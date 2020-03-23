@@ -26,6 +26,8 @@
     "portal-vue": "^2.1.4",
     "slug": "^1.1.0",
     "vue": "^2.5.2",
+    "vue-i18n": "^8.2.1",
+    "vue-meta": "^1.5.8",
     "vue-codemirror": "^4.0.6",
     "vue-cropperjs": "^3.0.0",
     "vue-pdf": "^4.0.7",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.29",
+    "@kazupon/vue-i18n-loader": "^0.3.0",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
