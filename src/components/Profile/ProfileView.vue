@@ -1,0 +1,75 @@
+<template>
+    <b-tabs pills fill>
+
+      <!-- Draft project -->
+      <b-tab title="Draft projects">
+
+        <!-- The list of projects -->
+        <b-row v-if="draftProjects.length > 0">
+          <b-col :key="project.id" v-for="project in draftProjects" md="4" class="mt-3">
+            <app-project-card :project="project" :buttonText="'Edit'"></app-project-card>
+          </b-col>
+        </b-row>
+        <b-row v-else>
+          <b-col class="text-center">
+            <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">Create a project</b-btn>
+          </b-col>
+        </b-row>
+
+      </b-tab>
+
+      <b-tab title="Your contributions">
+
+        <!-- The list of projects -->
+        <b-row v-if="contributedProjects.length > 0">
+          <b-col :key="project.id" v-for="project in contributedProjects" md="4" class="mt-3">
+            <app-project-card :project="project" :buttonText="'View'"></app-project-card>
+          </b-col>
+        </b-row>
+        <b-row v-else>
+          <b-col class="text-center">
+            <b-btn variant="outline-primary" :to="{ name: 'discover' }">Find a project</b-btn>
+          </b-col>
+        </b-row>
+      </b-tab>
+
+      <b-tab title="Published projects">
+
+        <!-- The list of projects -->
+        <b-row v-if="publishedProjects.length > 0">
+          <b-col :key="project.id" v-for="project in publishedProjects" md="4" class="mt-3">
+            <app-project-card :project="project" :buttonText="'Edit'"></app-project-card>
+          </b-col>
+        </b-row>
+        <b-row v-else>
+          <b-col class="text-center">
+            <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">Create a project</b-btn>
+          </b-col>
+        </b-row>
+      </b-tab>
+
+    </b-tabs>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+import ProjectCard from '@/components/Common/ProjectCard'
+
+export default {
+  name: 'ProfileView',
+  components: {
+    'app-project-card': ProjectCard
+  },
+  computed: {
+    ...mapState('user', {
+      draftProjects: state => state.draftProjects,
+      contributedProjects: state => state.contributedProjects,
+      publishedProjects: state => state.publishedProjects
+    })
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
