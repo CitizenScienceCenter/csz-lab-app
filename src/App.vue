@@ -7,13 +7,14 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
+
           <b-navbar-nav class="ml-auto">
-            <b-nav-item :to="{ name: 'home' }">Home</b-nav-item>
-            <b-nav-item :to="{ name: 'discover' }">Discover</b-nav-item>
-            <b-nav-item :to="{ name: 'about' }">About</b-nav-item>
+            <b-nav-item :to="{ name: 'home' }">{{ $t('app-vue-navigation-home') }}</b-nav-item>
+            <b-nav-item :to="{ name: 'discover' }">{{ $t('app-vue-navigation-discover') }}</b-nav-item>
+            <b-nav-item :to="{ name: 'about' }">{{ $t('app-vue-navigation-about') }}</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav>
-            <b-nav-item v-if="!userLogged" :to="{ name: 'login' }">Login</b-nav-item>
+            <b-nav-item v-if="!userLogged" :to="{ name: 'login' }">{{ $t('app-vue-navigation-login') }}</b-nav-item>
             <!--<b-nav-item v-if="!userLogged" :to="{ name: 'register' }">Register</b-nav-item>-->
 
             <b-nav-item-dropdown v-else right>
@@ -21,12 +22,12 @@
                 <b-img v-if="userProfile.info" height="32" width="32" rounded="circle" :src="userProfile.info.avatar_url"></b-img>&ensp;
                 {{ userProfile.fullname }}
               </template>
-              <b-dropdown-item :to="{ name: 'profile' }">Profile</b-dropdown-item>
-              <b-dropdown-item :to="{ name: 'logout' }">Sign Out</b-dropdown-item>
+              <b-dropdown-item :to="{ name: 'profile' }">{{ $t('app-vue-profile') }}</b-dropdown-item>
+              <b-dropdown-item :to="{ name: 'logout' }">{{ $t('app-vue-navigation-logout') }}</b-dropdown-item>
             </b-nav-item-dropdown>
 
             <b-nav-item v-if="userLogged" :to="{ name: 'project.builder.name' }">
-              <b-button variant="outline-secondary">Create your project</b-button>
+              <b-button variant="outline-secondary">{{ $t('app-vue-create-your-project') }}</b-button>
             </b-nav-item>
           </b-navbar-nav>
 
@@ -89,6 +90,12 @@ export default {
   name: 'App',
   created () {
     // this.getAccountProfile()
+  },
+  props:{
+    languages: {
+          type: Array,
+            default: function () { return ['de','en'] }
+        },
   },
   computed: mapState({
     errorNotifications: state => state.notification.errorNotifications,
