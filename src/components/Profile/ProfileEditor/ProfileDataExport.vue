@@ -2,10 +2,9 @@
   <b-row>
     <b-col>
       <p>
-        You will get an email when your personal data is available for download.
-        You will get access to your personal data, your contributions and all the projects you have created
+        {{ $t('profile-data-export-text')}}
       </p>
-      <b-btn ref="btn-submit" @click="onSubmit" variant="secondary" class="float-right">Export your data</b-btn>
+      <b-btn ref="btn-submit" @click="onSubmit" variant="secondary" class="float-right">{{ $t('profile-data-export-btn')}}</b-btn>
     </b-col>
   </b-row>
 </template>

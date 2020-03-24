@@ -39,15 +39,28 @@
         "discover-header":"Discover",
         "discover-no-projects":"There are no projects so far.",
         "discover-take-a-look-btn":"Take a look",
+        "discover-category-no-project":"There are no projects in this category so far.",
 
+        "your-api-key":"Your API key",
         "api-key-reset":"Reset API Key",
+
         "avatar-editor-save":"Save avatar",
+        
+        "basic-profile-editor-fullname-description":"Name and first name",
+        "basic-profile-editor-username-description":"If you change your username you will be asked to sign in again.",
         "basic-profile-editor-language":"Language",
-        "basic-profile-editor-privacy-settings":"Privacy setting",
+        "basic-profile-editor-privacy":"Privacy",
+        "basic-profile-editor-privacy-description":"If enabled, it all your public pages and statistics will become private and will no longer be visible for other users.",
+        "basic-profile-editor-privacy-setting":"Privacy setting",
         "basic-profile-editor-email-notification":"Email notifications",
+        "basic-profile-editor-email-notification-description":"Enable it in order to receive updates whenever a project publishes an update via a blog post.",
         "basic-profile-editor-save-changes":"Save changes",
+
+        "delete-profile-danzer-zone":"Danzer Zone!",
+        "delete-profile-delete-account":"Delete my account",
         "delete-profile-danger-description":"When deleting your account, all your personal data will be removed from the server and third party services. Your contributions will be anonymized. This operation cannot be undone!",
         "delete-profile-are-you-sure":"Are you sure you want to delete your account? This operation cannot be undone!",
+
         "password-editor-current-password":"Current password",
         "password-editor-current-password-placeholder":"Current password",
         "password-editor-new-password":"New password",
@@ -63,6 +76,7 @@
         "profile-editor-update-profile":"Update your profile",
         "profile-editor-change-password":"Change your password",
         "profile-editor-update-avatar":"Update your avatar",
+        "profile-editor-export-data":"Export your data",
         "profile-editor-update-apikey":"Update your API key",
         "profile-editor-delete-account":"Delete your account",
 
@@ -71,7 +85,12 @@
         "profile-header-position-global-ranking":"position in global ranking",
         "profile-header-contributions-to-project":"contributions to projects",
 
+        "profile-view-draft-project":"Draft projects",
+        "profile-view-publish-project":"Published projects",
+        "profile-view-create-a-project":"Create a project",
         "profile-view-find-a-project":"Find a project",
+
+        "DONE UNTIL HERE":"",
 
         "project-draft-complete":"Draft, complete it!",
         "project-draft-test":"Test it!",
@@ -229,13 +248,16 @@
         "task-describe-template-go":"I'm good to go",
 
         "edit-btn":"Edit",
+        "view-btn":"View",
         "submit-btn":"Submit",
         "take-a-look-btn":"Take a look",
         "go-back-btn":"Go back",
         "next-step-btn":"Next step",
         "create-btn":"Create!",
         "browse-btn":"Browse",
-        "settings":"Settings"
+        "settings":"Settings",
+        "enabled":"enabled",
+        "disabled":"disabled"
 
       
     },

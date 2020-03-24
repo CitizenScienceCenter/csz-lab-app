@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <b-row align-h="center" class="mb-5">
       <b-col md="9">
-        <h2 class="mt-4 mb-4 text-center">Update your profile</h2>
+        <h2 class="mt-4 mb-4 text-center">{{ $t('profile-editor-update-profile') }}</h2>
         <BasicProfileEditor></BasicProfileEditor>
       </b-col>
     </b-row>
@@ -11,7 +11,7 @@
 
     <b-row align-h="center" class="mb-5">
       <b-col md="9">
-        <h2 class="mt-4 mb-4 text-center">Change your password</h2>
+        <h2 class="mt-4 mb-4 text-center">{{ $t('profile-editor-change-password') }}</h2>
         <PasswordEditor></PasswordEditor>
       </b-col>
     </b-row>
@@ -20,7 +20,7 @@
 
     <b-row align-h="center" class="mb-5">
       <b-col md="9">
-        <h2 class="mt-4 mb-4 text-center">Update your avatar</h2>
+        <h2 class="mt-4 mb-4 text-center">{{ $t('profile-editor-update-avatar') }}</h2>
         <AvatarEditor></AvatarEditor>
       </b-col>
     </b-row>
@@ -29,7 +29,7 @@
 
     <b-row align-h="center" class="mb-5">
       <b-col md="9">
-        <h2 class="mt-4 mb-4 text-center">Export your data</h2>
+        <h2 class="mt-4 mb-4 text-center">{{ $t('profile-editor-export-data') }}</h2>
         <ProfileDataExport></ProfileDataExport>
       </b-col>
     </b-row>
@@ -38,7 +38,7 @@
 
     <b-row align-h="center" class="mb-5">
       <b-col md="9">
-        <h2 class="mt-4 mb-4 text-center">Update your API key</h2>
+        <h2 class="mt-4 mb-4 text-center">{{ $t('profile-editor-update-apikey') }}</h2>
         <ApiKeyReset></ApiKeyReset>
       </b-col>
     </b-row>
@@ -47,7 +47,7 @@
 
     <b-row align-h="center" class="mb-5">
       <b-col md="9">
-        <h2 class="mt-4 mb-4 text-center">Delete your account</h2>
+        <h2 class="mt-4 mb-4 text-center">{{ $t('profile-editor-delete-account') }}</h2>
         <DeleteProfile></DeleteProfile>
       </b-col>
     </b-row>

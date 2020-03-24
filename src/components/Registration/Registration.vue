@@ -6,13 +6,13 @@
       <b-row>
         <b-col>
 
-          <h1>Registration</h1>
+          <h1>{{ $t('register-header') }}</h1>
 
           <b-form ref="form-registration" @submit.prevent="submitRegistration" class="mt-4">
 
             <!-- Full name -->
             <b-form-group
-                    label="Full name"
+                    :label="$t('register-fullname')"
                     label-for="fullname"
                     :state="nameValid('fullname')"
                     :invalid-feedback="nameFeedback">
@@ -20,14 +20,15 @@
               <b-input id="fullname"
                        v-model="form.fullname"
                        @input="fieldUpdated('fullname')"
-                       placeholder="Full name">
+                       :placeholder="$t('register-fullname-placeholder')">
+
               </b-input>
 
             </b-form-group>
 
             <!-- User name -->
             <b-form-group
-                    label="User name"
+                    :label="$t('register-username')"
                     label-for="username"
                     :state="nameValid('username')"
                     :invalid-feedback="nameFeedback">
@@ -35,14 +36,14 @@
               <b-input id="username"
                        v-model="form.username"
                        @input="fieldUpdated('username')"
-                       placeholder="User name">
+                       :placeholder="$t('register-username-placeholder')">
               </b-input>
 
             </b-form-group>
 
             <!-- Email -->
             <b-form-group
-                    label="Email address"
+                    :label="$t('register-email')"
                     label-for="email"
                     :state="emailValid"
                     :invalid-feedback="emailFeedback">
@@ -51,13 +52,14 @@
                        type="email"
                        v-model="form.email"
                        @input="fieldUpdated('email')"
-                       placeholder="Email address">
+                       :placeholder="$t('register-email-placeholder')">
               </b-input>
 
             </b-form-group>
 
             <!-- Password -->
-            <b-form-group label="Password"
+            <b-form-group 
+                          :label="$t('register-password')"
                           label-for="password"
                           :state="passwordsValid"
                           :invalid-feedback="passwordFeedback">
@@ -66,14 +68,14 @@
                        type="password"
                        v-model="form.password"
                        @input="fieldUpdated('password')"
-                       placeholder="New password">
+                       :placeholder="$t('register-password-placeholder')">
               </b-input>
 
             </b-form-group>
 
             <!-- Password confirmation -->
             <b-form-group
-                    label="Password confirmation"
+                    :label="$t('register-password-confirmation')"
                     label-for="password-confirmation"
                     :state="passwordsValid"
                     :invalid-feedback="passwordFeedback">
@@ -82,7 +84,7 @@
                        type="password"
                        v-model="form.passwordConfirmation"
                        @input="fieldUpdated('password')"
-                       placeholder="Repeat password">
+                       :placeholder="$t('register-password-confirmation-placeholder')">
               </b-input>
 
             </b-form-group>
@@ -92,7 +94,7 @@
               I accept receiving emails from C3S Dev
             </b-form-checkbox>-->
 
-            <b-button class="mt-3" type="submit" variant="primary">Submit</b-button>
+            <b-button class="mt-3" type="submit" variant="primary"> {{$t('submit-btn')}} </b-button>
           </b-form>
 
         </b-col>

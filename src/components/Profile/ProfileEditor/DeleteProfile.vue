@@ -2,17 +2,15 @@
   <b-row>
     <b-col>
       <b-alert variant="danger" :show="true">
-        <b>Danger Zone!</b>
-        When deleting your account, all your personal data will be removed from the server and third party services.
-        Your contributions will be anonymized. This operation cannot be undone!
+        <b>{{ $t('delete-profile-danzer-zone') }}</b>
+        {{ $t('delete-profile-danger-description') }}
         <div class="text-center">
-          <b-btn ref="btn-delete-account" v-b-modal.delete-account variant="danger" class="mt-3 mb-3">Delete my account</b-btn>
+          <b-btn ref="btn-delete-account" v-b-modal.delete-account variant="danger" class="mt-3 mb-3"> {{ $t('delete-profile-delete-account') }}</b-btn>
         </div>
       </b-alert>
 
       <b-modal ref="modal-submit" id="delete-account" title="Delete account" @ok="onSubmit">
-        Are you sure you want to delete your account ?
-        This operation cannot be undone!
+        {{ $t('delete-profile-are-you-sure') }}
       </b-modal>
     </b-col>
   </b-row>

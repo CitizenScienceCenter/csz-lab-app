@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <h1 class="mt-4 text-center centered">Discover</h1>
+    <h1 class="mt-4 text-center centered">{{ $t('discover-header') }}</h1>
     <b-row class="justify-content-center mt-4">
       <b-col>
           <b-tabs pills align="center">
@@ -10,7 +10,7 @@
 
               <!-- The list of projects -->
               <b-row>
-                <p class="text-center m-3" v-if="projects.length < 1">There are no projects so far.</p>
+                <p class="text-center m-3" v-if="projects.length < 1">{{ $t('discover-no-projects') }}</p>
                 <b-col :key="project.id" v-for="project in categoryAll.showedProjects" md="4" class="mt-3">
                   <app-project-card :project="project" :buttonText="'Take a look'"></app-project-card>
                 </b-col>
@@ -39,7 +39,7 @@
             >
               <!-- The list of projects -->
               <b-row>
-                <p class="text-center m-3" v-if="!categoryProjects[category.short_name] || categoryProjects[category.short_name].length < 1">There are no projects in this category so far.</p>
+                <p class="text-center m-3" v-if="!categoryProjects[category.short_name] || categoryProjects[category.short_name].length < 1">{{ $t('discover-category-no-project') }}</p>
                 <b-col :key="project.id" v-for="project in categoryProjects[category.short_name]" md="4" class="mt-3">
                   <app-project-card :project="project" :buttonText="'Take a look'"></app-project-card>
                 </b-col>

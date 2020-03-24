@@ -31,14 +31,16 @@
             </b-nav-item>
           </b-navbar-nav>
 
-          <div class="custom-select language-select">
-            <div style="display: none;">
-              <router-link v-for="lang in languages" :to="'/'+lang+$route.path.substring(3)" :key="lang">{{lang}}</router-link>
+          <b-navbar-nav>
+            <div class="language-select custom-select">
+              <div style="display: none;">
+                <router-link v-for="lang in languages" :to="'/'+lang+$route.path.substring(3)" :key="lang">{{lang}}</router-link>
+              </div>
+              <select class="select-options" v-model="language" >
+                <option v-for="lang in languages" :value="lang" :key="lang">{{lang}}</option>
+              </select>
             </div>
-            <select class="select-options" v-model="language" >
-              <option v-for="lang in languages" :value="lang" :key="lang">{{lang}}</option>
-            </select>
-          </div>
+          </b-navbar-nav>
 
         </b-collapse>
 
@@ -149,7 +151,7 @@ export default {
 <style>
 
   .language-select {
-    width:80px;
+    width:70px;
     margin-left: 14px;
     margin-top: -2px;
     margin-bottom: -2px;
