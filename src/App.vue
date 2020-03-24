@@ -85,17 +85,12 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { i18n } from "./i18n"
 
 export default {
   name: 'App',
   created () {
     // this.getAccountProfile()
-  },
-  props:{
-    languages: {
-          type: Array,
-            default: function () { return ['de','en'] }
-        },
   },
   computed: mapState({
     errorNotifications: state => state.notification.errorNotifications,

@@ -308,6 +308,7 @@ const publicRoutes = [
 ]
 
 router.beforeEach((to, from, next) => {
+
   if (store.state.user.logged) {
     // user already logged (getAccountProfile already done) so he can access all the routes
     next()

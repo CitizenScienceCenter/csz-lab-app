@@ -2,9 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import VueRouter from 'vue-router';
+//import store from './store'
+//import router from './router'
 
-import store from './store'
-import router from './router'
+import { router } from './router/router.js';
+import store from './store/index.js';
+
 
 import BootstrapVue from 'bootstrap-vue'
 import VueLayers from 'vuelayers'
@@ -20,10 +24,12 @@ import './scss/global.scss'
 
 import VueI18n from 'vue-i18n'
 
-import * as messages from './assets/messages.json'
+import { i18n } from './i18n.js';
+
+//import * as messages from './assets/messages.json'
 
 Vue.config.productionTip = false
-
+Vue.use(VueRouter);
 Vue.use(BootstrapVue)
 Vue.use(VueLayers, {
   dataProjection: 'EPSG:4326'
@@ -34,12 +40,12 @@ Vue.component('pdf', Pdf)
 window.Vue = Vue
 
 // Create VueI18n instance with options
-const i18n = new VueI18n({
+/*const i18n = new VueI18n({
   locale: 'en', // set locale
   fallbackLocale: 'de',
   silentTranslationWarn: true,
   messages // set locale messages
-})
+})*/
 
 
 /* eslint-disable no-new */

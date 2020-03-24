@@ -240,9 +240,9 @@
       
     },
     "de": {
-      "main-navigation-home": "HOME 1",
-      "main-navigation-discover": "DISCOVER",
-      "main-navigation-about": "ABOUT",
-      "main-navigation-login": "LOGIN"
+      "app-vue-navigation-home": "Home de",
+      "app-vue-navigation-discover": "Discover de",
+      "app-vue-navigation-about": "About de",
+      "app-vue-navigation-login": "Login de"
     }
 }
