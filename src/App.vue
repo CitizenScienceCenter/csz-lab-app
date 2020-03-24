@@ -31,6 +31,15 @@
             </b-nav-item>
           </b-navbar-nav>
 
+          <div class="custom-select language-select">
+            <div style="display: none;">
+              <router-link v-for="lang in languages" :to="'/'+lang+$route.path.substring(3)" :key="lang">{{lang}}</router-link>
+            </div>
+            <select class="select-options" v-model="language" >
+              <option v-for="lang in languages" :value="lang" :key="lang">{{lang}}</option>
+            </select>
+          </div>
+
         </b-collapse>
 
     </b-navbar>
@@ -92,14 +101,37 @@ export default {
   created () {
     // this.getAccountProfile()
   },
-  computed: mapState({
-    errorNotifications: state => state.notification.errorNotifications,
-    infoNotifications: state => state.notification.infoNotifications,
-    successNotifications: state => state.notification.successNotifications,
+  props : {
+    languages: {
+          type: Array,
+            default: function () { return ['en','de'] }
+    },
+  },
+  
+  computed: {
+      ...mapState({
+      errorNotifications: state => state.notification.errorNotifications,
+      infoNotifications: state => state.notification.infoNotifications,
+      successNotifications: state => state.notification.successNotifications,
 
-    userLogged: state => state.user.logged,
-    userProfile: state => state.user.infos
-  }),
+      userLogged: state => state.user.logged,
+      userProfile: state => state.user.infos
+    }),
+    language: {
+          get() {
+            return this.$store.state.settings.language;
+          },
+          set(language) {
+            this.$store.dispatch("settings/setLanguage", language);
+          }
+      }
+  },
+  watch: {
+    language(to) {
+      i18n.locale = to;
+      this.$router.push( this.$route.path.substring( 3 ) );
+    }
+  },
   methods: {
     ...mapMutations({
       closeError: 'notification/closeError',
@@ -115,5 +147,20 @@ export default {
 </script>
 
 <style>
+
+  .language-select {
+    width:80px;
+    margin-left: 14px;
+    margin-top: -2px;
+    margin-bottom: -2px;
+  }
+        
+  .select-options {
+    height:28px;
+    width: 50px;
+    border:0px;
+    border-color: transparent;
+  }
+        
 
 </style>
