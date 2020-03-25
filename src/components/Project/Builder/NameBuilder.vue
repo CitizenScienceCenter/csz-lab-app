@@ -58,10 +58,10 @@ export default {
       return this.titleFirstInteraction || (this.currentTitle.length > 0 && this.currentTitle.length <= this.maxNbCharacters)
     },
     validFeedback () {
-      return this.maxNbCharacters - this.currentTitle.length + ' characters left'
+      return this.maxNbCharacters - this.currentTitle.length + ' ' + this.$t('characters-left')
     },
     invalidFeedback () {
-      return this.currentTitle.length === 0 ? 'You must set a title for your project' : 'The title length should not exceed ' + this.maxNbCharacters + ' characters'
+      return this.currentTitle.length === 0 ? this.$t('name-builder-project-title-error') : this.$t('name-builder-project-character-exceed') + ' ' + this.maxNbCharacters + ' ' + this.$t('characters')
     },
     ...mapState('project/builder', {
       title: state => state.title

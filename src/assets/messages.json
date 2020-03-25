@@ -125,10 +125,15 @@
         "information-builder-descripton":"Description",
         "information-builder-tip":"TIPS! Text: Some people will only read this text about your project and decide whether they want to collaborate. Try to make it clear and attractive. Picture: make sure that you respect copyrights and royalty fees when using images from the Web. See our terms and conditions (link) for liabilities.",
         "information-builder-choose-picture":"Choose a picture that represents your project",
+        "information-builder-description-error":"You must set a description for your project",
+        "information-builder-character-exceed":"The description length should not exceed",
+
 
         "name-builder-project-title-header":"Choose a title for your new project",
         "name-builder-project-title":"Project title",
         "name-builder-project-title-description":"Please write here a good one!",
+        "name-builder-project-title-error":"You must set a title for your project",
+        "name-builder-project-character-exceed":"The title length should not exceed",
 
         "story-builder-project-info":"More about your project.",
         "story-builder-project-info-label-1":"What & why",
@@ -249,7 +254,13 @@
 
         "task-count-template-question":"Question",
         "task-count-template-question-placeholder":"E.g. How many people can you see in the image?",
-        "task-count-template-go":"I'm good to go",
+        "task-count-template-go":"Continue",
+        "task-count-template-error-incomplete-form":"Incomplete form",
+        "task-count-template-error-question":"You have to provide a correct question",
+        "task-count-template-error-many-characters-question":"Too many characters in this question",
+        "task-count-template-error-empty-question":"The question should not be empty",
+        "task-count-template-error-many-characters-answer":"Too many characters in this answer",
+        "task-count-template-error-empty-answer":"The answer should not be empty",
 
         "task-describe-template-question":"General description",
         "task-describe-template-question-placeholder":"E.g. Describe the people in the picture.",
@@ -258,6 +269,21 @@
         "task-describe-template-add-description":"Add detailed description",
         "task-describe-template-delete":"Delete",
         "task-describe-template-go":"Continue",
+        "task-describe-template-error-incomplete-form":"Incomplete form",
+        "task-describe-template-error-fields-validation":"All the fields should be validated",
+        "task-describe-template-error-many-characters-answer":"Too many characters in this description",
+        "task-describe-template-error-empty-answer":"The description should not be empty",
+
+        "dropbox-choose-files":" Choose files from DropBox",
+        "dropbox-license":" You can use any free licensed pics (Creative Commons or alike), your own pictures or those copyright images that you are authorised to use.",
+
+        "project-menu-task-presenter-header":"Task presenter editor",
+        "project-menu-task-presenter-preview":"Preview task presenter",
+        "project-menu-task-presenter-update":"Update task presenter",
+        "project-menu-task-presenter-message":"This editor is reserved for expert users having coding skills. Edit and update at your own risk",
+        "project-menu-task-presenter-error-update":"Impossible to update the task presenter",
+        "project-menu-task-presenter-task-editor":"Task editor",
+
 
         "edit-btn":"Edit",
         "view-btn":"View",
@@ -277,14 +303,32 @@
         "drop-picture":"Drop a picture here...",
         "danzer-zone":"Danzer Zone!",
         "delete-project":"Delete Project",
-        "authorized-format":"Authorized formats",
+        "authorized-format":"Authorized formats: .jpg, .png, .gif, .svg. The picture must not exceed ",
         "title":"Title",
         "browse":"Browse",
+        "continue":"Continue",
+        "error":"Error",
+        "characters":"characters",
+        "characters-left":"characters left",
 
         "error-login-authentication":"Not authenticated",
-        "error-login-authentication-content":"You must be logged to access this page"
+        "error-login-authentication-content":"You must be logged to access this page",
 
+        "login-success-title":"Welcome",
+        "login-success-content":"We are happy to see you again!",
+        "login-failed-title":"Wrong credentials",
+        "login-failed-content":"Your email and/or your password are incorrect",
 
+        "register-success":"Success",
+        "register-error-incomplete-form":"Incomplete form error",
+        "register-error-form-validation":"Some fields are not validated",
+        "register-form-field-length":"The field must be between 3 and 35 characters long",
+        "register-form-email-length":"Email must be between 3 and 254 characters long and must be a valid email address",
+        "register-error-form-password-empty":"The password cannot be empty",
+        "register-error-form-password-match":"Passwords must match",
+
+        "mandatory-field": "This field is mandatory",
+        "field-should-not-exceed": "This field should not exceed"
 
       
     },

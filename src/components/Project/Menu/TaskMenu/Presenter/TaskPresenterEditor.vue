@@ -3,25 +3,25 @@
       <b-breadcrumb :items="items"></b-breadcrumb>
       <b-container>
             <div class="mt-2 clearfix">
-              <h1 class="float-left">Task presenter editor</h1>
+              <h1 class="float-left">{{ $t('project-menu-task-presenter-header') }}</h1>
 
               <!-- Buttons -->
               <div class="float-right">
-                <b-btn ref="btn-preview" variant="secondary" @click="previewPresenter">Preview task presenter</b-btn>
+                <b-btn ref="btn-preview" variant="secondary" @click="previewPresenter">{{ $t('project-menu-task-presenter-preview') }}</b-btn>
                 <b-btn
                   v-b-tooltip.hover title="This editor is reserved for expert users having 'coding' skills. Update the presenter only if you know what you are doing."
                   ref="btn-update-presenter"
                   variant="primary"
                   @click="updateTaskPresenter"
                 >
-                  Update task presenter
+                  {{ $t('project-menu-task-presenter-update') }}
                 </b-btn>
               </div>
 
             </div>
 
             <div class="mt-2 clearfix">
-              <i class="float-left">This editor is reserved for expert users having coding skills. Edit and update at your own risk!</i>
+              <i class="float-left">{{ $t('project-menu-task-presenter-message') }}</i>
             </div>
 
             <codemirror class="mt-3 float-none" ref="code-mirror" v-model="code" :options="cmOptions"></codemirror>
@@ -100,8 +100,8 @@ export default {
       }).then(response => {
         if (!response) {
           this.showError({
-            title: 'Error',
-            content: 'Impossible to update the task presenter'
+            title: this.$t('error'),
+            content: this.$t('project-menu-task-presenter-error-update')
           })
         }
       })
@@ -130,7 +130,7 @@ export default {
           to: { name: 'project', params: { id: 'id' in this.project ? this.project.id : 0 } }
         },
         {
-          text: ' Task editor',
+          text: this.$t('project-menu-task-presenter-task-editor'),
           active: false
         }
       ]

@@ -15,11 +15,11 @@
     </b-col>
     <b-col>
       <h1>#{{ stats.hasOwnProperty('n_completed_tasks') ? stats.n_completed_tasks : 'NaN' }}</h1>
-      <span class="text-muted">{{ $t('project-statistic-tasks-done')}}</span>
+      <span class="text-muted">{{ $t('project-statistic-menu-tasks-done')}}</span>
     </b-col>
     <b-col>
       <h1>#{{ stats.hasOwnProperty('n_tasks') &&  stats.hasOwnProperty('n_completed_tasks') ? stats.n_tasks - stats.n_completed_tasks : 'NaN' }}</h1>
-      <span class="text-muted">{{ $t('project-statistic-pending-tasks')}}</span>
+      <span class="text-muted">{{ $t('project-statistic-menu-pending-tasks')}}</span>
     </b-col>
   </b-row>
 </template>

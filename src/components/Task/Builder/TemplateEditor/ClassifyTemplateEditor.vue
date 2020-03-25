@@ -147,7 +147,12 @@ export default {
         this.setTaskTemplate(JSON.parse(JSON.stringify(this.questions)))
         this.setStep({ step: 'template', value: true })
       } else {
-        this.showError({ title: 'Incomplete form', content: 'Some fields are not validated' })
+        this.showError(
+          { 
+            title: this.$t('task-describe-template-error-incomplete-form'), 
+            content: this.$t('task-describe-template-error-fields-validation')
+          }
+        )
       }
     },
 
@@ -176,10 +181,10 @@ export default {
 
     // question validation
     validQuestionFeedback (question) {
-      return this.maxNbCharactersQuestions - question.length + ' characters left'
+      return this.maxNbCharactersQuestions - question.length + ' ' + this.$t('characters-left')
     },
     invalidQuestionFeedback (question) {
-      return question.length > 0 ? 'Too many characters in this question' : 'The question should not be empty'
+      return question.length > 0 ? this.$t('task-count-template-error-many-characters-question') : this.$t('task-count-template-error-empty-question')
     },
     questionValidated (questionKey) {
       const question = this.questions[questionKey].question
@@ -188,10 +193,10 @@ export default {
 
     // answer validation
     validAnswerFeedback (answer) {
-      return this.maxNbCharactersAnswers - answer.length + ' characters left'
+      return this.maxNbCharactersAnswers - answer.length + ' ' + this.$t('characters-left')
     },
     invalidAnswerFeedback (answer) {
-      return answer.length > 0 ? 'Too many characters in this answer' : 'The answer should not be empty'
+      return answer.length > 0 ? this.$t('task-count-template-error-many-characters-answer') : this.$t('task-count-template-error-empty-answer')
     },
     answerValidated (questionKey, answerKey) {
       const question = this.questions[questionKey]

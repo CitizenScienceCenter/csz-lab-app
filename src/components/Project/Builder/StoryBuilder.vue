@@ -158,10 +158,10 @@ export default {
       return this.firstInteraction[field] || (this.$data[field].length > 0 && this.$data[field].length <= this.maxNbCharacters)
     },
     validFeedback (field) {
-      return this.maxNbCharacters - this.$data[field].length + ' characters left'
+      return this.maxNbCharacters - this.$data[field].length + ' ' + this.$t('characters-left')
     },
     invalidFeedback (field) {
-      return this.$data[field].length === 0 ? 'This field is mandatory' : 'This field should not exceed ' + this.maxNbCharacters + ' characters'
+      return this.$data[field].length === 0 ? this.$t('mandatory-field') : this.$t('field-should-not-exceed') + ' ' + this.maxNbCharacters + ' ' + this.$t('characters')
     }
   },
   computed: {

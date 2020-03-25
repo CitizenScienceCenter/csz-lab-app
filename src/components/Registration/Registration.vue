@@ -162,12 +162,12 @@ export default {
         }).then(response => {
           if ('form' in response && 'errors' in response.form) {
             this.showError({
-              title: 'Incomplete form error',
+              title: this.$t('register-error-incomplete-form'),
               content: getFormErrorsAsString(response.form.errors)
             })
           } else {
             this.showSuccess({
-              title: 'Success',
+              title: this.$t('register-success'),
               content: response.flash
             })
             this.getAccountProfile().then(() => {
@@ -179,8 +179,8 @@ export default {
         })
       } else {
         this.showError({
-          title: 'Incomplete form',
-          content: 'Some fields are not validated'
+          title: this.$t('register-error-incomplete-form'),
+          content: this.$t('register-error-form-validation')
         })
       }
     },
@@ -201,7 +201,7 @@ export default {
     }),
 
     nameFeedback () {
-      return 'The field must be between 3 and 35 characters long'
+      return this.$t('register-form-field-length')
     },
 
     // email validation
@@ -209,7 +209,7 @@ export default {
       return this.firstInteractions.email || (this.form.email.length >= 3 && this.form.email.length <= 254 && validateEmail(this.form.email))
     },
     emailFeedback () {
-      return 'Email must be between 3 and 254 characters long and must be a valid email address'
+      return this.$t('register-form-email-length')
     },
 
     // password validation
@@ -218,9 +218,9 @@ export default {
     },
     passwordFeedback () {
       if (this.form.password.length === 0) {
-        return 'The password cannot be empty'
+        return this.$t('register-error-form-password-empty')
       } else {
-        return 'Passwords must match'
+        return this.$t('register-error-form-password-match')
       }
     }
   }

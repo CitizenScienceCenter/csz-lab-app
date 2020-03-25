@@ -45,7 +45,7 @@
           <b-form-group
                   :state="selectedPictureSizeInMB <= maxPictureSizeInMB"
                   :invalid-feedback="$t('picture-too-big')"
-                  :description="'Authorized formats: .jpg, .png, .gif, .svg. The picture must not exceed ' + maxPictureSizeInMB + ' MB.'"
+                  :description=" $t('authorized-format') + ' ' + maxPictureSizeInMB + ' MB.'"
           >
             <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg" 
               :placeholder="$t('select-picture')">
@@ -177,14 +177,14 @@ export default {
      * @return {string}
      */
     validFeedback () {
-      return this.maxNbCharacters - this.currentShortDescription.length + ' characters left'
+      return this.maxNbCharacters - this.currentShortDescription.length + ' ' + this.$t('characters-left')
     },
     /**
      * Returns an invalid feedback message that will be displayed in the form
      * @return {string}
      */
     invalidFeedback () {
-      return this.currentShortDescription.length === 0 ? 'You must set a description for your project' : 'The description length should not exceed ' + this.maxNbCharacters + ' characters'
+      return this.currentShortDescription.length === 0 ? this.$t('information-builder-description-error') : this.$t('information-builder-character-exceed') + ' ' + this.maxNbCharacters + ' characters'
     }
   },
   watch: {

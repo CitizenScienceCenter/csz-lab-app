@@ -91,12 +91,17 @@ export default {
         if (this.logged) {
           this.getAccountProfile()
           this.showInfo({
-            title: 'Welcome',
-            content: 'We are happy to see you again!'
+            title: this.$t('login-success-title'),
+            content: this.$t('login-success-content')
           })
           this.$router.push({ name: 'home' })
         } else {
-          this.showError({ title: 'Wrong credentials', content: 'Your email and/or your password are incorrect' })
+          this.showError(
+            {
+              title: this.$t('login-failed-title'), 
+              content: this.$t('login-failed-content') 
+            }
+          )
         }
       })
     }

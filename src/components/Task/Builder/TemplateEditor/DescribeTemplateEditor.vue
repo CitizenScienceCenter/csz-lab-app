@@ -101,7 +101,12 @@ export default {
         })
         this.setStep({ step: 'template', value: true })
       } else {
-        this.showError({ title: 'Incomplete form', content: 'All the fields should be validated' })
+        this.showError(
+          { 
+            title: this.$t('task-describe-template-error-incomplete-form'), 
+            content: this.$t('task-describe-template-error-fields-validation')
+          }
+        )
       }
     },
 
@@ -118,20 +123,20 @@ export default {
     },
 
     validQuestionFeedback (question) {
-      return this.maxNbCharactersQuestions - question.length + ' characters left'
+      return this.maxNbCharactersQuestions - question.length + ' ' + this.$t('characters-left')
     },
     invalidQuestionFeedback (question) {
-      return question.length > 0 ? 'Too many characters in this question' : 'The question should not be empty'
+      return question.length > 0 ? this.$t('task-count-template-error-many-characters-question') : this.$t('task-count-template-error-empty-question')
     },
     questionValidated (question) {
       return (this.questionFirstInteraction || question.length > 0) && question.length <= this.maxNbCharactersQuestions
     },
 
     validDescriptionFeedback (description) {
-      return this.maxNbCharactersDescriptions - description.length + ' characters left'
+      return this.maxNbCharactersDescriptions - description.length + this.$t('characters-left')
     },
     invalidDescriptionFeedback (description) {
-      return description.length > 0 ? 'Too many characters in this description' : 'The description should not be empty'
+      return description.length > 0 ? this.$t('task-describe-template-error-many-characters-answer') : this.$t('task-describe-template-error-empty-answer')
     },
     descriptionValidated (descriptionKey) {
       const description = this.descriptions[descriptionKey]
