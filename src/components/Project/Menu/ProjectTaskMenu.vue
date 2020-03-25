@@ -4,37 +4,38 @@
       <b-col>
 
         <div>
-          <h4>Import Tasks</h4>
-          <p>Import tasks from templates, GDrive, or CSV</p>
-          <b-btn variant="outline-primary" :to="{ name: 'project.task.importers', params: { id: ('id' in project) ? project.id : 0 } }">Import</b-btn>
+          <h4> {{ $t('project-task-menu-import-tasks') }} </h4>
+          <p>{{ $t('project-task-menu-import-tasks-templates') }}</p>
+          <b-btn variant="outline-primary" :to="{ name: 'project.task.importers', params: { id: ('id' in project) ? project.id : 0 } }">{{ $t('project-task-menu-import') }}</b-btn>
         </div>
 
         <div class="mt-4">
-          <h4>Task Presenter</h4>
-          <p>Edit the task presenter</p>
-          <div class="d-inline-block" v-b-tooltip.hover title="This section is reserved for expert users having 'coding' skills">
+          <h4> {{ $t('project-task-menu-task-presenter') }}</h4>
+          <p> {{ $t('project-task-menu-edit-task-presenter') }}</p>
+          <div class="d-inline-block" v-b-tooltip.hover 
+            :title="$t('project-task-menu-edit-task-presenter-title')">
 
             <b-button v-if="taskPresenter"
                       variant="outline-primary"
                       :to="{ name: 'project.task.presenter.editor', params: { id: 'id' in this.project ? this.project.id : 0 } }"
             >
-              Editor
+              {{ $t('project-task-menu-editor') }}
             </b-button>
 
             <b-button v-else
                       variant="outline-primary"
                       :to="{ name: 'project.task.presenter.settings', params: { id: ('id' in project) ? project.id : 0 } }"
             >
-              Task types
+             {{ $t('project-task-types-editor') }}
             </b-button>
 
           </div>
         </div>
 
         <div class="mt-4">
-          <h4>Browse</h4>
-          <p>Check the status of the tasks</p>
-          <b-btn variant="outline-primary" :to="{ name: 'project.tasks.list' }">Browse</b-btn>
+          <h4>{{ $t('browse') }}</h4>
+          <p>{{ $t('project-task-menu-status') }}</p>
+          <b-btn variant="outline-primary" :to="{ name: 'project.tasks.list' }">{{ $t('browse') }}</b-btn>
         </div>
 
       </b-col>
@@ -42,15 +43,15 @@
       <b-col>
 
         <div>
-          <h4>Export Tasks</h4>
-          <p>Export tasks to JSON, CSV, or a CKAN server</p>
-          <b-btn :to="{ name: 'project.task.exporters', params: { id: ('id' in project) ? project.id : 0 } }" variant="outline-primary">Export</b-btn>
+          <h4>{{ $t('project-task-menu-export-tasks') }}</h4>
+          <p>{{ $t('project-task-menu-export-tasks-type') }}</p>
+          <b-btn :to="{ name: 'project.task.exporters', params: { id: ('id' in project) ? project.id : 0 } }" variant="outline-primary">{{ $t('project-task-menu-export') }}</b-btn>
         </div>
 
         <div class="mt-4">
-          <h4>Settings</h4>
-          <p>Configure the task scheduler, redundancy, etc.</p>
-          <b-btn :to="{ name: 'project.task.settings', params: { id: ('id' in project) ? project.id : 0 } }" variant="outline-primary">Settings</b-btn>
+          <h4>{{ $t('settings') }}</h4>
+          <p>{{ $t('project-task-menu-configure-tasks') }}</p>
+          <b-btn :to="{ name: 'project.task.settings', params: { id: ('id' in project) ? project.id : 0 } }" variant="outline-primary">{{ $t('settings') }}</b-btn>
         </div>
 
       </b-col>

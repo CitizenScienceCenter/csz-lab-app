@@ -3,7 +3,7 @@
 
     <b-row class="mt-4">
       <b-col>
-        <b-link :to="{ name: 'project.builder.name' }">Go back</b-link>
+        <b-link :to="{ name: 'project.builder.name' }">{{ $t('go-back-btn') }}</b-link>
       </b-col>
     </b-row>
 
@@ -13,10 +13,10 @@
 
         <!-- Project description -->
         <b-col md="9">
-          <h1 class="mt-3 small">{{ title }} in a few words</h1>
+          <h1 class="mt-3 small">{{ title }} {{ $t('information-builder-few-words') }}</h1>
           <b-form-group
                   id="fieldset-description"
-                  label="Project short description"
+                  :label="$t('information-builder-short-descripton')"
                   label-for="Description"
                   :valid-feedback="validFeedback"
                   :invalid-feedback="invalidFeedback"
@@ -31,7 +31,7 @@
         </b-col>
 
         <b-col md="3" align-self="start">
-          <p><i class="fas fa-info-circle"></i>  TIP: Take your time, this will be your business card.</p>
+          <p><i class="fas fa-info-circle"></i> {{ $t('information-builder-tip') }} </p>
         </b-col>
 
       </b-row>
@@ -39,15 +39,17 @@
       <!-- Image upload -->
       <b-row class="mt-4">
         <b-col md="9">
-          <h1 class="mt-3 small">Choose a picture that represents or is related to your project</h1>
+          <h1 class="mt-3 small"> {{ $t('information-choose-picture') }}</h1>
 
           <vue-cropper ref="cropper" v-show="pictureSelected" :src="selectedPicture" :data="cropData" :autoCrop="true" :view-mode="2" :aspectRatio="4/3"></vue-cropper>
           <b-form-group
                   :state="selectedPictureSizeInMB <= maxPictureSizeInMB"
-                  invalid-feedback="The picture is too big"
+                  :invalid-feedback="$t('picture-too-big')"
                   :description="'Authorized formats: .jpg, .png, .gif, .svg. The picture must not exceed ' + maxPictureSizeInMB + ' MB.'"
           >
-            <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg" placeholder="Select a picture..."></b-form-file>
+            <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg" 
+              :placeholder="$t('select-picture')">
+            </b-form-file>
           </b-form-group>
 
         </b-col>
@@ -55,7 +57,7 @@
 
       <b-row class="mt-4">
         <b-col>
-          <b-button type="submit" variant="primary">Next Step</b-button>
+          <b-button type="submit" variant="primary"> {{ $t('next-step-btn') }}</b-button>
         </b-col>
       </b-row>
 

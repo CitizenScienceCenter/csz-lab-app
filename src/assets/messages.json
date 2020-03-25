@@ -90,11 +90,12 @@
         "profile-view-create-a-project":"Create a project",
         "profile-view-find-a-project":"Find a project",
 
-        "DONE UNTIL HERE":"",
-
         "project-draft-complete":"Draft, complete it!",
         "project-draft-test":"Test it!",
         "project-draft-publish":"Publish it!",
+        "project-draft-publish-your-project":"Publish your project",
+        "project-draft-publish-your-project-ok":"Yes, publish it",
+        "project-draft-publish-your-project-no":"No, do not publish it!",
         "project-draft-danger":"You are about to publish your project. This CANNOT be undone! Once your project has been published, people will be able to contribute to it. All the task runs (answers) that may have been created during the test phase will be flushed and your project will start fresh. That means that your project should be working properly, so please make sure it does. Otherwise you can work on it and publish it once it works fine.",
         "project-contribute":"Contribute",
 
@@ -110,6 +111,7 @@
         "project-editor-project-short-description-placeholder":"Short description",
         "project-editor-project-category":"Project category",
         "project-editor-anonymous-contributors":"Allow anonymous contributors",
+        "project-editor-project-long-description":"Project long description",
         "project-editor-update-project-data":"Update project data",
         "project-editor-update-project-avatar":"Update project avatar",
         "project-editor-danzer-zone-text":"If you delete the project and its tasks, it will be gone forever!",
@@ -120,12 +122,10 @@
         "information-builder-descripton":"Description",
         "information-builder-tip":"TIP: Take your time, this will be your business card.",
         "information-builder-choose-picture":"Choose a picture that represents or is related to your project",
-        "information-builder-select-picture-placeholder":"Select a picture...",
 
         "name-builder-project-title-header":"Give us a good title for your new project",
         "name-builder-project-title":"Project title",
         "name-builder-project-title-description":"Please write here a good one!",
-        "name-builder-project-title-placeholder":"Title",
 
         "story-builder-project-info":"We want to know all about your project!",
         "story-builder-project-info-label-1":"What & why",
@@ -144,7 +144,7 @@
         "summary-builder-leave-later":"You can always leave it for later and visit your",
         "summary-builder-project-page":"project's page",
 
-        "project-result-menu-result":"result",
+        "project-result-menu-results":"results",
         
         "project-statistic-menu-published-results":"published results",
         "project-statistic-menu-tasks":"tasks",
@@ -152,10 +152,13 @@
         "project-statistic-menu-tasks-done":"tasks done",
         "project-statistic-menu-pending-tasks":"pending tasks",
 
+        "project-task-menu-import":"Import",
+        "project-task-menu-export":"Export",
         "project-task-menu-import-tasks":"Import Tasks",
         "project-task-menu-import-tasks-templates":"Import tasks from templates, GDrive, or CSV",
         "project-task-menu-task-presenter":"Task Presenter",
         "project-task-menu-edit-task-presenter":"Edit the task presenter",
+        "project-task-menu-edit-task-presenter-title":"This section is reserved for expert users having 'coding' skills",
         "project-task-menu-editor":"Editor",
         "project-task-menu-types-editor":"Task types",
         "project-task-menu-status":"Check the status of the tasks",
@@ -177,7 +180,9 @@
         "task-exporter-menu-export-task-runs-json":"Export task runs in JSON format",
         "task-exporter-menu-export-results-json":"Export results in JSON format",
 
+        "task-template-renderer-go-back-editor":"Go back to the editor",
         "task-template-renderer-go-back-project":"Go back to the project",
+        "task-template-renderer-loading":"Task presenter loading...",
         "task-template-renderer-no-task-presenter":"The project does not contains a task presenter",
 
         "task-template-builder-formulate-questions":"Formulate simple questions and provide even simpler answer options!",
@@ -188,6 +193,8 @@
 
         "task-summary-builder-rock":"Are you ready to rock?!",
         "task-summary-builder-material":"material",
+        "task-summary-builder-job":"job",
+        "task-summary-builder-tasks":"tasks",
         "task-summary-builder-importer":"importer",
         "task-summary-builder-flickr-import":"One album to import",
         "task-summary-builder-tweets-import":"tweet(s) to import",
@@ -199,8 +206,9 @@
 
 
         "task-source-builder-select-source":"Now's the time to select your source",
+        "task-source-builder-other-source":"Go back: select another source",
         "task-source-builder-choose-options":" Choose any of the options.",
-        "task-source-builder-options-next-label":"Not what you were looking for? Try the",
+        "task-source-builder-options-next-label":"Not what you were looking for? Try the ",
 
         "task-material-builder-back-to-project":"Go back to the project",
         "task-material-builder-items":"Select the items that you'll work with",
@@ -252,12 +260,23 @@
         "submit-btn":"Submit",
         "take-a-look-btn":"Take a look",
         "go-back-btn":"Go back",
+        "next-btn":"Next",
         "next-step-btn":"Next step",
         "create-btn":"Create!",
         "browse-btn":"Browse",
         "settings":"Settings",
         "enabled":"enabled",
-        "disabled":"disabled"
+        "disabled":"disabled",
+        "picture-too-big":"The picture is too big",
+        "select-picture":"Select a picture...",
+        "choose-picture":"Choose a picture...",
+        "drop-picture":"Drop a picture here...",
+        "danzer-zone":"Danzer Zone!",
+        "delete-project":"Delete Project",
+        "authorized-format":"Authorized formats",
+        "title":"Title",
+        "browse":"Browse"
+
 
       
     },

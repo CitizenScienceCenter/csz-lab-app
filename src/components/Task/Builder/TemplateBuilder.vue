@@ -2,7 +2,7 @@
   <div>
     <b-row class="mt-4 mb-2">
       <b-col>
-        <b-link @click="goBack">Go back</b-link>
+        <b-link @click="goBack">{{ $t('go-back-btn') }}</b-link>
       </b-col>
     </b-row>
     <b-row class="mt-4 mb-2">
@@ -16,8 +16,8 @@
         <ClassifyTemplateEditor></ClassifyTemplateEditor>
       </b-col>
       <b-col md="3" class="text-muted">
-        <p class="small"><i class="fas fa-info-circle"></i>  Formulate simple questions and provide even simpler answer options!</p>
-        <p class="small">If our template doesn't exactly fit your project, you can always try our <b-link :to="{ name: 'project.task.presenter.settings', params: { id: this.selectedProject.id } }">expert path</b-link>. But remember: not for beginners!</p>
+        <p class="small"><i class="fas fa-info-circle"></i> {{ $t('task-template-builder-formulate-questions') }}</p>
+        <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: this.selectedProject.id } }"> {{ $t('task-template-builder-expert-path') }} </b-link>. {{ $t('task-template-builder-for-beginners') }}</p>
       </b-col>
     </b-row>
 
@@ -26,7 +26,7 @@
         <DescribeTemplateEditor></DescribeTemplateEditor>
       </b-col>
       <b-col md="3">
-        <p>If our template doesn't exactly fit your project, you can always try our <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">expert path</b-link>. But remember: not for beginners!</p>
+        <p>{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link>. {{ $t('task-template-builder-for-beginners') }}</p>
       </b-col>
     </b-row>
 
@@ -35,8 +35,8 @@
         <CountTemplateEditor></CountTemplateEditor>
       </b-col>
       <b-col md="3">
-        <p>Explain briefly what users should be counting. They will then be able to locate the things to be counted on the image.</p>
-        <p>If our template doesn't exactly fit your project, you can always try our <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">expert path</b-link>. But remember: not for beginners!</p>
+        <p>{{ $t('task-template-builder-counting') }} </p>
+        <p>{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link>.{{ $t('task-template-builder-for-beginners') }}</p>
       </b-col>
     </b-row>
   </div>

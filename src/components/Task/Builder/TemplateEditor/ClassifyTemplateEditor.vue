@@ -1,44 +1,44 @@
 <template>
   <div>
     <div class="clearfix">
-      <h2 class="float-left">Question</h2>
-      <b-btn @click="addQuestion" class="float-right">Add Question</b-btn>
+      <h2 class="float-left">{{ $t('task-classify-template-question') }}</h2>
+      <b-btn @click="addQuestion" class="float-right">{{ $t('task-classify-template-add-question') }}</b-btn>
     </div>
 
     <b-row>
       <b-col>
         <b-tabs content-class="mt-4">
-          <b-tab :key="questionKey" v-for="(question, questionKey) in questions" :title="'Question ' + (questionKey + 1)" active>
+          <b-tab :key="questionKey" v-for="(question, questionKey) in questions" :title="$t('task-classify-template-question') +' '+ (questionKey + 1)" active>
 
             <b-form-group
-                    :label="'Question ' + (questionKey + 1)"
+                    :label="$t('task-classify-template-question') +' ' + (questionKey + 1)"
                     :valid-feedback="validQuestionFeedback(question.question)"
                     :invalid-feedback="invalidQuestionFeedback(question.question)"
                     :state="questionValidated(questionKey)">
 
               <b-input v-model="question.question" @input="questionUpdated(questionKey)"></b-input>
-              <b-btn @click="deleteQuestion(questionKey)" v-if="questions.length > 1" variant="danger" size="sm" class="float-right mt-1 mb-1">Delete question</b-btn>
+              <b-btn @click="deleteQuestion(questionKey)" v-if="questions.length > 1" variant="danger" size="sm" class="float-right mt-1 mb-1">{{ $t('task-classify-template-delete-question') }}</b-btn>
 
             </b-form-group>
 
             <b-form-group
                     :key="answerKey"
                     v-for="(answer, answerKey) in question.answers"
-                    :label="'Answer ' + (answerKey + 1)"
+                    :label="$t('task-classify-template-answer') +' ' + (answerKey + 1)"
                     :valid-feedback="validAnswerFeedback(answer)"
                     :invalid-feedback="invalidAnswerFeedback(answer)"
                     :state="answerValidated(questionKey, answerKey)">
 
               <b-input v-model="question.answers[answerKey]" @input="answerUpdated(questionKey, answerKey)"></b-input>
-              <b-btn @click="deleteAnswer(questionKey, answerKey)" v-if="question.answers.length > 2" variant="danger" size="sm" class="float-right mt-1 mb-1">Delete answer</b-btn>
+              <b-btn @click="deleteAnswer(questionKey, answerKey)" v-if="question.answers.length > 2" variant="danger" size="sm" class="float-right mt-1 mb-1">{{ $t('task-classify-template-delete-answer') }}</b-btn>
 
             </b-form-group>
 
-            <b-btn @click="addAnswer(questionKey)" class="float-right ">Add answer</b-btn>
+            <b-btn @click="addAnswer(questionKey)" class="float-right ">{{ $t('task-classify-template-add-answer') }}</b-btn>
           </b-tab>
         </b-tabs>
 
-        <b-btn @click="onSubmit" variant="primary" size="lg" class="mt-4">I'm good to go</b-btn>
+        <b-btn @click="onSubmit" variant="primary" size="lg" class="mt-4">{{ $t('task-classify-template-go') }}</b-btn>
       </b-col>
     </b-row>
   </div>

@@ -1,23 +1,23 @@
 <template>
 <div>
   <b-row align-h="center" class="m-4">
-    <h1 class="small">Give us a good title for your new project</h1>
+    <h1 class="small">{{ $t('name-builder-project-title-header') }}</h1>
   </b-row>
   <b-row>
     <b-col md="6" offset-md="3" align-h="center">
       <b-form @submit.prevent="onSubmit" ref="form">
         <b-form-group
                 id="fieldset-title"
-                label="Project title"
-                description="Please write here a good one!"
+                :label="$t('name-builder-project-title')"
+                :description="$t('name-builder-project-title-description')"
                 label-for="title"
                 :valid-feedback="validFeedback"
                 :invalid-feedback="invalidFeedback"
                 :state="validated"
         >
-          <b-form-input id="title" v-model="currentTitle" placeholder="Title"></b-form-input>
+          <b-form-input id="title" v-model="currentTitle" :placeholder="$t('title')"></b-form-input>
         </b-form-group>
-        <b-button variant="primary" type="submit">Create!</b-button>
+        <b-button variant="primary" type="submit"> {{ $t('create-btn') }} </b-button>
       </b-form>
     </b-col>
   </b-row>

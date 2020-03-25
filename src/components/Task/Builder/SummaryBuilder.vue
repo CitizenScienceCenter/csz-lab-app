@@ -2,7 +2,7 @@
   <div>
     <b-row class="mt-4">
       <b-col>
-        <h1 class="text-center centered small">Are you ready to rock?!</h1>
+        <h1 class="text-center centered small"> {{ $t('task-summary-builder-rock') }}</h1>
       </b-col>
     </b-row>
 
@@ -20,7 +20,7 @@
               <i v-if="task.material === materials.pdf" class="fas fa-file-pdf icon-secondary-big"></i>
               <i v-if="task.material === materials.tweet" class="fab fa-twitter icon-secondary-big"></i>
             </template>
-              <h1 class="small text-muted m-0 pb-1">material</h1>
+              <h1 class="small text-muted m-0 pb-1">{{ $t('task-summary-builder-material') }}</h1>
               <legend class="mt-0 mb-0">{{ task.material.toUpperCase() }}</legend>
           </b-media>
 
@@ -31,7 +31,7 @@
               <i v-if="task.job === jobs.classify" class="fas fa-filter icon-secondary-big"></i>
               <i v-if="task.job === jobs.count" class="fas fa-calculator icon-secondary-big"></i>
             </template>
-              <h1 class="small text-muted m-0 pb-1">job</h1>
+              <h1 class="small text-muted m-0 pb-1">{{ $t('task-summary-builder-job') }}</h1>
               <legend class="mt-0 mb-0">{{ task.job.toUpperCase() }}</legend>
           </b-media>
         </ul>
@@ -47,13 +47,13 @@
               <i v-if="task.source === sources.flickr" class="fab fa-flickr icon-secondary-big"></i>
               <i v-if="task.source === sources.twitter" class="fab fa-twitter icon-secondary-big"></i>
             </template>
-              <h1 class="small text-muted mt-0 mb-0 pb-1">importer</h1>
+              <h1 class="small text-muted mt-0 mb-0 pb-1">{{ $t('task-summary-builder-importer') }}</h1>
               <legend class="m-0">{{ task.source.toUpperCase() }}</legend>
             <b-media tag="li" vertical-align="top">
               <template v-slot:aside>
                 <i class="fas fa-tasks icon-secondary-big"></i>
               </template>
-              <span v-if="task.source !== sources.flickr && task.source !== sources.twitter"><b>{{ task.sourceContent.length }}</b> tasks</span>
+              <span v-if="task.source !== sources.flickr && task.source !== sources.twitter"><b>{{ task.sourceContent.length }}</b> {{ $t('task-summary-builder-tasks') }}</span>
               <ul v-if="task.source !== sources.flickr && task.source !== sources.twitter">
                 <li :key="key" v-for="(file, key) in task.sourceContent">
                   <b-link v-if="task.source === sources.amazon" :href="getBucketFileLink(file)" target="_blank">{{ file }}</b-link>
@@ -61,8 +61,8 @@
                   <b-link v-else :href="file" target="_blank">{{ file }}</b-link>
                 </li>
               </ul>
-              <p v-else-if="task.source === sources.flickr">One album to import (<span class="font-italic">{{ task.sourceContent }}</span>)</p>
-              <p v-else-if="task.source === sources.twitter">{{ task.sourceContent.maxTweets + '' }} tweet(s) to import</p>
+              <p v-else-if="task.source === sources.flickr"> {{ $t('task-summary-builder-flickr-import') }} (<span class="font-italic">{{ task.sourceContent }}</span>)</p>
+              <p v-else-if="task.source === sources.twitter">{{ task.sourceContent.maxTweets + '' }} {{ $t('task-summary-builder-tweets-import') }}</p>
             </b-media>
           </b-media>
         </ul>
@@ -76,11 +76,11 @@
           <template v-slot:aside>
             <i class="fas fa-code icon-secondary-big"></i>
           </template>
-          <h1 class="small text-muted m-0 pb-1 mb-2">template</h1>
+          <h1 class="small text-muted m-0 pb-1 mb-2">{{ $t('task-summary-builder-template') }}</h1>
           <!-- Describe template -->
           <ul v-if="task.job === jobs.describe" class="list-unstyled">
             <li>
-              <b-button v-b-toggle.collapse-1 variant="outline-secondary">Question</b-button>
+              <b-button v-b-toggle.collapse-1 variant="outline-secondary">{{ $t('task-summary-builder-question') }}</b-button>
               <b-collapse id="collapse-1" class="mt-2">
                 <p class="mb-0">{{ task.template.question }}</p>
                 <ul class="list-unstyled ml-4">
@@ -111,7 +111,7 @@
           <!-- Count template -->
           <ul v-if="task.job === jobs.count" class="list-unstyled">
             <li>
-              <b-button v-b-toggle.collapse-3 variant="outline-secondary">Question</b-button>
+              <b-button v-b-toggle.collapse-3 variant="outline-secondary">{{ $t('task-summary-builder-question') }}</b-button>
               <b-collapse id="collapse-3" class="mt-2">
                 <p>{{ task.template }}</p>
               </b-collapse>
@@ -126,10 +126,10 @@
         <b-btn
           @click="onSubmit"
           v-b-tooltip.hover
-          title="It will create a task presenter from your template and import all the tasks"
+          :title="$t('task-summary-builder-onsubmit')"
           variant="primary"
           size="lg">
-          Create
+          {{ $t('create-btn') }}
         </b-btn>
       </b-col>
     </b-row>

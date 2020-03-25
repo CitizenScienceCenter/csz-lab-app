@@ -14,27 +14,25 @@
           <h1>{{ project.name }}</h1>
           <p>{{ project.description }}</p>
           <div v-if="isLoggedUserOwnerOfProject(project) && !project.published">
-            <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary">Draft, complete it!</b-btn>
-            <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">Test it!</b-btn><br>
-            <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project>Publish it!</b-btn><br>
+            <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
+            <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
+            <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project>{{ $t('project-draft-publish') }}</b-btn><br>
             <!-- Publish project modal -->
             <b-modal
               id="publish-project"
-              title="Publish your project"
-              ok-title="Yes, publish it"
-              cancel-title="No, do not publish it!"
+              :title="$t('project-draft-publish-your-project')"
+              :ok-title="$t('project-draft-publish-your-project-yes')"
+              :cancel-title="$t('project-draft-publish-your-project-no')"
               @ok="publish"
             >
               <b-alert variant="danger" :show="true">
-                You are about to publish your project. This CANNOT be undone! Once your project has been published, people will be able to contribute to it.
-                All the task runs (answers) that may have been created during the test phase will be flushed and your project will start fresh.
-                That means that your project should be working properly, so please make sure it does. Otherwise you can work on it and publish it once it works fine.
-              </b-alert>
+              {{ $t('project-draft-danger') }} 
+               </b-alert>
             </b-modal>
           </div>
-
+          
           <div v-else-if="isAnonymousProject">
-            <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">Contribute!</b-btn>
+            <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn>
           </div>
         </b-col>
       </b-row>

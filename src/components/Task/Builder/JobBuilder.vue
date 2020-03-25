@@ -2,13 +2,13 @@
   <div>
     <b-row class="mt-4">
       <b-col>
-        <b-link @click="goBack">Go back</b-link>
+        <b-link @click="goBack"> {{ $t('go-back-btn') }} </b-link>
       </b-col>
     </b-row>
     <!-- Job type selection title -->
     <b-row class="mt-4">
       <b-col>
-        <h1 class="text-center centered small">What will you do with all the files?</h1>
+        <h1 class="text-center centered small"> {{ $t('task-job-builder-files-purpose') }} </h1>
       </b-col>
     </b-row>
 
@@ -20,17 +20,17 @@
 
             <b-card ref="card-describe" :class="{ 'material-selected': selectedJob === jobs.describe }" v-if="job === jobs.describe" @click="onJobSelected(job)" class="text-center material mt-2 mt-md-0">
               <i class="fas fa-edit fa-4x"></i>
-              <div class="m-2">Describe</div>
+              <div class="m-2">{{ $t('task-job-builder-describe') }}</div>
             </b-card>
 
             <b-card ref="card-classify" :class="{ 'material-selected': selectedJob === jobs.classify }" v-if="job === jobs.classify" @click="onJobSelected(job)" class="text-center material mt-2 mt-md-0">
               <i class="fas fa-filter fa-4x"></i><br>
-              <div class="m-2">Classify</div>
+              <div class="m-2">{{ $t('task-job-builder-classify') }}</div>
             </b-card>
 
             <b-card ref="card-count" :class="{ 'material-selected': selectedJob === jobs.count }" v-if="job === jobs.count" @click="onJobSelected(job)" class="text-center material mt-2 mt-md-0">
               <i class="fas fa-calculator fa-4x"></i><br>
-              <div class="m-2">Count</div>
+              <div class="m-2">{{ $t('task-job-builder-count') }}</div>
             </b-card>
           </b-col>
 
@@ -38,15 +38,15 @@
       </b-col>
 
       <b-col md="3" class="text-muted">
-        <p class="small"><i class="fas fa-info-circle"></i>  Choose any of the options.</p>
-        <p class="small">Not what you were looking for? Try the <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">expert path</b-link> (not for beginners!)</p>
+        <p class="small"><i class="fas fa-info-circle"></i> {{ $t('task-job-builder-choose-options') }}  </p>
+        <p class="small"> {{$t('task-source-builder-options-next-label')}} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }"> {{$t('task-template-builder-expert-path')}} </b-link> {{$t('task-template-builder-for-beginners')}}</p>
       </b-col>
 
     </b-row>
 
     <b-row class="mt-4 mb-4">
       <b-col>
-        <b-btn ref="btn-submit-job" v-if="selectedJob" @click="onSubmit" variant="primary" size="lg">Next</b-btn>
+        <b-btn ref="btn-submit-job" v-if="selectedJob" @click="onSubmit" variant="primary" size="lg"> {{ $t('next-btn') }}</b-btn>
       </b-col>
     </b-row>
   </div>

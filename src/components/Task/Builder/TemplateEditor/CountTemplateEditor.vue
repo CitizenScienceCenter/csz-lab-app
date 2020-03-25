@@ -1,14 +1,17 @@
 <template>
   <div>
-    <h2>Question</h2>
+    <h2>{{ $t('task-count-template-question') }}</h2>
     <b-form @submit.prevent="onSubmit">
       <b-form-group
               :valid-feedback="validFeedback"
               :invalid-feedback="invalidFeedback"
               :state="validated">
-        <b-input v-model="question" placeholder="E.g. How many people can you see in the image?"></b-input>
+        <b-input 
+          v-model="question" 
+          :placeholder="$t('task-count-template-question-placeholder')">
+        </b-input>
       </b-form-group>
-      <b-button type="submit" size="lg" variant="primary">I'm good to go</b-button>
+      <b-button type="submit" size="lg" variant="primary"> {{$t('task-count-template-go')}} </b-button>
     </b-form>
   </div>
 </template>

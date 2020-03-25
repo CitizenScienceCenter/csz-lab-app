@@ -2,20 +2,20 @@
   <div>
     <b-row class="mt-4">
       <b-col>
-        <b-link :to="{ name: 'project.builder.name' }">Go back</b-link>
+        <b-link :to="{ name: 'project.builder.name' }"> {{ $t('go-back-btn') }} </b-link>
       </b-col>
     </b-row>
 
     <b-form ref="form" @submit.prevent="onSubmit">
       <b-row>
         <b-col md="9">
-          <h1 class="mt-3 mb-3 small">We want to know all about your project!</h1>
+          <h1 class="mt-3 mb-3 small"> {{ $t('story-builder-project-info') }} </h1>
 
           <b-form-group
                   id="fieldset-what-why"
-                  label="What & why"
+                  :label="$t('project-description-what-why')"
                   label-for="what-why"
-                  description="Explain what is the purpose of your project and why you have created it"
+                  :description="$t('story-builder-project-info-description-1')"
                   :valid-feedback="validFeedback('currentWhatWhy')"
                   :invalid-feedback="invalidFeedback('currentWhatWhy')"
                   :state="validated('currentWhatWhy')"
@@ -31,9 +31,9 @@
 
           <b-form-group
                   id="fieldset-how"
-                  label="How"
+                  :label="$t('project-description-how')"
                   label-for="how"
-                  description="Explain how you will use the contribution results"
+                  :description="$t('story-builder-project-info-description-2')"
                   :valid-feedback="validFeedback('currentHow')"
                   :invalid-feedback="invalidFeedback('currentHow')"
                   :state="validated('currentHow')"
@@ -49,9 +49,9 @@
 
           <b-form-group
                   id="fieldset-who"
-                  label="Who"
+                  :label="$t('project-description-who')"
                   label-for="who"
-                  description="Explain who should contribute to this project"
+                  :description="$t('story-builder-project-info-description-3')"
                   :valid-feedback="validFeedback('currentWho')"
                   :invalid-feedback="invalidFeedback('currentWho')"
                   :state="validated('currentWho')"
@@ -67,9 +67,9 @@
 
           <b-form-group
                   id="fieldset-keep-track"
-                  label="Keep track"
+                  :label="$t('project-description-keep-track')"
                   label-for="keep-track"
-                  description="Give some details about how contributors can contact or follow you (i.e. e-mail, Facebook page, Twitter handle, etc.)"
+                  :description="$t('story-builder-project-info-description-4')"
                   :valid-feedback="validFeedback('currentKeepTrack')"
                   :invalid-feedback="invalidFeedback('currentKeepTrack')"
                   :state="validated('currentKeepTrack')"
@@ -87,7 +87,7 @@
 
       <b-row class="mt-4">
         <b-col>
-          <b-button type="submit" variant="primary">Next Step</b-button>
+          <b-button type="submit" variant="primary"> {{ $t('next-step-btn') }}</b-button>
         </b-col>
       </b-row>
 
