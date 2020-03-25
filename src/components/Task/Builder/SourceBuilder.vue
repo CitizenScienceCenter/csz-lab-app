@@ -32,7 +32,7 @@
 
           <b-col md="3" class="text-muted">
             <p class="small"><i class="fas fa-info-circle"></i> {{ $t('task-source-builder-choose-options') }} </p>
-            <p class="small">{{ $t('task-source-builder-options-next-label') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link> {{ $t('task-template-builder-for-beginners') }}</p>
+            <p class="small">{{ $t('task-source-builder-options-next-label') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
           </b-col>
 
         </b-row>

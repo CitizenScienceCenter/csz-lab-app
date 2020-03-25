@@ -22,15 +22,21 @@
               :invalid-feedback="invalidDescriptionFeedback(description)"
               :state="descriptionValidated(key)">
 
-        <b-input v-model="descriptions[key]" @input="descriptionUpdated(key)" :placeholder="$('task-describe-template-description-placeholder')"></b-input>
+        <b-input 
+          v-model="descriptions[key]" 
+          @input="descriptionUpdated(key)" 
+          :placeholder="$t('task-describe-template-description-placeholder')">
+        </b-input>
         <b-btn @click="deleteDescription(key)" v-if="descriptions.length > 1" variant="danger" size="sm" class="mt-1 mb-1 float-right">{{ $t('task-describe-template-delete') }}</b-btn>
 
       </b-form-group>
 
-      <b-btn @click="addDescription" class="float-right">{{ $t('task-describe-add-description') }}</b-btn>
+      <b-btn @click="addDescription" class="float-right">{{ $t('task-describe-template-add-description') }}</b-btn>
+
     </div>
 
-    <b-btn @click="onSubmit" variant="primary" size="lg" class="mt-4">{{ $t('task-describe-go') }}</b-btn>
+    <b-btn @click="onSubmit" variant="primary" size="lg" class="mt-4">{{ $t('task-describe-template-go') }}</b-btn>
+
   </div>
 </template>
 

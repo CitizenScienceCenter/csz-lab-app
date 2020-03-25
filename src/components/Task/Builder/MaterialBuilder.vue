@@ -104,7 +104,7 @@
           {{$t('task-material-builder-file-label-1')}}
           {{$t('task-material-builder-file-label-2')}}
         </p>
-        <p class="small">{{$t('task-source-builder-options-next-label')}} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link> {{ $t('task-template-builder-for-beginners') }}</p>
+        <p class="small">{{$t('task-source-builder-options-next-label')}} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
       </b-col>
 
     </b-row>

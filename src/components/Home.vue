@@ -2,8 +2,12 @@
   <div>
 
     <app-cover>
-      <h2 class="cover-heading scroll-effect">Next generation citizen science</h2>
-      <p class="cover-subheading scroll-effect scroll-effect-delayed-1">Citizen Science Center Zurich</p>
+      <h2 class="cover-heading scroll-effect">
+        {{ $t('home-heading') }}
+      </h2>
+      <p class="cover-subheading scroll-effect scroll-effect-delayed-1">
+        {{ $t('home-subheading') }}
+      </p>
       <p class="text-center scroll-effect scroll-effect-delayed-2">
         <b-button :to="{ name: 'discover' }" variant="primary">{{ $t('home-start-contributing') }}</b-button>
         <b-button :to="{ name: 'project.builder.name' }" class="btn-secondary-inverted">{{ $t('home-create-a-project') }}</b-button>

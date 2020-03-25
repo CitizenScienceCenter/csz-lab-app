@@ -39,7 +39,7 @@
       <!-- Image upload -->
       <b-row class="mt-4">
         <b-col md="9">
-          <h1 class="mt-3 small"> {{ $t('information-choose-picture') }}</h1>
+          <h1 class="mt-3 small"> {{ $t('information-builder-choose-picture') }}</h1>
 
           <vue-cropper ref="cropper" v-show="pictureSelected" :src="selectedPicture" :data="cropData" :autoCrop="true" :view-mode="2" :aspectRatio="4/3"></vue-cropper>
           <b-form-group

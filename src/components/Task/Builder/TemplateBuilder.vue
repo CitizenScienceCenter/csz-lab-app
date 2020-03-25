@@ -17,7 +17,7 @@
       </b-col>
       <b-col md="3" class="text-muted">
         <p class="small"><i class="fas fa-info-circle"></i> {{ $t('task-template-builder-formulate-questions') }}</p>
-        <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: this.selectedProject.id } }"> {{ $t('task-template-builder-expert-path') }} </b-link>. {{ $t('task-template-builder-for-beginners') }}</p>
+        <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: this.selectedProject.id } }"> {{ $t('task-template-builder-expert-path') }} </b-link>.</p>
       </b-col>
     </b-row>
 
@@ -26,7 +26,7 @@
         <DescribeTemplateEditor></DescribeTemplateEditor>
       </b-col>
       <b-col md="3">
-        <p>{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link>. {{ $t('task-template-builder-for-beginners') }}</p>
+        <p>{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
       </b-col>
     </b-row>
 
@@ -36,7 +36,7 @@
       </b-col>
       <b-col md="3">
         <p>{{ $t('task-template-builder-counting') }} </p>
-        <p>{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link>.{{ $t('task-template-builder-for-beginners') }}</p>
+        <p>{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
       </b-col>
     </b-row>
   </div>
