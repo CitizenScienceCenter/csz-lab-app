@@ -32,7 +32,7 @@
           </b-navbar-nav>
 
           <b-navbar-nav>
-            <div class="language-select custom-select">
+            <div class="language-select custom-select" style="width:70px;">
               <div style="display: none;">
                 <router-link v-for="lang in languages" :to="'/'+lang+$route.path.substring(3)" :key="lang">{{lang}}</router-link>
               </div>
@@ -150,19 +150,11 @@ export default {
 
 <style>
 
-  .language-select {
-    width:70px;
-    margin-left: 14px;
-    margin-top: -2px;
-    margin-bottom: -2px;
-  }
-        
   .select-options {
     height:28px;
     width: 50px;
     border:0px;
     border-color: transparent;
   }
-        
 
 </style>
