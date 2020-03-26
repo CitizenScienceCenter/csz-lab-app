@@ -55,7 +55,7 @@ export default {
   data: () => {
     return {
       maxNbCharactersQuestions: 75,
-      maxNbCharactersDescriptions: 15,
+      maxNbCharactersDescriptions: 50,
 
       question: '',
       descriptions: [
@@ -133,7 +133,7 @@ export default {
     },
 
     validDescriptionFeedback (description) {
-      return this.maxNbCharactersDescriptions - description.length + this.$t('characters-left')
+      return this.maxNbCharactersDescriptions - description.length + ' ' +this.$t('characters-left')
     },
     invalidDescriptionFeedback (description) {
       return description.length > 0 ? this.$t('task-describe-template-error-many-characters-answer') : this.$t('task-describe-template-error-empty-answer')

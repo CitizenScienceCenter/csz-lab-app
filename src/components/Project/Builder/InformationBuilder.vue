@@ -13,7 +13,7 @@
 
         <!-- Project description -->
         <b-col md="9">
-          <h1 class="mt-3 small">{{ title }} {{ $t('information-builder-few-words') }}</h1>
+          <h1 class="mt-3 small">{{ $t('information-builder-describe') }} {{ title }} </h1>
           <b-form-group
                   id="fieldset-description"
                   :label="$t('information-builder-short-descripton')"
@@ -31,7 +31,16 @@
         </b-col>
 
         <b-col md="3" align-self="start">
-          <p><i class="fas fa-info-circle"></i> {{ $t('information-builder-tip') }} </p>
+          <p><i class="fas fa-info-circle"></i> 
+          <br>
+          {{ $t('information-builder-tip1') }} <br>
+
+          <p v-html="$t('information-builder-tip2',
+          {
+          'terms': `<a target='_blank' href='https://citizenscience.ch/en/terms'>terms and conditions</a>`,
+            })">   
+          
+          </p>
         </b-col>
 
       </b-row>
@@ -57,7 +66,7 @@
 
       <b-row class="mt-4">
         <b-col>
-          <b-button type="submit" variant="primary"> {{ $t('next-step-btn') }}</b-button>
+          <b-button type="submit" variant="primary"> {{ $t('continue') }}</b-button>
         </b-col>
       </b-row>
 

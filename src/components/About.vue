@@ -64,7 +64,7 @@
                 </li>
 
               <li>{{ $t('about-how-step1-list2') }}</li>
-                <ul style="list-style-type: circle;margin-left:30px;">
+                <ul style="list-style-type: circle;margin-left:20px;">
                   <li>{{ $t('about-how-step1-list3') }}</li>
                   <li>{{ $t('about-how-step1-list4') }}</li>
                   <li>{{ $t('about-how-step1-list5') }}</li>

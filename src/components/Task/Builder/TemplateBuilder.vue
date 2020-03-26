@@ -16,7 +16,15 @@
         <ClassifyTemplateEditor></ClassifyTemplateEditor>
       </b-col>
       <b-col md="3" class="text-muted">
-        <p class="small"><i class="fas fa-info-circle"></i> {{ $t('task-template-builder-formulate-questions') }}</p>
+        <p class="small"><i class="fas fa-info-circle"></i> <br>
+        {{ $t('task-template-builder-formulate-questions') }}<br><br>
+        {{ $t('task-template-builder-formulate-example') }}
+              <br>
+              <i>{{ $t('about-how-step4-label3') }}</i><br>
+              <i>{{ $t('about-how-step4-label4') }}</i><br>
+              <i>{{ $t('about-how-step4-label5') }}</i><br>
+              <i>{{ $t('about-how-step4-label6') }}</i><br>
+        </p>
         <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: this.selectedProject.id } }"> {{ $t('task-template-builder-expert-path') }} </b-link>.</p>
       </b-col>
     </b-row>
@@ -25,8 +33,19 @@
       <b-col md="9">
         <DescribeTemplateEditor></DescribeTemplateEditor>
       </b-col>
-      <b-col md="3">
-        <p>{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
+      <b-col md="3" class="text-muted">
+        <p class="small"><i class="fas fa-info-circle"></i> <br>
+        {{ $t('task-template-builder-describe-tip0') }}<br><br>
+        {{ $t('task-template-builder-describe-tip1') }}
+              <br>
+              <i>{{ $t('task-template-builder-describe-tip2') }}</i><br>
+              <i>{{ $t('task-template-builder-describe-tip3') }}</i><br><br>
+              <i>{{ $t('task-template-builder-describe-tip4') }}</i><br>
+              <i>{{ $t('task-template-builder-describe-tip5') }}</i><br><br>
+              <i>{{ $t('task-template-builder-describe-tip6') }}</i><br>
+              <i>{{ $t('task-template-builder-describe-tip7') }}</i><br>
+        </p>
+        <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
       </b-col>
     </b-row>
 
@@ -34,9 +53,13 @@
       <b-col md="9">
         <CountTemplateEditor></CountTemplateEditor>
       </b-col>
-      <b-col md="3">
-        <p>{{ $t('task-template-builder-counting') }} </p>
-        <p>{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
+      <b-col md="3" class="text-muted">
+        <p class="small"><i class="fas fa-info-circle"></i> <br>
+          {{ $t('task-template-builder-counting') }} 
+        </p>
+
+          <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
+        
       </b-col>
     </b-row>
   </div>

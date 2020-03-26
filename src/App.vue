@@ -46,7 +46,7 @@
 
     </b-navbar>
 
-      <router-view/>
+    <router-view/>
 
     <!-- Notification toasts -->
     <b-toast

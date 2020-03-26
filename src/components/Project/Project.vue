@@ -16,7 +16,19 @@
           <div v-if="isLoggedUserOwnerOfProject(project) && !project.published">
             <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
             <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
-            <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project>{{ $t('project-draft-publish') }}</b-btn><br>
+            <!--<b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project>{{ $t('project-draft-publish') }}</b-btn><br>-->
+            
+            <div v-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
+              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >Request Apporoval</b-btn><br>
+            </div>
+
+            <div v-else-if="!project.published && (!project.info.pending_approval || localPendingApproval)">
+              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project disabled>Project Pending Approval</b-btn><br>
+            </div>
+
+            <div v-else-if="project.published">
+              <b-btn ref="btn-approve-it" variant="success" class="mt-2" v-b-modal.approve-project disabled>Project Approved</b-btn><br>
+            </div>
             <!-- Publish project modal -->
             <b-modal
               id="publish-project"
@@ -25,8 +37,20 @@
               :cancel-title="$t('project-draft-publish-your-project-no')"
               @ok="publish"
             >
-              <b-alert variant="danger" :show="true">
+            <b-alert variant="danger" :show="true">
               {{ $t('project-draft-danger') }} 
+               </b-alert>
+            </b-modal>
+
+            <b-modal
+              id="approve-project"
+              :title="$t('project-draft-approve-your-project')"
+              :ok-title="$t('project-draft-approve-your-project-ok')"
+              :cancel-title="$t('project-draft-approve-your-project-no')"
+              @ok="approve"
+            >
+              <b-alert variant="wanring" :show="true">
+              {{ $t('project-draft-approval-warning') }} 
                </b-alert>
             </b-modal>
           </div>
@@ -98,6 +122,7 @@ export default {
     ProjectStatisticsMenu,
     'app-cover': Cover
   },
+  
   created () {
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
@@ -119,7 +144,8 @@ export default {
   },
   data: () => {
     return {
-      isAnonymousProject: true
+      isAnonymousProject: true,
+      localPendingApproval:false
     }
   },
   props: {
@@ -131,6 +157,7 @@ export default {
     ...mapActions('project', [
       'getProject',
       'publishProject',
+      'approveProject',
       'getResults',
       'getStatistics'
     ]),
@@ -144,6 +171,28 @@ export default {
     ...mapMutations('notification', [
       'showError'
     ]),
+
+    approve () {
+      this.localPendingApproval=true
+    },
+
+    approve1 () {
+      if (this.taskPresenter.length > 0) {
+        if (this.projectTasks.length > 0) {
+          this.approveProject(this.project)
+        } else {
+          this.showError({
+            title: 'Impossible to approve the project',
+            content: 'You must add at least one task to the project'
+          })
+        }
+      } else {
+        this.showError({
+          title: 'Impossible to approve the project',
+          content: 'You must provide a task presenter to approve the project'
+        })
+      }
+    },
 
     publish () {
       if (this.taskPresenter.length > 0) {

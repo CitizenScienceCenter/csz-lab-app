@@ -83,11 +83,21 @@
             </b-form-textarea>
           </b-form-group>
         </b-col>
+
+
+        <b-col md="3" align-self="start">
+          <p><i class="fas fa-info-circle"></i> 
+          <br>
+          {{ $t('story-builder-project-tip') }} <br>
+          
+          </p>
+        </b-col>
+
       </b-row>
 
       <b-row class="mt-4">
         <b-col>
-          <b-button type="submit" variant="primary"> {{ $t('next-step-btn') }}</b-button>
+          <b-button type="submit" variant="primary"> {{ $t('continue') }}</b-button>
         </b-col>
       </b-row>
 
