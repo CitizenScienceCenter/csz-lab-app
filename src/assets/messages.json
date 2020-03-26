@@ -328,9 +328,104 @@
         "register-error-form-password-match":"Passwords must match",
 
         "mandatory-field": "This field is mandatory",
-        "field-should-not-exceed": "This field should not exceed"
+        "field-should-not-exceed": "This field should not exceed",
 
-      
+        "about-header":"About",
+        "about-howitworks":"How it works",
+        "about-criteria":"Criteria",
+
+        "about-question-1":"What is the Citizen Science Project Builder?",
+        "about-answer-1":"The Citizen Science Project Builder is a web-based tool that allows researchers, students, and all members of the public to create and run Citizen Science Projects. ",
+        "about-question-2":"What is a Citizen Science project?",
+        "about-answer-2":"In Citizen Science projects, volunteer contributors (“citizens”) and scientists work together to produce scientific knowledge. Projects may take many different forms, from classifying images of snakes to transcribing handwritten German dialect, from collecting samples of water to taking pictures of insects and plants. If you want to learn more about Citizen Science (including an extensive list of existing projects) Wikipedia (https://en.wikipedia.org/wiki/Citizen_science and https://de.wikipedia.org/wiki/Citizen_Science)  is a good starting point. ",
+        "about-question-3":"Which kind of projects can be created in the CS Project Builder?",
+        "about-answer-3":"In its initial version, the CS Project Builder allows users to perform complex data classification tasks. It supports projects where contributors can analyze or enrich existing data, typically large sets of images or texts (ie. satellite pictures, social media posts, etc.), as well as other media formats such as videos, audios, and scanned documents. Next step, the web-based tool will be integrated with a data collection (smartphone-based) tool. .",
+        "about-question-4":"What is the aim of the CS Project Builder?",
+        "about-answer-4":"The CS Project Builder facilitates the implementation of CS projects by providing an interface that requires limited technical knowledge, and ideally little or no coding skills. Its aim is to facilitate the co-creation of Citizen Science projects by starting with the implementation of simple pilots.",
+        "about-question-5":"",
+        "about-answer-5":"Anybody with an idea for a data classification project can implement it here, as long as it complies with the platform criteria. Next step is to build around it an initial community of contributors (colleagues, friends, family, and more!) that will allow to test its scope, form, and potentials. By involving all contributors in the co-creation process, a lot can be learned about research questions, process, data, and mutual benefits, before deciding to spend more resources in a full-fledged implementation (ie. developing a project with a unique graphic style, dedicated features, etc. For more info on this option, please contact us).",
+        "about-question-6":"A bit of history ...",
+        "about-answer-6":"The web interface for the CS Project Builder is inspired by the now discontinued Crowdcrafting platform. Its implementation is based on the open source crowdsourcing framework PyBossa. The code is publicly available under the ‘CitizenScienceCenter’ organisation on Github.",
+
+        "about-how-header1":"The Project Builder supports projects where volunteer contributors can analyse or enrich existing data.",
+        "about-how-header2":"In particular, it allows to:",
+        "about-how-header-list1":"Classify or describe large sets of images or text (ie. identify images, count objects, describe scenes) and social media content (tweets).",
+        "about-how-header-list2":"Classify or describe sounds and video clips.",
+        "about-how-header-list3":"Work on PDF documents (transcribe, translate, describe).",
+        "about-how-header-list4":"Geo-code images or tweets, ie. mark their location on a map (note: this task requires some coding skills!).",
+
+        "about-how-header3":"Setting up a project involves a few simple steps:",
+
+        "about-how-step1":"STEP 1: Create your project’s home page",
+        "about-how-step1-label":"To create your project, you start with choosing a nice and catchy title and an image to represent it (<1MB). Then, you need to provide:",
+        "about-how-step1-list1":"A short description (120 characters)",
+        "about-how-step1-list1-note":"Note:  this text is the most visible one, the equivalent of your project business card!",
+        "about-how-step1-list2":"Additional text that explains in simple terms (each part 400 characters long):",
+        "about-how-step1-list3":"WHAT & WHY what is the purpose of your project, and why it is important;",
+        "about-how-step1-list4":"HOW your volunteers can contribute, and how their contributions will be used;",
+        "about-how-step1-list5":"WHO is behind the project;",
+        "about-how-step1-list6":"ADDITIONAL information - including details about how contributors can contact or follow you.",
+        "about-how-step1-label2":"You have now created the homepage of your project.",
+        "about-how-step1-note":"Note",
+        "about-how-step1-note1":"if you decide to leave the platform now, you will find the draft of your project under “Your profile” -> “Draft Projects”",
+        "about-how-step1-note2":"once you create your project draft, you will be able to change the description only at the end of the process from the “project overview” page. ",
+
+        "about-how-step2":"STEP 2: Select the type of source file",
+        "about-how-step2-label1":"Select the kind of source files you want to work with. Options include: images (.jpg and .png), videos (.mp4), audios (.mp3), tweets, PDF.",
+
+        "about-how-step3":"STEP 3: Select the type of task for contributors",
+        "about-how-step3-label1":"Select the task you would like your contributors to work on.",
+        "about-how-step3-label2":"For images possible tasks are: classify, describe, count.",
+        "about-how-step3-label3":"For sounds possible tasks are: classify, describe.",
+        "about-how-step3-label4":"For videos possible tasks are: classify, describe.",
+        "about-how-step3-label5":"For PDF files possible tasks are: describe.",
+        "about-how-step3-label6":"For Tweets possible tasks are: classify, describe.",
+
+        "about-how-step4":"STEP 4: Design your task protocol",
+        "about-how-step4-label1":"Design your tasks, ie. what contributors should provide and how. Depending on your source files, these can be entering questions and answers, or describing text fields.",
+        "about-how-step4-label2":"Example for classifying images",
+        "about-how-step4-label3":"Question: do you see a house in the image?",
+        "about-how-step4-label4":"Answer 1: Yes",
+        "about-how-step4-label5":"Answer 2: No",
+        "about-how-step4-label6":"Answer 3: I can’t say",
+        "about-how-step4-note":"Note: you will NOT be able to change your task protocol later in the process. To do so, you need to create a new project. ",
+
+        "about-how-step5":"STEP 5: Select the location of your source files (Import tasks)",
+        "about-how-step5-label1":"It’s time to import your source files (images, videos, sounds, ...).",
+        "about-how-step5-label2":"Possible import locations include: Dropbox, Flickr, Amazon S3 bucket, Google Spreadsheet (public), csv file.",
+        "about-how-step5-label3":"You will be able to add additional files also from the “project overview” page. ",
+        "about-how-step5-note":"NOTE: the builder is NOT copying your file, it is linking to them. So make sure they stay in the original location for the duration of the project.",
+
+        "about-how-step6":"STEP 6: Project Overview page - Test and adjust your project",
+        "about-how-step6-label1":"The draft of your project is ready. From the different tabs in this overview page, you can:",
+        "about-how-step6-list1":"Info: overview the current description of the project",
+        "about-how-step6-list2":"Statistics: overview the current statistics for your projects",
+        "about-how-step6-list3":"Tasks: you can do multiple actions:",
+        "about-how-step6-list4":"Import Tasks - import more source files via the provided importer (see step 4) ",
+        "about-how-step6-list5":"Task Presenter - if you have basic coding skills, you can change the protocol of your tasks (see Step 3) ",
+        "about-how-step6-list51":"Browse -  check the status of each task ",
+        "about-how-step6-list6":"Export Tasks - export tasks to JSON, CSV, or a CKAN server",
+        "about-how-step6-list7":"Task Settings - configure all aspects of tasks, including scheduler, priority, and redundancy. You can also delete tasks.",
+        "about-how-step6-list8":"Settings: edit the description of the project, select project category, allow anonymous contribution.",
+
+        "about-how-step7":"STEP 7: Submit for publication",
+        "about-how-step7-label1":"When you are ready to go public, submit your project for publication.",
+        "about-how-step7-label2":"We will make sure your project adheres to our criteria, and get back to you within a few hours.",
+
+        "about-criteria-label1":"Anybody can create a project in the platform, as long it obeys to the following criteria:",
+        "about-criteria-list1":"The project’s topic and goals have clear scientific and/or social interest.",
+        "about-criteria-list2":"The project objectives and desired outcomes are communicated in the project description in an accessible and comprehensible manner. ",
+        "about-criteria-list3":"The objectives of the project are impossible – or very hard - to achieve without the contribution of the citizens.",
+        "about-criteria-list4":"The project is open for all volunteer contributors to participate.",
+        "about-criteria-list5":"An easy way to communicate with the project organizer is available for feedback and discussions.",
+        "about-criteria-list6":"The content of the project does not facilitate illegal acts and does not cause offense to any audience (see terms and conditions for details). ",
+        "about-criteria-list7":"The project’s goals (quantity of necessary data, coverage, required number of participants) are reasonable and achievable within a defined timeframe.",
+        "about-criteria-list8":"Ethical aspects are considered (e.g. diversity, inclusion, gender equality) and permission of the UZH/ETH Ethical Commission is previously requested and obtained when necessary. ",
+        "about-criteria-list9":"Data generated by the project follows the EC principle 'as open as possible, as closed as necessary', which focuses encouraging as few restrictions as possible, while at the same time protecting sensitive data from inappropriate access.",
+        "about-criteria-list10":"The results of the project are published in an open-access format, provided there are no legitimate, legal, or ethical arguments against doing so. "
+
+
+
     },
     "de": {
       "app-vue-navigation-home": "Home de",

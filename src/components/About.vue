@@ -2,30 +2,29 @@
   <b-container>
     <b-row class="mt-4">
       <b-col>
-        <h1 class="text-center centered">About</h1>
+        <h1 class="text-center centered">{{ $t('about-header') }}</h1>
         <p>
-          <b>What is the Citizen Science Project Builder?</b><br>
-          The Citizen Science Project Builder is a web-based tool that allows researchers, students, and all members of the public to create and run Citizen Science Projects. 
+          <b>{{ $t('about-question-1') }}</b><br>
+          {{ $t('about-answer-1') }}
         </p>
         <p>
-          <b>What is a Citizen Science project?</b><br>
-          In Citizen Science projects, volunteer contributors (“citizens”) and scientists work together to produce scientific knowledge. Projects may take many different forms, from classifying images of snakes to transcribing handwritten German dialect, from collecting samples of water to taking pictures of insects and plants. If you want to learn more about Citizen Science (including an extensive list of existing projects) Wikipedia (https://en.wikipedia.org/wiki/Citizen_science and https://de.wikipedia.org/wiki/Citizen_Science)  is a good starting point.
-          </p>
-        <p>
-          <b>Which kind of projects can be created in the CS Project Builder?</b><br>
-          In its initial version, the CS Project Builder allows users to perform complex data classification tasks. It supports projects where contributors can analyze or enrich existing data, typically large sets of images or texts (ie. satellite pictures, social media posts, etc.), as well as other media formats such as videos, audios, and scanned documents.
-          Next step, the web-based tool will be integrated with a data collection (smartphone-based) tool. 
+          <b>{{ $t('about-question-2') }}</b><br>
+          {{ $t('about-answer-2') }}  
         </p>
         <p>
-          <b>What is the aim of the CS Project Builder?</b><br>
-          The CS Project Builder facilitates the implementation of CS projects by providing an interface that requires limited technical knowledge, and ideally little or no coding skills. Its aim is to facilitate the co-creation of Citizen Science projects by starting with the implementation of simple pilots. 
+          <b>{{ $t('about-question-3') }}</b><br>
+          {{ $t('about-answer-3') }}  
         </p>
         <p>
-          Anybody with an idea for a data classification project can implement it here, as long as it complies with the platform criteria. Next step is to build around it an initial community of contributors (colleagues, friends, family, and more!) that will allow to test its scope, form, and potentials. By involving all contributors in the co-creation process, a lot can be learned about research questions, process, data, and mutual benefits, before deciding to spend more resources in a full-fledged implementation (ie. developing a project with a unique graphic style, dedicated features, etc. For more info on this option, please contact us).
+          <b>{{ $t('about-question-4') }}</b><br>
+          {{ $t('about-answer-4') }}    
         </p>
         <p>
-          <b>A bit of history ...</b><br>
-          The web interface for the CS Project Builder is inspired by the now discontinued Crowdcrafting platform. Its implementation is based on the open source crowdsourcing framework PyBossa. The code is publicly available under the ‘CitizenScienceCenter’ organisation on Github.
+          {{ $t('about-answer-5') }}        
+        </p>
+        <p>
+          <b>{{ $t('about-question-6') }}</b><br>
+          {{ $t('about-answer-6') }}  
         </p>
       </b-col>
     </b-row>
@@ -35,133 +34,118 @@
 
           <b-tabs pills content-class="mt-5 mb-5" active-nav-item-class="font-weight-bold" fill>
 
-            <b-tab title="How it Works" >
-
-              The Project Builder supports projects where volunteer contributors can analyse or enrich existing data.
-
-              In particular, it allows to:
+            <b-tab 
+              :title="$t('about-howitworks')" >
+              {{ $t('about-how-header1') }}
+              {{ $t('about-how-header2') }}
               <ul style="list-style-type: square;margin-left:30px;margin-top:20px;">
-                <li>Classify or describe large sets of images or text (ie. identify images, count objects, describe scenes) and social media content (tweets).</li>
-                <li>Classify or describe sounds and video clips.</li>
-                <li>Work on PDF documents (transcribe, translate, describe).</li>
-                <li>Geo-code images or tweets, ie. mark their location on a map (note: this task requires some coding skills!).</li>
+                <li>{{ $t('about-how-header-list1') }}</li>
+                <li>{{ $t('about-how-header-list2') }}</li>
+                <li>{{ $t('about-how-header-list3') }}</li>
+                <li>{{ $t('about-how-header-list4') }}</li>
               </ul>
 
-              Setting up a project involves a few simple steps:<br><br>
+              {{ $t('about-how-header3') }}
+              
+              <br><br>
 
-              <b>STEP 1: Create your project’s home page</b><br>
+              <b>{{ $t('about-how-step1') }} </b><br>
 
-              To create your project, you start with choosing a nice and catchy title and an image to represent it (<1MB).
-
-              Then, you need to provide:
+              {{ $t('about-how-step1-label') }} 
 
               <ul style="list-style-type: square;margin-left:30px;margin-top:20px;">
-               <li>A short description (120 characters)
-                <it>Note:  this text is the most visible one, the equivalent of your project business card!</it>
+               <li>{{ $t('about-how-step1-list1') }} 
+                <i>{{ $t('about-how-step1-list1-note') }} </i>
                 </li>
 
-              <li>Additional text that explains in simple terms (each part 400 characters long):</li>
+              <li>{{ $t('about-how-step1-list2') }}</li>
                 <ul style="list-style-type: circle;margin-left:30px;">
-                  <li>WHAT & WHY what is the purpose of your project, and why it is important;</li>
-                  <li>HOW your volunteers can contribute, and how their contributions will be used;</li>
-                  <li>WHO is behind the project;</li>
-                  <li>ADDITIONAL information - including details about how contributors can contact or follow you.</li>
+                  <li>{{ $t('about-how-step1-list3') }}</li>
+                  <li>{{ $t('about-how-step1-list4') }}</li>
+                  <li>{{ $t('about-how-step1-list5') }}</li>
+                  <li>{{ $t('about-how-step1-list6') }}</li>
                 </ul>
               </ul>
 
-              <p>You have now created the homepage of your project.</p>
+              <p>{{ $t('about-how-step1-label2') }} </p>
 
-            Note: <br>
-            - if you decide to leave the platform now, you will find the draft of your project under “Your profile” -> “Draft Projects” <br>
-            - once you create your project draft, you will be able to change the description only at the end of the process from the “project overview” page. 
+              {{ $t('about-how-step1-note') }}:<br>
+              - {{ $t('about-how-step1-note1') }} <br>
+              - {{ $t('about-how-step1-note2') }} 
 
-            <br><br>
+              <br><br>
 
-            <b>STEP 2: Select the type of source file </b>
-            <p>Select the kind of source files you want to work with. Options include: images (.jpg and .png), videos (.mp4), audios (.mp3), tweets, PDF.</p>
+              <b>{{ $t('about-how-step2') }} </b>
+              <p> {{ $t('about-how-step2-label1') }}</p>
 
-            <b>STEP 3: Select the type of task for contributors </b><br>
-            Select the task you would like your contributors to work on.<br>
-            For images possible tasks are: classify, describe, count.<br>
-            For sounds possible tasks are: classify, describe.<br>
-            For videos possible tasks are: classify, describe.<br>
-            For PDF files possible tasks are: describe.<br>
-            For Tweets possible tasks are: classify, describe.<br>
+              <b>{{ $t('about-how-step3') }}</b><br>
+              {{ $t('about-how-step3-label1') }}<br>
+              {{ $t('about-how-step3-label2') }}<br>
+              {{ $t('about-how-step3-label3') }}<br>
+              {{ $t('about-how-step3-label4') }}<br>
+              {{ $t('about-how-step3-label5') }}<br>
+              {{ $t('about-how-step3-label6') }}<br>
 
-            <br>
+              <br>
 
-            <b>STEP 4: Design your task protocol</b>
-            Design your tasks, ie. what contributors should provide and how. Depending on your source files, these can be entering questions and answers, or describing text fields.
+              <b>{{ $t('about-how-step4') }}</b><br>
+              {{ $t('about-how-step4-label1') }}
+              <br>
+              <i>{{ $t('about-how-step4-label2') }}</i><br>
+              <i>{{ $t('about-how-step4-label3') }}</i><br>
+              <i>{{ $t('about-how-step4-label4') }}</i><br>
+              <i>{{ $t('about-how-step4-label5') }}</i><br>
+              <i>{{ $t('about-how-step4-label6') }}</i><br>
 
-            Example for classifying images:
-            Question: do you see a house in the image?
-            Answer 1: Yes
-            Answer 2: No
-            Answer 3: I can’t say
+              <i>{{ $t('about-how-step4-note') }} </i>
 
-            Note: you will NOT be able to change your task protocol later in the process. To do so, you need to create a new project. 
+              <br><br>
 
-            <br><br>
-            <b>STEP 5: Select the location of your source files (Import tasks)</b><br>
-            It’s time to import your source files (images, videos, sounds, ...). <br>
-            Possible import locations include: Dropbox, Flickr, Amazon S3 bucket, Google Spreadsheet (public), csv file.<br> 
-            You will be able to add additional files also from the “project overview” page. 
-            <br>
-            <i>NOTE: the builder is NOT copying your file, it is linking to them. So make sure they stay in the original location for the duration of the project.</i>
+              <b>{{ $t('about-how-step5') }}</b><br>
+              {{ $t('about-how-step5-label1') }} <br>
+              {{ $t('about-how-step5-label2') }}<br> 
+              {{ $t('about-how-step5-label3') }}<br>
+              <i>{{ $t('about-how-step5-note') }}</i>
 
-            <br><br>
-            <b>STEP 6: Project Overview page - Test and adjust your project</b><br>
-            The draft of your project is ready. From the different tabs in this overview page, you can:
-            <ul style="list-style-type: square;margin-left:30px;">
-              <li> Info: overview the current description of the project</li>
-              <li>Statistics: overview the current statistics for your projects</li>
-              <li> Tasks: you can do multiple actions:</li>
-                  <ul style="list-style-type: circle;margin-left:30px;">
-                   <li> Import Tasks - import more source files via the provided importer (see step 4)</li>
-                   <li> Task Presenter - if you have basic coding skills, you can change the protocol of your tasks (see Step 3)</li>
-                   <li> Browse -  check the status of each task</li>
-                   <li> Export Tasks - export tasks to JSON, CSV, or a CKAN server</li>
-                   <li> Task Settings - configure all aspects of tasks, including scheduler, priority, and redundancy. You can also delete tasks.</li>
-                  </ul>
-              <li> Settings: edit the description of the project, select project category, allow anonymous contribution.</li>
-            </ul>
+              <br><br>
+
+              <b>{{ $t('about-how-step6') }}</b><br>
+              {{ $t('about-how-step6-label1') }}
+              <ul style="list-style-type: square;margin-left:30px;">
+                <li> {{ $t('about-how-step6-label1') }}</li>
+                <li>{{ $t('about-how-step6-list1') }}</li>
+                <li>{{ $t('about-how-step6-list2') }}</li>
+                <li> {{ $t('about-how-step6-list3') }}</li>
+                    <ul style="list-style-type: circle;margin-left:30px;">
+                    <li> {{ $t('about-how-step6-list4') }}</li>
+                    <li> {{ $t('about-how-step6-list5') }}</li>
+                    <li> {{ $t('about-how-step6-list51') }}</li>
+                    <li> {{ $t('about-how-step6-list6') }}</li>
+                    <li>{{ $t('about-how-step6-list7') }}</li>
+                    </ul>
+                <li> {{ $t('about-how-step6-list8') }}</li>
+              </ul>
             
-            <b>STEP 7: Submit for publication</b><br> 
-            When you are ready to go public, submit your project for publication.
-            We will make sure your project adheres to our criteria, and get back to you within a few hours.
-
-
+              <b>{{ $t('about-how-step7') }}</b><br> 
+              {{ $t('about-how-step7-label1') }}
+              {{ $t('about-how-step7-label2') }}
 
             </b-tab>
 
-            <b-tab  title="Criteria">
-
-              Anybody can create a project in the platform, as long it obeys to the following criteria:
-
+            <b-tab :title="$t('about-criteria')" >
+              {{ $t('about-criteria-label1') }}
               <ul style="list-style-type: square;margin-left:30px;margin-top:20px;">
-              
-                <li>The project’s topic and goals have clear scientific and/or social interest. </li>
-
-                <li>The project objectives and desired outcomes are communicated in the project description in an accessible and comprehensible manner.  </li>
-
-                <li>The objectives of the project are impossible – or very hard - to achieve without the contribution of the citizens.</li>
-
-                <li>The project is open for all volunteer contributors to participate. </li>
-
-                <li>An easy way to communicate with the project organizer is available for feedback and discussions.</li>
-
-                <li>The content of the project does not facilitate illegal acts and does not cause offense to any audience (see terms and conditions for details).  </li>
-
-                <li>The project’s goals (quantity of necessary data, coverage, required number of participants) are reasonable and achievable within a defined timeframe. </li>
-
-                <li>Ethical aspects are considered (e.g. diversity, inclusion, gender equality) and permission of the UZH/ETH Ethical Commission is previously requested and obtained when necessary. </li>
-
-                <li>Data generated by the project follows the EC principle "as open as possible, as closed as necessary", which focuses encouraging as few restrictions as possible, while at the same time protecting sensitive data from inappropriate access. </li>
-
-                <li>The results of the project are published in an open-access format, provided there are no legitimate, legal, or ethical arguments against doing so.  </li>
-
+                <li>{{ $t('about-criteria-list1') }} </li>
+                <li>{{ $t('about-criteria-list2') }}  </li>
+                <li>{{ $t('about-criteria-list3') }} </li>
+                <li>{{ $t('about-criteria-list4') }}  </li>
+                <li>{{ $t('about-criteria-list5') }} </li>
+                <li>{{ $t('about-criteria-list6') }} </li>
+                <li>{{ $t('about-criteria-list7') }} </li>
+                <li>{{ $t('about-criteria-list8') }} </li>
+                <li>{{ $t('about-criteria-list9') }} </li>
+                <li>{{ $t('about-criteria-list10') }} </li>
               </ul>
-
             </b-tab>
 
           </b-tabs>
