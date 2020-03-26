@@ -21,7 +21,7 @@
             <b-modal
               id="publish-project"
               :title="$t('project-draft-publish-your-project')"
-              :ok-title="$t('project-draft-publish-your-project-yes')"
+              :ok-title="$t('project-draft-publish-your-project-ok')"
               :cancel-title="$t('project-draft-publish-your-project-no')"
               @ok="publish"
             >

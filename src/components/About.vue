@@ -9,7 +9,12 @@
         </p>
         <p>
           <b>{{ $t('about-question-2') }}</b><br>
-          {{ $t('about-answer-2') }}  
+        
+          <p v-html="$t('about-answer-2',
+          {
+          'link1': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>https://en.wikipedia.org/wiki/Citizen_science</a>`,
+          'link2': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>https://de.wikipedia.org/wiki/Citizen_science</a>`
+            })">            
         </p>
         <p>
           <b>{{ $t('about-question-3') }}</b><br>
