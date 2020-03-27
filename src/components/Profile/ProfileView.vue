@@ -2,17 +2,22 @@
     <b-tabs pills fill>
 
       <!-- Draft project -->
-      <b-tab title="Draft projects">
+      <b-tab 
+        :title="$t('profile-view-draft-project')"
+        >
 
         <!-- The list of projects -->
         <b-row v-if="draftProjects.length > 0">
           <b-col :key="project.id" v-for="project in draftProjects" md="4" class="mt-3">
-            <app-project-card :project="project" :buttonText="'Edit'"></app-project-card>
+            <app-project-card 
+              :project="project" 
+              :buttonText="$t('edit-btn')">
+            </app-project-card>
           </b-col>
         </b-row>
         <b-row v-else>
           <b-col class="text-center">
-            <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">Create a project</b-btn>
+            <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">{{ $t('profile-view-create-a-project') }}</b-btn>
           </b-col>
         </b-row>
 
@@ -23,27 +28,34 @@
         <!-- The list of projects -->
         <b-row v-if="contributedProjects.length > 0">
           <b-col :key="project.id" v-for="project in contributedProjects" md="4" class="mt-3">
-            <app-project-card :project="project" :buttonText="'View'"></app-project-card>
+            <app-project-card 
+              :project="project" 
+              :buttonText="$t('view-btn')">
+            </app-project-card>
           </b-col>
         </b-row>
         <b-row v-else>
           <b-col class="text-center">
-            <b-btn variant="outline-primary" :to="{ name: 'discover' }">Find a project</b-btn>
+            <b-btn variant="outline-primary" :to="{ name: 'discover' }">{{ $t('profile-view-find-a-project') }}</b-btn>
           </b-col>
         </b-row>
       </b-tab>
 
-      <b-tab title="Published projects">
+      <b-tab 
+        :title="$t('profile-view-publish-project')">
 
         <!-- The list of projects -->
         <b-row v-if="publishedProjects.length > 0">
           <b-col :key="project.id" v-for="project in publishedProjects" md="4" class="mt-3">
-            <app-project-card :project="project" :buttonText="'Edit'"></app-project-card>
+            <app-project-card 
+              :project="project" 
+              :buttonText="$t('edit-btn')">
+            </app-project-card>
           </b-col>
         </b-row>
         <b-row v-else>
           <b-col class="text-center">
-            <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">Create a project</b-btn>
+            <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">{{ $t('profile-view-create-a-project') }}</b-btn>
           </b-col>
         </b-row>
       </b-tab>

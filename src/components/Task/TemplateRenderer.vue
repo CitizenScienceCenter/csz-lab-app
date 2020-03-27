@@ -3,16 +3,20 @@
   <b-container class="mt-4">
     <b-row>
     <b-col>
-      <b-link v-if="template" :to="{ name: 'project.task.presenter.editor', params: { id: this.id, template: this.template } }">Go back to the editor</b-link>
-      <b-link v-else :to="{ name: 'project', params: { id: this.id } }">Go back to the project</b-link>
+      <b-link v-if="template" :to="{ name: 'project.task.presenter.editor', params: { id: this.id, template: this.template } }">{{ $t("task-template-renderer-go-back-editor") }}</b-link>
+      <b-link v-else :to="{ name: 'project', params: { id: this.id } }">{{ $t('task-template-renderer-go-back-project') }}</b-link>
 
       <div v-if="!taskPresenterLoaded" class="mt-4 text-center">
-        <b-spinner variant="primary" style="width: 3rem; height: 3rem;" label="Task presenter loading..."></b-spinner>
+        <b-spinner 
+          variant="primary" 
+          style="width: 3rem; height: 3rem;" 
+          :label="$t('task-template-renderer-loading')">
+        </b-spinner>
       </div>
 
       <component class="mt-4" ref="presenter" v-if="taskPresenterExists" :is="presenterComponent" :pybossa="this"></component>
       <div class="mt-4" v-else-if="taskPresenterLoaded">
-        <b-alert :show="true" variant="warning">The project does not contains a task presenter</b-alert>
+        <b-alert :show="true" variant="warning">{{ $t('task-template-renderer-no-task-presenter') }}</b-alert>
       </div>
 
     </b-col>
@@ -123,8 +127,8 @@ export default {
       this.getNewTask(this.project).then(allowed => {
         if (!allowed) {
           this.showError({
-            title: 'You are not allowed to contribute',
-            content: 'This project does not allow anonymous contributors'
+            title: this.$t('template-renderer-not-allowed-contribute'),
+            content: this.$t('template-renderer-not-allowed-anonymous')
           })
           this.$router.push({ name: 'project', params: { id: this.project.id } })
         } else {

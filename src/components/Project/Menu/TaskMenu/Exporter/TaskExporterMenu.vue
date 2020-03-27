@@ -4,93 +4,93 @@
 
   <b-container>
 
-        <p class="quote">You can export and download all the available Tasks and Task Runs (the submitted answers by the users) in CSV or JSON formats.</p>
+        <p class="quote">{{ $t('task-exporter-menu-export-text') }}</p>
 
-        <h1 class="text-center centered">Export in CSV format</h1>
+        <h1 class="text-center centered">{{ $t('task-exporter-menu-export-format') }}</h1>
 
         <b-row class="mt-4">
 
           <b-col md="4">
             <b-card
-                    header="Tasks"
-                    border-variant="primary"
-                    header-bg-variant="primary"
-                    header-text-variant="white"
-                    align="center"
+                :header="$t('task-exporter-menu-tasks')"
+                border-variant="primary"
+                header-bg-variant="primary"
+                header-text-variant="white"
+                align="center"
             >
-              <b-card-text>Export tasks in CSV format</b-card-text>
-              <b-button ref="btn-task-csv" @click="exportTasksInCsv(project)" variant="outline-primary">Export</b-button>
+              <b-card-text>{{ $t('task-exporter-menu-export-task-csv') }}</b-card-text>
+              <b-button ref="btn-task-csv" @click="exportTasksInCsv(project)" variant="outline-primary">{{ $t('task-exporter-menu-export') }}</b-button>
             </b-card>
           </b-col>
 
           <b-col md="4" class="mt-4 mt-md-0">
             <b-card
-                    header="Task Runs"
-                    border-variant="primary"
-                    header-bg-variant="primary"
-                    header-text-variant="white"
-                    align="center"
+                :header="$t('task-exporter-menu-task-runs')"
+                border-variant="primary"
+                header-bg-variant="primary"
+                header-text-variant="white"
+                align="center"
             >
-              <b-card-text>Export task runs in CSV format</b-card-text>
-              <b-button ref="btn-task-run-csv" @click="exportTaskRunsInCsv(project)" variant="outline-primary">Export</b-button>
+              <b-card-text>{{ $t('task-exporter-menu-export-task-runs-csv') }}</b-card-text>
+              <b-button ref="btn-task-run-csv" @click="exportTaskRunsInCsv(project)" variant="outline-primary">{{ $t('task-exporter-menu-export') }}</b-button>
             </b-card>
           </b-col>
 
           <b-col md="4" class="mt-4 mt-md-0">
             <b-card
-                    header="Results"
-                    border-variant="primary"
-                    header-bg-variant="primary"
-                    header-text-variant="white"
-                    align="center"
+                :header="$t('task-exporter-menu-results')"
+                border-variant="primary"
+                header-bg-variant="primary"
+                header-text-variant="white"
+                align="center"
             >
-              <b-card-text>Export results in CSV format</b-card-text>
-              <b-button ref="btn-result-csv" @click="exportResultsInCsv(project)" variant="outline-primary">Export</b-button>
+              <b-card-text>{{ $t('task-exporter-menu-export-results-csv') }}</b-card-text>
+              <b-button ref="btn-result-csv" @click="exportResultsInCsv(project)" variant="outline-primary">{{ $t('task-exporter-menu-export') }}</b-button>
             </b-card>
           </b-col>
 
         </b-row>
 
-        <h1 class="text-center centered mt-5">Export in JSON format</h1>
+        <h1 class="text-center centered mt-5">{{ $t('task-exporter-menu-export-in-json') }}</h1>
 
         <b-row class="mt-4">
 
           <b-col md="4">
             <b-card
-                    header="Tasks"
-                    border-variant="primary"
-                    header-bg-variant="primary"
-                    header-text-variant="white"
-                    align="center"
+                :header="$t('task-exporter-menu-tasks')"
+                border-variant="primary"
+                header-bg-variant="primary"
+                header-text-variant="white"
+                align="center"
             >
-              <b-card-text>Export tasks in JSON format</b-card-text>
-              <b-button ref="btn-task-json" @click="exportTasksInJson(project)" variant="outline-primary">Export</b-button>
+              <b-card-text>{{ $t('task-exporter-menu-export-task-json') }}</b-card-text>
+              <b-button ref="btn-task-json" @click="exportTasksInJson(project)" variant="outline-primary">{{ $t('task-exporter-menu-export') }}</b-button>
             </b-card>
           </b-col>
 
           <b-col md="4" class="mt-4 mt-md-0">
             <b-card
-                    header="Task Runs"
-                    border-variant="primary"
-                    header-bg-variant="primary"
-                    header-text-variant="white"
-                    align="center"
+                :header="$t('task-exporter-menu-task-runs')"
+                border-variant="primary"
+                header-bg-variant="primary"
+                header-text-variant="white"
+                align="center"
             >
-              <b-card-text>Export task runs in JSON format</b-card-text>
-              <b-button ref="btn-task-run-json" @click="exportTaskRunsInJson(project)" variant="outline-primary">Export</b-button>
+              <b-card-text>{{ $t('task-exporter-menu-export-task-runs-json') }}</b-card-text>
+              <b-button ref="btn-task-run-json" @click="exportTaskRunsInJson(project)" variant="outline-primary">{{ $t('task-exporter-menu-export') }}</b-button>
             </b-card>
           </b-col>
 
           <b-col md="4" class="mt-4 mt-md-0">
             <b-card
-                    header="Results"
-                    border-variant="primary"
-                    header-bg-variant="primary"
-                    header-text-variant="white"
-                    align="center"
+                :header="$t('task-exporter-menu-results')"
+                border-variant="primary"
+                header-bg-variant="primary"
+                header-text-variant="white"
+                align="center"
             >
-              <b-card-text>Export results in JSON format</b-card-text>
-              <b-button ref="btn-result-json" @click="exportResultsInJson(project)" variant="outline-primary">Export</b-button>
+              <b-card-text>{{ $t('task-exporter-menu-export-results-json') }}</b-card-text>
+              <b-button ref="btn-result-json" @click="exportResultsInJson(project)" variant="outline-primary">{{ $t('task-exporter-menu-export') }}</b-button>
             </b-card>
           </b-col>
 

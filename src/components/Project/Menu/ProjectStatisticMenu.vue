@@ -3,23 +3,23 @@
   <b-row align-h="between" align-v="start">
     <b-col>
       <h1>#{{ stats.hasOwnProperty('overall_progress') ? stats.overall_progress : 'NaN' }}</h1>
-      <span class="text-muted">published results</span>
+      <span class="text-muted"> {{ $t('project-statistic-menu-published-results') }}</span>
     </b-col>
     <b-col>
       <h1>#{{ stats.hasOwnProperty('n_tasks') ? stats.n_tasks : 'NaN' }}</h1>
-      <span class="text-muted">tasks</span>
+      <span class="text-muted">{{ $t('project-statistic-menu-tasks')}}</span>
     </b-col>
     <b-col>
       <h1>#{{ stats.hasOwnProperty('n_volunteers') ? stats.n_volunteers : 'NaN' }}</h1>
-      <span class="text-muted">crafters</span>
+      <span class="text-muted">{{ $t('project-statistic-menu-crafters')}}</span>
     </b-col>
     <b-col>
       <h1>#{{ stats.hasOwnProperty('n_completed_tasks') ? stats.n_completed_tasks : 'NaN' }}</h1>
-      <span class="text-muted">tasks done</span>
+      <span class="text-muted">{{ $t('project-statistic-menu-tasks-done')}}</span>
     </b-col>
     <b-col>
       <h1>#{{ stats.hasOwnProperty('n_tasks') &&  stats.hasOwnProperty('n_completed_tasks') ? stats.n_tasks - stats.n_completed_tasks : 'NaN' }}</h1>
-      <span class="text-muted">pending tasks</span>
+      <span class="text-muted">{{ $t('project-statistic-menu-pending-tasks')}}</span>
     </b-col>
   </b-row>
 </template>

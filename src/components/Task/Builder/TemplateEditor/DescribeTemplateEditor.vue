@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h2>Question</h2>
+    <h2>{{ $t('task-describe-template-question') }}</h2>
     <b-form-group>
       <b-form-group
               :valid-feedback="validQuestionFeedback(question)"
               :invalid-feedback="invalidQuestionFeedback(question)"
               :state="questionValidated(question)">
         <b-input
-                placeholder="E.g. What is the people in the picture doing?"
-                v-model="question">
+            :placeholder="$t('task-describe-template-question-placeholder')"
+            v-model="question">
         </b-input>
       </b-form-group>
     </b-form-group>
@@ -17,20 +17,26 @@
       <b-form-group
               :key="key"
               v-for="(description, key) in descriptions"
-              :label="'Description ' + (key + 1)"
+              :label="$t('task-describe-template-description') + ' ' + (key + 1)"
               :valid-feedback="validDescriptionFeedback(description)"
               :invalid-feedback="invalidDescriptionFeedback(description)"
               :state="descriptionValidated(key)">
 
-        <b-input v-model="descriptions[key]" @input="descriptionUpdated(key)" placeholder="Describe what?"></b-input>
-        <b-btn @click="deleteDescription(key)" v-if="descriptions.length > 1" variant="danger" size="sm" class="mt-1 mb-1 float-right">Delete</b-btn>
+        <b-input 
+          v-model="descriptions[key]" 
+          @input="descriptionUpdated(key)" 
+          :placeholder="$t('task-describe-template-description-placeholder')">
+        </b-input>
+        <b-btn @click="deleteDescription(key)" v-if="descriptions.length > 1" variant="danger" size="sm" class="mt-1 mb-1 float-right">{{ $t('task-describe-template-delete') }}</b-btn>
 
       </b-form-group>
 
-      <b-btn @click="addDescription" class="float-right">Add description</b-btn>
+      <b-btn @click="addDescription" class="float-right">{{ $t('task-describe-template-add-description') }}</b-btn>
+
     </div>
 
-    <b-btn @click="onSubmit" variant="primary" size="lg" class="mt-4">I'm good to go</b-btn>
+    <b-btn @click="onSubmit" variant="primary" size="lg" class="mt-4">{{ $t('task-describe-template-go') }}</b-btn>
+
   </div>
 </template>
 
@@ -49,7 +55,7 @@ export default {
   data: () => {
     return {
       maxNbCharactersQuestions: 75,
-      maxNbCharactersDescriptions: 15,
+      maxNbCharactersDescriptions: 50,
 
       question: '',
       descriptions: [
@@ -95,7 +101,12 @@ export default {
         })
         this.setStep({ step: 'template', value: true })
       } else {
-        this.showError({ title: 'Incomplete form', content: 'All the fields should be validated' })
+        this.showError(
+          { 
+            title: this.$t('task-describe-template-error-incomplete-form'), 
+            content: this.$t('task-describe-template-error-fields-validation')
+          }
+        )
       }
     },
 
@@ -112,20 +123,20 @@ export default {
     },
 
     validQuestionFeedback (question) {
-      return this.maxNbCharactersQuestions - question.length + ' characters left'
+      return this.maxNbCharactersQuestions - question.length + ' ' + this.$t('characters-left')
     },
     invalidQuestionFeedback (question) {
-      return question.length > 0 ? 'Too many characters in this question' : 'The question should not be empty'
+      return question.length > 0 ? this.$t('task-count-template-error-many-characters-question') : this.$t('task-count-template-error-empty-question')
     },
     questionValidated (question) {
       return (this.questionFirstInteraction || question.length > 0) && question.length <= this.maxNbCharactersQuestions
     },
 
     validDescriptionFeedback (description) {
-      return this.maxNbCharactersDescriptions - description.length + ' characters left'
+      return this.maxNbCharactersDescriptions - description.length + ' ' +this.$t('characters-left')
     },
     invalidDescriptionFeedback (description) {
-      return description.length > 0 ? 'Too many characters in this description' : 'The description should not be empty'
+      return description.length > 0 ? this.$t('task-describe-template-error-many-characters-answer') : this.$t('task-describe-template-error-empty-answer')
     },
     descriptionValidated (descriptionKey) {
       const description = this.descriptions[descriptionKey]

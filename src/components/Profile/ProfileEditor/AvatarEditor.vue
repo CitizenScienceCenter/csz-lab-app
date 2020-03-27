@@ -8,7 +8,7 @@
       >
         <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg"></b-form-file>
       </b-form-group>
-      <b-btn ref="btn-submit" v-if="pictureSelected" variant="secondary" class="float-right mt-2" @click="onSubmit">Save avatar</b-btn>
+      <b-btn ref="btn-submit" v-if="pictureSelected" variant="secondary" class="float-right mt-2" @click="onSubmit"> {{ $t('avatar-editor-save') }}</b-btn>
       <LoadingSpinner id="user/updateAvatar" class="mt-2"></LoadingSpinner>
     </b-col>
   </b-row>

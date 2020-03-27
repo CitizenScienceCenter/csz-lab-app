@@ -6,33 +6,39 @@
         <b-form ref="project-form" @submit.prevent="onSubmit">
 
           <b-form-group
-                  label="Project data"
-                  label-size="lg"
-                  label-class="font-weight-bold mb-3"
-          >
+              :label="$t('project-editor-project-data')"
+              label-size="lg"
+              label-class="font-weight-bold mb-3">
 
             <b-form-group
-              label="Project name"
+              :label="$t('project-editor-project-name')"
               :valid-feedback="validFeedback('name')"
               :invalid-feedback="invalidFeedback('name')"
               :state="validated('name')">
-              <b-input placeholder="Name" v-model="form.name"></b-input>
+              <b-input 
+                :placeholder="$t('project-editor-project-name-placeholder')" 
+                v-model="form.name">
+              </b-input>
             </b-form-group>
 
             <b-form-group
-              label="Project short description"
+              :label="$t('project-editor-project-short-description')"
               :valid-feedback="validFeedback('shortDescription')"
               :invalid-feedback="invalidFeedback('shortDescription')"
               :state="validated('shortDescription')">
-              <b-textarea placeholder="Short description" v-model="form.shortDescription"></b-textarea>
+              <b-textarea 
+                :placeholder="$t('project-editor-project-short-description-placeholder')" 
+                v-model="form.shortDescription">
+              </b-textarea>
             </b-form-group>
 
-            <b-form-group label="Project category">
+            <b-form-group 
+              :label="$t('project-editor-project-category')">
               <b-select v-model="form.category" :options="selectCategories"></b-select>
             </b-form-group>
 
             <b-form-checkbox v-model="form.allowAnonymousContributors">
-              Allow anonymous contributors
+              {{ $t('project-editor-anonymous-contributors') }}
             </b-form-checkbox>
 
           </b-form-group>
@@ -41,11 +47,11 @@
           <b-form-group
             label-size="lg"
             label-class="mb-3"
-            label="Project long description"
+            :label="$t('project-editor-project-long-description')"
           >
 
             <b-form-group
-              label="What & Why"
+              :label="$t('project-description-what-why')"
               :valid-feedback="validFeedback('whatWhy')"
               :invalid-feedback="invalidFeedback('whatWhy')"
               :state="validated('whatWhy')">
@@ -53,7 +59,7 @@
             </b-form-group>
 
             <b-form-group
-              label="How"
+              :label="$t('project-description-how')"
               :valid-feedback="validFeedback('how')"
               :invalid-feedback="invalidFeedback('how')"
               :state="validated('how')">
@@ -61,7 +67,7 @@
             </b-form-group>
 
             <b-form-group
-              label="Who"
+              :label="$t('project-description-who')"
               :valid-feedback="validFeedback('who')"
               :invalid-feedback="invalidFeedback('who')"
               :state="validated('who')">
@@ -69,7 +75,7 @@
             </b-form-group>
 
             <b-form-group
-              label="Keep Track"
+              :label="$t('project-description-keep-track')"
               :valid-feedback="validFeedback('keepTrack')"
               :invalid-feedback="invalidFeedback('keepTrack')"
               :state="validated('keepTrack')">
@@ -79,7 +85,7 @@
           </b-form-group>
 
           <div class="text-center">
-            <b-button type="submit" variant="primary" class="">Update project data</b-button>
+            <b-button type="submit" variant="primary" class=""> {{ $t('project-editor-update-project-data') }}</b-button>
           </div>
 
         </b-form>
@@ -88,16 +94,21 @@
       <!-- Avatar update -->
       <b-col md="5" class="mt-md-0 mt-5">
         <b-form ref="picture-form" @submit.prevent="onPictureSubmit">
-          <b-form-group :description="'Authorized formats: .jpg, .png, .gif, .svg. Maximum file size: ' + maxPictureSizeInMb + 'MB.'"
-                        :state="pictureSizeInMb <= maxPictureSizeInMb"
-                        invalid-feedback="The picture is too big"
+          <b-form-group 
+              :description="'Authorized formats: .jpg, .png, .gif, .svg. Maximum file size: ' + maxPictureSizeInMb + 'MB.'"
+              :state="pictureSizeInMb <= maxPictureSizeInMb"
+              :invalid-feedback="$t('picture-too-big')"
           >
             <vue-cropper v-show="(('info' in project) && ('thumbnail_url' in project.info)) || picture" ref="cropper" :view-mode="2" :autoCropArea="1" :aspectRatio="4/3"></vue-cropper>
-            <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg" placeholder="Choose a picture..." drop-placeholder="Drop picture here..."></b-form-file>
+            <b-form-file @change="setImage" 
+              accept=".jpg, .png, .gif, .svg" 
+              :placeholder="$t('choose-picture')" 
+              :drop-placeholder="$t('drop-picture')" >
+            </b-form-file>
           </b-form-group>
 
           <div class="text-center">
-            <b-button type="submit" variant="primary">Update project avatar</b-button>
+            <b-button type="submit" variant="primary">{{ $t(('project-editor-update-project-avatar')) }}</b-button>
           </div>
         </b-form>
       </b-col>
@@ -108,11 +119,12 @@
     <b-row class="mt-5 mb-4">
       <b-col>
         <b-alert :show="true" variant="danger" class="text-center">
-          <b>Danger Zone!</b> If you delete the project and its tasks, it will be gone forever!<br>
-          <b-button v-b-modal.modal-delete-project variant="danger" class="mt-3">Delete Project</b-button>
+          <b>{{ $t('danzer-zone') }}</b> {{ $t('project-editor-danzer-zone-text') }}  <br>
+          <b-button v-b-modal.modal-delete-project variant="danger" class="mt-3">{{ $t('delete-project') }}</b-button>
         </b-alert>
-        <b-modal  @ok="onDeleteProjectSubmit" id="modal-delete-project" title="Delete the project">
-          Are you sure you want to delete this project and all its tasks and associated task runs?
+        <b-modal  @ok="onDeleteProjectSubmit" id="modal-delete-project" 
+          :title="$t('delete-project')">
+          {{ $t('project-editor-danzer-zone-onconfirm') }}
         </b-modal>
       </b-col>
     </b-row>
@@ -236,21 +248,21 @@ export default {
         }).then(response => {
           if ('form' in response && 'errors' in response.form) {
             this.showError({
-              title: 'Error',
+              title: this.$t('error'),
               content: getFormErrorsAsString(response.form.errors)
             })
           } else {
             this.showSuccess({
-              title: 'Success',
-              content: 'Project data updated'
+              title: this.$t('success'),
+              content: this.$t('project-data-updated'),
             })
             this.getProject(this.project.id) // reload the project
           }
         })
       } else {
         this.showError({
-          title: 'Incomplete form',
-          content: 'All the fields must be validated to update the project data'
+          title: this.$t('error-incomplete-form'),
+          content: this.$t('all-fields-validated'),
         })
       }
 
@@ -272,8 +284,8 @@ export default {
           }).then(response => {
             if (response) {
               this.showSuccess({
-                title: 'Success',
-                content: 'Project picture updated'
+                title: this.$t('success'),
+                content: this.$t('project-picture-updated')
               })
               this.getProject(this.project.id)
               this.$refs.cropper.replace(this.croppedPicture)
@@ -281,14 +293,14 @@ export default {
           })
         } else {
           this.showError({
-            title: 'Picture too big',
-            content: 'Your picture must be less than ' + this.maxPictureSizeInMb + 'MB'
+            title: this.$t('picture-too-big'),
+            content: this.$t('project-picture-size-less') + ' ' + this.maxPictureSizeInMb + 'MB'
           })
         }
       } else {
         this.showError({
-          title: 'Picture not selected',
-          content: 'You must select a picture to upload it'
+          title: this.$t('project-picture-not-selected'),
+          content: this.$t('project-picture-select-a-picture')
         })
       }
     },
@@ -350,10 +362,10 @@ export default {
       return this.$data['form'][field].length > 0 && this.$data['form'][field].length <= this.validation[field].maxLength
     },
     validFeedback (field) {
-      return this.validation[field].maxLength - this.$data['form'][field].length + ' characters left'
+      return this.validation[field].maxLength - this.$data['form'][field].length + ' ' + this.$t('characters-left')
     },
     invalidFeedback (field) {
-      return this.$data['form'][field].length === 0 ? 'This field is mandatory' : 'This field should not exceed ' + this.validation[field].maxLength + ' characters'
+      return this.$data['form'][field].length === 0 ? this.$t('mandatory-field') : this.$t('field-should-not-exceed')+' ' + this.validation[field].maxLength + ' ' + this.$t('characters')
     }
   },
   computed: {

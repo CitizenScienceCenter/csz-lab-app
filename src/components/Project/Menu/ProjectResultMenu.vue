@@ -3,7 +3,7 @@
   <b-row align-h="between" align-v="center">
     <b-col>
       <b>{{ results.n_results }}</b><br>
-      <span class="text-muted">results</span>
+      <span class="text-muted">{{ $t('project-result-menu-results') }}</span>
     </b-col>
   </b-row>
 </template>

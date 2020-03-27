@@ -2,8 +2,8 @@
   <div>
     <b-row class="mt-4">
       <b-col>
-        <h1 class="text-center centered small">Now's the time to select your source</h1>
-        <b-link v-if="selectedSource && materialSources[task.material].length > 1" @click="goBack">Go back: select another source</b-link>
+        <h1 class="text-center centered small"> {{ $t('task-source-builder-select-source') }} </h1>
+        <b-link v-if="selectedSource && materialSources[task.material].length > 1" @click="goBack">{{ $t('task-source-builder-other-source') }}</b-link>
 
         <b-row class="mt-4" v-if="!selectedSource">
           <b-col md="9">
@@ -31,8 +31,8 @@
           </b-col>
 
           <b-col md="3" class="text-muted">
-            <p class="small"><i class="fas fa-info-circle"></i>  Choose any of the options.</p>
-            <p class="small">Not what you were looking for? Try the <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">expert path</b-link> (not for beginners!)</p>
+            <p class="small"><i class="fas fa-info-circle"></i> {{ $t('task-source-builder-choose-options') }} </p>
+            <p class="small">{{ $t('task-source-builder-options-next-label') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
           </b-col>
 
         </b-row>

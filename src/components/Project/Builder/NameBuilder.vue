@@ -1,23 +1,23 @@
 <template>
 <div>
   <b-row align-h="center" class="m-4">
-    <h1 class="small">Give us a good title for your new project</h1>
+    <h1 class="small">{{ $t('name-builder-project-title-header') }}</h1>
   </b-row>
   <b-row>
     <b-col md="6" offset-md="3" align-h="center">
       <b-form @submit.prevent="onSubmit" ref="form">
         <b-form-group
                 id="fieldset-title"
-                label="Project title"
-                description="Please write here a good one!"
+                :label="$t('name-builder-project-title')"
+                :description="$t('name-builder-project-title-description')"
                 label-for="title"
                 :valid-feedback="validFeedback"
                 :invalid-feedback="invalidFeedback"
                 :state="validated"
         >
-          <b-form-input id="title" v-model="currentTitle" placeholder="Title"></b-form-input>
+          <b-form-input id="title" v-model="currentTitle" :placeholder="$t('title')"></b-form-input>
         </b-form-group>
-        <b-button variant="primary" type="submit">Create!</b-button>
+        <b-button variant="primary" type="submit"> {{ $t('create-btn') }} </b-button>
       </b-form>
     </b-col>
   </b-row>
@@ -58,10 +58,10 @@ export default {
       return this.titleFirstInteraction || (this.currentTitle.length > 0 && this.currentTitle.length <= this.maxNbCharacters)
     },
     validFeedback () {
-      return this.maxNbCharacters - this.currentTitle.length + ' characters left'
+      return this.maxNbCharacters - this.currentTitle.length + ' ' + this.$t('characters-left')
     },
     invalidFeedback () {
-      return this.currentTitle.length === 0 ? 'You must set a title for your project' : 'The title length should not exceed ' + this.maxNbCharacters + ' characters'
+      return this.currentTitle.length === 0 ? this.$t('name-builder-project-title-error') : this.$t('name-builder-project-character-exceed') + ' ' + this.maxNbCharacters + ' ' + this.$t('characters')
     },
     ...mapState('project/builder', {
       title: state => state.title

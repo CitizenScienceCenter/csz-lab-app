@@ -2,7 +2,7 @@
   <b-form ref="form" @submit.prevent="onSubmit">
 
     <b-form-group
-            label="Current password"
+            :label="$t('password-editor-current-password')"
             label-for="current-password"
             description="">
       <b-form-input
@@ -10,40 +10,40 @@
               v-model="form.currentPassword"
               type="password"
               required
-              placeholder="Current password">
+              :placeholder="$t('password-editor-current-password')">
       </b-form-input>
     </b-form-group>
 
     <b-form-group
-            label="New password"
+            :label="$t('password-editor-new-password')"
             label-for="new-password"
             description=""
             :state="passwordConfirmed"
-            invalid-feedback="Password and password confirmation do not match">
+            :invalid-feedback="$t('password-editor-invalid-password')">
       <b-form-input
               id="new-password"
               v-model="form.newPassword"
               type="password"
               required
-              placeholder="New password">
+              :placeholder="$t('password-editor-new-password')">
       </b-form-input>
     </b-form-group>
 
     <b-form-group
-            label="New password confirmation"
+            :label="$t('password-editor-new-password-confirmation')"
             label-for="password-confirmation"
             description=""
             :state="passwordConfirmed"
-            invalid-feedback="Password and password confirmation do not match">
+            :invalid-feedback="$t('password-editor-invalid-password')">
       <b-form-input
               id="password-confirmation"
               v-model="form.passwordConfirmation"
               type="password"
-              placeholder="Password confirmation">
+              :placeholder="$t('password-editor-new-password-confirmation-placeholder')">
       </b-form-input>
     </b-form-group>
 
-    <b-button type="submit" variant="secondary" class="float-right">Save the changes</b-button>
+    <b-button type="submit" variant="secondary" class="float-right"> {{ $t('password-editor-save-the-changes') }}</b-button>
 
   </b-form>
 </template>

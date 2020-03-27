@@ -3,7 +3,7 @@
 
     <b-row class="mt-4">
       <b-col>
-        <b-link :to="{ name: 'project.builder.name' }">Go back</b-link>
+        <b-link :to="{ name: 'project.builder.name' }">{{ $t('go-back-btn') }}</b-link>
       </b-col>
     </b-row>
 
@@ -13,10 +13,10 @@
 
         <!-- Project description -->
         <b-col md="9">
-          <h1 class="mt-3 small">{{ title }} in a few words</h1>
+          <h1 class="mt-3 small">{{ $t('information-builder-describe') }} {{ title }} </h1>
           <b-form-group
                   id="fieldset-description"
-                  label="Project short description"
+                  :label="$t('information-builder-short-descripton')"
                   label-for="Description"
                   :valid-feedback="validFeedback"
                   :invalid-feedback="invalidFeedback"
@@ -31,7 +31,16 @@
         </b-col>
 
         <b-col md="3" align-self="start">
-          <p><i class="fas fa-info-circle"></i>  TIP: Take your time, this will be your business card.</p>
+          <p><i class="fas fa-info-circle"></i> 
+          <br>
+          {{ $t('information-builder-tip1') }} <br>
+
+          <p v-html="$t('information-builder-tip2',
+          {
+          'terms': `<a target='_blank' href='https://citizenscience.ch/en/terms'>terms and conditions</a>`,
+            })">   
+          
+          </p>
         </b-col>
 
       </b-row>
@@ -39,15 +48,17 @@
       <!-- Image upload -->
       <b-row class="mt-4">
         <b-col md="9">
-          <h1 class="mt-3 small">Choose a picture that represents or is related to your project</h1>
+          <h1 class="mt-3 small"> {{ $t('information-builder-choose-picture') }}</h1>
 
           <vue-cropper ref="cropper" v-show="pictureSelected" :src="selectedPicture" :data="cropData" :autoCrop="true" :view-mode="2" :aspectRatio="4/3"></vue-cropper>
           <b-form-group
                   :state="selectedPictureSizeInMB <= maxPictureSizeInMB"
-                  invalid-feedback="The picture is too big"
-                  :description="'Authorized formats: .jpg, .png, .gif, .svg. The picture must not exceed ' + maxPictureSizeInMB + ' MB.'"
+                  :invalid-feedback="$t('picture-too-big')"
+                  :description=" $t('authorized-format') + ' ' + maxPictureSizeInMB + ' MB.'"
           >
-            <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg" placeholder="Select a picture..."></b-form-file>
+            <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg" 
+              :placeholder="$t('select-picture')">
+            </b-form-file>
           </b-form-group>
 
         </b-col>
@@ -55,7 +66,7 @@
 
       <b-row class="mt-4">
         <b-col>
-          <b-button type="submit" variant="primary">Next Step</b-button>
+          <b-button type="submit" variant="primary"> {{ $t('continue') }}</b-button>
         </b-col>
       </b-row>
 
@@ -175,14 +186,14 @@ export default {
      * @return {string}
      */
     validFeedback () {
-      return this.maxNbCharacters - this.currentShortDescription.length + ' characters left'
+      return this.maxNbCharacters - this.currentShortDescription.length + ' ' + this.$t('characters-left')
     },
     /**
      * Returns an invalid feedback message that will be displayed in the form
      * @return {string}
      */
     invalidFeedback () {
-      return this.currentShortDescription.length === 0 ? 'You must set a description for your project' : 'The description length should not exceed ' + this.maxNbCharacters + ' characters'
+      return this.currentShortDescription.length === 0 ? this.$t('information-builder-description-error') : this.$t('information-builder-character-exceed') + ' ' + this.maxNbCharacters + ' characters'
     }
   },
   watch: {

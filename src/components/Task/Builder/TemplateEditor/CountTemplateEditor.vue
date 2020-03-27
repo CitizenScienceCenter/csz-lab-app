@@ -1,14 +1,17 @@
 <template>
   <div>
-    <h2>Question</h2>
+    <h2>{{ $t('task-count-template-question') }}</h2>
     <b-form @submit.prevent="onSubmit">
       <b-form-group
               :valid-feedback="validFeedback"
               :invalid-feedback="invalidFeedback"
               :state="validated">
-        <b-input v-model="question" placeholder="E.g. How many people can you see in the image?"></b-input>
+        <b-input 
+          v-model="question" 
+          :placeholder="$t('task-count-template-question-placeholder')">
+        </b-input>
       </b-form-group>
-      <b-button type="submit" size="lg" variant="primary">I'm good to go</b-button>
+      <b-button type="submit" size="lg" variant="primary"> {{$t('task-count-template-go')}} </b-button>
     </b-form>
   </div>
 </template>
@@ -45,25 +48,30 @@ export default {
         this.setTaskTemplate(JSON.parse(JSON.stringify(this.question)))
         this.setStep({ step: 'template', value: true })
       } else {
-        this.showError({ title: 'Incomplete form', content: 'You have to provide a correct question' })
+        this.showError(
+          { 
+            title: this.$t('task-count-template-incomplete-form'), 
+            content: this.$t('task-count-template-error-question')
+          }
+        )
       }
     },
 
     validQuestionFeedback (question) {
-      return this.maxNbCharactersQuestions - question.length + ' characters left'
+      return this.maxNbCharactersQuestions - question.length + ' ' + this.$t('characters-left')
     },
     invalidQuestionFeedback (question) {
-      return question.length > 0 ? 'Too many characters in this question' : 'The question should not be empty'
+      return question.length > 0 ? this.$t('task-count-template-error-many-characters-question') : this.$t('task-count-template-error-empty-question')
     },
     questionValidated (question) {
       return question.length > 0 && question.length <= this.maxNbCharactersQuestions
     },
 
     validAnswerFeedback (answer) {
-      return this.maxNbCharactersAnswers - answer.length + ' characters left'
+      return this.maxNbCharactersAnswers - answer.length + ' ' + this.$t('characters-left')
     },
     invalidAnswerFeedback (answer) {
-      return answer.length > 0 ? 'Too many characters in this answer' : 'The answer should not be empty'
+      return answer.length > 0 ? this.$t('task-count-template-error-many-characters-answer') : this.$t('task-count-template-error-empty-answer')
     },
     answerValidated (answer) {
       return answer.length > 0 && answer.length <= this.maxNbCharactersAnswers
@@ -75,10 +83,10 @@ export default {
     ]),
 
     validFeedback () {
-      return this.maxNbCharacters - this.question.length + ' characters left'
+      return this.maxNbCharacters - this.question.length + ' ' + this.$t('characters-left')
     },
     invalidFeedback () {
-      return this.question.length > 0 ? 'Too many characters in the question' : 'The question should not be empty'
+      return this.question.length > 0 ?  this.$t('task-count-template-error-many-characters-question') : this.$t('task-count-template-error-empty-question')
     },
     validated () {
       return (this.isFirstInteraction || this.question.length > 0) && this.question.length <= this.maxNbCharacters

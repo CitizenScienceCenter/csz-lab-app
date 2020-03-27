@@ -105,6 +105,15 @@ export default {
     })
   },
 
+  approveProject (csrf, projectShortName) {
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/approve', {}, {
+      withCredentials: true,
+      headers: {
+        'X-CSRFToken': csrf
+      }
+    })
+  },
+
   getStatistics (projectShortName) {
     return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/stats', {
       withCredentials: true,

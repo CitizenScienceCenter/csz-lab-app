@@ -2,7 +2,7 @@
   <b-row>
 
     <b-col md="9">
-      <b-btn class="mt-3 mb-3" @click="openDropBox" variant="primary" size="lg"><i class="fab fa-dropbox"></i> Choose files from DropBox</b-btn>
+      <b-btn class="mt-3 mb-3" @click="openDropBox" variant="primary" size="lg"><i class="fab fa-dropbox"></i>{{ $t('dropbox-choose-files') }}</b-btn>
 
       <b-row>
         <b-col md="4" sm="6" cols="12" class="mt-5" :key="file.id" v-for="file in files" align="center">
@@ -20,11 +20,11 @@
         </b-col>
       </b-row>
 
-      <b-btn ref="btn-submit" v-if="selectedFiles.length > 0" @click="onSubmit" class="mt-4" variant="primary" size="md">Continue</b-btn>
+      <b-btn ref="btn-submit" v-if="selectedFiles.length > 0" @click="onSubmit" class="mt-4" variant="primary" size="md">{{ $t('continue') }}</b-btn>
     </b-col>
 
     <b-col md="3" class="text-muted">
-      <p class="small"><i class="fas fa-info-circle"></i>  You can use any free licensed pics (Creative Commons or alike), your own pictures or those copyright images that you are authorised to use.</p>
+      <p class="small"><i class="fas fa-info-circle"></i> {{ $t('dropbox-license') }}</p>
     </b-col>
 
   </b-row>

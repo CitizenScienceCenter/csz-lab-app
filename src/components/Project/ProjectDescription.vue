@@ -2,16 +2,16 @@
   <b-container class="greyish">
     <b-row>
       <b-col>
-        <h2 class="mt-3 mb-0">What & Why</h2>
+        <h2 class="mt-3 mb-0">{{ $t('project-description-what-why') }}</h2>
         <p class="small">{{ description.whatWhy }}</p>
 
-        <h2 class="mt-3 mb-0">How</h2>
+        <h2 class="mt-3 mb-0">{{ $t('project-description-how') }}</h2>
         <p class="small">{{ description.how }}</p>
 
-        <h2 class="mt-3 mb-0">Who</h2>
+        <h2 class="mt-3 mb-0">{{ $t('project-description-who') }}</h2>
         <p class="small">{{ description.who }}</p>
 
-        <h2 class="mt-3 mb-0">Keep Track</h2>
+        <h2 class="mt-3 mb-0">{{ $t('project-description-keep-track') }}</h2>
         <p class="small mb-3">{{ description.keepTrack }}</p>
       </b-col>
     </b-row>
