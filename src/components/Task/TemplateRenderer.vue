@@ -127,8 +127,8 @@ export default {
       this.getNewTask(this.project).then(allowed => {
         if (!allowed) {
           this.showError({
-            title: 'You are not allowed to contribute',
-            content: 'This project does not allow anonymous contributors'
+            title: this.$t('template-renderer-not-allowed-contribute'),
+            content: this.$t('template-renderer-not-allowed-anonymous')
           })
           this.$router.push({ name: 'project', params: { id: this.project.id } })
         } else {

@@ -352,7 +352,7 @@
         "about-question-1":"What is the Citizen Science Project Builder?",
         "about-answer-1":"The Citizen Science Project Builder is a web-based tool that allows researchers, students, and all members of the public to create and run Citizen Science Projects. ",
         "about-question-2":"What is a Citizen Science project?",
-        "about-answer-2":"In Citizen Science projects, volunteer contributors (“citizens”) and scientists work together to produce scientific knowledge. Projects may take many different forms, from classifying images of snakes to transcribing handwritten German dialect, from collecting samples of water to taking pictures of insects and plants. If you want to learn more about Citizen Science (including an extensive list of existing projects) Wikipedia ({link1} and {link2})  is a good starting point. ",
+        "about-answer-2":"In Citizen Science projects, volunteer contributors (“citizens”) and scientists work together to produce scientific knowledge. Projects may take many different forms, from classifying images of snakes to transcribing handwritten German dialect, from collecting samples of water to taking pictures of insects and plants. If you want to learn more about Citizen Science (including an extensive list of existing projects) {link1} is a good starting point. ",
         "about-question-3":"Which kind of projects can be created in the CS Project Builder?",
         "about-answer-3":"In its initial version, the CS Project Builder allows users to perform complex data classification tasks. It supports projects where contributors can analyze or enrich existing data, typically large sets of images or texts (ie. satellite pictures, social media posts, etc.), as well as other media formats such as videos, audios, and scanned documents. Next step, the web-based tool will be integrated with a data collection (smartphone-based) tool. .",
         "about-question-4":"What is the aim of the CS Project Builder?",
@@ -536,7 +536,10 @@
         "task-presenter-menu-transcribe":"Transcribing documents",
         "task-presenter-menu-transcribe1":"Re-use the PDF transcription template",
 
-        "about-overview":"Overview"
+        "about-overview":"Overview",
+
+        "template-renderer-not-allowed-contribute":"You are not allowed to contribute",
+        "template-renderer-not-allowed-anonymous":"'This project does not allow anonymous contributors'"
         
 
     },

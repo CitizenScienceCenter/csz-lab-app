@@ -19,8 +19,7 @@
               
                 <p v-html="$t('about-answer-2',
                 {
-                'link1': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>https://en.wikipedia.org/wiki/Citizen_science</a>`,
-                'link2': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>https://de.wikipedia.org/wiki/Citizen_science</a>`
+                'link1': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>Wikipedia</a>`
                   })">            
               </p>
               <p>
