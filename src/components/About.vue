@@ -3,44 +3,45 @@
     <b-row class="mt-4">
       <b-col>
         <h1 class="text-center centered">{{ $t('about-header') }}</h1>
-        <p>
-          <b>{{ $t('about-question-1') }}</b><br>
-          {{ $t('about-answer-1') }}
-        </p>
-        <p>
-          <b>{{ $t('about-question-2') }}</b><br>
-        
-          <p v-html="$t('about-answer-2',
-          {
-          'link1': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>https://en.wikipedia.org/wiki/Citizen_science</a>`,
-          'link2': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>https://de.wikipedia.org/wiki/Citizen_science</a>`
-            })">            
-        </p>
-        <p>
-          <b>{{ $t('about-question-3') }}</b><br>
-          {{ $t('about-answer-3') }}  
-        </p>
-        <p>
-          <b>{{ $t('about-question-4') }}</b><br>
-          {{ $t('about-answer-4') }}    
-        </p>
-        <p>
-          {{ $t('about-answer-5') }}        
-        </p>
-        <p>
-          <b>{{ $t('about-question-6') }}</b><br>
-          {{ $t('about-answer-6') }}  
-        </p>
-      </b-col>
-    </b-row>
 
-      <b-row class="mt-5">
+        <b-row class="mt-5">
         <b-col cols="12">
 
           <b-tabs pills content-class="mt-5 mb-5" active-nav-item-class="font-weight-bold" fill>
 
-            <b-tab 
-              :title="$t('about-howitworks')" >
+            <b-tab :title="$t('about-overview')" >
+               <p>
+                <b>{{ $t('about-question-1') }}</b><br>
+                {{ $t('about-answer-1') }}
+              </p>
+              <p>
+                <b>{{ $t('about-question-2') }}</b><br>
+              
+                <p v-html="$t('about-answer-2',
+                {
+                'link1': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>https://en.wikipedia.org/wiki/Citizen_science</a>`,
+                'link2': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>https://de.wikipedia.org/wiki/Citizen_science</a>`
+                  })">            
+              </p>
+              <p>
+                <b>{{ $t('about-question-3') }}</b><br>
+                {{ $t('about-answer-3') }}  
+              </p>
+              <p>
+                <b>{{ $t('about-question-4') }}</b><br>
+                {{ $t('about-answer-4') }}    
+              </p>
+              <p>
+                {{ $t('about-answer-5') }}        
+              </p>
+              <p>
+                <b>{{ $t('about-question-6') }}</b><br>
+                {{ $t('about-answer-6') }}  
+              </p>
+
+            </b-tab>
+
+            <b-tab :title="$t('about-howitworks')" >
               {{ $t('about-how-header1') }}
               {{ $t('about-how-header2') }}
               <ul style="list-style-type: square;margin-left:30px;margin-top:20px;">
@@ -157,6 +158,13 @@
 
         </b-col>
       </b-row>
+
+
+       
+      </b-col>
+    </b-row>
+
+      
   </b-container>
 
 </template>

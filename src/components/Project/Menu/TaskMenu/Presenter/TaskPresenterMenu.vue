@@ -3,30 +3,33 @@
         <b-breadcrumb :items="items"></b-breadcrumb>
 
         <b-container>
-        <p class="mt-2 quote">Use one of the following available <b>templates</b> for your project</p>
+        <p class="mt-2 quote"> {{ $t('task-presenter-menu-headera') }} 
+          <b>{{ $t('task-presenter-menu-headerb') }}</b> 
+          {{ $t('task-presenter-menu-headerc') }}
+        </p>
 
         <b-row class="mt-4">
           <b-col md="6" cols="12">
 
             <div class="mb-5">
-              <h4>Basic</h4>
-              <p>The most basic template</p>
-              <p><b>Skills</b>: HTML and Javascript</p>
-              <b-btn ref="btn-basic-template" variant="outline-primary" @click="displayTemplate(templates.basic)">Use</b-btn>
+              <h4>{{ $t('task-presenter-menu-basic') }}</h4>
+              <p>{{ $t('task-presenter-menu-basic1') }}</p>
+              <p><b>{{ $t('task-presenter-menu-skills') }}</b>: HTML and Javascript</p>
+              <b-btn ref="btn-basic-template" variant="outline-primary" @click="displayTemplate(templates.basic)">{{ $t('use') }}</b-btn>
             </div>
 
             <div class="mb-5">
-              <h4>Sound Pattern Recognition</h4>
-              <p>Re-use the SoundCloud template</p>
-              <p><b>Skills</b>: HTML and Javascript</p>
-              <b-btn variant="outline-primary" @click="displayTemplate(templates.sound)">Use</b-btn>
+              <h4>{{ $t('task-presenter-menu-sound') }}</h4>
+              <p>{{ $t('task-presenter-menu-sound1') }}</p>
+              <p><b>{{ $t('task-presenter-menu-skills') }}</b>: HTML and Javascript</p>
+              <b-btn variant="outline-primary" @click="displayTemplate(templates.sound)">{{ $t('use') }}</b-btn>
             </div>
 
             <div class="mb-5">
               <h4>Geo-coding</h4>
-              <p>Re-use the Urban Park template</p>
-              <p><b>Skills</b>: HTML, Javascript and Geo expertise</p>
-              <b-btn variant="outline-primary" @click="displayTemplate(templates.geocoding)">Use</b-btn>
+              <p>{{ $t('task-presenter-menu-geocoding1') }}</p>
+              <p><b>{{ $t('task-presenter-menu-skills') }}</b>: HTML, Javascript and Geo expertise</p>
+              <b-btn variant="outline-primary" @click="displayTemplate(templates.geocoding)">{{ $t('use') }}</b-btn>
             </div>
 
           </b-col>
@@ -34,24 +37,24 @@
           <b-col md="6" cols="12">
 
             <div class="mb-5">
-              <h4>Image Pattern Recognition</h4>
-              <p>Re-use the Flickr Person Finder template</p>
-              <p><b>Skills</b>: HTML and Javascript</p>
-              <b-btn variant="outline-primary" @click="displayTemplate(templates.image)">Use</b-btn>
+              <h4>{{ $t('task-presenter-menu-image') }}</h4>
+              <p>{{ $t('task-presenter-menu-image1') }}</p>
+              <p><b>{{ $t('task-presenter-menu-skills') }}</b>: HTML and Javascript</p>
+              <b-btn variant="outline-primary" @click="displayTemplate(templates.image)">{{ $t('use') }}</b-btn>
             </div>
 
             <div class="mb-5">
-              <h4>Video Pattern Recognition</h4>
-              <p>Re-use the Vimeo template</p>
-              <p><b>Skills</b>: HTML and Javascript</p>
-              <b-btn variant="outline-primary" @click="displayTemplate(templates.video)">Use</b-btn>
+              <h4>{{ $t('task-presenter-menu-video') }}</h4>
+              <p>{{ $t('task-presenter-menu-video1') }}</p>
+              <p><b>{{ $t('task-presenter-menu-skills') }}</b>: HTML and Javascript</p>
+              <b-btn variant="outline-primary" @click="displayTemplate(templates.video)">{{ $t('use') }}</b-btn>
             </div>
 
             <div class="mb-5">
-              <h4>Transcribing documents</h4>
-              <p>Re-use the PDF transcription template</p>
-              <p><b>Skills</b>: HTML, Javascript and Server side</p>
-              <b-btn variant="outline-primary" @click="displayTemplate(templates.document)">Use</b-btn>
+              <h4>{{ $t('task-presenter-menu-transcribe') }}</h4>
+              <p>{{ $t('task-presenter-menu-transcribe') }}</p>
+              <p><b>{{ $t('task-presenter-menu-skills') }}</b>: HTML, Javascript and Server side</p>
+              <b-btn variant="outline-primary" @click="displayTemplate(templates.document)">{{ $t('use') }}</b-btn>
             </div>
 
           </b-col>

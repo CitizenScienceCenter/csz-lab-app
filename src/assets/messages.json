@@ -464,6 +464,7 @@
         "or":"or",
         "or-c":"Or",
         "set":"Set",
+        "use":"Use",
         "completed":"completed",
         "scheduler":"Scheduler",
         "priority":"Priority",
@@ -517,7 +518,26 @@
 
         "task-settings-redundancy":"Tasks Redundancy",
         "task-settings-redundancy-header":"Tasks Redundancy",
-        "task-settings-redundancy-description-placeholder":"The number of answers per task that you want for the project"
+        "task-settings-redundancy-description-placeholder":"The number of answers per task that you want for the project",
+
+        "task-presenter-menu-headera":"Use one of the following available",
+        "task-presenter-menu-headerb":"templates",
+        "task-presenter-menu-headerc":"for your project",
+        "task-presenter-menu-basic":"Basic",
+        "task-presenter-menu-basic1":"The most basic template",
+        "task-presenter-menu-skills":"Skills",
+        "task-presenter-menu-sound":"Sound Pattern Recognition",
+        "task-presenter-menu-sound1":"Re-use the SoundCloud template",
+        "task-presenter-menu-geocoding1":"Re-use the Urban Park template",
+        "task-presenter-menu-image":"Image Pattern Recognition",
+        "task-presenter-menu-image1":"Re-use the Flickr Person Finder template",
+        "task-presenter-menu-video":"Video Pattern Recognition",
+        "task-presenter-menu-video1":"Re-use the Vimeo template",
+        "task-presenter-menu-transcribe":"Transcribing documents",
+        "task-presenter-menu-transcribe1":"Re-use the PDF transcription template",
+
+        "about-overview":"Overview"
+        
 
     },
     "de": {
