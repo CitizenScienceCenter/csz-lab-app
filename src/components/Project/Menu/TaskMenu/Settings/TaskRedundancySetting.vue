@@ -3,18 +3,19 @@
     <b-breadcrumb :items="items"></b-breadcrumb>
 
     <b-container>
-        <h1>Task redundancy</h1>
+        <h1>{{ $t('task-settings-redundancy-header') }}</h1>
 
         <b-form ref="form-task-redundancy-setting" @submit.prevent="onSubmit">
           <b-form-group
-                  label="Redundancy"
-                  description="The number of answers per task that you want for the project"
+                  :label="$t('redundancy')"
+                  :description="$t('task-settings-redundancy-description-placeholder')"
           >
-            <b-form-input type="number" min="1" max="1000" v-model="redundancy" placeholder="The number of answers per task that you want for the project"></b-form-input>
+            <b-form-input type="number" min="1" max="1000" v-model="redundancy" 
+              :placeholder="$t('task-settings-redundancy-description-placeholder')"></b-form-input>
           </b-form-group>
 
-          <b-button type="submit" variant="primary">Set</b-button>
-          <b-btn @click="goBack">Cancel</b-btn>
+          <b-button type="submit" variant="primary">{{ $t('set') }}</b-button>
+          <b-btn @click="goBack">{{ $t('cancel') }}</b-btn>
         </b-form>
 
     </b-container>

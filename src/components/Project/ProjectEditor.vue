@@ -248,21 +248,21 @@ export default {
         }).then(response => {
           if ('form' in response && 'errors' in response.form) {
             this.showError({
-              title: 'Error',
+              title: this.$t('error'),
               content: getFormErrorsAsString(response.form.errors)
             })
           } else {
             this.showSuccess({
-              title: 'Success',
-              content: 'Project data updated'
+              title: this.$t('success'),
+              content: this.$t('project-data-updated'),
             })
             this.getProject(this.project.id) // reload the project
           }
         })
       } else {
         this.showError({
-          title: 'Incomplete form',
-          content: 'All the fields must be validated to update the project data'
+          title: this.$t('error-incomplete-form'),
+          content: this.$t('all-fields-validated'),
         })
       }
 
@@ -284,8 +284,8 @@ export default {
           }).then(response => {
             if (response) {
               this.showSuccess({
-                title: 'Success',
-                content: 'Project picture updated'
+                title: this.$t('success'),
+                content: this.$t('project-picture-updated')
               })
               this.getProject(this.project.id)
               this.$refs.cropper.replace(this.croppedPicture)
@@ -293,14 +293,14 @@ export default {
           })
         } else {
           this.showError({
-            title: 'Picture too big',
-            content: 'Your picture must be less than ' + this.maxPictureSizeInMb + 'MB'
+            title: this.$t('picture-too-big'),
+            content: this.$t('project-picture-size-less') + ' ' + this.maxPictureSizeInMb + 'MB'
           })
         }
       } else {
         this.showError({
-          title: 'Picture not selected',
-          content: 'You must select a picture to upload it'
+          title: this.$t('project-picture-not-selected'),
+          content: this.$t('project-picture-select-a-picture')
         })
       }
     },
@@ -362,10 +362,10 @@ export default {
       return this.$data['form'][field].length > 0 && this.$data['form'][field].length <= this.validation[field].maxLength
     },
     validFeedback (field) {
-      return this.validation[field].maxLength - this.$data['form'][field].length + ' characters left'
+      return this.validation[field].maxLength - this.$data['form'][field].length + ' ' + this.$t('characters-left')
     },
     invalidFeedback (field) {
-      return this.$data['form'][field].length === 0 ? 'This field is mandatory' : 'This field should not exceed ' + this.validation[field].maxLength + ' characters'
+      return this.$data['form'][field].length === 0 ? this.$t('mandatory-field') : this.$t('field-should-not-exceed')+' ' + this.validation[field].maxLength + ' ' + this.$t('characters')
     }
   },
   computed: {

@@ -3,14 +3,14 @@
     <b-breadcrumb :items="items"></b-breadcrumb>
     <b-container>
           <!--<b-link :to="{ name: 'project', params: { id: 'id' in selectedProject ? selectedProject.id : 0 } }">Go back to the project</b-link>-->
-            <h1 class="mt-2">Browse tasks</h1>
-            <p>This page shows all the available tasks for this project.</p>
-            <p>For each task, you can find the following information:</p>
+            <h1 class="mt-2">{{ $t('task-menu-tasklist-browse-tasks') }}</h1>
+            <p>{{ $t('task-menu-tasklist-browse-tasks-label1') }}</p>
+            <p>{{ $t('task-menu-tasklist-browse-tasks-label2') }}</p>
 
             <ul>
-              <li><b>Task</b> <b-badge variant="primary">#0000</b-badge> This number identifies the task for the project and it is unique</li>
-              <li><b>0 of 30:</b> The first number shows how many answers have been submitted for the task and the second number how many need to be obtained to mark the task as completed</li>
-              <li><b>Progress Bar:</b> The progress progress bar shows the percentage that has been completed for the task</li>
+              <li><b>{{ $t('task-menu-tasklist-task') }}</b> <b-badge variant="primary">#0000</b-badge> {{ $t('task-menu-tasklist-browse-task-identify') }}</li>
+              <li><b>0 of 30:</b> {{ $t('task-menu-tasklist-browse-task-identify1') }}</li>
+              <li><b>{{ $t('task-menu-tasklist-browse-task-progress-bar') }}</b> {{ $t('task-menu-tasklist-browse-task-progress-bar-label') }}</li>
             </ul>
 
             <b-list-group>

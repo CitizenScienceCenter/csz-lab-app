@@ -9,7 +9,8 @@
               <div class="float-right">
                 <b-btn ref="btn-preview" variant="secondary" @click="previewPresenter">{{ $t('project-menu-task-presenter-preview') }}</b-btn>
                 <b-btn
-                  v-b-tooltip.hover title="This editor is reserved for expert users having 'coding' skills. Update the presenter only if you know what you are doing."
+                  v-b-tooltip.hover 
+                  :title=$t('project-menu-task-presenter-title')
                   ref="btn-update-presenter"
                   variant="primary"
                   @click="updateTaskPresenter"

@@ -19,7 +19,7 @@
             <!--<b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project>{{ $t('project-draft-publish') }}</b-btn><br>-->
             
             <div v-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
-              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >Request Apporoval</b-btn><br>
+              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >Request Approval</b-btn><br>
             </div>
 
             <div v-else-if="!project.published && (!project.info.pending_approval || localPendingApproval)">
@@ -233,5 +233,9 @@ export default {
 </script>
 
 <style scoped>
+
+.myclass > .modal-dialog > .modal-content {
+  margin-top:100px;
+}
 
 </style>

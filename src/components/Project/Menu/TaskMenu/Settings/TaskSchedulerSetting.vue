@@ -3,24 +3,24 @@
     <b-breadcrumb :items="items"></b-breadcrumb>
 
     <b-container>
-        <h1>Task scheduler</h1>
+        <h1>{{ $t('task-settings-scheduler') }}</h1>
 
-        <p>You can choose from the following schedulers:</p>
+        <p>{{ $t('task-settings-scheduler-ul') }}</p>
         <ul>
-          <li><b>Default</b> or <b>Depth First</b>: returns a task that has not been completed (the required number of answers has not been yet reached) excluding those already answered by the current user.</li>
-          <li><b>Breadth First</b>: returns a task which has the least number of task runs (answers) excluding those already answered by the current user.</li>
-          <li><b>Depth First All</b>: returns a task where the current user has not participated. It does not take into account the task state.</li>
+          <li><b>{{ $t('default') }}</b> {{ $t('or') }} <b>Depth First</b>: {{ $t('task-settings-scheduler-list1c') }}</li>
+          <li><b>Breadth First</b>:  {{ $t('task-settings-scheduler-list2b') }}</li>
+          <li><b>Depth First All</b>: {{ $t('task-settings-scheduler-list3b') }}</li>
         </ul>
 
         <b-form-group
-                label="Task scheduler"
+                :label="$t('task-settings-scheduler')"
                 :state="selected !== 'None'"
-                invalid-feedback="The project does not use a task scheduler currently"
+                :invalid-feedback="$t('task-settings-scheduler-invalid-feedback')"
         >
           <b-form-select v-model="selected" :options="schedulers"></b-form-select>
         </b-form-group>
 
-        <b-btn ref="btn-submit" @click="onSubmit" variant="primary" :disabled="selected === 'None'">Set</b-btn>
+        <b-btn ref="btn-submit" @click="onSubmit" variant="primary" :disabled="selected === 'None'">{{ $t('set') }}</b-btn>
     </b-container>
   </div>
 </template>

@@ -26,7 +26,7 @@
                       variant="outline-primary"
                       :to="{ name: 'project.task.presenter.settings', params: { id: ('id' in project) ? project.id : 0 } }"
             >
-             {{ $t('project-task-types-editor') }}
+             {{ $t('project-task-menu-types-editor') }}
             </b-button>
 
           </div>

@@ -2,7 +2,7 @@
   <div>
     <b-breadcrumb :items="items"></b-breadcrumb>
     <b-container>
-        <h1 class="mt-2 text-center centered">Tasks importing</h1>
+        <h1 class="mt-2 text-center centered"> {{ $t('task-importer-menu-tasks-importing') }}</h1>
 
         <b-row class="mt-4">
           <b-col>
