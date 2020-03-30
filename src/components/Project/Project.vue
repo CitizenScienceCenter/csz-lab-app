@@ -28,20 +28,10 @@
               <div v-if="!infos.admin">
                 <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >Request Approval</b-btn><br>
               </div>
-              <!--<div v-else>
-                <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project1>{{ $t('project-draft-publish') }}</b-btn><br>
-                <b-modal
-                  id="publish-project1"
-                  :title="$t('project-draft-publish-your-project')"
-                  :ok-title="$t('project-draft-publish-your-project-ok')"
-                  :cancel-title="$t('project-draft-publish-your-project-no')"
-                  @ok="publish"
-                >
-                <b-alert variant="danger" :show="true">
-                  {{ $t('project-draft-danger') }} 
-                  </b-alert>
-                </b-modal>
-              </div>-->
+              <div v-else>
+                <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project  @click="publish()">  {{ $t('project-draft-publish') }}</b-btn><br>
+              </div>
+              
             </div>
 
             <div v-else-if="!project.published && (project.info.pending_approval || localPendingApproval)">

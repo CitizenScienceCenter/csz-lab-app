@@ -18,6 +18,8 @@ router.beforeEach((to, from, next) => {
     console.log( 'navigate to: '+to.path );
     console.log('split:');
 
+    document.title = to.meta.title || 'Lab | Citizen Science';
+
     let filteredPath = to.path.split('/').filter(element => element.length > 0);
     console.log( filteredPath );
 
