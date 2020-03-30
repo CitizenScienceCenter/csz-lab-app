@@ -13,51 +13,88 @@
         <b-col cols="7" sm="8" md="9">
           <h1>{{ project.name }}</h1>
           <p>{{ project.description }}</p>
-          <div v-if="isLoggedUserOwnerOfProject(project) && !project.published">
-            <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
-            <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
-            <!--<b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project>{{ $t('project-draft-publish') }}</b-btn><br>-->
+
+          <div v-if="isLoggedUserOwnerOfProject(project)">
             
-            <div v-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
-              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >Request Approval</b-btn><br>
+             <div v-if="project.published">
+              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>Published</b-btn><br>
             </div>
 
-            <div v-else-if="!project.published && (!project.info.pending_approval || localPendingApproval)">
+            <div v-else-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
+             
+              <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
+              <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
+
+              <div v-if="!infos.admin">
+                <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >Request Approval</b-btn><br>
+              </div>
+              <!--<div v-else>
+                <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project1>{{ $t('project-draft-publish') }}</b-btn><br>
+                <b-modal
+                  id="publish-project1"
+                  :title="$t('project-draft-publish-your-project')"
+                  :ok-title="$t('project-draft-publish-your-project-ok')"
+                  :cancel-title="$t('project-draft-publish-your-project-no')"
+                  @ok="publish"
+                >
+                <b-alert variant="danger" :show="true">
+                  {{ $t('project-draft-danger') }} 
+                  </b-alert>
+                </b-modal>
+              </div>-->
+            </div>
+
+            <div v-else-if="!project.published && (project.info.pending_approval || localPendingApproval)">
               <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project disabled>Project Pending Approval</b-btn><br>
             </div>
-
-            <div v-else-if="project.published">
-              <b-btn ref="btn-approve-it" variant="success" class="mt-2" v-b-modal.approve-project disabled>Project Approved</b-btn><br>
-            </div>
-            <!-- Publish project modal -->
-            <b-modal
-              id="publish-project"
-              :title="$t('project-draft-publish-your-project')"
-              :ok-title="$t('project-draft-publish-your-project-ok')"
-              :cancel-title="$t('project-draft-publish-your-project-no')"
-              @ok="publish"
-            >
-            <b-alert variant="danger" :show="true">
-              {{ $t('project-draft-danger') }} 
-               </b-alert>
-            </b-modal>
 
             <b-modal
               id="approve-project"
               :title="$t('project-draft-approve-your-project')"
-              :ok-title="$t('project-draft-approve-your-project-ok')"
-              :cancel-title="$t('project-draft-approve-your-project-no')"
+              :ok-title="$t('submit-btn')"
+              :cancel-title="$t('cancel-c')"
               @ok="approve"
             >
-              <b-alert variant="wanring" :show="true">
-              {{ $t('project-draft-approval-warning') }} 
+              <b-alert variant="warning" :show="true">
+               <span v-html="$t('project-draft-approval-warning',
+                {
+                'link': `<a target='_blank' href='https://lab.staging.citizenscience.ch/en/about'>criteria</a>`
+                  })"></span>
+
                </b-alert>
             </b-modal>
           </div>
-          
-          <div v-else-if="isAnonymousProject">
-            <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn>
+
+          <div v-else-if="isAnonymousProject && !infos.admin">
+            <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn>            
           </div>
+
+          <div v-else>
+              <div v-if="!project.published">
+                <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
+                <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
+                
+                <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project :disabled="!project.info.pending_approval" >  {{ $t('project-draft-publish') }}</b-btn><br>
+              
+                <!-- Publish project modal -->
+                <b-modal
+                  id="publish-project"
+                  :title="$t('project-draft-publish-your-project')"
+                  :ok-title="$t('project-draft-publish-your-project-ok')"
+                  :cancel-title="$t('project-draft-publish-your-project-no')"
+                  @ok="publish"
+                >
+                <b-alert variant="danger" :show="true">
+                  {{ $t('project-draft-danger') }} 
+                  </b-alert>
+                </b-modal>
+              </div>
+              <div v-else>
+                <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn>            
+              </div>
+
+          </div>
+            
         </b-col>
       </b-row>
     </app-cover>
@@ -67,11 +104,11 @@
 
           <b-tabs pills content-class="mt-5 mb-5" active-nav-item-class="font-weight-bold" fill>
 
-            <b-tab title="Info" :active="currentTab === tabs.info" @click="setCurrentTab(tabs.info)">
+            <b-tab :title="$t('info-c')" :active="currentTab === tabs.info" @click="setCurrentTab(tabs.info)">
               <ProjectInfoMenu></ProjectInfoMenu>
             </b-tab>
 
-            <b-tab  title="Statistics" :active="currentTab === tabs.statistics" @click="setCurrentTab(tabs.statistics)">
+            <b-tab :title="$t('statistics-c')" :active="currentTab === tabs.statistics" @click="setCurrentTab(tabs.statistics)">
               <ProjectStatisticsMenu></ProjectStatisticsMenu>
             </b-tab>
 
@@ -80,11 +117,11 @@
               <ProjectResultsMenu></ProjectResultsMenu>
             </b-tab>
 
-            <b-tab ref="tab-tasks" v-if="isLoggedUserOwnerOfProject(project)" title="Tasks" :active="currentTab === tabs.tasks" @click="setCurrentTab(tabs.tasks)">
+            <b-tab ref="tab-tasks" v-if="isLoggedUserOwnerOfProject(project) || infos.admin" :title="$t('tasks-c')" :active="currentTab === tabs.tasks" @click="setCurrentTab(tabs.tasks)">
               <ProjectTasksMenu></ProjectTasksMenu>
             </b-tab>
 
-            <b-tab ref="tab-settings" v-if="isLoggedUserOwnerOfProject(project)" title="Settings" :active="currentTab === tabs.settings" @click="setCurrentTab(tabs.settings)">
+            <b-tab ref="tab-settings" v-if="isLoggedUserOwnerOfProject(project) || infos.admin" :title="$t('settings-c')" :active="currentTab === tabs.settings" @click="setCurrentTab(tabs.settings)">
               <!-- v-if used to render the component only if the tab is active -->
               <ProjectEditor v-if="currentTab === tabs.settings"></ProjectEditor>
             </b-tab>
@@ -124,6 +161,7 @@ export default {
   },
   
   created () {
+    
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
     this.getProject(this.id).then(project => {
@@ -135,10 +173,13 @@ export default {
         this.isAnonymousProject = !!allowed
         // TODO: should go to the home screen?
       })
-      if (this.isLoggedUserOwnerOfProject(project)) {
+      if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
         // has to be loaded to know if the project can be published
         this.getProjectTasks(project)
       }
+
+     
+
     })
 
   },
@@ -173,13 +214,10 @@ export default {
     ]),
 
     approve () {
-      this.localPendingApproval=true
-    },
-
-    approve1 () {
       if (this.taskPresenter.length > 0) {
         if (this.projectTasks.length > 0) {
           this.approveProject(this.project)
+          this.localPendingApproval=true
         } else {
           this.showError({
             title: 'Impossible to approve the project',
@@ -225,8 +263,12 @@ export default {
     ...mapState('project/menu', [
       'currentTab', 'tabs'
     ]),
+    ...mapState('user', [
+      'infos',
+    ]),
     ...mapGetters('user', [
-      'isLoggedUserOwnerOfProject'
+      'isLoggedUserOwnerOfProject',
+      'isLoggedUserAdmin'
     ])
   }
 }

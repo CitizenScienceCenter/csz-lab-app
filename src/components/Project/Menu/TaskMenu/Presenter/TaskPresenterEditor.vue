@@ -10,7 +10,7 @@
                 <b-btn ref="btn-preview" variant="secondary" @click="previewPresenter">{{ $t('project-menu-task-presenter-preview') }}</b-btn>
                 <b-btn
                   v-b-tooltip.hover 
-                  :title=$t('project-menu-task-presenter-title')
+                  :title="$t('project-menu-task-presenter-title')"
                   ref="btn-update-presenter"
                   variant="primary"
                   @click="updateTaskPresenter"

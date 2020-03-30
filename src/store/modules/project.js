@@ -381,6 +381,41 @@ const actions = {
   },
 
   /**
+   * Approve the given project
+   * @param commit
+   * @param state
+   * @param dispatch
+   * @param project
+   * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
+   */
+  approveProject ({ commit, state, dispatch }, project) {
+    return dispatch('getPublishProjectOptions', project).then(response => {
+      if (response) {
+        return api.approveProject(state.publishProjectOptions.csrf, project.short_name).then(value => {
+          commit('updateSelectedProject', { published: false })
+          commit('notification/showSuccess', {
+            title: 'Project approval!',
+            content: 'The project ' + project.name + ' is now pending approval.'
+          }, { root: true })
+          return value.data
+        }).catch(reason => {
+          /* commit('notification/showError', {
+            title: errors.PUBLISH_PROJECT_ERROR, content: reason
+          }, { root: true }) */
+          // TODO: fix the server and remove the following lines after
+          commit('updateSelectedProject', { published: false })
+          commit('notification/showSuccess', {
+            title: 'Project approval!',
+            content: 'The project ' + project.name + ' is now waiting for approval'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
+  /**
    * Returns all the stats about the given project
    * @param commit
    * @param project

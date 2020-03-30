@@ -35,6 +35,9 @@ const state = {
 const getters = {
   isLoggedUserOwnerOfProject: state => (project) => {
     return project.owner_id === state.infos.id
+  },
+  isLoggedUserAdmin: state => {
+    return state.infos.admin
   }
 }
 

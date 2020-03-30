@@ -2,6 +2,8 @@
   <div id="app">
     <b-navbar :sticky="true" toggleable="lg" type="light" variant="light">
 
+        <b-navbar-brand :to="{ name: 'home' }"><div class="beta">Beta</div></b-navbar-brand>
+
         <b-navbar-brand :to="{ name: 'home' }"><img alt="Citizen Science Center Zurich" class="brand-logo" src="./assets/img/logo.svg"/></b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -156,5 +158,19 @@ export default {
     border:0px;
     border-color: transparent;
   }
+
+  .beta {
+        margin-left: 4px;
+        font-size: 40px;
+        font-size: $font-size-tiny;
+        line-height: 100%;
+        text-transform: uppercase;
+        font-weight: 700;
+        background-color: $color-secondary;
+        border-radius: $border-radius;
+        padding: 4px;
+        display: flex;
+        align-self: flex-start;
+      }
 
 </style>
