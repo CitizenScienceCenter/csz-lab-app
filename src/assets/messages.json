@@ -98,7 +98,7 @@
         "project-draft-approve-your-project":"Request project approval",
         "project-draft-approve-your-project-ok":"Yes, approve it",
         "project-draft-approve-your-project-no":"No, do not approve it!",
-        "project-draft-approval-warning":"We will check your project against our criteria before publishing. We will contact you by email if we have questions.",
+        "project-draft-approval-warning":"We will check your project against our {link} before publishing. We will contact you by email if we have questions.",
         "project-draft-publish-your-project":"Publish your project",
         "project-draft-publish-your-project-ok":"Yes, publish it",
         "project-draft-publish-your-project-no":"No, do not publish it!",
@@ -539,7 +539,13 @@
         "about-overview":"Overview",
 
         "template-renderer-not-allowed-contribute":"You are not allowed to contribute",
-        "template-renderer-not-allowed-anonymous":"'This project does not allow anonymous contributors'"
+        "template-renderer-not-allowed-anonymous":"'This project does not allow anonymous contributors'",
+
+        "info-c":"Info",
+        "statistics-c":"Statistics",
+        "settings-c":"Settings",
+
+        "cancel-c":"Cancel"
         
 
     },
