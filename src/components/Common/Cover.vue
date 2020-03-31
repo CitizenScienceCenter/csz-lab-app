@@ -1,5 +1,5 @@
 <template>
-  <section :style="{ 'background-image': 'url(' + imageUrl + ')' }" class="cover">
+  <section :style="{ 'background-image': 'url(' + backgroundImage + ')' }" class="cover">
     <div class="content-wrapper">
       <b-row>
         <b-col>
@@ -15,7 +15,13 @@
 export default {
   name: 'Cover',
   props: {
-    imageUrl: String
+    imageUrl: String,
+    imageUrl_v: "@/assets/PB-background_opt.jsp"
+  },
+  computed: {
+    backgroundImage () {
+      return require('@/assets/PB-background_opt.jpg')
+    }
   },
   mounted: function () {
     let matches = this.$el.querySelectorAll('.scroll-effect')
