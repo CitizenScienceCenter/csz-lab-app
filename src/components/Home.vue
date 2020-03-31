@@ -18,7 +18,7 @@
       <b-row class="mt-4">
         <b-col>
           <h1 class="text-center centered">{{ $t('home-featured-projects') }}</h1>
-          <b-row align-v="center" align-h="center">
+          <b-row>
             <p v-if="projects.length < 1">{{ $t('home-no-featured-projects') }}</p>
             <b-col :key="project.id" v-for="project in projects" md="4" class="mt-3">
               <app-project-card :project="project" :buttonText="'Take a look'"></app-project-card>
