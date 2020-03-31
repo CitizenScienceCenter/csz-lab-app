@@ -18,7 +18,7 @@
       </b-col>
 
       <b-col lg="3" class="mt-3 mt-md-0 d-none d-sm-none d-md-none d-lg-inline">
-        <p class="h1">{{ profile.total }}</p>
+        <p class="h1">{{ profile.n_answers ?  profile.n_answers : '0'}}</p>
         <p>{{ $t('profile-header-contributions-to-project') }}</p>
       </b-col>
 

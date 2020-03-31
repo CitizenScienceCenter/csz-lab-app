@@ -20,7 +20,7 @@
             </b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-2" 
+          <b-form-group id="input-group-2"
             :label="$t('login-input-password')"
             label-for="password">
             <b-form-input
@@ -40,7 +40,7 @@
 
     <b-row class="mt-4">
       <b-col>
-        <p class="text-center">{{$t('login-not-registered')}}<b-link :to="{ name: 'register' }">{{$t('login-not-signup')}}</b-link></p>
+        <p class="text-center">{{$t('login-not-registered')}} <b-link :to="{ name: 'register' }">{{$t('login-not-signup')}}</b-link></p>
       </b-col>
     </b-row>
   </b-container>
@@ -98,8 +98,8 @@ export default {
         } else {
           this.showError(
             {
-              title: this.$t('login-failed-title'), 
-              content: this.$t('login-failed-content') 
+              title: this.$t('login-failed-title'),
+              content: this.$t('login-failed-content')
             }
           )
         }

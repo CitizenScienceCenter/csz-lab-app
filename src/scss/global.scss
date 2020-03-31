@@ -79,6 +79,14 @@ a {
   }
 }
 
+.modal-dialog {
+  margin-top: 6rem !important;
+}
+
+.btn-group {
+  display: inline !important;
+}
+
 .breadcrumb {
   background: linear-gradient(120deg,rgba(22,73,107,.025),rgba(153,42,61,.025)) !important;
 }
@@ -379,12 +387,16 @@ a.btn {
 legend {
   line-height: 1.25;
   font-weight: 700;
+  word-break: break-word;
+  word-wrap: break-word;
   color: $secondary;
 }
 
 label {
   line-height: 1.25;
   font-weight: 700;
+  word-break: break-word;
+  word-wrap: break-word;
   color: $secondary;
 }
 

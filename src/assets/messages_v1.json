@@ -8,7 +8,7 @@
         "home-start-contributing": "Start Contributing",
         "home-featured-projects":"Featured projects",
         "home-no-featured-projects":"There are no featured projects so far.",
-      
+
         "app-vue-navigation-home": "Home",
         "app-vue-navigation-discover": "Discover",
         "app-vue-navigation-about": "About",
@@ -25,6 +25,8 @@
         "login-input-password-placeholder":"Password",
         "login-not-registered":"Not registered?",
         "login-not-signup":"Sign up for free now",
+
+        "forgot-password-header": "Password forgotten?",
 
         "register-header":"Registration",
         "register-fullname":"Full name",
@@ -47,7 +49,7 @@
         "api-key-reset":"Reset API Key",
 
         "avatar-editor-save":"Save avatar",
-        
+
         "basic-profile-editor-fullname-description":"Name and first name",
         "basic-profile-editor-username-description":"If you change your username you will be asked to sign in again.",
         "basic-profile-editor-language":"Language",
@@ -147,7 +149,7 @@
         "summary-builder-project-page":"project's page",
 
         "project-result-menu-results":"results",
-        
+
         "project-statistic-menu-published-results":"published results",
         "project-statistic-menu-tasks":"tasks",
         "project-statistic-menu-crafters":"crafters",
@@ -227,7 +229,7 @@
         "task-material-builder-file-types":" Select the type of files that you will use for your project.",
         "task-material-builder-file-label-1":"You can use images, sounds, videos and PDFs files.",
         "task-material-builder-file-label-2":"The geo-coding template is also available and will allow you to get answers about places with a map.",
-        
+
         "task-job-builder-files-purpose":"What will you do with all the files?",
         "task-job-builder-describe":"Describe",
         "task-job-builder-classify":"Classify",
@@ -284,7 +286,7 @@
 
 
 
-      
+
     },
     "de": {
       "app-vue-navigation-home": "Home de",
