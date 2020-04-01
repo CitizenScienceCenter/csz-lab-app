@@ -4,7 +4,8 @@ const state = {
   errorNotifications: [],
   infoNotifications: [],
   successNotifications: [],
-  loadingNotifications: []
+  loadingNotifications: [],
+  isLoadingSpinnerDisplayed: false
 }
 
 // filter methods on the state data
@@ -54,7 +55,10 @@ const mutations = {
     state.loadingNotifications = state.loadingNotifications.filter(value => {
       return value !== id
     })
-  }
+  },
+  showLoadingSpinner (state, value) {
+    state.isLoadingSpinnerDisplayed = value
+  },
 }
 
 export default {

@@ -27,6 +27,9 @@ const getters = {
 // async methods making mutations are placed here
 const actions = {
   exportTasksInCsv ({ commit, state }, project) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return api.exportTasksInCsv(project.short_name).then(value => {
       commit('setTasksCsvBlob', value.data)
       saveAs(state.tasksCsvBlob, project.id + '_' + project.short_name + '_task_csv.zip')
@@ -36,10 +39,15 @@ const actions = {
         title: errors.DOWNLOAD_TASKS_IN_CSV_ERROR, content: reason
       }, { root: true })
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   exportTaskRunsInCsv ({ commit, state }, project) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return api.exportTaskRunsInCsv(project.short_name).then(value => {
       commit('setTaskRunsCsvBlob', value.data)
       saveAs(state.taskRunsCsvBlob, project.id + '_' + project.short_name + '_task_run_csv.zip')
@@ -49,10 +57,15 @@ const actions = {
         title: errors.DOWNLOAD_TASK_RUNS_IN_CSV_ERROR, content: reason
       }, { root: true })
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   exportResultsInCsv ({ commit, state }, project) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return api.exportResultsInCsv(project.short_name).then(value => {
       commit('setResultsCsvBlob', value.data)
       saveAs(state.resultsCsvBlob, project.id + '_' + project.short_name + '_result_csv.zip')
@@ -62,10 +75,15 @@ const actions = {
         title: errors.DOWNLOAD_RESULTS_IN_CSV_ERROR, content: reason
       }, { root: true })
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   exportTasksInJson ({ commit, state }, project) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return api.exportTasksInJson(project.short_name).then(value => {
       commit('setTasksJsonBlob', value.data)
       saveAs(state.tasksJsonBlob, project.id + '_' + project.short_name + '_task_json.zip')
@@ -75,10 +93,15 @@ const actions = {
         title: errors.DOWNLOAD_TASKS_IN_JSON_ERROR, content: reason
       }, { root: true })
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   exportTaskRunsInJson ({ commit, state }, project) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return api.exportTaskRunsInJson(project.short_name).then(value => {
       commit('setTaskRunsJsonBlob', value.data)
       saveAs(state.taskRunsJsonBlob, project.id + '_' + project.short_name + '_task_run_json.zip')
@@ -88,10 +111,15 @@ const actions = {
         title: errors.DOWNLOAD_TASK_RUNS_IN_JSON_ERROR, content: reason
       }, { root: true })
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   exportResultsInJson ({ commit, state }, project) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return api.exportResultsInJson(project.short_name).then(value => {
       commit('setResultsJsonBlob', value.data)
       saveAs(state.resultsJsonBlob, project.id + '_' + project.short_name + '_result_json.zip')
@@ -101,7 +129,9 @@ const actions = {
         title: errors.DOWNLOAD_RESULTS_IN_JSON_ERROR, content: reason
       }, { root: true })
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   }
 }
 

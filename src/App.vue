@@ -167,6 +167,12 @@
       <span v-html="notification.message.content"></span>
     </b-toast>
 
+    <loading :active.sync="isLoadingSpinnerDisplayed"
+             :can-cancel="false"
+             :is-full-page="true"
+             color="#c5202e">
+    </loading>
+
   </div>
 </template>
 
@@ -174,10 +180,16 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { i18n } from "./i18n"
 
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 export default {
   name: 'App',
   created () {
     // this.getAccountProfile()
+  },
+  components: {
+    Loading
   },
   props : {
     languages: {
@@ -185,24 +197,24 @@ export default {
             default: function () { return ['en','de'] }
     },
   },
-  
   computed: {
       ...mapState({
-      errorNotifications: state => state.notification.errorNotifications,
-      infoNotifications: state => state.notification.infoNotifications,
-      successNotifications: state => state.notification.successNotifications,
+        errorNotifications: state => state.notification.errorNotifications,
+        infoNotifications: state => state.notification.infoNotifications,
+        successNotifications: state => state.notification.successNotifications,
+        isLoadingSpinnerDisplayed: state => state.notification.isLoadingSpinnerDisplayed,
 
-      userLogged: state => state.user.logged,
-      userProfile: state => state.user.infos
+        userLogged: state => state.user.logged,
+        userProfile: state => state.user.infos
     }),
     language: {
-          get() {
-            return this.$store.state.settings.language;
-          },
-          set(language) {
-            this.$store.dispatch("settings/setLanguage", language);
-          }
+      get() {
+        return this.$store.state.settings.language;
+      },
+      set(language) {
+        this.$store.dispatch("settings/setLanguage", language);
       }
+    }
   },
   watch: {
     language(to) {

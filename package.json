@@ -26,18 +26,19 @@
     "portal-vue": "^2.1.4",
     "slug": "^1.1.0",
     "vue": "^2.5.2",
-    "vue-i18n": "^8.2.1",
-    "vue-meta": "^1.5.8",
     "vue-codemirror": "^4.0.6",
     "vue-cropperjs": "^3.0.0",
+    "vue-i18n": "^8.2.1",
+    "vue-loading-overlay": "^3.3.2",
+    "vue-meta": "^1.5.8",
     "vue-pdf": "^4.0.7",
     "vue-router": "^3.0.1",
     "vuelayers": "^0.11.4",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.29",
     "@kazupon/vue-i18n-loader": "^0.3.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
@@ -92,6 +93,7 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.2.1",
+    "react-snap": "^1.23.0",
     "rimraf": "^2.6.0",
     "sass-loader": "^7.1.0",
     "selenium-server": "^3.0.1",
@@ -108,8 +110,7 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0",
-    "react-snap": "^1.23.0"
+    "webpack-merge": "^4.1.0"
   },
   "engines": {
     "node": ">= 6.0.0",

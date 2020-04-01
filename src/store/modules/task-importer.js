@@ -17,7 +17,8 @@ const errors = {
   GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading flickr importer options',
   POST_FLICKR_TASKS_ERROR: 'Error when importing flickr tasks',
   LOAD_FLICKR_ALBUMS_ERROR: 'Impossible to load your Flickr albums. Ensure that Pybossa is authorized to access your account',
-  GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading twitter importer options'
+  GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading twitter importer options',
+  POST_TWITTER_TASKS_ERROR: 'Error when importing twitter tasks'
 }
 
 const state = {
@@ -118,6 +119,9 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   importAmazonS3Tasks ({ commit, state, dispatch }, { project, bucket, files }) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return dispatch('getAmazonS3TasksImportationOptions', project).then(response => {
       if (response) {
         return api.importAmazonS3Tasks(
@@ -142,7 +146,9 @@ const actions = {
         })
       }
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   /**
@@ -173,6 +179,9 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   importGoogleDocsTasks ({ commit, state, dispatch }, { project, link }) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return dispatch('getGoogleDocsTasksImportationOptions', project).then(response => {
       if (response) {
         return api.importGoogleDocsTasks(
@@ -201,7 +210,9 @@ const actions = {
         })
       }
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   /**
@@ -232,6 +243,9 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   importLocalCsvTasks ({ commit, state, dispatch }, { project, file }) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return dispatch('getLocalCsvTasksImportationOptions', project).then(response => {
       if (response) {
         return api.importLocalCsvTasks(
@@ -260,7 +274,9 @@ const actions = {
         })
       }
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   /**
@@ -291,6 +307,9 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   importOnlineCsvTasks ({ commit, state, dispatch }, { project, link }) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return dispatch('getOnlineCsvTasksImportationOptions', project).then(response => {
       if (response) {
         return api.importOnlineCsvTasks(
@@ -319,7 +338,9 @@ const actions = {
         })
       }
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   /**
@@ -350,6 +371,9 @@ const actions = {
    * @returns {*}
    */
   importDropboxTasks ({ commit, state, dispatch }, { project, files }) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return dispatch('getDropboxTasksImportationOptions', project).then(response => {
       if (response) {
         return api.importDropboxTasks(
@@ -373,7 +397,9 @@ const actions = {
         })
       }
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   /**
@@ -405,6 +431,9 @@ const actions = {
    * @returns {*}
    */
   importFlickrTasks ({ commit, state, dispatch }, { project, albumId }) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return dispatch('getFlickrTasksImportationOptions', project).then(response => {
       if (response) {
         return api.importFlickrTasks(
@@ -428,7 +457,9 @@ const actions = {
         })
       }
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   },
 
   /**
@@ -493,6 +524,9 @@ const actions = {
    * @return {Promise<any> | * | Promise<any> | Thenable<any> | PromiseLike<any> | Promise<any>}
    */
   importTwitterTasks ({ commit, state, dispatch }, { project, source, maxTweets }) {
+
+    commit('notification/showLoadingSpinner', true, { root: true })
+
     return dispatch('getTwitterTasksImportationOptions', project).then(response => {
       if (response) {
         return api.importTwitterTasks(
@@ -511,13 +545,15 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_FLICKR_TASKS_ERROR, content: reason
+            title: errors.POST_TWITTER_TASKS_ERROR, content: reason
           }, { root: true })
           return false
         })
       }
       return false
-    })
+    }).finally(() =>
+        commit('notification/showLoadingSpinner', false, { root: true })
+    )
   }
 
 }
