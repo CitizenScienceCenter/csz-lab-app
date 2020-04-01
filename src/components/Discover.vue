@@ -25,7 +25,7 @@
               <b-row class="mt-3">
                 <b-col>
                   <b-pagination
-                          v-if="categoryPagination[category.short_name].total > categoryPagination[category.short_name].per_page"
+                          v-if="categoryPagination[category.short_name] && categoryPagination[category.short_name].total > categoryPagination[category.short_name].per_page"
                           v-model="categoryCurrentPage[category.id]"
                           @change="pageChange($event, category)"
                           align="center"
