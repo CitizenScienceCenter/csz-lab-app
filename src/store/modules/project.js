@@ -57,6 +57,34 @@ const getters = {
   },
   getUserProgressInPercent: state => {
     return state.selectedProjectUserProgress.done / state.selectedProjectUserProgress.total * 100
+  },
+
+  projects: state => {
+    let projects = []
+    for (const categoryId in state.categoryProjects) {
+      if (categoryId !== 'featured') {
+        projects = projects.concat(state.categoryProjects[categoryId])
+      }
+    }
+    return projects
+  },
+
+  globalPagination: state => {
+    const pagination = {
+      next: false,
+      page: 1,
+      per_page: 20,
+      prev: false,
+      total: 0
+    }
+
+    for (const categoryId in state.categoryPagination) {
+      if (categoryId !== 'featured') {
+        pagination.total += state.categoryPagination[categoryId].total
+      }
+    }
+
+    return pagination
   }
 }
 
