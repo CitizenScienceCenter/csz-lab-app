@@ -39,11 +39,11 @@
         }),
         methods: {
             ...mapActions('user', [
-                'resetPassword'
+                'forgotPassword'
             ]),
 
             onSubmit () {
-                this.resetPassword()
+                this.forgotPassword(this.form.email)
             }
         }
     }

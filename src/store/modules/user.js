@@ -29,7 +29,7 @@ const state = {
   registrationOptions: {},
   profileUpdateOptions: {},
   resetApiKeyOptions: {},
-  resetPasswordOptions: {}
+  forgotPasswordOptions: {}
 }
 
 // filter methods on the state data
@@ -132,10 +132,9 @@ const actions = {
     })
   },
 
-  getResetPasswordOptions ({ commit }) {
-    return api.forgotPassword().then(value => {
-      commit('setResetPasswordOptions', value.data)
-      // console.log(value.data)
+  getForgotPasswordOptions ({ commit }) {
+    return api.getForgotPasswordOptions().then(value => {
+      commit('setForgotPasswordOptions', value.data)
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
@@ -145,13 +144,21 @@ const actions = {
     })
   },
 
-  resetPassword ({ commit, dispatch }, email) {
-    return dispatch('getResetPasswordOptions').then(value => {
+  forgotPassword ({ commit, dispatch }, email) {
+    return dispatch('getForgotPasswordOptions').then(value => {
       if (value) {
-        return api.resetPassword(state.resetPasswordOptions.form.csrf, email).then(response => {
-          console.log(response.data)
-          // TODO: check the API response
-          return true
+        return api.forgotPassword(state.forgotPasswordOptions.form.csrf, email).then(response => {
+          if (response.data.status === 'success') {
+            commit('notification/showSuccess', {
+              title: 'Email sent', content: response.data.flash
+            }, { root: true })
+            return true
+          } else {
+            commit('notification/showError', {
+              title: 'Error', content: response.data.flash
+            }, { root: true })
+            return false
+          }
         }).catch(reason => {
           commit('notification/showError', {
             title: 'Error during reset password', content: reason
@@ -446,8 +453,8 @@ const mutations = {
   setRegistrationOptions (state, options) {
     state.registrationOptions = options
   },
-  setResetPasswordOptions (state, options) {
-    state.resetPasswordOptions = options
+  setForgotPasswordOptions (state, options) {
+    state.forgotPasswordOptions = options
   },
   setUserInfos (state, infos) {
     state.infos = infos
