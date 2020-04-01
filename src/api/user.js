@@ -113,24 +113,19 @@ export default {
 
   forgotPassword () {
     return axios.get(process.env.BASE_ENDPOINT_URL + 'account/forgot-password', {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrf
-      }
+      data: {},
+      withCredentials: true
     })
   },
 
   resetPassword (csrf, email) {
     return axios.post(process.env.BASE_ENDPOINT_URL + 'account/reset-password', {
-        form: {
-          email_addr: email
-        },
-        template: "account/password_forgot.html"
-      }, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrf
-      }
+      email_addr: email
+    }, {
+        withCredentials: true,
+        headers: {
+          'X-CSRFToken': csrf
+        }
     })
   },
 

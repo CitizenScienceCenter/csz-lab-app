@@ -135,6 +135,7 @@ const actions = {
   getResetPasswordOptions ({ commit }) {
     return api.forgotPassword().then(value => {
       commit('setResetPasswordOptions', value.data)
+      // console.log(value.data)
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
@@ -148,6 +149,7 @@ const actions = {
     return dispatch('getResetPasswordOptions').then(value => {
       if (value) {
         return api.resetPassword(state.resetPasswordOptions.form.csrf, email).then(response => {
+          console.log(response.data)
           // TODO: check the API response
           return true
         }).catch(reason => {

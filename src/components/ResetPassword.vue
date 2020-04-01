@@ -9,8 +9,7 @@
                     <b-form-group
                             id="input-group-1"
                             :label="$t('login-input-email')"
-                            label-for="email"
-                            :description="$t('login-input-email-description')">
+                            label-for="email">
                         <b-form-input
                                 id="email"
                                 v-model="form.email"
