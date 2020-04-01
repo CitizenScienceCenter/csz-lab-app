@@ -22,6 +22,7 @@ import TaskSchedulerSetting from '@/components/Project/Menu/TaskMenu/Settings/Ta
 import TaskRedundancySetting from '@/components/Project/Menu/TaskMenu/Settings/TaskRedundancySetting'
 import TaskPrioritySetting from '@/components/Project/Menu/TaskMenu/Settings/TaskPrioritySetting'
 import FlickrCallback from '@/components/Task/Builder/FlickrCallback'
+import ResetPassword from '@/components/ResetPassword'
 
 export const routes = [
     {
@@ -43,6 +44,11 @@ export const routes = [
                 path: 'register',
                 name: 'register',
                 component: Registration
+              },
+              {
+                path: 'reset-password',
+                name: 'reset-password',
+                component: ResetPassword
               },
               {
                 path: 'logout',

@@ -22,6 +22,7 @@ import TaskSchedulerSetting from '@/components/Project/Menu/TaskMenu/Settings/Ta
 import TaskRedundancySetting from '@/components/Project/Menu/TaskMenu/Settings/TaskRedundancySetting'
 import TaskPrioritySetting from '@/components/Project/Menu/TaskMenu/Settings/TaskPrioritySetting'
 import FlickrCallback from '@/components/Task/Builder/FlickrCallback'
+import ResetPassword from '@/components/components/ResetPassword'
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ const router = new Router({
       path: '/register',
       name: 'register',
       component: Registration
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: ResetPassword
     },
     {
       path: '/logout',
@@ -304,7 +310,7 @@ const router = new Router({
 })
 
 const publicRoutes = [
-  'home', 'login', 'register', 'logout', 'discover', 'about', 'project', 'project.task.presenter'
+  'home', 'login', 'register', 'logout', 'discover', 'about', 'project', 'project.task.presenter', 'reset-password'
 ]
 
 router.beforeEach((to, from, next) => {

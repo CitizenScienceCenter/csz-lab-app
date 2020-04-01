@@ -28,7 +28,8 @@ const state = {
 
   registrationOptions: {},
   profileUpdateOptions: {},
-  resetApiKeyOptions: {}
+  resetApiKeyOptions: {},
+  resetPasswordOptions: {}
 }
 
 // filter methods on the state data
@@ -127,6 +128,35 @@ const actions = {
       commit('notification/showError', {
         title: 'Sign in not available', content: reason
       }, { root: true })
+      return false
+    })
+  },
+
+  getResetPasswordOptions ({ commit }) {
+    return api.forgotPassword().then(value => {
+      commit('setResetPasswordOptions', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Reset password not available', content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  resetPassword ({ commit, dispatch }, email) {
+    return dispatch('getResetPasswordOptions').then(value => {
+      if (value) {
+        return api.resetPassword(state.resetPasswordOptions.form.csrf, email).then(response => {
+          // TODO: check the API response
+          return true
+        }).catch(reason => {
+          commit('notification/showError', {
+            title: 'Error during reset password', content: reason
+          }, { root: true })
+          return false
+        })
+      }
       return false
     })
   },
@@ -413,6 +443,9 @@ const mutations = {
   },
   setRegistrationOptions (state, options) {
     state.registrationOptions = options
+  },
+  setResetPasswordOptions (state, options) {
+    state.resetPasswordOptions = options
   },
   setUserInfos (state, infos) {
     state.infos = infos
