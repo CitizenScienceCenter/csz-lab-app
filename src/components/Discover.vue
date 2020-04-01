@@ -6,13 +6,13 @@
           <b-tabs pills align="center">
 
             <!-- All projects fake category -->
-            <b-tab :title="'All (' + projects.length + ')'">
+            <b-tab :title=" $t('all-text-c') + ' (' + projects.length + ')'">
 
               <!-- The list of projects -->
               <b-row>
                 <p class="text-center m-3" v-if="projects.length < 1">{{ $t('discover-no-projects') }}</p>
                 <b-col :key="project.id" v-for="project in categoryAll.showedProjects" md="4" class="mt-3">
-                  <app-project-card :project="project" :buttonText="'Take a look'"></app-project-card>
+                  <app-project-card :project="project" :buttonText="$t('take-a-look-btn')"></app-project-card>
                 </b-col>
               </b-row>
 
@@ -33,15 +33,15 @@
 
             <!-- A tab for each category -->
             <b-tab
-                    v-for="category in allCategories"
-                    :key="category.id"
-                    :title="category.name + (category.short_name in categoryPagination ? ' (' + categoryPagination[category.short_name].total + ')' : '')"
+              v-for="category in allCategories"
+              :key="category.id"
+              :title="category.name + (category.short_name in categoryPagination ? ' (' + categoryPagination[category.short_name].total + ')' : '')"
             >
               <!-- The list of projects -->
               <b-row>
                 <p class="text-center m-3" v-if="!categoryProjects[category.short_name] || categoryProjects[category.short_name].length < 1">{{ $t('discover-category-no-project') }}</p>
                 <b-col :key="project.id" v-for="project in categoryProjects[category.short_name]" md="4" class="mt-3">
-                  <app-project-card :project="project" :buttonText="'Take a look'"></app-project-card>
+                  <app-project-card :project="project" :buttonText="$t('take-a-look-btn')"></app-project-card>
                 </b-col>
               </b-row>
 

@@ -21,7 +21,7 @@
           <b-row>
             <p v-if="projects.length < 1">{{ $t('home-no-featured-projects') }}</p>
             <b-col :key="project.id" v-for="project in projects" md="4" class="mt-3">
-              <app-project-card :project="project" :buttonText="'Take a look'"></app-project-card>
+              <app-project-card :project="project" :buttonText="$t('take-a-look-btn')"></app-project-card>
             </b-col>
           </b-row>
 
