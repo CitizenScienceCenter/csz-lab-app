@@ -69,13 +69,15 @@
           </div> 
         -->
       <div class="uzh-eth">
-        <span v-if="this.$i18n.locale === 'en'">A joint initiative by</span>
-        <span v-else>Ein gemeinsamer Effort von</span>
+        <p v-if="this.$i18n.locale === 'en'">A joint initiative by</p>
+        <p v-else>Ein gemeinsamer Effort von</p>
         <div>
             <a href="https://citizenscience.ch" class="home-link home-link-platform" target="_blank">
               <img src="@/assets/logo-white.svg">
             </a> &nbsp;
-            <img alt="University of Zurich / ETH Zurich" src="@/assets/CCL-logo-all-white.png" @click="logoClick($event)"/>
+            <a href="http://www.citizencyberlab.org/" class="home-link home-link-platform" target="_blank">
+              <img src="@/assets/CCL-logo-all-white.png" />
+            </a> &nbsp;
         </div>
       </div>
 
@@ -305,6 +307,14 @@ export default {
       color: white;
       display: block;
       margin-bottom: $spacing-2;
+    }
+
+    p {
+      font-size: $font-size-small/1.25;
+      color: white;
+      display: block;
+      margin-bottom: $spacing-2;
+      margin-top:10px;
     }
 
     img {

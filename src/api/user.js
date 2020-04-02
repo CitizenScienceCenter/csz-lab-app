@@ -144,21 +144,26 @@ export default {
   },
 
   getResetPasswordOptions () {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'account/reset-password?key=.eJwNirsOwyAMAP_FytgBExkon9C5S0ZjTPoMEajtUPXfyw233H3h1bVBhG3V2tb65K0-rh0OsHPvn9ryaHu652Jjv7AlF5HMYLot1fjz6T0dHTMFLx4lp1lIkFkRiwz5wMglzxmDOiKryYgG73hcznIwBhF-fzJiKFU.XoX-fw._PIsY21SL4bt0yns2Y0XOX6nL_Q', {
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'account/reset-password', {
+      params : {
+        key:".eJwNirsOwyAMAP8FZewA5hXzNwbsBKUNUVDVoeq_l1tuuPuq9-BbJXVu3O-tv-jszzbUQ100xqffdbYrH1UgjZ3Ah2S8niyllYb7QQuAgdVRkOJB2xjMfDkiW_G6sgacEhepRnCRS_AokrFkzGCsxVX9_hIMJ-s.XoYwgA.STcNruklKW_Rwzl5GSXM1F-Edz8"
+      },
       data: {},
       withCredentials: true
     })
   },
 
   resetPassword (csrf, form) {
-    return axios.post(process.env.BASE_ENDPOINT_URL + 'account/reset-password', {
-      ...form
-    }, {
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'account/reset-password',
+     {
+      new_password: form.newPassword,
+      confirm: form.passwordConfirmation
+      },{
         withCredentials: true,
         headers: {
           'X-CSRFToken': csrf
         }
     })
-  },
+  }
 
 }

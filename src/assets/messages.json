@@ -158,7 +158,7 @@
 
         "summary-builder-congrats":"Congratulations!",
         "summary-builder-just-created-project":"You just created the homepage for your project ",
-        "summary-builder-keep-going":"WYou can now move to the part dedicated to the data and analysis workflow.",
+        "summary-builder-keep-going":"You can now move to the part dedicated to the data and analysis workflow.",
         "summary-builder-comeon":"Continue",
         "summary-builder-leave-later":"You can also continue later and visit your",
         "summary-builder-project-page":"project's page",
@@ -680,8 +680,11 @@
 
        "information-builder-few-words":"in wenigen Worten",
        "information-builder-short-descripton":"Kurzbeschreibung des Projekts",
+       "information-builder-describe":"Beschreiben",
        "information-builder-descripton":"Beschreibung",
-       "information-builder-tip":"TIPP! Einige Personen werden nur diesen Text über Ihr Projekt lesen und dann entscheiden, ob sie mitmachen möchten oder nicht. Versuchen Sie informativ und ansprechend zu formulieren. Abbildungen: Achten Sie bei der Verwendung von Bildern aus dem Internet darauf, dass Sie Urheberrechte und Lizenzgebühren einhalten. Mehr dazu finden Sie in unseren Allgemeinen Geschäftsbedingungen (Link).",
+       "information-builder-tip1":"Einige Personen werden nur diesen Text über Ihr Projekt lesen und dann entscheiden, ob sie mitmachen möchten oder nicht. Versuchen Sie informativ und ansprechend zu formulieren. Abbildungen: Achten Sie bei der Verwendung von Bildern aus dem Internet darauf, dass Sie Urheberrechte und Lizenzgebühren einhalten. Mehr dazu finden Sie in unseren Allgemeinen Geschäftsbedingungen (Link).",
+       "information-builder-tip2":"Abbildungen: Achten Sie bei der Verwendung von Bildern aus dem Internet darauf, dass Sie Urheberrechte und Lizenzgebühren einhalten. Mehr dazu finden Sie in unseren Allgemeinen Geschäftsbedingungen {terms}.",
+
        "information-builder-choose-picture":"Wählen Sie ein passendes Titelbild für Ihr Projekt aus.",
        "information-builder-description-error":"Sie müssen eine Beschreibung für Ihr Projekt angeben.",
        "information-builder-character-exceed":"Die angegebene Länge der Beschreibung sollte nicht überschritten werden.",
@@ -693,7 +696,8 @@
        "name-builder-project-title-error":"Sie müssen einen Titel für Ihr Projekt festlegen",
        "name-builder-project-character-exceed":"Der Titel Länge sollte nicht überschritten werden.",
 
-       "Story-builder-project-info":"Mehr über Ihr Projekt.",
+       "story-builder-project-tip":"Diese Informationen bilden die Homepage Ihres Projekts. Nachdem Sie auf WEITER geklickt haben, können Sie diese Seite erst am Ende des Erstellungsprozesses bearbeiten.",
+       "story-builder-project-info":"Mehr über Ihr Projekt.",
        "story-builder-project-info-label-1":"Was & Warum",
        "story-builder-project-info-description-1":"Erklären Sie in einfachen Worten den Zweck Ihres Projekts und warum es wichtig ist.",
        "story-builder-project-info-label-2":"Wie",
@@ -715,7 +719,7 @@
        "project-statistic-menu-published-results":"Veröffentlichte Ergebnisse",
        "project-statistic-menu-tasks":"Aufgaben",
        "project-statistic-menu-crafters":"crafters",
-       "Project-statistic-menu-tasks-done":"Erledigte Aufgaben",
+       "project-statistic-menu-tasks-done":"Erledigte Aufgaben",
        "project-statistic-menu-pending-tasks":"Ausstehende Aufgaben",
 
        "project-task-menu-import":"Importieren",
@@ -995,7 +999,13 @@
        "template-renderer-not-allowed-contribute":"Sie dürfen nicht teilnehmen",
        "template-renderer-not-allowed-anonymous":"Dieses Projekt erlaubt keine anonymen Beitragenden",
        
-       "avatar-update-message-succes":"Ihr Avatar wurde aktualisiert! Das Aktualisieren kann einige Minuten dauern ..."
+       "avatar-update-message-succes":"Ihr Avatar wurde aktualisiert! Das Aktualisieren kann einige Minuten dauern ...",
+
+       "info-c":"Info",
+        "statistics-c":"Statistiken",
+        "settings-c":"Einstellungen",
+
+        "cancel-c":"Stornieren"
 
 
     }

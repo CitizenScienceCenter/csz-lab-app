@@ -70,15 +70,7 @@ export default {
     onSubmit () {
       if (this.passwordConfirmed) {
         const form = this.form
-        this.resetPassword({
-          form: {
-            new_password: form.newPassword,
-            confirm: form.passwordConfirmation,
-            csrf_token: "",
-            current_password: "",
-            errors: {}
-          }
-        }).then(() => {
+        this.resetPassword(form).then(() => {
           // reset the form
           Object.keys(this.form).forEach(key => {
             this.form[key] = ''
