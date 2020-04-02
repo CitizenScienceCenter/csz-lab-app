@@ -74,7 +74,9 @@
         "password-editor-new-password-confirmation-placeholder":"Password confirmation",
         "password-editor-save-the-changes":"Save the changes",
 
-        "reset-password": "Reset password",
+        "login-forgot-password": "Forgot password",
+
+        "reset-password":"Reset password",
 
         "profile-data-export-text":"You will get an email when your personal data is available for download. You will get access to your personal data, your contributions and all the projects you have created",
         "profile-data-export-btn":"Export your data",
@@ -577,6 +579,9 @@
        "login-input-password-placeholder":"Passwort",
        "login-not-registered":"Noch nicht registriert?",
        "login-not-signup":"Jetzt kostenlos registrieren",
+       "login-forgot-password": "Passwort vergessen",
+
+       "reset-password":"Passwort zurücksetzen",
 
        "register-header":"Registrierung",
        "register-fullname":"Vollständiger Name",
@@ -933,7 +938,64 @@
        "project-picture-select-a-picture":"Sie müssen ein Bild auswählen, um es hochzuladen.",
 
        "error-incomplete-form":"Unvollständiges Formular",
-       "all-fields-validated":"Alle Felder müssen ausgefüllt werden, um die Projektdaten zu aktualisieren"
+       "all-fields-validated":"Alle Felder müssen ausgefüllt werden, um die Projektdaten zu aktualisieren",
+
+       "task-settings-menu":"Aufgabeneinstellungen",
+       "task-settings-menu-scheduler-text":"Ändern Sie, wie die Aufgaben an Freiwillige übermittelt werden",
+       "task-settings-menu-priority-text":"Priorität der Aufgaben ändern",
+       "task-settings-menu-delete-text":"Alle Aufgaben und zugehörigen Antworten löschen",
+       "task-settings-menu-redundancy-text":"Redundanzstufe für die Aufgaben ändern",
+
+
+       "task-settings-scheduler":"Aufgabenplaner",
+       "task-settings-scheduler-ul":"Sie können aus folgenden Planern auswählen:",
+       "task-settings-scheduler-list1c":"zu einer Aufgabe gehen, die noch nicht abgeschlossen wurde (die erforderliche Anzahl von Antworten wurde noch nicht erreicht), mit Ausnahme der bereits vom aktuellen Benutzer beantworteten.",
+       "task-settings-scheduler-list2b":"zu einer Aufgabe gehen, die die geringste Anzahl von Ausführungen (Antworten) aufweist, mit Ausnahme derjenigen, die bereits vom aktuellen Benutzer beantwortet wurden.",
+       "task-settings-scheduler-list3b":"zu einer Aufgabe gehen, an der der aktuelle Benutzer nicht gearbeitet hat. Der Aufgabenstatus wird nicht berücksichtigt.",
+       "task-settings-scheduler-invalid-feedback":"Das Projekt verwendet derzeit keinen Aufgabenplaner",
+
+       "task-settings-priority":"Aufgabenpriorität",
+       "task-settings-priority-text1":"Sie können die Priorität einer oder mehrerer Aufgaben ändern, indem Sie eine Liste von Aufgaben-IDs erstellen, die durch Kommas getrennt sind.",
+       "task-settings-priority-lowest":"Die niedrigste Priorität ist",
+       "task-settings-priority-highest":"und die höchste Priorität ist",
+       "task-settings-priority-important-texta":"Der Prioritätswert wird nur eingehalten, wenn der",
+       "task-settings-priority-important-textb":"Standard-Planer",
+       "Task-settings-priority-important-textc":"ausgewählt wurde",
+       "task-settings-priority-taskid-description":"Durch Kommas getrennte Task IDs, zum Beispiel 3,532,100",
+       "task-settings-priority-value-between":"Prioritätswert zwischen 0,0 und 1,0",
+
+       "task-settings-delete":"Aufgaben löschen",
+       "task-settings-delete-header":"Alle Aufgaben und Aufgaben-Ausführungen löschen",
+       "Task-settings-delete-danzer-note":"wenn sie die Aufgaben und Aufgaben-Ausführungen löschen, sind sie für immer verschwunden. Sie können diese Aktion nicht rückgängig machen!",
+       "task-settings-delete-confirm-note":"Sind Sie sicher, dass Sie alle Aufgaben und zugehörigen Ausführungen löschen möchten?",
+       "task-settings-delete-confirm-no":"Nein, nichts löschen!",
+
+       "task-settings-redundancy":"Aufgaben Redundanz",
+       "task-settings-redundancy-header":"Aufgaben Redundanz",
+       "task-settings-redundancy-description-placeholder":"Die Anzahl der Antworten pro Aufgabe, die Sie für das Projekt wünschen",
+
+       "task-presenter-menu-headera":"Verwenden Sie eine der folgenden verfügbaren",
+       "task-presenter-menu-headerb":"Vorlagen",
+       "Task-presenter-menu-headerc":"für Ihr Projekt",
+       "task-presenter-menu-basic":"Einfach",
+       "task-presenter-menu-basic1":"Die einfachste Vorlage",
+       "task-presenter-menu-skills":"Kompetenzen",
+       "task-presenter-menu-sound":"Erkennen von Klangmustern",
+       "task-presenter-menu-sound1":"SoundCloud-Vorlage verwenden",
+       "task-presenter-menu-geocoding1":"Urban Park-Vorlage verwenden",
+       "task-presenter-menu-image":"Erkennen von Bildmustern",
+       "task-presenter-menu-image1":"Flickr Person Finder-Vorlage verwenden",
+       "task-presenter-menu-video":"Erkennen von Video-Mustern",
+       "task-presenter-menu-video1":"Vimeo-Vorlage verwenden",
+       "task-presenter-menu-transcribe":"Dokumente transkribieren",
+       "task-presenter-menu-transcribe1":"PDF Transkriptions-Vorlage verwenden",
+
+       "about-overview":"Übersicht",
+
+       "template-renderer-not-allowed-contribute":"Sie dürfen nicht teilnehmen",
+       "template-renderer-not-allowed-anonymous":"Dieses Projekt erlaubt keine anonymen Beitragenden",
+       
+       "avatar-update-message-succes":"Ihr Avatar wurde aktualisiert! Das Aktualisieren kann einige Minuten dauern ..."
 
 
     }

@@ -42,7 +42,7 @@
       <b-col>
         <p class="text-center">{{$t('login-not-registered')}} <b-link :to="{ name: 'register' }">{{$t('login-not-signup')}}</b-link></p>
         <p class="text-center">
-          <b-link :to="{ name: 'reset-password' }">{{$t('reset-password')}}</b-link>
+          <b-link :to="{ name: 'reset-password' }">{{$t('login-forgot-password')}}</b-link>
         </p>
       </b-col>
     </b-row>
