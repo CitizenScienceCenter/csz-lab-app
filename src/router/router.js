@@ -9,7 +9,7 @@ export const router = new VueRouter({
 });
 
 const publicRoutes = [
-    'home', 'login', 'register', 'logout', 'discover', 'about', 'project', 'project.task.presenter', 'reset-password'
+    'home', 'login', 'register', 'logout', 'discover', 'about', 'project', 'project.task.presenter', 'reset-password','recover-password'
   ]
 
 router.beforeEach((to, from, next) => {

@@ -23,6 +23,7 @@ import TaskRedundancySetting from '@/components/Project/Menu/TaskMenu/Settings/T
 import TaskPrioritySetting from '@/components/Project/Menu/TaskMenu/Settings/TaskPrioritySetting'
 import FlickrCallback from '@/components/Task/Builder/FlickrCallback'
 import ResetPassword from '@/components/ResetPassword'
+import RecoverPassword from '@/components/RecoverPassword'
 
 export const routes = [
     {
@@ -49,6 +50,19 @@ export const routes = [
                 path: 'reset-password',
                 name: 'reset-password',
                 component: ResetPassword
+              },
+              {
+                path: 'account/reset-password',
+                name: 'recover-password',
+                component: RecoverPassword,
+                query: { plan: 'private' },
+                beforeEnter(to, from, next) {
+                  if(!to.fullPath.includes('?key=')){
+                    next({ name: 'home' })
+                  } else{
+                    next()
+                  }
+                }
               },
               {
                 path: 'logout',
