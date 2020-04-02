@@ -52,11 +52,11 @@
 
     </b-navbar>
 
-    <div id="content" style="padding-bottom: 11.5rem;"> 
+    <div class="main-content" > 
       <router-view/>
     </div> 
 
-    <footer class="footer" style="position:absolute; bottom:0px; width:100%; overflow:hidden;">
+    <div class="footer">
       <!--<div v-if="!platform" class="logo-wrapper">
             <a href="https://citizenscience.ch" class="home-link home-link-platform" target="_blank">
               <img src="@/assets/logo-white.svg">
@@ -122,7 +122,7 @@
           <router-link :to="{ name: 'about' }">Criteria for project publication</router-link>
         </p>
       </div>
-    </footer>
+    </div>
 
     <!-- Notification toasts -->
     <b-toast
@@ -174,6 +174,7 @@
     </loading>
 
   </div>
+
 </template>
 
 <script>
@@ -228,25 +229,24 @@ export default {
       closeInfo: 'notification/closeInfo',
       closeSuccess: 'notification/closeSuccess'
     }),
-
     ...mapActions('user', [
       'getAccountProfile'
     ]),
     openInNewTab: function(url) {
-        var win = window.open(url, '_blank');
-        win.focus();
-      },
-      logoClick: function(e) {
-          var rect = e.target.getBoundingClientRect();
-          var x = e.clientX - rect.left;
-          var width = rect.width;
-          if( x < width/2 ) {
-              this.openInNewTab('https://www.uzh.ch');
-          }
-          else {
-              this.openInNewTab('https://www.ethz.ch');
-          }
+      var win = window.open(url, '_blank');
+      win.focus();
+    },
+    logoClick: function(e) {
+      var rect = e.target.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var width = rect.width;
+      if( x < width/2 ) {
+        this.openInNewTab('https://www.uzh.ch');
       }
+      else {
+        this.openInNewTab('https://www.ethz.ch'); 
+      }
+    }
   }
 }
 </script>
@@ -276,9 +276,16 @@ export default {
         align-self: flex-start;
       }
 
+  .main-content {
+    padding-bottom: 11.5rem;
+  }
+
   .footer {
     background: linear-gradient(120deg, $color-gradient-start, $color-gradient-end );
-    position: relative;
+    position:absolute; 
+    bottom:0px; 
+    width:100%; 
+    overflow:hidden;
 
   .logo-wrapper {
     padding-top: $spacing-5;
