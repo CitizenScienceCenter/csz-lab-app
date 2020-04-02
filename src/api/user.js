@@ -141,5 +141,24 @@ export default {
       data: {},
       withCredentials: true
     })
-  }
+  },
+
+  getResetPasswordOptions () {
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'account/reset-password?key=.eJwNirsOwyAMAP_FytgBExkon9C5S0ZjTPoMEajtUPXfyw233H3h1bVBhG3V2tb65K0-rh0OsHPvn9ryaHu652Jjv7AlF5HMYLot1fjz6T0dHTMFLx4lp1lIkFkRiwz5wMglzxmDOiKryYgG73hcznIwBhF-fzJiKFU.XoX-fw._PIsY21SL4bt0yns2Y0XOX6nL_Q', {
+      data: {},
+      withCredentials: true
+    })
+  },
+
+  resetPassword (csrf, form) {
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'account/reset-password', {
+      ...form
+    }, {
+        withCredentials: true,
+        headers: {
+          'X-CSRFToken': csrf
+        }
+    })
+  },
+
 }

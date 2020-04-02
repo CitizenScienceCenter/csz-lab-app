@@ -170,6 +170,46 @@ const actions = {
     })
   },
 
+  getResetPasswordOptions ({ commit }) {
+    return api.getResetPasswordOptions().then(value => {
+      commit('setResetPasswordOptions', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Reset password not available', content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+
+  resetPassword ({ commit, dispatch }, form) {
+    return dispatch('getResetPasswordOptions').then(value => {
+      if (value) {
+        return api.resetPassword(state.resetPasswordOptions.form.csrf, form).then(response => {
+          if (response.data.status === 'success') {
+            commit('notification/showSuccess', {
+              title: 'Email sent', content: response.data.flash
+            }, { root: true })
+            return true
+          } else {
+            commit('notification/showError', {
+              title: 'Error', content: response.data.flash
+            }, { root: true })
+            return false
+          }
+        }).catch(reason => {
+          commit('notification/showError', {
+            title: 'Error during reset password', content: reason
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+    
+  },
+
   /**
    * Returns all the data about the logged user (session login)
    * @param commit
@@ -455,6 +495,9 @@ const mutations = {
   },
   setForgotPasswordOptions (state, options) {
     state.forgotPasswordOptions = options
+  },
+  setResetPasswordOptions (state, options) {
+    state.resetPasswordOptions = options
   },
   setUserInfos (state, infos) {
     state.infos = infos

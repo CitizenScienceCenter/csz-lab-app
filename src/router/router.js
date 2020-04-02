@@ -55,9 +55,10 @@ router.beforeEach((to, from, next) => {
         }
 
     } else{
-        console.log('redirect to');
-        console.log( '/'+ i18n.locale + to.path );
-        next( '/'+ i18n.locale + to.path );
+        console.log('redirect to')
+        console.log(to.fullPath)
+        console.log( '/'+ i18n.locale + to.fullPath );
+        next( '/'+ i18n.locale + to.fullPath );
     }
 
 

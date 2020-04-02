@@ -47,20 +47,16 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  name: 'PasswordEditor',
+  name: 'PasswordRecover',
   data: () => {
     return {
       form: {
-        currentPassword: '',
         newPassword: '',
         passwordConfirmation: ''
       }
     }
   },
   computed: {
-    ...mapState('user', {
-      profile: state => state.infos
-    }),
 
     passwordConfirmed () {
       return this.form.newPassword === this.form.passwordConfirmation
@@ -68,18 +64,19 @@ export default {
   },
   methods: {
     ...mapActions('user', [
-      'updatePassword'
+      'resetPassword'
     ]),
 
     onSubmit () {
       if (this.passwordConfirmed) {
         const form = this.form
-        this.updatePassword({
-          user: this.profile,
+        this.resetPassword({
           form: {
-            current_password: form.currentPassword,
             new_password: form.newPassword,
-            confirm: form.passwordConfirmation
+            confirm: form.passwordConfirmation,
+            csrf_token: "",
+            current_password: "",
+            errors: {}
           }
         }).then(() => {
           // reset the form

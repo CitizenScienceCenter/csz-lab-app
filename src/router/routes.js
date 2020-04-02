@@ -55,14 +55,7 @@ export const routes = [
                 path: 'account/reset-password',
                 name: 'recover-password',
                 component: RecoverPassword,
-                query: { plan: 'private' },
-                beforeEnter(to, from, next) {
-                  if(!to.fullPath.includes('?key=')){
-                    next({ name: 'home' })
-                  } else{
-                    next()
-                  }
-                }
+                query: { plan: 'private' }
               },
               {
                 path: 'logout',
