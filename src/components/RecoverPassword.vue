@@ -71,7 +71,7 @@ export default {
       if (this.passwordConfirmed) {
         const form = this.form
         this.resetPassword(form).then(() => {
-          // reset the form
+          // reset the form=
           Object.keys(this.form).forEach(key => {
             this.form[key] = ''
           })

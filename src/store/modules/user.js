@@ -29,7 +29,8 @@ const state = {
   registrationOptions: {},
   profileUpdateOptions: {},
   resetApiKeyOptions: {},
-  forgotPasswordOptions: {}
+  forgotPasswordOptions: {},
+  recoverKey:false
 }
 
 // filter methods on the state data
@@ -170,8 +171,8 @@ const actions = {
     })
   },
 
-  getResetPasswordOptions ({ commit }) {
-    return api.getResetPasswordOptions().then(value => {
+  getResetPasswordOptions ({ commit },key) {
+    return api.getResetPasswordOptions(key).then(value => {
       commit('setResetPasswordOptions', value.data)
       return value.data
     }).catch(reason => {
@@ -184,7 +185,7 @@ const actions = {
 
 
   resetPassword ({ commit, dispatch }, form) {
-    return dispatch('getResetPasswordOptions').then(value => {
+    return dispatch('getResetPasswordOptions',state.recoverKey).then(value => {
       if (value) {
         return api.resetPassword(state.resetPasswordOptions.form.csrf, form).then(response => {
           if (response.data.status === 'success') {
@@ -522,6 +523,9 @@ const mutations = {
   },
   setBirthDateVerified (state, value) {
     state.isBirthDateVerified = value
+  },
+  setUrlRecoverKey(state,value){
+    state.recoverKey = value
   }
 }
 

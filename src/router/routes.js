@@ -55,7 +55,16 @@ export const routes = [
                 path: 'account/reset-password',
                 name: 'recover-password',
                 component: RecoverPassword,
-                query: { plan: 'private' }
+                query: { plan: 'private' },
+                beforeEnter: (to, from, next) => {
+                  let url = to.fullPath.split('?key=');
+                  if(url.length>1) {
+                    store.commit('user/setUrlRecoverKey', url[1])
+                    next()
+                  } else {
+                    next({ name: 'home' })
+                  } 
+                }
               },
               {
                 path: 'logout',

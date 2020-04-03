@@ -37,7 +37,7 @@
             </b-nav-item>
           </b-navbar-nav>
 
-          <b-navbar-nav>
+          <!--<b-navbar-nav>
             <div class="language-select custom-select" style="width:70px;">
               <div style="display: none;">
                 <router-link v-for="lang in languages" :to="'/'+lang+$route.path.substring(3)" :key="lang">{{lang}}</router-link>
@@ -46,7 +46,7 @@
                 <option v-for="lang in languages" :value="lang" :key="lang">{{lang}}</option>
               </select>
             </div>
-          </b-navbar-nav>
+          </b-navbar-nav>-->
 
         </b-collapse>
 

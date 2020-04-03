@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { dataURItoBlob } from '@/helper'
+import url from 'postcss-url'
 
 axios.defaults.headers['Content-Type'] = 'application/json'
 
@@ -143,10 +144,10 @@ export default {
     })
   },
 
-  getResetPasswordOptions () {
+  getResetPasswordOptions (urlkey) {
     return axios.get(process.env.BASE_ENDPOINT_URL + 'account/reset-password', {
       params : {
-        key:".eJwNirsOwyAMAP8FZewA5hXzNwbsBKUNUVDVoeq_l1tuuPuq9-BbJXVu3O-tv-jszzbUQ100xqffdbYrH1UgjZ3Ah2S8niyllYb7QQuAgdVRkOJB2xjMfDkiW_G6sgacEhepRnCRS_AokrFkzGCsxVX9_hIMJ-s.XoYwgA.STcNruklKW_Rwzl5GSXM1F-Edz8"
+        key:urlkey
       },
       data: {},
       withCredentials: true
@@ -157,7 +158,7 @@ export default {
     return axios.post(process.env.BASE_ENDPOINT_URL + 'account/reset-password',
      {
       new_password: form.newPassword,
-      confirm: form.passwordConfirmation
+      confirm: form.passwordConfirmation,
       },{
         withCredentials: true,
         headers: {
