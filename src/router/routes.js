@@ -35,6 +35,9 @@ export const routes = [
                 path: '',
                 name: 'home',
                 component: Home
+                /*,meta: {
+                  icon:"/favicon.ico" 
+                }*/
               },
               {
                 path: 'login',

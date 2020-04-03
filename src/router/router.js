@@ -19,6 +19,9 @@ router.beforeEach((to, from, next) => {
     console.log('split:');
 
     document.title = to.meta.title || 'CS project Builder';
+    
+    //const link = document.querySelector("[rel='icon']")
+    //link.setAttribute('href',to.meta.icon)
 
     let filteredPath = to.path.split('/').filter(element => element.length > 0);
     console.log( filteredPath );

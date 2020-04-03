@@ -1,6 +1,6 @@
 <template>
   
-  <div id="app" style="position: relative;min-height: 100vh;">
+  <div id="app" class="main-app">
 
     <b-navbar :sticky="true" toggleable="lg" type="light" variant="light">
 
@@ -256,6 +256,11 @@ export default {
 <style lang="scss">
   @import '@/styles/themes.scss';
   @import '@/styles/variables.scss';
+
+  .main-app {
+    position: relative;
+    min-height: 100vh;
+  }
 
   .select-options {
     height:28px;
