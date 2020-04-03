@@ -187,7 +187,7 @@ const actions = {
   resetPassword ({ commit, dispatch }, form) {
     return dispatch('getResetPasswordOptions',state.recoverKey).then(value => {
       if (value) {
-        return api.resetPassword(state.resetPasswordOptions.form.csrf, form).then(response => {
+        return api.resetPassword(state.resetPasswordOptions.form.csrf, form, state.recoverKey).then(response => {
           if (response.data.status === 'success') {
             commit('notification/showSuccess', {
               title: 'Email sent', content: response.data.flash

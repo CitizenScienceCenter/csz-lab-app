@@ -154,15 +154,11 @@ export default {
     })
   },
 
-  resetPassword (csrf, form) {
-    const data = new FormData()
-    data.append('new_password', form.newPassword)
-    data.append('confirm', form.passwordConfirmation)
-
+  resetPassword (csrf, form,key) {
     return axios.post(process.env.BASE_ENDPOINT_URL + 'account/reset-password',{
-      new_password: form.newPassword,
-      confirm: form.passwordConfirmation
-      },{
+      new_password:form.newPassword,
+      confirm:form.passwordConfirmation
+    },{
         withCredentials: true,
         headers: {
           'X-CSRFToken': csrf

@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
     console.log( 'navigate to: '+to.path );
     console.log('split:');
 
-    document.title = to.meta.title || 'CS project Builder';
+    document.title = to.meta.title || 'CS Project Builder';
     
     //const link = document.querySelector("[rel='icon']")
     //link.setAttribute('href',to.meta.icon)
