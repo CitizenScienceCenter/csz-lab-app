@@ -154,8 +154,8 @@ export default {
     })
   },
 
-  resetPassword (csrf, form,key) {
-    return axios.post(process.env.BASE_ENDPOINT_URL + 'account/reset-password',{
+  resetPassword (csrf, form, key) {
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'account/reset-password?key='+key,{
       new_password:form.newPassword,
       confirm:form.passwordConfirmation
     },{

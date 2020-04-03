@@ -57,7 +57,9 @@ export default {
     }
   },
   computed: {
-
+    ...mapState('user', {
+      userLogged: state => state.logged
+    }),
     passwordConfirmed () {
       return this.form.newPassword === this.form.passwordConfirmation
     }
@@ -75,6 +77,10 @@ export default {
           Object.keys(this.form).forEach(key => {
             this.form[key] = ''
           })
+
+          if (this.userLogged) {
+            this.$router.push({ name: 'home' })
+          }
         })
       }
     }

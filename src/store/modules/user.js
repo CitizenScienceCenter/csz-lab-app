@@ -192,6 +192,7 @@ const actions = {
             commit('notification/showSuccess', {
               title: 'Email sent', content: response.data.flash
             }, { root: true })
+            commit('setLogged')
             return true
           } else {
             commit('notification/showError', {
