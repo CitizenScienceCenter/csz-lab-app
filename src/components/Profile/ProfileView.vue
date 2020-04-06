@@ -16,14 +16,16 @@
           </b-col>
         </b-row>
         <b-row v-else>
-          <b-col class="text-center">
+          <b-col class="text-center" style="margin-top:30px;">
             <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">{{ $t('profile-view-create-a-project') }}</b-btn>
           </b-col>
         </b-row>
 
       </b-tab>
 
-      <b-tab title="Your contributions">
+      <b-tab 
+      :title="$t('profile-view-contributions-project')"
+      >
 
         <!-- The list of projects -->
         <b-row v-if="contributedProjects.length > 0">
@@ -35,7 +37,7 @@
           </b-col>
         </b-row>
         <b-row v-else>
-          <b-col class="text-center">
+          <b-col class="text-center" style="margin-top:30px;">
             <b-btn variant="outline-primary" :to="{ name: 'discover' }">{{ $t('profile-view-find-a-project') }}</b-btn>
           </b-col>
         </b-row>
@@ -54,7 +56,7 @@
           </b-col>
         </b-row>
         <b-row v-else>
-          <b-col class="text-center">
+          <b-col class="text-center" style="margin-top:30px;">
             <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">{{ $t('profile-view-create-a-project') }}</b-btn>
           </b-col>
         </b-row>

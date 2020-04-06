@@ -94,6 +94,7 @@
         "profile-header-contributions-to-project":"contributions to projects",
 
         "profile-view-draft-project":"Draft projects",
+        "profile-view-contributions-project":"Your contributions",
         "profile-view-publish-project":"Published projects",
         "profile-view-create-a-project":"Create a project",
         "profile-view-find-a-project":"Find a project",
@@ -551,7 +552,12 @@
         "statistics-c":"Statistics",
         "settings-c":"Settings",
 
-        "cancel-c":"Cancel"
+        "cancel-c":"Cancel",
+
+        "project":"project",
+        "project-c":"Project",
+        "projects":"projects",
+        "projects-c":"Projects"
 
 
     },
@@ -617,7 +623,7 @@
 
        "delete-profile-danzer-zone":"Gefahrenzone!",
        "delete-profile-delete-account":"Meinen Account löschen",
-       "Delete-profile-danger-description":"Wenn Sie Ihr Benutzerkonto löschen, werden alle Ihre persönlichen Daten vom Server und den Diensten Dritter entfernt. Ihre Beiträge werden anonymisiert. Dieser Vorgang kann nicht rückgängig gemacht werden!",
+       "delete-profile-danger-description":"Wenn Sie Ihr Benutzerkonto löschen, werden alle Ihre persönlichen Daten vom Server und den Diensten Dritter entfernt. Ihre Beiträge werden anonymisiert. Dieser Vorgang kann nicht rückgängig gemacht werden!",
        "delete-profile-are-you-sure":"Möchten Sie Ihren Account wirklich löschen? Dieser Vorgang kann nicht rückgängig gemacht werden!",
 
        "password-editor-current-password":"Aktuelles Passwort",
@@ -645,6 +651,7 @@
        "profile-header-contributions-to-project":"Beiträge zu Projekten",
 
        "profile-view-draft-project":"Projektentwürfe",
+       "profile-view-contributions-project":"Deine Beiträge",
        "profile-view-publish-project":"Veröffentlichte Projekte",
        "profile-view-create-a-project":"Projekt starten",
        "profile-view-find-a-project":"Projekt finden",
@@ -718,7 +725,7 @@
       
        "project-statistic-menu-published-results":"Veröffentlichte Ergebnisse",
        "project-statistic-menu-tasks":"Aufgaben",
-       "project-statistic-menu-crafters":"crafters",
+       "project-statistic-menu-crafters":"Crafters",
        "project-statistic-menu-tasks-done":"Erledigte Aufgaben",
        "project-statistic-menu-pending-tasks":"Ausstehende Aufgaben",
 
@@ -1005,7 +1012,12 @@
         "statistics-c":"Statistiken",
         "settings-c":"Einstellungen",
 
-        "cancel-c":"Stornieren"
+        "cancel-c":"Stornieren",
+
+        "project":"projekt",
+        "project-c":"Projekt",
+        "projects":"projekte",
+        "projects-c":"Projekte"
 
 
     }

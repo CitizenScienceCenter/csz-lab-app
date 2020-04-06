@@ -2,9 +2,10 @@
   <b-row>
     <b-col>
       <vue-cropper ref="cropper" v-show="pictureSelected" :src="selectedPicture" :autoCrop="true" :view-mode="2" :aspectRatio="+1"></vue-cropper>
-      <b-form-group :description="'Authorized formats: .jpg, .png, .gif, .svg. Maximum file size: ' + maxPictureSizeInMb + 'MB.'"
-                    :state="pictureSizeInMb <= maxPictureSizeInMb"
-                    invalid-feedback="The picture is too big"
+      <b-form-group 
+          :description=" $t('authorized-format') + ' ' + maxPictureSizeInMb + 'MB.'"
+          :state="pictureSizeInMb <= maxPictureSizeInMb"
+          :invalid-feedback="$t('picture-too-big')"
       >
         <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg"></b-form-file>
       </b-form-group>

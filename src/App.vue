@@ -37,6 +37,15 @@
             </b-nav-item>
           </b-navbar-nav>
 
+          <b-navbar-nav>
+            <b-nav-item-dropdown id="dropdownLang" right >
+              <template slot="button-content" >
+                {{ this.$i18n.locale }}
+              </template>
+              <b-dropdown-item  v-for="lang in languages" :to="'/'+lang+$route.path.substring(3)" :key="lang">{{lang}}</b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+
           <!--<b-navbar-nav>
             <div class="language-select custom-select" style="width:70px;">
               <div style="display: none;">
@@ -267,6 +276,10 @@ export default {
     width: 50px;
     border:0px;
     border-color: transparent;
+  }
+
+  #dropdownLang > ul{
+    min-width:1rem
   }
 
   .beta {

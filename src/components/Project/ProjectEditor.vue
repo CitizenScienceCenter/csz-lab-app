@@ -95,7 +95,7 @@
       <b-col md="5" class="mt-md-0 mt-5">
         <b-form ref="picture-form" @submit.prevent="onPictureSubmit">
           <b-form-group 
-              :description="'Authorized formats: .jpg, .png, .gif, .svg. Maximum file size: ' + maxPictureSizeInMb + 'MB.'"
+              :description=" $t('authorized-format')+ ' ' + maxPictureSizeInMb + 'MB.'"
               :state="pictureSizeInMb <= maxPictureSizeInMb"
               :invalid-feedback="$t('picture-too-big')"
           >
