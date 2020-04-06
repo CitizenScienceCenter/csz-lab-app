@@ -80,7 +80,7 @@ export default {
           this.selectedFiles = files
           this.files = files
         },
-        linkType: 'direct',
+        linkType: 'preview',
         multiselect: true
       }
       dropbox.choose(options)

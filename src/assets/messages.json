@@ -3,7 +3,7 @@
     "en": {
 
         "home-heading":"CITIZEN SCIENCE PROJECT BUILDER",
-        "home-subheading":"Contribute to existing projects or create your own.",
+        "home-subheading":"Contribute to existing projects or create your own",
         "home-create-a-project":"Create a project",
         "home-start-contributing": "Start contributing",
         "home-featured-projects":"Featured projects",
@@ -557,7 +557,7 @@
     },
     "de": {
       "home-heading":"CITIZEN SCIENCE PROJECT BUILDER",
-       "home-subheading":"Tragen Sie zu einem laufenden Projekt bei oder starten Sie Ihr eigenes.",
+       "home-subheading":"Tragen Sie zu einem laufenden Projekt bei oder starten Sie Ihr eigenes",
        "home-create-a-project":"Neues Projekt starten",
        "home-start-contributing": "Mitforschen",
        "home-featured-projects":"Unterstützte Projekte",
