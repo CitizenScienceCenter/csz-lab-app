@@ -19,6 +19,17 @@
             <b-nav-item :to="{ name: 'discover' }">{{ $t('app-vue-navigation-discover') }}</b-nav-item>
             <b-nav-item :to="{ name: 'about' }">{{ $t('app-vue-navigation-about') }}</b-nav-item>
           </b-navbar-nav>
+          
+
+          <b-navbar-nav>
+            <b-nav-item-dropdown id="dropdownLang" right >
+              <template slot="button-content" >
+                {{ this.$i18n.locale }}
+              </template>
+              <b-dropdown-item  v-for="lang in languages" :to="'/'+lang+$route.path.substring(3)" :key="lang">{{lang.toUpperCase()}}</b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+
           <b-navbar-nav>
             <b-nav-item v-if="!userLogged" :to="{ name: 'login' }">{{ $t('app-vue-navigation-login') }}</b-nav-item>
             <!--<b-nav-item v-if="!userLogged" :to="{ name: 'register' }">Register</b-nav-item>-->
@@ -26,24 +37,15 @@
             <b-nav-item-dropdown v-else right>
               <template slot="button-content">
                 <b-img v-if="userProfile.info" height="32" width="32" rounded="circle" :src="userProfile.info.avatar_url"></b-img>&ensp;
-                {{ userProfile.fullname }}
+                {{ userProfile.name }}
               </template>
               <b-dropdown-item :to="{ name: 'profile' }">{{ $t('app-vue-profile') }}</b-dropdown-item>
               <b-dropdown-item :to="{ name: 'logout' }">{{ $t('app-vue-navigation-logout') }}</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item v-if="userLogged" :to="{ name: 'project.builder.name' }">
+           <!-- <b-nav-item v-if="userLogged" :to="{ name: 'project.builder.name' }">
               <b-button variant="outline-secondary">{{ $t('app-vue-create-your-project') }}</b-button>
-            </b-nav-item>
-          </b-navbar-nav>
-
-          <b-navbar-nav>
-            <b-nav-item-dropdown id="dropdownLang" right >
-              <template slot="button-content" >
-                {{ this.$i18n.locale }}
-              </template>
-              <b-dropdown-item  v-for="lang in languages" :to="'/'+lang+$route.path.substring(3)" :key="lang">{{lang}}</b-dropdown-item>
-            </b-nav-item-dropdown>
+            </b-nav-item>-->
           </b-navbar-nav>
 
           <!--<b-navbar-nav>
@@ -270,6 +272,21 @@ export default {
     position: relative;
     min-height: 100vh;
   }
+
+  .loginBtn {
+        padding: 0 8px;
+    height: 42px;
+    margin: 14px;
+    font-size: 13px;
+    border: 1px solid #231f20;
+    color: #c5202e;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    background: none;
+  }
+
 
   .select-options {
     height:28px;
