@@ -28,6 +28,22 @@
             >
             </b-form-textarea>
           </b-form-group>
+
+          <br><br>
+
+           <!-- Image upload -->
+          <h1 class="mt-3 small"> {{ $t('information-builder-choose-picture') }}</h1>
+
+          <vue-cropper ref="cropper" v-show="pictureSelected" :src="selectedPicture" :data="cropData" :autoCrop="true" :view-mode="2" :aspectRatio="4/3"></vue-cropper>
+          <b-form-group
+                  :state="selectedPictureSizeInMB <= maxPictureSizeInMB"
+                  :invalid-feedback="$t('picture-too-big')"
+                  :description=" $t('authorized-format') + ' ' + maxPictureSizeInMB + ' MB.'"
+          >
+            <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg" 
+              :placeholder="$t('select-picture')">
+            </b-form-file>
+          </b-form-group>
         </b-col>
 
         <b-col md="3" align-self="start">
@@ -43,25 +59,6 @@
           </p>
         </b-col>
 
-      </b-row>
-
-      <!-- Image upload -->
-      <b-row class="mt-4">
-        <b-col md="9">
-          <h1 class="mt-3 small"> {{ $t('information-builder-choose-picture') }}</h1>
-
-          <vue-cropper ref="cropper" v-show="pictureSelected" :src="selectedPicture" :data="cropData" :autoCrop="true" :view-mode="2" :aspectRatio="4/3"></vue-cropper>
-          <b-form-group
-                  :state="selectedPictureSizeInMB <= maxPictureSizeInMB"
-                  :invalid-feedback="$t('picture-too-big')"
-                  :description=" $t('authorized-format') + ' ' + maxPictureSizeInMB + ' MB.'"
-          >
-            <b-form-file @change="setImage" accept=".jpg, .png, .gif, .svg" 
-              :placeholder="$t('select-picture')">
-            </b-form-file>
-          </b-form-group>
-
-        </b-col>
       </b-row>
 
       <b-row class="mt-4">

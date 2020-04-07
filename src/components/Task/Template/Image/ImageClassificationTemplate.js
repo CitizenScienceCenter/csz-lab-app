@@ -22,16 +22,16 @@ const component =
           </b-form-group>
           
           <!-- Submit button -->
-          <b-btn @click="submit" variant="success">Submit</b-btn>
+          <b-btn @click="submit" variant="success">{{$t('submit-btn')}}</b-btn>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
-            You must complete the form to submit
+            {{$t('template-editor-text-8')}}
           </b-alert>
            
           <!-- User progress -->
           <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
-          <p class="mt-2">You have completed: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge> tasks out of <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge></p>
+          <p class="mt-2"> {{$t('template-editor-text-2')}}: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>  {{$t('template-editor-text-2a')}} <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge> {{$t('template-editor-text-3')}}</p>
             
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
@@ -43,16 +43,16 @@ const component =
               <b-img v-if="taskInfo.url" fluid-grow :src="taskInfo.url" class="shadow" style="min-height: 120px; background-color: grey" alt="Image loading..."></b-img>
               <b-img v-else fluid-grow :src="taskInfo.link_raw" class="shadow" style="min-height: 120px; background-color: grey" alt="Image loading..."></b-img>
             </div>
-            <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" label="Image loading..."></b-spinner>
+            <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-4')"></b-spinner>
           </div>
-          <b-alert v-else :show="true" variant="danger">Picture not available</b-alert>
+          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
         </b-col>
       </b-row>
       
       <!-- Task end message -->
       <b-row v-else>
         <b-col>
-          <b-jumbotron header="This the end!" lead="Thanks you for your participation"></b-jumbotron>
+          <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')" ></b-jumbotron>
         </b-col>
       </b-row>`,
 

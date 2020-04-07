@@ -20,16 +20,16 @@ const component =
             
           </b-form-group>
           
-          <b-btn @click="submit" variant="success">Submit</b-btn>
+          <b-btn @click="submit" variant="success">{{ $t('submit-bt') }}</b-btn>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
-            You must complete the form to submit
+          {{ $t('template-editor-text-8') }}
           </b-alert>
           
           <!-- User progress -->
           <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
-          <p class="mt-2">You have completed: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge> tasks out of <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge></p>
+          <p class="mt-2"> {{$t('template-editor-text-2')}}: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>  {{$t('template-editor-text-2a')}} <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge> {{$t('template-editor-text-3')}}</p>
             
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
@@ -39,10 +39,10 @@ const component =
           <div v-if="pybossa.taskLoaded">
             <b-embed v-if="taskInfo.video_url" type="iframe" allowfullscreen :src="taskInfo.video_url"></b-embed>
             <div v-else-if="taskInfo && taskInfo.oembed" v-html="taskInfo.oembed"></div>
-            <b-alert v-else :show="true" variant="danger">Video media not available</b-alert>
+            <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-15') }}</b-alert>
           </div>
           <div v-else class="text-center">
-            <b-spinner style="width: 4rem; height: 4rem;" variant="primary" label="Video loading..."></b-spinner>
+            <b-spinner style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-14')"></b-spinner>
           </div>
         </b-col>
         
@@ -51,7 +51,7 @@ const component =
       <!-- Task end message -->
       <b-row v-else>
         <b-col>
-          <b-jumbotron header="This the end!" lead="Thanks you for your participation"></b-jumbotron>
+          <b-jumbotron :header="$t('template-editor-text-2')" :lead="$t('template-editor-text-3')"></b-jumbotron>
         </b-col>
       </b-row>`,
 

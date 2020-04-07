@@ -40,6 +40,7 @@
                 {{ userProfile.name }}
               </template>
               <b-dropdown-item :to="{ name: 'profile' }">{{ $t('app-vue-profile') }}</b-dropdown-item>
+              <b-dropdown-item :to="{ name: 'project.builder.name' }">{{ $t('home-create-a-project') }}</b-dropdown-item>
               <b-dropdown-item :to="{ name: 'logout' }">{{ $t('app-vue-navigation-logout') }}</b-dropdown-item>
             </b-nav-item-dropdown>
 

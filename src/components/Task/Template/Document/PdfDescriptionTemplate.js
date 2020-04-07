@@ -18,23 +18,23 @@ const component =
               v-for="(description, index) in descriptions"
               :label="description"
               :state="isFieldValid(answers[index])"
-              invalid-feedback="This field is required"
+              :invalid-feedback="$t('mandatory-field')"
               class="mt-4"
             >
             <b-form-textarea v-model="answers[index]" rows="10"></b-form-textarea>
           </b-form-group>
          
           <!-- Submit button -->
-          <b-button @click="submit" variant="primary" class="mt-2">Submit transcription!</b-button>
+          <b-button @click="submit" variant="primary" class="mt-2">{{$t('submit-btn')}}</b-button>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
-            You must complete the form to submit
+          {{$t('template-editor-text-8')}}
           </b-alert>
           
           <!-- User progress -->
           <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
-          <p class="mt-2">You have completed: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge> tasks out of <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge></p>
+          <p class="mt-2"> {{$t('template-editor-text-2')}}: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>  {{$t('template-editor-text-2a')}} <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge> {{$t('template-editor-text-3')}}</p>
           
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
@@ -62,16 +62,16 @@ const component =
                   :page="currentPage">
               </pdf>
             </div>
-            <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" label="Pdf loading..."></b-spinner>
+            <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-4')"></b-spinner>
           </div>
-          <b-alert v-else :show="true" variant="danger">Document not available</b-alert>
+          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-10')}}</b-alert>
         </b-col>
       </b-row>
       
       <!-- Task end message -->
       <b-row v-else>
         <b-col>
-          <b-jumbotron header="This the end!" lead="Thanks you for your participation"></b-jumbotron>
+          <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')"></b-jumbotron>
         </b-col>
       </b-row>`,
 

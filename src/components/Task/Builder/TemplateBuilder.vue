@@ -20,10 +20,10 @@
         {{ $t('task-template-builder-formulate-questions') }}<br><br>
         {{ $t('task-template-builder-formulate-example') }}
               <br>
-              <i>{{ $t('about-how-step4-label3') }}</i><br>
-              <i>{{ $t('about-how-step4-label4') }}</i><br>
-              <i>{{ $t('about-how-step4-label5') }}</i><br>
-              <i>{{ $t('about-how-step4-label6') }}</i><br>
+              <i>{{ $t('task-template-builder-formulate-questions-1') }}</i><br>
+              <i>{{ $t('task-template-builder-formulate-questions-2') }}</i><br>
+              <i>{{ $t('task-template-builder-formulate-questions-3') }}</i><br>
+              <i>{{ $t('task-template-builder-formulate-questions-4') }}</i><br>
         </p>
         <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: this.selectedProject.id } }"> {{ $t('task-template-builder-expert-path') }} </b-link>.</p>
       </b-col>

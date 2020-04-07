@@ -12,11 +12,11 @@ const component =
           <h2>{{ question }}</h2>
     
           <b-input v-model="count" type="number"></b-input>
-          <b-button @click="answer(count)" variant="primary" class="mt-2">Submit</b-button>
+          <b-button @click="answer(count)" variant="primary" class="mt-2">{{$t('submit-btn')}}</b-button>
           
           <!-- User progress -->
           <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
-          <p class="mt-2">You have completed: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge> tasks out of <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge></p>
+          <p class="mt-2"> {{$t('template-editor-text-2')}}: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>  {{$t('template-editor-text-2a')}} <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge> {{$t('template-editor-text-3')}}</p>
           
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
