@@ -16,6 +16,7 @@ import 'codemirror/lib/codemirror.css'
 import 'vuelayers/lib/style.css'
 import './scss/global.scss'
 import { i18n } from './i18n.js';
+import VueGtag from "vue-gtag";
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
@@ -23,6 +24,11 @@ Vue.use(BootstrapVue)
 Vue.use(VueLayers, {
   dataProjection: 'EPSG:4326'
 })
+
+Vue.use(VueGtag, {
+  config: { id: "UA-162894944-1" }
+},router);
+
 Vue.component('pdf', Pdf)
 
 window.Vue = Vue
