@@ -5,32 +5,29 @@
         <h1 class="mt-2 text-center centered"> {{ $t('task-importer-menu-tasks-importing') }}</h1>
 
         <b-row class="mt-4">
-          <b-col>
-            <AmazonS3BucketImporter></AmazonS3BucketImporter>
-          </b-col>
-        </b-row>
-
-        <b-row class="mt-4">
-          <b-col>
-            <FlickrImporter></FlickrImporter>
-          </b-col>
-        </b-row>
-
-        <b-row class="mt-4">
-          <b-col>
+          <b-col md="6">
             <DropboxImporter></DropboxImporter>
           </b-col>
-        </b-row>
-
-        <b-row class="mt-4">
-          <b-col>
+          <b-col md="6" class="mt-md-0 mt-4">
             <TwitterImporter></TwitterImporter>
           </b-col>
         </b-row>
 
         <b-row class="mt-4">
-          <b-col>
+          <b-col md="6">
+            <AmazonS3BucketImporter></AmazonS3BucketImporter>
+          </b-col>
+          <b-col md="6" class="mt-md-0 mt-4">
+            <FlickrImporter></FlickrImporter>
+          </b-col>
+        </b-row>
+
+        <b-row class="mt-4">
+          <b-col md="6">
             <GoogleDocImporter></GoogleDocImporter>
+          </b-col>
+          <b-col md="6" class="mt-md-0 mt-4">
+            <LocalCsvImporter></LocalCsvImporter>
           </b-col>
         </b-row>
 
@@ -39,7 +36,6 @@
             <OnlineCsvImporter></OnlineCsvImporter>
           </b-col>
           <b-col md="6" class="mt-md-0 mt-4">
-            <LocalCsvImporter></LocalCsvImporter>
           </b-col>
         </b-row>
 </b-container>

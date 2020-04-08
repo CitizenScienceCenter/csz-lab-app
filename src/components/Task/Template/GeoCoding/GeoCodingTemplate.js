@@ -12,9 +12,9 @@ const component =
             <h4>{{ localizationName }}</h4>
             
             <div class="mt-4">
-              <b-btn @click="addMarker" :disabled="markedPlaces.length > 0" variant="primary" class="mt-2 mt-md-0">Add a marker</b-btn>
-              <b-btn @click="deleteMarker" v-if="markedPlaces.length > 0" variant="danger" class="mt-2 mt-md-0">Delete the marker</b-btn>
-              <b-btn @click="skipTask" v-if="markedPlaces.length === 0" class="mt-2 mt-md-0">I have not found if, continue to the next task</b-btn>
+              <b-btn @click="addMarker" :disabled="markedPlaces.length > 0" variant="primary" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-1') }}</b-btn>
+              <b-btn @click="deleteMarker" v-if="markedPlaces.length > 0" variant="danger" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-2') }}</b-btn>
+              <b-btn @click="skipTask" v-if="markedPlaces.length === 0" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-3') }}</b-btn>
             </div>
             
             <p class="mt-2">Task: <b-badge variant="warning">{{ task.id }}</b-badge></p>
@@ -67,7 +67,7 @@ const component =
     
             <!-- Selected position coordinates -->
             <div class="mt-2">
-              Selected position: 
+            {{ $t('template-editor-geo-text-4') }}: 
               <ul>
                 <li>Longitude <b-badge>{{ markedPlaces.length > 0 ? markedPlaces[0].geometry.coordinates[0] : '-' }}</b-badge></li>
                 <li>Latitude <b-badge>{{ markedPlaces.length > 0 ? markedPlaces[0].geometry.coordinates[1] : '-' }}</b-badge></li>
@@ -80,14 +80,14 @@ const component =
         <!-- Submit button -->
         <b-row v-if="!jobDone">
           <b-col>
-            <b-btn @click="submit" variant="success" size="lg">Save these coordinates</b-btn>     
+            <b-btn @click="submit" variant="success" size="lg">{{ $t('template-editor-geo-text-5') }}</b-btn>     
           </b-col>
         </b-row>
         
         <!-- Task end message -->
         <b-row v-if="jobDone">
           <b-col>
-            <b-jumbotron header="This the end!" lead="Thanks you for your participation"></b-jumbotron>
+            <b-jumbotron header="This the end!" lead="{{ $t('template-editor-geo-text-6') }}"></b-jumbotron>
           </b-col>
         </b-row>
       </div>`,

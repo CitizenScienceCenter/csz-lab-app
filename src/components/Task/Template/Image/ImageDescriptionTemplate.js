@@ -22,16 +22,16 @@ const component =
             <b-form-textarea v-model="answers[index]" rows="10"></b-form-textarea>
           </b-form-group>
          
-          <b-button @click="submit" variant="primary" class="mt-2">Submit</b-button>
+          <b-button @click="submit" variant="primary" class="mt-2">{{$t('submit-btn')}}</b-button>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
-            You must complete the form to submit
+          {{$t('template-editor-text-8')}}
           </b-alert>
           
           <!-- User progress -->
           <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
-          <p class="mt-2">You have completed: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge> tasks out of <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge></p>
+          <p class="mt-2"> {{$t('template-editor-text-2')}}: <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>  {{$t('template-editor-text-2a')}} <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge> {{$t('template-editor-text-3')}}</p>
           
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
