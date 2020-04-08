@@ -5,12 +5,22 @@
       <div class="m-2">Google spreadsheet</div>
     </b-card>
     <b-collapse id="google-doc-collapse" v-model="isGoogleDocVisible">
+
+      <!--<p class="mt-4">{{ $t('taks-import-localcsv-text1') }}:</p>
+      <ul>
+        <li><b-link href='https://docs.google.com/spreadsheets/d/1LM5DUtMG65dtYzkvA7a5ymhUTLamzqZy2t6XmRJvK7g/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text2') }}</b-link></li>
+        <li><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
+        <li><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
+        <li><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>
+        <li><b-link :href="csvSamples.geoCoding" download="geo-coding-sample.csv">{{ $t('taks-import-localcsv-text6') }}</b-link></li>
+      </ul>-->
+      
       <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
         <b-form-group>
-          <b-input placeholder="Google spreadsheet public url" v-model="googleDocLink"></b-input>
+          <b-input :placeholder="$t('taks-import-googlespeadsheet-text1')" v-model="googleDocLink"></b-input>
         </b-form-group>
 
-        <b-button type="submit" variant="secondary">Send tasks</b-button>
+        <b-button type="submit" variant="secondary">{{ $t('taks-import-googlespeadsheet-text2') }}</b-button>
       </b-form>
     </b-collapse>
   </div>
@@ -19,11 +29,25 @@
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
 
+
+import video from '@/assets/csv-samples/video.csv'
+import image from '@/assets/csv-samples/image.csv'
+import sound from '@/assets/csv-samples/sound.csv'
+import pdf from '@/assets/csv-samples/pdf.csv'
+import geoCoding from '@/assets/csv-samples/geo-coding.csv'
+
 export default {
   name: 'GoogleDocImporter',
   data: () => {
     return {
-      googleDocLink: ''
+      googleDocLink: '',
+      csvSamples: {
+        video,
+        image,
+        sound,
+        pdf,
+        geoCoding
+      }
     }
   },
   methods: {

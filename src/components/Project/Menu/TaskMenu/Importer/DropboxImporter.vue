@@ -7,7 +7,7 @@
     <b-collapse id="dropbox-collapse" v-model="isDropboxVisible">
 
       <div class="mt-4">
-        <b-btn class="mt-3 mb-3" @click="openDropBox" variant="secondary"><i class="fab fa-dropbox"></i> Choose files from DropBox</b-btn>
+        <b-btn class="mt-3 mb-3" @click="openDropBox" variant="secondary"><i class="fab fa-dropbox"></i> {{ $t('dropbox-choose-files') }} </b-btn>
 
         <b-row>
           <b-col md="4" sm="6" cols="12" class="mt-5" :key="file.id" v-for="file in files" align="center">

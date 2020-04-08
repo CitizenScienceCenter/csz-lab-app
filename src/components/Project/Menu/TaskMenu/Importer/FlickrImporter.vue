@@ -7,12 +7,12 @@
     <b-collapse id="flickr-collapse" v-model="isFlickrVisible">
       <div class="mt-4">
 
-        <b-form-group v-if="albums.length === 0" description="Grant access to your Flickr albums to select one...">
-          <b-btn :href="baseUrl + 'flickr/?next=' + callbackUrl" target="_blank" @click="listenForAccess">Log in Flickr</b-btn>
+        <b-form-group v-if="albums.length === 0" :description="$t('taks-import-flickr-text1a')">
+          <b-btn :href="baseUrl + 'flickr/?next=' + callbackUrl" target="_blank" @click="listenForAccess"> {{ $t('taks-import-flickr-text1') }} </b-btn>
         </b-form-group>
 
-        <b-form-group v-else description="You can revoke the access to your Flickr account at anytime">
-          <b-btn variant="warning" @click="revokeFlickerAccess">Revoke access</b-btn>
+        <b-form-group v-else :description="$t('taks-import-flickr-text2a')">
+          <b-btn variant="warning" @click="revokeFlickerAccess">{{ $t('taks-import-flickr-text2') }}</b-btn>
         </b-form-group>
 
         <b-row>
@@ -21,22 +21,22 @@
               <h5>{{ album.title }} ({{ album.photos }})</h5>
               <b-img :src="album.thumbnail_url" alt="Album thumbnail"></b-img>
               <div class="text-center mt-2">
-                <b-btn variant="secondary" @click="onSubmit(album.id)">Select</b-btn>
+                <b-btn variant="secondary" @click="onSubmit(album.id)">{{ $t('taks-import-flickr-text3') }}</b-btn>
               </div>
             </b-media>
           </b-col>
         </b-row>
 
-        <p class="font-weight-bold">Or</p>
+        <p class="font-weight-bold">{{ $t('or-c') }}</p>
 
-        <b-form-group description="Manually provide the ID of a Flickr set with images for all.">
+        <b-form-group :description="$t('taks-import-flickr-text4')">
 
           <b-form-group label="Album ID">
             <b-form-input v-model="albumId" placeholder="Flickr album ID"></b-form-input>
           </b-form-group>
 
           <b-form-group>
-            <b-button @click="onSubmit(albumId)" variant="secondary">Import</b-button>
+            <b-button @click="onSubmit(albumId)" variant="secondary">{{ $t('project-task-menu-import') }}</b-button>
           </b-form-group>
 
         </b-form-group>

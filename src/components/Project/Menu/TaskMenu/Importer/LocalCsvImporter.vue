@@ -6,21 +6,21 @@
     </b-card>
     <b-collapse id="csv-collapse" v-model="isLocalCsvVisible">
 
-      <p class="mt-4">You can download some CSV examples to know how to write it for each kind of template:</p>
+      <p class="mt-4">{{ $t('taks-import-localcsv-text1') }}:</p>
       <ul>
-        <li><b-link :href="csvSamples.image" download="image-sample.csv">Image example</b-link></li>
-        <li><b-link :href="csvSamples.sound" download="sound-sample.csv">Sound example</b-link></li>
-        <li><b-link :href="csvSamples.video" download="video-sample.csv">Video example</b-link></li>
-        <li><b-link :href="csvSamples.pdf" download="pdf-sample.csv">PDF example</b-link></li>
-        <li><b-link :href="csvSamples.geoCoding" download="geo-coding-sample.csv">Geo-coding example</b-link></li>
+        <li><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('taks-import-localcsv-text2') }}</b-link></li>
+        <li><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
+        <li><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
+        <li><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>
+        <li><b-link :href="csvSamples.geoCoding" download="geo-coding-sample.csv">{{ $t('taks-import-localcsv-text6') }}</b-link></li>
       </ul>
 
       <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
         <b-form-group>
-          <b-file placeholder="Select a CSV file..." accept=".csv" v-model="csvFile"></b-file>
+          <b-file :placeholder="$t('taks-import-localcsv-text7')" accept=".csv" v-model="csvFile"></b-file>
         </b-form-group>
 
-        <b-button type="submit" variant="secondary">Send tasks</b-button>
+        <b-button type="submit" variant="secondary">{{ $t('taks-import-localcsv-text8') }}</b-button>
       </b-form>
     </b-collapse>
   </div>

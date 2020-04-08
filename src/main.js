@@ -25,9 +25,9 @@ Vue.use(VueLayers, {
   dataProjection: 'EPSG:4326'
 })
 
-Vue.use(VueGtag, {
+/*Vue.use(VueGtag, {
   config: { id: "UA-162894944-1" }
-},router);
+},router);*/
 
 Vue.component('pdf', Pdf)
 
