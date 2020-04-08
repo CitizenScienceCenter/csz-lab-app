@@ -622,7 +622,9 @@
         "taks-import-localcsv-text8":"Send tasks",
 
         "taks-import-publiccsv-text1":"Public csv link",
-        "taks-import-publiccsv-text2":"Send tasks"
+        "taks-import-publiccsv-text2":"Send tasks",
+
+        "text-cookies": "We use cookies to improve your experience on our sites."
 
 
 
@@ -1210,7 +1212,6 @@
         "template-editor-geo-text-5":"Speichern Sie diese Koordinaten",
         "template-editor-geo-text-6":"Vielen Dank für Ihre Teilnahme",
 
-
         "task-template-builder-describe-tip0":"Erklären Sie genau, was die Mitwirkenden beschreiben sollen.",
         "task-template-builder-describe-tip1":"Beispiel Frage:",
         "task-template-builder-describe-tip2":"Allgemeine Beschreibung",
@@ -1218,9 +1219,10 @@
         "task-template-builder-describe-tip4":"Detaillierte Beschreibung 1:",
         "task-template-builder-describe-tip5":"Was tun sie?",
         "task-template-builder-describe-tip6":"Detaillierte Beschreibung 2:",
-        "task-template-builder-describe-tip7":"Wie sind sie angezogen?"
+        "task-template-builder-describe-tip7":"Wie sind sie angezogen?",
 
 
+        "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites."
 
     }
 }

@@ -69,17 +69,7 @@
     </div> 
 
     <div class="footer">
-      <!--<div v-if="!platform" class="logo-wrapper">
-            <a href="https://citizenscience.ch" class="home-link home-link-platform" target="_blank">
-              <img src="@/assets/logo-white.svg">
-            </a>
-          </div>
-          <div v-else class="logo-wrapper">
-            <router-link to="/" class="home-link" active-class="active" exact>
-              <img src="@/assets/logo-white.svg">
-            </router-link>
-          </div> 
-        -->
+
       <div class="uzh-eth">
         <p v-if="this.$i18n.locale === 'en'">A joint initiative by</p>
         <p v-else>Ein gemeinsamer Effort von</p>
@@ -136,7 +126,13 @@
           <router-link :to="{ name: 'about' }">Criteria for project publication</router-link>
         </p>
       </div>
+
+      <g-d-p-r></g-d-p-r>
+
+
     </div>
+
+
 
     <!-- Notification toasts -->
     <b-toast
@@ -197,6 +193,7 @@ import { i18n } from "./i18n"
 
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import GDPR from "./components/GDPR.vue";
 
 export default {
   name: 'App',
@@ -204,7 +201,8 @@ export default {
     // this.getAccountProfile()
   },
   components: {
-    Loading
+    Loading,
+    GDPR
   },
   props : {
     languages: {
