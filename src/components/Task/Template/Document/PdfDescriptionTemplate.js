@@ -42,12 +42,15 @@ const component =
         <!-- Media -->
         <b-col md="8" class="order-1 order-md-2">
           <div v-if="taskInfo.pdf_url" class="text-center">
-            <pdf
-                v-if="pybossa.taskLoaded && taskInfo.page && taskInfo.page.length > 0"
+            <div v-if="pybossa.taskLoaded && taskInfo.page && taskInfo.page.length > 0" 
+                 class="clickable-element" 
+                 @click="pybossa.showModal('pdf', taskInfo.pdf_url)">
+              <pdf
                 class="w-100 shadow"
                 :src="taskInfo.pdf_url"
                 :page="parseInt(taskInfo.page)">
-            </pdf>
+              </pdf>
+            </div>
             <div v-else-if="pybossa.taskLoaded">
               <b-pagination
                 v-model="currentPage"
@@ -55,12 +58,14 @@ const component =
                 :per-page="1"
                 align="center">
               </b-pagination>
-              <pdf
+              <div class="clickable-element" @click="pybossa.showModal('pdf', taskInfo.pdf_url)">
+                <pdf 
                   class="w-100 shadow"
                   @num-pages="pageCount = $event"
                   :src="taskInfo.pdf_url"
                   :page="currentPage">
-              </pdf>
+                </pdf>
+              </div>
             </div>
             <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-4')"></b-spinner>
           </div>

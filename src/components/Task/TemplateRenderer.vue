@@ -19,6 +19,41 @@
         <b-alert :show="true" variant="warning">{{ $t('task-template-renderer-no-task-presenter') }}</b-alert>
       </div>
 
+      <b-modal scrollable
+               dialog-class="task-presenter-modal"
+               content-class="task-presenter-modal-content"
+               header-class="task-presenter-modal-header"
+               body-class="task-presenter-modal-body"
+               size="xl"
+               :hide-footer="true"
+               ref="presenter-modal"
+               id="presenter-modal"
+               header-close-variant="light"
+      >
+        <template v-slot="body">
+          <div v-if="modal.mediaType === 'image'">
+            <b-img class="w-100" :src="modal.mediaUrl"></b-img>
+          </div>
+
+          <div v-else-if="modal.mediaType === 'pdf'">
+            <b-pagination
+                    v-model="modal.pdfCurrentPage"
+                    v-if="modal.pdfPageCount > 1"
+                    :total-rows="modal.pdfPageCount"
+                    :per-page="1"
+                    align="fill"
+            >
+            </b-pagination>
+            <pdf
+                    class="w-100"
+                    @num-pages="modal.pdfPageCount = $event"
+                    :src="modal.mediaUrl"
+                    :page="modal.pdfCurrentPage">
+            </pdf>
+          </div>
+        </template>
+      </b-modal>
+
     </b-col>
     </b-row>
   </b-container>
@@ -55,7 +90,14 @@ export default {
     return {
       taskPresenterExists: false,
       taskPresenterLoaded: false,
-      taskLoaded: false
+      taskLoaded: false,
+
+      modal: {
+        mediaType: 'image',
+        mediaUrl: '#',
+        pdfPageCount: 1,
+        pdfCurrentPage: 1
+      }
     }
   },
   computed: {
@@ -161,11 +203,52 @@ export default {
         // load a new task when current task saved
         this.newTask()
       })
+    },
+
+    showModal (type, url) {
+      this.modal.mediaType = type
+      this.modal.mediaUrl = url
+      this.$refs['presenter-modal'].show()
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+
+  .task-presenter-modal {
+    text-align: center;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    width: 90%;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .task-presenter-modal-content {
+    background-color: transparent;
+    border: 0;
+  }
+
+  .task-presenter-modal-header {
+    background-color: transparent;
+    border-bottom: none;
+
+    .close {
+      opacity: 1;
+    }
+  }
+
+  .task-presenter-modal-body {
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .clickable-element {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
 </style>

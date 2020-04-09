@@ -39,7 +39,7 @@ const component =
         <!-- Image -->
         <b-col md="6" class="order-1 order-md-2">
           <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center">
-            <div v-if="pybossa.taskLoaded">
+            <div v-if="pybossa.taskLoaded" @click="pybossa.showModal('image', taskInfo.url ? taskInfo.url : taskInfo.link_raw)" class="clickable-element">
               <b-img v-if="taskInfo.url" fluid-grow :src="taskInfo.url" class="shadow" style="min-height: 120px; background-color: grey" alt="Image loading..."></b-img>
               <b-img v-else fluid-grow :src="taskInfo.link_raw" class="shadow" style="min-height: 120px; background-color: grey" alt="Image loading..."></b-img>
             </div>
