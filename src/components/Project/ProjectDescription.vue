@@ -1,18 +1,18 @@
 <template>
   <b-container class="greyish">
-    <b-row>
+    <b-row id="project-description-container">
       <b-col>
         <h2 class="mt-3 mb-0">{{ $t('project-description-what-why') }}</h2>
-        <p class="small">{{ description.whatWhy }}</p>
+        <p class="small" v-html="description.whatWhy"></p>
 
         <h2 class="mt-3 mb-0">{{ $t('project-description-how') }}</h2>
-        <p class="small">{{ description.how }}</p>
+        <p class="small" v-html="description.how"></p>
 
         <h2 class="mt-3 mb-0">{{ $t('project-description-who') }}</h2>
-        <p class="small">{{ description.who }}</p>
+        <p class="small" v-html="description.who"></p>
 
         <h2 class="mt-3 mb-0">{{ $t('project-description-keep-track') }}</h2>
-        <p class="small mb-3">{{ description.keepTrack }}</p>
+        <p class="small mb-3" v-html="description.keepTrack"></p>
       </b-col>
     </b-row>
   </b-container>
@@ -54,6 +54,11 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  #project-description-container {
+    ul, ol {
+      list-style: disc !important;
+      margin-left: 3em;
+    }
+  }
 </style>

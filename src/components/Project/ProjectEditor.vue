@@ -55,7 +55,8 @@
               :valid-feedback="validFeedback('whatWhy')"
               :invalid-feedback="invalidFeedback('whatWhy')"
               :state="validated('whatWhy')">
-              <b-textarea v-model="form.whatWhy"></b-textarea>
+
+              <vue-editor :editorToolbar="toolbarOptions" v-model="form.whatWhy"></vue-editor>
             </b-form-group>
 
             <b-form-group
@@ -63,7 +64,8 @@
               :valid-feedback="validFeedback('how')"
               :invalid-feedback="invalidFeedback('how')"
               :state="validated('how')">
-              <b-textarea v-model="form.how"></b-textarea>
+
+              <vue-editor :editorToolbar="toolbarOptions" v-model="form.how"></vue-editor>
             </b-form-group>
 
             <b-form-group
@@ -71,7 +73,8 @@
               :valid-feedback="validFeedback('who')"
               :invalid-feedback="invalidFeedback('who')"
               :state="validated('who')">
-              <b-textarea v-model="form.who"></b-textarea>
+
+              <vue-editor :editorToolbar="toolbarOptions" v-model="form.who"></vue-editor>
             </b-form-group>
 
             <b-form-group
@@ -79,7 +82,8 @@
               :valid-feedback="validFeedback('keepTrack')"
               :invalid-feedback="invalidFeedback('keepTrack')"
               :state="validated('keepTrack')">
-              <b-textarea v-model="form.keepTrack"></b-textarea>
+
+              <vue-editor :editorToolbar="toolbarOptions" v-model="form.keepTrack"></vue-editor>
             </b-form-group>
 
           </b-form-group>
@@ -135,6 +139,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import { VueEditor } from 'vue2-editor'
 import VueCropper from 'vue-cropperjs'
 import slug from 'slug'
 import { getFormErrorsAsString, uuid } from '@/helper'
@@ -142,7 +147,8 @@ import { getFormErrorsAsString, uuid } from '@/helper'
 export default {
   name: 'ProjectEditor',
   components: {
-    VueCropper
+    VueCropper,
+    VueEditor
   },
   mounted () {
     if (Object.keys(this.project).length > 0) {
@@ -159,6 +165,10 @@ export default {
   },
   data: () => {
     return {
+      toolbarOptions: [
+        ["bold", "italic", "link"], [{ list: "bullet" }]
+      ],
+
       form: {
         name: '',
         shortDescription: '',
@@ -183,16 +193,16 @@ export default {
           maxLength: 120
         },
         whatWhy: {
-          maxLength: 400
+          maxLength: 800
         },
         how: {
-          maxLength: 400
+          maxLength: 800
         },
         who: {
-          maxLength: 400
+          maxLength: 800
         },
         keepTrack: {
-          maxLength: 400
+          maxLength: 800
         }
       }
     }
@@ -359,13 +369,19 @@ export default {
     },
 
     validated (field) {
-      return this.$data['form'][field].length > 0 && this.$data['form'][field].length <= this.validation[field].maxLength
+      let fieldLength = this.$data['form'][field].replace(/<[^>]*>?/gm, '').length;
+      fieldLength = fieldLength < 0 ? 0 : fieldLength
+      return fieldLength > 0 && fieldLength <= this.validation[field].maxLength
     },
     validFeedback (field) {
-      return this.validation[field].maxLength - this.$data['form'][field].length + ' ' + this.$t('characters-left')
+      let fieldLength = this.$data['form'][field].replace(/<[^>]*>?/gm, '').length;
+      fieldLength = fieldLength < 0 ? 0 : fieldLength
+      return this.validation[field].maxLength - fieldLength + ' ' + this.$t('characters-left')
     },
     invalidFeedback (field) {
-      return this.$data['form'][field].length === 0 ? this.$t('mandatory-field') : this.$t('field-should-not-exceed')+' ' + this.validation[field].maxLength + ' ' + this.$t('characters')
+      let fieldLength = this.$data['form'][field].replace(/<[^>]*>?/gm, '').length;
+      fieldLength = fieldLength < 0 ? 0 : fieldLength
+      return fieldLength === 0 ? this.$t('mandatory-field') : this.$t('field-should-not-exceed')+' ' + this.validation[field].maxLength + ' ' + this.$t('characters')
     }
   },
   computed: {

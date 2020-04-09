@@ -20,13 +20,7 @@
                   :invalid-feedback="invalidFeedback('currentWhatWhy')"
                   :state="validated('currentWhatWhy')"
           >
-            <b-form-textarea
-                    id="what-why"
-                    size="md"
-                    max-rows="5"
-                    v-model="currentWhatWhy"
-            >
-            </b-form-textarea>
+            <vue-editor id="what-why" :editorToolbar="toolbarOptions" v-model="currentWhatWhy"></vue-editor>
           </b-form-group>
 
           <b-form-group
@@ -38,13 +32,7 @@
                   :invalid-feedback="invalidFeedback('currentHow')"
                   :state="validated('currentHow')"
           >
-            <b-form-textarea
-                    id="how"
-                    size="md"
-                    max-rows="5"
-                    v-model="currentHow"
-            >
-            </b-form-textarea>
+            <vue-editor id="how" :editorToolbar="toolbarOptions" v-model="currentHow"></vue-editor>
           </b-form-group>
 
           <b-form-group
@@ -56,13 +44,7 @@
                   :invalid-feedback="invalidFeedback('currentWho')"
                   :state="validated('currentWho')"
           >
-            <b-form-textarea
-                    id="who"
-                    size="md"
-                    max-rows="5"
-                    v-model="currentWho"
-            >
-            </b-form-textarea>
+            <vue-editor id="who" :editorToolbar="toolbarOptions" v-model="currentWho"></vue-editor>
           </b-form-group>
 
           <b-form-group
@@ -74,13 +56,7 @@
                   :invalid-feedback="invalidFeedback('currentKeepTrack')"
                   :state="validated('currentKeepTrack')"
           >
-            <b-form-textarea
-                    id="keep-track"
-                    size="md"
-                    max-rows="5"
-                    v-model="currentKeepTrack"
-            >
-            </b-form-textarea>
+            <vue-editor id="keep-track" :editorToolbar="toolbarOptions" v-model="currentKeepTrack"></vue-editor>
           </b-form-group>
         </b-col>
 
@@ -106,13 +82,17 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor"
 import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'StoryBuilder',
+  components: {
+    VueEditor
+  },
   data: () => {
     return {
-      maxNbCharacters: 400,
+      maxNbCharacters: 800,
 
       currentWhatWhy: '',
       currentHow: '',
@@ -124,7 +104,11 @@ export default {
         currentHow: true,
         currentWho: true,
         currentKeepTrack: true
-      }
+      },
+
+      toolbarOptions: [
+        ["bold", "italic", "link"], [{ list: "bullet" }]
+      ]
     }
   },
   created () {
@@ -165,13 +149,19 @@ export default {
     },
 
     validated (field) {
-      return this.firstInteraction[field] || (this.$data[field].length > 0 && this.$data[field].length <= this.maxNbCharacters)
+      let fieldLength = this.$data[field].replace(/<[^>]*>?/gm, '').length;
+      fieldLength = fieldLength < 0 ? 0 : fieldLength
+      return this.firstInteraction[field] || (fieldLength > 0 && fieldLength <= this.maxNbCharacters)
     },
     validFeedback (field) {
-      return this.maxNbCharacters - this.$data[field].length + ' ' + this.$t('characters-left')
+      let fieldLength = this.$data[field].replace(/<[^>]*>?/gm, '').length
+      fieldLength = fieldLength < 0 ? 0 : fieldLength
+      return this.maxNbCharacters - fieldLength + ' ' + this.$t('characters-left')
     },
     invalidFeedback (field) {
-      return this.$data[field].length === 0 ? this.$t('mandatory-field') : this.$t('field-should-not-exceed') + ' ' + this.maxNbCharacters + ' ' + this.$t('characters')
+      let fieldLength = this.$data[field].replace(/<[^>]*>?/gm, '').length
+      fieldLength = fieldLength < 0 ? 0 : fieldLength
+      return fieldLength === 0 ? this.$t('mandatory-field') : this.$t('field-should-not-exceed') + ' ' + this.maxNbCharacters + ' ' + this.$t('characters')
     }
   },
   computed: {
