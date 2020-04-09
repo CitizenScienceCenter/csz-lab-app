@@ -1221,6 +1221,37 @@
         "task-template-builder-describe-tip6":"Detaillierte Beschreibung 2:",
         "task-template-builder-describe-tip7":"Wie sind sie angezogen?",
 
+        "taks-import-twitter-text1":"Datenquelle",
+       "taks-import-twitter-text2":"Bitte geben Sie die Quelle Ihrer Tweets an. Es kann ein '#hashtag', ein reguläres 'Suchwort' oder ein '@user_account' sein, von wo aus die tweets importiert werden sollen.",
+       "taks-import-twitter-text3":"#Hashtag oder @user oder andere",
+       "taks-import-twitter-text4":"Anzahl der Tweets",
+       "taks-import-twitter-text5":"Sie können nur die Anzahl der Tweets importieren, die von einem einzelnen Twitter-API-Aufruf zurückgegeben werden. Dies sind 100 für Suchvorgänge und 200 für Benutzer-Timelines.",
+       "taks-import-twitter-text6":"Tweets importieren",
+
+       "taks-import-amazon-text1":"Ausgewählte Dateien suchen",
+       "taks-import-amazon-text2":"Ausgewählte Dateien hinzufügen ",
+
+       "taks-import-flickr-text1":"Bei Flickr einloggen",
+       "taks-import-flickr-text1a":"Für Auswahl Zugriff auf Ihre Flickr-Alben gewähren ...",
+       "taks-import-flickr-text2":"Zugangsberechtigung aufheben",
+       "taks-import-flickr-text2a":"Sie können den Zugriff auf Ihr Flickr-Konto jederzeit widerrufen",
+       "taks-import-flickr-text3":"Auswählen",
+       "taks-import-flickr-text4":"Manually provide the ID of a Flickr set with images for all.",
+
+       "taks-import-googlespeadsheet-text1":"Öffentliche URL der Google-Tabelle",
+       "taks-import-googlespeadsheet-text2":"Aufgaben senden",
+
+       "taks-import-localcsv-text1":"Sie können CSV-Beispiele herunterladen, um zu sehen, wie sie für verschiedene Vorlagen geschrieben werden",
+       "taks-import-localcsv-text2":"Bildbeispiel",
+       "taks-import-localcsv-text3":"Tonbeispiel",
+       "taks-import-localcsv-text4":"Videobeispiel",
+       "taks-import-localcsv-text5":"PDF-Beispiel",
+       "taks-import-localcsv-text6":"Geo-Coding Beispiel",
+       "taks-import-localcsv-text7":"CSV-Datei auswählen...",
+       "taks-import-localcsv-text8":"Aufgaben senden",
+
+       "taks-import-publiccsv-text1":"Öffentlicher CSV-Link",
+       "taks-import-publiccsv-text2":"Aufgaben senden",
 
         "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites."
 
