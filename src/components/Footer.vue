@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Footer',
@@ -146,7 +145,7 @@ export default {
       }
 
       img {
-        height: 42px;
+        height: 46px;
         cursor: pointer;
       }
     }
