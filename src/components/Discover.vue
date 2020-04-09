@@ -12,6 +12,7 @@
                     v-for="category in allCategories"
                     :key="category.id"
                     :title="category.name + (category.short_name in categoryPagination ? ' (' + categoryPagination[category.short_name].total + ')' : '')"
+                    style="outline: none"
             >
               <!-- The list of projects -->
               <b-row>

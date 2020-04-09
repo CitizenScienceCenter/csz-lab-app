@@ -30,6 +30,10 @@
                id="presenter-modal"
                header-close-variant="light"
       >
+        <template v-slot:modal-header="{ close }">
+          <b-button size="lg" variant="outline-light" class="font-weight-bold" style="margin-left: auto" @click="close()">X</b-button>
+        </template>
+
         <template v-slot="body">
           <div v-if="modal.mediaType === 'image'">
             <b-img class="w-100" :src="modal.mediaUrl"></b-img>

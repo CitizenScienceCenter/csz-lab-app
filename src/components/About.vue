@@ -9,7 +9,7 @@
 
           <b-tabs pills content-class="mt-5 mb-5" active-nav-item-class="font-weight-bold" fill>
 
-            <b-tab :title="$t('about-overview')" >
+            <b-tab :title="$t('about-overview')" style="outline: none">
                <p>
                 <b>{{ $t('about-question-1') }}</b><br>
                 {{ $t('about-answer-1') }}
@@ -40,7 +40,7 @@
 
             </b-tab>
 
-            <b-tab :title="$t('about-howitworks')" >
+            <b-tab :title="$t('about-howitworks')" style="outline: none">
               {{ $t('about-how-header1') }}
               {{ $t('about-how-header2') }}
               <ul style="list-style-type: square;margin-left:30px;margin-top:20px;">
@@ -137,7 +137,7 @@
 
             </b-tab>
 
-            <b-tab :title="$t('about-criteria')" >
+            <b-tab :title="$t('about-criteria')" style="outline: none">
               {{ $t('about-criteria-label1') }}
               <ul style="list-style-type: square;margin-left:30px;margin-top:20px;">
                 <li>{{ $t('about-criteria-list1') }} </li>

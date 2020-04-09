@@ -2,9 +2,7 @@
     <b-tabs pills fill>
 
       <!-- Draft project -->
-      <b-tab 
-        :title="$t('profile-view-draft-project')"
-        >
+      <b-tab :title="$t('profile-view-draft-project')" style="outline: none">
 
         <!-- The list of projects -->
         <b-row v-if="draftProjects.length > 0">
@@ -23,9 +21,7 @@
 
       </b-tab>
 
-      <b-tab 
-      :title="$t('profile-view-contributions-project')"
-      >
+      <b-tab :title="$t('profile-view-contributions-project')" style="outline: none">
 
         <!-- The list of projects -->
         <b-row v-if="contributedProjects.length > 0">
@@ -43,8 +39,7 @@
         </b-row>
       </b-tab>
 
-      <b-tab 
-        :title="$t('profile-view-publish-project')">
+      <b-tab :title="$t('profile-view-publish-project')" style="outline: none">
 
         <!-- The list of projects -->
         <b-row v-if="publishedProjects.length > 0">

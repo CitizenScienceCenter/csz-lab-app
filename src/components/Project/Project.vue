@@ -94,24 +94,24 @@
 
           <b-tabs pills content-class="mt-5 mb-5" active-nav-item-class="font-weight-bold" fill>
 
-            <b-tab :title="$t('info-c')" :active="currentTab === tabs.info" @click="setCurrentTab(tabs.info)">
+            <b-tab :title="$t('info-c')" :active="currentTab === tabs.info" @click="setCurrentTab(tabs.info)" style="outline: none">
               <ProjectInfoMenu></ProjectInfoMenu>
             </b-tab>
 
-            <b-tab :title="$t('statistics-c')" :active="currentTab === tabs.statistics" @click="setCurrentTab(tabs.statistics)">
+            <b-tab :title="$t('statistics-c')" :active="currentTab === tabs.statistics" @click="setCurrentTab(tabs.statistics)" style="outline: none">
               <ProjectStatisticsMenu></ProjectStatisticsMenu>
             </b-tab>
 
             <!-- Temporary removed -->
-            <b-tab v-if="false" :title="'Results (' + results.n_results + ')'" :active="currentTab === tabs.results" @click="setCurrentTab(tabs.results)">
+            <b-tab v-if="false" :title="'Results (' + results.n_results + ')'" :active="currentTab === tabs.results" @click="setCurrentTab(tabs.results)" style="outline: none">
               <ProjectResultsMenu></ProjectResultsMenu>
             </b-tab>
 
-            <b-tab ref="tab-tasks" v-if="isLoggedUserOwnerOfProject(project) || infos.admin" :title="$t('tasks-c')" :active="currentTab === tabs.tasks" @click="setCurrentTab(tabs.tasks)">
+            <b-tab ref="tab-tasks" v-if="isLoggedUserOwnerOfProject(project) || infos.admin" :title="$t('tasks-c')" :active="currentTab === tabs.tasks" @click="setCurrentTab(tabs.tasks)" style="outline: none">
               <ProjectTasksMenu></ProjectTasksMenu>
             </b-tab>
 
-            <b-tab ref="tab-settings" v-if="isLoggedUserOwnerOfProject(project) || infos.admin" :title="$t('settings-c')" :active="currentTab === tabs.settings" @click="setCurrentTab(tabs.settings)">
+            <b-tab ref="tab-settings" v-if="isLoggedUserOwnerOfProject(project) || infos.admin" :title="$t('settings-c')" :active="currentTab === tabs.settings" @click="setCurrentTab(tabs.settings)" style="outline: none">
               <!-- v-if used to render the component only if the tab is active -->
               <ProjectEditor v-if="currentTab === tabs.settings"></ProjectEditor>
             </b-tab>
