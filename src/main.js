@@ -25,13 +25,20 @@ Vue.use(VueLayers, {
   dataProjection: 'EPSG:4326'
 })
 
-/*Vue.use(VueGtag, {
-  config: { id: "UA-162894944-1" }
-},router);*/
+let gtagstorage;
+
+(!JSON.parse(localStorage.getItem('gdpr'))) ? gtagstorage = false : gtagstorage=true
+
+Vue.use(VueGtag, {
+  config: { id: "UA-162894944-1" },
+  enabled: gtagstorage
+},router);
+
 
 Vue.component('pdf', Pdf)
 
 window.Vue = Vue
+
 
 /* eslint-disable no-new */
 new Vue({

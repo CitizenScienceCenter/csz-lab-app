@@ -1,7 +1,7 @@
 <template>
   <b-form ref="form" @submit.prevent="onProfileSubmitted">
 
-    <b-form-group
+    <!--<b-form-group
             :label="$t('register-fullname')"
             label-for="fullname"
             :description="$t('basic-profile-editor-fullname-description')">
@@ -12,7 +12,7 @@
               required
               :placeholder="$t('register-fullname-placeholder')">
       </b-form-input>
-    </b-form-group>
+    </b-form-group>-->
 
     <b-form-group
             :label="$t('register-username')"
@@ -40,7 +40,7 @@
       </b-form-input>
     </b-form-group>
 
-    <b-form-group
+   <!-- <b-form-group
             :label="$t('basic-profile-editor-language')"
             label-for="language"
             description="">
@@ -52,16 +52,9 @@
               placeholder="Email address">
       </b-form-select>
     </b-form-group>
+    -->
 
-    <b-form-group
-            :label="$t('basic-profile-editor-privacy')"
-            label-for="privacy"
-            :description="$t('basic-profile-editor-privacy-description')">
-      <b-form-checkbox v-model="form.privacy" id="privacy" switch>
-        {{ $t("basic-profile-editor-privacy-setting")}} {{ form.privacy ? 'enabled' : 'disabled' }}
-      </b-form-checkbox>
-    </b-form-group>
-
+    
     <b-form-group
             :label="$t('basic-profile-editor-email-notification')"
             label-for="email-notification"
@@ -73,8 +66,11 @@
     </b-form-group>
 
     <b-button type="submit" variant="secondary" class="float-right">{{$t('basic-profile-editor-save-changes')}}</b-button>
+   
 
   </b-form>
+
+  
 </template>
 
 <script>
@@ -85,7 +81,7 @@ export default {
   data: () => {
     return {
       form: {
-        fullname: '',
+        //fullname: '',
         email: '',
         username: '',
         language: null,
@@ -101,7 +97,7 @@ export default {
   },
   created () {
     this.getProfileUpdateOptions(this.profile).then(() => {
-      this.form.fullname = this.formOptions.fullname
+      //this.form.fullname = this.formOptions.fullname
       this.form.email = this.formOptions.email_addr
       this.form.username = this.formOptions.name
       this.form.language = this.formOptions.locale
@@ -126,7 +122,7 @@ export default {
       this.updateProfile({
         user: this.profile,
         form: {
-          fullname: form.fullname,
+          //fullname: form.fullname,
           name: form.username,
           email_addr: form.email,
           locale: form.language,

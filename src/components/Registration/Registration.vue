@@ -11,7 +11,7 @@
           <b-form ref="form-registration" @submit.prevent="submitRegistration" class="mt-4">
 
             <!-- Full name -->
-            <b-form-group
+            <!--<b-form-group
                     :label="$t('register-fullname')"
                     label-for="fullname"
                     :state="nameValid('fullname')"
@@ -24,7 +24,7 @@
 
               </b-input>
 
-            </b-form-group>
+            </b-form-group>-->
 
             <!-- User name -->
             <b-form-group
@@ -187,7 +187,7 @@ export default {
 
     nameValid (fieldName) {
       const name = this.form[fieldName]
-      return this.firstInteractions[fieldName] || (name.length >= 3 && name.length <= 35)
+      return this.firstInteractions[fieldName] || (name.length >= 0 && name.length <= 35)
     },
 
     fieldUpdated (fieldName) {

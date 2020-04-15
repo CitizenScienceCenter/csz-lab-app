@@ -30,9 +30,9 @@
         },
         methods: {
             acceptGdpr() {
-                //this.$store.dispatch('gdpr/accept');
                 localStorage.setItem('gdpr', true);
                 this.gdprAccepted = true
+                window['ga-disable-UA-162894944-1'] = false;
             }
         }
     }
@@ -44,7 +44,7 @@
 
     .gdpr {
         position: fixed;
-        left: 70%;
+        left: 40%;
         bottom: 0;
         width: 100%;
         pointer-events: none;

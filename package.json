@@ -26,6 +26,7 @@
     "portal-vue": "^2.1.4",
     "slug": "^1.1.0",
     "vue": "^2.5.2",
+    "vue-analytics": "^5.22.1",
     "vue-codemirror": "^4.0.6",
     "vue-cropperjs": "^3.0.0",
     "vue-gtag": "^1.6.2",

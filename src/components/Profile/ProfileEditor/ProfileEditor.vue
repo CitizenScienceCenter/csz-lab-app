@@ -38,12 +38,21 @@
 
     <b-row align-h="center" class="mb-5">
       <b-col md="9">
+        <h2 class="mt-4 mb-4 text-center">Analytics</h2>
+        <Gtag></Gtag>
+      </b-col>
+    </b-row>
+
+    <hr>
+
+    <!--<b-row align-h="center" class="mb-5">
+      <b-col md="9">
         <h2 class="mt-4 mb-4 text-center">{{ $t('profile-editor-update-apikey') }}</h2>
         <ApiKeyReset></ApiKeyReset>
       </b-col>
     </b-row>
 
-    <hr>
+    <hr>-->
 
     <b-row align-h="center" class="mb-5">
       <b-col md="9">
@@ -59,7 +68,7 @@
 import { mapState } from 'vuex'
 
 import BasicProfileEditor from '@/components/Profile/ProfileEditor/BasicProfileEditor'
-import ApiKeyReset from '@/components/Profile/ProfileEditor/ApiKeyReset'
+import Gtag from '@/components/Profile/ProfileEditor/Gtag'
 import PasswordEditor from '@/components/Profile/ProfileEditor/PasswordEditor'
 import AvatarEditor from '@/components/Profile/ProfileEditor/AvatarEditor'
 import ProfileDataExport from '@/components/Profile/ProfileEditor/ProfileDataExport'
@@ -73,7 +82,7 @@ export default {
     AvatarEditor,
     PasswordEditor,
     BasicProfileEditor,
-    ApiKeyReset
+    Gtag
   },
   data: () => {
     return {

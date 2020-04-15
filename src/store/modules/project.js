@@ -427,15 +427,15 @@ const actions = {
           }, { root: true })
           return value.data
         }).catch(reason => {
-          /* commit('notification/showError', {
+          commit('notification/showError', {
             title: errors.PUBLISH_PROJECT_ERROR, content: reason
-          }, { root: true }) */
+          }, { root: true }) 
           // TODO: fix the server and remove the following lines after
-          commit('updateSelectedProject', { published: false })
-          commit('notification/showSuccess', {
+          //commit('updateSelectedProject', { published: false })
+          /*commit('notification/showSuccess', {
             title: 'Project approval!',
             content: 'The project ' + project.name + ' is now waiting for approval'
-          }, { root: true })
+          }, { root: true })*/
           return false
         })
       }
