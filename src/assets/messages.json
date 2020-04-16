@@ -1299,7 +1299,11 @@
 
         "notifications-messages-delete-profile-message":"Dein Account wurde gelöscht",
 
-        "notifications-messages-export-data-message":"Sie erhalten per E-Mail alle Ihre Daten ..."
+        "notifications-messages-export-data-message":"Sie erhalten per E-Mail alle Ihre Daten ...",
+
+        "User-name-must-be-between-3-and-35-characters-long":"Der Benutzername muss zwischen 3 und 35 Zeichen lang sein",
+        "The-user-name-is-already-taken":"Der Benutzername ist bereits vergeben",
+        "Email-is-already-taken":"E-Mail ist bereits vergeben"
 
     }
 }

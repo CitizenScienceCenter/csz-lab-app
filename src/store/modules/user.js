@@ -1,6 +1,6 @@
 import api from '@/api/user'
 
-import { getTranslationLocale } from '@/helper'
+import { getTranslationLocale, getPybossaTranslation } from '@/helper'
 
 const errors = {
   GET_PROFILE_UPDATE_OPTIONS_LOADING_ERROR: 'Error during profile update options loading',
@@ -59,7 +59,7 @@ const actions = {
     }).catch(reason => {
       commit('notification/showError', {
         title: getTranslationLocale('notifications-messages-register-notavailable'), 
-        content: reason
+        content: getPybossaTranslation(reason)
       }, { root: true })
       return false
     })
@@ -81,7 +81,7 @@ const actions = {
         }).catch(reason => {
           commit('notification/showError', {
             title: getTranslationLocale('notifications-messages-register-error'), 
-            content: reason
+            content: getPybossaTranslation(reason)
           }, { root: true })
           return false
         })

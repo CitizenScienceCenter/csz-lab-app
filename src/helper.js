@@ -108,3 +108,22 @@ export function validateEmail (email) {
 export function getTranslationLocale(tag){
   return i18n.messages[i18n.locale][tag]
 }
+
+export function getPybossaTranslation(reason){
+  const tag = reason.split(' ')
+  const complete = tag.join('-')
+  return i18n.messages[i18n.locale][complete]
+}
+
+export function getFormErrorsAsStringOnlyErrorMsg (errors) {
+  // console.log(errors)
+  const fields = Object.keys(errors)
+  let result =''
+  for (let fldIndex in fields) {
+    const fieldName = fields[fldIndex]
+    for (let error of errors[fieldName]) {
+      result=error
+    }
+  }
+  return result
+}
