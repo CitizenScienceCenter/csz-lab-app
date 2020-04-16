@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router';
+import { i18n } from './i18n.js';
 //import store from './store'
 //import router from './router'
 import { router } from './router/router.js';
@@ -15,7 +16,6 @@ import '@fortawesome/fontawesome-free/js/all'
 import 'codemirror/lib/codemirror.css'
 import 'vuelayers/lib/style.css'
 import './scss/global.scss'
-import { i18n } from './i18n.js';
 import VueGtag from "vue-gtag";
 
 Vue.config.productionTip = false

@@ -7,7 +7,7 @@
         <b-col cols="5" sm="4" md="3">
           <div class="div-image" v-if=" 'info' in project && 'thumbnail_url' in project.info " :style="{ 'background-image': 'url(' + project.info.thumbnail_url + ')' }"></div>
           <!--<b-img v-else blank-color="#777" :blank="true" thumbnail rounded="circle" width="auto" height="auto"></b-img>-->
-          <div class="div-image" v-else  :style="{ 'background-image': 'url(' + getImage + ')' }"></div>
+          <div class="div-image" v-else  :style="{ 'background-image': 'url(' + defaultImage + ')' }"></div>
         </b-col>
 
         <!-- Header -->
@@ -176,7 +176,8 @@ export default {
   data: () => {
     return {
       isAnonymousProject: true,
-      localPendingApproval:false
+      localPendingApproval:false,
+      defaultImage:require('@/assets/graphic-projects.png')
     }
   },
   props: {
@@ -241,9 +242,6 @@ export default {
     }
   },
   computed: {
-    getImage(){
-      return require('@/assets/graphic-projects.png')
-    },
     ...mapState('project', {
       project: state => state.selectedProject,
       results: state => state.selectedProjectResults,

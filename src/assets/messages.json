@@ -624,7 +624,33 @@
         "taks-import-publiccsv-text1":"Public csv link",
         "taks-import-publiccsv-text2":"Send tasks",
 
-        "text-cookies": "We use cookies to improve your experience on our sites."
+        "text-cookies": "We use cookies to improve your experience on our sites.",
+
+        "notifications-messages-register-error":"Error during registration",
+        "notifications-messages-register-notavailable":"Registration not available",
+
+        "notifications-messages-signin-notavailable":"Sign in not available",
+        "notifications-messages-signin-procedure":"Error during signin",
+
+        "notifications-messages-forgot-error":"Reset password not available",
+        "notifications-messages-forgot-pass-title":"Email sent",
+        "notifications-messages-forgot-pass-response-success":"We've sent you an email with account recovery instructions!",
+        "notifications-messages-reset-title":"Email reset",
+        "notifications-messages-reset-response-success":"You reset your password successfully!",
+        "notifications-messages-reset-response-error":"Error during reset password",
+        "notifications-messages-reset-notavailable":"Reset password not available",
+
+        "notifications-messages-signout-title":"Signed out",
+        "notifications-messages-signout-message":"You are now logged out",
+
+        "notifications-messages-update-profile-title":"Success",
+        "notifications-messages-update-profile-message":"Your profile has been updated",
+
+        "notifications-messages-delete-profile-title":"Success",
+        "notifications-messages-delete-profile-message":"Your account has been deleted",
+
+        "notifications-messages-export-data-title":"Success",
+        "notifications-messages-export-data-message":"You will receive by email all your data..."
 
     },
     "de": {
@@ -1250,7 +1276,30 @@
        "taks-import-publiccsv-text1":"Öffentlicher CSV-Link",
        "taks-import-publiccsv-text2":"Aufgaben senden",
 
-        "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites."
+        "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites.",
+
+        "notifications-messages-register-error":"Fehler bei der Registrierung",
+        "notifications-messages-register-notavailable":"Registrierung nicht möglich",
+
+        "notifications-messages-signin-notavailable":"Anmeldung nicht möglich",
+        "notifications-messages-signin-procedure":"Fehler bei der Anmeldung",
+
+        "notifications-messages-forgot-error":"Passwort zurücksetzen nicht verfügbar",
+        "notifications-messages-forgot-pass-title":"E-Mail gesendet",
+        "notifications-messages-forgot-pass-response-success":"Wir haben Ihnen eine E-Mail mit Anweisungen zur Wiederherstellung des Kontos gesendet!",
+        "notifications-messages-reset-title":"E-Mail zurücksetzen",
+        "notifications-messages-reset-response-success":"Sie haben Ihr Passwort erfolgreich zurückgesetzt!",
+        "notifications-messages-reset-response-error":"Fehler beim Zurücksetzen des Passworts",
+        "notifications-messages-reset-notavailable":"Passwort zurücksetzen nicht verfügbar",
+
+        "notifications-messages-signout-title":"Abgemeldet",
+        "notifications-messages-signout-message":"Sie sind nun ausgeloggt",
+
+        "notifications-messages-update-profile-message":"Ihr Profil wurde aktualisiert",
+
+        "notifications-messages-delete-profile-message":"Dein Account wurde gelöscht",
+
+        "notifications-messages-export-data-message":"Sie erhalten per E-Mail alle Ihre Daten ..."
 
     }
 }

@@ -5,7 +5,8 @@
         <b-col class="col-image">
           <!--<b-card-img-lazy v-if="project.info.thumbnail_url" :src="project.info.thumbnail_url"></b-card-img-lazy>
           <b-card-img-lazy v-else :src="'https://dummyimage.com/334x250/777777/fff&text=' + project.name"></b-card-img-lazy>-->
-          <div class="project-image" :style="{ backgroundImage: 'url('+ project.info.thumbnail_url +')' }"></div>
+          <div v-if="project.info.thumbnail_url" class="project-image" :style="{ backgroundImage: 'url('+ project.info.thumbnail_url +')' }"></div>
+          <div v-else class="project-image" :style="{ 'background-image': 'url(' + defaultImg + ')'  }"></div>
         </b-col>
       </b-row>
       <b-row class="row">
@@ -26,6 +27,11 @@
 <script>
 export default {
   name: 'ProjectCard',
+  data: () => {
+    return {
+      defaultImg: require('@/assets/graphic-projects.png')
+    }
+  },
   props: {
     project: Object,
     buttonText: String
