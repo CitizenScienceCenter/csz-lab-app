@@ -5,7 +5,11 @@
                 <div class="col centered">
                     <div class="drawer">
                         <span>{{ $t('text-cookies') }}</span>
-                        <b-button variant="primary" @click.prevent="acceptGdpr()">OK</b-button>
+                        <b-button v-if="!logged" variant="primary" @click.prevent="acceptGdpr()">OK</b-button>
+                        <span v-else>
+                            <b-button variant="primary" @click.prevent="acceptGdpr()">OK</b-button>
+                            <!--<b-button variant="primary" @click.prevent="detailsGdpr()">More</b-button>-->
+                        </span>
                     </div>
                 </div>
             </div>
@@ -33,7 +37,15 @@
                 localStorage.setItem('gdpr', true);
                 this.gdprAccepted = true
                 window['ga-disable-UA-162894944-1'] = false;
+            },
+            detailsGdpr(){
+                this.$router.push({ name: 'profile.edition' })
             }
+        },
+        computed: {
+            ...mapState('user', [
+            'logged'
+            ])
         }
     }
 </script>
@@ -44,7 +56,7 @@
 
     .gdpr {
         position: fixed;
-        left: 40%;
+        left: 37%;
         bottom: 0;
         width: 100%;
         pointer-events: none;

@@ -31,11 +31,20 @@
                 {{ $t('about-answer-4') }}    
               </p>
               <p>
-                {{ $t('about-answer-5') }}        
+                
+                <p v-html="$t('about-answer-5',
+                {
+                'criteria': `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'></a>`
+                  })">          
               </p>
               <p>
                 <b>{{ $t('about-question-6') }}</b><br>
-                {{ $t('about-answer-6') }}  
+                <p v-html="$t('about-answer-6',
+                {
+                'pybossa': `<a target='_blank' href='https://github.com/Scifabric/pybossa'>PyBossa</a>`,
+                'csgit': `<a target='_blank' href='https://github.com/CitizenScienceCenter'>Github</a>`
+                  })">          
+              </p>
               </p>
 
             </b-tab>
