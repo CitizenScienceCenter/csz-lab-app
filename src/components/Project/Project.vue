@@ -6,7 +6,8 @@
         <!-- Avatar -->
         <b-col cols="5" sm="4" md="3">
           <div class="div-image" v-if=" 'info' in project && 'thumbnail_url' in project.info " :style="{ 'background-image': 'url(' + project.info.thumbnail_url + ')' }"></div>
-          <b-img v-else blank-color="#777" :blank="true" thumbnail rounded="circle"></b-img>
+          <!--<b-img v-else blank-color="#777" :blank="true" thumbnail rounded="circle" width="auto" height="auto"></b-img>-->
+          <div class="div-image" v-else  :style="{ 'background-image': 'url(' + getImage + ')' }"></div>
         </b-col>
 
         <!-- Header -->
@@ -149,7 +150,6 @@ export default {
     ProjectStatisticsMenu,
     'app-cover': Cover
   },
-  
   created () {
     
     // eager loading: load the project and finally get stats and results
@@ -241,6 +241,9 @@ export default {
     }
   },
   computed: {
+    getImage(){
+      return require('@/assets/graphic-projects.png')
+    },
     ...mapState('project', {
       project: state => state.selectedProject,
       results: state => state.selectedProjectResults,
@@ -259,7 +262,7 @@ export default {
     ...mapGetters('user', [
       'isLoggedUserOwnerOfProject',
       'isLoggedUserAdmin'
-    ])
+    ]),    
   }
 }
 </script>

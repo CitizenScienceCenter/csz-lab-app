@@ -45,7 +45,7 @@
                 'csgit': `<a target='_blank' href='https://github.com/CitizenScienceCenter'>Github</a>`
                   })">          
               </p>
-              </p>
+            
 
             </b-tab>
 
