@@ -159,13 +159,13 @@ const actions = {
           if (response.data.status === 'success') {
             commit('notification/showSuccess', {
               title: getTranslationLocale('notifications-messages-forgot-pass-title'), 
-              content: response.data.flash
+              content: getPybossaTranslation(response.data.flash)
             }, { root: true })
             return true
           } else {
             commit('notification/showError', {
               title: getTranslationLocale('error'), 
-              content: response.data.flash
+              content: getPybossaTranslation(response.data.flash)
             }, { root: true })
             return false
           }

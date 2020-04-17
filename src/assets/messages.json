@@ -662,7 +662,10 @@
         "Your-avatar-has-been-updated!-It-may-take-some-minutes-to-refresh":"Your avatar has been updated! It may take some minutes to refresh",
         "You-have-to-provide-an-image-file-to-update-your-avatar":"You have to provide an image file to update your avatar",
         "An-email-has-been-sent-to-validate-your-email-address":"An email has been sent to validate your email address",
-        "Your-email-has-been-validated.":"Your email has been validated."
+        "Your-email-has-been-validated.":"Your email has been validated.",
+        "We've-sent-you-an-email-with-account-recovery-instructions!":"We've sent you an email with account recovery instructions!",
+        "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"We don't have this email in our records.You may have signed up with a different email"
+
 
     },
     "de": {
@@ -1323,7 +1326,9 @@
         "Your-avatar-has-been-updated!-It-may-take-some-minutes-to-refresh":"Dein Avatar wurde aktualisiert! Das Aktualisieren kann einige Minuten dauern",
         "You-have-to-provide-an-image-file-to-update-your-avatar":"Sie müssen eine Bilddatei bereitstellen, um Ihren Avatar zu aktualisieren",
         "An-email-has-been-sent-to-validate-your-email-address":"Es wurde eine E-Mail gesendet, um Ihre E-Mail-Adresse zu bestätigen",
-        "Your-email-has-been-validated.":"Your-email-has-been-validated."
+        "Your-email-has-been-validated.":"Your-email-has-been-validated.",
+        "We've-sent-you-an-email-with-account-recovery-instructions!":"Wir haben Ihnen eine E-Mail mit Anweisungen zur Wiederherstellung des Kontos gesendet!",
+        "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"Wir haben diese E-Mail nicht in unseren Unterlagen. Möglicherweise haben Sie sich mit einer anderen E-Mail angemeldet"
 
     }
 }
