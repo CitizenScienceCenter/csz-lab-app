@@ -391,13 +391,13 @@ const actions = {
           if ('status' in value.data && value.data.status === 'error') {
             commit('notification/showError', {
               title: getTranslationLocale('error'), 
-              content: value.data.flash
+              content: getPybossaTranslation(value.data.flash)
             }, { root: true })
           } else {
             return dispatch('getAccountProfile').then(() => {
               commit('notification/showSuccess', {
                 title: getTranslationLocale('success'), 
-                content: value.data.flash
+                content: getPybossaTranslation(value.data.flash)
               }, { root: true })
               commit('notification/closeLoading', 'user/updateAvatar', { root: true })
               return value.data
@@ -434,12 +434,12 @@ const actions = {
           if ('status' in value.data && value.data.status === 'error') {
             commit('notification/showError', {
               title: getTranslationLocale('error'), 
-              content: value.data.flash
+              content: getPybossaTranslation(value.data.flash)
             }, { root: true })
           } else {
             commit('notification/showSuccess', {
               title: getTranslationLocale('success'), 
-              content: value.data.flash
+              content: getPybossaTranslation(value.data.flash)
             }, { root: true })
           }
           return value.data
@@ -494,6 +494,21 @@ const actions = {
     }).catch(reason => {
       commit('notification/showError', {
         title: errors.EXPORT_ACCOUNT_DATA_ERROR, content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  registerConfirmation({commit},key) {
+    return api.confirmRegistration(key).then(value => {
+      commit('notification/showSuccess', {
+        title: getTranslationLocale('success'), 
+        content: getPybossaTranslation(value.data.flash)
+      }, { root: true })
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: getTranslationLocale('error'), content: reason
       }, { root: true })
       return false
     })

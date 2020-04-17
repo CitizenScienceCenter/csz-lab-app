@@ -5,6 +5,14 @@ import url from 'postcss-url'
 axios.defaults.headers['Content-Type'] = 'application/json'
 
 export default {
+
+  confirmRegistration (key) {
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'account/register/confirmation?key='+key, {
+      data: {},
+      withCredentials: true
+    })
+  },
+
   getRegistrationOptions () {
     return axios.get(process.env.BASE_ENDPOINT_URL + 'account/register', {
       data: {},

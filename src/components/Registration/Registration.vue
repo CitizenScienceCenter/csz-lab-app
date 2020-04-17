@@ -170,7 +170,7 @@ export default {
           } else {
             this.showSuccess({
               title: this.$t('register-success'),
-              content: response.flash
+              content: getPybossaTranslation(response.flash)
             })
             this.getAccountProfile().then(() => {
               if (this.userLogged) {
