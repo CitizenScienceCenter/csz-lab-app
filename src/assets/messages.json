@@ -101,8 +101,10 @@
 
         "project-draft-complete":"Modify draft",
         "project-draft-test":"Test it!",
+        "project-draft-published":"Project published",
+        "project-draft-pending-approval":"Project pending approval",
         "project-draft-publish":"Submit for publication",
-        "project-draft-approve-your-project":"Request project approval",
+        "project-draft-approve-your-project":"Request approval",
         "project-draft-approve-your-project-ok":"Yes, approve it",
         "project-draft-approve-your-project-no":"No, do not approve it!",
         "project-draft-approval-warning":"We will check your project against our {link} before publishing. We will contact you by email if we have questions.",
@@ -664,8 +666,9 @@
         "An-email-has-been-sent-to-validate-your-email-address":"An email has been sent to validate your email address",
         "Your-email-has-been-validated.":"Your email has been validated.",
         "We've-sent-you-an-email-with-account-recovery-instructions!":"We've sent you an email with account recovery instructions!",
-        "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"We don't have this email in our records.You may have signed up with a different email"
-
+        "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"We don't have this email in our records.You may have signed up with a different email",
+        "Thank-you!-Our-administrators-will-contact-you-in-case-of-questions!":"Thank you! Our administrators will contact you in case of questions!",
+        "We-have-found-your-project-in-our-approval-list!":"We have found your project in our approval list!"
 
     },
     "de": {
@@ -765,8 +768,11 @@
 
        "project-draft-complete":"Entwurf ändern",
        "project-draft-test":"Ausprobieren!",
+       "project-draft-pending-approval":"Projekt steht noch aus",
+       "project-draft-published":"Projekt veröffentlicht",
        "project-draft-publish":"Zur Veröffentlichung einreichen",
-       "project-draft-publish-approval":"Wir werden Ihr Projekt vor der Veröffentlichung anhand unserer Kriterien prüfen und Sie bei Fragen per E-Mail kontaktieren.",
+       "project-draft-approve-your-project":"Genehmigung anfordern",
+       "project-draft-approval-warning":"Wir werden Ihr Projekt vor der Veröffentlichung anhand unserer Kriterien prüfen und Sie bei Fragen per E-Mail kontaktieren.",
        "project-draft-publish-your-project":"Projekt veröffentlichen",
        "project-draft-publish-your-project-ok":"Ja, veröffentlichen!",
        "project-draft-publish-your-project-no":"Nein, nicht veröffentlichen!",
@@ -1328,7 +1334,9 @@
         "An-email-has-been-sent-to-validate-your-email-address":"Es wurde eine E-Mail gesendet, um Ihre E-Mail-Adresse zu bestätigen",
         "Your-email-has-been-validated.":"Your-email-has-been-validated.",
         "We've-sent-you-an-email-with-account-recovery-instructions!":"Wir haben Ihnen eine E-Mail mit Anweisungen zur Wiederherstellung des Kontos gesendet!",
-        "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"Wir haben diese E-Mail nicht in unseren Unterlagen. Möglicherweise haben Sie sich mit einer anderen E-Mail angemeldet"
+        "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"Wir haben diese E-Mail nicht in unseren Unterlagen. Möglicherweise haben Sie sich mit einer anderen E-Mail angemeldet",
+        "Thank-you!-Our-administrators-will-contact-you-in-case-of-questions!":"Vielen Dank! Unsere Administratoren werden Sie bei Fragen kontaktieren!",
+        "We-have-found-your-project-in-our-approval-list!":"Wir haben Ihr Projekt in unserer Genehmigungsliste gefunden!"
 
     }
 }

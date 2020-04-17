@@ -18,7 +18,7 @@
           <div v-if="isLoggedUserOwnerOfProject(project)">
             
              <div v-if="project.published">
-              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>Published</b-btn><br>
+              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>{{ $t('project-draft-published') }}</b-btn><br>
             </div>
 
             <div v-else-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
@@ -27,7 +27,7 @@
               <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
 
               <div v-if="!infos.admin">
-                <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >Request Approval</b-btn><br>
+                <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >{{ $t('project-draft-approve-your-project') }}</b-btn><br>
               </div>
               <div v-else>
                 <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project  @click="publish()">  {{ $t('project-draft-publish') }}</b-btn><br>
@@ -36,7 +36,7 @@
             </div>
 
             <div v-else-if="!project.published && (project.info.pending_approval || localPendingApproval)">
-              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project disabled>Project Pending Approval</b-btn><br>
+              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project disabled>{{ $t('project-draft-pending-approval') }}</b-btn><br>
             </div>
 
             <b-modal
