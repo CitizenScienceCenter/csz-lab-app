@@ -306,7 +306,7 @@
         "dropbox-choose-files":" Choose files from DropBox",
         "dropbox-license":" You can use any free licensed pics (Creative Commons or alike), your own pictures or those copyright images that you are authorised to use.",
 
-        "project-menu-task-presenter-header":"Task presenter editor",
+        "project-menu-task-presenter-header":"Task Presenter Editor",
         "project-menu-task-presenter-preview":"Preview task presenter",
         "project-menu-task-presenter-update":"Update task presenter",
         "project-menu-task-presenter-message":"This editor is reserved for expert users having coding skills. Edit and update at your own risk",
@@ -566,6 +566,13 @@
         "projects":"projects",
         "projects-c":"Projects",
 
+        "builder-breadcrumb-name":"Name",
+        "builder-breadcrumb-info":"Information",
+        "builder-breadcrumb-story":"Story",
+
+        "source":"Source",
+        "summary":"Summary",
+        "template":"Template",
         
         "template-editor-text-1": "You are working now on task",
         "template-editor-text-2": "You have completed",
@@ -610,11 +617,18 @@
         "taks-import-flickr-text2a":"You can revoke the access to your Flickr account at anytime",
         "taks-import-flickr-text3":"Select",
         "taks-import-flickr-text4":"Manually provide the ID of a Flickr set with images for all.",
+        "taks-import-flickr-text5-error":"You must provide a flickr album ID",
+
+        "taks-source-editor-amazon-text1":"Name of the S3 bucket",
+        "taks-source-editor-amazon-text2":"Search in bucket",
+        "taks-source-editor-amazon-text3":"Continue",
+
 
         "taks-import-googlespeadsheet-text1":"Google spreadsheet public url",
         "taks-import-googlespeadsheet-text2":"Send tasks",
 
         "taks-import-localcsv-text1":"You can download some CSV examples to know how to write it for each kind of template",
+        "taks-import-localPDF-text1":"You can download some PDF examples to know how to write it for each kind of template",
         "taks-import-localcsv-text2":"Image example",
         "taks-import-localcsv-text3":"Sound example",
         "taks-import-localcsv-text4":"Video example",
@@ -668,7 +682,12 @@
         "We've-sent-you-an-email-with-account-recovery-instructions!":"We've sent you an email with account recovery instructions!",
         "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"We don't have this email in our records.You may have signed up with a different email",
         "Thank-you!-Our-administrators-will-contact-you-in-case-of-questions!":"Thank you! Our administrators will contact you in case of questions!",
-        "We-have-found-your-project-in-our-approval-list!":"We have found your project in our approval list!"
+        "We-have-found-your-project-in-our-approval-list!":"We have found your project in our approval list!",
+
+        "Task-presenter-added":"Task presenter added",
+        "It-looks-like-there-were-no-new-records-to-import":"It looks like there were no new records to import",
+
+        "Your-flicker-account-access-is-now-revoked":"Your flickr account access is now revoked"
 
     },
     "de": {
@@ -812,7 +831,7 @@
 
        "name-builder-project-title-header":"Wählen Sie einen Namen bzw. Titel für Ihr neues Projekt",
        "name-builder-project-title":"Projektname",
-       "name-builder-project-title-description":"Please write here a good one!",
+       "name-builder-project-title-description":"Bitte hier einen guten schreiben",
        "name-builder-project-title-error":"Sie müssen einen Titel für Ihr Projekt festlegen",
        "name-builder-project-character-exceed":"Der Titel Länge sollte nicht überschritten werden.",
 
@@ -1139,6 +1158,13 @@
         "projects":"projekte",
         "projects-c":"Projekte",
 
+        "builder-breadcrumb-name":"Name",
+        "builder-breadcrumb-info":"Information",
+        "builder-breadcrumb-story":"Story",
+
+        "source":"Datenquelle",
+        "summary":"Zusammenfassung",
+        "template":"Vorlage",
 
         "about-question-1":"Was ist der Citizen Science Project Builder?",
         "about-answer-1":"Der Citizen Science Project Builder ist ein webbasiertes Tool, mit dem Forschende, Studierende sowie Bürgerinnen und Bürger Citizen Science Projekte entwickeln und durchführen können.",
@@ -1280,12 +1306,18 @@
        "taks-import-flickr-text2":"Zugangsberechtigung aufheben",
        "taks-import-flickr-text2a":"Sie können den Zugriff auf Ihr Flickr-Konto jederzeit widerrufen",
        "taks-import-flickr-text3":"Auswählen",
-       "taks-import-flickr-text4":"Manually provide the ID of a Flickr set with images for all.",
+       "taks-import-flickr-text4":"Geben Sie die ID eines Flickr-Sets manuell mit Bildern für alle an.",
+       "taks-import-flickr-text5-error":"Sie müssen eine Flickr-Album-ID angeben",
+
+       "taks-source-editor-amazon-text1":"Name des S3-Buckets",
+        "taks-source-editor-amazon-text2":"Suche in S3-Buckets",
+        "taks-source-editor-amazon-text3":"Weiter",
 
        "taks-import-googlespeadsheet-text1":"Öffentliche URL der Google-Tabelle",
        "taks-import-googlespeadsheet-text2":"Aufgaben senden",
 
        "taks-import-localcsv-text1":"Sie können CSV-Beispiele herunterladen, um zu sehen, wie sie für verschiedene Vorlagen geschrieben werden",
+       "taks-import-localPDF-text1":"Sie können PDF-Beispiele herunterladen, um zu sehen, wie sie für verschiedene Vorlagen geschrieben werden",
        "taks-import-localcsv-text2":"Bildbeispiel",
        "taks-import-localcsv-text3":"Tonbeispiel",
        "taks-import-localcsv-text4":"Videobeispiel",
@@ -1336,7 +1368,11 @@
         "We've-sent-you-an-email-with-account-recovery-instructions!":"Wir haben Ihnen eine E-Mail mit Anweisungen zur Wiederherstellung des Kontos gesendet!",
         "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"Wir haben diese E-Mail nicht in unseren Unterlagen. Möglicherweise haben Sie sich mit einer anderen E-Mail angemeldet",
         "Thank-you!-Our-administrators-will-contact-you-in-case-of-questions!":"Vielen Dank! Unsere Administratoren werden Sie bei Fragen kontaktieren!",
-        "We-have-found-your-project-in-our-approval-list!":"Wir haben Ihr Projekt in unserer Genehmigungsliste gefunden!"
+        "We-have-found-your-project-in-our-approval-list!":"Wir haben Ihr Projekt in unserer Genehmigungsliste gefunden!",
+
+        "Task-presenter-added":"Task presenter hinzugefügt",
+        "It-looks-like-there-were-no-new-records-to-import":"Es sieht so aus, als ob keine neuen Datensätze importiert werden mussten.",
+        "Your-flicker-account-access-is-now-revoked":"Der Zugriff auf Ihr Flickr-Konto wird jetzt widerrufen"
 
     }
 }

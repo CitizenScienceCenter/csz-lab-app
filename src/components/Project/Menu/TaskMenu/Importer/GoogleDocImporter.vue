@@ -6,14 +6,14 @@
     </b-card>
     <b-collapse id="google-doc-collapse" v-model="isGoogleDocVisible">
 
-      <!--<p class="mt-4">{{ $t('taks-import-localcsv-text1') }}:</p>
+      <p class="mt-4">{{ $t('taks-import-localPDF-text1') }}:</p>
       <ul>
         <li><b-link href='https://docs.google.com/spreadsheets/d/1LM5DUtMG65dtYzkvA7a5ymhUTLamzqZy2t6XmRJvK7g/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text2') }}</b-link></li>
-        <li><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
-        <li><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
-        <li><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>
-        <li><b-link :href="csvSamples.geoCoding" download="geo-coding-sample.csv">{{ $t('taks-import-localcsv-text6') }}</b-link></li>
-      </ul>-->
+        <li><b-link href='https://docs.google.com/spreadsheets/d/1ALbDzJwp7DCb8Mva3rHS4jWeWwZbskrownR2kDtTB3c/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text3') }}</b-link></li>
+        <li><b-link href='https://docs.google.com/spreadsheets/d/1QVKXYzza9H1oHeUFHpblc8L3aCxkEP4OF25Ptcvtntg/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text4') }}</b-link></li>
+        <li><b-link href='https://docs.google.com/spreadsheets/d/1vKeB93G1uyqBnmiDr5OHbT3VGF6FD--D65YQYY0iGNY/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text5') }}</b-link></li>
+        <li><b-link  href='https://docs.google.com/spreadsheets/d/1hU7TDDZB4dVWbgXuaxeUw7yHj00fyy0N_7sMhcZ4Xng/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text6') }}</b-link></li>
+      </ul>
       
       <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
         <b-form-group>

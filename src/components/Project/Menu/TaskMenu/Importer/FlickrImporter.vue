@@ -95,8 +95,8 @@ export default {
         })
       } else {
         this.showError({
-          title: 'Incomplete form',
-          content: 'You must provide a flickr album ID'
+          title: this.$t('error-incomplete-form'),
+          content: this.$t('taks-import-flickr-text5-error')
         })
         return false
       }

@@ -4,7 +4,7 @@ import importer from './task-importer'
 import exporter from './task-exporter'
 import settings from './task-settings'
 
-import { buildTemplateFromModel } from '@/helper'
+import { buildTemplateFromModel, getTranslationLocale, getPybossaTranslation } from '@/helper'
 
 import BasicTemplate from '@/components/Task/Template/BasicTemplate'
 import ImageTemplate from '@/components/Task/Template/Image/ImageClassificationTemplate'
@@ -171,8 +171,8 @@ const actions = {
           if ('status' in value.data && value.data.status === 'success') {
             commit('setTaskPresenter', template)
             commit('notification/showSuccess', {
-              title: 'Success',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: getPybossaTranslation(value.data.flash) 
             }, { root: true })
             return value.data
           }

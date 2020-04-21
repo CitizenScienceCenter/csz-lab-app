@@ -85,7 +85,7 @@
                 <p class="mb-0">{{ task.template.question }}</p>
                 <ul class="list-unstyled ml-4">
                   <li :key="index" v-for="(description, index) in task.template.descriptions">
-                    <label>{{ 'Description ' + (index + 1) }}</label>
+                    <label>{{ $t('description')  + ' ' + (index + 1) }}</label>
                     <p class="mb-0">{{ description }}</p>
                   </li>
                 </ul>
@@ -95,12 +95,12 @@
           <!-- Classify template -->
           <ul v-if="task.job === jobs.classify" class="list-unstyled">
             <li :key="q" v-for="(question, q) in task.template" class="mb-2">
-              <b-button v-b-toggle="'collapse-' + (q + 1)" variant="outline-secondary">{{ 'Question ' + (q + 1) }}</b-button>
+              <b-button v-b-toggle="'collapse-' + (q + 1)" variant="outline-secondary">{{  $t('task-summary-builder-question')+' ' + (q + 1) }}</b-button>
               <b-collapse :id="'collapse-' + (q + 1)" :visible="q === 0 ? 'visible' : false" class="mt-2">
                 <p class="mb-0">{{ question.question }}</p>
                 <ul class="list-unstyled ml-4">
                   <li :key="a" v-for="(answer, a) in task.template[q].answers">
-                    <label>{{ 'Answer ' + (a + 1) }}</label>
+                    <label>{{ $t('task-summary-builder-answer')  + ' ' + (a + 1) }}</label>
                     <p class="mb-0">{{ answer }}</p>
                   </li>
                 </ul>

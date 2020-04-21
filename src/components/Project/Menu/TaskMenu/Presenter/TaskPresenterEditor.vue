@@ -127,7 +127,7 @@ export default {
     items () {
       return [
         {
-          html: '<i class="fas fa-home"></i>&ensp;<span>Project</span>',
+          html: '<i class="fas fa-home"></i>&ensp;<span>'+this.$t('project-c')+'</span>',
           to: { name: 'project', params: { id: 'id' in this.project ? this.project.id : 0 } }
         },
         {

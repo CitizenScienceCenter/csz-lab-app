@@ -55,18 +55,18 @@ export default {
     items () {
       return [
         {
-          text: 'Name',
+          text: this.$t('builder-breadcrumb-name'),
           to: { name: 'project.builder.name' },
           active: this.currentStep === 'name'
         },
         {
-          text: 'Information',
+          text: this.$t('builder-breadcrumb-info'),
           to: { name: 'project.builder.information' },
           active: this.currentStep === 'information',
           disabled: this.currentStep === 'name'
         },
         {
-          text: 'Story',
+          text: this.$t('builder-breadcrumb-story'),
           to: { name: 'project.builder.story' },
           active: this.currentStep === 'story',
           disabled: true

@@ -36,7 +36,8 @@
 
             <b-nav-item-dropdown v-else right>
               <template slot="button-content">
-                <b-img v-if="userProfile.info" height="32" width="32" rounded="circle" :src="userProfile.info.avatar_url"></b-img>&ensp;
+                <b-img v-if="userProfile.info.avatar_url" height="32" width="32" rounded="circle" :src="userProfile.info.avatar_url"></b-img>
+                <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;
                 {{ userProfile.name }}
               </template>
               <b-dropdown-item :to="{ name: 'profile' }">{{ $t('app-vue-profile') }}</b-dropdown-item>
@@ -137,6 +138,11 @@ export default {
   name: 'App',
   created () {
     // this.getAccountProfile()
+  },
+  data: () => {
+    return {
+      defaultImage:require('@/assets/graphic-community.png')
+    }
   },
   components: {
     Loading,
