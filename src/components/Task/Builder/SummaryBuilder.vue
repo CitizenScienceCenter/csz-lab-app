@@ -167,7 +167,7 @@ export default {
   },
   methods: {
     ...mapActions('task', [
-      'saveTaskPresenter'
+      'saveTaskPresenter','saveTaskCategory'
     ]),
     ...mapActions('task/importer', [
       'importAmazonS3Tasks',
@@ -276,6 +276,12 @@ export default {
         template: template
       })
 
+      // store the generated template for the selected project
+      const categoryPromise = this.saveTaskCategory({
+        project: this.selectedProject,
+        category: this.task.material
+      })
+
       /// --------------------------------------------------
       /// Tasks importation depending on the selected source
       /// --------------------------------------------------
@@ -316,8 +322,8 @@ export default {
       /// --------------------------------------------------
 
       // test if all calls have been done correctly and redirects to the project detail page
-      Promise.all([templatePromise, sourcePromise]).then(results => {
-        if (results.filter(el => el !== false).length === 2) {
+      Promise.all([templatePromise,categoryPromise, sourcePromise]).then(results => {
+        if (results.filter(el => el !== false).length === 3) {
           this.resetTaskBuilder()
           this.$router.push({ name: 'project', params: { id: this.selectedProject.id } })
         } else {

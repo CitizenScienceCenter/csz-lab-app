@@ -628,7 +628,7 @@
         "taks-import-googlespeadsheet-text2":"Send tasks",
 
         "taks-import-localcsv-text1":"You can download some CSV examples to know how to write it for each kind of template",
-        "taks-import-localPDF-text1":"You can download some PDF examples to know how to write it for each kind of template",
+        "taks-import-localPDF-text1":"You can download some examples to know how to write it for each kind of template",
         "taks-import-localcsv-text2":"Image example",
         "taks-import-localcsv-text3":"Sound example",
         "taks-import-localcsv-text4":"Video example",
@@ -1317,7 +1317,7 @@
        "taks-import-googlespeadsheet-text2":"Aufgaben senden",
 
        "taks-import-localcsv-text1":"Sie können CSV-Beispiele herunterladen, um zu sehen, wie sie für verschiedene Vorlagen geschrieben werden",
-       "taks-import-localPDF-text1":"Sie können PDF-Beispiele herunterladen, um zu sehen, wie sie für verschiedene Vorlagen geschrieben werden",
+       "taks-import-localPDF-text1":"Sie können Beispiele herunterladen, um zu sehen, wie sie für verschiedene Vorlagen geschrieben werden",
        "taks-import-localcsv-text2":"Bildbeispiel",
        "taks-import-localcsv-text3":"Tonbeispiel",
        "taks-import-localcsv-text4":"Videobeispiel",

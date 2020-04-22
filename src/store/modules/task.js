@@ -188,6 +188,29 @@ const actions = {
     })
   },
 
+  saveTaskCategory ({ commit, state, dispatch }, { project, category }) {
+    return dispatch('getTaskPresenterImportationOptions', project).then(response => {
+      if (response) {
+        return api.saveTaskCategory(
+          state.taskPresenterImportationOptions.form.csrf,
+          project.short_name,
+          category
+        ).then(value => {
+          if (value.data.status === 'success') {
+            return value.data
+          }
+          return false
+        }).catch(reason => {
+          commit('notification/showError', {
+            title: errors.POST_TASK_PRESENTER_ERROR, content: reason
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
   /**
    * Gets a new task not already done for the logged user
    * @param commit
