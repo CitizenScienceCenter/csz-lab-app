@@ -328,8 +328,8 @@ export default {
           this.$router.push({ name: 'project', params: { id: this.selectedProject.id } })
         } else {
           this.showError({
-            title: 'Error during creation',
-            content: 'We are not able to submit your template and/or your tasks for the moment.'
+            title: this.$t('error'),
+            content: this.$t('summary-builder-promise-error')
           })
         }
       })

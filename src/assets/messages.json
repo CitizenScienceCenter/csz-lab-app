@@ -687,7 +687,9 @@
         "Task-presenter-added":"Task presenter added",
         "It-looks-like-there-were-no-new-records-to-import":"It looks like there were no new records to import",
 
-        "Your-flicker-account-access-is-now-revoked":"Your flickr account access is now revoked"
+        "Your-flicker-account-access-is-now-revoked":"Your flickr account access is now revoked",
+
+        "summary-builder-promise-error":"We are not able to submit your template and/or your tasks for the moment."
 
     },
     "de": {
@@ -1372,7 +1374,9 @@
 
         "Task-presenter-added":"Task presenter hinzugefügt",
         "It-looks-like-there-were-no-new-records-to-import":"Es sieht so aus, als ob keine neuen Datensätze importiert werden mussten.",
-        "Your-flicker-account-access-is-now-revoked":"Der Zugriff auf Ihr Flickr-Konto wird jetzt widerrufen"
+        "Your-flicker-account-access-is-now-revoked":"Der Zugriff auf Ihr Flickr-Konto wird jetzt widerrufen",
+
+        "summary-builder-promise-error":"Wir können Ihre Vorlage und / oder Ihre Aufgaben derzeit nicht einreichen."
 
     }
 }
