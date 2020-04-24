@@ -5,7 +5,7 @@
         <b-col class="col-image">
           <!--<b-card-img-lazy v-if="project.info.thumbnail_url" :src="project.info.thumbnail_url"></b-card-img-lazy>
           <b-card-img-lazy v-else :src="'https://dummyimage.com/334x250/777777/fff&text=' + project.name"></b-card-img-lazy>-->
-          <div v-if="project.info.thumbnail_url" class="project-image" :style="{ backgroundImage: 'url('+ project.info.thumbnail_url +')' }"></div>
+          <div v-if="project.info.thumbnail_url" class="project-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
           <div v-else class="project-image" :style="{ 'background-image': 'url(' + defaultImg + ')'  }"></div>
         </b-col>
       </b-row>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="overlay"></div>
-    <div class="project-bg-image" :style="{ backgroundImage: 'url('+ project.info.thumbnail_url +')' }"></div>
+    <div class="project-bg-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
 
   </div>
 </template>
@@ -35,6 +35,18 @@ export default {
   props: {
     project: Object,
     buttonText: String
+  },
+  methods:{
+    getBaseUrl(){
+      if(this.project.info.thumbnail){
+        const base = process.env.BASE_ENDPOINT_URL
+        const container = this.project.info.container
+        const picname = this.project.info.thumbnail
+        return base +'uploads/'+ container + '/' + picname
+      } else {
+        return this.defaultImg
+      }
+    }
   }
 }
 </script>

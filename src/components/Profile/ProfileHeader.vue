@@ -7,8 +7,8 @@
         <!--<b-img v-else blank-color="#777" :blank="true" rounded="circle"></b-img>-->
       </b-col>
 
-      <b-col cols="7" sm="8" md="3" class="mt-3 mt-md-0">
-        <h1>{{ profile.fullname }}</h1>
+      <b-col cols="6" sm="6" md="3" class="mt-3 mt-md-0">
+        <h1>{{ profile.email_addr.split('@')[0] }}</h1>
         <b-btn ref="btn-edit-profile" v-if="!isInEditionMode" :to="{ name: 'profile.edition' }" variant="primary"> {{ $t('profile-header-edit-your-profile') }}</b-btn>
         <b-btn ref="btn-go-back" v-else :to="{ name: 'profile' }">{{ $t('profile-header-go-back-to-profile') }}</b-btn>
       </b-col>

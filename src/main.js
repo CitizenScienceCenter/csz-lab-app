@@ -16,9 +16,12 @@ import '@fortawesome/fontawesome-free/js/all'
 import 'codemirror/lib/codemirror.css'
 import 'vuelayers/lib/style.css'
 import './scss/global.scss'
-import VueGtag from "vue-gtag";
+import VueGtag from "vue-gtag"
+//import VueDisqus from 'vue-disqus'
+
 
 Vue.config.productionTip = false
+//Vue.use(VueDisqus)
 Vue.use(VueRouter);
 Vue.use(BootstrapVue)
 Vue.use(VueLayers, {
@@ -34,11 +37,9 @@ Vue.use(VueGtag, {
   enabled: gtagstorage
 },router);
 
-
 Vue.component('pdf', Pdf)
 
 window.Vue = Vue
-
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <app-cover :imageUrl="project.info.thumbnail_url">
+    <app-cover :imageUrl="getBaseUrl()">
       <b-row class="mt-4">
 
         <!-- Avatar -->
         <b-col cols="5" sm="4" md="3">
-          <div class="div-image" v-if=" 'info' in project && 'thumbnail_url' in project.info " :style="{ 'background-image': 'url(' + project.info.thumbnail_url + ')' }"></div>
+          <div class="div-image" v-if=" 'info' in project && 'thumbnail_url' in project.info " :style="{ 'background-image': 'url(' + getBaseUrl() + ')' }"></div>
           <!--<b-img v-else blank-color="#777" :blank="true" thumbnail rounded="circle" width="auto" height="auto"></b-img>-->
           <div class="div-image" v-else  :style="{ 'background-image': 'url(' + defaultImage + ')' }"></div>
         </b-col>
@@ -238,6 +238,16 @@ export default {
           title: 'Impossible to publish the project',
           content: 'You must provide a task presenter to publish the project'
         })
+      }
+    },
+    getBaseUrl(){
+      if(this.project.info.thumbnail){
+        const base = process.env.BASE_ENDPOINT_URL
+        const container = this.project.info.container
+        const picname = this.project.info.thumbnail
+        return base +'uploads/'+ container + '/' + picname
+      } else {
+        return this.defaultImage
       }
     }
   },

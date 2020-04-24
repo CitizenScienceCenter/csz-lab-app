@@ -20,7 +20,11 @@ export default {
   },
   computed: {
     backgroundImage () {
-      return require('@/assets/PB-background_opt.jpg')
+      let img;
+      (this.imageUrl) 
+      ? img = this.imageUrl
+      : img = require('@/assets/PB-background_opt.jpg')
+      return img
     }
   },
   mounted: function () {

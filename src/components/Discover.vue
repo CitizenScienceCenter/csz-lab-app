@@ -3,7 +3,7 @@
     <h1 class="mt-4 text-center centered">{{ $t('discover-header') }}</h1>
     <b-row class="justify-content-center mt-4">
       <b-col>
-          <h2 class="text-center">{{ globalPagination.total }} {{ $t('projects') }}</h2>
+          <h2 class="text-center">{{ globalPagination.total }} {{ $t('projects-c') }}</h2>
 
           <b-tabs pills align="center">
 

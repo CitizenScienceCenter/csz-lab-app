@@ -689,12 +689,15 @@
 
         "Your-flicker-account-access-is-now-revoked":"Your flickr account access is now revoked",
 
-        "summary-builder-promise-error":"We are not able to submit your template and/or your tasks for the moment."
+        "summary-builder-promise-error":"We are not able to submit your template and/or your tasks for the moment.",
+
+        "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Impossible to get profile data",
+        "Error:-Request-failed-with-status-code-502":"Error: Request failed with status code 502"
 
     },
     "de": {
       "home-heading":"CITIZEN SCIENCE PROJECT BUILDER",
-       "home-subheading":"Tragen Sie zu einem laufenden Projekt bei oder starten Sie Ihr eigenes",
+       "home-subheading":"Forschen Sie mit oder starten Sie Ihr eigenes Projekt",
        "home-create-a-project":"Neues Projekt starten",
        "home-start-contributing": "Mitforschen",
        "home-featured-projects":"Unterstützte Projekte",
@@ -787,7 +790,7 @@
        "profile-view-create-a-project":"Projekt starten",
        "profile-view-find-a-project":"Projekt finden",
 
-       "project-draft-complete":"Entwurf ändern",
+       "project-draft-complete":"Entwurf bearbeiten",
        "project-draft-test":"Ausprobieren!",
        "project-draft-pending-approval":"Projekt steht noch aus",
        "project-draft-published":"Projekt veröffentlicht",
@@ -831,9 +834,9 @@
        "information-builder-character-exceed":"Die angegebene Länge der Beschreibung sollte nicht überschritten werden.",
 
 
-       "name-builder-project-title-header":"Wählen Sie einen Namen bzw. Titel für Ihr neues Projekt",
+       "name-builder-project-title-header":"Wählen Sie einen Namen für Ihr neues Projekt",
        "name-builder-project-title":"Projektname",
-       "name-builder-project-title-description":"Bitte hier einen guten schreiben",
+       "name-builder-project-title-description":"Am besten kurz und eingängig!",
        "name-builder-project-title-error":"Sie müssen einen Titel für Ihr Projekt festlegen",
        "name-builder-project-character-exceed":"Der Titel Länge sollte nicht überschritten werden.",
 
@@ -999,7 +1002,7 @@
 
        "edit-btn":"Bearbeiten",
        "view-btn":"Ansehen",
-       "submit-btn":"Übermitteln",
+       "submit-btn":"Senden",
        "take-a-look-btn":"Anschauen",
        "go-back-btn":"Zurück",
        "next-btn":"Weiter",
@@ -1247,7 +1250,7 @@
         "about-how-step7-label2":"Wir werden überprüfen, ob Ihr Projekt unseren Kriterien entspricht und melden uns innerhalb von ein paar Stunden bei Ihnen.",
 
         "about-criteria-label1":"Jeder kann ein Projekt auf der Plattform anlegen, solange folgende Kriterien beachtet werden:",
-        "about-criteria-list1":"Thema und Zielsetzungen des Projekts sind für die Wissenschaft und/oder die Gesellschaft eindeutig von Relevanz.",
+        "about-criteria-list1":"Thema und Zielsetzung des Projekts haben einen klaren wissenschaftlichen und/oder sozialen Bezug.",
         "about-criteria-list2":"Die Ziele und angestrebten Ergebnisse des Projekts sind in der Projektbeschreibung nachvollziehbar und verständlich kommuniziert.",
         "about-criteria-list3":"Die Projektziele sind ohne die Beteiligung der Bürgerinnen und Bürger nicht oder nur schwer zu erreichen.",
         "about-criteria-list4":"Das Projekt steht allen Mitwirkenden, die freiwillig teilnehmen möchten, offen.",
@@ -1376,7 +1379,10 @@
         "It-looks-like-there-were-no-new-records-to-import":"Es sieht so aus, als ob keine neuen Datensätze importiert werden mussten.",
         "Your-flicker-account-access-is-now-revoked":"Der Zugriff auf Ihr Flickr-Konto wird jetzt widerrufen",
 
-        "summary-builder-promise-error":"Wir können Ihre Vorlage und / oder Ihre Aufgaben derzeit nicht einreichen."
+        "summary-builder-promise-error":"Wir können Ihre Vorlage und / oder Ihre Aufgaben derzeit nicht einreichen.",
+
+        "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Profildaten können nicht abgerufen werden",
+        "Error:-Request-failed-with-status-code-502":"Fehler: Anforderung mit Statuscode 502 fehlgeschlagen"
 
     }
 }
