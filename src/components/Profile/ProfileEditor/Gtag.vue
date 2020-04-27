@@ -18,9 +18,14 @@ import { setOptions, bootstrap } from 'vue-gtag'
 export default {
     name: 'Gtag',
     mounted(){
-        if (localStorage.getItem('gdpr'))
+        /*if (localStorage.getItem('gdpr'))
             this.gdprAccepted = JSON.parse(localStorage.getItem('gdpr'))
-        },
+        },*/
+        if(JSON.parse(localStorage.getItem('gtag'))) {
+          const data = JSON.parse(localStorage.getItem('gtag'))
+          if(data['status']){ this.gdprAccepted = true} else { this.gdprAccepted = false }
+        }
+    },
     data: () => {
         return {
             gdprAccepted:false
@@ -29,7 +34,8 @@ export default {
     watch: {
        gdprAccepted:{
            handler: function (val, oldVal) {
-                localStorage.setItem('gdpr', val);
+                //localStorage.setItem('gdpr', val);
+                localStorage.setItem('gtag', JSON.stringify({status:val,id:this.infos.id}));
                 this.gdprAccepted = val
                 this.gtagPlugin()
            }
@@ -37,9 +43,12 @@ export default {
        } 
     },
     computed: {
-    ...mapState('settings', [
-      'gdpr'
-    ])
+      ...mapState('settings', [
+        'gdpr'
+      ]),
+      ...mapState('user', [
+        'infos'
+        ])
     },
    methods: {
     ...mapActions('settings', [

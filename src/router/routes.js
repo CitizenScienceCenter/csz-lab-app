@@ -70,10 +70,18 @@ export const routes = [
                 name: 'register-confirmation',
                 query: { plan: 'private' },
                 beforeEnter: (to, from, next) => {
+                  /*if(store.state.user.logged){
+                    store.dispatch('user/signOut').then(signedOut => {
+                      if (signedOut) {
+                        next({ name: 'home' })
+                      }
+                    })
+                  }*/
+
                   let url = to.fullPath.split('?key=');
                   if(url.length>1) {
                     store.dispatch('user/registerConfirmation', url[1]).then(confirm => {
-                      console.log(confirm)
+                      //console.log(confirm)
                       if (confirm) {
                         next({ name: 'home' })
                       }

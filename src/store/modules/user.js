@@ -90,6 +90,16 @@ const actions = {
     })
   },
 
+  checkGtag({ state }){
+    if(JSON.parse(localStorage.getItem('gtag'))) {
+      const data = JSON.parse(localStorage.getItem('gtag'))
+      if(data['status']){ 
+        localStorage.setItem('gtag', JSON.stringify({status:data['status'],id:state.infos.id}));
+      }   
+    }
+    return false
+  },
+
   /**
    * Log the user in
    * @param commit
@@ -231,7 +241,7 @@ const actions = {
    * @param commit
    * @return {Promise<T | boolean>}
    */
-  getAccountProfile ({ commit }) {
+  getAccountProfile ({ commit,dispatch}) {
     return api.getAccountProfile().then(value => {
       if (value.data.hasOwnProperty('user')) {
         commit('setUserInfos', value.data.user)
@@ -239,6 +249,7 @@ const actions = {
         commit('setUserDraftProjects', value.data.projects_draft)
         commit('setUserPublishedProjects', value.data.projects_published)
         commit('setLogged')
+        dispatch('checkGtag')
         return value.data
       }
       commit('setLoggedOut')

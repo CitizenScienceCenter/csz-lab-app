@@ -28,13 +28,20 @@ Vue.use(VueLayers, {
   dataProjection: 'EPSG:4326'
 })
 
-let gtagstorage;
+let cookie_enabled = false;
 
-(!JSON.parse(localStorage.getItem('gdpr'))) ? gtagstorage = false : gtagstorage=true
-
+let cfg = { id: "UA-162894944-1" }
+localStorage.removeItem('analytics');
+localStorage.removeItem('gdpr');
+if(JSON.parse(localStorage.getItem('gtag'))) {
+  const data = JSON.parse(localStorage.getItem('gtag'))
+  if(data['status']){ cookie_enabled = true } else { cookie_enabled = false }
+  if(data['id']) { Object.assign(cfg,{ params: { 'user_id': data['id'].toString() } }) }
+} 
+//console.log(cfg)
 Vue.use(VueGtag, {
-  config: { id: "UA-162894944-1" },
-  enabled: gtagstorage
+  config: cfg,
+  enabled: cookie_enabled
 },router);
 
 Vue.component('pdf', Pdf)

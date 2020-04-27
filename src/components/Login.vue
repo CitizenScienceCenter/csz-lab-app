@@ -88,7 +88,7 @@ export default {
     ...mapMutations('notification', [
       'showInfo', 'showError'
     ]),
-
+    
     onSubmit () {
       this.signIn(this.form).then(() => {
         if (this.logged) {

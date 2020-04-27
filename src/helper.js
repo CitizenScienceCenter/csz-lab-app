@@ -112,7 +112,6 @@ export function getTranslationLocale(tag){
 export function getPybossaTranslation(reason){
   const tag = reason.split(' ')
   const complete = tag.join('-')
-  alert(complete)
   return i18n.messages[i18n.locale][complete]
 }
 

@@ -24,8 +24,8 @@
     export default {
         name: "GDPR",
         mounted(){
-            if (localStorage.getItem('gdpr'))
-                this.gdprAccepted = JSON.parse(localStorage.getItem('gdpr'))
+            if (localStorage.getItem('gtag'))
+                this.gdprAccepted = JSON.parse(localStorage.getItem('gtag'))
         },
         data: () => {
             return {
@@ -34,7 +34,7 @@
         },
         methods: {
             acceptGdpr() {
-                localStorage.setItem('gdpr', true);
+                localStorage.setItem('gtag', JSON.stringify({status:true,id:(this.logged) ? this.infos.id : null}));
                 this.gdprAccepted = true
                 window['ga-disable-UA-162894944-1'] = false;
             },
@@ -44,7 +44,7 @@
         },
         computed: {
             ...mapState('user', [
-            'logged'
+            'logged','infos'
             ])
         }
     }
