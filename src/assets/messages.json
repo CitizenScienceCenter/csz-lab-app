@@ -692,7 +692,24 @@
         "summary-builder-promise-error":"We are not able to submit your template and/or your tasks for the moment.",
 
         "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Impossible to get profile data",
-        "Error:-Request-failed-with-status-code-502":"Error: Request failed with status code 502"
+        "Error:-Request-failed-with-status-code-502":"Error: Request failed with status code 502",
+
+        
+        "FORUM IMPLEMENTATION":"-----------------------------------------------------------",
+
+        "newtopic-heading": "Start a new Topic",
+        "newtopic-title-placeholder": "Topic Title",
+        "newtopic-text-placeholder": "What's on your mind?",
+        "newtopic-button": "Send",
+
+        "login-text": "You need to be logged in to write something.",
+        "login-button": "Login",
+
+        "reply-button": "Reply",
+        "reply-placeholder": "Reply",
+
+        "more-replies-button": "Show More Replies",
+        "more-comments-button": "Show More Comments"
 
     },
     "de": {
@@ -1382,7 +1399,24 @@
         "summary-builder-promise-error":"Wir können Ihre Vorlage und / oder Ihre Aufgaben derzeit nicht einreichen.",
 
         "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Profildaten können nicht abgerufen werden",
-        "Error:-Request-failed-with-status-code-502":"Fehler: Anforderung mit Statuscode 502 fehlgeschlagen"
+        "Error:-Request-failed-with-status-code-502":"Fehler: Anforderung mit Statuscode 502 fehlgeschlagen",
+
+        "FORUM IMPLEMENTATION":"-----------------------------------------------------------",
+
+        "newtopic-heading": "Starte ein neues Thema",
+        "newtopic-title-placeholder": "Titel",
+        "newtopic-text-placeholder": "Was liegt dir auf dem Herzen?",
+        "newtopic-button": "Senden",
+
+        "login-text": "Du musst eingeloggt sein um etwas zu schreiben.",
+        "login-button": "Anmelden",
+
+        "reply-button": "Antworten",
+        "reply-placeholder": "Antwort",
+
+
+        "more-replies-button": "Mehr Antworten zeigen",
+        "more-comments-button": "Mehr Kommentare zeigen"
 
     }
 }
