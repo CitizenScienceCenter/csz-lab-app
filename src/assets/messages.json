@@ -553,7 +553,7 @@
         "about-overview":"Overview",
 
         "template-renderer-not-allowed-contribute":"You are not allowed to contribute",
-        "template-renderer-not-allowed-anonymous":"'This project does not allow anonymous contributors'",
+        "template-renderer-not-allowed-anonymous":"This project does not allow anonymous contributors",
 
         "info-c":"Info",
         "statistics-c":"Statistics",

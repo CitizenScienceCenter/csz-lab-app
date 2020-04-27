@@ -61,7 +61,7 @@
           </div>
 
           <div v-else>
-              <div v-if="!project.published">
+              <div v-if="!project.published && isAnonymousProject">
                 <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
                 <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
                 
