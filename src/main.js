@@ -35,7 +35,7 @@ localStorage.removeItem('analytics');
 localStorage.removeItem('gdpr');
 if(JSON.parse(localStorage.getItem('gtag'))) {
   const data = JSON.parse(localStorage.getItem('gtag'))
-  if(data['status']){ cookie_enabled = true } else { cookie_enabled = false }
+  if(data['status']==true){ cookie_enabled = true } else { cookie_enabled = false }
   if(data['id']) { Object.assign(cfg,{ params: { 'user_id': data['id'].toString() } }) }
 } 
 //console.log(cfg)

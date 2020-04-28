@@ -24,8 +24,10 @@
     export default {
         name: "GDPR",
         mounted(){
-            if (localStorage.getItem('gtag'))
-                this.gdprAccepted = JSON.parse(localStorage.getItem('gtag'))
+            if (localStorage.getItem('gtag')){
+                const data = JSON.parse(localStorage.getItem('gtag'))
+                this.gdprAccepted = data['status']
+            }
         },
         data: () => {
             return {
@@ -56,23 +58,23 @@
 
     .gdpr {
         position: fixed;
-        left: 37%;
         bottom: 0;
         width: 100%;
         pointer-events: none;
         z-index: 500;
+        text-align: center;
 
         .drawer {
             display: inline-block;
             pointer-events: all;
             background-color: rgba( $color-black, 0.8 );
             color: white;
-            padding: $spacing-1 $spacing-3;
+            padding: $spacing-2 $spacing-4;
             border-top-left-radius: $border-radius;
             border-top-right-radius: $border-radius;
 
             span {
-                font-size: $font-size-small;
+                font-size: $font-size-normal;
                 margin-right: $spacing-2;
             }
         }
