@@ -28,6 +28,7 @@ const errors = {
 const state = {
   categories: [], // all categories
   projects: [], // all projects
+  projectComments : [],
 
   categoryProjects: {}, // projects ordered by category
   categoryPagination: {}, // contains a pagination object for each category
@@ -42,7 +43,8 @@ const state = {
   projectCreationOptions: {},
   projectUpdateOptions: {},
   publishProjectOptions: {},
-  projectDeletionOptions: {}
+  projectDeletionOptions: {},
+  projectCommentsOptions: {}
 }
 
 // filter methods on the state data
@@ -489,7 +491,70 @@ const actions = {
       }, { root: true })
       return false
     })
+  },
+
+  setProjectCommentsOptions ({ commit }, short_name) {
+    return api.setProjectCommentsOptions(short_name).then(value => {
+      commit('setProjectCommentsOptions', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Error getting proeject commnets options', 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  /**
+   * Publish the given project
+   * @param commit
+   * @param state
+   * @param dispatch
+   * @param project
+   * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
+   */
+  setProjectComment ({ commit, state, dispatch },payload) {
+    return dispatch('setProjectCommentsOptions', payload.short_name).then(response => {
+      if (response) {
+        return api.setProjectComment(state.projectCommentsOptions.csrf, payload.short_name, payload.comment).then(value => {
+          commit('setProjectComments', value)
+          commit('notification/showSuccess', {
+            title: 'Comment saved!',
+            content: 'All good'
+          }, { root: true })
+          return value.data
+        }).catch(reason => {
+          commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Project comments!',
+            content: 'Could not load the comments for the project ' +  project.name
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
+  getProjectComments ({commit}, short_name) {
+    return api.getProjectComments(short_name).then(value => {
+      commit('setProjectComments', value)
+      commit('notification/showSuccess', {
+        title: 'Comments loaded!',
+        content: 'The project ' + short_name + ' has loaded the comments'
+      }, { root: true })
+      return value.data
+    }).catch(reason => {
+      commit('setProjectComments',[])
+      commit('notification/showError', {
+        title: 'Project comments!',
+        content: 'Could not load the comments for the project ' +  short_name
+      }, { root: true })
+      return false
+    })
   }
+
 }
 
 // methods that change the state
@@ -535,6 +600,12 @@ const mutations = {
       ...state.categoryPagination,
       [category]: pagination
     }
+  },
+  setProjectCommentsOptions (state, options) {
+    state.projectCommentsOptions = options
+  },
+  setProjectComments(state,comments){
+    state.projectComments = comments
   }
 }
 

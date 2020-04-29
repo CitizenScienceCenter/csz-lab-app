@@ -1,90 +1,123 @@
 <template>
-    <div class="comments">
+    <div v-if="logged">
+        <b-container>
+            <b-row align-h="center" class="mb-5">
+                <b-col md="9">
+                    <h3 class="subheading">{{ $t('newtopic-heading') }}</h3>
+                        
+                        <b-img v-if="infos.avatar_url" height="32" width="32" rounded="circle" :src="infos.avatar_url"></b-img>
+                        <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;
+                     
+                        <b-form-group
+                            id="fieldset-description"
+                            :label="$t('newtopic-title-placeholder')">
+                            <b-form-textarea
+                                size="lg"
+                                v-model="commentTitle">
+                            </b-form-textarea>
+                        </b-form-group>
 
-        <template v-if="logged">
+                        <b-form-group
+                            id="fieldset-description"
+                            :label="$t('newtopic-text-placeholder')">
+                            <b-form-textarea
+                                size="lg"
+                                v-model="commentText" >
+                            </b-form-textarea>
+                        </b-form-group>
 
-            <h3 class="subheading">{{ $t('newtopic-heading') }}</h3>
+                        <b-button :disabled="commentTitle === '' || commentText === ''" 
+                        type="submit" variant="primary" @click="newComment()">Send</b-button>
+                </b-col>
+            </b-row>
 
-            <div class="comment">
+            <hr>
 
-                <user-avatar class="avatar" :username="infos.name"></user-avatar>
 
-                <div class="form-field">
-                    <growing-textarea v-model="commentTitle" :placeholder="$t('newtopic-title-placeholder')" fat></growing-textarea>
-                </div>
-                <div class="form-field">
-                    <growing-textarea v-model="commentText" :placeholder="$t('newtopic-text-placeholder')"></growing-textarea>
-                </div>
+            <h1>Comments</h1>
+            <ul v-if="treeSituation.length > 0" class="comment-list">
+                
+                <li v-if="index < topicsShown" v-for="(situation,index) in treeSituation">
 
-                <div class="button-group right-aligned">
-                    <button :disabled="commentTitle === '' || commentText === ''" class="button button-primary" @click="newComment()">{{ $t('newtopic-button') }}</button>
-                </div>
+                    <CommentThread :comment=commentTree :situation=situation :index=index />
 
-            </div>
+                    <!--<div class="comment comment-existing withTitles"  style="border: 1px solid green;">
 
-        </template>
+                        <h3 class="subheading">Comment ID: {{ commentTree[index][0].id }}</h3>
+                        <h3 class="subheading">{{ commentTree[index][0].content.title }}</h3>
+                            
+                            <p>{{ commentTree[index][0].content.text }}</p>
+                            <span class="date">{{ giveDateTime(commentTree[index][0].created) }}</span>
+                            <span class="username">by {{ commentTree[index][0].username }}</span>
+                            <span class="role">({{ commentTree[index][0].role }})</span>
 
-        <template v-else>
+                            <template v-if="logged">
 
-            <p>{{ $t('login-text') }}</p>
-            <router-link tag="button" to="/login" class="button button-primary">{{ $t('login-button') }}</router-link>
-
-        </template>
-
-        <ul v-if="treeSituation.length > 0" class="comment-list">
-            <li v-if="index < topicsShown" v-for="(situation,index) in treeSituation">
-
-                <div class="comment comment-existing withTitles">
-
-                    <user-avatar class="avatar" :username="commentTree[index][0].username"></user-avatar>
-
-                    <h3 class="subheading">{{ commentTree[index][0].content.title }}</h3>
-                    <p>{{ commentTree[index][0].content.text }}</p>
-                    <span class="date">{{ giveDateTime(commentTree[index][0].comment_created) }}</span>
-                    <span class="username">by {{ commentTree[index][0].username }}</span>
-
-                    <template v-if="!user.isAnon">
-                        <div v-if="!situation[1]" class="button-group right-aligned">
-                            <button @click.prevent="showReplyField(index)" class="button button-secondary button-secondary-naked">{{ $t('reply-button') }}</button>
-                        </div>
-                        <div v-else class="comment reply">
-                            <user-avatar class="avatar" :username="user.currentUser.username"></user-avatar>
-
-                            <div class="form-field">
-                                <growing-textarea v-model="replyTexts[index]" :placeholder="$t('reply-placeholder')"></growing-textarea>
-                            </div>
-                            <div class="button-group right-aligned">
-                                <button :disabled="replyTexts[index].length === 0" class="button button-primary" @click="newComment(commentTree[index][0].comment_id, index)">{{ $t('reply-button') }}</button>
-                            </div>
-                        </div>
-                    </template>
-
-                    <div class="replies" v-if="commentTree[index][1].length > 0">
-
-                        <ul class="reply-list">
-
-                            <li v-if="replyIndex < situation[0]" v-for="(reply,replyIndex) in commentTree[index][1]">
-                                <div class="comment comment-existing">
-                                    <user-avatar class="avatar" :username="reply.username"></user-avatar>
-                                    <p>{{ reply.content.text }}</p>
-                                    <span class="date">{{ giveDateTime(reply.comment_created) }}</span>
-                                    <span class="username">by {{ reply.username }}</span>
+                                <div v-if="!situation[1]" >
+                                   <b-col lg="4" class="pb-2"> <b-button size="sm"  variant="primary" @click.prevent="showReplyField(index)">{{ $t('reply-button') }}</b-button>  </b-col>                              
                                 </div>
-                            </li>
+                                    
+                                <div v-else class="comment reply" style="border: 1px solid red;margin: 45px;">
 
-                        </ul>
-                        <div v-if="commentTree[index][1].length > situation[0]" class="button-group">
-                            <button @click.prevent="expand(index)" class="button button-secondary button-secondary-naked">{{ $t('more-replies-button') }}</button>
+                                    <b-form-group
+                                        id="reply-group-1"
+                                        label="Reply to comment"
+                                        label-for="reply"
+                                        description="Reply to comment">
+                                        <b-form-textarea
+                                            size="lg"
+                                            v-model="replyTexts[index]" :placeholder="$t('reply-placeholder')" />
+                                    </b-form-group>
+
+                                    <b-button :disabled="replyTexts[index].length === 0"
+                                        type="submit" variant="secondary" @click="newComment(commentTree[index][0].id, index)">Reply</b-button>
+                                
+                                </div>
+                            </template> 
+                            
+
+                                
+
+                        <div class="replies" v-if="commentTree[index][1].length > 0">
+
+                                    <ul class="reply-list">
+
+                                        <li v-if="replyIndex < situation[0]" v-for="(reply,replyIndex) in commentTree[index][1]" >
+
+                                            <div class="comment comment-existing" style="padding: 10px 60px; border:1px solid;">
+
+                                                <p>{{ reply.content.text }}</p>
+                                                <span class="date">{{ giveDateTime(reply.created) }}</span>
+                                                <span class="username">by {{ reply.username }}</span>
+                                                <span class="role">({{ reply.role }})</span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                            <div v-if="commentTree[index][1].length > situation[0]" class="button-group">
+                                <button @click.prevent="expand(index)" class="button button-secondary button-secondary-naked">{{ $t('more-replies-button') }}</button>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
-            </li>
-        </ul>
-        <div v-if="commentTree.length > topicsShown" class="button-group">
-            <button @click.prevent="showMore()" class="button button-secondary">{{ $t('more-comments-button') }}</button>
-        </div>
+                    </div>-->
+                </li>
+            </ul>
+            <div v-if="commentTree.length > topicsShown" class="button-group">
+                <button @click.prevent="showMore()" class="button button-secondary">{{ $t('more-comments-button') }}</button>
+            </div>
+        </b-container>
+    </div>
 
+    <div v-else>
+        <b-container>
+            <b-row class="mt-4 justify-content-center">
+                <b-col md="6" md-offset="3">
+                    <h1>{{ $t('login-text') }}</h1>
+                    <router-link tag="button" to="/login" class="button button-primary">{{ $t('login-button') }}</router-link>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 
@@ -93,13 +126,15 @@
     import {mapState} from 'vuex'
     import GrowingTextarea from "./GrowingTextarea";
     import UserAvatar from "./UserAvatar";
+    import CommentThread from "./CommentThread";
 
 
     export default {
         name: "Comments",
         components: {
             GrowingTextarea,
-            UserAvatar
+            UserAvatar,
+            CommentThread
         },
         data() {
             return {
@@ -109,13 +144,16 @@
                 topicsShown: 5,
                 repliesShownDefault: 2,
                 replySubmitted: null,
-
+                comments: [{user_id: 1,username:'ngeorgomanolis',parent:null,source_id: 'lab',content: {title: "ger",text: "rgeg"}}],
                 commentTitle: '',
                 commentText: '',
-                replyTexts: []
+                replyTexts: [],
+                defaultImage:require('@/assets/graphic-community.png'),
+                comments: [],
+                isGoogleDocImporterVisible:false
             }
         },
-        props: {
+        /*props: {
             sourceId: {
               type: String,
               default: null
@@ -125,13 +163,16 @@
             sourceId: function() {
                 this.loadComments();
             }
-        },
+        },*/
         computed: {
             ...mapState('user', [
-                'logged','infos']
-                //comments: state => state.c3s.comments.comments,
-                //loading: state => state.c3s.settings.loading
-            )
+                'logged','infos'
+            ]),
+            ...mapState('project', [
+                'projectComments',
+            ]),
+
+            
         },
         mounted: function() {
             this.loadComments();
@@ -139,54 +180,15 @@
         methods: {
             loadComments: function() {
                 console.log('Loading comments db ...')
-               /* let query = {
-                    'select': {
-                        'fields': [
-                            'comments.id as comment_id',
-                            'comments.created_at as comment_created',
-                            '*'
-                        ],
-                        'tables': [
-                            'comments'
-                        ],
-                        'orderBy': {
-                            'comment_created': 'DESC'
-                        }
-                    },
-                    "join": {
-                        "type": "LEFT",
-                        "conditions":{
-                            "from": {
-                                "table": "users",
-                                "field": "id"
-                            },
-                            "to": {
-                                "table": "comments",
-                                "field": "user_id"
-                            }
-                        }
-                    },
-                    'where': [
-                        {
-                            "field": 'source_id',
-                            'op': 'e',
-                            'val': this.sourceId
-                        }
-                    ]
-                };
-
-                this.$store.dispatch('c3s/media/getMedia', [query, 'c3s/comments/SET_COMMENTS', 9999] ).then(res => {
-
-                    this.commentTitle = '';
-                    this.commentText = '';
-                    //console.log('comments loaded:');
+               
+                this.$store.dispatch('project/getProjectComments','masks4all' ).then(res => {
+                    this.comments = res.data;                   
                     this.buildCommentTree();
-                    //console.log( this.commentTree );
+                });
 
-                });*/
             },
             buildCommentTree() {
-
+                console.log('Building comment tree')
                 if( this.newSituationOnLoad ) {
                     this.treeSituation = [];
                     this.replyTexts = [];
@@ -198,11 +200,11 @@
 
                 for( let i = 0; i < this.comments.length; i++ ) {
 
-                    //console.log('comment check');
+                    console.log('comment check');
 
                     if( this.comments[i].parent === null ) {
 
-                        //console.log('has no parent');
+                        console.log('has no parent');
 
                         this.commentTree.push( [ this.comments[i], [] ] );
 
@@ -217,19 +219,19 @@
                     }
                     else {
 
-                        //console.log('has parent');
+                        console.log('has parent');
                         var parentFound = false;
 
                         for( let j = 0; j < this.commentTree.length; j++ ) {
 
-                            if( this.comments[i].parent === this.commentTree[j][0].comment_id ) {
+                            if( this.comments[i].parent === this.commentTree[j][0].id ) {
                                 this.addChildToTree( j, this.comments[i] );
                                 parentFound = true;
                             }
                         }
 
                         if( !parentFound ) {
-                            //console.log('parent not found');
+                            console.log('parent not found');
                             unfoundChildren.unshift( this.comments[i] );
                         }
                     }
@@ -237,7 +239,7 @@
 
                 for( let i = unfoundChildren.length-1; i >= 0; i-- ) {
 
-                    //console.log('lost child');
+                    console.log('lost child');
 
                     for( let j = 0; j < this.commentTree.length; j++ ) {
                         if( unfoundChildren[i].parent === this.commentTree[j][0].comment_id ) {
@@ -247,9 +249,10 @@
                     }
 
                 }
-                //console.log('comment tree generated');
-                //console.log('reply texts');
-                //console.log( this.replyTexts );
+                console.log('comment tree generated');
+                console.log( this.commentTree );
+                console.log('reply texts');
+                console.log( this.replyTexts );
             },
             addChildToTree( parentIndex, child ) {
                 //console.log('parent found');
@@ -285,18 +288,19 @@
             newComment: function(parentId, index) {
 
 
-                //console.log('new comment');
+                console.log('NEW COMMENT');
 
                 let comment;
                 if( !parentId && !index ) {
                     this.newSituationOnLoad = true;
 
                     this.opened = [];
-                    //console.log('no parent');
+                    console.log('new comment topic - no parent');
 
                     comment = {
                         user_id: this.infos.id,
-                        source_id: this.sourceId,
+                        parent: null,
+                        text:null,
                         content: {
                             title: this.commentTitle,
                             text: this.commentText
@@ -304,30 +308,33 @@
                     };
                 }
                 else {
+                    console.log('reply comment on topic- has parent');
+                    console.log(parentId)
                     this.newSituationOnLoad = false;
                     this.replySubmitted = index;
 
                     comment = {
                         user_id: this.infos.id,
-                        source_id: this.sourceId,
                         parent: parentId,
+                        text:null,
                         content: {
                             text: this.replyTexts[index]
                         }
                     };
+                   
                 }
 
                 console.log('create: '+ parentId);
                 console.log('new comment created');
                 console.log(comment);
 
-                /*this.$store.dispatch('c3s/comments/createComment', comment).then(res => {
+                this.$store.dispatch('project/setProjectComment',{'short_name':'masks4all', 'comment':comment }).then(res => {
+                    if(res.status=='success'){
+                        //this.comments.push(comment)
+                        this.loadComments();
+                    }
+                });
 
-                    //console.log('new comment created');
-
-                    this.loadComments();
-
-                });*/
             }
         }
     }
@@ -411,7 +418,7 @@
                         margin-bottom: 0;
                     }
                     .date, .username {
-                        font-size: $font-size-small;
+                        font-size: $font-size-tiny;
                         color: $color-black-tint-50;
                         display: inline;
 
