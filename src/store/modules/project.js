@@ -89,6 +89,10 @@ const getters = {
     }
 
     return pagination
+  },
+
+  comments:state => {
+    return state.projectComments
   }
 }
 
@@ -518,17 +522,16 @@ const actions = {
     return dispatch('setProjectCommentsOptions', payload.short_name).then(response => {
       if (response) {
         return api.setProjectComment(state.projectCommentsOptions.csrf, payload.short_name, payload.comment).then(value => {
-          commit('setProjectComments', value)
           commit('notification/showSuccess', {
-            title: 'Comment saved!',
-            content: 'All good'
+            title: 'Success',
+            content: 'Comment added!'
           }, { root: true })
           return value.data
         }).catch(reason => {
           commit('setProjectComments',[])
           commit('notification/showError', {
-            title: 'Project comments!',
-            content: 'Could not load the comments for the project ' +  project.name
+            title: 'Error',
+            content: 'Could not save your comment. Try again later!'
           }, { root: true })
           return false
         })
@@ -539,18 +542,18 @@ const actions = {
 
   getProjectComments ({commit}, short_name) {
     return api.getProjectComments(short_name).then(value => {
-      commit('setProjectComments', value)
-      commit('notification/showSuccess', {
+      commit('setProjectComments', value.data)
+      /*commit('notification/showSuccess', {
         title: 'Comments loaded!',
         content: 'The project ' + short_name + ' has loaded the comments'
-      }, { root: true })
+      }, { root: true })*/
       return value.data
     }).catch(reason => {
       commit('setProjectComments',[])
-      commit('notification/showError', {
-        title: 'Project comments!',
-        content: 'Could not load the comments for the project ' +  short_name
-      }, { root: true })
+      /*commit('notification/showError', {
+        title: 'Error!',
+        content: 'Could not load the comments'
+      }, { root: true })*/
       return false
     })
   }

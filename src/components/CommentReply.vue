@@ -8,7 +8,7 @@
                     <label for="username" class="d-block" style="float:left;margin: 0;">{{ reply.username }}</label>
                     <span class="role">{{ (reply.role) ? reply.role : '' }}</span>
                     <span class="date text-muted" style="font-size:0.85rem;margin-left:10px">{{ giveDateTime(reply.created) }}</span>
-                    <p >{{ reply.content.text }}</p>                    
+                    <p >{{ reply.content.text }}</p>                 
                 </div>
             </b-col>
         </b-row>

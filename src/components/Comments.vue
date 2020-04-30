@@ -132,7 +132,7 @@
             <b-row class="mt-4 justify-content-center">
                 <b-col md="6" md-offset="3">
                     <h1>{{ $t('login-text') }}</h1>
-                    <router-link tag="button" to="/login" class="button button-primary">{{ $t('login-button') }}</router-link>
+                    <b-btn variant="primary" :to="{ name: 'login' }">{{ $t('login-button') }}</b-btn>
                 </b-col>
             </b-row>
         </b-container>
@@ -145,7 +145,6 @@
     import GrowingTextarea from "./GrowingTextarea";
     import UserAvatar from "./UserAvatar";
     import CommentThread from "./CommentThread";
-
 
     export default {
         name: "Comments",
@@ -160,7 +159,7 @@
                 treeSituation: [],
                 newSituationOnLoad: true,
                 topicsShown: 5,
-                repliesShownDefault: 10,
+                repliesShownDefault: 5,
                 replySubmitted: null,
                 commentTitle: '',
                 commentText: '',
@@ -181,15 +180,25 @@
                 this.loadComments();
             }
         },*/
+        
         computed: {
             ...mapState('user', [
                 'logged','infos'
             ]),
-            ...mapState('project', [
-                'projectComments',
+           
+            ...mapState('project',[
+                'projectComments'
             ]),
-
-            
+        },
+        watch: {
+            projectComments(newValue, oldValue) {
+                if(newValue.data.length && oldValue.data.length){
+                    if (newValue.data.length > oldValue.data.length){
+                        this.comments = newValue.data
+                        this.buildCommentTree()
+                    }
+                }
+            },
         },
         mounted: function() {
             this.loadComments();
@@ -199,8 +208,8 @@
                 console.log('Loading comments db ...')
                
                 this.$store.dispatch('project/getProjectComments','masks4all' ).then(res => {
-                    this.comments = res.data;                   
-                    this.buildCommentTree();
+                    this.comments = res.data                   
+                    this.buildCommentTree()
                 });
 
             },
@@ -346,6 +355,7 @@
                 this.$store.dispatch('project/setProjectComment',{'short_name':'masks4all', 'comment':comment }).then(res => {
                     if(res.status=='success'){
                         //this.comments.push(comment)
+                        this.commentTitle=''
                         this.loadComments();
                     }
                 });
