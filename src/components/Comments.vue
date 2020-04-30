@@ -1,111 +1,129 @@
 <template>
     <div v-if="logged">
-        <b-container>
-            <b-row align-h="center" class="mb-5">
-                <b-col md="9">
-                    <h3 class="subheading">{{ $t('newtopic-heading') }}</h3>
+        <b-container >
+            <h1 class="mt-2 text-center centered"> Comments</h1>
+            <b-row class="mt-4"> 
+                <b-col md="12" class="mt-md-0 mt-4">
+                    <!--<h3 class="subheading">{{ $t('newtopic-heading') }}</h3>-->
                         
-                        <b-img v-if="infos.avatar_url" height="32" width="32" rounded="circle" :src="infos.avatar_url"></b-img>
-                        <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;
+                        <!--<b-img v-if="infos.avatar_url" height="32" width="32" rounded="circle" :src="infos.avatar_url"></b-img>
+                        <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;-->
                      
-                        <b-form-group
+                        <!--<b-form-group
                             id="fieldset-description"
-                            :label="$t('newtopic-title-placeholder')">
+                            >
                             <b-form-textarea
-                                size="lg"
+                                size="sm"
+                                rows="1"
+                                max-rows="5"
+                                :placeholder="$t('newtopic-title-placeholder')"
                                 v-model="commentTitle">
                             </b-form-textarea>
-                        </b-form-group>
+                        </b-form-group>-->
 
                         <b-form-group
                             id="fieldset-description"
-                            :label="$t('newtopic-text-placeholder')">
+                            >
                             <b-form-textarea
-                                size="lg"
-                                v-model="commentText" >
+                               size="sm"
+                                rows="1"
+                                max-rows="5"
+                                :placeholder="$t('newtopic-text-placeholder')"
+                                v-model="commentTitle" >
                             </b-form-textarea>
                         </b-form-group>
 
-                        <b-button :disabled="commentTitle === '' || commentText === ''" 
+                        <b-button :disabled="commentTitle === ''" style="float:right;"
                         type="submit" variant="primary" @click="newComment()">Send</b-button>
+                        <!--<b-button :disabled="commentTitle === '' || commentText === ''" 
+                        type="submit" variant="primary" @click="newComment()">Send</b-button>-->
                 </b-col>
             </b-row>
-
-            <hr>
-
-
-            <h1>Comments</h1>
-            <ul v-if="treeSituation.length > 0" class="comment-list">
+        </b-container>
+        <hr>
+        <b-container >
+            <b-row class="mt-4">
                 
-                <li v-if="index < topicsShown" v-for="(situation,index) in treeSituation">
+                <b-col md="12" class="mt-md-0 mt-4">  
+                    <ul v-if="treeSituation.length > 0" class="comment-list">
+                        
+                        <li v-if="index < topicsShown" v-for="(situation,index) in treeSituation">
 
-                    <CommentThread :comment=commentTree :situation=situation :index=index />
+                            <CommentThread 
+                                :comment=commentTree 
+                                :situation=situation 
+                                :index=index
+                                :treeSituation=treeSituation
+                            />
 
-                    <!--<div class="comment comment-existing withTitles"  style="border: 1px solid green;">
+                            <!--<div class="comment comment-existing withTitles"  style="border: 1px solid green;">
 
-                        <h3 class="subheading">Comment ID: {{ commentTree[index][0].id }}</h3>
-                        <h3 class="subheading">{{ commentTree[index][0].content.title }}</h3>
-                            
-                            <p>{{ commentTree[index][0].content.text }}</p>
-                            <span class="date">{{ giveDateTime(commentTree[index][0].created) }}</span>
-                            <span class="username">by {{ commentTree[index][0].username }}</span>
-                            <span class="role">({{ commentTree[index][0].role }})</span>
-
-                            <template v-if="logged">
-
-                                <div v-if="!situation[1]" >
-                                   <b-col lg="4" class="pb-2"> <b-button size="sm"  variant="primary" @click.prevent="showReplyField(index)">{{ $t('reply-button') }}</b-button>  </b-col>                              
-                                </div>
+                                <h3 class="subheading">Comment ID: {{ commentTree[index][0].id }}</h3>
+                                <h3 class="subheading">{{ commentTree[index][0].content.title }}</h3>
                                     
-                                <div v-else class="comment reply" style="border: 1px solid red;margin: 45px;">
+                                    <p>{{ commentTree[index][0].content.text }}</p>
+                                    <span class="date">{{ giveDateTime(commentTree[index][0].created) }}</span>
+                                    <span class="username">by {{ commentTree[index][0].username }}</span>
+                                    <span class="role">({{ commentTree[index][0].role }})</span>
 
-                                    <b-form-group
-                                        id="reply-group-1"
-                                        label="Reply to comment"
-                                        label-for="reply"
-                                        description="Reply to comment">
-                                        <b-form-textarea
-                                            size="lg"
-                                            v-model="replyTexts[index]" :placeholder="$t('reply-placeholder')" />
-                                    </b-form-group>
+                                    <template v-if="logged">
 
-                                    <b-button :disabled="replyTexts[index].length === 0"
-                                        type="submit" variant="secondary" @click="newComment(commentTree[index][0].id, index)">Reply</b-button>
-                                
+                                        <div v-if="!situation[1]" >
+                                        <b-col lg="4" class="pb-2"> <b-button size="sm"  variant="primary" @click.prevent="showReplyField(index)">{{ $t('reply-button') }}</b-button>  </b-col>                              
+                                        </div>
+                                            
+                                        <div v-else class="comment reply" style="border: 1px solid red;margin: 45px;">
+
+                                            <b-form-group
+                                                id="reply-group-1"
+                                                label="Reply to comment"
+                                                label-for="reply"
+                                                description="Reply to comment">
+                                                <b-form-textarea
+                                                    size="lg"
+                                                    v-model="replyTexts[index]" :placeholder="$t('reply-placeholder')" />
+                                            </b-form-group>
+
+                                            <b-button :disabled="replyTexts[index].length === 0"
+                                                type="submit" variant="secondary" @click="newComment(commentTree[index][0].id, index)">Reply</b-button>
+                                        
+                                        </div>
+                                    </template> 
+                                    
+
+                                        
+
+                                <div class="replies" v-if="commentTree[index][1].length > 0">
+
+                                            <ul class="reply-list">
+
+                                                <li v-if="replyIndex < situation[0]" v-for="(reply,replyIndex) in commentTree[index][1]" >
+
+                                                    <div class="comment comment-existing" style="padding: 10px 60px; border:1px solid;">
+
+                                                        <p>{{ reply.content.text }}</p>
+                                                        <span class="date">{{ giveDateTime(reply.created) }}</span>
+                                                        <span class="username">by {{ reply.username }}</span>
+                                                        <span class="role">({{ reply.role }})</span>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+
+                                    <div v-if="commentTree[index][1].length > situation[0]" class="button-group">
+                                        <button @click.prevent="expand(index)" class="button button-secondary button-secondary-naked">{{ $t('more-replies-button') }}</button>
+                                    </div>
                                 </div>
-                            </template> 
-                            
 
-                                
-
-                        <div class="replies" v-if="commentTree[index][1].length > 0">
-
-                                    <ul class="reply-list">
-
-                                        <li v-if="replyIndex < situation[0]" v-for="(reply,replyIndex) in commentTree[index][1]" >
-
-                                            <div class="comment comment-existing" style="padding: 10px 60px; border:1px solid;">
-
-                                                <p>{{ reply.content.text }}</p>
-                                                <span class="date">{{ giveDateTime(reply.created) }}</span>
-                                                <span class="username">by {{ reply.username }}</span>
-                                                <span class="role">({{ reply.role }})</span>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-
-                            <div v-if="commentTree[index][1].length > situation[0]" class="button-group">
-                                <button @click.prevent="expand(index)" class="button button-secondary button-secondary-naked">{{ $t('more-replies-button') }}</button>
-                            </div>
-                        </div>
-
-                    </div>-->
-                </li>
-            </ul>
-            <div v-if="commentTree.length > topicsShown" class="button-group">
-                <button @click.prevent="showMore()" class="button button-secondary">{{ $t('more-comments-button') }}</button>
-            </div>
+                            </div>-->
+                        </li>
+                    </ul>
+                    <div v-if="commentTree.length > topicsShown" class="button-group">
+                        <b-button variant="primary" @click.prevent="showMore()">Load more comments ...</b-button>
+                    </div>
+                </b-col>
+            </b-row>
+          
         </b-container>
     </div>
 
@@ -142,9 +160,8 @@
                 treeSituation: [],
                 newSituationOnLoad: true,
                 topicsShown: 5,
-                repliesShownDefault: 2,
+                repliesShownDefault: 10,
                 replySubmitted: null,
-                comments: [{user_id: 1,username:'ngeorgomanolis',parent:null,source_id: 'lab',content: {title: "ger",text: "rgeg"}}],
                 commentTitle: '',
                 commentText: '',
                 replyTexts: [],
@@ -197,15 +214,12 @@
                 //console.log('build tree');
                 this.commentTree = [];
                 var unfoundChildren = [];
-
+                //console.log('Found comments: ' + this.comments.length)
                 for( let i = 0; i < this.comments.length; i++ ) {
-
-                    console.log('comment check');
 
                     if( this.comments[i].parent === null ) {
 
-                        console.log('has no parent');
-
+                        //console.log('Topics id:' + this.comments[i].parent + ' with ID:' + this.comments[i].id  )
                         this.commentTree.push( [ this.comments[i], [] ] );
 
                         if( this.newSituationOnLoad ) {
@@ -217,13 +231,16 @@
                             this.replySubmitted = null;
                         }
                     }
-                    else {
+                }
 
-                        console.log('has parent');
+                for( let i = 0; i < this.comments.length; i++ ) {
+                    if( this.comments[i].parent ) {
+
+                        //console.log('has parent');
                         var parentFound = false;
 
                         for( let j = 0; j < this.commentTree.length; j++ ) {
-
+                            //console.log('Parent:' + this.comments[i].parent + ' - CommId: ' + this.commentTree[j][0].id)
                             if( this.comments[i].parent === this.commentTree[j][0].id ) {
                                 this.addChildToTree( j, this.comments[i] );
                                 parentFound = true;
@@ -231,16 +248,14 @@
                         }
 
                         if( !parentFound ) {
-                            console.log('parent not found');
+                            //console.log('parent not found');
                             unfoundChildren.unshift( this.comments[i] );
                         }
                     }
                 }
 
                 for( let i = unfoundChildren.length-1; i >= 0; i-- ) {
-
-                    console.log('lost child');
-
+                    //console.log('lost child');
                     for( let j = 0; j < this.commentTree.length; j++ ) {
                         if( unfoundChildren[i].parent === this.commentTree[j][0].comment_id ) {
                             this.addChildToTree( j, unfoundChildren[i] );
