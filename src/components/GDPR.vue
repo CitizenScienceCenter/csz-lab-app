@@ -8,7 +8,7 @@
                         <b-button v-if="!logged" variant="primary" @click.prevent="acceptGdpr()">OK</b-button>
                         <span v-else>
                             <b-button variant="primary" @click.prevent="acceptGdpr()">OK</b-button>
-                            <!--<b-button variant="primary" @click.prevent="detailsGdpr()">More</b-button>-->
+                            <b-button variant="primary" @click.prevent="detailsGdpr()">{{$t('more')}}</b-button>
                         </span>
                     </div>
                 </div>

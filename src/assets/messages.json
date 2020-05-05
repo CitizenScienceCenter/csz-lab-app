@@ -566,6 +566,9 @@
         "projects":"projects",
         "projects-c":"Projects",
 
+        "more-c":"More",
+        "more":"more",
+
         "builder-breadcrumb-name":"Name",
         "builder-breadcrumb-info":"Information",
         "builder-breadcrumb-story":"Story",
@@ -684,7 +687,7 @@
         "Thank-you!-Our-administrators-will-contact-you-in-case-of-questions!":"Thank you! Our administrators will contact you in case of questions!",
         "We-have-found-your-project-in-our-approval-list!":"We have found your project in our approval list!",
 
-        "Task-presenter-added":"Task presenter added",
+        "Task-presenter-added!":"Task presenter added!",
         "It-looks-like-there-were-no-new-records-to-import":"It looks like there were no new records to import",
 
         "Your-flicker-account-access-is-now-revoked":"Your flickr account access is now revoked",
@@ -1162,6 +1165,9 @@
         "project-c":"Projekt",
         "projects":"projekte",
         "projects-c":"Projekte",
+
+        "more-c":"Mehr",
+        "more":"mehr",
 
         "builder-breadcrumb-name":"Name",
         "builder-breadcrumb-info":"Information",
