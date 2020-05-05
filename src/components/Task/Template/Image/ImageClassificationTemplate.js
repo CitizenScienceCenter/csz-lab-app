@@ -24,10 +24,6 @@ const component =
           <!-- Submit button -->
           <b-btn @click="submit" variant="success">{{$t('submit-btn')}}</b-btn>
           
-          <!-- skip button -->
-          <b-btn @click="skip" variant="warning">{{$t('skip-btn')}}</b-btn>
-
-
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
             {{$t('template-editor-text-8')}}
@@ -83,12 +79,6 @@ const component =
         } else {
           this.showAlert = true
         }
-      },
-      skip () {
-          this.showAlert = false
-          this.answers = []
-          this.questions.forEach(() => this.answers.push(null))
-          this.pybossa.newTask()
       },
       isFormValid () {
         return this.answers.length === this.questions.length && !this.answers.some(el => typeof el === 'undefined' || el == null)
