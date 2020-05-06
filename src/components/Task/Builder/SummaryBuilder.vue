@@ -85,7 +85,7 @@
                 <p class="mb-0">{{ task.template.question }}</p>
                 <ul class="list-unstyled ml-4">
                   <li :key="index" v-for="(description, index) in task.template.descriptions">
-                    <label>{{ 'Description ' + (index + 1) }}</label>
+                    <label>{{ $t('description')  + ' ' + (index + 1) }}</label>
                     <p class="mb-0">{{ description }}</p>
                   </li>
                 </ul>
@@ -95,12 +95,12 @@
           <!-- Classify template -->
           <ul v-if="task.job === jobs.classify" class="list-unstyled">
             <li :key="q" v-for="(question, q) in task.template" class="mb-2">
-              <b-button v-b-toggle="'collapse-' + (q + 1)" variant="outline-secondary">{{ 'Question ' + (q + 1) }}</b-button>
+              <b-button v-b-toggle="'collapse-' + (q + 1)" variant="outline-secondary">{{  $t('task-summary-builder-question')+' ' + (q + 1) }}</b-button>
               <b-collapse :id="'collapse-' + (q + 1)" :visible="q === 0 ? 'visible' : false" class="mt-2">
                 <p class="mb-0">{{ question.question }}</p>
                 <ul class="list-unstyled ml-4">
                   <li :key="a" v-for="(answer, a) in task.template[q].answers">
-                    <label>{{ 'Answer ' + (a + 1) }}</label>
+                    <label>{{ $t('task-summary-builder-answer')  + ' ' + (a + 1) }}</label>
                     <p class="mb-0">{{ answer }}</p>
                   </li>
                 </ul>
@@ -167,7 +167,7 @@ export default {
   },
   methods: {
     ...mapActions('task', [
-      'saveTaskPresenter'
+      'saveTaskPresenter','saveTaskCategory'
     ]),
     ...mapActions('task/importer', [
       'importAmazonS3Tasks',
@@ -276,6 +276,12 @@ export default {
         template: template
       })
 
+      // store the generated template for the selected project
+      const categoryPromise = this.saveTaskCategory({
+        project: this.selectedProject,
+        category: this.task.material
+      })
+
       /// --------------------------------------------------
       /// Tasks importation depending on the selected source
       /// --------------------------------------------------
@@ -316,14 +322,14 @@ export default {
       /// --------------------------------------------------
 
       // test if all calls have been done correctly and redirects to the project detail page
-      Promise.all([templatePromise, sourcePromise]).then(results => {
-        if (results.filter(el => el !== false).length === 2) {
+      Promise.all([templatePromise,categoryPromise, sourcePromise]).then(results => {
+        if (results.filter(el => el !== false).length === 3) {
           this.resetTaskBuilder()
           this.$router.push({ name: 'project', params: { id: this.selectedProject.id } })
         } else {
           this.showError({
-            title: 'Error during creation',
-            content: 'We are not able to submit your template and/or your tasks for the moment.'
+            title: this.$t('error'),
+            content: this.$t('summary-builder-promise-error')
           })
         }
       })

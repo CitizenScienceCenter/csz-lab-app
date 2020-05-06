@@ -109,7 +109,7 @@
 
 <script>
 import { mapMutations, mapActions, mapState } from 'vuex'
-import { getFormErrorsAsString, validateEmail } from '@/helper'
+import { getFormErrorsAsString, validateEmail,getPybossaTranslation,getFormErrorsAsStringOnlyErrorMsg } from '@/helper'
 
 export default {
   name: 'Registration',
@@ -163,12 +163,14 @@ export default {
           if ('form' in response && 'errors' in response.form) {
             this.showError({
               title: this.$t('register-error-incomplete-form'),
-              content: getFormErrorsAsString(response.form.errors)
+              content: getPybossaTranslation(
+                getFormErrorsAsStringOnlyErrorMsg(response.form.errors)
+              )
             })
           } else {
             this.showSuccess({
               title: this.$t('register-success'),
-              content: response.flash
+              content: getPybossaTranslation(response.flash)
             })
             this.getAccountProfile().then(() => {
               if (this.userLogged) {

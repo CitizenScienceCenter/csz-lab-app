@@ -1,3 +1,5 @@
+import { i18n } from './i18n.js';
+
 export function uuid () {
   let dt = new Date().getTime()
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -101,4 +103,27 @@ export function getFormErrorsAsString (errors) {
 export function validateEmail (email) {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return regex.test(String(email).toLowerCase())
+}
+
+export function getTranslationLocale(tag){
+  return i18n.messages[i18n.locale][tag]
+}
+
+export function getPybossaTranslation(reason){
+  const tag = reason.split(' ')
+  const complete = tag.join('-')
+  return i18n.messages[i18n.locale][complete]
+}
+
+export function getFormErrorsAsStringOnlyErrorMsg (errors) {
+  // console.log(errors)
+  const fields = Object.keys(errors)
+  let result =''
+  for (let fldIndex in fields) {
+    const fieldName = fields[fldIndex]
+    for (let error of errors[fieldName]) {
+      result=error
+    }
+  }
+  return result
 }

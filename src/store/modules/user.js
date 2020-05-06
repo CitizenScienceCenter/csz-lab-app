@@ -1,5 +1,7 @@
 import api from '@/api/user'
 
+import { getTranslationLocale, getPybossaTranslation } from '@/helper'
+
 const errors = {
   GET_PROFILE_UPDATE_OPTIONS_LOADING_ERROR: 'Error during profile update options loading',
   UPDATE_PROFILE_ERROR: 'Error during profile update',
@@ -56,7 +58,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: 'Registration not available', content: reason
+        title: getTranslationLocale('notifications-messages-register-notavailable'), 
+        content: getPybossaTranslation(reason)
       }, { root: true })
       return false
     })
@@ -77,13 +80,24 @@ const actions = {
           return response.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: 'Error during registration', content: reason
+            title: getTranslationLocale('notifications-messages-register-error'), 
+            content: getPybossaTranslation(reason)
           }, { root: true })
           return false
         })
       }
       return false
     })
+  },
+
+  checkGtag({ state }){
+    if(JSON.parse(localStorage.getItem('gtag'))) {
+      const data = JSON.parse(localStorage.getItem('gtag'))
+      if(data['status']){ 
+        localStorage.setItem('gtag', JSON.stringify({status:data['status'],id:state.infos.id}));
+      }   
+    }
+    return false
   },
 
   /**
@@ -107,7 +121,8 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: 'Error during user sign in', content: reason
+            title: getTranslationLocale('notifications-messages-signin-procedure'), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -127,7 +142,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: 'Sign in not available', content: reason
+        title: getTranslationLocale('notifications-messages-signin-notavailable'), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -139,7 +155,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: 'Reset password not available', content: reason
+        title: getTranslationLocale('notifications-messages-forgot-error'), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -151,18 +168,21 @@ const actions = {
         return api.forgotPassword(state.forgotPasswordOptions.form.csrf, email).then(response => {
           if (response.data.status === 'success') {
             commit('notification/showSuccess', {
-              title: 'Email sent', content: response.data.flash
+              title: getTranslationLocale('notifications-messages-forgot-pass-title'), 
+              content: getPybossaTranslation(response.data.flash)
             }, { root: true })
             return true
           } else {
             commit('notification/showError', {
-              title: 'Error', content: response.data.flash
+              title: getTranslationLocale('error'), 
+              content: getPybossaTranslation(response.data.flash)
             }, { root: true })
             return false
           }
         }).catch(reason => {
           commit('notification/showError', {
-            title: 'Error during reset password', content: reason
+            title: getTranslationLocale('notifications-messages-reset-response-error'), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -177,7 +197,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: 'Reset password not available', content: reason
+        title: getTranslationLocale('notifications-messages-reset-notavailable'),
+        content: reason
       }, { root: true })
       return false
     })
@@ -190,19 +211,22 @@ const actions = {
         return api.resetPassword(state.resetPasswordOptions.form.csrf, form, state.recoverKey).then(response => {
           if (response.data.status === 'success') {
             commit('notification/showSuccess', {
-              title: 'Email sent', content: response.data.flash
+              title: getTranslationLocale('notifications-messages-forgot-pass-title'), 
+              content: response.data.flash
             }, { root: true })
             commit('setLogged')
             return true
           } else {
             commit('notification/showError', {
-              title: 'Error', content: response.data.flash
+              title: getTranslationLocale('error'), 
+              content: response.data.flash
             }, { root: true })
             return false
           }
         }).catch(reason => {
           commit('notification/showError', {
-            title: 'Error during reset password', content: reason
+            title: getTranslationLocale('notifications-messages-reset-response-error'), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -217,7 +241,7 @@ const actions = {
    * @param commit
    * @return {Promise<T | boolean>}
    */
-  getAccountProfile ({ commit }) {
+  getAccountProfile ({ commit,dispatch}) {
     return api.getAccountProfile().then(value => {
       if (value.data.hasOwnProperty('user')) {
         commit('setUserInfos', value.data.user)
@@ -225,13 +249,15 @@ const actions = {
         commit('setUserDraftProjects', value.data.projects_draft)
         commit('setUserPublishedProjects', value.data.projects_published)
         commit('setLogged')
+        dispatch('checkGtag')
         return value.data
       }
       commit('setLoggedOut')
       return false
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_ACCOUNT_PROFILE_LOADING_ERROR, content: reason
+        title:getTranslationLocale('error') +' 502',
+        content:  getTranslationLocale('GET_ACCOUNT_PROFILE_LOADING_ERROR')
       }, { root: true })
       return false
     })
@@ -251,8 +277,8 @@ const actions = {
         commit('setUserDraftProjects', [])
         commit('setUserPublishedProjects', [])
         commit('notification/showInfo', {
-          title: 'Signed out',
-          content: 'You are now logged out'
+          title: getTranslationLocale('notifications-messages-signout-title'),
+          content: getTranslationLocale('notifications-messages-signout-message')
         }, { root: true })
         return response.data
       }
@@ -297,7 +323,8 @@ const actions = {
       if (response) {
         return api.updateProfile(state.profileUpdateOptions.form.csrf, user.name, form).then(value => {
           commit('notification/showSuccess', {
-            title: 'Success', content: 'Your profile has been updated'
+            title: getTranslationLocale('success'),
+            content: getTranslationLocale('notifications-messages-update-profile-message')
           }, { root: true })
           return value.data
         }).catch(reason => {
@@ -375,12 +402,14 @@ const actions = {
         return api.updateAvatar(state.profileUpdateOptions.form.csrf, user.name, avatar).then(value => {
           if ('status' in value.data && value.data.status === 'error') {
             commit('notification/showError', {
-              title: 'Error', content: value.data.flash
+              title: getTranslationLocale('error'), 
+              content: getPybossaTranslation(value.data.flash)
             }, { root: true })
           } else {
             return dispatch('getAccountProfile').then(() => {
               commit('notification/showSuccess', {
-                title: 'Success', content: value.data.flash
+                title: getTranslationLocale('success'), 
+                content: getPybossaTranslation(value.data.flash)
               }, { root: true })
               commit('notification/closeLoading', 'user/updateAvatar', { root: true })
               return value.data
@@ -391,7 +420,7 @@ const actions = {
         }).catch(reason => {
           commit('notification/showError', {
             title: errors.UPDATE_AVATAR_ERROR,
-            content: this.$t('picture-too-big') + ' (< 1MB)'
+            content: getTranslationLocale('picture-too-big') + ' (< 1MB)' 
           }, { root: true })
           commit('notification/closeLoading', 'user/updateAvatar', { root: true })
           return false
@@ -415,14 +444,14 @@ const actions = {
       if (response) {
         return api.updatePassword(state.profileUpdateOptions.form.csrf, user.name, form).then(value => {
           if ('status' in value.data && value.data.status === 'error') {
-
             commit('notification/showError', {
-              title: 'Error', content: value.data.flash
+              title: getTranslationLocale('error'), 
+              content: getPybossaTranslation(value.data.flash)
             }, { root: true })
-
           } else {
             commit('notification/showSuccess', {
-              title: 'Success', content: value.data.flash
+              title: getTranslationLocale('success'), 
+              content: getPybossaTranslation(value.data.flash)
             }, { root: true })
           }
           return value.data
@@ -447,7 +476,8 @@ const actions = {
   deleteAccount ({ commit, dispatch }, user) {
     return api.deleteAccount(user.name).then(value => {
       commit('notification/showSuccess', {
-        title: 'Success', content: 'Your account is definitively deleted'
+        title: getTranslationLocale('success'), 
+        content: getTranslationLocale('notifications-messages-delete-profile-message')
       }, { root: true })
       dispatch('signOut')
       return true
@@ -469,12 +499,28 @@ const actions = {
   exportAccountData ({ commit }, user) {
     return api.exportAccountData(user.name).then(value => {
       commit('notification/showSuccess', {
-        title: 'Success', content: 'You will receive by email all your data...'
+        title: getTranslationLocale('success'), 
+        content: getTranslationLocale('notifications-messages-export-data-message')
       }, { root: true })
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
         title: errors.EXPORT_ACCOUNT_DATA_ERROR, content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  registerConfirmation({commit},key) {
+    return api.confirmRegistration(key).then(value => {
+      commit('notification/showSuccess', {
+        title: getTranslationLocale('success'), 
+        content: getPybossaTranslation(value.data.flash)
+      }, { root: true })
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: getTranslationLocale('error'), content: reason
       }, { root: true })
       return false
     })

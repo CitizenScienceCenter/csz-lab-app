@@ -8,7 +8,7 @@
                         <b-button v-if="!logged" variant="primary" @click.prevent="acceptGdpr()">OK</b-button>
                         <span v-else>
                             <b-button variant="primary" @click.prevent="acceptGdpr()">OK</b-button>
-                            <!--<b-button variant="primary" @click.prevent="detailsGdpr()">More</b-button>-->
+                            <b-button variant="primary" @click.prevent="detailsGdpr()">{{$t('more')}}</b-button>
                         </span>
                     </div>
                 </div>
@@ -24,8 +24,10 @@
     export default {
         name: "GDPR",
         mounted(){
-            if (localStorage.getItem('gdpr'))
-                this.gdprAccepted = JSON.parse(localStorage.getItem('gdpr'))
+            if (localStorage.getItem('gtag')){
+                const data = JSON.parse(localStorage.getItem('gtag'))
+                this.gdprAccepted = data['status']
+            }
         },
         data: () => {
             return {
@@ -34,7 +36,7 @@
         },
         methods: {
             acceptGdpr() {
-                localStorage.setItem('gdpr', true);
+                localStorage.setItem('gtag', JSON.stringify({status:true,id:(this.logged) ? this.infos.id : null}));
                 this.gdprAccepted = true
                 window['ga-disable-UA-162894944-1'] = false;
             },
@@ -44,7 +46,7 @@
         },
         computed: {
             ...mapState('user', [
-            'logged'
+            'logged','infos'
             ])
         }
     }
@@ -56,23 +58,23 @@
 
     .gdpr {
         position: fixed;
-        left: 37%;
         bottom: 0;
         width: 100%;
         pointer-events: none;
         z-index: 500;
+        text-align: center;
 
         .drawer {
             display: inline-block;
             pointer-events: all;
             background-color: rgba( $color-black, 0.8 );
             color: white;
-            padding: $spacing-1 $spacing-3;
+            padding: $spacing-2 $spacing-4;
             border-top-left-radius: $border-radius;
             border-top-right-radius: $border-radius;
 
             span {
-                font-size: $font-size-small;
+                font-size: $font-size-normal;
                 margin-right: $spacing-2;
             }
         }

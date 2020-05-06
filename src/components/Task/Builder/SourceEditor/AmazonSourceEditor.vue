@@ -4,11 +4,11 @@
     <b-col md="9">
       <b-form ref="search-form" @submit.prevent="search">
         <b-form-group>
-          <b-input v-model="bucketName" placeholder="Name of the S3 bucket"></b-input>
+          <b-input v-model="bucketName" :placeholder="$t('taks-source-editor-amazon-text1')"></b-input>
         </b-form-group>
 
-        <b-button type="submit" ref="btn-get-bucket-links" variant="primary">Search in bucket</b-button>
-        <b-btn ref="btn-submit" @click="onSubmit" variant="primary" size="lg" class="float-right" v-if="allowedFiles.length > 0">Go!</b-btn>
+        <b-button type="submit" ref="btn-get-bucket-links" variant="primary">{{ $t('taks-source-editor-amazon-text2') }}</b-button>
+        <b-btn ref="btn-submit" @click="onSubmit" variant="primary" size="lg" class="float-right" v-if="allowedFiles.length > 0">{{ $t('taks-source-editor-amazon-text3') }}</b-btn>
       </b-form>
 
       <LoadingSpinner class="mt-4" :id="loaders.GET_BUCKET_FILES"></LoadingSpinner>
@@ -32,7 +32,9 @@
     </b-col>
 
     <b-col md="3">
-      <p class="small text-muted"><i class="fas fa-info-circle"></i>  You can use any free licensed pics (Creative Commons or alike), your own pictures or those copyright images that you are authorised to use.</p>
+      <p class="small text-muted"><i class="fas fa-info-circle"></i> 
+        {{ $t('task-source-builder-choose-authorized') }}
+       </p>
     </b-col>
   </b-row>
 </template>

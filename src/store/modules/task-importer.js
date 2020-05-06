@@ -2,6 +2,9 @@ import api from '@/api/task-importer'
 import aws from '@/api/aws'
 import flickr from '@/api/flickr'
 
+import { getTranslationLocale, getPybossaTranslation } from '@/helper'
+
+
 const errors = {
   GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading amazon s3 options',
   POST_AMAZON_S3_TASKS_ERROR: 'Error when importing amazon s3 tasks',
@@ -443,8 +446,8 @@ const actions = {
         ).then(value => {
           if ('status' in value.data && value.data.status === 'message') {
             commit('notification/showSuccess', {
-              title: 'Success',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: getPybossaTranslation(value.data.flash) 
             }, { root: true })
             return value.data
           }
@@ -488,8 +491,8 @@ const actions = {
   revokeFlickerAccess ({ dispatch, commit }) {
     return flickr.revokeAccess().then(() => {
       commit('notification/showSuccess', {
-        title: 'Success',
-        content: 'Your flicker account access is now revoked'
+        title: getTranslationLocale('success'),
+        content: ''
       }, { root: true })
       return dispatch('getFlickrAlbums')
     })
@@ -537,8 +540,8 @@ const actions = {
         ).then(value => {
           if ('status' in value.data && value.data.status === 'message') {
             commit('notification/showSuccess', {
-              title: 'Success',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: getPybossaTranslation(value.data.flash) 
             }, { root: true })
             return value.data
           }

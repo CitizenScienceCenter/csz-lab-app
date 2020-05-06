@@ -47,11 +47,11 @@ export default {
     items () {
       const items = [
         {
-          html: '<i class="fas fa-home"></i>&ensp;<span>Project</span>',
+          html: '<i class="fas fa-home"></i>&ensp;<span>'+this.$t('project-c')+'</span>',
           to: { name: 'project', params: { id: this.id } }
         },
         {
-          text: 'Material',
+          text: this.$t('task-summary-builder-material'),
           to: { name: 'task.builder.material' },
           active: this.currentStep === 'material'
         }
@@ -77,7 +77,7 @@ export default {
 
       if (this.steps.template) {
         items.push({
-          text: 'Source',
+          text: this.$t('source'),
           to: { name: 'task.builder.source' },
           active: this.currentStep === 'source',
           disabled: this.steps.template === false
@@ -86,7 +86,7 @@ export default {
 
       if (this.steps.source) {
         items.push({
-          text: 'Summary',
+          text: this.$t('summary'),
           to: { name: 'task.builder.summary' },
           active: this.currentStep === 'summary',
           disabled: this.steps.source === false

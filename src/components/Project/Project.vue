@@ -1,13 +1,13 @@
 <template>
   <div>
-    <app-cover :imageUrl="project.info.thumbnail_url">
+    <app-cover :imageUrl="getBaseUrl()">
       <b-row class="mt-4">
 
         <!-- Avatar -->
         <b-col cols="5" sm="4" md="3">
-          <div class="div-image" v-if=" 'info' in project && 'thumbnail_url' in project.info " :style="{ 'background-image': 'url(' + project.info.thumbnail_url + ')' }"></div>
+          <div class="div-image" v-if=" 'info' in project && 'thumbnail_url' in project.info " :style="{ 'background-image': 'url(' + getBaseUrl() + ')' }"></div>
           <!--<b-img v-else blank-color="#777" :blank="true" thumbnail rounded="circle" width="auto" height="auto"></b-img>-->
-          <div class="div-image" v-else  :style="{ 'background-image': 'url(' + getImage + ')' }"></div>
+          <div class="div-image" v-else  :style="{ 'background-image': 'url(' + defaultImage + ')' }"></div>
         </b-col>
 
         <!-- Header -->
@@ -18,7 +18,7 @@
           <div v-if="isLoggedUserOwnerOfProject(project)">
             
              <div v-if="project.published">
-              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>Published</b-btn><br>
+              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>{{ $t('project-draft-published') }}</b-btn><br>
             </div>
 
             <div v-else-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
@@ -27,7 +27,7 @@
               <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
 
               <div v-if="!infos.admin">
-                <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >Request Approval</b-btn><br>
+                <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >{{ $t('project-draft-approve-your-project') }}</b-btn><br>
               </div>
               <div v-else>
                 <b-btn ref="btn-publish-it" variant="primary" class="mt-2" v-b-modal.publish-project  @click="publish()">  {{ $t('project-draft-publish') }}</b-btn><br>
@@ -36,7 +36,7 @@
             </div>
 
             <div v-else-if="!project.published && (project.info.pending_approval || localPendingApproval)">
-              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project disabled>Project Pending Approval</b-btn><br>
+              <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project disabled>{{ $t('project-draft-pending-approval') }}</b-btn><br>
             </div>
 
             <b-modal
@@ -61,7 +61,7 @@
           </div>
 
           <div v-else>
-              <div v-if="!project.published">
+              <div v-if="!project.published && isAnonymousProject">
                 <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
                 <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
                 
@@ -176,7 +176,8 @@ export default {
   data: () => {
     return {
       isAnonymousProject: true,
-      localPendingApproval:false
+      localPendingApproval:false,
+      defaultImage:require('@/assets/graphic-projects.png')
     }
   },
   props: {
@@ -238,12 +239,19 @@ export default {
           content: 'You must provide a task presenter to publish the project'
         })
       }
+    },
+    getBaseUrl(){
+      if(this.project.info.thumbnail){
+        const base = process.env.BASE_ENDPOINT_URL
+        const container = this.project.info.container
+        const picname = this.project.info.thumbnail
+        return base +'uploads/'+ container + '/' + picname
+      } else {
+        return this.defaultImage
+      }
     }
   },
   computed: {
-    getImage(){
-      return require('@/assets/graphic-projects.png')
-    },
     ...mapState('project', {
       project: state => state.selectedProject,
       results: state => state.selectedProjectResults,

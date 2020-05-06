@@ -50,7 +50,7 @@ export default {
       } else {
         this.showError(
           { 
-            title: this.$t('task-count-template-incomplete-form'), 
+            title: this.$t('task-count-template-error-incomplete-form'), 
             content: this.$t('task-count-template-error-question')
           }
         )

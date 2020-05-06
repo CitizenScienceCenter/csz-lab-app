@@ -1,6 +1,8 @@
 import api from '../../api/project'
 import builder from './project-builder'
 import menu from './project-menu'
+import { getTranslationLocale, getPybossaTranslation } from '@/helper'
+
 
 const errors = {
   GET_ALL_PROJECTS_LOADING_ERROR: 'Error during projects loading',
@@ -420,15 +422,25 @@ const actions = {
     return dispatch('getPublishProjectOptions', project).then(response => {
       if (response) {
         return api.approveProject(state.publishProjectOptions.csrf, project.short_name).then(value => {
-          commit('updateSelectedProject', { published: false })
-          commit('notification/showSuccess', {
-            title: 'Project approval!',
-            content: 'The project ' + project.name + ' is now pending approval.'
-          }, { root: true })
-          return value.data
+          if (value.data.status === 'success') {
+            commit('updateSelectedProject', { published: false })
+            commit('notification/showSuccess', {
+              title: getTranslationLocale('success'), 
+              content: getPybossaTranslation(value.data.flash)
+            }, { root: true })
+            return true
+          } else {
+            commit('notification/showError', {
+              title: getTranslationLocale('error'), 
+              content: getPybossaTranslation(value.data.flash)
+            }, { root: true })
+            return false
+          } 
+          //return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.PUBLISH_PROJECT_ERROR, content: reason
+            title: errors.PUBLISH_PROJECT_ERROR, 
+            content: reason
           }, { root: true }) 
           // TODO: fix the server and remove the following lines after
           //commit('updateSelectedProject', { published: false })

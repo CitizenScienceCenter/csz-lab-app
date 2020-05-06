@@ -61,7 +61,7 @@
             :description="$t('basic-profile-editor-email-notification-description')">
       <b-form-checkbox v-model="form.emailNotification" id="email-notification" switch>
         {{$t('basic-profile-editor-email-notification')}} 
-        {{ form.emailNotification ? 'enabled' : 'disabled' }}
+        {{ form.emailNotification ? this.$t('enabled') : this.$t('disabled') }}
       </b-form-checkbox>
     </b-form-group>
 

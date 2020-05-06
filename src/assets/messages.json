@@ -101,8 +101,10 @@
 
         "project-draft-complete":"Modify draft",
         "project-draft-test":"Test it!",
+        "project-draft-published":"Project published",
+        "project-draft-pending-approval":"Project pending approval",
         "project-draft-publish":"Submit for publication",
-        "project-draft-approve-your-project":"Request project approval",
+        "project-draft-approve-your-project":"Request approval",
         "project-draft-approve-your-project-ok":"Yes, approve it",
         "project-draft-approve-your-project-no":"No, do not approve it!",
         "project-draft-approval-warning":"We will check your project against our {link} before publishing. We will contact you by email if we have questions.",
@@ -304,7 +306,7 @@
         "dropbox-choose-files":" Choose files from DropBox",
         "dropbox-license":" You can use any free licensed pics (Creative Commons or alike), your own pictures or those copyright images that you are authorised to use.",
 
-        "project-menu-task-presenter-header":"Task presenter editor",
+        "project-menu-task-presenter-header":"Task Presenter Editor",
         "project-menu-task-presenter-preview":"Preview task presenter",
         "project-menu-task-presenter-update":"Update task presenter",
         "project-menu-task-presenter-message":"This editor is reserved for expert users having coding skills. Edit and update at your own risk",
@@ -551,7 +553,7 @@
         "about-overview":"Overview",
 
         "template-renderer-not-allowed-contribute":"You are not allowed to contribute",
-        "template-renderer-not-allowed-anonymous":"'This project does not allow anonymous contributors'",
+        "template-renderer-not-allowed-anonymous":"This project does not allow anonymous contributors",
 
         "info-c":"Info",
         "statistics-c":"Statistics",
@@ -564,6 +566,16 @@
         "projects":"projects",
         "projects-c":"Projects",
 
+        "more-c":"More",
+        "more":"more",
+
+        "builder-breadcrumb-name":"Name",
+        "builder-breadcrumb-info":"Information",
+        "builder-breadcrumb-story":"Story",
+
+        "source":"Source",
+        "summary":"Summary",
+        "template":"Template",
         
         "template-editor-text-1": "You are working now on task",
         "template-editor-text-2": "You have completed",
@@ -608,11 +620,18 @@
         "taks-import-flickr-text2a":"You can revoke the access to your Flickr account at anytime",
         "taks-import-flickr-text3":"Select",
         "taks-import-flickr-text4":"Manually provide the ID of a Flickr set with images for all.",
+        "taks-import-flickr-text5-error":"You must provide a flickr album ID",
+
+        "taks-source-editor-amazon-text1":"Name of the S3 bucket",
+        "taks-source-editor-amazon-text2":"Search in bucket",
+        "taks-source-editor-amazon-text3":"Continue",
+
 
         "taks-import-googlespeadsheet-text1":"Google spreadsheet public url",
         "taks-import-googlespeadsheet-text2":"Send tasks",
 
         "taks-import-localcsv-text1":"You can download some CSV examples to know how to write it for each kind of template",
+        "taks-import-localPDF-text1":"You can download some examples to know how to write it for each kind of template",
         "taks-import-localcsv-text2":"Image example",
         "taks-import-localcsv-text3":"Sound example",
         "taks-import-localcsv-text4":"Video example",
@@ -624,12 +643,64 @@
         "taks-import-publiccsv-text1":"Public csv link",
         "taks-import-publiccsv-text2":"Send tasks",
 
-        "text-cookies": "We use cookies to improve your experience on our sites."
+        "text-cookies": "We use cookies to improve your experience on our sites.",
+
+        "notifications-messages-register-error":"Error during registration",
+        "notifications-messages-register-notavailable":"Registration not available",
+
+        "notifications-messages-signin-notavailable":"Sign in not available",
+        "notifications-messages-signin-procedure":"Error during signin",
+
+        "notifications-messages-forgot-error":"Reset password not available",
+        "notifications-messages-forgot-pass-title":"Email sent",
+        "notifications-messages-forgot-pass-response-success":"We've sent you an email with account recovery instructions!",
+        "notifications-messages-reset-title":"Email reset",
+        "notifications-messages-reset-response-success":"You reset your password successfully!",
+        "notifications-messages-reset-response-error":"Error during reset password",
+        "notifications-messages-reset-notavailable":"Reset password not available",
+
+        "notifications-messages-signout-title":"Signed out",
+        "notifications-messages-signout-message":"You are now logged out",
+
+        "notifications-messages-update-profile-title":"Success",
+        "notifications-messages-update-profile-message":"Your profile has been updated",
+
+        "notifications-messages-delete-profile-title":"Success",
+        "notifications-messages-delete-profile-message":"Your account has been deleted",
+
+        "notifications-messages-export-data-title":"Success",
+        "notifications-messages-export-data-message":"You will receive by email all your data...",
+
+        "User-name-must-be-between-3-and-35-characters-long":"User name must be between 3 and 35 characters long",
+        "The-user-name-is-already-taken":"The user name is already taken",
+        "Email-is-already-taken":"Email is already taken",
+        "Thanks-for-signing-up":"Thanks for signing-up",
+
+        "You-changed-your-password-succesfully!":"You changed your password succesfully!",
+        "Your-current-password-does-not-match-the-one-in-our-records":"Your current password does not match the one in our records",
+        "Your-avatar-has-been-updated!-It-may-take-some-minutes-to-refresh":"Your avatar has been updated! It may take some minutes to refresh",
+        "You-have-to-provide-an-image-file-to-update-your-avatar":"You have to provide an image file to update your avatar",
+        "An-email-has-been-sent-to-validate-your-email-address":"An email has been sent to validate your email address",
+        "Your-email-has-been-validated.":"Your email has been validated.",
+        "We've-sent-you-an-email-with-account-recovery-instructions!":"We've sent you an email with account recovery instructions!",
+        "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"We don't have this email in our records.You may have signed up with a different email",
+        "Thank-you!-Our-administrators-will-contact-you-in-case-of-questions!":"Thank you! Our administrators will contact you in case of questions!",
+        "We-have-found-your-project-in-our-approval-list!":"We have found your project in our approval list!",
+
+        "Task-presenter-added!":"Task presenter added!",
+        "It-looks-like-there-were-no-new-records-to-import":"It looks like there were no new records to import",
+
+        "Your-flicker-account-access-is-now-revoked":"Your flickr account access is now revoked",
+
+        "summary-builder-promise-error":"We are not able to submit your template and/or your tasks for the moment.",
+
+        "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Impossible to get profile data",
+        "Error:-Request-failed-with-status-code-502":"Error: Request failed with status code 502"
 
     },
     "de": {
       "home-heading":"CITIZEN SCIENCE PROJECT BUILDER",
-       "home-subheading":"Tragen Sie zu einem laufenden Projekt bei oder starten Sie Ihr eigenes",
+       "home-subheading":"Forschen Sie mit oder starten Sie Ihr eigenes Projekt",
        "home-create-a-project":"Neues Projekt starten",
        "home-start-contributing": "Mitforschen",
        "home-featured-projects":"Unterstützte Projekte",
@@ -722,10 +793,13 @@
        "profile-view-create-a-project":"Projekt starten",
        "profile-view-find-a-project":"Projekt finden",
 
-       "project-draft-complete":"Entwurf ändern",
+       "project-draft-complete":"Entwurf bearbeiten",
        "project-draft-test":"Ausprobieren!",
+       "project-draft-pending-approval":"Projekt steht noch aus",
+       "project-draft-published":"Projekt veröffentlicht",
        "project-draft-publish":"Zur Veröffentlichung einreichen",
-       "project-draft-publish-approval":"Wir werden Ihr Projekt vor der Veröffentlichung anhand unserer Kriterien prüfen und Sie bei Fragen per E-Mail kontaktieren.",
+       "project-draft-approve-your-project":"Genehmigung anfordern",
+       "project-draft-approval-warning":"Wir werden Ihr Projekt vor der Veröffentlichung anhand unserer Kriterien prüfen und Sie bei Fragen per E-Mail kontaktieren.",
        "project-draft-publish-your-project":"Projekt veröffentlichen",
        "project-draft-publish-your-project-ok":"Ja, veröffentlichen!",
        "project-draft-publish-your-project-no":"Nein, nicht veröffentlichen!",
@@ -763,9 +837,9 @@
        "information-builder-character-exceed":"Die angegebene Länge der Beschreibung sollte nicht überschritten werden.",
 
 
-       "name-builder-project-title-header":"Wählen Sie einen Namen bzw. Titel für Ihr neues Projekt",
+       "name-builder-project-title-header":"Wählen Sie einen Namen für Ihr neues Projekt",
        "name-builder-project-title":"Projektname",
-       "name-builder-project-title-description":"Please write here a good one!",
+       "name-builder-project-title-description":"Am besten kurz und eingängig!",
        "name-builder-project-title-error":"Sie müssen einen Titel für Ihr Projekt festlegen",
        "name-builder-project-character-exceed":"Der Titel Länge sollte nicht überschritten werden.",
 
@@ -931,7 +1005,7 @@
 
        "edit-btn":"Bearbeiten",
        "view-btn":"Ansehen",
-       "submit-btn":"Übermitteln",
+       "submit-btn":"Senden",
        "take-a-look-btn":"Anschauen",
        "go-back-btn":"Zurück",
        "next-btn":"Weiter",
@@ -1092,6 +1166,16 @@
         "projects":"projekte",
         "projects-c":"Projekte",
 
+        "more-c":"Mehr",
+        "more":"mehr",
+
+        "builder-breadcrumb-name":"Name",
+        "builder-breadcrumb-info":"Information",
+        "builder-breadcrumb-story":"Story",
+
+        "source":"Datenquelle",
+        "summary":"Zusammenfassung",
+        "template":"Vorlage",
 
         "about-question-1":"Was ist der Citizen Science Project Builder?",
         "about-answer-1":"Der Citizen Science Project Builder ist ein webbasiertes Tool, mit dem Forschende, Studierende sowie Bürgerinnen und Bürger Citizen Science Projekte entwickeln und durchführen können.",
@@ -1172,7 +1256,7 @@
         "about-how-step7-label2":"Wir werden überprüfen, ob Ihr Projekt unseren Kriterien entspricht und melden uns innerhalb von ein paar Stunden bei Ihnen.",
 
         "about-criteria-label1":"Jeder kann ein Projekt auf der Plattform anlegen, solange folgende Kriterien beachtet werden:",
-        "about-criteria-list1":"Thema und Zielsetzungen des Projekts sind für die Wissenschaft und/oder die Gesellschaft eindeutig von Relevanz.",
+        "about-criteria-list1":"Thema und Zielsetzung des Projekts haben einen klaren wissenschaftlichen und/oder sozialen Bezug.",
         "about-criteria-list2":"Die Ziele und angestrebten Ergebnisse des Projekts sind in der Projektbeschreibung nachvollziehbar und verständlich kommuniziert.",
         "about-criteria-list3":"Die Projektziele sind ohne die Beteiligung der Bürgerinnen und Bürger nicht oder nur schwer zu erreichen.",
         "about-criteria-list4":"Das Projekt steht allen Mitwirkenden, die freiwillig teilnehmen möchten, offen.",
@@ -1233,12 +1317,18 @@
        "taks-import-flickr-text2":"Zugangsberechtigung aufheben",
        "taks-import-flickr-text2a":"Sie können den Zugriff auf Ihr Flickr-Konto jederzeit widerrufen",
        "taks-import-flickr-text3":"Auswählen",
-       "taks-import-flickr-text4":"Manually provide the ID of a Flickr set with images for all.",
+       "taks-import-flickr-text4":"Geben Sie die ID eines Flickr-Sets manuell mit Bildern für alle an.",
+       "taks-import-flickr-text5-error":"Sie müssen eine Flickr-Album-ID angeben",
+
+       "taks-source-editor-amazon-text1":"Name des S3-Buckets",
+        "taks-source-editor-amazon-text2":"Suche in S3-Buckets",
+        "taks-source-editor-amazon-text3":"Weiter",
 
        "taks-import-googlespeadsheet-text1":"Öffentliche URL der Google-Tabelle",
        "taks-import-googlespeadsheet-text2":"Aufgaben senden",
 
        "taks-import-localcsv-text1":"Sie können CSV-Beispiele herunterladen, um zu sehen, wie sie für verschiedene Vorlagen geschrieben werden",
+       "taks-import-localPDF-text1":"Sie können Beispiele herunterladen, um zu sehen, wie sie für verschiedene Vorlagen geschrieben werden",
        "taks-import-localcsv-text2":"Bildbeispiel",
        "taks-import-localcsv-text3":"Tonbeispiel",
        "taks-import-localcsv-text4":"Videobeispiel",
@@ -1250,7 +1340,55 @@
        "taks-import-publiccsv-text1":"Öffentlicher CSV-Link",
        "taks-import-publiccsv-text2":"Aufgaben senden",
 
-        "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites."
+        "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites.",
+
+        "notifications-messages-register-error":"Fehler bei der Registrierung",
+        "notifications-messages-register-notavailable":"Registrierung nicht möglich",
+
+        "notifications-messages-signin-notavailable":"Anmeldung nicht möglich",
+        "notifications-messages-signin-procedure":"Fehler bei der Anmeldung",
+
+        "notifications-messages-forgot-error":"Passwort zurücksetzen nicht verfügbar",
+        "notifications-messages-forgot-pass-title":"E-Mail gesendet",
+        "notifications-messages-forgot-pass-response-success":"Wir haben Ihnen eine E-Mail mit Anweisungen zur Wiederherstellung des Kontos gesendet!",
+        "notifications-messages-reset-title":"E-Mail zurücksetzen",
+        "notifications-messages-reset-response-success":"Sie haben Ihr Passwort erfolgreich zurückgesetzt!",
+        "notifications-messages-reset-response-error":"Fehler beim Zurücksetzen des Passworts",
+        "notifications-messages-reset-notavailable":"Passwort zurücksetzen nicht verfügbar",
+
+        "notifications-messages-signout-title":"Abgemeldet",
+        "notifications-messages-signout-message":"Sie sind nun ausgeloggt",
+
+        "notifications-messages-update-profile-message":"Ihr Profil wurde aktualisiert",
+
+        "notifications-messages-delete-profile-message":"Dein Account wurde gelöscht",
+
+        "notifications-messages-export-data-message":"Sie erhalten per E-Mail alle Ihre Daten ...",
+
+        "User-name-must-be-between-3-and-35-characters-long":"Der Benutzername muss zwischen 3 und 35 Zeichen lang sein",
+        "The-user-name-is-already-taken":"Der Benutzername ist bereits vergeben",
+        "Email-is-already-taken":"E-Mail ist bereits vergeben",
+        "Thanks-for-signing-up":"Danke für's Registrieren",
+
+        "You-changed-your-password-succesfully!":"Sie haben Ihr Passwort erfolgreich geändert!",
+        "Your-current-password-does-not-match-the-one-in-our-records":"Ihr aktuelles Passwort stimmt nicht mit dem in unseren Unterlagen überein",
+        "Your-avatar-has-been-updated!-It-may-take-some-minutes-to-refresh":"Dein Avatar wurde aktualisiert! Das Aktualisieren kann einige Minuten dauern",
+        "You-have-to-provide-an-image-file-to-update-your-avatar":"Sie müssen eine Bilddatei bereitstellen, um Ihren Avatar zu aktualisieren",
+        "An-email-has-been-sent-to-validate-your-email-address":"Es wurde eine E-Mail gesendet, um Ihre E-Mail-Adresse zu bestätigen",
+        "Your-email-has-been-validated.":"Your-email-has-been-validated.",
+        "We've-sent-you-an-email-with-account-recovery-instructions!":"Wir haben Ihnen eine E-Mail mit Anweisungen zur Wiederherstellung des Kontos gesendet!",
+        "We-don't-have-this-email-in-our-records.You-may-have-signed-up-with-a-different-email":"Wir haben diese E-Mail nicht in unseren Unterlagen. Möglicherweise haben Sie sich mit einer anderen E-Mail angemeldet",
+        "Thank-you!-Our-administrators-will-contact-you-in-case-of-questions!":"Vielen Dank! Unsere Administratoren werden Sie bei Fragen kontaktieren!",
+        "We-have-found-your-project-in-our-approval-list!":"Wir haben Ihr Projekt in unserer Genehmigungsliste gefunden!",
+
+        "Task-presenter-added":"Task presenter hinzugefügt",
+        "It-looks-like-there-were-no-new-records-to-import":"Es sieht so aus, als ob keine neuen Datensätze importiert werden mussten.",
+        "Your-flicker-account-access-is-now-revoked":"Der Zugriff auf Ihr Flickr-Konto wird jetzt widerrufen",
+
+        "summary-builder-promise-error":"Wir können Ihre Vorlage und / oder Ihre Aufgaben derzeit nicht einreichen.",
+
+        "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Profildaten können nicht abgerufen werden",
+        "Error:-Request-failed-with-status-code-502":"Fehler: Anforderung mit Statuscode 502 fehlgeschlagen"
 
     }
 }
