@@ -47,8 +47,8 @@ router.beforeEach((to, from, next) => {
             } else {
                 // if the route needs to be logged the user is redirected
                 store.commit('notification/showInfo', {
-                title: 'Not authenticated',
-                content: 'You must be logged to access this page'
+                title: this.$t('error-login-authentication'),
+                content: this.$t('error-login-authentication-content')
                 })
                 from.name !== null ? next(false) : next({ name: 'login' })
             }

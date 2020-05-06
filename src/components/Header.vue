@@ -1,11 +1,15 @@
 <template>
     <b-navbar :sticky="true" toggleable="lg" type="light" variant="light">
 
-        <b-navbar-brand :to="{ name: 'home' }">
+        <b-navbar-brand>
             <div class="beta">Beta</div>
         </b-navbar-brand>
 
-        <b-navbar-brand :to="{ name: 'home' }"><img alt="Citizen Science Center Zurich" class="brand-logo" src="../assets/img/logo.svg"/></b-navbar-brand>
+        <b-navbar-brand >
+          <a href="https://citizenscience.ch" class="home-link home-link-platform" target="_blank">
+            <img alt="Citizen Science Center Zurich" class="brand-logo" src="@/assets/img/logo.svg"/>
+          </a>
+        </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
