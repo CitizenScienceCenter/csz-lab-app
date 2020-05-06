@@ -126,5 +126,12 @@ export default {
       withCredentials: true,
       data: {}
     })
+  },
+
+  getShareableLink (projectShortName) {
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/link', {
+      withCredentials: true,
+      data: {}
+    })
   }
 }

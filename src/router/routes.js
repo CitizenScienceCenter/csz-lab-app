@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Discover from '@/components/Discover'
 import Project from '@/components/Project/Project'
+import ProjectTest from '@/components/Project/ProjectTest'
 import ProjectBuilder from '@/components/Project/Builder/ProjectBuilder'
 import About from '@/components/About'
 import TaskBuilder from '@/components/Task/Builder/TaskBuilder'
@@ -144,6 +145,21 @@ export const routes = [
                     store.commit('project/menu/setCurrentTab', store.state.project.menu.tabs.info)
                   }
                   next()
+                }
+              },
+              {
+                path: 'project/:id/test',
+                name: 'project.test',
+                component: ProjectTest,
+                props: true,
+                beforeEnter: (to, from ,next) =>{
+                  let key = to.fullPath.split('?share=');
+                  if(key[1].length==36) {
+                    store.commit('project/setShareableProjectKey', key[1])
+                    next()
+                  } else {
+                    next({ name: 'home' })
+                  }
                 }
               },
               {

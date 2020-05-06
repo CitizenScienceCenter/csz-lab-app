@@ -25,6 +25,22 @@
              
               <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
               <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
+              <b-btn ref="btn-test-it" v-b-modal.project-link variant="warning" class="mt-2">{{ $t('project-share-link') }}</b-btn><br>
+              <p v-if="project.info.shareable_url">Your Shareable Link: {{ project.info.shareable_url }}</p>
+              <p v-else>{{ shareable_url }}</p>
+              <b-modal
+                id="project-link"
+                :title="$t('project-share-link')"
+                :ok-title="$t('submit-btn')"
+                :cancel-title="$t('cancel-c')"
+                @ok="getLink">
+                <b-alert variant="warning" :show="true">
+                Your project will be published in a temporary environment and you will get a link that you can share
+                with your colleagues for the test purposes. Only people with the link can see the project, the project 
+                will not be visible in the CS Project Builder platform </br>
+                Note: this a test environment, all data contributed while testing will not be saved.
+               </b-alert>
+              </b-modal>
 
               <div v-if="!infos.admin">
                 <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >{{ $t('project-draft-approve-your-project') }}</b-btn><br>
@@ -151,10 +167,11 @@ export default {
     'app-cover': Cover
   },
   created () {
-    
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
     this.getProject(this.id).then(project => {
+      if(!project)
+        return false
       // load some stats
       this.getStatistics(project)
       this.getResults(project)
@@ -167,17 +184,14 @@ export default {
         // has to be loaded to know if the project can be published
         this.getProjectTasks(project)
       }
-
-     
-
     })
-
   },
   data: () => {
     return {
       isAnonymousProject: true,
       localPendingApproval:false,
-      defaultImage:require('@/assets/graphic-projects.png')
+      defaultImage:require('@/assets/graphic-projects.png'),
+      shareable_url:null
     }
   },
   props: {
@@ -190,6 +204,7 @@ export default {
       'getProject',
       'publishProject',
       'approveProject',
+      'getShareableLink',
       'getResults',
       'getStatistics'
     ]),
@@ -203,7 +218,11 @@ export default {
     ...mapMutations('notification', [
       'showError'
     ]),
-
+    getLink (){
+      this.getShareableLink(this.project).then(value => {
+        this.shareable_url = value.key
+      })
+    },
     approve () {
       if (this.taskPresenter.length > 0) {
         if (this.projectTasks.length > 0) {

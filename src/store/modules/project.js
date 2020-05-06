@@ -42,7 +42,11 @@ const state = {
   projectCreationOptions: {},
   projectUpdateOptions: {},
   publishProjectOptions: {},
-  projectDeletionOptions: {}
+  projectDeletionOptions: {},
+
+  //shareable link
+  projectShareableLink: {},
+  projectShareableKey: {}
 }
 
 // filter methods on the state data
@@ -489,8 +493,32 @@ const actions = {
       }, { root: true })
       return false
     })
+  },
+
+  /**
+   * Gets a CSRF token to publish the project with the publishProject method
+   * @param commit
+   * @param project
+   * @return {Promise<T | boolean>}
+   */
+  getShareableLink ({ commit }, project) {
+    return api.getShareableLink(project.short_name).then(value => {
+      commit('setProjectShareableLink', value.data )
+      commit('notification/showSuccess', {
+        title: 'Shareable link!',
+        content: value.data
+      }, { root: true })
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Shareable link error!', 
+        content: reason
+      }, { root: true })
+    })
   }
+
 }
+
 
 // methods that change the state
 const mutations = {
@@ -535,6 +563,12 @@ const mutations = {
       ...state.categoryPagination,
       [category]: pagination
     }
+  },
+  setProjectShareableLink(state, link) {
+    state.projectShareableLink = link
+  },
+  setShareableProjectKey(state,key){
+    state.projectShareableKey = key
   }
 }
 

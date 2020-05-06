@@ -101,6 +101,7 @@
 
         "project-draft-complete":"Modify draft",
         "project-draft-test":"Test it!",
+        "project-share-link":"Get shareable link",
         "project-draft-published":"Project published",
         "project-draft-pending-approval":"Project pending approval",
         "project-draft-publish":"Submit for publication",
@@ -795,6 +796,7 @@
 
        "project-draft-complete":"Entwurf bearbeiten",
        "project-draft-test":"Ausprobieren!",
+       "project-share-link":"Get shareable link",
        "project-draft-pending-approval":"Projekt steht noch aus",
        "project-draft-published":"Projekt veröffentlicht",
        "project-draft-publish":"Zur Veröffentlichung einreichen",
