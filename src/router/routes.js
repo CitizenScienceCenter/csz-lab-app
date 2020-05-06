@@ -10,6 +10,7 @@ import ProjectBuilder from '@/components/Project/Builder/ProjectBuilder'
 import About from '@/components/About'
 import TaskBuilder from '@/components/Task/Builder/TaskBuilder'
 import TemplateRenderer from '@/components/Task/TemplateRenderer'
+import TemplateRendererTestProject from '@/components/Task/TemplateRendererTestProject'
 import Profile from '@/components/Profile/Profile'
 import TaskPresenterMenu from '@/components/Project/Menu/TaskMenu/Presenter/TaskPresenterMenu'
 import TaskPresenterEditor from '@/components/Project/Menu/TaskMenu/Presenter/TaskPresenterEditor'
@@ -148,18 +149,24 @@ export const routes = [
                 }
               },
               {
-                path: 'project/:id/test',
+                path: 'project/:short_name/test/confirm',
                 name: 'project.test',
                 component: ProjectTest,
-                props: true,
                 beforeEnter: (to, from ,next) =>{
-                  let key = to.fullPath.split('?share=');
-                  if(key[1].length==36) {
-                    store.commit('project/setShareableProjectKey', key[1])
-                    next()
+                  let fp = to.fullPath
+                  let short_name = fp.substring(fp.lastIndexOf("project/") + 8,fp.lastIndexOf("/test"));
+                  let url = fp.split('?share=');                
+                  if(url.length>1) {
+                    store.dispatch('project/getProjectSharedLinkConfirmation',{'key':url[1],'short_name':short_name}).then(confirm => {
+                      if (confirm == 'success') {
+                        next()
+                      } else {
+                        next({ name: 'home' })
+                      }
+                    })
                   } else {
                     next({ name: 'home' })
-                  }
+                  } 
                 }
               },
               {
@@ -208,6 +215,12 @@ export const routes = [
                 path: 'project/:id/task-presenter',
                 name: 'project.task.presenter',
                 component: TemplateRenderer,
+                props: true
+              },
+              {
+                path: 'project/:id/task-presenter/test',
+                name: 'project.task.presenter.test',
+                component: TemplateRendererTestProject,
                 props: true
               },
               {

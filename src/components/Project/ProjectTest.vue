@@ -14,7 +14,7 @@
         <b-col cols="7" sm="8" md="9">
             <h1>{{ project.name }}</h1>
             <p>{{ project.description }}</p>
-            <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>   
+            <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter.test', params: { id:project.id } }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>   
         </b-col>
 
       </b-row>
@@ -40,31 +40,22 @@
 
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
-
 import ProjectInfoMenu from '@/components/Project/Menu/ProjectInfoMenu'
-
+import TemplateRendererTestProject from '@/components/Task/TemplateRendererTestProject'
 import Cover from '@/components/Common/Cover'
 
 export default {
   name: 'ProjectTest',
   components: {
     ProjectInfoMenu,
+    TemplateRendererTestProject,
     'app-cover': Cover
   },
   created () {
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
-    this.getProject(this.id).then(project => {
-      if(!project || this.sharedKey != project.info.shareable_key)
-        this.$router.push({ name: 'home' })
-        return false
-      // checks if the project is open for anonymous users or not
-      this.getNewTask(project).then(allowed => {
-        this.isAnonymousProject = !!allowed
-        // TODO: should go to the home screen?
-      })
-      this.getProjectTasks(project)
-    })
+    //alert(JSON.stringify(this.project))
+    
   },
   data: () => {
     return {
@@ -74,14 +65,9 @@ export default {
       shareable_link:null
     }
   },
-  props: {
-    id: {
-      required: true
-    }
-  },
   methods: {
     ...mapActions('project', [
-      'getProject'
+      'getProjectTestEnv'
     ]),
     ...mapActions('task', [
       'getProjectTasks',
@@ -110,7 +96,9 @@ export default {
       project: state => state.selectedProject,
       results: state => state.selectedProjectResults,
       stats: state => state.selectedProjectStats,
-      sharedKey: state => state.projectShareableKey
+      sharedKey: state => state.projectShareableKey,
+      //project : state => state.projectTestEnvironment.project,
+      testEnvId: state => state.projectTestEnvironment.id
     }),
     ...mapState('task', [
       'taskPresenter',

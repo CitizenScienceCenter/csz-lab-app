@@ -46,7 +46,8 @@ const state = {
 
   //shareable link
   projectShareableLink: {},
-  projectShareableKey: {}
+  projectShareableKey: {},
+  enableTestEnvironment: false
 }
 
 // filter methods on the state data
@@ -182,6 +183,41 @@ const actions = {
     }).catch(reason => {
       commit('notification/showError', {
         title: errors.GET_PROJECT_LOADING_ERROR, content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  getProjectSharedLinkConfirmation({commit},payload) {
+    return api.projectSharedLinkConfirmation(payload.key,payload.short_name).then(value => {
+      if(value.data.status == 'success'){
+        commit('setProjectTestEnvironment',true)
+        commit('setSelectedProject',value.data.project)
+      }
+      return value.data.status
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: getTranslationLocale('error'), 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  getProjectTestEnv ({ commit, state, rootState }, project) {
+    return api.getProjectByIdTestEnv(project.short_name).then(value => {
+      commit('setSelectedProject', value.data)
+      // stores the task presenter directly in the task store
+      if ('task_presenter' in value.data.info) {
+        commit('task/setTaskPresenter', value.data.info.task_presenter, { root: true })
+      } else {
+        commit('task/setTaskPresenter', '', { root: true })
+      }
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: errors.GET_PROJECT_LOADING_ERROR, 
+        content: reason
       }, { root: true })
       return false
     })
@@ -504,10 +540,6 @@ const actions = {
   getShareableLink ({ commit }, project) {
     return api.getShareableLink(project.short_name).then(value => {
       commit('setProjectShareableLink', value.data )
-      commit('notification/showSuccess', {
-        title: 'Shareable link!',
-        content: value.data
-      }, { root: true })
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
@@ -569,6 +601,9 @@ const mutations = {
   },
   setShareableProjectKey(state,key){
     state.projectShareableKey = key
+  },
+  setProjectTestEnvironment(state,status){
+    state.enableTestEnvironment = status
   }
 }
 

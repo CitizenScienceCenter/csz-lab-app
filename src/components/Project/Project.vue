@@ -37,7 +37,7 @@
                 <b-alert variant="warning" :show="true">
                 Your project will be published in a temporary environment and you will get a link that you can share
                 with your colleagues for the test purposes. Only people with the link can see the project, the project 
-                will not be visible in the CS Project Builder platform </br>
+                will not be visible in the CS Project Builder platform <br>
                 Note: this a test environment, all data contributed while testing will not be saved.
                </b-alert>
               </b-modal>

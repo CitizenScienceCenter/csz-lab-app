@@ -26,6 +26,12 @@ export default {
     })
   },
 
+  projectSharedLinkConfirmation (key,shortname) {
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + shortname + '/test/confirm?share='+key, {
+      data: {}
+    })
+  },
+
   getProjectUserProgress (projectId, apiKey) {
     return axios.get(process.env.BASE_API_URL + 'project/' + projectId + '/userprogress' + (apiKey ? '?api_key=' + apiKey : ''), {
       data: {}
