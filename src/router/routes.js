@@ -218,10 +218,18 @@ export const routes = [
                 props: true
               },
               {
-                path: 'project/:id/task-presenter/test',
+                path: 'project/:short_name/task-presenter/test',
                 name: 'project.task.presenter.test',
                 component: TemplateRendererTestProject,
-                props: true
+                props: true,
+                beforeEnter: (to, from, next) => {
+                  let enabled = store.state.project.enableTestEnvironment
+                  if(enabled){
+                    next()
+                  } else {
+                    next({ name: 'home' })
+                  }
+                }
               },
               {
                 path: 'project/:id/task-presenter/settings',

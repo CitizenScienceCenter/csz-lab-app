@@ -540,6 +540,10 @@ const actions = {
   getShareableLink ({ commit }, project) {
     return api.getShareableLink(project.short_name).then(value => {
       commit('setProjectShareableLink', value.data )
+      /*commit('notification/showInfo', {
+        title: 'Your Shareable link!', 
+        content: value.data.key
+      }, { root: true })*/
       return value.data
     }).catch(reason => {
       commit('notification/showError', {

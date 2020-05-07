@@ -4,7 +4,7 @@
     <b-row>
     <b-col>
       <b-link v-if="template" :to="{ name: 'project.task.presenter.editor', params: { id: this.id, template: this.template } }">{{ $t("task-template-renderer-go-back-editor") }}</b-link>
-      <b-link v-else :to="{ name: 'project', params: { id: this.id } }">{{ $t('task-template-renderer-go-back-project') }}</b-link>
+      <b-link v-else :to="{ name: 'project.test' }">{{ $t('task-template-renderer-go-back-project') }}</b-link>
 
       <div v-if="!taskPresenterLoaded" class="mt-4 text-center">
         <b-spinner 
@@ -77,20 +77,20 @@ export default {
     // template code (optional)
     template: {
       type: String
+    },
+    short_name:{
+      type: String
     }
   },
   created () {
-    // load the project first to have access to the presenter and to the related tasks
-    alert('Is test env enabled?')
-    alert(this.testEnvEnabled)
-    this.getProject(this.id).then(() => {
+      //in test environment the project values have already been loaded in the sharaeable link confirmation
       this.taskPresenterLoaded = true
       // if the project presenter exists or a template is given (with the task presenter editor), it will be displayed
       // otherwise an alert is displayed to indicate that the presenter is not already configured
       if (this.presenter || this.template) {
         this.taskPresenterExists = true
       }
-    })
+      
   },
   data: () => {
     return {

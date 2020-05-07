@@ -24,10 +24,15 @@
             <div v-else-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
              
               <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
-              <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
-              <b-btn ref="btn-test-it" v-b-modal.project-link variant="warning" class="mt-2">{{ $t('project-share-link') }}</b-btn><br>
-              <p v-if="project.info.shareable_url">Your Shareable Link: {{ project.info.shareable_url }}</p>
-              <p v-else>{{ shareable_url }}</p>
+              <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn>
+              <b-btn ref="btn-share-it" v-b-modal.project-link variant="primary" class="mt-2">{{ $t('project-share-link') }}</b-btn> 
+              <b-btn v-if="project.info.shareable_link" class="mt-2" variant="secondary" @click="makeToast('info',project.info.shareable_link)">
+                 My link
+              </b-btn>
+              <b-btn v-else-if="shareable_link" class="mt-2" variant="secondary" @click="makeToast('info',shareable_link)">
+                 My link
+              </b-btn>
+              <br>
               <b-modal
                 id="project-link"
                 :title="$t('project-share-link')"
@@ -191,7 +196,7 @@ export default {
       isAnonymousProject: true,
       localPendingApproval:false,
       defaultImage:require('@/assets/graphic-projects.png'),
-      shareable_url:null
+      shareable_link:null
     }
   },
   props: {
@@ -220,7 +225,7 @@ export default {
     ]),
     getLink (){
       this.getShareableLink(this.project).then(value => {
-        this.shareable_url = value.key
+        this.shareable_link = value.key
       })
     },
     approve () {
@@ -268,6 +273,14 @@ export default {
       } else {
         return this.defaultImage
       }
+    },
+    makeToast(variant = null,data) {
+        this.$bvToast.toast(data, {
+          toaster: 'b-toaster-top-center',
+          title: 'Your shareable link',
+          variant: variant,
+          solid: true
+        })
     }
   },
   computed: {
