@@ -14,7 +14,15 @@
         <b-col cols="7" sm="8" md="9">
             <h1>{{ project.name }}</h1>
             <p>{{ project.description }}</p>
-            <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter.test', params: { id:project.id, template:project.info.task_presenter,short_name:project.short_name } }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>   
+            <b-btn ref="btn-test-it" 
+              :to="{ 
+                name: 'project.task.presenter.test', 
+                params: { 
+                  id:project.id, 
+                  template:project.info.task_presenter,
+                  short_name:project.short_name
+                } 
+              }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>   
         </b-col>
 
       </b-row>
@@ -55,7 +63,6 @@ export default {
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
     //alert(JSON.stringify(this.project))
-    
   },
   data: () => {
     return {
@@ -96,7 +103,7 @@ export default {
       project: state => state.selectedProject,
       results: state => state.selectedProjectResults,
       stats: state => state.selectedProjectStats,
-      sharedKey: state => state.projectShareableKey,
+      sharedKey: state => state.projectShareableLink,
       //project : state => state.projectTestEnvironment.project,
       testEnvId: state => state.projectTestEnvironment.id
     }),

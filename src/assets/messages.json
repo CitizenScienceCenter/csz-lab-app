@@ -696,7 +696,12 @@
         "summary-builder-promise-error":"We are not able to submit your template and/or your tasks for the moment.",
 
         "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Impossible to get profile data",
-        "Error:-Request-failed-with-status-code-502":"Error: Request failed with status code 502"
+        "Error:-Request-failed-with-status-code-502":"Error: Request failed with status code 502",
+
+
+        "shareable-link":"Your shareable link",
+        "shareable-link-modal-content":" Your project will be published in a temporary environment and you will get a link that you can share with your colleagues for the test purposes. Only people with the link can see the project, the project will not be visible in the CS Project Builder platform ",
+        "shareable-link-modal-content-note":"<b>Note</b>: this a test environment, all data contributed while testing will not be saved."
 
     },
     "de": {
@@ -1390,7 +1395,12 @@
         "summary-builder-promise-error":"Wir können Ihre Vorlage und / oder Ihre Aufgaben derzeit nicht einreichen.",
 
         "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Profildaten können nicht abgerufen werden",
-        "Error:-Request-failed-with-status-code-502":"Fehler: Anforderung mit Statuscode 502 fehlgeschlagen"
+        "Error:-Request-failed-with-status-code-502":"Fehler: Anforderung mit Statuscode 502 fehlgeschlagen",
+
+        "shareable-link":"Your shareable link",
+        "shareable-link-modal-content":" Your project will be published in a temporary environment and you will get a link that you can share with your colleagues for the test purposes. Only people with the link can see the project, the project will not be visible in the CS Project Builder platform ",
+        "shareable-link-modal-content-note":"<b>Note</b>: this a test environment, all data contributed while testing will not be saved."
+
 
     }
 }

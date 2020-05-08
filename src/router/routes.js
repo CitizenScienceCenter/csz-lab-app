@@ -157,7 +157,7 @@ export const routes = [
                   let short_name = fp.substring(fp.lastIndexOf("project/") + 8,fp.lastIndexOf("/test"));
                   let url = fp.split('?share=');                
                   if(url.length>1) {
-                    store.dispatch('project/getProjectSharedLinkConfirmation',{'key':url[1],'short_name':short_name}).then(confirm => {
+                    store.dispatch('project/getProjectSharedLinkConfirmation',{'key':url[1],'short_name':short_name,'fullpath':fp}).then(confirm => {
                       if (confirm == 'success') {
                         next()
                       } else {

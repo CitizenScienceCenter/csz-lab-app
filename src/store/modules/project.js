@@ -45,7 +45,7 @@ const state = {
   projectDeletionOptions: {},
 
   //shareable link
-  projectShareableLink: {},
+  projectShareableLink: null,
   projectShareableKey: {},
   enableTestEnvironment: false
 }
@@ -192,6 +192,7 @@ const actions = {
     return api.projectSharedLinkConfirmation(payload.key,payload.short_name).then(value => {
       if(value.data.status == 'success'){
         commit('setProjectTestEnvironment',true)
+        commit('setProjectShareableLink',payload.fullpath)
         commit('setSelectedProject',value.data.project)
       }
       return value.data.status
@@ -539,7 +540,7 @@ const actions = {
    */
   getShareableLink ({ commit }, project) {
     return api.getShareableLink(project.short_name).then(value => {
-      commit('setProjectShareableLink', value.data )
+      commit('setProjectShareableLink', value.data.key )
       /*commit('notification/showInfo', {
         title: 'Your Shareable link!', 
         content: value.data.key

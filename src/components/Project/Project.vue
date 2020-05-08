@@ -25,11 +25,10 @@
              
               <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
               <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn>
+              &ensp;&ensp;&ensp;
               <b-btn ref="btn-share-it" v-b-modal.project-link variant="primary" class="mt-2">{{ $t('project-share-link') }}</b-btn> 
-              <b-btn v-if="project.info.shareable_link" class="mt-2" variant="secondary" @click="makeToast('info',project.info.shareable_link)">
-                 My link
-              </b-btn>
-              <b-btn v-else-if="shareable_link" class="mt-2" variant="secondary" @click="makeToast('info',shareable_link)">
+            
+              <b-btn v-if="shareable_link" class="mt-2" variant="secondary" @click="makeToast('info',shareable_link)">
                  My link
               </b-btn>
               <br>
@@ -40,10 +39,8 @@
                 :cancel-title="$t('cancel-c')"
                 @ok="getLink">
                 <b-alert variant="warning" :show="true">
-                Your project will be published in a temporary environment and you will get a link that you can share
-                with your colleagues for the test purposes. Only people with the link can see the project, the project 
-                will not be visible in the CS Project Builder platform <br>
-                Note: this a test environment, all data contributed while testing will not be saved.
+                {{ $t('shareable-link-modal-content') }} <br>
+                {{ $t('shareable-link-modal-content-note=') }} 
                </b-alert>
               </b-modal>
 
@@ -177,6 +174,7 @@ export default {
     this.getProject(this.id).then(project => {
       if(!project)
         return false
+      this.shareable_link = project.info.shareable_link
       // load some stats
       this.getStatistics(project)
       this.getResults(project)
@@ -277,7 +275,7 @@ export default {
     makeToast(variant = null,data) {
         this.$bvToast.toast(data, {
           toaster: 'b-toaster-top-center',
-          title: 'Your shareable link',
+          title: this.$t('shareable-link'),
           variant: variant,
           solid: true
         })

@@ -3,8 +3,8 @@
   <b-container class="mt-4">
     <b-row>
     <b-col>
-      <b-link v-if="template" :to="{ name: 'project.task.presenter.editor', params: { id: this.id, template: this.template } }">{{ $t("task-template-renderer-go-back-editor") }}</b-link>
-      <b-link v-else :to="{ name: 'project.test' }">{{ $t('task-template-renderer-go-back-project') }}</b-link>
+     <!--<b-link v-if="template" :to="{ name: 'project.task.presenter.editor', params: { id: this.id, template: this.template } }">{{ $t("task-template-renderer-go-back-editor") }}</b-link>
+      <b-link v-else :to="{ name: 'project.test' }">{{ $t('task-template-renderer-go-back-project') }}</b-link> -->
 
       <div v-if="!taskPresenterLoaded" class="mt-4 text-center">
         <b-spinner 
@@ -90,7 +90,6 @@ export default {
       if (this.presenter || this.template) {
         this.taskPresenterExists = true
       }
-      
   },
   data: () => {
     return {
@@ -111,7 +110,7 @@ export default {
       // the current project where is displayed the task presenter
       project: state => state.selectedProject,
       testEnvEnabled: state => state.enableTestEnvironment,
-
+      sharedLink: state => state.projectShareableLink,
       // user task progress
       userProgress: state => state.selectedProjectUserProgress
     }),
