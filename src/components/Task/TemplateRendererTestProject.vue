@@ -84,6 +84,7 @@ export default {
   },
   created () {
       //in test environment the project values have already been loaded in the sharaeable link confirmation
+      this.setSelectedProjectUserProgress({'done':0,'total':0})
       this.taskPresenterLoaded = true
       // if the project presenter exists or a template is given (with the task presenter editor), it will be displayed
       // otherwise an alert is displayed to indicate that the presenter is not already configured
@@ -112,13 +113,13 @@ export default {
       testEnvEnabled: state => state.enableTestEnvironment,
       sharedLink: state => state.projectShareableLink,
       // user task progress
-      userProgress: state => state.selectedProjectUserProgress
+      userProgress_: state => state.selectedProjectUserProgress
     }),
 
     ...mapState('task', {
       // the currently displayed task in the presenter
       task: state => state.currentTask,
-
+      offset: state =>state.taskOffset,
       // the task presenter template loaded from the pybossa server
       presenter: state => state.taskPresenter
     }),
@@ -144,7 +145,7 @@ export default {
   },
   methods: {
     ...mapActions('task', [
-      'getNewTask', 'saveTaskRun'
+      'getNewTask', 'saveTaskRun','skipTaskWithOffset'
     ]),
 
     ...mapActions('project', [
@@ -157,6 +158,9 @@ export default {
 
     ...mapMutations('notification', [
       'showError'
+    ]),
+    ...mapMutations('project', [
+      'setSelectedProjectUserProgress'
     ]),
 
     /**
@@ -172,7 +176,10 @@ export default {
      */
     newTask () {
       this.taskLoaded = false
-      this.getNewTask(this.project).then(allowed => {
+      this.skipTaskWithOffset({'id':this.project.id,'offset':this.offset}).then(allowed => {
+        if(this.userProgress.total > 0){
+          this.setSelectedProjectUserProgress({'done':this.userProgress.done+1,'total':this.userProgress.total})
+        }
         if (!allowed) {
           this.showError({
             title: this.$t('template-renderer-not-allowed-contribute'),
@@ -180,7 +187,9 @@ export default {
           })
           this.$router.push({ name: 'project', params: { id: this.project.id } })
         } else {
-          this.getUserProgress(this.project)
+          if(this.userProgress.total == 0){
+            this.getUserProgress(this.project)
+          }
           this.taskLoaded = true
         }
       })
@@ -205,10 +214,7 @@ export default {
       if (this.isUserLogged) {
         taskRun.user_id = this.userId
       }
-      this.saveTaskRun(JSON.stringify(taskRun)).then(() => {
-        // load a new task when current task saved
-        this.newTask()
-      })
+      this.newTask()
     },
 
     showModal (type, url) {

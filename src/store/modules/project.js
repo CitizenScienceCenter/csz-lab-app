@@ -65,7 +65,9 @@ const getters = {
   getUserProgressInPercent: state => {
     return state.selectedProjectUserProgress.done / state.selectedProjectUserProgress.total * 100
   },
-
+  getUserProgress: state => {
+    return state.selectedProjectUserProgress
+  },
   projects: state => {
     let projects = []
     for (const categoryId in state.categoryProjects) {

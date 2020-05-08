@@ -32,6 +32,10 @@ const state = {
   // the currently loaded task presenter (of the selected project)
   taskPresenter: '',
 
+  //task offset
+  taskOffset: 0,
+
+
   // the current task showed in the task presenter
   currentTask: {
     info: {}
@@ -240,6 +244,34 @@ const actions = {
   },
 
   /**
+   * Gets a new task not already done for the logged user
+   * @param commit
+   * @param rootState
+   * @param project
+   * @return {Promise<T | boolean>}
+   */
+  skipTaskWithOffset ({ commit, rootState }, payload) {
+    return api.skipTaskOffset(
+      payload.id,
+      rootState.user.logged ? rootState.user.infos.api_key : false,
+      payload.offset
+    ).then(value => {
+      // return false when the task cannot be loaded because the project is not open for anonymous users
+      if ('info' in value.data && 'error' in value.data.info) {
+        return false
+      }
+      commit('setTaskOffset', payload.offset+1)
+      commit('setCurrentTask', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: errors.GET_CURRENT_TASK_LOADING_ERROR, content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  /**
    * Saves a task run
    * @param commit
    * @param rootState
@@ -278,6 +310,9 @@ const mutations = {
   },
   setUsingTemplate (state, template) {
     state.usingTemplate = template
+  },
+  setTaskOffset(state, offset) {
+    state.taskOffset = offset
   }
 }
 
