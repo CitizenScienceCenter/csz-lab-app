@@ -23,6 +23,9 @@ const component =
           
           <!-- Submit button -->
           <b-btn @click="submit" variant="success">{{$t('submit-btn')}}</b-btn>
+
+          <!-- Skip button -->
+          <b-btn @click="skip" variant="secondary">{{$t('next-btn')}}</b-btn>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
@@ -80,6 +83,9 @@ const component =
           this.showAlert = true
         }
       },
+      skip(){
+	      this.pybossa.skip();
+	    },
       isFormValid () {
         return this.answers.length === this.questions.length && !this.answers.some(el => typeof el === 'undefined' || el == null)
       }

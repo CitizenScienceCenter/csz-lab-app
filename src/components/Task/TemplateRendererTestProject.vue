@@ -180,18 +180,10 @@ export default {
         if(this.userProgress.total > 0){
           this.setSelectedProjectUserProgress({'done':this.userProgress.done+1,'total':this.userProgress.total})
         }
-        if (!allowed) {
-          this.showError({
-            title: this.$t('template-renderer-not-allowed-contribute'),
-            content: this.$t('template-renderer-not-allowed-anonymous')
-          })
-          this.$router.push({ name: 'project', params: { id: this.project.id } })
-        } else {
-          if(this.userProgress.done==0)
+        if(this.userProgress.done==0)
             this.getUserProgress(this.project)
           this.taskLoaded = true
-        }
-      })
+      }) 
     },
 
     /**

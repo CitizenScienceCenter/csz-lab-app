@@ -116,7 +116,7 @@ export default {
     ...mapState('task', {
       // the currently displayed task in the presenter
       task: state => state.currentTask,
-
+      offset: state =>state.taskOffset,
       // the task presenter template loaded from the pybossa server
       presenter: state => state.taskPresenter
     }),
@@ -142,7 +142,7 @@ export default {
   },
   methods: {
     ...mapActions('task', [
-      'getNewTask', 'saveTaskRun'
+      'getNewTask', 'saveTaskRun','skipTaskWithOffset'
     ]),
 
     ...mapActions('project', [
@@ -155,6 +155,9 @@ export default {
 
     ...mapMutations('notification', [
       'showError'
+    ]),
+    ...mapMutations('project', [
+      'setSelectedProjectUserProgress'
     ]),
 
     /**
@@ -170,7 +173,10 @@ export default {
      */
     newTask () {
       this.taskLoaded = false
-      this.getNewTask(this.project).then(allowed => {
+      this.skipTaskWithOffset({'id':this.project.id,'offset':this.offset}).then(allowed => {
+        if(this.userProgress.total > 0){
+          this.setSelectedProjectUserProgress({'done':this.userProgress.done+1,'total':this.userProgress.total})
+        }
         if (!allowed) {
           this.showError({
             title: this.$t('template-renderer-not-allowed-contribute'),
@@ -178,12 +184,32 @@ export default {
           })
           this.$router.push({ name: 'project', params: { id: this.project.id } })
         } else {
+          if(this.userProgressInPercent < 100 && !allowed.id){
+            this.skipTaskWithOffset({'id':this.project.id,'offset':0})
+          }
           this.getUserProgress(this.project)
           this.taskLoaded = true
         }
       })
     },
-
+    skip(){
+      this.taskLoaded = false
+      this.skipTaskWithOffset({'id':this.project.id,'offset':this.offset}).then(allowed => {
+        if (!allowed) {
+          this.showError({
+            title: this.$t('template-renderer-not-allowed-contribute'),
+            content: this.$t('template-renderer-not-allowed-anonymous')
+          })
+          this.$router.push({ name: 'project', params: { id: this.project.id } })
+        } else {
+          if(this.userProgressInPercent < 100 && !allowed.id){
+            this.skipTaskWithOffset({'id':this.project.id,'offset':0})
+          }
+          this.getUserProgress(this.project)
+          this.taskLoaded = true
+        }
+      }) 
+    },
     /**
      * Save the user task answer and get a new task after
      * @param answer

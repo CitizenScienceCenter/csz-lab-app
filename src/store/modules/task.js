@@ -250,7 +250,7 @@ const actions = {
    * @param project
    * @return {Promise<T | boolean>}
    */
-  skipTaskWithOffset ({ commit, rootState }, payload) {
+  skipTaskWithOffset ({ commit,dispatch, rootState }, payload) {
     return api.skipTaskOffset(
       payload.id,
       rootState.user.logged ? rootState.user.infos.api_key : false,
@@ -264,7 +264,8 @@ const actions = {
         commit('setTaskOffset', payload.offset+1)
         commit('setCurrentTask', value.data)
       } else {
-        commit('setTaskOffset', 0)    
+        commit('setTaskOffset', 0)
+        //dispatch('skipTaskWithOffset',{'id':payload.id,'offset':0})
       }
       return value.data
     }).catch(reason => {
