@@ -159,6 +159,8 @@ export const routes = [
                   if(url.length>1) {
                     store.dispatch('project/getProjectSharedLinkConfirmation',{'key':url[1],'short_name':short_name,'fullpath':fp}).then(confirm => {
                       if (confirm == 'success') {
+                        store.dispatch('project/resetTaskProgress',{'done':0,'total':0})
+                        store.dispatch('task/forceTaskOffset',0)
                         next()
                       } else {
                         next({ name: 'home' })
@@ -224,7 +226,7 @@ export const routes = [
                 props: true,
                 beforeEnter: (to, from, next) => {
                   let enabled = store.state.project.enableTestEnvironment
-                  if(enabled){
+                  if(enabled) {
                     next()
                   } else {
                     next({ name: 'home' })

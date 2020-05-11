@@ -84,7 +84,7 @@ export default {
   },
   created () {
       //in test environment the project values have already been loaded in the sharaeable link confirmation
-      this.setSelectedProjectUserProgress({'done':0,'total':0})
+      //this.setSelectedProjectUserProgress({'done':0,'total':0})
       this.taskPresenterLoaded = true
       // if the project presenter exists or a template is given (with the task presenter editor), it will be displayed
       // otherwise an alert is displayed to indicate that the presenter is not already configured
@@ -113,7 +113,7 @@ export default {
       testEnvEnabled: state => state.enableTestEnvironment,
       sharedLink: state => state.projectShareableLink,
       // user task progress
-      userProgress_: state => state.selectedProjectUserProgress
+      userProgress: state => state.selectedProjectUserProgress
     }),
 
     ...mapState('task', {
@@ -187,9 +187,8 @@ export default {
           })
           this.$router.push({ name: 'project', params: { id: this.project.id } })
         } else {
-          if(this.userProgress.total == 0){
+          if(this.userProgress.done==0)
             this.getUserProgress(this.project)
-          }
           this.taskLoaded = true
         }
       })

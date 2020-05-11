@@ -260,8 +260,12 @@ const actions = {
       if ('info' in value.data && 'error' in value.data.info) {
         return false
       }
-      commit('setTaskOffset', payload.offset+1)
-      commit('setCurrentTask', value.data)
+      if(value.data.id) {
+        commit('setTaskOffset', payload.offset+1)
+        commit('setCurrentTask', value.data)
+      } else {
+        commit('setTaskOffset', 0)    
+      }
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
@@ -269,6 +273,10 @@ const actions = {
       }, { root: true })
       return false
     })
+  },
+
+  forceTaskOffset({commit}, offset){
+    commit('setTaskOffset', offset)    
   },
 
   /**

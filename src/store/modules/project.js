@@ -328,6 +328,10 @@ const actions = {
     })
   },
 
+  resetTaskProgress({commit},values) {
+    commit('setSelectedProjectUserProgress', values)
+  },
+
   /**
    * Gets a CSRF token to update the project with the updateProject method
    * @param commit
