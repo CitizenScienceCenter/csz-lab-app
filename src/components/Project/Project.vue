@@ -24,7 +24,25 @@
             <div v-else-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
              
               <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
-              <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn><br>
+              <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn>
+              &ensp;&ensp;&ensp;
+              <b-btn ref="btn-share-it" v-b-modal.project-link variant="primary" class="mt-2">{{ $t('project-share-link') }}</b-btn> 
+            
+              <b-btn v-if="shareable_link" class="mt-2" variant="secondary" @click="makeToast('info',shareable_link)">
+                 My link
+              </b-btn>
+              <br>
+              <b-modal
+                id="project-link"
+                :title="$t('project-share-link')"
+                :ok-title="$t('submit-btn')"
+                :cancel-title="$t('cancel-c')"
+                @ok="getLink">
+                <b-alert variant="warning" :show="true">
+                {{ $t('shareable-link-modal-content') }} <br>
+                {{ $t('shareable-link-modal-content-note=') }} 
+               </b-alert>
+              </b-modal>
 
               <div v-if="!infos.admin">
                 <b-btn ref="btn-approve-it" variant="primary" class="mt-2" v-b-modal.approve-project >{{ $t('project-draft-approve-your-project') }}</b-btn><br>
@@ -151,10 +169,12 @@ export default {
     'app-cover': Cover
   },
   created () {
-    
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
     this.getProject(this.id).then(project => {
+      if(!project)
+        return false
+      this.shareable_link = project.info.shareable_link
       // load some stats
       this.getStatistics(project)
       this.getResults(project)
@@ -167,17 +187,14 @@ export default {
         // has to be loaded to know if the project can be published
         this.getProjectTasks(project)
       }
-
-     
-
     })
-
   },
   data: () => {
     return {
       isAnonymousProject: true,
       localPendingApproval:false,
-      defaultImage:require('@/assets/graphic-projects.png')
+      defaultImage:require('@/assets/graphic-projects.png'),
+      shareable_link:null
     }
   },
   props: {
@@ -190,6 +207,7 @@ export default {
       'getProject',
       'publishProject',
       'approveProject',
+      'getShareableLink',
       'getResults',
       'getStatistics'
     ]),
@@ -203,7 +221,11 @@ export default {
     ...mapMutations('notification', [
       'showError'
     ]),
-
+    getLink (){
+      this.getShareableLink(this.project).then(value => {
+        this.shareable_link = value.key
+      })
+    },
     approve () {
       if (this.taskPresenter.length > 0) {
         if (this.projectTasks.length > 0) {
@@ -249,6 +271,14 @@ export default {
       } else {
         return this.defaultImage
       }
+    },
+    makeToast(variant = null,data) {
+        this.$bvToast.toast(data, {
+          toaster: 'b-toaster-top-center',
+          title: this.$t('shareable-link'),
+          variant: variant,
+          solid: true
+        })
     }
   },
   computed: {

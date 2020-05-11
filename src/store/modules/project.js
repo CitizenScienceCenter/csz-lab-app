@@ -42,7 +42,12 @@ const state = {
   projectCreationOptions: {},
   projectUpdateOptions: {},
   publishProjectOptions: {},
-  projectDeletionOptions: {}
+  projectDeletionOptions: {},
+
+  //shareable link
+  projectShareableLink: null,
+  projectShareableKey: {},
+  enableTestEnvironment: false
 }
 
 // filter methods on the state data
@@ -60,7 +65,9 @@ const getters = {
   getUserProgressInPercent: state => {
     return state.selectedProjectUserProgress.done / state.selectedProjectUserProgress.total * 100
   },
-
+  getUserProgress: state => {
+    return state.selectedProjectUserProgress
+  },
   projects: state => {
     let projects = []
     for (const categoryId in state.categoryProjects) {
@@ -183,6 +190,42 @@ const actions = {
     })
   },
 
+  getProjectSharedLinkConfirmation({commit},payload) {
+    return api.projectSharedLinkConfirmation(payload.key,payload.short_name).then(value => {
+      if(value.data.status == 'success'){
+        commit('setProjectTestEnvironment',true)
+        commit('setProjectShareableLink',payload.fullpath)
+        commit('setSelectedProject',value.data.project)
+      }
+      return value.data.status
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: getTranslationLocale('error'), 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  getProjectTestEnv ({ commit, state, rootState }, project) {
+    return api.getProjectByIdTestEnv(project.short_name).then(value => {
+      commit('setSelectedProject', value.data)
+      // stores the task presenter directly in the task store
+      if ('task_presenter' in value.data.info) {
+        commit('task/setTaskPresenter', value.data.info.task_presenter, { root: true })
+      } else {
+        commit('task/setTaskPresenter', '', { root: true })
+      }
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: errors.GET_PROJECT_LOADING_ERROR, 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
   /**
    * Creates a project with the builder data
    * It will not import a project avatar
@@ -283,6 +326,10 @@ const actions = {
       }, { root: true })
       return false
     })
+  },
+
+  resetTaskProgress({commit},values) {
+    commit('setSelectedProjectUserProgress', values)
   },
 
   /**
@@ -489,8 +536,32 @@ const actions = {
       }, { root: true })
       return false
     })
+  },
+
+  /**
+   * Gets a CSRF token to publish the project with the publishProject method
+   * @param commit
+   * @param project
+   * @return {Promise<T | boolean>}
+   */
+  getShareableLink ({ commit }, project) {
+    return api.getShareableLink(project.short_name).then(value => {
+      commit('setProjectShareableLink', value.data.key )
+      /*commit('notification/showInfo', {
+        title: 'Your Shareable link!', 
+        content: value.data.key
+      }, { root: true })*/
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Shareable link error!', 
+        content: reason
+      }, { root: true })
+    })
   }
+
 }
+
 
 // methods that change the state
 const mutations = {
@@ -535,6 +606,15 @@ const mutations = {
       ...state.categoryPagination,
       [category]: pagination
     }
+  },
+  setProjectShareableLink(state, link) {
+    state.projectShareableLink = link
+  },
+  setShareableProjectKey(state,key){
+    state.projectShareableKey = key
+  },
+  setProjectTestEnvironment(state,status){
+    state.enableTestEnvironment = status
   }
 }
 

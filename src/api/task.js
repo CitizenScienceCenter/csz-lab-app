@@ -52,6 +52,12 @@ export default {
     })
   },
 
+  skipTaskOffset (projectId, apiKey,offset) {
+    return axios.get(process.env.BASE_API_URL + 'project/' + projectId + '/newtask' + (apiKey ? '?api_key=' + apiKey : '') + (offset ? '&offset=' + offset : ''), {
+      data: {}
+    })
+  },
+
   saveTaskRun (taskRun, apiKey) {
     return axios.post(process.env.BASE_API_URL + 'taskrun' + (apiKey ? '?api_key=' + apiKey : ''), taskRun)
   }
