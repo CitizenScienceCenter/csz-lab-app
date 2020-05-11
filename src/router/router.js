@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 import { routes } from './routes.js';
 import store from '../store/index.js';
 import { i18n } from '../i18n.js';
+import { getTranslationLocale } from '@/helper'
 
 export const router = new VueRouter({
   routes: routes,
@@ -47,8 +48,8 @@ router.beforeEach((to, from, next) => {
             } else {
                 // if the route needs to be logged the user is redirected
                 store.commit('notification/showInfo', {
-                title: this.$t('error-login-authentication'),
-                content: this.$t('error-login-authentication-content')
+                title: getTranslationLocale('error-login-authentication'),
+                content: getTranslationLocale('error-login-authentication-content')
                 })
                 from.name !== null ? next(false) : next({ name: 'login' })
             }
