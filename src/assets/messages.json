@@ -176,7 +176,7 @@
 
         "project-statistic-menu-published-results":"published results",
         "project-statistic-menu-tasks":"tasks",
-        "project-statistic-menu-crafters":"crafters",
+        "project-statistic-menu-crafters":"volunteers",
         "project-statistic-menu-tasks-done":"tasks done",
         "project-statistic-menu-pending-tasks":"pending tasks",
 
@@ -346,8 +346,8 @@
         "characters":"characters",
         "characters-left":"characters left",
 
-        "error-login-authentication":"Not authenticated",
-        "error-login-authentication-content":"You must be logged to access this page",
+        "error-login-authentication":"Please authenticate",
+        "error-login-authentication-content":"You must be logged to create a project",
 
         "login-success-title":"Welcome",
         "login-success-content":"We are happy to see you again!",
@@ -496,6 +496,7 @@
         "creation-date":"Creation date",
         "last-activity":"Last activity",
         "overall-progress":"Overall progress",
+        "overall-progress-low":"overall progress",
 
         "project-data-updated":"Project data updated",
         "project-picture-updated":"Project picture updated",
@@ -875,7 +876,7 @@
       
        "project-statistic-menu-published-results":"Veröffentlichte Ergebnisse",
        "project-statistic-menu-tasks":"Aufgaben",
-       "project-statistic-menu-crafters":"Crafters",
+       "project-statistic-menu-crafters":"Freiwillige",
        "project-statistic-menu-tasks-done":"Erledigte Aufgaben",
        "project-statistic-menu-pending-tasks":"Ausstehende Aufgaben",
 
@@ -1039,7 +1040,7 @@
        "characters":"Zeichen",
        "characters-left":"Zeichen übrig",
 
-       "error-login-authentication":"Nicht berechtigt",
+       "error-login-authentication":"Bitte authentifizieren Sie sich",
        "error-login-authentication-content":"Sie müssen angemeldet sein, um auf diese Seite zugreifen zu können",
 
        "login-success-title":"Herzlich willkommen",
@@ -1098,6 +1099,7 @@
        "creation-date":"Erstellungsdatum",
        "last-activity":"Letzte Aktivität",
        "overall-progress":"Gesamtfortschritt",
+       "overall-progress-low":"Gesamtfortschritt",
 
        "project-data-updated":"Projektdaten aktualisiert",
        "project-picture-updated":"Projektbild aktualisiert",
