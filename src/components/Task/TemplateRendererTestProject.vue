@@ -68,7 +68,7 @@
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
-  name: 'TemplateRenderer',
+  name: 'TemplateRendererTestProject',
   props: {
     // project id
     id: {
@@ -181,7 +181,18 @@ export default {
           this.setSelectedProjectUserProgress({'done':this.userProgress.done+1,'total':this.userProgress.total})
         }
         if(this.userProgress.done==0)
-            this.getUserProgress(this.project)
+          this.getUserProgress(this.project)
+          this.taskLoaded = true
+      }) 
+    },
+    skip(){
+      this.taskLoaded = false
+      this.skipTaskWithOffset({'id':this.project.id,'offset':this.offset}).then(allowed => {
+          if(this.userProgressInPercent < 100 && !allowed.id){
+            this.skipTaskWithOffset({'id':this.project.id,'offset':0})
+          }
+          if(this.userProgress.done==0)
+          this.getUserProgress(this.project)
           this.taskLoaded = true
       }) 
     },
