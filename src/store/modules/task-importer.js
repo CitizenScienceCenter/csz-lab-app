@@ -452,9 +452,11 @@ const actions = {
           albumId
         ).then(value => {
           if ('status' in value.data && value.data.status === 'message') {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
               title: getTranslationLocale('success'),
-              content: getPybossaTranslation(value.data.flash) 
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
@@ -546,9 +548,11 @@ const actions = {
           maxTweets
         ).then(value => {
           if ('status' in value.data && value.data.status === 'message') {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
               title: getTranslationLocale('success'),
-              content: getPybossaTranslation(value.data.flash) 
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }

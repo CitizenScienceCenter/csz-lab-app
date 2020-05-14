@@ -769,7 +769,8 @@
         "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR": "Error when loading twitter importer options",
         "POST_TWITTER_TASKS_ERROR": "Error when importing twitter tasks",
 
-        "project-name-already-taken":"Project name already taken"
+        "project-name-already-taken":"Project name already taken",
+        "new-tasks-were-imported-successfully":"new tasks were imported successfully"
 
     },
     "de": {
@@ -1533,7 +1534,8 @@
         "LOAD_FLICKR_ALBUMS_ERROR": "Es ist nicht möglich, Ihre Flickr-Alben zu laden. Stellen Sie sicher, dass Pybossa berechtigt ist, auf Ihr Konto zuzugreifen",
         "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Twitter-Importer-Optionen",
 
-        "project-name-already-taken":"Projektname bereits vergeben"
+        "project-name-already-taken":"Projektname bereits vergeben",
+        "new-tasks-were-imported-successfully":"neue Aufgaben wurden erfolgreich importiert"
 
     }
 }
