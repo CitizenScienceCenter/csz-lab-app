@@ -111,7 +111,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_FEATURED_PROJECTS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_FEATURED_PROJECTS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -128,7 +129,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_ALL_PROJECTS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_ALL_PROJECTS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -156,7 +158,8 @@ const actions = {
     }).catch(reason => {
       if (category.short_name !== 'featured') {
         commit('notification/showError', {
-          title: 'Error', content: reason
+          title: getTranslationLocale("GET_CATEGORIES_LOADING_ERROR"), 
+          content: reason
         }, {root: true})
         return false
       }
@@ -184,7 +187,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROJECT_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PROJECT_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -219,7 +223,7 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROJECT_LOADING_ERROR, 
+        title: getTranslationLocale("GET_PROJECT_LOADING_ERROR"), 
         content: reason
       }, { root: true })
       return false
@@ -245,7 +249,8 @@ const actions = {
         if (responseData.exception_cls && responseData.exception_cls === 'DBIntegrityError') {
           // specific error message when duplicated project name
           commit('notification/showError', {
-            title: 'Error', content: 'Project name already taken'
+            title: getTranslationLocale("error"), 
+            content: getTranslationLocale("project-name-already-taken")
           }, {root: true})
           return false
         }
@@ -270,7 +275,7 @@ const actions = {
     }).catch(reason => {
       const response = reason.response.data
       commit('notification/showError', {
-        title: errors.GET_PROJECT_DELETION_OPTIONS_LOADING_ERROR,
+        title: getTranslationLocale("GET_PROJECT_DELETION_OPTIONS_LOADING_ERROR"),
         content: 'description' in response ? response.description : reason
       }, { root: true })
       return false
@@ -290,13 +295,13 @@ const actions = {
       if (response) {
         return api.deleteProject(state.projectDeletionOptions.csrf, project.short_name).then(value => {
           commit('notification/showSuccess', {
-            title: 'Success',
+            title: getTranslationLocale("success"),
             content: value.data.flash
           }, { root: true })
           return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.DELETE_PROJECT_ERROR,
+            title: getTranslationLocale("DELETE_PROJECT_ERROR"),
             content: reason
           }, { root: true })
           return false
@@ -322,7 +327,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROJECT_USER_PROGRESS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PROJECT_USER_PROGRESS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -344,7 +350,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROJECT_UPDATE_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PROJECT_UPDATE_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -367,7 +374,8 @@ const actions = {
           return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.UPLOAD_PROJECT_ERROR, content: reason
+            title: getTranslationLocale("UPLOAD_PROJECT_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -394,8 +402,8 @@ const actions = {
           return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.UPLOAD_PROJECT_AVATAR_ERROR,
-            content: 'Your picture is certainly too big. Ensure it size is less than 1MB'
+            title: getTranslationLocale("UPLOAD_PROJECT_AVATAR_ERROR"),
+            content: getTranslationLocale("profile-pic-too-big")
           }, { root: true })
           return false
         })
@@ -416,7 +424,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PUBLISH_PROJECT_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PUBLISH_PROJECT_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -436,20 +445,21 @@ const actions = {
         return api.publishProject(state.publishProjectOptions.csrf, project.short_name).then(value => {
           commit('updateSelectedProject', { published: true })
           commit('notification/showSuccess', {
-            title: 'Project published!',
+            title: getTranslationLocale("success"),
             content: 'The project ' + project.name + ' is now public'
           }, { root: true })
           return value.data
         }).catch(reason => {
-          /* commit('notification/showError', {
-            title: errors.PUBLISH_PROJECT_ERROR, content: reason
-          }, { root: true }) */
+          commit('notification/showError', {
+            title: getTranslationLocale("PUBLISH_PROJECT_ERROR"), 
+            content: reason
+          }, { root: true }) 
           // TODO: fix the server and remove the following lines after
-          commit('updateSelectedProject', { published: true })
+          /*commit('updateSelectedProject', { published: true })
           commit('notification/showSuccess', {
             title: 'Project published!',
             content: 'The project ' + project.name + ' is now public'
-          }, { root: true })
+          }, { root: true })*/
           return false
         })
       }
@@ -486,7 +496,7 @@ const actions = {
           //return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.PUBLISH_PROJECT_ERROR, 
+            title: getTranslationLocale("PUBLISH_PROJECT_ERROR"), 
             content: reason
           }, { root: true }) 
           // TODO: fix the server and remove the following lines after
@@ -514,7 +524,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROJECT_STATS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PROJECT_STATS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -532,7 +543,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROJECT_RESULTS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PROJECT_RESULTS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -554,7 +566,7 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: 'Shareable link error!', 
+        title: getTranslationLocale("error"), 
         content: reason
       }, { root: true })
     })

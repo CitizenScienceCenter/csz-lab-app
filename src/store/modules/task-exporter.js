@@ -36,7 +36,8 @@ const actions = {
       return true
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.DOWNLOAD_TASKS_IN_CSV_ERROR, content: reason
+        title: getTranslationLocale("DOWNLOAD_TASKS_IN_CSV_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     }).finally(() =>
@@ -54,7 +55,8 @@ const actions = {
       return true
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.DOWNLOAD_TASK_RUNS_IN_CSV_ERROR, content: reason
+        title: getTranslationLocale("DOWNLOAD_TASK_RUNS_IN_CSV_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     }).finally(() =>
@@ -72,7 +74,8 @@ const actions = {
       return true
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.DOWNLOAD_RESULTS_IN_CSV_ERROR, content: reason
+        title: getTranslationLocale("DOWNLOAD_RESULTS_IN_CSV_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     }).finally(() =>
@@ -90,7 +93,8 @@ const actions = {
       return true
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.DOWNLOAD_TASKS_IN_JSON_ERROR, content: reason
+        title: getTranslationLocale("DOWNLOAD_TASKS_IN_JSON_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     }).finally(() =>
@@ -108,7 +112,8 @@ const actions = {
       return true
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.DOWNLOAD_TASK_RUNS_IN_JSON_ERROR, content: reason
+        title: getTranslationLocale("DOWNLOAD_TASK_RUNS_IN_JSON_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     }).finally(() =>
@@ -126,7 +131,8 @@ const actions = {
       return true
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.DOWNLOAD_RESULTS_IN_JSON_ERROR, content: reason
+        title: getTranslationLocale("DOWNLOAD_RESULTS_IN_JSON_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     }).finally(() =>

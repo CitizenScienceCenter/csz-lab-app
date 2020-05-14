@@ -75,7 +75,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROJECT_TASKS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PROJECT_TASKS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -105,7 +106,8 @@ const actions = {
         return false
       }).catch(reason => {
         commit('notification/showError', {
-          title: errors.GET_PROJECT_TASK_PRESENTER_LOADING_ERROR, content: reason
+          title: getTranslationLocale("GET_PROJECT_TASK_PRESENTER_LOADING_ERROR"), 
+          content: reason
         }, { root: true })
         return false
       })
@@ -146,7 +148,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_TASK_PRESENTER_IMPORTATION_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_TASK_PRESENTER_IMPORTATION_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -183,7 +186,8 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_TASK_PRESENTER_ERROR, content: reason
+            title: getTranslationLocale("POST_TASK_PRESENTER_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -206,7 +210,8 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_TASK_PRESENTER_ERROR, content: reason
+            title: getTranslationLocale("POST_TASK_PRESENTER_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -237,7 +242,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_CURRENT_TASK_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_CURRENT_TASK_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -270,7 +276,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_CURRENT_TASK_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_CURRENT_TASK_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -296,7 +303,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.POST_TASK_RUN_ERROR, content: reason
+        title: getTranslationLocale("POST_TASK_RUN_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })

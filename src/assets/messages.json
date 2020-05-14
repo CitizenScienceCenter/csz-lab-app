@@ -334,6 +334,7 @@
         "enabled":"enabled",
         "disabled":"disabled",
         "picture-too-big":"The picture is too big",
+        "profile-pic-too-big":"The picture is too big and must not exceed 1MB",
         "select-picture":"Select a picture...",
         "choose-picture":"Choose a picture...",
         "drop-picture":"Drop a picture here...",
@@ -702,13 +703,73 @@
 
         "summary-builder-promise-error":"We are not able to submit your template and/or your tasks for the moment.",
 
-        "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Impossible to get profile data",
         "Error:-Request-failed-with-status-code-502":"Error: Request failed with status code 502",
-
 
         "shareable-link":"Your shareable link",
         "shareable-link-modal-content":" Your project will be published in a temporary environment and you will get a link that you can share with your colleagues for the test purposes. Only people with the link can see the project, the project will not be visible in the CS Project Builder platform ",
-        "shareable-link-modal-content-note":"<b>Note</b>: this a test environment, all data contributed while testing will not be saved."
+        "shareable-link-modal-content-note":"<b>Note</b>: this a test environment, all data contributed while testing will not be saved.",
+
+        "GET_ALL_PROJECTS_LOADING_ERROR": "Error during projects loading",
+        "GET_USER_PROJECTS_LOADING_ERROR": "Error during user projects loading",
+        "GET_PROJECT_LOADING_ERROR": "Error during project loading",
+        "POST_PROJECT_ERROR": "Error during project creation",
+        "GET_PROJECT_USER_PROGRESS_LOADING_ERROR": "Error during project user progress loading",
+        "GET_FEATURED_PROJECTS_LOADING_ERROR": "Error during featured projects loading",
+        "GET_CATEGORIES_LOADING_ERROR": "Error during categories loading",
+        "UPLOAD_PROJECT_AVATAR_ERROR": "Error during project avatar upload",
+        "GET_PROJECT_UPDATE_OPTIONS_LOADING_ERROR": "Error during project update options loading",
+        "GET_PUBLISH_PROJECT_OPTIONS_LOADING_ERROR": "Error during project publish options loading",
+        "PUBLISH_PROJECT_ERROR": "Error during project publishing",
+        "APPROVE_PROJECT_ERROR": "Error during project approval",
+        "GET_PROJECT_STATS_LOADING_ERROR": "Error during project stats loading",
+        "GET_PROJECT_RESULTS_LOADING_ERROR": "Error during project results loading",
+        "UPLOAD_PROJECT_ERROR": "Error during project update",
+        "GET_PROJECT_DELETION_OPTIONS_LOADING_ERROR": "Error during project deletion",
+        "DELETE_PROJECT_ERROR": "Error during project deletion",
+
+        "GET_PROJECT_TASKS_LOADING_ERROR": "Error during project tasks loading",
+        "GET_PROJECT_TASK_PRESENTER_LOADING_ERROR": "Error during project task presenter loading",
+        "GET_CURRENT_TASK_LOADING_ERROR": "Error during current task loading",
+        "POST_TASK_RUN_ERROR": "Error when saving the task run",
+        "GET_TASK_PRESENTER_IMPORTATION_OPTIONS_LOADING_ERROR": "Error when loading task presenter importation options",
+        "POST_TASK_PRESENTER_ERROR": "Error during task presenter importation",
+
+        "GET_PROFILE_UPDATE_OPTIONS_LOADING_ERROR": "Error during profile update options loading",
+        "UPDATE_PROFILE_ERROR": "Error during profile update",
+        "GET_RESET_API_KEY_OPTIONS_LOADING_ERROR": "Error during reset api key options loading",
+        "RESET_API_KEY_ERROR": "Error during api key reset",
+        "UPDATE_PASSWORD_ERROR": "Error during password update",
+        "UPDATE_AVATAR_ERROR": "Error during avatat update",
+        "DELETE_ACCOUNT_ERROR": "Error during account delete",
+        "EXPORT_ACCOUNT_DATA_ERROR": "Error during account data export",
+        "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Impossible to get profile data",
+        "SIGN_OUT_ERROR": "Impossible to sign out",
+
+        "DOWNLOAD_TASKS_IN_CSV_ERROR": "Error during tasks csv download",
+        "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR": "Error during task runs csv download",
+        "DOWNLOAD_RESULTS_IN_CSV_ERROR": "Error during results csv download",
+        "DOWNLOAD_TASKS_IN_JSON_ERROR": "Error during tasks json download",
+        "DOWNLOAD_TASK_RUNS_IN_JSON_ERROR": "Error during task runs json download",
+        "DOWNLOAD_RESULTS_IN_JSON_ERROR": "Error during results json download",
+
+        "GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR": "Error when loading amazon s3 options",
+        "POST_AMAZON_S3_TASKS_ERROR": "Error when importing amazon s3 tasks",
+        "GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR": "Error when loading google docs importer options",
+        "POST_GOOGLE_DOCS_TASKS_ERROR": "Error when importing google docs tasks",
+        "GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR": "Error when loading local csv importer options",
+        "POST_CSV_FILE_TASKS_ERROR": "Error when importing csv file tasks",
+        "GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR": "Error when loading online csv importer options",
+        "POST_CSV_TASKS_ERROR": "Error when importing csv tasks",
+        "GET_BUCKET_FILES_ERROR": "Error during bucket files loading",
+        "GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR": "Error when loading dropbox importer options",
+        "POST_DROPBOX_TASKS_ERROR": "Error when importing dropbox tasks",
+        "GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR": "Error when loading flickr importer options",
+        "POST_FLICKR_TASKS_ERROR": "Error when importing flickr tasks",
+        "LOAD_FLICKR_ALBUMS_ERROR": "Impossible to load your Flickr albums. Ensure that Pybossa is authorized to access your account",
+        "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR": "Error when loading twitter importer options",
+        "POST_TWITTER_TASKS_ERROR": "Error when importing twitter tasks",
+
+        "project-name-already-taken":"Project name already taken"
 
     },
     "de": {
@@ -1034,6 +1095,7 @@
        "enabled":"aktiviert",
        "disabled":"deaktiviert",
        "Picture-too-big":"Das Bild ist zu gross",
+       "profile-pic-too-big":"Das Bild ist zu gross and darf nicht grösser sein als 1MB",
        "select-picture":"Bild auswählen...",
        "choose-picture":"Bild auswählen...",
        "drop-picture":"Drop a picture here...",
@@ -1048,7 +1110,7 @@
        "characters-left":"Zeichen übrig",
 
        "error-login-authentication":"Bitte authentifizieren Sie sich",
-       "error-login-authentication-content":"Sie müssen angemeldet sein, um auf diese Seite zugreifen zu können",
+       "error-login-authentication-content":"Sie müssen angemeldet sein, um ein Projekt zu erstellen",
 
        "login-success-title":"Herzlich willkommen",
        "login-success-content":"Wir freuen uns, Sie wiederzusehen!",
@@ -1406,13 +1468,72 @@
 
         "summary-builder-promise-error":"Wir können Ihre Vorlage und / oder Ihre Aufgaben derzeit nicht einreichen.",
 
-        "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Profildaten können nicht abgerufen werden",
         "Error:-Request-failed-with-status-code-502":"Fehler: Anforderung mit Statuscode 502 fehlgeschlagen",
 
         "shareable-link":"Your shareable link",
         "shareable-link-modal-content":" Your project will be published in a temporary environment and you will get a link that you can share with your colleagues for the test purposes. Only people with the link can see the project, the project will not be visible in the CS Project Builder platform ",
-        "shareable-link-modal-content-note":"<b>Note</b>: this a test environment, all data contributed while testing will not be saved."
+        "shareable-link-modal-content-note":"<b>Note</b>: this a test environment, all data contributed while testing will not be saved.",
 
+        "GET_ALL_PROJECTS_LOADING_ERROR": "Fehler beim Laden der Projekte",
+        "GET_USER_PROJECTS_LOADING_ERROR": "Fehler beim Laden der Benutzerprojekte",
+        "GET_PROJECT_LOADING_ERROR": "Fehler beim Laden des Projekts",
+        "POST_PROJECT_ERROR": "Fehler bei der Projekterstellung",
+        "GET_PROJECT_USER_PROGRESS_LOADING_ERROR": "Fehler beim Laden des Projektbenutzer-Fortschritts",
+        "GET_FEATURED_PROJECTS_LOADING_ERROR": "Fehler beim Laden der unterstützten Projekte",
+        "GET_CATEGORIES_LOADING_ERROR": "Fehler beim Laden der Kategorien",
+        "UPLOAD_PROJECT_AVATAR_ERROR": "Fehler beim Hochladen des Projekt-Avatars",
+        "GET_PROJECT_UPDATE_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Profil-Update-Optionen",
+        "GET_PUBLISH_PROJECT_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Optionen zur Projektveröffentlichung",
+        "PUBLISH_PROJECT_ERROR": "Fehler beim Veröffentlichen des Projekts",
+        "APPROVE_PROJECT_ERROR": "Fehler bei der Projektgenehmigung",
+        "GET_PROJECT_STATS_LOADING_ERROR": "Fehler beim Laden der Projektstatistik",
+        "GET_PROJECT_RESULTS_LOADING_ERROR": "Fehler beim Laden der Projektergebnisse",
+        "UPLOAD_PROJECT_ERROR": "Fehler beim Projektupdate",
+        "GET_PROJECT_DELETION_OPTIONS_LOADING_ERROR": "Fehler beim Löschen des Projekts",
+        "DELETE_PROJECT_ERROR": "Fehler beim Löschen des Projekts",
+
+        "GET_PROJECT_TASKS_LOADING_ERROR": "Fehler beim Laden der Projektaufgaben",
+        "GET_PROJECT_TASK_PRESENTER_LOADING_ERROR": "Fehler beim Laden des Projekt Task Presenters",
+        "GET_CURRENT_TASK_LOADING_ERROR": "Fehler beim Laden der aktuellen Aufgabe",
+        "POST_TASK_RUN_ERROR": "Fehler beim Speichern der Aufgaben-Ausführung",
+        "GET_TASK_PRESENTER_IMPORTATION_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Importoptionen für Task Presenter",
+        "POST_TASK_PRESENTER_ERROR": "Fehler beim Import des Task Presenter",
+
+        "GET_PROFILE_UPDATE_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Profil-Update-Optionen",
+        "UPDATE_PROFILE_ERROR": "Fehler beim Profil-Update",
+        "GET_RESET_API_KEY_OPTIONS_LOADING_ERROR": "Fehler beim Laden der API-Schlüsseloptionen zurückgesetzt",
+        "RESET_API_KEY_ERROR": "Fehler beim Zurücksetzen des API-Schlüssels",
+        "UPDATE_PASSWORD_ERROR": "Fehler bei der Passwort-Aktualisierung",
+        "UPDATE_AVATAR_ERROR": "Fehler bei der Avatar-Aktualisierung",
+        "DELETE_ACCOUNT_ERROR": "Fehler beim Löschen des Accounts",
+        "EXPORT_ACCOUNT_DATA_ERROR": "Fehler beim Export der Kontodaten",
+        "GET_ACCOUNT_PROFILE_LOADING_ERROR": "Profildaten können nicht abgerufen werden",
+        "SIGN_OUT_ERROR": "Abmelden nicht möglich",
+
+        "DOWNLOAD_TASKS_IN_CSV_ERROR": "Fehler beim CSV-Download der Aufgaben",
+        "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR": "Fehler beim CSV-Download der Aufgaben-Ausführungen",
+        "DOWNLOAD_RESULTS_IN_CSV_ERROR": "Fehler beimCSV-Download der Ergebnisse",
+        "DOWNLOAD_TASKS_IN_JSON_ERROR": "Fehler beim json-Download der Aufgaben",
+        "DOWNLOAD_TASK_RUNS_IN_JSON_ERROR": "Fehler beim json-Download der Aufgaben-Ausführungen",
+        "DOWNLOAD_RESULTS_IN_JSON_ERROR": "Fehler beim json-Download der Ergebnisse",
+
+        "GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Amazon S3-Optionen",
+        "POST_AMAZON_S3_TASKS_ERROR": "Fehler beim Importieren von Amazon S3-Tasks",
+        "GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Optionen für den Google Docs-Importer",
+        "POST_GOOGLE_DOCS_TASKS_ERROR": "Fehler beim Importieren von Google Docs-Aufgabe",
+        "GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der lokalen CSV-Importer-Optionen",
+        "POST_CSV_FILE_TASKS_ERROR": "Fehler beim Importieren von CSV-Datei Aufgaben",
+        "GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Online-CSV-Importer-Optionen",
+        "POST_CSV_TASKS_ERROR": "Fehler beim Importieren von CSV-Aufgaben",
+        "GET_BUCKET_FILES_ERROR": "Fehler beim Laden der Bucket-Dateien",
+        "GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Dropbox-Importer-Optionen",
+        "POST_DROPBOX_TASKS_ERROR": "Fehler beim Importieren von Dropbox-Aufgaben",
+        "GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Flickr-Importer-Optionen",
+        "POST_FLICKR_TASKS_ERROR": "Fehler beim Importieren von flickr-Aufgaben",
+        "LOAD_FLICKR_ALBUMS_ERROR": "Es ist nicht möglich, Ihre Flickr-Alben zu laden. Stellen Sie sicher, dass Pybossa berechtigt ist, auf Ihr Konto zuzugreifen",
+        "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Twitter-Importer-Optionen",
+
+        "project-name-already-taken":"Projektname bereits vergeben"
 
     }
 }
