@@ -22,7 +22,7 @@ const component =
             <b-form-textarea v-model="answers[index]" rows="10"></b-form-textarea>
           </b-form-group>
          
-          <b-button @click="submit" variant="primary" class="mt-2">{{ $t('submit-bt') }}</b-button>
+          <b-button @click="submit" variant="primary" class="mt-2">{{ $t('submit-btn') }}</b-button>
 
           <!-- Skip button -->
           <b-button @click="skip" variant="secondary" class="mt-2">{{$t('next-btn')}}</b-button>

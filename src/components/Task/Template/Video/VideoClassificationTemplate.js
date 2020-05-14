@@ -20,7 +20,7 @@ const component =
             
           </b-form-group>
           
-          <b-btn @click="submit" variant="success">{{ $t('submit-bt') }}</b-btn>
+          <b-btn @click="submit" variant="success">{{ $t('submit-btn') }}</b-btn>
 
           <!-- Skip button -->
           <b-button @click="skip" variant="secondary" class="mt-2">{{$t('next-btn')}}</b-button>

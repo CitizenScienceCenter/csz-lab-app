@@ -256,8 +256,8 @@ const actions = {
       return false
     }).catch(reason => {
       commit('notification/showError', {
-        title:getTranslationLocale('error') +' 502',
-        content:  getTranslationLocale('GET_ACCOUNT_PROFILE_LOADING_ERROR')
+        title:getTranslationLocale('GET_ACCOUNT_PROFILE_LOADING_ERROR'),
+        content: reason
       }, { root: true })
       return false
     })
