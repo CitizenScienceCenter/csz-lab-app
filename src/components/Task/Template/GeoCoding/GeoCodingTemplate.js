@@ -14,7 +14,7 @@ const component =
             <div class="mt-4">
               <b-btn @click="addMarker" :disabled="markedPlaces.length > 0" variant="primary" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-1') }}</b-btn>
               <b-btn @click="deleteMarker" v-if="markedPlaces.length > 0" variant="danger" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-2') }}</b-btn>
-              <b-btn @click="skipTask" v-if="markedPlaces.length === 0" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-3') }}</b-btn>
+              <!--<b-btn @click="skipTask" v-if="markedPlaces.length === 0" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-3') }}</b-btn>-->
             </div>
             
             <p class="mt-2">Task: <b-badge variant="warning">{{ task.id }}</b-badge></p>
@@ -80,14 +80,16 @@ const component =
         <!-- Submit button -->
         <b-row v-if="!jobDone">
           <b-col>
-            <b-btn @click="submit" variant="success" size="lg">{{ $t('template-editor-geo-text-5') }}</b-btn>     
+            <b-button @click="submit" variant="success" class="mt-2">{{ $t('template-editor-geo-text-5') }}</b-button>
+            <!-- Skip button -->
+            <b-button @click="skip" variant="secondary" class="mt-2">{{$t('next-btn')}}</b-button>
           </b-col>
         </b-row>
         
         <!-- Task end message -->
         <b-row v-if="jobDone">
           <b-col>
-            <b-jumbotron header="This the end!" lead="{{ $t('template-editor-geo-text-6') }}"></b-jumbotron>
+            <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')"></b-jumbotron>
           </b-col>
         </b-row>
       </div>`,
@@ -126,7 +128,10 @@ const component =
         if (this.markedPlaces.length > 0) {
           this.pybossa.saveTask(this.markedPlaces[0].geometry.coordinates)
         }
-      }
+      },
+      skip(){
+	      this.pybossa.skip();
+	    }
     },
 
     computed: {

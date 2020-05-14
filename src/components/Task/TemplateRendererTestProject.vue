@@ -3,8 +3,8 @@
   <b-container class="mt-4">
     <b-row>
     <b-col>
-      <b-link v-if="template" :to="{ name: 'project.task.presenter.editor', params: { id: this.id, template: this.template } }">{{ $t("task-template-renderer-go-back-editor") }}</b-link>
-      <b-link v-else :to="{ name: 'project', params: { id: this.id } }">{{ $t('task-template-renderer-go-back-project') }}</b-link>
+     <!--<b-link v-if="template" :to="{ name: 'project.task.presenter.editor', params: { id: this.id, template: this.template } }">{{ $t("task-template-renderer-go-back-editor") }}</b-link>
+      <b-link v-else :to="{ name: 'project.test' }">{{ $t('task-template-renderer-go-back-project') }}</b-link> -->
 
       <div v-if="!taskPresenterLoaded" class="mt-4 text-center">
         <b-spinner 
@@ -68,7 +68,7 @@
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
-  name: 'TemplateRenderer',
+  name: 'TemplateRendererTestProject',
   props: {
     // project id
     id: {
@@ -77,18 +77,20 @@ export default {
     // template code (optional)
     template: {
       type: String
+    },
+    short_name:{
+      type: String
     }
   },
   created () {
-    // load the project first to have access to the presenter and to the related tasks
-    this.getProject(this.id).then(() => {
+      //in test environment the project values have already been loaded in the sharaeable link confirmation
+      //this.setSelectedProjectUserProgress({'done':0,'total':0})
       this.taskPresenterLoaded = true
       // if the project presenter exists or a template is given (with the task presenter editor), it will be displayed
       // otherwise an alert is displayed to indicate that the presenter is not already configured
       if (this.presenter || this.template) {
         this.taskPresenterExists = true
       }
-    })
   },
   data: () => {
     return {
@@ -108,7 +110,8 @@ export default {
     ...mapState('project', {
       // the current project where is displayed the task presenter
       project: state => state.selectedProject,
-
+      testEnvEnabled: state => state.enableTestEnvironment,
+      sharedLink: state => state.projectShareableLink,
       // user task progress
       userProgress: state => state.selectedProjectUserProgress
     }),
@@ -177,39 +180,23 @@ export default {
         if(this.userProgress.total > 0){
           this.setSelectedProjectUserProgress({'done':this.userProgress.done+1,'total':this.userProgress.total})
         }
-        if (!allowed) {
-          this.showError({
-            title: this.$t('template-renderer-not-allowed-contribute'),
-            content: this.$t('template-renderer-not-allowed-anonymous')
-          })
-          this.$router.push({ name: 'project', params: { id: this.project.id } })
-        } else {
-          if(this.userProgressInPercent < 100 && !allowed.id){
-            this.skipTaskWithOffset({'id':this.project.id,'offset':0})
-          }
+        if(this.userProgress.done==0)
           this.getUserProgress(this.project)
           this.taskLoaded = true
-        }
-      })
+      }) 
     },
     skip(){
       this.taskLoaded = false
       this.skipTaskWithOffset({'id':this.project.id,'offset':this.offset}).then(allowed => {
-        if (!allowed) {
-          this.showError({
-            title: this.$t('template-renderer-not-allowed-contribute'),
-            content: this.$t('template-renderer-not-allowed-anonymous')
-          })
-          this.$router.push({ name: 'project', params: { id: this.project.id } })
-        } else {
           if(this.userProgressInPercent < 100 && !allowed.id){
             this.skipTaskWithOffset({'id':this.project.id,'offset':0})
           }
+          if(this.userProgress.done==0)
           this.getUserProgress(this.project)
           this.taskLoaded = true
-        }
       }) 
     },
+
     /**
      * Save the user task answer and get a new task after
      * @param answer
@@ -229,10 +216,7 @@ export default {
       if (this.isUserLogged) {
         taskRun.user_id = this.userId
       }
-      this.saveTaskRun(JSON.stringify(taskRun)).then(() => {
-        // load a new task when current task saved
-        this.newTask()
-      })
+      this.newTask()
     },
 
     showModal (type, url) {
