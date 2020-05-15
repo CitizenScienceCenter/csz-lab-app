@@ -40,7 +40,7 @@
                 @ok="getLink">
                 <b-alert variant="warning" :show="true">
                 {{ $t('shareable-link-modal-content') }} <br>
-                {{ $t('shareable-link-modal-content-note=') }} 
+                {{ $t('shareable-link-modal-content-note') }} 
                </b-alert>
               </b-modal>
 

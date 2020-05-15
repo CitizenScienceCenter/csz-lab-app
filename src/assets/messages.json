@@ -320,7 +320,7 @@
         "project-menu-task-presenter-error-update":"Impossible to update the task presenter",
         "project-menu-task-presenter-task-editor":"Task editor",
 
-
+        "skip-btn":"Skip",
         "edit-btn":"Edit",
         "view-btn":"View",
         "submit-btn":"Submit",
@@ -707,7 +707,7 @@
 
         "shareable-link":"Your shareable link",
         "shareable-link-modal-content":" Your project will be published in a temporary environment and you will get a link that you can share with your colleagues for the test purposes. Only people with the link can see the project, the project will not be visible in the CS Project Builder platform ",
-        "shareable-link-modal-content-note":"<b>Note</b>: this a test environment, all data contributed while testing will not be saved.",
+        "shareable-link-modal-content-note":"Note: this a test environment, all data contributed while testing will not be saved.",
 
         "GET_ALL_PROJECTS_LOADING_ERROR": "Error during projects loading",
         "GET_USER_PROJECTS_LOADING_ERROR": "Error during user projects loading",
@@ -870,7 +870,7 @@
 
        "project-draft-complete":"Entwurf bearbeiten",
        "project-draft-test":"Ausprobieren!",
-       "project-share-link":"Get shareable link",
+       "project-share-link":"Teilbarer link",
        "project-draft-pending-approval":"Projekt steht noch aus",
        "project-draft-published":"Projekt veröffentlicht",
        "project-draft-publish":"Zur Veröffentlichung einreichen",
@@ -1082,7 +1082,7 @@
        "project-menu-task-presenter-error-update":"Der Task Presenter kann nicht aktualisiert werden",
        "project-menu-task-presenter-task-editor":"Task Editor",
 
-
+       "skip-btn":"Überspringen",
        "edit-btn":"Bearbeiten",
        "view-btn":"Ansehen",
        "submit-btn":"Senden",
@@ -1471,9 +1471,9 @@
 
         "Error:-Request-failed-with-status-code-502":"Fehler: Anforderung mit Statuscode 502 fehlgeschlagen",
 
-        "shareable-link":"Your shareable link",
-        "shareable-link-modal-content":" Your project will be published in a temporary environment and you will get a link that you can share with your colleagues for the test purposes. Only people with the link can see the project, the project will not be visible in the CS Project Builder platform ",
-        "shareable-link-modal-content-note":"<b>Note</b>: this a test environment, all data contributed while testing will not be saved.",
+        "shareable-link":"teilbarer link",
+        "shareable-link-modal-content":"Ihr Projekt wird in einer temporären Umgebung veröffentlicht und Sie erhalten einen Link, den Sie mit anderen zu Testzwecken teilen können. Nur Personen mit dem Link können das Projekt sehen; das Projekt wird noch nicht öffentlich im CS Project Builder angezeigt.",
+        "shareable-link-modal-content-note":"Hinweis: Dies ist eine Testumgebung. Alle Antworten zu den Projekt-Tasks, die während des Tests eingegeben werden, werden nicht gespeichert.",
 
         "GET_ALL_PROJECTS_LOADING_ERROR": "Fehler beim Laden der Projekte",
         "GET_USER_PROJECTS_LOADING_ERROR": "Fehler beim Laden der Benutzerprojekte",

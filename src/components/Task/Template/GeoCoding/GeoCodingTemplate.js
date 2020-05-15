@@ -82,7 +82,7 @@ const component =
           <b-col>
             <b-button @click="submit" variant="success" class="mt-2">{{ $t('template-editor-geo-text-5') }}</b-button>
             <!-- Skip button -->
-            <b-button @click="skip" variant="secondary" class="mt-2">{{$t('next-btn')}}</b-button>
+            <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
           </b-col>
         </b-row>
         

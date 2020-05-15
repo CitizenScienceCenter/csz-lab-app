@@ -15,7 +15,7 @@ const component =
           <b-button @click="answer(count)" variant="primary" class="mt-2">{{$t('submit-btn')}}</b-button>
 
           <!-- Skip button -->
-          <b-button @click="skip" variant="secondary" class="mt-2">{{$t('next-btn')}}</b-button>
+          <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
           
           <!-- User progress -->
           <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->

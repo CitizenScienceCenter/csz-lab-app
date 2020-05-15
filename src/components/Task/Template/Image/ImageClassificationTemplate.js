@@ -25,7 +25,7 @@ const component =
           <b-btn @click="submit" variant="success">{{$t('submit-btn')}}</b-btn>
 
           <!-- Skip button -->
-          <b-btn @click="skip" variant="secondary">{{$t('next-btn')}}</b-btn>
+          <b-btn @click="skip" variant="secondary">{{$t('skip-btn')}}</b-btn>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
