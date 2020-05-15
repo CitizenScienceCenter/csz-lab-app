@@ -770,7 +770,9 @@
         "POST_TWITTER_TASKS_ERROR": "Error when importing twitter tasks",
 
         "project-name-already-taken":"Project name already taken",
-        "new-tasks-were-imported-successfully":"new tasks were imported successfully"
+        "new-tasks-were-imported-successfully":"new tasks were imported successfully",
+        "new-task-was-imported-successfully":"new tasks was imported successfully",
+        "import-the-selected-files":"Import the selected files"
 
     },
     "de": {
@@ -1535,7 +1537,9 @@
         "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR": "Fehler beim Laden der Twitter-Importer-Optionen",
 
         "project-name-already-taken":"Projektname bereits vergeben",
-        "new-tasks-were-imported-successfully":"neue Aufgaben wurden erfolgreich importiert"
+        "new-tasks-were-imported-successfully":"neue Aufgaben wurden erfolgreich importiert",
+        "new-task-was-imported-successfully":"neue Aufgabe wurde erfolgreich importiert",
+        "import-the-selected-files":"Importieren Sie die ausgewählten Dateien"
 
     }
 }

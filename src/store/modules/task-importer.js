@@ -197,9 +197,11 @@ const actions = {
           link
         ).then(value => {
           if ('flash' in value.data) {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
-              title: 'Tasks imported',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
@@ -262,9 +264,11 @@ const actions = {
           file
         ).then(value => {
           if ('flash' in value.data) {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
-              title: 'Tasks imported',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
@@ -327,9 +331,11 @@ const actions = {
           link
         ).then(value => {
           if ('flash' in value.data) {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
-              title: 'Tasks imported',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
@@ -392,9 +398,11 @@ const actions = {
           files
         ).then(value => {
           if ('status' in value.data && value.data.status === 'message') {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
-              title: getTranslationLocale("success"),
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
