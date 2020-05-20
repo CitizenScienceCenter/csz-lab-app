@@ -359,7 +359,7 @@
         "register-success":"Success",
         "register-error-incomplete-form":"Incomplete form error",
         "register-error-form-validation":"Some fields are not validated",
-        "register-form-field-length":"The field must be between 3 and 35 characters long",
+        "register-form-field-length":"The field must be between 3 and 35 characters long and not contain any special character (e.g. !@#$%^) and space.",
         "register-form-email-length":"Email must be between 3 and 254 characters long and must be a valid email address",
         "register-error-form-password-empty":"The password cannot be empty",
         "register-error-form-password-match":"Passwords must match",
@@ -392,6 +392,8 @@
         "about-how-header-list4":"Geo-code images or tweets, ie. mark their location on a map (note: this task requires some coding skills!).",
 
         "about-how-header3":"Setting up a project involves a few simple steps:",
+
+        "about-how-step0":"STEP 0: Login or create your Project Builder account",
 
         "about-how-step1":"STEP 1: Create your project’s home page",
         "about-how-step1-label":"To create your project, you start with choosing a nice and catchy title and an image to represent it (<1MB). Then, you need to provide:",
@@ -1123,7 +1125,7 @@
        "register-success":"Erfolg",
        "register-error-incomplete-form":"Fehler durch unvollständiges Formular",
        "register-error-form-validation":"Einige Felder sind noch nicht ausgefüllt",
-       "register-form-field-length":"Der Text muss zwischen 3 und 35 Zeichen lang sein.", 
+       "register-form-field-length":"Der Text muss zwischen 3 und 35 Zeichen lang sein und keine Sonderzeichen (z.B. !@#$%^) und Leerzeichen enthalten.", 
        "register-form-email-length":"Die E-Mail-Adresse muss zwischen 3 und 254 Zeichen lang und eine gültige Adresse sein.", 
 
        "Register-error-form-password-empty":"Das Passwort darf nicht leer sein",
@@ -1282,6 +1284,8 @@
         "about-how-header-list4":"die Geokodierung von Bildern oder Tweets, d. h. die Kennzeichnung ihrer Position auf einer Landkarte (Hinweis: Für diese Aufgabe werden Programmierkenntnisse benötigt!)",
 
         "about-how-header3":"Ein Projekt lässt sich in wenigen einfachen Schritten anlegen:",
+
+        "about-how-step0":"SCHRITT 0: Melden Sie sich an oder erstellen Sie Ihr Project Builder-Konto",
 
         "about-how-step1":"SCHRITT 1: Erstellen Sie eine Homepage für Ihr Projekt",
         "about-how-step1-label":"Beginnen Sie damit, dass Sie für Ihr Projekt einen gut klingenden und einprägsamen Namen auswählen sowie ein Bild, das Ihr Projekt repräsentiert (< 1 MB).",

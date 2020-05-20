@@ -62,7 +62,7 @@
               {{ $t('about-how-header3') }}
               
               <br><br>
-
+              <b>{{ $t('about-how-step0') }} </b><br><br>
               <b>{{ $t('about-how-step1') }} </b><br>
 
               {{ $t('about-how-step1-label') }} 

@@ -30,7 +30,7 @@
             <b-form-group
                     :label="$t('register-username')"
                     label-for="username"
-                    :state="nameValid('username')"
+                    :state="usernameValid('username')"
                     :invalid-feedback="nameFeedback">
 
               <b-input id="username"
@@ -149,7 +149,7 @@ export default {
       }
 
       if (this.nameValid('fullname') &&
-        this.nameValid('username') &&
+        this.usernameValid('username') &&
         this.emailValid &&
         this.passwordsValid
       ) {
@@ -190,6 +190,11 @@ export default {
     nameValid (fieldName) {
       const name = this.form[fieldName]
       return this.firstInteractions[fieldName] || (name.length >= 0 && name.length <= 35)
+    },
+    usernameValid (fieldName) {
+      const name = this.form[fieldName]
+      const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
+      return (this.firstInteractions[fieldName] || (name.length >= 0 && name.length <= 35) ) && !format.test(name)
     },
 
     fieldUpdated (fieldName) {
