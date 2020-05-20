@@ -20,7 +20,10 @@ const component =
             
           </b-form-group>
           
-          <b-btn @click="submit" variant="success">{{ $t('submit-bt') }}</b-btn>
+          <b-btn @click="submit" variant="success">{{ $t('submit-btn') }}</b-btn>
+
+          <!-- Skip button -->
+          <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
@@ -51,7 +54,7 @@ const component =
       <!-- Task end message -->
       <b-row v-else>
         <b-col>
-          <b-jumbotron :header="$t('template-editor-text-2')" :lead="$t('template-editor-text-3')"></b-jumbotron>
+          <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')"></b-jumbotron>
         </b-col>
       </b-row>`,
 
@@ -79,6 +82,9 @@ const component =
           this.showAlert = true
         }
       },
+      skip(){
+	      this.pybossa.skip();
+	    },
       isFormValid () {
         return this.answers.length === this.questions.length && !this.answers.some(el => typeof el === 'undefined' || el == null)
       }

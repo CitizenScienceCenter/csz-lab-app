@@ -52,6 +52,15 @@ export default {
     })
   },
 
+  skipTaskOffset (projectId, apiKey,offset) {
+    let cnc
+    (!apiKey) ? cnc = (offset ? '?offset=' + offset : '')
+    : cnc = (apiKey ? '?api_key=' + apiKey : '') + (offset ? '&offset=' + offset : '')
+    return axios.get(process.env.BASE_API_URL + 'project/' + projectId + '/newtask' + cnc, {
+      data: {}
+    })
+  },
+
   saveTaskRun (taskRun, apiKey) {
     return axios.post(process.env.BASE_API_URL + 'taskrun' + (apiKey ? '?api_key=' + apiKey : ''), taskRun)
   }

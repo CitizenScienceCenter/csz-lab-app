@@ -25,7 +25,7 @@
           </b-col>
         </b-row>
 
-        <b-btn ref="btn-submit" v-if="selectedFiles.length > 0" @click="onSubmit" class="mt-4" variant="secondary">Import the selected files</b-btn>
+        <b-btn ref="btn-submit" v-if="selectedFiles.length > 0" @click="onSubmit" class="mt-4" variant="secondary">{{ $t('import-the-selected-files') }}</b-btn>
       </div>
 
     </b-collapse>

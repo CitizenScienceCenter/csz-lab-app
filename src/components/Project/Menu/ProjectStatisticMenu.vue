@@ -2,8 +2,8 @@
   <!-- TODO: find the differences with the info tab -->
   <b-row align-h="between" align-v="start">
     <b-col>
-      <h1>#{{ stats.hasOwnProperty('overall_progress') ? stats.overall_progress : 'NaN' }}</h1>
-      <span class="text-muted"> {{ $t('project-statistic-menu-published-results') }}</span>
+      <h1>#{{ stats.hasOwnProperty('overall_progress') ? stats.overall_progress+'%': 'NaN' }}</h1>
+      <span class="text-muted"> {{ $t('overall-progress-low') }}</span>
     </b-col>
     <b-col>
       <h1>#{{ stats.hasOwnProperty('n_tasks') ? stats.n_tasks : 'NaN' }}</h1>

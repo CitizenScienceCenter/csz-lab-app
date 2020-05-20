@@ -7,8 +7,16 @@
     <b-collapse id="csv-collapse" v-model="isLocalCsvVisible">
 
       <p class="mt-4">{{ $t('taks-import-localcsv-text1') }}:</p>
-      <ul>
-        <li><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('taks-import-localcsv-text2') }}</b-link></li>
+      <ul v-if="project.info.task_category">
+        <li v-if="project.info.task_category=='image'"><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('taks-import-localcsv-text2') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='sound'"><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='video'"><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='pdf'"><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='tweet'"></li>
+        <li v-else><b-link :href="csvSamples.geoCoding" download="geo-coding-sample.csv">{{ $t('taks-import-localcsv-text6') }}</b-link></li>
+      </ul>
+      <ul v-else>
+        <li ><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('taks-import-localcsv-text2') }}</b-link></li>
         <li><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
         <li><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
         <li><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>

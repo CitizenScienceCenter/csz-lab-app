@@ -5,10 +5,12 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Discover from '@/components/Discover'
 import Project from '@/components/Project/Project'
+import ProjectTest from '@/components/Project/ProjectTest'
 import ProjectBuilder from '@/components/Project/Builder/ProjectBuilder'
 import About from '@/components/About'
 import TaskBuilder from '@/components/Task/Builder/TaskBuilder'
 import TemplateRenderer from '@/components/Task/TemplateRenderer'
+import TemplateRendererTestProject from '@/components/Task/TemplateRendererTestProject'
 import Profile from '@/components/Profile/Profile'
 import TaskPresenterMenu from '@/components/Project/Menu/TaskMenu/Presenter/TaskPresenterMenu'
 import TaskPresenterEditor from '@/components/Project/Menu/TaskMenu/Presenter/TaskPresenterEditor'
@@ -147,6 +149,29 @@ export const routes = [
                 }
               },
               {
+                path: 'project/:short_name/test/confirm',
+                name: 'project.test',
+                component: ProjectTest,
+                beforeEnter: (to, from ,next) =>{
+                  let fp = to.fullPath
+                  let short_name = fp.substring(fp.lastIndexOf("project/") + 8,fp.lastIndexOf("/test"));
+                  let url = fp.split('?share=');                
+                  if(url.length>1) {
+                    store.dispatch('project/getProjectSharedLinkConfirmation',{'key':url[1],'short_name':short_name,'fullpath':fp}).then(confirm => {
+                      if (confirm == 'success') {
+                        store.dispatch('project/resetTaskProgress',{'done':0,'total':0})
+                        store.dispatch('task/forceTaskOffset',0)
+                        next()
+                      } else {
+                        next({ name: 'home' })
+                      }
+                    })
+                  } else {
+                    next({ name: 'home' })
+                  } 
+                }
+              },
+              {
                 path: 'project/:id/task-importers',
                 name: 'project.task.importers',
                 component: TaskImporterMenu,
@@ -193,6 +218,20 @@ export const routes = [
                 name: 'project.task.presenter',
                 component: TemplateRenderer,
                 props: true
+              },
+              {
+                path: 'project/:short_name/task-presenter/test',
+                name: 'project.task.presenter.test',
+                component: TemplateRendererTestProject,
+                props: true,
+                beforeEnter: (to, from, next) => {
+                  let enabled = store.state.project.enableTestEnvironment
+                  if(enabled) {
+                    next()
+                  } else {
+                    next({ name: 'home' })
+                  }
+                }
               },
               {
                 path: 'project/:id/task-presenter/settings',

@@ -32,6 +32,10 @@ const state = {
   // the currently loaded task presenter (of the selected project)
   taskPresenter: '',
 
+  //task offset
+  taskOffset: 0,
+
+
   // the current task showed in the task presenter
   currentTask: {
     info: {}
@@ -71,7 +75,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROJECT_TASKS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PROJECT_TASKS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -101,7 +106,8 @@ const actions = {
         return false
       }).catch(reason => {
         commit('notification/showError', {
-          title: errors.GET_PROJECT_TASK_PRESENTER_LOADING_ERROR, content: reason
+          title: getTranslationLocale("GET_PROJECT_TASK_PRESENTER_LOADING_ERROR"), 
+          content: reason
         }, { root: true })
         return false
       })
@@ -142,7 +148,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_TASK_PRESENTER_IMPORTATION_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_TASK_PRESENTER_IMPORTATION_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -179,7 +186,8 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_TASK_PRESENTER_ERROR, content: reason
+            title: getTranslationLocale("POST_TASK_PRESENTER_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -202,7 +210,8 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_TASK_PRESENTER_ERROR, content: reason
+            title: getTranslationLocale("POST_TASK_PRESENTER_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -233,10 +242,49 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_CURRENT_TASK_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_CURRENT_TASK_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
+  },
+
+  /**
+   * Gets a new task not already done for the logged user
+   * @param commit
+   * @param rootState
+   * @param project
+   * @return {Promise<T | boolean>}
+   */
+  skipTaskWithOffset ({ commit,dispatch, rootState }, payload) {
+    return api.skipTaskOffset(
+      payload.id,
+      rootState.user.logged ? rootState.user.infos.api_key : false,
+      payload.offset
+    ).then(value => {
+      // return false when the task cannot be loaded because the project is not open for anonymous users
+      if ('info' in value.data && 'error' in value.data.info) {
+        return false
+      }
+      if(value.data.id) {
+        commit('setTaskOffset', payload.offset+1)
+        commit('setCurrentTask', value.data)
+      } else {
+        commit('setTaskOffset', 0)
+        //dispatch('skipTaskWithOffset',{'id':payload.id,'offset':0})
+      }
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: getTranslationLocale("GET_CURRENT_TASK_LOADING_ERROR"), 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  forceTaskOffset({commit}, offset){
+    commit('setTaskOffset', offset)    
   },
 
   /**
@@ -255,7 +303,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.POST_TASK_RUN_ERROR, content: reason
+        title: getTranslationLocale("POST_TASK_RUN_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -278,6 +327,9 @@ const mutations = {
   },
   setUsingTemplate (state, template) {
     state.usingTemplate = template
+  },
+  setTaskOffset(state, offset) {
+    state.taskOffset = offset
   }
 }
 

@@ -256,8 +256,8 @@ const actions = {
       return false
     }).catch(reason => {
       commit('notification/showError', {
-        title:getTranslationLocale('error') +' 502',
-        content:  getTranslationLocale('GET_ACCOUNT_PROFILE_LOADING_ERROR')
+        title:getTranslationLocale('GET_ACCOUNT_PROFILE_LOADING_ERROR'),
+        content: reason
       }, { root: true })
       return false
     })
@@ -285,7 +285,8 @@ const actions = {
       return false
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.SIGN_OUT_ERROR, content: reason
+        title: getTranslationLocale("SIGN_OUT_ERROR"),
+        content: reason
       }, { root: true })
       return false
     })
@@ -303,7 +304,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_PROFILE_UPDATE_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_PROFILE_UPDATE_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -329,7 +331,8 @@ const actions = {
           return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.UPDATE_PROFILE_ERROR, content: reason
+            title: getTranslationLocale("UPDATE_PROFILE_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -350,7 +353,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_RESET_API_KEY_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_RESET_API_KEY_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -377,7 +381,8 @@ const actions = {
           return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.RESET_API_KEY_ERROR, content: reason
+            title: getTranslationLocale("RESET_API_KEY_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -419,7 +424,7 @@ const actions = {
           return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.UPDATE_AVATAR_ERROR,
+            title: getTranslationLocale("UPDATE_AVATAR_ERROR"),
             content: getTranslationLocale('picture-too-big') + ' (< 1MB)' 
           }, { root: true })
           commit('notification/closeLoading', 'user/updateAvatar', { root: true })
@@ -457,7 +462,8 @@ const actions = {
           return value.data
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.UPDATE_PASSWORD_ERROR, content: reason
+            title: getTranslationLocale("UPDATE_PASSWORD_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -483,7 +489,8 @@ const actions = {
       return true
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.DELETE_ACCOUNT_ERROR, content: reason
+        title: getTranslationLocale("DELETE_ACCOUNT_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -505,7 +512,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.EXPORT_ACCOUNT_DATA_ERROR, content: reason
+        title: getTranslationLocale("EXPORT_ACCOUNT_DATA_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })

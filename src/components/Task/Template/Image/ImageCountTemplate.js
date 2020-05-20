@@ -13,6 +13,9 @@ const component =
     
           <b-input v-model="count" type="number"></b-input>
           <b-button @click="answer(count)" variant="primary" class="mt-2">{{$t('submit-btn')}}</b-button>
+
+          <!-- Skip button -->
+          <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
           
           <!-- User progress -->
           <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
@@ -50,7 +53,10 @@ const component =
     methods: {
       answer (answer) {
         this.pybossa.saveTask(answer)
-      }
+      },
+      skip(){
+	      this.pybossa.skip();
+	    }
     },
 
     computed: {

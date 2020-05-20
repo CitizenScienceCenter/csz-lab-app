@@ -86,7 +86,8 @@ const actions = {
         }, { root: true })
       } else {
         commit('notification/showError', {
-          title: errors.GET_BUCKET_FILES_ERROR, content: reason
+          title: getTranslationLocale("GET_BUCKET_FILES_ERROR"), 
+          content: reason
         }, { root: true })
       }
       return false
@@ -105,7 +106,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -143,7 +145,8 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_AMAZON_S3_TASKS_ERROR, content: reason
+            title: getTranslationLocale("POST_AMAZON_S3_TASKS_ERROR"), 
+            content: reason
           }, { root: true })
           return false
         })
@@ -166,7 +169,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -193,9 +197,11 @@ const actions = {
           link
         ).then(value => {
           if ('flash' in value.data) {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
-              title: 'Tasks imported',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
@@ -206,7 +212,7 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_GOOGLE_DOCS_TASKS_ERROR,
+            title: getTranslationLocale("POST_GOOGLE_DOCS_TASKS_ERROR"),
             content: reason
           }, { root: true })
           return false
@@ -230,7 +236,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -257,9 +264,11 @@ const actions = {
           file
         ).then(value => {
           if ('flash' in value.data) {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
-              title: 'Tasks imported',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
@@ -270,7 +279,7 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_CSV_FILE_TASKS_ERROR,
+            title: getTranslationLocale("POST_CSV_FILE_TASKS_ERROR"),
             content: reason
           }, { root: true })
           return false
@@ -294,7 +303,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -321,9 +331,11 @@ const actions = {
           link
         ).then(value => {
           if ('flash' in value.data) {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
-              title: 'Tasks imported',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
@@ -334,7 +346,7 @@ const actions = {
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_CSV_TASKS_ERROR,
+            title: getTranslationLocale("POST_CSV_TASKS_ERROR"),
             content: reason
           }, { root: true })
           return false
@@ -358,7 +370,8 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR"), 
+        content: reason
       }, { root: true })
       return false
     })
@@ -385,16 +398,18 @@ const actions = {
           files
         ).then(value => {
           if ('status' in value.data && value.data.status === 'message') {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
-              title: 'Success',
-              content: value.data.flash
+              title: getTranslationLocale('success'),
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_DROPBOX_TASKS_ERROR, content: reason
+            title: getTranslationLocale("POST_DROPBOX_TASKS_ERROR"), content: reason
           }, { root: true })
           return false
         })
@@ -417,7 +432,7 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR"), content: reason
       }, { root: true })
       return false
     })
@@ -445,16 +460,18 @@ const actions = {
           albumId
         ).then(value => {
           if ('status' in value.data && value.data.status === 'message') {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
               title: getTranslationLocale('success'),
-              content: getPybossaTranslation(value.data.flash) 
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_FLICKR_TASKS_ERROR, content: reason
+            title: getTranslationLocale("POST_FLICKR_TASKS_ERROR"), content: reason
           }, { root: true })
           return false
         })
@@ -476,7 +493,7 @@ const actions = {
       return response.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.LOAD_FLICKR_ALBUMS_ERROR, content: reason
+        title: getTranslationLocale("LOAD_FLICKR_ALBUMS_ERROR"), content: reason
       }, { root: true })
       return false
     })
@@ -510,7 +527,7 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: errors.GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR, content: reason
+        title: getTranslationLocale("GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR"), content: reason
       }, { root: true })
       return false
     })
@@ -539,16 +556,18 @@ const actions = {
           maxTweets
         ).then(value => {
           if ('status' in value.data && value.data.status === 'message') {
+            let flash = value.data.flash.split(' ')
+            let message = flash.slice(1).join(' ')
             commit('notification/showSuccess', {
               title: getTranslationLocale('success'),
-              content: getPybossaTranslation(value.data.flash) 
+              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
             }, { root: true })
             return value.data
           }
           return false
         }).catch(reason => {
           commit('notification/showError', {
-            title: errors.POST_TWITTER_TASKS_ERROR, content: reason
+            title: getTranslationLocale("POST_TWITTER_TASKS_ERROR"), content: reason
           }, { root: true })
           return false
         })

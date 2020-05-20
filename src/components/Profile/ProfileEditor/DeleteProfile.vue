@@ -9,7 +9,7 @@
         </div>
       </b-alert>
 
-      <b-modal ref="modal-submit" id="delete-account" title="Delete account" @ok="onSubmit">
+      <b-modal ref="modal-submit" id="delete-account" :title="$t('profile-editor-delete-account')" @ok="onSubmit">
         {{ $t('delete-profile-are-you-sure') }}
       </b-modal>
     </b-col>

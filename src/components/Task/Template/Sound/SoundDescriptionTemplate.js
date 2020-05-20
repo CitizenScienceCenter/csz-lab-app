@@ -22,7 +22,10 @@ const component =
             <b-form-textarea v-model="answers[index]" rows="10"></b-form-textarea>
           </b-form-group>
          
-          <b-button @click="submit" variant="primary" class="mt-2"> {{ $t('submit-bt') }}</b-button>
+          <b-button @click="submit" variant="primary" class="mt-2"> {{ $t('submit-btn') }}</b-button>
+
+          <!-- Skip button -->
+          <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
@@ -52,7 +55,7 @@ const component =
       <!-- Task end message -->
       <b-row v-else>
         <b-col>
-          <b-jumbotron :header="$t('template-editor-text-2')" :lead="$t('template-editor-text-3')"></b-jumbotron>
+          <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')"></b-jumbotron>
         </b-col>
       </b-row>`,
 
@@ -77,6 +80,9 @@ const component =
           this.showAlert = true
         }
       },
+      skip(){
+	      this.pybossa.skip();
+	    },
       isFieldValid (field) {
         return field.length > 0
       },

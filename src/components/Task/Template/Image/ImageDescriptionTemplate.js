@@ -23,6 +23,9 @@ const component =
           </b-form-group>
          
           <b-button @click="submit" variant="primary" class="mt-2">{{$t('submit-btn')}}</b-button>
+
+          <!-- Skip button -->
+          <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
@@ -77,6 +80,9 @@ const component =
           this.showAlert = true
         }
       },
+      skip(){
+	      this.pybossa.skip();
+	    },
       isFieldValid (field) {
         return field.length > 0
       },
