@@ -55,7 +55,7 @@
               </b-col>
             </b-row>
             <div v-if="comment[index][1].length > situation[0]" style="text-align:center;">
-              <p for="username" @click.prevent="expand(index)">Show more replies ...</p>
+              <span class="show-more" @click.prevent="expand(index)">Show more replies ...</span>
             </div>
           </div>
         </b-collapse>
