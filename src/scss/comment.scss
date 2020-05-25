@@ -1,0 +1,52 @@
+.comment {
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &__avatar {
+    flex-shrink: 1;
+  }
+
+  &__username {
+    flex-grow: 1;
+    font-weight: $font-weight-light;
+    padding-left: 15px;
+
+    .name {
+
+      font-style: italic;
+    }
+  }
+
+  &__see-discussion {
+    margin-bottom: 15px;
+    span {
+      margin-left: 5px;
+    }
+    .arrow_box {
+      color:$primary;
+    }
+
+  }
+  &__see-discussion[aria-expanded='true'] > .arrow_box {
+    transform: rotate(90deg);
+  }
+
+  &__add {
+    font-weight: bold;
+    color: $secondary;
+    cursor: pointer;
+  }
+
+  &__content {
+    padding-left: 63px;
+    padding-top: 15px;
+
+    &_mainthread {
+      font-weight: bold;
+    }
+  }
+}

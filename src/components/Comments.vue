@@ -1,14 +1,14 @@
 <template>
     <div v-if="logged">
         <b-container >
-            <h1 class="mt-2 text-center centered"> Comments</h1>
-            <b-row class="mt-4"> 
+            <h1 class="mt-2"> Comments</h1>
+            <b-row class="mt-4">
                 <b-col md="12" class="mt-md-0 mt-4">
                     <!--<h3 class="subheading">{{ $t('newtopic-heading') }}</h3>-->
-                        
+
                         <!--<b-img v-if="infos.avatar_url" height="32" width="32" rounded="circle" :src="infos.avatar_url"></b-img>
                         <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;-->
-                     
+
                         <!--<b-form-group
                             id="fieldset-description"
                             >
@@ -35,7 +35,7 @@
 
                         <b-button :disabled="commentTitle === ''" style="float:right;"
                         type="submit" variant="primary" @click="newComment()">Send</b-button>
-                        <!--<b-button :disabled="commentTitle === '' || commentText === ''" 
+                        <!--<b-button :disabled="commentTitle === '' || commentText === ''"
                         type="submit" variant="primary" @click="newComment()">Send</b-button>-->
                 </b-col>
             </b-row>
@@ -43,15 +43,15 @@
         <hr>
         <b-container >
             <b-row class="mt-4">
-                
-                <b-col md="12" class="mt-md-0 mt-4">  
-                    <ul v-if="treeSituation.length > 0" class="comment-list">
-                        
-                        <li v-if="index < topicsShown" v-for="(situation,index) in treeSituation">
 
-                            <CommentThread 
-                                :comment=commentTree 
-                                :situation=situation 
+                <b-col md="12" class="mt-md-0 mt-4">
+                    <ul v-if="treeSituation.length > 0" class="comment-list">
+
+                        <li v-if="index < topicsShown" v-for="(situation,index) in treeSituation" v-bind:key="index">
+
+                            <CommentThread
+                                :comment=commentTree
+                                :situation=situation
                                 :index=index
                                 :treeSituation=treeSituation
                             />
@@ -60,7 +60,7 @@
 
                                 <h3 class="subheading">Comment ID: {{ commentTree[index][0].id }}</h3>
                                 <h3 class="subheading">{{ commentTree[index][0].content.title }}</h3>
-                                    
+
                                     <p>{{ commentTree[index][0].content.text }}</p>
                                     <span class="date">{{ giveDateTime(commentTree[index][0].created) }}</span>
                                     <span class="username">by {{ commentTree[index][0].username }}</span>
@@ -69,9 +69,9 @@
                                     <template v-if="logged">
 
                                         <div v-if="!situation[1]" >
-                                        <b-col lg="4" class="pb-2"> <b-button size="sm"  variant="primary" @click.prevent="showReplyField(index)">{{ $t('reply-button') }}</b-button>  </b-col>                              
+                                        <b-col lg="4" class="pb-2"> <b-button size="sm"  variant="primary" @click.prevent="showReplyField(index)">{{ $t('reply-button') }}</b-button>  </b-col>
                                         </div>
-                                            
+
                                         <div v-else class="comment reply" style="border: 1px solid red;margin: 45px;">
 
                                             <b-form-group
@@ -86,12 +86,12 @@
 
                                             <b-button :disabled="replyTexts[index].length === 0"
                                                 type="submit" variant="secondary" @click="newComment(commentTree[index][0].id, index)">Reply</b-button>
-                                        
-                                        </div>
-                                    </template> 
-                                    
 
-                                        
+                                        </div>
+                                    </template>
+
+
+
 
                                 <div class="replies" v-if="commentTree[index][1].length > 0">
 
@@ -123,7 +123,7 @@
                     </div>
                 </b-col>
             </b-row>
-          
+
         </b-container>
     </div>
 
@@ -180,12 +180,12 @@
                 this.loadComments();
             }
         },*/
-        
+
         computed: {
             ...mapState('user', [
                 'logged','infos'
             ]),
-           
+
             ...mapState('project',[
                 'projectComments'
             ]),
@@ -206,9 +206,9 @@
         methods: {
             loadComments: function() {
                 console.log('Loading comments db ...')
-               
+
                 this.$store.dispatch('project/getProjectComments','masks4all' ).then(res => {
-                    this.comments = res.data                   
+                    this.comments = res.data
                     this.buildCommentTree()
                 });
 
@@ -345,7 +345,7 @@
                             text: this.replyTexts[index]
                         }
                     };
-                   
+
                 }
 
                 console.log('create: '+ parentId);
