@@ -320,6 +320,7 @@
         "project-menu-task-presenter-error-update":"Impossible to update the task presenter",
         "project-menu-task-presenter-task-editor":"Task editor",
 
+        "download-btn":"Download",
         "skip-btn":"Skip",
         "edit-btn":"Edit",
         "view-btn":"View",
@@ -1086,6 +1087,7 @@
        "project-menu-task-presenter-error-update":"Der Task Presenter kann nicht aktualisiert werden",
        "project-menu-task-presenter-task-editor":"Task Editor",
 
+       "download-btn":"Herunterladen",
        "skip-btn":"Überspringen",
        "edit-btn":"Bearbeiten",
        "view-btn":"Ansehen",

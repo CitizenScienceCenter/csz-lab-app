@@ -152,6 +152,14 @@ export default {
     })
   },
 
+  
+  exportAccProCtbData (username,shortname) {
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'account/' + username + '/project/' + shortname + '/contributions', {
+      data: {},
+      withCredentials: true
+    })
+  },
+
   getResetPasswordOptions (urlkey) {
     return axios.get(process.env.BASE_ENDPOINT_URL + 'account/reset-password', {
       params : {
