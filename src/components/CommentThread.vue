@@ -1,75 +1,67 @@
 <template>
-  <b-container>
-    <b-row align-h="center" class="mb-5">
-      <b-col md="10">
-        <div class="comment comment-existing withTitles">
+  <div class="comment comment-existing withTitles mb-5">
+    <!--<b-img v-if="infos.avatar_url" height="32" width="32" rounded="circle" :src="infos.avatar_url"></b-img>
+    <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;-->
+    <!--<span class="text-muted" style="font-size:0.85rem;margin-left:10px;position:absolute;right:40px">Comment ID: #{{ comment[index][0].id }}</span>-->
 
-          <!--<b-img v-if="infos.avatar_url" height="32" width="32" rounded="circle" :src="infos.avatar_url"></b-img>
-          <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;-->
-          <!--<span class="text-muted" style="font-size:0.85rem;margin-left:10px;position:absolute;right:40px">Comment ID: #{{ comment[index][0].id }}</span>-->
-
-          <div class="comment__header">
-            <div class="comment__avatar">
-              <b-img v-if="comment[index][0].avatar_url" height="48" width="48" rounded="circle"
-                     :src="comment[index][0].avatar_url"></b-img>
-              <b-img v-else height="48" width="48" rounded="circle" :src="defaultImage"></b-img>
-            </div>
-            <div class="comment__username small text-muted">
-              <div>
-                <span>{{ giveDateTime(comment[index][0].created) }}</span>
-                <span v-if="comment[index][0].role">, {{ comment[index][0].role }}</span>
-              </div>
-              <span class="name">{{ comment[index][0].username }}</span>
-            </div>
-          </div>
-
-          <div class="comment__content">
-            <!--<h4 class="subheading"></h4>-->
-            <p class="comment__content_mainthread">{{ comment[index][0].content.title }}</p>
-            <!--<p>{{ comment[index][0].content.text }}</p>-->
-            <div class="comment__see-discussion" v-b-toggle="'discussion' + index">
-              <i class="fas fa-caret-right arrow_box"></i><span class="small">See discussion</span>
-            </div>
-            <div class="comment_discussion">
-              <b-collapse :id="'discussion' + index">
-                <div class="comment__add mb-2">Add comment</div>
-                <b-row align-h="center" class="mb-2">
-                  <b-col md="11">
-                    <b-form-group id="reply-group-1">
-                      <b-form-textarea
-                        size="sm"
-                        rows="1"
-                        max-rows="5"
-                        v-model="replyTexts[index]" placeholder="Add your comment here ... "/>
-                    </b-form-group>
-                    <b-button :disabled="(replyTexts[index]) ? false : true"
-                              size="sm" type="submit" variant="secondary"
-                              class="float-right"
-                              @click="newComment(comment[index][0].id, index)"
-                    >Reply
-                    </b-button>
-                  </b-col>
-                </b-row>
-
-                <div class="replies" v-if="comment[index][1].length > 0">
-                  <b-row align-h="center" class="mb-2" v-if="replyIndex < situation[0]"
-                         v-for="(reply,replyIndex) in comment[index][1]" v-bind:key="replyIndex">
-                    <b-col md="11">
-                      <CommentReply :reply="reply"></CommentReply>
-                    </b-col>
-                  </b-row>
-                  <div v-if="comment[index][1].length > situation[0]" style="text-align:center;">
-                    <p for="username" @click.prevent="expand(index)">Show more replies ...</p>
-                  </div>
-                </div>
-              </b-collapse>
-            </div>
-          </div>
-
+    <div class="comment__header">
+      <div class="comment__avatar">
+        <b-img v-if="comment[index][0].avatar_url" height="48" width="48" rounded="circle"
+               :src="comment[index][0].avatar_url"></b-img>
+        <b-img v-else height="48" width="48" rounded="circle" :src="defaultImage"></b-img>
+      </div>
+      <div class="comment__username small text-muted">
+        <div>
+          <span>{{ giveDateTime(comment[index][0].created) }}</span>
+          <span v-if="comment[index][0].role">, {{ comment[index][0].role }}</span>
         </div>
-      </b-col>
-    </b-row>
-  </b-container>
+        <span class="name">{{ comment[index][0].username }}</span>
+      </div>
+    </div>
+
+    <div class="comment__content">
+      <!--<h4 class="subheading"></h4>-->
+      <p class="comment__content_mainthread">{{ comment[index][0].content.title }}</p>
+      <!--<p>{{ comment[index][0].content.text }}</p>-->
+      <div class="comment__see-discussion" v-b-toggle="'discussion' + index">
+        <i class="fas fa-caret-right arrow_box"></i><span class="small">See discussion</span>
+      </div>
+      <div class="comment_discussion">
+        <b-collapse :id="'discussion' + index">
+          <div class="comment__add mb-2">Add comment</div>
+          <b-row align-h="center" class="mb-2">
+            <b-col md="11">
+              <b-form-group id="reply-group-1">
+                <b-form-textarea
+                  size="sm"
+                  rows="1"
+                  max-rows="5"
+                  v-model="replyTexts[index]" placeholder="Add your comment here ... "/>
+              </b-form-group>
+              <b-button :disabled="(replyTexts[index]) ? false : true"
+                        size="sm" type="submit" variant="secondary"
+                        class="float-right"
+                        @click="newComment(comment[index][0].id, index)"
+              >Reply
+              </b-button>
+            </b-col>
+          </b-row>
+
+          <div class="replies" v-if="comment[index][1].length > 0">
+            <b-row align-h="center" class="mb-4" v-if="replyIndex < situation[0]"
+                   v-for="(reply,replyIndex) in comment[index][1]" v-bind:key="replyIndex">
+              <b-col md="11">
+                <CommentReply :reply="reply"></CommentReply>
+              </b-col>
+            </b-row>
+            <div v-if="comment[index][1].length > situation[0]" style="text-align:center;">
+              <p for="username" @click.prevent="expand(index)">Show more replies ...</p>
+            </div>
+          </div>
+        </b-collapse>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-4">
+  <div>
     <div class="comment__header">
       <div class="comment__avatar">
         <b-img v-if="reply.avatar_url" height="48" width="48" rounded="circle"
