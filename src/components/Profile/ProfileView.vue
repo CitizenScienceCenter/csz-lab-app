@@ -21,24 +21,6 @@
 
       </b-tab>
 
-      <b-tab :title="$t('profile-view-contributions-project')" style="outline: none">
-
-        <!-- The list of projects -->
-        <b-row v-if="contributedProjects.length > 0">
-          <b-col :key="project.id" v-for="project in contributedProjects" md="4" class="mt-3">
-            <app-project-card-small 
-              :project="project" 
-              :buttonText="$t('download-btn')">
-            </app-project-card-small>
-          </b-col>
-        </b-row>
-        <b-row v-else>
-          <b-col class="text-center" style="margin-top:30px;">
-            <b-btn variant="outline-primary" :to="{ name: 'discover' }">{{ $t('profile-view-find-a-project') }}</b-btn>
-          </b-col>
-        </b-row>
-      </b-tab>
-
       <b-tab :title="$t('profile-view-publish-project')" style="outline: none">
 
         <!-- The list of projects -->
@@ -53,6 +35,24 @@
         <b-row v-else>
           <b-col class="text-center" style="margin-top:30px;">
             <b-btn variant="outline-primary" :to="{ name: 'project.builder.name' }">{{ $t('profile-view-create-a-project') }}</b-btn>
+          </b-col>
+        </b-row>
+      </b-tab>
+
+      <b-tab :title="$t('profile-view-contributions-project')" style="outline: none">
+
+        <!-- The list of projects -->
+        <b-row v-if="contributedProjects.length > 0">
+          <b-col :key="project.id" v-for="project in contributedProjects" md="4" class="mt-3">
+            <app-project-card-small 
+              :project="project" 
+              :buttonText="$t('download-btn')">
+            </app-project-card-small>
+          </b-col>
+        </b-row>
+        <b-row v-else>
+          <b-col class="text-center" style="margin-top:30px;">
+            <b-btn variant="outline-primary" :to="{ name: 'discover' }">{{ $t('profile-view-find-a-project') }}</b-btn>
           </b-col>
         </b-row>
       </b-tab>

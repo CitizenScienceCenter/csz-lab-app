@@ -46,11 +46,14 @@ export default {
   },
   methods:{
     ...mapActions('user', [
-      'exportAccProCtbData'
+      'exportAccProCtbData','getUserContributionsData'
     ]),
 
     onSubmit () {
-      this.exportAccProCtbData({'username':this.profile.name,'project_name':this.project.short_name})
+      this.exportAccProCtbData({'username':this.profile.name,'project_name':this.project.short_name}).then((data) => {
+        window.open(process.env.BASE_ENDPOINT_URL + 'uploads/' + data.link)
+        //this.getUserContributionsData(data.link)
+      })
     },
     getBaseUrl(){
       if(this.project.info.thumbnail){

@@ -520,8 +520,19 @@ const actions = {
   },
 
   exportAccProCtbData ({ commit }, payload) {
-    alert(JSON.stringify(payload))
     return api.exportAccProCtbData(payload.username,payload.project_name).then(value => {
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: getTranslationLocale("EXPORT_ACCOUNT_DATA_ERROR"), 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  getUserContributionsData ({ commit }, link) {
+    return api.getUserContributionsData(link).then(value => {
       commit('notification/showSuccess', {
         title: getTranslationLocale('success'), 
         content: getTranslationLocale('notifications-messages-export-data-message')

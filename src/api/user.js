@@ -160,6 +160,13 @@ export default {
     })
   },
 
+  getUserContributionsData (link) {
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'uploads/' + link, {
+      data: {},
+      withCredentials: true
+    })
+  },
+
   getResetPasswordOptions (urlkey) {
     return axios.get(process.env.BASE_ENDPOINT_URL + 'account/reset-password', {
       params : {
