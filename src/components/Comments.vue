@@ -1,29 +1,16 @@
 <template>
-  <div v-if="logged">
+  <div >
     <b-container>
-      <h1 class="mt-2"> Comments</h1>
-      <b-row class="mt-4">
+      <b-row class="mt-4 justify-content-center">
+        <b-col md="6" md-offset="3">
+          <h1>Forum</h1>
+        </b-col>
+      </b-row>
+
+      <b-row v-if='infos.admin' class="mt-4">
         <b-col md="12" class="mt-md-0 mt-4">
-          <!--<h3 class="subheading">{{ $t('newtopic-heading') }}</h3>-->
-
-          <!--<b-img v-if="infos.avatar_url" height="32" width="32" rounded="circle" :src="infos.avatar_url"></b-img>
-          <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;-->
-
-          <!--<b-form-group
-              id="fieldset-description"
-              >
-              <b-form-textarea
-                  size="sm"
-                  rows="1"
-                  max-rows="5"
-                  :placeholder="$t('newtopic-title-placeholder')"
-                  v-model="commentTitle">
-              </b-form-textarea>
-          </b-form-group>-->
-
-          <b-form-group
-            id="fieldset-description"
-          >
+        
+          <b-form-group id="fieldset-description">
             <b-form-textarea
               size="sm"
               rows="1"
@@ -33,12 +20,13 @@
             </b-form-textarea>
           </b-form-group>
 
-          <b-button :disabled="commentTitle === ''" style="float:right;"
-                    type="submit" variant="primary" @click="newComment()">Send
+          <b-button 
+            :disabled="commentTitle === ''" style="float:right;"
+            type="submit" variant="primary" @click="newComment()"
+            >Send
           </b-button>
-          <!--<b-button :disabled="commentTitle === '' || commentText === ''"
-          type="submit" variant="primary" @click="newComment()">Send</b-button>-->
         </b-col>
+
       </b-row>
       <b-row class="mt-4">
         <b-col md="12" class="mt-md-0 mt-4">
@@ -55,7 +43,9 @@
           </div>
 
           <div v-if="commentTree.length > topicsShown" class="button-group">
-            <b-button variant="primary" @click.prevent="showMore()">Load more comments ...</b-button>
+            <b-button variant="primary" @click.prevent="showMore()">
+              Load more comments...
+            </b-button>
           </div>
         </b-col>
       </b-row>
@@ -63,7 +53,7 @@
     </b-container>
   </div>
 
-  <div v-else>
+  <!--<div v-else>
     <b-container>
       <b-row class="mt-4 justify-content-center">
         <b-col md="6" md-offset="3">
@@ -72,7 +62,7 @@
         </b-col>
       </b-row>
     </b-container>
-  </div>
+  </div>-->
 </template>
 
 <script>
@@ -94,29 +84,16 @@
         commentTree: [],
         treeSituation: [],
         newSituationOnLoad: true,
-        topicsShown: 5,
-        repliesShownDefault: 5,
+        topicsShown: 6,
+        repliesShownDefault: 2,
         replySubmitted: null,
         commentTitle: '',
         commentText: '',
         replyTexts: [],
         defaultImage: require('@/assets/graphic-community.png'),
-        comments: [],
-        isGoogleDocImporterVisible: false
+        comments: []
       }
     },
-    /*props: {
-        sourceId: {
-          type: String,
-          default: null
-        }
-    },
-    watch: {
-        sourceId: function() {
-            this.loadComments();
-        }
-    },*/
-
     computed: {
       ...mapState('user', [
         'logged', 'infos'
@@ -142,12 +119,10 @@
     methods: {
       loadComments: function () {
         console.log('Loading comments db ...')
-
         this.$store.dispatch('project/getProjectComments', 'masks4all').then(res => {
           this.comments = res.data
           this.buildCommentTree()
         });
-
       },
       buildCommentTree() {
         console.log('Building comment tree')
@@ -218,23 +193,8 @@
         //console.log('parent found');
         this.commentTree[parentIndex][1].push(child);
       },
-      giveDateTime(timestamp) {
-        var date = new Date(timestamp);
-        var date_time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ', ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
-        //console.log( date_time );
-        return date_time;
-      },
       showMore() {
-        this.topicsShown += 10;
-      },
-      expand(index) {
-        this.treeSituation[index][0] += 10;
-
-        this.treeSituation.push(['dummy object']);
-        this.treeSituation.pop();
-
-        //console.log( 'expand');
-        //console.log( this.treeSituation );
+        this.topicsShown += 1;
       },
       showReplyField(index) {
         this.treeSituation[index][1] = true;

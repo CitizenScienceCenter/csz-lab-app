@@ -1,9 +1,5 @@
 <template>
   <div class="comment comment-existing withTitles mb-5">
-    <!--<b-img v-if="infos.avatar_url" height="32" width="32" rounded="circle" :src="infos.avatar_url"></b-img>
-    <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;-->
-    <!--<span class="text-muted" style="font-size:0.85rem;margin-left:10px;position:absolute;right:40px">Comment ID: #{{ comment[index][0].id }}</span>-->
-
     <div class="comment__header">
       <div class="comment__avatar">
         <b-img v-if="comment[index][0].avatar_url" height="48" width="48" rounded="circle"
@@ -20,14 +16,20 @@
     </div>
 
     <div class="comment__content">
-      <!--<h4 class="subheading"></h4>-->
       <p class="comment__content_mainthread">{{ comment[index][0].content.title }}</p>
-      <!--<p>{{ comment[index][0].content.text }}</p>-->
       <div class="comment__see-discussion" v-b-toggle="'discussion' + index">
         <i class="fas fa-caret-right arrow_box"></i><span class="small">See discussion</span>
       </div>
       <div class="comment_discussion">
         <b-collapse :id="'discussion' + index">
+          <div v-if='!logged'>
+            <b-row class="justify-content-center">
+              <b-col md="6" md-offset="3">
+                <p class="justify-content-center" style='margin-bottom:20px;'>{{ $t('login-text') }}</p>
+              </b-col>
+            </b-row>
+          </div>
+          <div v-else>
           <div class="comment__add mb-2">Add comment</div>
           <b-row align-h="center" class="mb-2">
             <b-col md="11">
@@ -36,26 +38,30 @@
                   size="sm"
                   rows="1"
                   max-rows="5"
-                  v-model="replyTexts[index]" placeholder="Add your comment here ... "/>
+                  v-model="replyTexts[index]" 
+                  placeholder="Add your comment here ... "/>
               </b-form-group>
-              <b-button :disabled="(replyTexts[index]) ? false : true"
-                        size="sm" type="submit" variant="secondary"
-                        class="float-right"
-                        @click="newComment(comment[index][0].id, index)"
-              >Reply
-              </b-button>
+              <b-button 
+                :disabled="(replyTexts[index]) ? false : true"
+                size="sm" type="submit" variant="secondary"
+                class="float-right"
+                @click="newComment(comment[index][0].id, index)"
+              >Reply</b-button>
             </b-col>
           </b-row>
+          </div>
 
           <div class="replies" v-if="comment[index][1].length > 0">
-            <b-row align-h="center" class="mb-4" v-if="replyIndex < situation[0]"
+            <b-row align-h="center" class="mb-4" v-if="replyIndex < repliesShown"
                    v-for="(reply,replyIndex) in comment[index][1]" v-bind:key="replyIndex">
               <b-col md="11">
                 <CommentReply :reply="reply"></CommentReply>
               </b-col>
             </b-row>
-            <div v-if="comment[index][1].length > situation[0]" style="text-align:center;">
-              <span class="show-more" @click.prevent="expand(index)">Show more replies ...</span>
+            <div v-if="comment[index][1].length > repliesShown" style="text-align:center;">
+              <b-button class="show-more" variant="primary" @click.prevent="expand(index)">
+                Load more replies...
+              </b-button>
             </div>
           </div>
         </b-collapse>
@@ -77,9 +83,9 @@
     },
     data() {
       return {
-        isGoogleDocImporterVisible: false,
         replyTexts: [],
-        defaultImage: require('@/assets/graphic-community.png')
+        defaultImage: require('@/assets/graphic-community.png'),
+        repliesShown : 4
       }
     },
     props: {
@@ -119,14 +125,7 @@
         return "google-doc-collapse-" + index
       },
       expand(index) {
-        //alert('clikced expanded')
-        this.treeSituation[index][0] += 10;
-
-        this.treeSituation.push(['dummy object']);
-        this.treeSituation.pop();
-
-        //console.log( 'expand');
-        console.log(this.treeSituation);
+        this.repliesShown +=1
       },
       newComment: function (parentId, index) {
         console.log('reply comment on topic- has parent');
