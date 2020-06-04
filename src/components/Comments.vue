@@ -84,7 +84,8 @@
         commentTree: [],
         treeSituation: [],
         newSituationOnLoad: true,
-        topicsShown: 6,
+        topicsOffset:0,
+        topicsShown: 2,
         repliesShownDefault: 2,
         replySubmitted: null,
         commentTitle: '',
@@ -119,7 +120,15 @@
     methods: {
       loadComments: function () {
         console.log('Loading comments db ...')
-        this.$store.dispatch('project/getProjectComments', 'masks4all').then(res => {
+        /*this.$store.dispatch('project/getProjectComments', 'masks4all').then(res => {
+          this.comments = res.data
+          this.buildCommentTree()
+        });*/
+
+        this.$store.dispatch('project/getForumThreads', {
+          'limit':this.topicsShown,
+          'offset':this.topicsOffset
+        }).then(res => {
           this.comments = res.data
           this.buildCommentTree()
         });

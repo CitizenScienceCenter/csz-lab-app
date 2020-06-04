@@ -556,6 +556,24 @@ const actions = {
       }, { root: true })*/
       return false
     })
+  },
+
+  getForumThreads ({commit}, payload) {
+    return api.getForumThreads(payload.limit,payload.offset).then(value => {
+      commit('setProjectComments', value.data)
+      /*commit('notification/showSuccess', {
+        title: 'Comments loaded!',
+        content: 'The project ' + short_name + ' has loaded the comments'
+      }, { root: true })*/
+      return value.data
+    }).catch(reason => {
+      commit('setProjectComments',[])
+      /*commit('notification/showError', {
+        title: 'Error!',
+        content: 'Could not load the comments'
+      }, { root: true })*/
+      return false
+    })
   }
 
 }

@@ -135,6 +135,13 @@ export default {
     })
   },
 
+  getForumThreads(limit,offset){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/forum/threads?limit='+limit+'&offset='+offset, {
+      withCredentials: true,
+      data: {}
+    })
+  },
+
   setProjectCommentsOptions(projectShortName){
     return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/new-comment', {
       withCredentials: true,
