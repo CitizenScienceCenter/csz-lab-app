@@ -128,8 +128,8 @@ export default {
     })
   },
 
-  getProjectComments(projectShortName){
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/get-comment', {
+  getProjectComments(limit,offset,id){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/forum/thread/' + id + '/comments?limit='+limit+'&offset='+offset, {
       withCredentials: true,
       data: {}
     })

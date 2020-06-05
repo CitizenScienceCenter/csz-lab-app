@@ -31,20 +31,18 @@
       <b-row class="mt-4">
         <b-col md="12" class="mt-md-0 mt-4">
           <div v-if="treeSituation.length > 0">
-            <CommentThread
-              v-if="index < topicsShown"
+            
+          </div>
+          <CommentThread
               v-for="(situation,index) in treeSituation"
               v-bind:key="index"
               :comment=commentTree
-              :situation=situation
               :index=index
-              :treeSituation=treeSituation
             />
-          </div>
 
-          <div v-if="commentTree.length > topicsShown" class="button-group">
+          <div v-if="numberOfThreads > topicsShown" class="button-group">
             <b-button variant="primary" @click.prevent="showMore()">
-              Load more comments...
+              view more comments
             </b-button>
           </div>
         </b-col>
@@ -86,13 +84,14 @@
         newSituationOnLoad: true,
         topicsOffset:0,
         topicsShown: 2,
-        repliesShownDefault: 2,
+        repliesShownDefault: 10,
         replySubmitted: null,
         commentTitle: '',
         commentText: '',
         replyTexts: [],
         defaultImage: require('@/assets/graphic-community.png'),
-        comments: []
+        comments: [],
+        numberOfThreads: 0
       }
     },
     computed: {
@@ -101,11 +100,11 @@
       ]),
 
       ...mapState('project', [
-        'projectComments'
+        'setForumThreads'
       ]),
     },
     watch: {
-      projectComments(newValue, oldValue) {
+      setForumThreads(newValue, oldValue) {
         if (newValue.data.length && oldValue.data.length) {
           if (newValue.data.length > oldValue.data.length) {
             this.comments = newValue.data
@@ -120,16 +119,13 @@
     methods: {
       loadComments: function () {
         console.log('Loading comments db ...')
-        /*this.$store.dispatch('project/getProjectComments', 'masks4all').then(res => {
-          this.comments = res.data
-          this.buildCommentTree()
-        });*/
 
         this.$store.dispatch('project/getForumThreads', {
           'limit':this.topicsShown,
           'offset':this.topicsOffset
         }).then(res => {
           this.comments = res.data
+          this.numberOfThreads = res.count
           this.buildCommentTree()
         });
       },
@@ -203,16 +199,8 @@
         this.commentTree[parentIndex][1].push(child);
       },
       showMore() {
-        this.topicsShown += 1;
-      },
-      showReplyField(index) {
-        this.treeSituation[index][1] = true;
-
-        this.treeSituation.push(['dummy object']);
-        this.treeSituation.pop();
-
-        //console.log( 'show');
-        //console.log( this.treeSituation );
+        this.topicsShown += 2;
+        this.loadComments()
       },
       newComment: function (parentId, index) {
 
@@ -256,7 +244,7 @@
         console.log('new comment created');
         console.log(comment);
 
-        this.$store.dispatch('project/setProjectComment', {'short_name': 'masks4all', 'comment': comment}).then(res => {
+        this.$store.dispatch('project/setProjectComment', {'short_name': 'NA', 'comment': comment}).then(res => {
           if (res.status == 'success') {
             //this.comments.push(comment)
             this.commentTitle = ''

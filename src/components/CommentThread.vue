@@ -17,11 +17,11 @@
 
     <div class="comment__content">
       <p class="comment__content_mainthread">{{ comment[index][0].content.title }}</p>
-      <div class="comment__see-discussion" v-b-toggle="'discussion' + index">
+      <div class="comment__see-discussion" v-b-toggle="'discussion' + comment[index][0].id">
         <i class="fas fa-caret-right arrow_box"></i><span class="small">See discussion</span>
       </div>
       <div class="comment_discussion">
-        <b-collapse :id="'discussion' + index">
+        <b-collapse @shown="show(comment[index][0].id)" :id="'discussion' + comment[index][0].id">
           <div v-if='!logged'>
             <b-row class="justify-content-center">
               <b-col md="6" md-offset="3">
@@ -58,9 +58,9 @@
                 <CommentReply :reply="reply"></CommentReply>
               </b-col>
             </b-row>
-            <div v-if="comment[index][1].length > repliesShown" style="text-align:center;">
+            <div v-if="totalRepliesInThread > comment[index][1].length " style="text-align:center;">
               <b-button class="show-more" variant="primary" @click.prevent="expand(index)">
-                Load more replies...
+                view more replies
               </b-button>
             </div>
           </div>
@@ -85,7 +85,10 @@
       return {
         replyTexts: [],
         defaultImage: require('@/assets/graphic-community.png'),
-        repliesShown : 4
+        repliesShown : 10,
+        repliesOffset: 0,
+        replies : [],
+        totalRepliesInThread : 0
       }
     },
     props: {
@@ -93,17 +96,9 @@
         type: Array,
         default: []
       },
-      situation: {
-        type: Array,
-        default: null
-      },
       index: {
         type: Number,
         default: null
-      },
-      treeSituation: {
-        type: Array,
-        default: []
       }
     },
     computed: {
@@ -115,6 +110,49 @@
       }),
     },
     methods: {
+      show(index){
+
+        this.$store.dispatch('project/getProjectComments', {
+              'id':index,
+              'limit':this.repliesShown,
+              'offset':this.repliesOffset
+            }).then(res => {
+              //this.replies = res.data
+              this.replies = res.data
+              this.totalRepliesInThread = res.count
+              this.buildCommentTree(this.comment,res.data)
+
+              //alert(JSON.stringify(cm))
+              
+              //this.comment[1] = res.data
+              //this.numberOfThreads = res.count
+              //this.buildCommentTree()
+            });
+      },
+      buildCommentTree(comments,replies) {
+        console.log('Building comment tree')
+       
+        for (let i = 0; i < replies.length; i++) {
+          if (replies[i].parent) {
+
+            var parentFound = false;
+
+            for (let j = 0; j < comments.length; j++) {
+              if (replies[i].parent === comments[j][0].id) {
+                
+                let temp = this.comment[j][1]
+                if(temp.length > 0 && replies[i].id == temp[0].id){
+                  
+                  continue
+                }
+                this.comment[j][1].push(replies[i]);
+                parentFound = true;
+              }
+            }
+
+          }
+        }
+      },
       giveDateTime(timestamp) {
         var date = new Date(timestamp);
         var date_time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ', ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
@@ -128,11 +166,7 @@
         this.repliesShown +=1
       },
       newComment: function (parentId, index) {
-        console.log('reply comment on topic- has parent');
-        console.log(parentId)
-        //this.newSituationOnLoad = false;
-        //this.replySubmitted = index;
-
+       
         let comment = {
           user_id: this.infos.id,
           parent: parentId,
@@ -142,10 +176,18 @@
           }
         };
 
-        this.$store.dispatch('project/setProjectComment', {'short_name': 'masks4all', 'comment': comment}).then(res => {
+        this.$store.dispatch('project/setProjectComment', {'short_name': 'NA', 'comment': comment}).then(res => {
           if (res.status == 'success') {
             this.replyTexts[index] = ''
-            this.$store.dispatch('project/getProjectComments', 'masks4all').then(res => {
+            this.$store.dispatch('project/getProjectComments', {
+              'id':parentId,
+              'limit':this.repliesShown,
+              'offset':this.repliesOffset
+            }).then(res => {
+              //this.replies = res.data
+              this.replies = res.data
+              this.totalRepliesInThread = res.count
+              this.buildCommentTree(this.comment,res.data)           
             });
           }
         });

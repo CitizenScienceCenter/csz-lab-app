@@ -29,6 +29,7 @@ const state = {
   categories: [], // all categories
   projects: [], // all projects
   projectComments : [],
+  forumThreads : [],
 
   categoryProjects: {}, // projects ordered by category
   categoryPagination: {}, // contains a pagination object for each category
@@ -522,10 +523,10 @@ const actions = {
     return dispatch('setProjectCommentsOptions', payload.short_name).then(response => {
       if (response) {
         return api.setProjectComment(state.projectCommentsOptions.csrf, payload.short_name, payload.comment).then(value => {
-          commit('notification/showSuccess', {
+         /* commit('notification/showSuccess', {
             title: 'Success',
             content: 'Comment added!'
-          }, { root: true })
+          }, { root: true })*/
           return value.data
         }).catch(reason => {
           commit('setProjectComments',[])
@@ -540,8 +541,8 @@ const actions = {
     })
   },
 
-  getProjectComments ({commit}, short_name) {
-    return api.getProjectComments(short_name).then(value => {
+  getProjectComments ({commit}, payload) {
+    return api.getProjectComments(payload.limit,payload.offset,payload.id).then(value => {
       commit('setProjectComments', value.data)
       /*commit('notification/showSuccess', {
         title: 'Comments loaded!',
@@ -560,7 +561,7 @@ const actions = {
 
   getForumThreads ({commit}, payload) {
     return api.getForumThreads(payload.limit,payload.offset).then(value => {
-      commit('setProjectComments', value.data)
+      commit('setForumThreads', value.data)
       /*commit('notification/showSuccess', {
         title: 'Comments loaded!',
         content: 'The project ' + short_name + ' has loaded the comments'
@@ -627,6 +628,9 @@ const mutations = {
   },
   setProjectComments(state,comments){
     state.projectComments = comments
+  },
+  setForumThreads(state,comments){
+    state.forumThreads = comments
   }
 }
 
