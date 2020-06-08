@@ -17,11 +17,12 @@
 
     <div class="comment__content">
       <p class="comment__content_mainthread">{{ comment[index][0].content.title }}</p>
-      <div class="comment__see-discussion" v-b-toggle="'discussion' + comment[index][0].id">
+      <div class="comment__see-discussion" v-b-toggle="'discussion' + index">
         <i class="fas fa-caret-right arrow_box"></i><span class="small">See discussion</span>
       </div>
       <div class="comment_discussion">
-        <b-collapse @shown="show(comment[index][0].id)" :id="'discussion' + comment[index][0].id">
+        <b-collapse @shown="show(comment[index][0].id)"
+        @hide="hide(index)" :id="'discussion' +index">
           <div v-if='!logged'>
             <b-row class="justify-content-center">
               <b-col md="6" md-offset="3">
@@ -52,14 +53,15 @@
           </div>
 
           <div class="replies" v-if="comment[index][1].length > 0">
-            <b-row align-h="center" class="mb-4" v-if="replyIndex < repliesShown"
-                   v-for="(reply,replyIndex) in comment[index][1]" v-bind:key="replyIndex">
+            <b-row align-h="center" class="mb-4" 
+                v-for="(reply,replyIndex) in comment[index][1]" v-bind:key="replyIndex"
+                v-if="replyIndex < repliesShown">
               <b-col md="11">
                 <CommentReply :reply="reply"></CommentReply>
               </b-col>
             </b-row>
-            <div v-if="totalRepliesInThread > comment[index][1].length " style="text-align:center;">
-              <b-button class="show-more" variant="primary" @click.prevent="expand(index)">
+            <div v-if="totalRepliesInThread > repliesShown " style="text-align:center;">
+              <b-button class="show-more" variant="primary" @click.prevent="expand(index,comment[index][1])">
                 view more replies
               </b-button>
             </div>
@@ -85,7 +87,7 @@
       return {
         replyTexts: [],
         defaultImage: require('@/assets/graphic-community.png'),
-        repliesShown : 10,
+        repliesShown : 4,
         repliesOffset: 0,
         replies : [],
         totalRepliesInThread : 0
@@ -111,31 +113,28 @@
     },
     methods: {
       show(index){
-
         this.$store.dispatch('project/getProjectComments', {
               'id':index,
-              'limit':this.repliesShown,
+              'limit':this.repliesShown+999,
               'offset':this.repliesOffset
             }).then(res => {
               //this.replies = res.data
               this.replies = res.data
               this.totalRepliesInThread = res.count
               this.buildCommentTree(this.comment,res.data)
-
-              //alert(JSON.stringify(cm))
-              
-              //this.comment[1] = res.data
-              //this.numberOfThreads = res.count
-              //this.buildCommentTree()
+             
             });
+      },
+      hide(index){
+        this.replies = []
+        this.comment[index][1] = []
+        this.buildCommentTree(this.comment,[])
       },
       buildCommentTree(comments,replies) {
         console.log('Building comment tree')
        
         for (let i = 0; i < replies.length; i++) {
           if (replies[i].parent) {
-
-            var parentFound = false;
 
             for (let j = 0; j < comments.length; j++) {
               if (replies[i].parent === comments[j][0].id) {
@@ -146,7 +145,6 @@
                   continue
                 }
                 this.comment[j][1].push(replies[i]);
-                parentFound = true;
               }
             }
 
@@ -162,8 +160,8 @@
       getCollapseId(index) {
         return "google-doc-collapse-" + index
       },
-      expand(index) {
-        this.repliesShown +=1
+      expand(index,comment) {
+        this.repliesShown +=4
       },
       newComment: function (parentId, index) {
        
@@ -185,9 +183,14 @@
               'offset':this.repliesOffset
             }).then(res => {
               //this.replies = res.data
+              this.replies = []
               this.replies = res.data
               this.totalRepliesInThread = res.count
-              this.buildCommentTree(this.comment,res.data)           
+              this.comment[index].push(comment)
+              this.comment[index][1]=res.data
+              console.log(this.comment[index][1])
+              //this.buildCommentTree(this.comment,res.data)   
+                 
             });
           }
         });
