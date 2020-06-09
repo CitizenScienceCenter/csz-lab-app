@@ -320,7 +320,7 @@
         "project-menu-task-presenter-error-update":"Impossible to update the task presenter",
         "project-menu-task-presenter-task-editor":"Task editor",
 
-        "download-contributions-modal-text":"Your contributions to this project will be downlaoded as JSON file",
+        "download-contributions-modal-text":"Your contributions to this project will be downloaded as JSON file",
         "download-contributions":"Download Contributions",
         "download-btn":"Download",
         "skip-btn":"Skip",
