@@ -10,6 +10,9 @@
         <div>
           <span>{{ giveDateTime(comment[index][0].created) }}</span>
           <span v-if="comment[index][0].role">, {{ comment[index][0].role }}</span>
+          <b-button variant="warning" @click.prevent="deleteTopic()" style="float:right;display:none;">
+            {{$t('forum-delete-topic')}}
+          </b-button>
         </div>
         <span class="name">{{ comment[index][0].username }}</span>
       </div>
@@ -18,11 +21,16 @@
     <div class="comment__content">
       <p class="comment__content_mainthread">{{ comment[index][0].content.title }}</p>
       <div class="comment__see-discussion" v-b-toggle="'discussion' + index">
-        <i class="fas fa-caret-right arrow_box"></i><span class="small">See discussion</span>
+        <i class="fas fa-caret-right arrow_box"></i>
+        <span class="small">
+          {{$t('see-discussion')}}
+        </span>
       </div>
       <div class="comment_discussion">
-        <b-collapse @shown="show(comment[index][0].id)"
-        @hide="hide(index)" :id="'discussion' +index">
+        <b-collapse 
+          @shown="showCollapse(comment[index][0].id)" 
+          @hide="hideCollapse(index)" 
+          :id="'discussion' +index">
           <div v-if='!logged'>
             <b-row class="justify-content-center">
               <b-col md="6" md-offset="3">
@@ -31,25 +39,28 @@
             </b-row>
           </div>
           <div v-else>
-          <div class="comment__add mb-2">Add comment</div>
-          <b-row align-h="center" class="mb-2">
-            <b-col md="11">
-              <b-form-group id="reply-group-1">
-                <b-form-textarea
-                  size="sm"
-                  rows="1"
-                  max-rows="5"
-                  v-model="replyTexts[index]" 
-                  placeholder="Add your comment here ... "/>
-              </b-form-group>
-              <b-button 
-                :disabled="(replyTexts[index]) ? false : true"
-                size="sm" type="submit" variant="secondary"
-                class="float-right"
-                @click="newComment(comment[index][0].id, index)"
-              >Reply</b-button>
-            </b-col>
-          </b-row>
+            <div class="comment__add mb-2">
+              {{$t('forum-add-comment')}}
+            </div>
+            <b-row align-h="center" class="mb-2">
+              <b-col md="11">
+                <b-form-group id="reply-group-1">
+                  <b-form-textarea
+                    size="sm"
+                    rows="1"
+                    max-rows="5"
+                    v-model="replyTexts[index]" 
+                    :placeholder="$t('newtopic-text-placeholder')"/>
+                </b-form-group>
+                <b-button 
+                  :disabled="(replyTexts[index]) ? false : true"
+                  size="sm" type="submit" variant="secondary"
+                  class="float-right"
+                  @click="newComment(comment[index][0].id, index)">
+                  {{$t('reply-button')}}
+                </b-button>
+              </b-col>
+            </b-row>
           </div>
 
           <div class="replies" v-if="comment[index][1].length > 0">
@@ -62,7 +73,7 @@
             </b-row>
             <div v-if="totalRepliesInThread > repliesShown " style="text-align:center;">
               <b-button class="show-more" variant="primary" @click.prevent="expand(index,comment[index][1])">
-                view more replies
+                {{$t('more-replies-button')}}
               </b-button>
             </div>
           </div>
@@ -112,42 +123,37 @@
       }),
     },
     methods: {
-      show(index){
+      showCollapse(parent){
         this.$store.dispatch('project/getProjectComments', {
-              'id':index,
+              'id':parent,
               'limit':this.repliesShown+999,
               'offset':this.repliesOffset
             }).then(res => {
-              //this.replies = res.data
               this.replies = res.data
               this.totalRepliesInThread = res.count
-              this.buildCommentTree(this.comment,res.data)
-             
+              this.buildThreadTree(this.comment,res.data)
             });
       },
-      hide(index){
+      hideCollapse(index){
         this.replies = []
         this.comment[index][1] = []
-        this.buildCommentTree(this.comment,[])
+        this.buildThreadTree(this.comment,[])
       },
-      buildCommentTree(comments,replies) {
+      buildThreadTree(comments,replies) {
         console.log('Building comment tree')
-       
         for (let i = 0; i < replies.length; i++) {
           if (replies[i].parent) {
-
             for (let j = 0; j < comments.length; j++) {
               if (replies[i].parent === comments[j][0].id) {
-                
-                let temp = this.comment[j][1]
-                if(temp.length > 0 && replies[i].id == temp[0].id){
-                  
-                  continue
+                let temp = comments[j][1]
+                if(temp.length > 0){
+                  if(replies[i].id == temp[0].id){
+                    continue
+                  }
                 }
                 this.comment[j][1].push(replies[i]);
               }
             }
-
           }
         }
       },
@@ -163,7 +169,7 @@
       expand(index,comment) {
         this.repliesShown +=4
       },
-      newComment: function (parentId, index) {
+      newComment(parentId, index) {
        
         let comment = {
           user_id: this.infos.id,
@@ -194,6 +200,9 @@
             });
           }
         });
+
+      },
+      deleteTopic(){
 
       }
     }

@@ -106,7 +106,7 @@ export const routes = [
                 component: About
               },
               {
-                path: 'comments',
+                path: 'forum',
                 name:'comments',
                 component: Comments
             },

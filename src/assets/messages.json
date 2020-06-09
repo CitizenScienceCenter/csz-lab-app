@@ -701,15 +701,16 @@
         "newtopic-title-placeholder": "Topic Title",
         "newtopic-text-placeholder": "What's on your mind?",
         "newtopic-button": "Send",
-
         "login-text": "You need to be logged in to write something.",
         "login-button": "Login",
-
         "reply-button": "Reply",
         "reply-placeholder": "Reply",
-
         "more-replies-button": "Show More Replies",
-        "more-comments-button": "Show More Comments"
+        "more-comments-button": "Show More Comments",
+        "see-discussion":"See discussion",
+        "forum-add-comment":"Add comment",
+        "forum-delete-topic":"Delete topic",
+        "forum-delete-comment":"Delete comment"
 
     },
     "de": {
@@ -1407,16 +1408,16 @@
         "newtopic-title-placeholder": "Titel",
         "newtopic-text-placeholder": "Was liegt dir auf dem Herzen?",
         "newtopic-button": "Senden",
-
         "login-text": "Du musst eingeloggt sein um etwas zu schreiben.",
         "login-button": "Anmelden",
-
         "reply-button": "Antworten",
         "reply-placeholder": "Antwort",
-
-
         "more-replies-button": "Mehr Antworten zeigen",
-        "more-comments-button": "Mehr Kommentare zeigen"
+        "more-comments-button": "Mehr Kommentare zeigen",
+        "see-discussion":"Siehe Diskussion",
+        "forum-add-comment":"Kommentar hinzufügen",
+        "forum-delete-topic":"Thema löschen",
+        "forum-delete-comment":"Kommentar löschen"
 
     }
 }

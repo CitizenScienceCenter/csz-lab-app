@@ -10,6 +10,9 @@
         <div>
           <span>{{ giveDateTime(reply.created) }}</span>
           <span v-if="reply.role">, {{ reply.role }}</span>
+          <b-button v-if="reply.owner_id == infos.id" variant="warning" @click.prevent="deleteComment(reply.id)" style="float:right;display:none;">
+            {{$t('forum-delete-comment')}}
+          </b-button>
         </div>
         <span class="name">{{ reply.username }}</span>
       </div>
@@ -38,12 +41,20 @@
         default: []
       }
     },
+    computed: {
+      ...mapState('user', [
+        'infos'
+      ])
+    },
     methods: {
       giveDateTime(timestamp) {
         var date = new Date(timestamp);
         var date_time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ', ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
         //console.log( date_time );
         return date_time;
+      },
+      deleteComment(id){
+
       }
     }
 

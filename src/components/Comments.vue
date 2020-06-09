@@ -15,34 +15,34 @@
               size="sm"
               rows="1"
               max-rows="5"
-              :placeholder="$t('newtopic-text-placeholder')"
+              :placeholder="$t('newtopic-heading')"
               v-model="commentTitle">
             </b-form-textarea>
           </b-form-group>
 
           <b-button 
             :disabled="commentTitle === ''" style="float:right;"
-            type="submit" variant="primary" @click="newComment()"
-            >Send
+            type="submit" variant="primary" @click="newComment()">
+            {{$t('create-btn')}}
           </b-button>
         </b-col>
-
       </b-row>
+
       <b-row class="mt-4">
         <b-col md="12" class="mt-md-0 mt-4">
-          <div v-if="treeSituation.length > 0">
-            
+          <div 
+             v-for="(thread,index) in comments" v-bind:key="index"
+              v-if="index < topicsShown">
+              <CommentThread
+                v-bind:key="index"
+                :comment=commentTree
+                :index=index
+              />
           </div>
-          <CommentThread
-              v-for="(situation,index) in treeSituation"
-              v-bind:key="index"
-              :comment=commentTree
-              :index=index
-            />
 
           <div v-if="numberOfThreads > topicsShown" class="button-group">
             <b-button variant="primary" @click.prevent="showMore()">
-              view more comments
+              {{$t('more-comments-button')}}
             </b-button>
           </div>
         </b-col>
@@ -83,8 +83,8 @@
         treeSituation: [],
         newSituationOnLoad: true,
         topicsOffset:0,
-        topicsShown: 4,
-        repliesShownDefault: 4,
+        topicsShown:4,
+        repliesShownDefault: 10,
         replySubmitted: null,
         commentTitle: '',
         commentText: '',
@@ -98,7 +98,6 @@
       ...mapState('user', [
         'logged', 'infos'
       ]),
-
       ...mapState('project', [
         'setForumThreads'
       ]),
@@ -119,14 +118,14 @@
     methods: {
       loadComments: function () {
         console.log('Loading comments db ...')
-
         this.$store.dispatch('project/getForumThreads', {
-          'limit':this.topicsShown,
+          //'limit':this.topicsShown,
+          'limit':9999,
           'offset':this.topicsOffset
         }).then(res => {
-          this.comments = res.data
           this.numberOfThreads = res.count
-          this.buildCommentTree()
+          this.comments = res.data
+          this.buildCommentTree()          
         });
       },
       buildCommentTree() {
@@ -189,31 +188,25 @@
           }
 
         }
-        console.log('comment tree generated');
-        console.log(this.commentTree);
-        console.log('reply texts');
-        console.log(this.replyTexts);
+        //console.log('comment tree generated');
+        //console.log(this.commentTree);
+        //console.log('reply texts');
+        //console.log(this.replyTexts);
       },
       addChildToTree(parentIndex, child) {
         //console.log('parent found');
         this.commentTree[parentIndex][1].push(child);
       },
       showMore() {
-        this.topicsShown += 2;
-        this.loadComments()
+        this.topicsShown += 2
       },
       newComment: function (parentId, index) {
-
-
-        console.log('NEW COMMENT');
 
         let comment;
         if (!parentId && !index) {
           this.newSituationOnLoad = true;
-
           this.opened = [];
-          console.log('new comment topic - no parent');
-
+          //console.log('new comment topic - no parent');
           comment = {
             user_id: this.infos.id,
             parent: null,
@@ -224,8 +217,8 @@
             }
           };
         } else {
-          console.log('reply comment on topic- has parent');
-          console.log(parentId)
+          //console.log('reply comment on topic- has parent');
+          //console.log(parentId)
           this.newSituationOnLoad = false;
           this.replySubmitted = index;
 
@@ -237,19 +230,16 @@
               text: this.replyTexts[index]
             }
           };
-
         }
 
-        console.log('create: ' + parentId);
-        console.log('new comment created');
-        console.log(comment);
-
-        this.$store.dispatch('project/setProjectComment', {'short_name': 'NA', 'comment': comment}).then(res => {
+        this.$store.dispatch('project/setProjectComment', {
+          'short_name': 'NA', 
+          'comment': comment
+        }).then(res => {
           if (res.status == 'success') {
-            //this.comments.push(comment)
             this.commentTitle = ''
             this.loadComments();
-          }
+          }  
         });
 
       }
