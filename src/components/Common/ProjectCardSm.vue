@@ -17,13 +17,26 @@
           <p v-html="project.description"></p>-->
         </b-col>
       </b-row>
-      <b-btn ref="btn-submit" @click="onSubmit" variant="primary" >{{ buttonText }}</b-btn>
+      <b-btn ref="btn-submit" v-b-modal="'download-contrib' + index" variant="primary" >{{ buttonText }}</b-btn>
+      
     </div>
 
     <div class="overlay"></div>
     <div class="project-bg-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
-
+     <div>
+        <b-modal
+        :id="'download-contrib' + index"
+        :title="$t('download-contributions')"
+        :ok-title="$t('download-btn')"
+        :cancel-title="$t('cancel-c')"
+        @ok="onSubmit">
+        <b-alert variant="warning" :show="true">
+          {{ $t('download-contributions-modal-text') }}
+        </b-alert>
+      </b-modal>
+      </div>
   </div>
+  
 </template>
 
 <script>
@@ -37,7 +50,8 @@ export default {
   },
   props: {
     project: Object,
-    buttonText: String
+    buttonText: String,
+    index:Number
   },
   computed: {
     ...mapState('user', {
