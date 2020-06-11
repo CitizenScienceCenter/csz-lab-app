@@ -44,7 +44,7 @@ const state = {
   projectCreationOptions: {},
   projectUpdateOptions: {},
   publishProjectOptions: {},
-  projectCommentsOptions: {}
+  projectCommentsOptions: {},
   projectDeletionOptions: {},
 
   //shareable link
@@ -555,6 +555,84 @@ const actions = {
       }, { root: true })
       return false
     })
+  },
+  setProjectCommentsOptions ({ commit }, short_name) {
+    return api.setProjectCommentsOptions(short_name).then(value => {
+      commit('setProjectCommentsOptions', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Error getting proeject commnets options', 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  /**
+   * Publish the given project
+   * @param commit
+   * @param state
+   * @param dispatch
+   * @param project
+   * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
+   */
+  setProjectComment ({ commit, state, dispatch },payload) {
+    return dispatch('setProjectCommentsOptions', payload.short_name).then(response => {
+      if (response) {
+        return api.setProjectComment(state.projectCommentsOptions.csrf, payload.short_name, payload.comment).then(value => {
+         /* commit('notification/showSuccess', {
+            title: 'Success',
+            content: 'Comment added!'
+          }, { root: true })*/
+          return value.data
+        }).catch(reason => {
+          commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Error',
+            content: 'Could not save your comment. Try again later!'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
+  getProjectComments ({commit}, payload) {
+    return api.getProjectComments(payload.limit,payload.offset,payload.id).then(value => {
+      commit('setProjectComments', value.data)
+      /*commit('notification/showSuccess', {
+        title: 'Comments loaded!',
+        content: 'The project ' + short_name + ' has loaded the comments'
+      }, { root: true })*/
+      return value.data
+    }).catch(reason => {
+      commit('setProjectComments',[])
+      /*commit('notification/showError', {
+        title: 'Error!',
+        content: 'Could not load the comments'
+      }, { root: true })*/
+      return false
+    })
+  },
+
+  getForumThreads ({commit}, payload) {
+    return api.getForumThreads(payload.limit,payload.offset).then(value => {
+      commit('setForumThreads', value.data)
+      /*commit('notification/showSuccess', {
+        title: 'Comments loaded!',
+        content: 'The project ' + short_name + ' has loaded the comments'
+      }, { root: true })*/
+      return value.data
+    }).catch(reason => {
+      commit('setProjectComments',[])
+      /*commit('notification/showError', {
+        title: 'Error!',
+        content: 'Could not load the comments'
+      }, { root: true })*/
+      return false
+    })
   }
 
 }
@@ -603,6 +681,15 @@ const mutations = {
       ...state.categoryPagination,
       [category]: pagination
     }
+  },
+  setProjectCommentsOptions (state, options) {
+    state.projectCommentsOptions = options
+  },
+  setProjectComments(state,comments){
+    state.projectComments = comments
+  },
+  setForumThreads(state,comments){
+    state.forumThreads = comments
   }
 }
 
