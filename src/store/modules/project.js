@@ -633,6 +633,22 @@ const actions = {
       }, { root: true })*/
       return false
     })
+  },
+
+  getShareableLink ({ commit }, project) {
+    return api.getShareableLink(project.short_name).then(value => {
+      commit('setProjectShareableLink', value.data.key )
+      /*commit('notification/showInfo', {
+        title: 'Your Shareable link!', 
+        content: value.data.key
+      }, { root: true })*/
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Shareable link error!', 
+        content: reason
+      }, { root: true })
+    })
   }
 
 }
@@ -690,6 +706,15 @@ const mutations = {
   },
   setForumThreads(state,comments){
     state.forumThreads = comments
+  },
+  setProjectShareableLink(state, link) {
+    state.projectShareableLink = link
+  },
+  setShareableProjectKey(state,key){
+    state.projectShareableKey = key
+  },
+  setProjectTestEnvironment(state,status){
+    state.enableTestEnvironment = status
   }
 }
 
