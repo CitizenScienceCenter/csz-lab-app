@@ -28,6 +28,8 @@ const errors = {
 const state = {
   categories: [], // all categories
   projects: [], // all projects
+  projectComments : [],
+  forumThreads : [],
 
   categoryProjects: {}, // projects ordered by category
   categoryPagination: {}, // contains a pagination object for each category
@@ -42,6 +44,7 @@ const state = {
   projectCreationOptions: {},
   projectUpdateOptions: {},
   publishProjectOptions: {},
+  projectCommentsOptions: {}
   projectDeletionOptions: {},
 
   //shareable link
@@ -94,6 +97,10 @@ const getters = {
     }
 
     return pagination
+  },
+
+  comments:state => {
+    return state.projectComments
   }
 }
 
@@ -548,28 +555,6 @@ const actions = {
       }, { root: true })
       return false
     })
-  },
-
-  /**
-   * Gets a CSRF token to publish the project with the publishProject method
-   * @param commit
-   * @param project
-   * @return {Promise<T | boolean>}
-   */
-  getShareableLink ({ commit }, project) {
-    return api.getShareableLink(project.short_name).then(value => {
-      commit('setProjectShareableLink', value.data.key )
-      /*commit('notification/showInfo', {
-        title: 'Your Shareable link!', 
-        content: value.data.key
-      }, { root: true })*/
-      return value.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("error"), 
-        content: reason
-      }, { root: true })
-    })
   }
 
 }
@@ -618,15 +603,6 @@ const mutations = {
       ...state.categoryPagination,
       [category]: pagination
     }
-  },
-  setProjectShareableLink(state, link) {
-    state.projectShareableLink = link
-  },
-  setShareableProjectKey(state,key){
-    state.projectShareableKey = key
-  },
-  setProjectTestEnvironment(state,status){
-    state.enableTestEnvironment = status
   }
 }
 

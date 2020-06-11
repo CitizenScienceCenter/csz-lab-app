@@ -127,3 +127,12 @@ export function getFormErrorsAsStringOnlyErrorMsg (errors) {
   }
   return result
 }
+
+
+
+export function giveDateTime(timestamp) {
+  var date = new Date(timestamp);
+  var date_time =  date.getDate() +'.'+ (date.getMonth()+1) +'.'+ date.getFullYear()+', '+ date.getHours() +':'+ (date.getMinutes()<10?'0':'') + date.getMinutes();
+  //console.log( date_time );
+  return date_time;
+}
