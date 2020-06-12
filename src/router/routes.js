@@ -117,7 +117,7 @@ export const routes = [
               },
               {
                 path: 'forum',
-                name:'comments',
+                name:'forum',
                 component: Comments
             },
               {
