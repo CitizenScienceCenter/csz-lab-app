@@ -1,13 +1,12 @@
 <template>
-  <div >
     <b-container>
       <b-row class="mt-4 justify-content-center">
         <b-col md="6" md-offset="3">
-          <h1>Forum</h1>
+          <h1 class="mt-4 text-center centered">Forum</h1>
         </b-col>
       </b-row>
 
-      <b-row v-if='infos.admin' class="mt-4">
+      <b-row v-if='infos.admin' class="justify-content-center mt-4">
         <b-col md="12" class="mt-md-0 mt-4">
         
           <b-form-group id="fieldset-description">
@@ -28,10 +27,9 @@
         </b-col>
       </b-row>
 
-      <b-row class="mt-4">
+      <b-row class="justify-content-center mt-4" >
         <b-col md="12" class="mt-md-0 mt-4">
-          <div 
-             v-for="(thread,index) in comments" v-bind:key="index"
+          <div v-for="(thread,index) in comments" v-bind:key="index"
               v-if="index < topicsShown">
               <CommentThread
                 v-bind:key="index"
@@ -47,20 +45,7 @@
           </div>
         </b-col>
       </b-row>
-
     </b-container>
-  </div>
-
-  <!--<div v-else>
-    <b-container>
-      <b-row class="mt-4 justify-content-center">
-        <b-col md="6" md-offset="3">
-          <h1>{{ $t('login-text') }}</h1>
-          <b-btn variant="primary" :to="{ name: 'login' }">{{ $t('login-button') }}</b-btn>
-        </b-col>
-      </b-row>
-    </b-container>
-  </div>-->
 </template>
 
 <script>

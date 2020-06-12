@@ -1,5 +1,5 @@
 <template>
-  <div class="comment comment-existing withTitles mb-5">
+  <div class="comment comment-existing withTitles mb-5 ">
     <div class="comment__header">
       <div class="comment__avatar">
         <b-img v-if="comment[index][0].avatar_url" height="48" width="48" rounded="circle"
