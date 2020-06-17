@@ -19,6 +19,8 @@ import './scss/global.scss'
 import VueGtag from "vue-gtag"
 //import VueDisqus from 'vue-disqus'
 
+import '@/components/globalComponents'
+
 
 Vue.config.productionTip = false
 //Vue.use(VueDisqus)

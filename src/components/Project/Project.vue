@@ -18,7 +18,8 @@
           <div v-if="isLoggedUserOwnerOfProject(project)">
             
              <div v-if="project.published">
-              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>{{ $t('project-draft-published') }}</b-btn><br>
+              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>{{ $t('project-draft-published') }}</b-btn>
+              <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn> <br>
             </div>
 
             <div v-else-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 

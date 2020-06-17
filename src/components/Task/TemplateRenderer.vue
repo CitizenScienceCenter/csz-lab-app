@@ -60,6 +60,8 @@
 
     </b-col>
     </b-row>
+    
+     
   </b-container>
   </div>
 </template>
@@ -70,6 +72,7 @@ import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'TemplateRenderer',
   props: {
+
     // project id
     id: {
       required: true
@@ -89,13 +92,17 @@ export default {
         this.taskPresenterExists = true
       }
     })
+
+    //this.saveFile()
+
+    
   },
   data: () => {
     return {
       taskPresenterExists: false,
       taskPresenterLoaded: false,
       taskLoaded: false,
-
+      showMulti: false,
       modal: {
         mediaType: 'image',
         mediaUrl: '#',
@@ -108,7 +115,6 @@ export default {
     ...mapState('project', {
       // the current project where is displayed the task presenter
       project: state => state.selectedProject,
-
       // user task progress
       userProgress: state => state.selectedProjectUserProgress
     }),
@@ -126,6 +132,11 @@ export default {
       isUserLogged: state => state.logged,
       userId: state => state.infos.id,
       userApiKey: state => state.infos.api_key
+    }),
+
+     // user data
+    ...mapState('snakes', {
+      snake: state => state.snake
     }),
 
     ...mapGetters('project', {
