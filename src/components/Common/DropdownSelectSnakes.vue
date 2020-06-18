@@ -34,9 +34,10 @@
     tag-placeholder="Click to add" 
     trackBy="value" 
     label="value"
-    :clearOnSelect="true"
-    ></multiselect>
-  <pre>{{ value }}</pre>
+    :clearOnSelect="true">
+    </multiselect>
+  <label class="typo__label">Groups</label>
+  <pre class="language-json"><code>{{ value }}</code></pre>
 </div>
 </template>
 

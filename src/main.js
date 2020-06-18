@@ -17,10 +17,7 @@ import 'codemirror/lib/codemirror.css'
 import 'vuelayers/lib/style.css'
 import './scss/global.scss'
 import VueGtag from "vue-gtag"
-//import VueDisqus from 'vue-disqus'
-
-import '@/components/globalComponents'
-
+import '@/components/Common/globalComponents'
 
 Vue.config.productionTip = false
 //Vue.use(VueDisqus)

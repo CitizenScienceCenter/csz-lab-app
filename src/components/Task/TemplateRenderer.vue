@@ -133,12 +133,7 @@ export default {
       userId: state => state.infos.id,
       userApiKey: state => state.infos.api_key
     }),
-
-     // user data
-    ...mapState('snakes', {
-      snake: state => state.snake
-    }),
-
+    
     ...mapGetters('project', {
       userProgressInPercent: 'getUserProgressInPercent'
     }),

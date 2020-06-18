@@ -1,7 +1,7 @@
 //import snakes from "@/assets/snakes.min.json";
 
 const state = {
-    snake:null
+    snake:'Not selected'
 };
 
 const actions = {

@@ -51,15 +51,13 @@
 <script>
 
   import {mapState} from 'vuex'
-  import GrowingTextarea from "./GrowingTextarea";
-  import UserAvatar from "./UserAvatar";
+  import GrowingTextarea from "@/components/GrowingTextarea";
   import CommentThread from "./CommentThread";
 
   export default {
     name: "Comments",
     components: {
       GrowingTextarea,
-      UserAvatar,
       CommentThread
     },
     data() {
