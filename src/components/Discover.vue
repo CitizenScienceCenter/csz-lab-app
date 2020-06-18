@@ -5,18 +5,16 @@
       <b-col>
           <h2 class="text-center">{{ globalPagination.total }} {{ $t('projects-c') }}</h2>
 
-          <b-tabs pills align="center">
 
             <!-- A tab for each category -->
-            <b-tab
-                    v-for="category in allCategories"
-                    :key="category.id"
-                    :title="category.name + (category.short_name in categoryPagination ? ' (' + categoryPagination[category.short_name].total + ')' : '')"
-                    style="outline: none"
-            >
+            <div
+              v-for="category in allCategories.filter((cat)=>{ return cat.name == 'Thinking'})"
+              :key="category.id"
+              style="outline: none">
+              
               <!-- The list of projects -->
               <b-row>
-                <p class="text-center m-3" v-if="!categoryProjects[category.short_name] || categoryProjects[category.short_name].length < 1">{{ $t('discover-category-no-project') }}</p>
+                <!--<p class="text-center m-3" v-if="!categoryProjects[category.short_name] || categoryProjects[category.short_name].length < 1">{{ $t('discover-category-no-project') }}</p>-->
                 <b-col :key="project.id" v-for="project in categoryProjects[category.short_name]" md="4" class="mt-3">
                   <app-project-card :project="project" :buttonText="'Take a look'"></app-project-card>
                 </b-col>
@@ -35,9 +33,8 @@
                   ></b-pagination>
                 </b-col>
               </b-row>
-            </b-tab>
+            </div>
 
-          </b-tabs>
       </b-col>
     </b-row>
   </b-container>
@@ -59,8 +56,9 @@ export default {
       this.allCategories.forEach(category => {
 
         this.categoryCurrentPage[category.id] = 1
-
+        
         this.getProjectsWithCategory({ category })
+
       })
     })
   },
