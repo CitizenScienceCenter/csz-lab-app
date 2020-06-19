@@ -6,7 +6,9 @@
           <h2 class="text-center">{{ globalPagination.total }} {{ $t('projects-c') }}</h2>
 
 
-            <!-- A tab for each category -->
+            <!-- A tab for each category 
+            :title="category.name + (category.short_name in categoryPagination ? ' (' + categoryPagination[category.short_name].total + ')' : '')" 
+            -->
             <div
               v-for="category in allCategories.filter((cat)=>{ return cat.name == 'Thinking'})"
               :key="category.id"

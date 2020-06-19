@@ -546,7 +546,7 @@
 
         "task-settings-redundancy":"Tasks Redundancy",
         "task-settings-redundancy-header":"Tasks Redundancy",
-        "task-settings-redundancy-description-placeholder":"The number of answers per task that you want for the project",
+        "task-settings-redundancy-description-placeholder":"The number of answers per task that you want for the project (default=5)",
 
         "task-presenter-menu-headera":"Use one of the following available",
         "task-presenter-menu-headerb":"templates",
@@ -764,7 +764,35 @@
         "see-discussion":"See discussion",
         "forum-add-comment":"Add comment",
         "forum-delete-topic":"Delete topic",
-        "forum-delete-comment":"Delete comment"
+        "forum-delete-comment":"Delete comment",
+
+        "DOWNLOAD_TASKS_IN_CSV_ERROR": "DOWNLOAD_TASKS_IN_CSV_ERROR",
+        "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR": "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR",
+        "DOWNLOAD_RESULTS_IN_CSV_ERROR": "DOWNLOAD_RESULTS_IN_CSV_ERROR",
+        "DOWNLOAD_TASKS_IN_JSON_ERROR": "DOWNLOAD_TASKS_IN_JSON_ERROR",
+        "DOWNLOAD_TASK_RUNS_IN_JSON_ERROR": "DOWNLOAD_TASK_RUNS_IN_JSON_ERROR",
+        "DOWNLOAD_RESULTS_IN_JSON_ERROR": "DOWNLOAD_RESULTS_IN_JSON_ERROR",
+
+        "GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR": "GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR",
+        "POST_AMAZON_S3_TASKS_ERROR": "POST_AMAZON_S3_TASKS_ERROR",
+        "GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR": "GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR",
+        "POST_GOOGLE_DOCS_TASKS_ERROR": "POST_GOOGLE_DOCS_TASKS_ERROR",
+        "GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR": "GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR",
+        "POST_CSV_FILE_TASKS_ERROR": "POST_CSV_FILE_TASKS_ERROR",
+        "GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR": "GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR",
+        "POST_CSV_TASKS_ERROR": "POST_CSV_TASKS_ERROR",
+        "GET_BUCKET_FILES_ERROR": "GET_BUCKET_FILES_ERROR",
+        "GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR": "GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR",
+        "POST_DROPBOX_TASKS_ERROR": "POST_DROPBOX_TASKS_ERROR",
+        "GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR": "GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR",
+        "POST_FLICKR_TASKS_ERROR": "POST_FLICKR_TASKS_ERROR",
+        "LOAD_FLICKR_ALBUMS_ERROR": "LOAD_FLICKR_ALBUMS_ERROR",
+        "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR": "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR",
+
+        "project-name-already-taken":"Project name already taken",
+        "new-tasks-were-imported-successfully":"new tasks were imported successfully",
+        "new-task-was-imported-successfully":"new task was imported successfully",
+        "import-the-selected-files":"Import selected files"
 
     },
     "de": {
@@ -1209,7 +1237,7 @@
 
        "task-settings-redundancy":"Aufgaben Redundanz",
        "task-settings-redundancy-header":"Aufgaben Redundanz",
-       "task-settings-redundancy-description-placeholder":"Die Anzahl der Antworten pro Aufgabe, die Sie für das Projekt wünschen",
+       "task-settings-redundancy-description-placeholder":"Die Anzahl der Antworten pro Aufgabe, die Sie für das Projekt wünschen (Standard=5)",
 
        "task-presenter-menu-headera":"Verwenden Sie eine der folgenden verfügbaren",
        "task-presenter-menu-headerb":"Vorlagen",
