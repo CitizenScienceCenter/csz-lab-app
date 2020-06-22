@@ -25,11 +25,12 @@
 
         <!-- The list of projects -->
         <b-row v-if="contributedProjects.length > 0">
-          <b-col :key="project.id" v-for="project in contributedProjects" md="4" class="mt-3">
-            <app-project-card 
-              :project="project" 
-              :buttonText="$t('view-btn')">
-            </app-project-card>
+          <b-col :key="project.id" v-for="(project,index) in contributedProjects" md="4" class="mt-3">
+            <app-project-card-small 
+              :project="project"
+              :index = index
+              :buttonText="$t('download-contributions')">
+            </app-project-card-small>
           </b-col>
         </b-row>
         <b-row v-else>
@@ -63,11 +64,13 @@
 <script>
 import { mapState } from 'vuex'
 import ProjectCard from '@/components/Common/ProjectCard'
+import ProjectCardSm from '@/components/Common/ProjectCardSm'
 
 export default {
   name: 'ProfileView',
   components: {
-    'app-project-card': ProjectCard
+    'app-project-card': ProjectCard,
+    'app-project-card-small': ProjectCardSm
   },
   computed: {
     ...mapState('user', {

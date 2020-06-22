@@ -25,6 +25,12 @@
                 </b-row>
               </b-list-group-item>
             </b-list-group>
+            <b-pagination class="mt-4"
+                v-model="currentPage"
+                :total-rows="projectTasksTotalNumber"
+                :per-page="perPage"
+                align="center">
+              </b-pagination>
     </b-container>
   </div>
 </template>
@@ -36,7 +42,10 @@ export default {
   name: 'TaskList',
   created () {
     this.getProject(this.id).then(() => {
-      this.getProjectTasks(this.project)
+      this.getProjectTasksPage({
+        'short_name':this.project.short_name,
+        'page':(this.currentPage) ? this.currentPage : 1
+        })
     })
   },
   props: {
@@ -44,12 +53,28 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      perPage: 10,
+      currentPage: 0
+    }
+  },
+  watch: {
+    currentPage: {
+      handler: function(value) {
+        if(value && this.project.short_name){
+          this.currentPage = value
+          this.getProjectTasksPage({'short_name':this.project.short_name,'page':value})
+        }
+      }
+    }
+  },
   computed: {
     ...mapState('project', {
       project: state => state.selectedProject
     }),
     ...mapState('task', [
-      'projectTasks'
+      'projectTasks','projectTasksTotalNumber'
     ]),
 
     items () {
@@ -71,7 +96,7 @@ export default {
       'getProject'
     ]),
     ...mapActions('task', [
-      'getProjectTasks'
+      'getProjectTasks','getProjectTasksPage'
     ])
   }
 }

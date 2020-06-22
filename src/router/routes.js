@@ -2,6 +2,7 @@ import Vue from 'vue'
 import store from '@/store'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import Comments from '@/components/Forum/Comments'
 import Login from '@/components/Login'
 import Discover from '@/components/Discover'
 import Project from '@/components/Project/Project'
@@ -114,6 +115,11 @@ export const routes = [
                 name: 'about',
                 component: About
               },
+              {
+                path: 'forum',
+                name:'forum',
+                component: Comments
+            },
               {
                 path: 'profile',
                 name: 'profile',

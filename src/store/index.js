@@ -9,6 +9,7 @@ import user from './modules/user'
 import task from './modules/task'
 import osm from './modules/osm'
 import settings from './modules/settings';
+import snakes from './modules/snakes'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ export default new Vuex.Store({
     project,
     user,
     task,
-    osm
+    osm,
+    snakes
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

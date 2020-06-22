@@ -127,3 +127,24 @@ export function getFormErrorsAsStringOnlyErrorMsg (errors) {
   }
   return result
 }
+
+
+
+export function giveDateTime(timestamp) {
+  var date = new Date(timestamp);
+  var date_time =  date.getDate() +'.'+ (date.getMonth()+1) +'.'+ date.getFullYear()+', '+ date.getHours() +':'+ (date.getMinutes()<10?'0':'') + date.getMinutes();
+  //console.log( date_time );
+  return date_time;
+}
+
+export function saveJsonObj2File(obj) {
+    const data = JSON.stringify(obj)
+    const blob = new Blob([data], {type: 'text/plain'})
+    const e = document.createEvent('MouseEvents'),
+    a = document.createElement('a');
+    a.download = "data.json";
+    a.href = window.URL.createObjectURL(blob);
+    a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+    e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+}

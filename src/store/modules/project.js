@@ -28,6 +28,8 @@ const errors = {
 const state = {
   categories: [], // all categories
   projects: [], // all projects
+  projectComments : [],
+  forumThreads : [],
 
   categoryProjects: {}, // projects ordered by category
   categoryPagination: {}, // contains a pagination object for each category
@@ -42,6 +44,7 @@ const state = {
   projectCreationOptions: {},
   projectUpdateOptions: {},
   publishProjectOptions: {},
+  projectCommentsOptions: {},
   projectDeletionOptions: {},
 
   //shareable link
@@ -94,6 +97,10 @@ const getters = {
     }
 
     return pagination
+  },
+
+  comments:state => {
+    return state.projectComments
   }
 }
 
@@ -549,13 +556,85 @@ const actions = {
       return false
     })
   },
+  setProjectCommentsOptions ({ commit }, short_name) {
+    return api.setProjectCommentsOptions(short_name).then(value => {
+      commit('setProjectCommentsOptions', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Error getting proeject commnets options', 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
 
   /**
-   * Gets a CSRF token to publish the project with the publishProject method
+   * Publish the given project
    * @param commit
+   * @param state
+   * @param dispatch
    * @param project
-   * @return {Promise<T | boolean>}
+   * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
+  setProjectComment ({ commit, state, dispatch },payload) {
+    return dispatch('setProjectCommentsOptions', payload.short_name).then(response => {
+      if (response) {
+        return api.setProjectComment(state.projectCommentsOptions.csrf, payload.short_name, payload.comment).then(value => {
+         /* commit('notification/showSuccess', {
+            title: 'Success',
+            content: 'Comment added!'
+          }, { root: true })*/
+          return value.data
+        }).catch(reason => {
+          commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Error',
+            content: 'Could not save your comment. Try again later!'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
+  getProjectComments ({commit}, payload) {
+    return api.getProjectComments(payload.limit,payload.offset,payload.id).then(value => {
+      commit('setProjectComments', value.data)
+      /*commit('notification/showSuccess', {
+        title: 'Comments loaded!',
+        content: 'The project ' + short_name + ' has loaded the comments'
+      }, { root: true })*/
+      return value.data
+    }).catch(reason => {
+      commit('setProjectComments',[])
+      /*commit('notification/showError', {
+        title: 'Error!',
+        content: 'Could not load the comments'
+      }, { root: true })*/
+      return false
+    })
+  },
+
+  getForumThreads ({commit}, payload) {
+    return api.getForumThreads(payload.limit,payload.offset).then(value => {
+      commit('setForumThreads', value.data)
+      /*commit('notification/showSuccess', {
+        title: 'Comments loaded!',
+        content: 'The project ' + short_name + ' has loaded the comments'
+      }, { root: true })*/
+      return value.data
+    }).catch(reason => {
+      commit('setProjectComments',[])
+      /*commit('notification/showError', {
+        title: 'Error!',
+        content: 'Could not load the comments'
+      }, { root: true })*/
+      return false
+    })
+  },
+
   getShareableLink ({ commit }, project) {
     return api.getShareableLink(project.short_name).then(value => {
       commit('setProjectShareableLink', value.data.key )
@@ -566,7 +645,7 @@ const actions = {
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
-        title: getTranslationLocale("error"), 
+        title: 'Shareable link error!', 
         content: reason
       }, { root: true })
     })
@@ -618,6 +697,15 @@ const mutations = {
       ...state.categoryPagination,
       [category]: pagination
     }
+  },
+  setProjectCommentsOptions (state, options) {
+    state.projectCommentsOptions = options
+  },
+  setProjectComments(state,comments){
+    state.projectComments = comments
+  },
+  setForumThreads(state,comments){
+    state.forumThreads = comments
   },
   setProjectShareableLink(state, link) {
     state.projectShareableLink = link

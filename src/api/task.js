@@ -3,8 +3,8 @@ import axios from 'axios'
 axios.defaults.headers['Content-Type'] = 'application/json'
 
 export default {
-  getProjectTasks (projectShortName) {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/browse', {
+  getProjectTasks (projectShortName,page=1) {
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/browse/'+page, {
       data: {},
       withCredentials: true
     })

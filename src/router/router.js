@@ -10,7 +10,7 @@ export const router = new VueRouter({
 });
 
 const publicRoutes = [
-    'home', 'login', 'register', 'logout', 'discover', 'about', 'project','project.test', 'project.task.presenter','project.task.presenter.test','reset-password','recover-password','register-confirmation'
+    'home', 'login', 'register', 'logout', 'discover', 'about','forum', 'project','project.test', 'project.task.presenter','project.task.presenter.test','reset-password','recover-password','register-confirmation'
   ]
 
 router.beforeEach((to, from, next) => {
@@ -26,6 +26,7 @@ router.beforeEach((to, from, next) => {
 
     let filteredPath = to.path.split('/').filter(element => element.length > 0);
     console.log( filteredPath );
+    console.log(to.name)
 
     //if( to.params.lang && to.params.lang.split('/')[0].length === 2 ) {
     if( filteredPath.length > 0 && filteredPath[0].length === 2 ) {

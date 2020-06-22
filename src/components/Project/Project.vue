@@ -18,12 +18,13 @@
           <div v-if="isLoggedUserOwnerOfProject(project)">
             
              <div v-if="project.published">
-              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>{{ $t('project-draft-published') }}</b-btn><br>
+              <b-btn ref="btn-approve-it" variant="success" class="mt-2" disabled>{{ $t('project-draft-published') }}</b-btn>
+              <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn> <br>
             </div>
 
             <div v-else-if="!project.published && !project.info.pending_approval && !localPendingApproval"> 
              
-              <b-btn ref="btn-draft-complete-it" :to="{ name: 'task.builder.material', params: { id } }" class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
+              <b-btn ref="btn-draft-complete-it" v-b-modal.draft-project class="mt-2" variant="primary"> {{ $t('project-draft-complete') }}</b-btn>
               <b-btn ref="btn-test-it" :to="{ name: 'project.task.presenter' }" variant="primary" class="mt-2">{{ $t('project-draft-test') }}</b-btn>
               &ensp;&ensp;&ensp;
               <b-btn ref="btn-share-it" v-b-modal.project-link variant="primary" class="mt-2">{{ $t('project-share-link') }}</b-btn> 
@@ -32,6 +33,19 @@
                  My link
               </b-btn>
               <br>
+              <b-modal
+                id="draft-project"
+                :title="$t('project-draft-complete')"
+                :ok-title="$t('ok')"
+                :cancel-title="$t('cancel-c')"
+                @ok="draftProject(id)">
+                <b-alert variant="warning" :show="true">
+                  <span v-html="$t('modify-draft-modal-content',
+                {
+                'HowitWorks': `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>How it works</a>`
+                  })"></span> 
+               </b-alert>
+              </b-modal>
               <b-modal
                 id="project-link"
                 :title="$t('project-share-link')"
@@ -279,6 +293,9 @@ export default {
           variant: variant,
           solid: true
         })
+    },
+    draftProject(projectId){
+      this.$router.push({ name: 'task.builder.material', params: { projectId } })
     }
   },
   computed: {

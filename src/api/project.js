@@ -139,5 +139,40 @@ export default {
       withCredentials: true,
       data: {}
     })
+  },
+
+  getProjectComments(limit,offset,id){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/forum/thread/' + id + '/comments?limit='+limit+'&offset='+offset, {
+      withCredentials: true,
+      data: {}
+    })
+  },
+
+  getForumThreads(limit,offset){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/forum/threads?limit='+limit+'&offset='+offset, {
+      withCredentials: true,
+      data: {}
+    })
+  },
+
+  setProjectCommentsOptions(projectShortName){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/new-comment', {
+      withCredentials: true,
+      data: {}
+    })
+  },
+
+  setProjectComment(csrf,projectShortName,comment){
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/new-comment', {
+      userId:comment.user_id,
+      parentId: comment.parent,
+      content: comment.content,
+      text:comment.text
+    }, {
+      withCredentials: true,
+      headers: {
+        'X-CSRFToken': csrf
+      }
+    })
   }
 }
