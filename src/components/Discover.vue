@@ -4,11 +4,15 @@
     <b-row class="justify-content-center mt-4">
       <b-col>
           <h2 class="text-center">{{ globalPagination.total }} {{ $t('projects-c') }}</h2>
-
-
-            <!-- A tab for each category 
-            :title="category.name + (category.short_name in categoryPagination ? ' (' + categoryPagination[category.short_name].total + ')' : '')" 
+          <!-- A tab for each category 
+          <b-tabs pills align="center">
+            <b-tab
+              v-for="category in allCategories"
+              :key="category.id"
+              :title="category.name + (category.short_name in categoryPagination ? ' (' + categoryPagination[category.short_name].total + ')' : '')"
+              style="outline: none">
             -->
+            
             <div
               v-for="category in allCategories.filter((cat)=>{ return cat.name == 'Thinking'})"
               :key="category.id"
@@ -36,7 +40,10 @@
                 </b-col>
               </b-row>
             </div>
-
+            <!--  
+            </b-tab>
+          </b-tabs> 
+          -->
       </b-col>
     </b-row>
   </b-container>

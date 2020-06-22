@@ -35,6 +35,8 @@ const state = {
   //task offset
   taskOffset: 0,
 
+  projectTasksTotalNumber:0,
+
 
   // the current task showed in the task presenter
   currentTask: {
@@ -308,6 +310,26 @@ const actions = {
       }, { root: true })
       return false
     })
+  },
+
+  /**
+   * Returns the list of all the tasks for the given project
+   * @param commit
+   * @param project
+   * @return {Promise<T | boolean>}
+   */
+  getProjectTasksPage ({ commit }, payload) {
+    return api.getProjectTasks(payload.short_name,payload.page).then(value => {
+      commit('setProjectTasks', value.data.tasks)
+      commit('setProjectTasksTotalNumber', value.data.n_tasks)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: getTranslationLocale("GET_PROJECT_TASKS_LOADING_ERROR"), 
+        content: reason
+      }, { root: true })
+      return false
+    })
   }
 }
 
@@ -330,6 +352,9 @@ const mutations = {
   },
   setTaskOffset(state, offset) {
     state.taskOffset = offset
+  },
+  setProjectTasksTotalNumber(state,offset) {
+    state.projectTasksTotalNumber = offset
   }
 }
 
