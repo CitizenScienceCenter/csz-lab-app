@@ -667,8 +667,6 @@ const actions = {
   },
 
   deleteComment ({ commit, state, dispatch },comment_id) {
-    alert('deleting with id:')
-    alert(comment_id)
     return dispatch('deleteCommentsOptions', comment_id).then(response => {
       if (response) {
         return api.deleteComment(state.deleteCommentsOptions.csrf, comment_id).then(value => {
@@ -681,7 +679,7 @@ const actions = {
           commit('setProjectComments',[])
           commit('notification/showError', {
             title: 'Error',
-            content: 'Could not save your comment. Try again later!'
+            content: 'Could not delete your comment!'
           }, { root: true })
           return false
         })

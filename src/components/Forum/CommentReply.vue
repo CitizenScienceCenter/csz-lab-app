@@ -11,7 +11,7 @@
           <span>{{ giveDateTime(reply.created) }}</span>
           <span v-if="reply.role">, {{ reply.role }}</span>
           <b-button v-if="reply.owner_id == infos.id" variant="warning" 
-            @click.prevent="deleteComment(reply.id)" style="float:right;">
+            @click.prevent="deleteComment(reply.id)" style="float:right;display:none;">
             {{$t('forum-delete-comment')}}
           </b-button>
         </div>
@@ -21,6 +21,10 @@
     <div class="comment__content">
       <p>{{ reply.content.text }}</p>
     </div>
+     <a href="#" class="small comment__content comment__add mb-2" v-if="reply.owner_id == infos.id" 
+            @click.prevent="deleteComment(reply.id)" >
+              {{$t('forum-delete-comment')}}
+            </a>
   </div>
 </template>
 
@@ -55,8 +59,12 @@
         return date_time;
       },
       deleteComment(id){
-        alert(id)
-        this.$store.dispatch('project/deleteComment', id)
+        this.$store.dispatch('project/deleteComment', id).then(res => {
+          if(res.status=='success'){
+            alert('deleted')
+
+          }
+        })
       }
     }
 
