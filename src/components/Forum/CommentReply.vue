@@ -10,7 +10,8 @@
         <div>
           <span>{{ giveDateTime(reply.created) }}</span>
           <span v-if="reply.role">, {{ reply.role }}</span>
-          <b-button v-if="reply.owner_id == infos.id" variant="warning" @click.prevent="deleteComment(reply.id)" style="float:right;display:none;">
+          <b-button v-if="reply.owner_id == infos.id" variant="warning" 
+            @click.prevent="deleteComment(reply.id)" style="float:right;">
             {{$t('forum-delete-comment')}}
           </b-button>
         </div>
@@ -25,7 +26,7 @@
 
 <script>
 
-  import {mapState} from 'vuex'
+  import {mapState, mapActions} from 'vuex'
 
   export default {
     name: "Reply",
@@ -54,7 +55,8 @@
         return date_time;
       },
       deleteComment(id){
-
+        alert(id)
+        this.$store.dispatch('project/deleteComment', id)
       }
     }
 

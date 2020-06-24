@@ -46,6 +46,7 @@ const state = {
   publishProjectOptions: {},
   projectCommentsOptions: {},
   projectDeletionOptions: {},
+  deleteCommentsOptions : {},
 
   //shareable link
   projectShareableLink: null,
@@ -649,7 +650,45 @@ const actions = {
         content: reason
       }, { root: true })
     })
-  }
+  },
+
+
+  deleteCommentsOptions ({ commit }, short_name) {
+    return api.deleteCommentsOptions(short_name).then(value => {
+      commit('deleteCommentsOptions', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Error getting comments options', 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  deleteComment ({ commit, state, dispatch },comment_id) {
+    alert('deleting with id:')
+    alert(comment_id)
+    return dispatch('deleteCommentsOptions', comment_id).then(response => {
+      if (response) {
+        return api.deleteComment(state.deleteCommentsOptions.csrf, comment_id).then(value => {
+         commit('notification/showSuccess', {
+            title: 'Success',
+            content: 'Comment deleted!'
+          }, { root: true })
+          return value.data
+        }).catch(reason => {
+          commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Error',
+            content: 'Could not save your comment. Try again later!'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
 
 }
 
@@ -715,7 +754,10 @@ const mutations = {
   },
   setProjectTestEnvironment(state,status){
     state.enableTestEnvironment = status
-  }
+  },
+  deleteCommentsOptions (state, options) {
+    state.deleteCommentsOptions = options
+  },
 }
 
 export default {
