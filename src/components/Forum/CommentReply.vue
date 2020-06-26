@@ -8,7 +8,7 @@
       </div>
       <div class="comment__username small text-muted">
         <div>
-          <span>{{ giveDateTime(reply.created) }}</span>
+          <span>{{ helpers.giveDateTime(reply.created) }}</span>
           <span v-if="reply.role">, {{ reply.role }}</span>
           <b-button v-if="reply.owner_id == infos.id" variant="warning" 
             @click.prevent="deleteComment(reply.id)" style="float:right;display:none;">
@@ -21,15 +21,15 @@
     <div class="comment__content">
       <p>{{ reply.content.text }}</p>
     </div>
-     <a href="#" class="small comment__content comment__add mb-2" v-if="reply.owner_id == infos.id" 
-            @click.prevent="deleteComment(reply.id)" >
-              {{$t('forum-delete-comment')}}
-            </a>
+    <div class="comment__header">
+      <a v-if="reply.owner_id == infos.id || infos.admin" href="#" class="small comment__content comment__add mb-2" @click.prevent="deleteComment(reply.parent,reply.id)" >
+        {{$t('forum-delete-comment')}}
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
-
   import {mapState, mapActions} from 'vuex'
 
   export default {
@@ -37,7 +37,8 @@
     data() {
       return {
         replyTexts: [],
-        defaultImage: require('@/assets/graphic-community.png')
+        defaultImage: require('@/assets/graphic-community.png'),
+        helpers: require('@/helper.js')
       }
     },
     props: {
@@ -52,19 +53,11 @@
       ])
     },
     methods: {
-      giveDateTime(timestamp) {
-        var date = new Date(timestamp);
-        var date_time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ', ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
-        //console.log( date_time );
-        return date_time;
-      },
-      deleteComment(id){
-        this.$store.dispatch('project/deleteComment', id).then(res => {
-          if(res.status=='success'){
-            alert('deleted')
-
-          }
-        })
+      deleteComment(thread_id,comment_id){
+        this.$store.dispatch('project/deleteComment', {
+          'thread':thread_id,
+          'comment':comment_id
+          })
       }
     }
 

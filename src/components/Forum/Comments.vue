@@ -31,11 +31,11 @@
         <b-col md="12" class="mt-md-0 mt-4">
           <div v-for="(thread,index) in comments" v-bind:key="index"
               v-if="index < topicsShown">
-              <CommentThread
+              <comment-thread
                 v-bind:key="index"
                 :comment=commentTree
                 :index=index
-              />
+              ></comment-thread>
           </div>
 
           <div v-if="numberOfThreads > topicsShown" class="button-group">
@@ -93,7 +93,7 @@
             this.buildCommentTree()
           }
         }
-      },
+      }
     },
     mounted: function () {
       this.loadComments();

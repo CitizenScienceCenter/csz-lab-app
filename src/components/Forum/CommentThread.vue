@@ -8,7 +8,7 @@
       </div>
       <div class="comment__username small text-muted">
         <div>
-          <span>{{ giveDateTime(comment[index][0].created) }}</span>
+          <span>{{ helpers.giveDateTime(comment[index][0].created) }}</span>
           <span v-if="comment[index][0].role">, {{ comment[index][0].role }}</span>
           <b-button variant="warning" @click.prevent="deleteTopic()" style="float:right;display:none;">
             {{$t('forum-delete-topic')}}
@@ -16,6 +16,14 @@
         </div>
         <span class="name">{{ comment[index][0].username }}</span>
       </div>
+
+      <!-- delete topic -->
+      <div class="comment__header">
+        <a v-if="comment[index][0].owner_id == infos.id || infos.admin" href="#"  @click.prevent="deleteComment(comment[index][0].parent,comment[index][0].id)" >
+          {{$t('forum-delete-topic')}}
+        </a>
+      </div>
+      <!-- delete topic -->
     </div>
 
     <div class="comment__content">
@@ -68,7 +76,9 @@
                 v-for="(reply,replyIndex) in comment[index][1]" v-bind:key="replyIndex"
                 v-if="replyIndex < repliesShown">
               <b-col md="11">
-                <CommentReply :reply="reply"></CommentReply>
+                <comment-reply 
+                  :reply="reply">
+                </comment-reply>
               </b-col>
             </b-row>
             <div v-if="totalRepliesInThread > repliesShown " style="text-align:center;">
@@ -77,6 +87,7 @@
               </b-button>
             </div>
           </div>
+
         </b-collapse>
       </div>
     </div>
@@ -98,10 +109,11 @@
       return {
         replyTexts: [],
         defaultImage: require('@/assets/graphic-community.png'),
+        helpers: require('@/helper.js'),
         repliesShown : 4,
         repliesOffset: 0,
         replies : [],
-        totalRepliesInThread : 0
+        totalRepliesInThread : 0,
       }
     },
     props: {
@@ -121,6 +133,22 @@
       ...mapState('project', {
         comments: state => state.projectComments
       }),
+    },
+     watch: {
+      comments(newValue, oldValue) {
+        console.log('CommentThread.vue')
+        console.log(newValue)
+        //console.log(oldValue)
+        if (newValue.count != oldValue.count && oldValue.count) {
+            //this.comments = newValue.data
+            //this.buildCommentTree()
+            //this.comment = newValue
+            //this.replies = newValue.data;
+            this.buildThreadTree(this.comment,newValue.data)
+            //this.comment[this.index][1] = newValue.data;
+          
+        }
+      },
     },
     methods: {
       showCollapse(parent){
@@ -156,12 +184,6 @@
             }
           }
         }
-      },
-      giveDateTime(timestamp) {
-        var date = new Date(timestamp);
-        var date_time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ', ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
-        //console.log( date_time );
-        return date_time;
       },
       getCollapseId(index) {
         return "google-doc-collapse-" + index
@@ -202,8 +224,11 @@
         });
 
       },
-      deleteTopic(){
-
+       deleteComment(thread_id,comment_id){
+        this.$store.dispatch('project/deleteComment', {
+          'thread':thread_id,
+          'comment':comment_id
+          })
       }
     }
 
