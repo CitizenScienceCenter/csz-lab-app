@@ -56,11 +56,11 @@
         let filteredRound1,filteredRound2,filteredRound1Options;
         let temp = this.options
 
-        filteredRound1 = temp.filter((obj)=>{ return obj.label == 'label-binomials' })
+        filteredRound1 = temp.filter((obj)=>{ return obj.label == 'Binomials' })
         
         filteredRound2 = filteredRound1[0].options.filter((obj)=>{ return obj.value != '' })
 
-        let index = temp.findIndex(x => x.label ==="label-binomials");
+        let index = temp.findIndex(x => x.label ==="Binomials");
 
         temp[index]['options'] = filteredRound2
 
