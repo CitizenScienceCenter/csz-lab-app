@@ -55,8 +55,8 @@
     methods: {
       deleteComment(thread_id,comment_id){
         this.$store.dispatch('project/deleteComment', {
-          'thread':thread_id,
-          'comment':comment_id
+          'thread_id':thread_id,
+          'comment_id':comment_id
           })
       }
     }

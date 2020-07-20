@@ -33,7 +33,7 @@
               v-if="index < topicsShown">
               <comment-thread
                 v-bind:key="index"
-                :comment=commentTree
+                :commentsThread=commentTree
                 :index=index
               ></comment-thread>
           </div>

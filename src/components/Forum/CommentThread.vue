@@ -114,10 +114,11 @@
         repliesOffset: 0,
         replies : [],
         totalRepliesInThread : 0,
+        comment : this.commentsThread
       }
     },
     props: {
-      comment: {
+      commentsThread: {
         type: Array,
         default: []
       },
@@ -136,18 +137,7 @@
     },
      watch: {
       comments(newValue, oldValue) {
-        console.log('CommentThread.vue')
-        console.log(newValue)
-        //console.log(oldValue)
-        if (newValue.count != oldValue.count && oldValue.count) {
-            //this.comments = newValue.data
-            //this.buildCommentTree()
-            //this.comment = newValue
-            //this.replies = newValue.data;
-            this.buildThreadTree(this.comment,newValue.data)
-            //this.comment[this.index][1] = newValue.data;
-          
-        }
+        
       },
     },
     methods: {
@@ -170,6 +160,7 @@
       buildThreadTree(comments,replies) {
         console.log('Building comment tree')
         for (let i = 0; i < replies.length; i++) {
+          
           if (replies[i].parent) {
             for (let j = 0; j < comments.length; j++) {
               if (replies[i].parent === comments[j][0].id) {
@@ -179,7 +170,13 @@
                     continue
                   }
                 }
-                this.comment[j][1].push(replies[i]);
+
+                const found = this.comment[j][1].some(el => el.id === replies[i].id);
+                if (!found){
+                  //this.comment[j][1].splice(0, 0, replies[i]);
+                  this.comment[j][1].push(replies[i]);
+                }
+               
               }
             }
           }
@@ -211,13 +208,10 @@
               'offset':this.repliesOffset
             }).then(res => {
               //this.replies = res.data
-              this.replies = []
               this.replies = res.data
               this.totalRepliesInThread = res.count
-              this.comment[index].push(comment)
-              this.comment[index][1]=res.data
-              console.log(this.comment[index][1])
-              //this.buildCommentTree(this.comment,res.data)   
+              this.comment[this.index][1] = []
+              this.buildThreadTree(this.comment,res.data)   
                  
             });
           }
