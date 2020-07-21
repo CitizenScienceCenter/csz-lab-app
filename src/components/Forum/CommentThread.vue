@@ -136,8 +136,15 @@
       }),
     },
      watch: {
+      commentsThread(newValue, oldValue) {
+        if(newValue.length > oldValue.length) this.comment = newValue
+      },
       comments(newValue, oldValue) {
-        
+        this.replies = newValue.data
+        this.totalRepliesInThread = newValue.count
+        this.comment[this.index][1] = []
+        this.buildThreadTree(this.comment,newValue.data)
+        this.replyTexts = []
       },
     },
     methods: {
@@ -146,15 +153,11 @@
               'id':parent,
               'limit':this.repliesShown+999,
               'offset':this.repliesOffset
-            }).then(res => {
-              this.replies = res.data
-              this.totalRepliesInThread = res.count
-              this.buildThreadTree(this.comment,res.data)
             });
       },
       hideCollapse(index){
         this.replies = []
-        this.comment[index][1] = []
+        this.comment[this.index][1] = []
         this.buildThreadTree(this.comment,[])
       },
       buildThreadTree(comments,replies) {
@@ -206,13 +209,6 @@
               'id':parentId,
               'limit':this.repliesShown,
               'offset':this.repliesOffset
-            }).then(res => {
-              //this.replies = res.data
-              this.replies = res.data
-              this.totalRepliesInThread = res.count
-              this.comment[this.index][1] = []
-              this.buildThreadTree(this.comment,res.data)   
-                 
             });
           }
         });

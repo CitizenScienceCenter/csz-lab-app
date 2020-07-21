@@ -634,7 +634,7 @@ const actions = {
       if (response) {
         return api.deleteComment(state.deleteCommentsOptions.csrf, payload.comment_id).then(value => {
           if (value.data.status === 'success') {
-            commit('setProjectComments', value.data.data)
+            //commit('setProjectComments', value.data.data)
             //return true
             return dispatch('getProjectComments',{'id':payload.thread_id,'limit':1000,'offset':0})
 

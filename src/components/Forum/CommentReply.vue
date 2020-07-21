@@ -10,10 +10,6 @@
         <div>
           <span>{{ helpers.giveDateTime(reply.created) }}</span>
           <span v-if="reply.role">, {{ reply.role }}</span>
-          <b-button v-if="reply.owner_id == infos.id" variant="warning" 
-            @click.prevent="deleteComment(reply.id)" style="float:right;display:none;">
-            {{$t('forum-delete-comment')}}
-          </b-button>
         </div>
         <span class="name">{{ reply.username }}</span>
       </div>
@@ -23,7 +19,7 @@
     </div>
     <div class="comment__header">
       <a v-if="reply.owner_id == infos.id || infos.admin" href="#" class="small comment__content comment__add mb-2" @click.prevent="deleteComment(reply.parent,reply.id)" >
-        {{$t('forum-delete-comment')}}
+        <span  style="color:#c5202e;font-weight: lighter;"> {{$t('forum-delete-comment')}} </span>
       </a>
     </div>
   </div>
