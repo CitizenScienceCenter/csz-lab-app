@@ -24,8 +24,7 @@
            size="sm"
             rows="1"
             max-rows="5"
-            :value="activeComment" 
-            v-model="replyTexts[0]"
+            v-model="replyTexts"
           />
         </b-form-group>
 
@@ -67,10 +66,9 @@
     name: "Reply",
     data() {
       return {
-        replyTexts: [],
+        replyTexts: null,
         edit_comment : false,
         tempComment : null,
-        activeComment: this.reply.content.text,
         defaultImage: require('@/assets/graphic-community.png'),
         helpers: require('@/helper.js')
       }
@@ -94,22 +92,17 @@
           })
       },
       editComment(thread_id,comment_id){
-
         let comment = {
           id:comment_id,
-          user_id: this.infos.id,
           parent: thread_id,
-          text: null,
           content: {
-            text: this.replyTexts[0]
+            text: this.replyTexts
           }
         };
 
-        console.log(comment)
-
         this.$store.dispatch('project/updateProjectComment', {'short_name': 'NA', 'comment': comment}).then(res => {
           if (res.status == 'success') {
-            this.replyTexts[index] = ''
+            this.replyTexts = ''
             this.edit_comment = false
             this.$store.dispatch('project/getProjectComments', {
               'id':thread_id,
@@ -122,13 +115,12 @@
       },
       editBtn(commentContent){
         this.edit_comment = true
+        this.replyTexts = this.reply.content.text
         this.tempComment = commentContent
       },
       cancelEdit(){
         this.reply.content.text = this.tempComment
-        //alert(this.$refs.rep_content.value)
         this.edit_comment = false
-        //this.activeComment = this.tempComment
       }
     }
 
