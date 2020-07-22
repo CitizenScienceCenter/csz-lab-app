@@ -71,7 +71,7 @@
             </b-row>
           </div>
 
-          <div class="replies" v-if="comment[index][1].length > 0">
+          <div class="replies" >
             <b-row align-h="center" class="mb-4" 
                 v-for="(reply,replyIndex) in comment[index][1]" v-bind:key="replyIndex"
                 v-if="replyIndex < repliesShown">

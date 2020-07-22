@@ -190,5 +190,19 @@ export default {
         'X-CSRFToken': csrf
       }
     })
-  }
+  },
+
+  updateProjectComment(csrf,projectShortName,comment){
+    console.log(comment)
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/update-comment', {
+      id:comment.id,
+      parentId: comment.parent,
+      content: comment.content.text
+    }, {
+      withCredentials: true,
+      headers: {
+        'X-CSRFToken': csrf
+      }
+    })
+  },
 }

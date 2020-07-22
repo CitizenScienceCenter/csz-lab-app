@@ -659,6 +659,25 @@ const actions = {
     })
   },
 
+  updateProjectComment ({ commit, state, dispatch },payload) {
+    return dispatch('setProjectCommentsOptions', payload.short_name).then(response => {
+      if (response) {
+        return api.updateProjectComment(state.projectCommentsOptions.csrf, payload.short_name, payload.comment).then(value => {
+          return value.data
+        }).catch(reason => {
+          //commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Error',
+            content: 'Could not save your comment. Try again later!'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
+
 }
 
 
