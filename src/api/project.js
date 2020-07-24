@@ -197,7 +197,7 @@ export default {
     return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/update-comment', {
       id:comment.id,
       parentId: comment.parent,
-      content: comment.content.text
+      content: comment.content
     }, {
       withCredentials: true,
       headers: {
