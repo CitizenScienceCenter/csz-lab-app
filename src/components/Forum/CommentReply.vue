@@ -30,9 +30,10 @@
 
         <b-button 
           size="sm" type="submit" variant="secondary"
+          style="margin-left:10px"
           class="float-right"
           @click="editComment(reply.parent,reply.id)">
-            {{$t('post')}}
+            {{$t('submit-btn')}}
         </b-button>
 
         <b-button 
