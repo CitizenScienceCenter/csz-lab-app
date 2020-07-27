@@ -19,7 +19,7 @@
 
       <!-- delete topic -->
       <div class="comment__header">
-        <a v-if="comment[index][0].owner_id == infos.id || infos.admin" href="#"  @click.prevent="deleteComment(comment[index][0].parent,comment[index][0].id)" >
+        <a v-if="comment[index][0].owner_id == infos.id || infos.admin" href="#"  @click.prevent="deleteThread(comment[index][0].parent,comment[index][0].id)" >
           {{$t('forum-delete-topic')}}
         </a>
       </div>
@@ -117,6 +117,7 @@
         comment : this.commentsThread
       }
     },
+    
     props: {
       commentsThread: {
         type: Array,
@@ -135,9 +136,9 @@
         comments: state => state.projectComments
       }),
     },
-     watch: {
+    watch: {
       commentsThread(newValue, oldValue) {
-        if(newValue.length > oldValue.length) this.comment = newValue
+        if(newValue.length != oldValue.length) this.comment = newValue
       },
       comments(newValue, oldValue) {
         this.replies = newValue.data
@@ -214,10 +215,10 @@
         });
 
       },
-       deleteComment(thread_id,comment_id){
-        this.$store.dispatch('project/deleteComment', {
-          'thread':thread_id,
-          'comment':comment_id
+      deleteThread(thread_id,comment_id){
+        this.$store.dispatch('project/deleteThread', {
+          'thread_id':thread_id,
+          'comment_id':comment_id
           })
       }
     }

@@ -677,6 +677,33 @@ const actions = {
     })
   },
 
+  deleteThread ({ commit, state, dispatch },payload) {
+    return dispatch('deleteCommentsOptions', payload.comment_id).then(response => {
+      if (response) {
+        return api.deleteComment(state.deleteCommentsOptions.csrf, payload.comment_id).then(value => {
+          if (value.data.status === 'success') {
+            return dispatch('getForumThreads',{'limit':1000,'offset':0})
+          } else {
+            commit('notification/showError', {
+              title: getTranslationLocale('error'), 
+              content: 'Could not delete your comment!'
+            }, { root: true })
+            return false
+          } 
+         
+        }).catch(reason => {
+          commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Error',
+            content: 'Could not delete your comment!'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
 
 }
 
