@@ -30,39 +30,43 @@
      <!-- private project modal -->
        <b-modal
           :id="'private-project' + project.id"
-          :title="$t('project-draft-publish-your-project')"
-          :ok-title="$t('login-input-password-placeholder')"
-          :cancel-title="$t('project-draft-publish-your-project-no')"
-          @ok="checkPass"
+          hide-footer
+          title="Private project"
+          :ok-title="$t('submit-btn')"
+          :cancel-title="$t('cancel-c')"
+          @show="resetModal"
+          @ok="submitPass"
         >
-          <b-form-group id="input-group-1">
+        <b-form ref="form-registration" @submit.prevent="submitPass" class="mt-4">
+          <b-form-group >
             <b-form-input
-                    id="password"
-                    type="password"
-                    v-model="privateProjectPassword"
-                    required
-                    :placeholder="$t('login-input-password-placeholder')"
+              :id="'private-project' + project.id"
+              type="password"
+              v-model="privateProjectPassword"
+              required
+              :placeholder="$t('login-input-password-placeholder')"
             ></b-form-input>
           </b-form-group>
-
-
-        </b-modal>   
+          <b-button class="mt-3" type="submit" variant="primary"> {{$t('submit-btn')}} </b-button>
+        </b-form>
+      </b-modal>   
      
     <div class="overlay"></div>
     <div class="project-bg-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
     
-
   </div>
   
 </template>
 
 <script>
+import { mapMutations, mapActions, mapState } from 'vuex'
+
 export default {
   name: 'ProjectCard',
   data: () => {
     return {
       defaultImg: require('@/assets/graphic-projects.png'),
-      privateProjectPassword
+      privateProjectPassword:''
     }
   },
   props: {
@@ -70,6 +74,9 @@ export default {
     buttonText: String
   },
   methods:{
+    ...mapActions('project', [
+      'getAccessToProject'
+    ]),
     getBaseUrl(){
       if(this.project.info.thumbnail){
         const base = process.env.BASE_ENDPOINT_URL
@@ -80,8 +87,21 @@ export default {
         return this.defaultImg
       }
     },
-    checkPass(){
+    submitPass(){
       alert(this.privateProjectPassword)
+      this.getAccessToProject(this.privateProjectPassword).then((response) => {
+        if (response.status == 'success'){
+          this.$router.push({ name: 'project', params: { id: project.id } })
+        } else {
+          this.showError({
+              title: 'Access denied',
+              content: ''
+            })
+        }
+      })
+    },
+    resetModal() {
+      this.privateProjectPassword = ''
     }
   }
 }
