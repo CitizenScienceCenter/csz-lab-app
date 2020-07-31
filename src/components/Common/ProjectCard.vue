@@ -1,6 +1,11 @@
 <template>
   <div class="project">
+     
     <div class="project-info">
+      <b-badge v-if="project.restricted" variant="secondary" class='project-restricted'>
+        Private
+      </b-badge>
+      
       <b-row class="row text-center mb-4">
         <b-col class="col-image">
           <!--<b-card-img-lazy v-if="project.info.thumbnail_url" :src="project.info.thumbnail_url"></b-card-img-lazy>
@@ -15,13 +20,40 @@
           <p v-html="project.description"></p>
         </b-col>
       </b-row>
-      <b-button :to="{ name: 'project', params: { id: project.id } }" variant="primary">{{ buttonText }}</b-button>
+
+      <b-btn v-if="project.restricted" v-b-modal="'private-project' + project.id" variant="primary">{{ buttonText }}</b-btn>
+    
+      <b-btn v-else :to="{ name: 'project', params: { id: project.id } }" variant="primary">{{ buttonText }}</b-btn>
+      
     </div>
 
+     <!-- private project modal -->
+       <b-modal
+          :id="'private-project' + project.id"
+          :title="$t('project-draft-publish-your-project')"
+          :ok-title="$t('login-input-password-placeholder')"
+          :cancel-title="$t('project-draft-publish-your-project-no')"
+          @ok="checkPass"
+        >
+          <b-form-group id="input-group-1">
+            <b-form-input
+                    id="password"
+                    type="password"
+                    v-model="privateProjectPassword"
+                    required
+                    :placeholder="$t('login-input-password-placeholder')"
+            ></b-form-input>
+          </b-form-group>
+
+
+        </b-modal>   
+     
     <div class="overlay"></div>
     <div class="project-bg-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
+    
 
   </div>
+  
 </template>
 
 <script>
@@ -29,7 +61,8 @@ export default {
   name: 'ProjectCard',
   data: () => {
     return {
-      defaultImg: require('@/assets/graphic-projects.png')
+      defaultImg: require('@/assets/graphic-projects.png'),
+      privateProjectPassword
     }
   },
   props: {
@@ -46,6 +79,9 @@ export default {
       } else {
         return this.defaultImg
       }
+    },
+    checkPass(){
+      alert(this.privateProjectPassword)
     }
   }
 }
@@ -67,6 +103,13 @@ export default {
       color: white;
       height: 100%;
       padding: $spacing-3 $spacing-2;
+
+      .project-restricted{
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 20px;
+      }
 
       .project-type {
         display: block;
