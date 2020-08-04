@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapState } from 'vuex'
+import { mapMutations, mapActions, mapState,mapGetters } from 'vuex'
 
 export default {
   name: 'ProjectCard',
@@ -73,9 +73,21 @@ export default {
     project: Object,
     buttonText: String
   },
+  computed:{
+    ...mapState('user', [
+      'infos',
+    ]),
+    ...mapGetters('user', [
+      'isLoggedUserOwnerOfProject',
+      'isLoggedUserAdmin'
+    ]),   
+  },
   methods:{
     ...mapActions('project', [
       'getAccessToProject'
+    ]),
+    ...mapMutations('notification', [
+      'showError', 'showSuccess'
     ]),
     getBaseUrl(){
       if(this.project.info.thumbnail){
@@ -88,14 +100,16 @@ export default {
       }
     },
     submitPass(){
-      alert(this.privateProjectPassword)
-      this.getAccessToProject(this.privateProjectPassword).then((response) => {
+      this.getAccessToProject({
+        'password':this.privateProjectPassword,
+        'short_name':this.project.short_name
+        }).then((response) => {
         if (response.status == 'success'){
-          this.$router.push({ name: 'project', params: { id: project.id } })
+          this.$router.push({ name: 'project', params: { id: this.project.id } })
         } else {
           this.showError({
               title: 'Access denied',
-              content: ''
+              content: response.status
             })
         }
       })

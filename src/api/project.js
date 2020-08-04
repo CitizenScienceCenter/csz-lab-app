@@ -174,5 +174,23 @@ export default {
         'X-CSRFToken': csrf
       }
     })
+  },
+
+  setPrivateProjectOptions(projectShortName){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/password', {
+      withCredentials: true,
+      data: {}
+    })
+  },
+
+  getAccessToProject(csrf,projectShortName,password){
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/password', {
+      password:password
+    }, {
+      withCredentials: true,
+      headers: {
+        'X-CSRFToken': csrf
+      }
+    })
   }
 }
