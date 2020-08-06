@@ -388,6 +388,12 @@ export const routes = [
                 name: 'flickr.callback',
                 props: true,
                 component: FlickrCallback
+              },
+              {
+                path: 'project_editor',
+                name: 'flexyproject.editor',
+                props: true,
+                component: () => import(/* webpackChunkName: "FlexyProjectEditor" */ '../views/FlexyProjectEditor.vue')
               }
 
         ]

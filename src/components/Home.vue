@@ -11,6 +11,8 @@
       <p class="text-center scroll-effect scroll-effect-delayed-2">
         <b-button :to="{ name: 'discover' }" variant="primary">{{ $t('home-start-contributing') }}</b-button>
         <b-button :to="{ name: 'project.builder.name' }" class="btn-secondary-inverted">{{ $t('home-create-a-project') }}</b-button>
+        <!-- Andres: button to test flexy projects -->
+        <b-button :to="{ name: 'flexyproject.editor' }" class="btn-warning">Flexy Projects</b-button>
       </p>
     </app-cover>
 
