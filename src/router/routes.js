@@ -147,6 +147,15 @@ export const routes = [
                 component: Project,
                 props: true,
                 beforeEnter: (to, from, next) => {
+                  /*store.dispatch('project/isProjectPrivate',{'id':parseInt(to.params.id)}).then(response => {
+                    alert(JSON.stringify(response))
+                    if (response.private) {
+                      next({ name: 'home' })
+                    } else {
+                      
+                    }
+                  })*/
+
                   const selectedProjectId = store.state.project.selectedProject.id
                   if (parseInt(selectedProjectId) !== parseInt(to.params.id)) {
                     store.commit('project/menu/setCurrentTab', store.state.project.menu.tabs.info)

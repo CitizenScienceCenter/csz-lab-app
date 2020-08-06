@@ -192,5 +192,12 @@ export default {
         'X-CSRFToken': csrf
       }
     })
-  }
+  },
+
+  isProjectPrivate(project_id){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + project_id + '/private', {
+      withCredentials: true,
+      data: {}
+    })
+  },
 }

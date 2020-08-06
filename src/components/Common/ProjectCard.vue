@@ -21,13 +21,13 @@
         </b-col>
       </b-row>
 
-      <b-btn v-if="project.restricted" v-b-modal="'private-project' + project.id" variant="primary">{{ buttonText }}</b-btn>
+      <!--<b-btn v-if="project.restricted" v-b-modal="'private-project' + project.id" variant="primary">{{ buttonText }}</b-btn>-->
     
-      <b-btn v-else :to="{ name: 'project', params: { id: project.id } }" variant="primary">{{ buttonText }}</b-btn>
+      <b-btn :to="{ name: 'project', params: { id: project.id } }" variant="primary">{{ buttonText }}</b-btn>
       
     </div>
 
-     <!-- private project modal -->
+     <!-- private project modal 
        <b-modal
           :id="'private-project' + project.id"
           hide-footer
@@ -49,7 +49,7 @@
           </b-form-group>
           <b-button class="mt-3" type="submit" variant="primary"> {{$t('submit-btn')}} </b-button>
         </b-form>
-      </b-modal>   
+      </b-modal>   -->
      
     <div class="overlay"></div>
     <div class="project-bg-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>

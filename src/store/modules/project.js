@@ -680,6 +680,18 @@ const actions = {
       }
       return false
     })
+  },
+
+  isProjectPrivate({commit, state}, project) {
+    return api.isProjectPrivate(project.id).then(value => {
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Private project', 
+        content: reason
+      }, { root: true })
+    })
+    return false
   }
 
 }
