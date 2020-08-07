@@ -152,19 +152,22 @@ export default {
 
 .wrapper {
   display: flex;
+  align-items: stretch;
+  overflow-x: hidden;
 }
 
+/*Global Sidebar section*/
 .sidebar {
-  min-width: 250px;
   max-width: 250px;
+  min-width: 250px;
   background-image: linear-gradient(45deg, #16496b 50%, #c5202e 100%);
   color: #fff;
   transition: all 0.5s;
   left: 0;
-  z-index: 3;
   position: fixed;
   height: 100vh;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 .sidebar.active {
   min-width: 80px;
@@ -172,13 +175,14 @@ export default {
   text-align: center;
 }
 
+/* Sidebar Header section*/
 .sidebar .sidebar-header {
-  padding: 18px;
+  padding: 10px 20px;
   background: #494a4d;
   min-height: 100px;
 }
 .sidebar.active .sidebar-header {
-  min-height: 100px;
+  min-height: 80px;
 }
 .sidebar.active .sidebar-header h3 {
   display: none;
@@ -200,9 +204,10 @@ export default {
   transform: rotate(180deg);
 }
 
+/*Sidebar Body section*/
 .sidebar .sidebar-body ul li a {
-  padding: 20px 10px;
-  font-size: 1.2em;
+  padding: 15px 10px;
+  font-size: 1.1em;
   text-align: left;
   display: block;
   cursor: pointer;
@@ -211,9 +216,9 @@ export default {
   transition: padding-left 0.5s ease;
 }
 .sidebar.active .sidebar-body ul li a {
-  padding: 20px 0px;
+  padding: 15px 0px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 .sidebar .sidebar-body ul li a:hover {
   color: #19191a;
@@ -250,7 +255,7 @@ export default {
 ----------------------------------------------------- */
 
 #content {
-  width: 100%;
+  width: calc(100% - 250px);
   padding: 0px;
   left: 250px;
   position: relative;
@@ -259,6 +264,7 @@ export default {
 }
 #content.active {
   left: 80px !important;
+  width: calc(100% - 80px);
 }
 
 /* ---------------------------------------------------
