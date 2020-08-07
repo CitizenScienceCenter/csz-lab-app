@@ -1,68 +1,79 @@
 <template>
   <div class="wrapper">
-    <!-- Sidebar  -->
-    <div class="sidebar" :class="{ active: hidden }">
+    <nav class="sidebar" :class="{ active: hidden }">
+      <!-- sidebar header -->
       <div class="sidebar-header">
+        <input type="checkbox" id="check" hidden v-model="hidden" />
         <b-row>
-          <b-col cols="10" class="d-flex justify-content-center"
-            ><h3>Project Editor</h3></b-col
-          >
-          <b-col cols="2" class="d-flex justify-content-end"
-            ><div v-show="!hidden">
-              <b-button @click="hideSidebar" variant="outline-light" class="button">
-                <i class="fas fa-arrow-left"></i>
-              </b-button>
-            </div>
+          <b-col cols="10" class="d-flex justify-content-center">
+            <h3>Project Editor</h3>
+            <label for="check">
+              <span class="fas fa-arrow-left sidebar-btn"></span>
+            </label>
           </b-col>
-          <b-col cols="12" class="d-flex justify-content-center">
-            <div v-show="hidden">
-              <b-button @click="hideSidebar" variant="outline-light">
-                <i class="fas fa-arrow-right"></i>
-              </b-button></div
-          ></b-col>
         </b-row>
       </div>
-      <a id="project" @click="changeContent($event)">
-        <i class="fas fa-home"></i>
-        <span> Project</span>
-      </a>
-      <a id="about" @click="changeContent($event)">
-        <i class="fas fa-users"></i>
-        <span>About</span>
-      </a>
-      <a id="tasks" @click="changeContent($event)">
-        <b-row>
-          <b-col :cols="!hidden ? '8' : '12'"
-            ><i class="fas fa-briefcase"></i> <span> Tasks</span></b-col
-          >
-          <b-col cols="2" v-show="!hidden">
-            <div @click="addComponent('tasks')">
-              <i class="fas fa-plus"></i></div
-          ></b-col>
-        </b-row>
-      </a>
-      <a>
-        <b-row>
-          <b-col :cols="!hidden ? '8' : '12'"
-            ><i class="fas fa-comments"></i> <span> Forum</span></b-col
-          >
-          <b-col cols="2" v-show="!hidden"
-            ><b-form-checkbox name="check-button" switch size="sm">
-            </b-form-checkbox
-          ></b-col>
-        </b-row>
-      </a>
-      <a>
-        <b-row>
-          <b-col :cols="!hidden ? '8' : '12'"
-            ><i class="fas fa-question"></i> <span> FAQ</span></b-col
-          >
-          <b-col cols="2" v-show="!hidden"
-            ><b-form-checkbox name="check-button" switch> </b-form-checkbox
-          ></b-col>
-        </b-row>
-      </a>
-    </div>
+      <!-- sidebar body -->
+      <div class="sidebar-body">
+        <ul>
+          <li :class="{selected: checkContent('project')}">
+            <a
+              id="project"
+              @click="changeContent($event)"
+            >
+              <i class="fas fa-home"></i>
+              <span> Project</span>
+            </a>
+          </li>
+          <li :class="{selected: checkContent('about')}">
+            <a id="about" @click="changeContent($event)">
+              <i class="fas fa-users"></i>
+              <span>About</span>
+            </a>
+          </li>
+          <li :class="{selected: checkContent('tasks')}">
+            <a id="tasks" @click="changeContent($event)">
+              <b-row>
+                <b-col :cols="!hidden ? '8' : '12'"
+                  ><i class="fas fa-briefcase"></i> <span> Tasks</span></b-col
+                >
+                <b-col cols="2" v-show="!hidden">
+                  <div @click="addComponent('tasks')">
+                    <i class="fas fa-plus"></i></div
+                ></b-col>
+              </b-row>
+            </a>
+          </li>
+          <li>
+            <a>
+              <b-row>
+                <b-col :cols="!hidden ? '8' : '12'"
+                  ><i class="fas fa-comments"></i> <span> Forum</span></b-col
+                >
+                <b-col cols="2" v-show="!hidden"
+                  ><b-form-checkbox name="check-button" switch size="sm">
+                  </b-form-checkbox
+                ></b-col>
+              </b-row>
+            </a>
+          </li>
+          <li>
+            <a>
+              <b-row>
+                <b-col :cols="!hidden ? '8' : '12'"
+                  ><i class="fas fa-question"></i> <span> FAQ</span></b-col
+                >
+                <b-col cols="2" v-show="!hidden"
+                  ><b-form-checkbox name="check-button" switch>
+                  </b-form-checkbox
+                ></b-col>
+              </b-row>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     <!-- Page Content  -->
     <div id="content" :class="{ active: hidden }">
       <div v-show="checkContent('project')">
@@ -72,17 +83,6 @@
           </h2>
           <p class="cover-subheading scroll-effect scroll-effect-delayed-1">
             {{ $t("home-subheading") }}
-          </p>
-          <p class="text-center scroll-effect scroll-effect-delayed-2">
-            <b-button :to="{ name: 'discover' }" variant="primary">{{
-              $t("home-start-contributing")
-            }}</b-button>
-            <!-- Andres: button to test flexy projects -->
-            <b-button
-              :to="{ name: 'flexyproject.editor' }"
-              class="btn-secondary-inverted"
-              >Flexy Projects</b-button
-            >
           </p>
         </app-cover>
       </div>
@@ -126,38 +126,26 @@ export default {
     changeContent(event) {
       this.currentView = event.currentTarget.id;
     },
-    checkContent(event) {
-      return this.currentView === event;
+    checkContent(view_id) {
+      console.log(view_id);
+      return this.currentView === view_id;
     },
 
     // Methods for dynamic adding or removing components
     addComponent(idSection) {
       this.children.push(Cover);
-      console.log(this.children);
     },
     removeComponent(idComponent) {
       this.children.splice(idComponent, 1);
     }
   },
   created() {
-    this.currentView = "project"
-  },
+    this.currentView = "project";
+  }
 };
 </script>
 
 <style scoped>
-a,
-a:hover,
-a:focus {
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-i,
-span {
-  display: inline-block;
-}
-
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -169,73 +157,90 @@ span {
 .sidebar {
   min-width: 250px;
   max-width: 250px;
-  background-image: linear-gradient(45deg, #1c4769 50%, #952b3f 100%);
+  background-image: linear-gradient(45deg, #16496b 50%, #c5202e 100%);
   color: #fff;
   transition: all 0.5s;
   left: 0;
-  z-index: 999;
+  z-index: 3;
   position: fixed;
   height: 100vh;
+  box-sizing: border-box;
 }
 .sidebar.active {
   min-width: 80px;
-  max-width: 100px;
+  max-width: 80px;
   text-align: center;
 }
 
 .sidebar .sidebar-header {
   padding: 18px;
   background: #494a4d;
+  min-height: 100px;
+}
+.sidebar.active .sidebar-header {
+  min-height: 100px;
 }
 .sidebar.active .sidebar-header h3 {
   display: none;
 }
-.sidebar-header .button {
-  position: relative;
-  width: 60px;
-  height: 50px;
-  background-color: transparent;
-  z-index: 999;
-  border-radius: 50px;
-  border: 0px;
-  text-align: center;
+.sidebar .sidebar-header .sidebar-btn {
+  z-index: 2;
+  color: whitesmoke;
+  position: fixed;
+  cursor: pointer;
+  font-size: 25px;
+  margin: 10px auto;
+  transition: all 1s ease;
 }
-.sidebar-header .button:hover {
-  color: #1c4769;
-  background: whitesmoke;
-  width: 60px;
-  height: 50px;
+.sidebar .sidebar-header .sidebar-btn:hover {
+  color: #c5202e;
+}
+.sidebar.active .sidebar-header .sidebar-btn {
+  font-size: 30px;
+  transform: rotate(180deg);
 }
 
-.sidebar a {
+.sidebar .sidebar-body ul li a {
   padding: 20px 10px;
   font-size: 1.2em;
   text-align: left;
   display: block;
   cursor: pointer;
+  width: 100%;
+  border-left: 5px solid transparent;
+  transition: padding-left 0.5s ease;
 }
-.sidebar.active a {
-  padding: 20px 10px;
+.sidebar.active .sidebar-body ul li a {
+  padding: 20px 0px;
   text-align: center;
   font-size: 1.5em;
-  cursor: pointer;
 }
-.sidebar a:hover {
+.sidebar .sidebar-body ul li a:hover {
   color: #19191a;
-  background: whitesmoke;  
+  background: whitesmoke;
+}
+.sidebar .sidebar-body ul li.selected a {
+  color: #19191a;
+  background: whitesmoke;
+  border-left-color: #c5202e;
+  font-weight: 600;
+  padding-left: 25px;
+}
+.sidebar.active .sidebar-body ul li.selected a{
+  padding-left: 15px;
 }
 
-.sidebar span{
+.sidebar .sidebar-body ul li a span {
   transition: font-size 0.5s;
 }
-.sidebar.active span{
+.sidebar.active .sidebar-body ul li a span {
   font-size: 0;
 }
 
-.sidebar a i {
+.sidebar .sidebar-body ul li a i {
   margin-right: 10px;
 }
-.sidebar.active a i {
+.sidebar.active .sidebar-body ul li a i {
   display: block;
   margin-bottom: 5px;
 }
@@ -252,7 +257,7 @@ span {
   min-height: 100vh;
   transition: all 0.5s;
 }
-#content.active{
+#content.active {
   left: 80px !important;
 }
 
@@ -260,20 +265,12 @@ span {
     MEDIAQUERIES
 ----------------------------------------------------- */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .sidebar {
     min-width: 80px;
     max-width: 80px;
     text-align: center;
     margin-left: -80px !important;
-  }
-  .dropdown-toggle::after {
-    top: auto;
-    bottom: 10px;
-    right: 50%;
-    -webkit-transform: translateX(50%);
-    -ms-transform: translateX(50%);
-    transform: translateX(50%);
   }
   .sidebar.active {
     margin-left: 0 !important;
@@ -281,21 +278,15 @@ span {
   .sidebar .sidebar-header h3 {
     display: none;
   }
-  .sidebar .sidebar-header strong {
-    display: block;
-  }
   .sidebar a {
     padding: 20px 10px;
   }
   .sidebar a span {
-    font-size: 0.85em;
+    font-size: 0;
   }
   .sidebar a i {
     margin-right: 0;
     display: block;
-  }
-  .sidebar ul ul a {
-    padding: 10px !important;
   }
   .sidebar a i {
     font-size: 1.3em;
@@ -306,5 +297,5 @@ span {
   .sidebarCollapse span {
     display: none;
   }
-}
+} */
 </style>
