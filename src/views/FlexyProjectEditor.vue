@@ -1,101 +1,70 @@
 <template>
   <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar" :class="{ active: hidden }">
+    <div class="sidebar" :class="{ active: hidden }">
       <div class="sidebar-header">
         <b-row>
-          <b-col cols="12"><h3>Project Editor</h3></b-col>
-          <b-col cols="12" class="mr-4"
+          <b-col cols="10" class="d-flex justify-content-center"
+            ><h3>Project Editor</h3></b-col
+          >
+          <b-col cols="2" class="d-flex justify-content-end"
             ><div v-show="!hidden">
-              <b-button @click="onclick" variant="outline-light" size="md">
+              <b-button @click="hideSidebar" variant="outline-light" class="button">
                 <i class="fas fa-arrow-left"></i>
               </b-button>
             </div>
+          </b-col>
+          <b-col cols="12" class="d-flex justify-content-center">
             <div v-show="hidden">
-              <b-button @click="onclick" variant="outline-light" size="sm">
+              <b-button @click="hideSidebar" variant="outline-light">
                 <i class="fas fa-arrow-right"></i>
               </b-button></div
           ></b-col>
         </b-row>
       </div>
-      <ul class="list-unstyled components">
-        <li id="project" @click="changeContent($event)">
-          <a>
-            <i class="fas fa-home"></i>
-            Project
-          </a>
-        </li>
-        <li id="about" @click="changeContent($event)">
-          <a>
-            <i class="fas fa-users"></i>
-            About
-          </a>
-        </li>
-        <li id="tasks" @click="changeContent($event)">
-          <a>
-            <b-row>
-              <b-col :cols="!hidden ? '8' : '12'"
-                ><i class="fas fa-briefcase"></i> Tasks</b-col
-              >
-              <b-col cols="2" v-show="!hidden">
-                <div @click="addComponent('tasks')">
-                  <i class="fas fa-plus"></i></div
-              ></b-col>
-            </b-row>
-          </a>
-        </li>
-        <li>
-          <a>
-            <b-row>
-              <b-col :cols="!hidden ? '8' : '12'"
-                ><i class="fas fa-comments"></i> Forum</b-col
-              >
-              <b-col cols="2" v-show="!hidden"
-                ><b-form-checkbox name="check-button" switch size="sm">
-                </b-form-checkbox
-              ></b-col>
-            </b-row>
-          </a>
-        </li>
-        <li>
-          <a>
-            <b-row>
-              <b-col :cols="!hidden ? '8' : '12'"
-                ><i class="fas fa-question"></i> FAQ</b-col
-              >
-              <b-col cols="2" v-show="!hidden"
-                ><b-form-checkbox name="check-button" switch> </b-form-checkbox
-              ></b-col>
-            </b-row>
-          </a>
-        </li>
-        <!-- <li>
-          <a
-            href="#pageSubmenu"
-            data-toggle="collapse"
-            aria-expanded="false"
-            class="dropdown-toggle"
+      <a id="project" @click="changeContent($event)">
+        <i class="fas fa-home"></i>
+        <span> Project</span>
+      </a>
+      <a id="about" @click="changeContent($event)">
+        <i class="fas fa-users"></i>
+        <span>About</span>
+      </a>
+      <a id="tasks" @click="changeContent($event)">
+        <b-row>
+          <b-col :cols="!hidden ? '8' : '12'"
+            ><i class="fas fa-briefcase"></i> <span> Tasks</span></b-col
           >
-            <i class="fas fa-paper-plane"></i>
-            Contact
-          </a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li>
-              <a href="#">Page 1</a>
-            </li>
-            <li>
-              <a href="#">Page 2</a>
-            </li>
-            <li>
-              <a href="#">Page 3</a>
-            </li>
-          </ul>
-        </li> -->
-      </ul>
-    </nav>
-
+          <b-col cols="2" v-show="!hidden">
+            <div @click="addComponent('tasks')">
+              <i class="fas fa-plus"></i></div
+          ></b-col>
+        </b-row>
+      </a>
+      <a>
+        <b-row>
+          <b-col :cols="!hidden ? '8' : '12'"
+            ><i class="fas fa-comments"></i> <span> Forum</span></b-col
+          >
+          <b-col cols="2" v-show="!hidden"
+            ><b-form-checkbox name="check-button" switch size="sm">
+            </b-form-checkbox
+          ></b-col>
+        </b-row>
+      </a>
+      <a>
+        <b-row>
+          <b-col :cols="!hidden ? '8' : '12'"
+            ><i class="fas fa-question"></i> <span> FAQ</span></b-col
+          >
+          <b-col cols="2" v-show="!hidden"
+            ><b-form-checkbox name="check-button" switch> </b-form-checkbox
+          ></b-col>
+        </b-row>
+      </a>
+    </div>
     <!-- Page Content  -->
-    <div id="content">
+    <div id="content" :class="{ active: hidden }">
       <div v-show="checkContent('project')">
         <app-cover>
           <h2 class="cover-heading scroll-effect">
@@ -109,7 +78,9 @@
               $t("home-start-contributing")
             }}</b-button>
             <!-- Andres: button to test flexy projects -->
-            <b-button :to="{ name: 'flexyproject.editor' }" class="btn-warning"
+            <b-button
+              :to="{ name: 'flexyproject.editor' }"
+              class="btn-secondary-inverted"
               >Flexy Projects</b-button
             >
           </p>
@@ -144,21 +115,22 @@ export default {
   data() {
     return {
       hidden: false,
-      currentView: "project",
+      currentView: "",
       children: []
     };
   },
   methods: {
-    onclick() {
+    hideSidebar() {
       this.hidden = !this.hidden;
     },
     changeContent(event) {
       this.currentView = event.currentTarget.id;
-      console.log(this.currentView); // returns 'foo'
     },
     checkContent(event) {
       return this.currentView === event;
     },
+
+    // Methods for dynamic adding or removing components
     addComponent(idSection) {
       this.children.push(Cover);
       console.log(this.children);
@@ -167,7 +139,9 @@ export default {
       this.children.splice(idComponent, 1);
     }
   },
-  computed: {}
+  created() {
+    this.currentView = "project"
+  },
 };
 </script>
 
@@ -177,31 +151,8 @@ a:hover,
 a:focus {
   color: inherit;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
-
-.navbar {
-  padding: 15px 10px;
-  background: #fff;
-  border: none;
-  border-radius: 0;
-  margin-bottom: 40px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-btn {
-  box-shadow: none;
-  outline: none !important;
-  border: none;
-}
-
-.line {
-  width: 100%;
-  height: 1px;
-  border-bottom: 1px dashed #ddd;
-  margin: 40px 0;
-}
-
 i,
 span {
   display: inline-block;
@@ -213,112 +164,80 @@ span {
 
 .wrapper {
   display: flex;
-  align-items: stretch;
 }
 
-#sidebar {
+.sidebar {
   min-width: 250px;
   max-width: 250px;
-  background: rgba(46, 45, 45, 0.8);
+  background-image: linear-gradient(45deg, #1c4769 50%, #952b3f 100%);
   color: #fff;
-  transition: all 0.3s;
-  float: left;
+  transition: all 0.5s;
+  left: 0;
+  z-index: 999;
+  position: fixed;
+  height: 100vh;
 }
-
-#sidebar.active {
+.sidebar.active {
   min-width: 80px;
   max-width: 100px;
   text-align: center;
 }
 
-#sidebar.active .sidebar-header h3,
-#sidebar.active .CTAs {
-  display: none;
-}
-
-#sidebar ul li a {
-  text-align: left;
-  cursor: pointer;
-}
-
-#sidebar.active ul li a {
-  padding: 20px 10px;
-  text-align: center;
-  font-size: 0.85em;
-  cursor: pointer;
-}
-
-#sidebar.active ul li a i {
-  margin-right: 0;
-  display: block;
-  font-size: 1.8em;
-  margin-bottom: 5px;
-}
-
-#sidebar.active ul ul a {
-  padding: 10px !important;
-}
-
-#sidebar.active .dropdown-toggle::after {
-  top: auto;
-  bottom: 10px;
-  right: 50%;
-  -webkit-transform: translateX(50%);
-  -ms-transform: translateX(50%);
-  transform: translateX(50%);
-}
-
-#sidebar .sidebar-header {
-  padding: 20px;
+.sidebar .sidebar-header {
+  padding: 18px;
   background: #494a4d;
 }
-
-#sidebar .sidebar-header strong {
+.sidebar.active .sidebar-header h3 {
   display: none;
-  font-size: 1.8em;
+}
+.sidebar-header .button {
+  position: relative;
+  width: 60px;
+  height: 50px;
+  background-color: transparent;
+  z-index: 999;
+  border-radius: 50px;
+  border: 0px;
+  text-align: center;
+}
+.sidebar-header .button:hover {
+  color: #1c4769;
+  background: whitesmoke;
+  width: 60px;
+  height: 50px;
 }
 
-#sidebar ul.components {
-  padding: 20px 0;
-}
-
-#sidebar ul li a {
-  padding: 10px;
-  font-size: 1.1em;
+.sidebar a {
+  padding: 20px 10px;
+  font-size: 1.2em;
+  text-align: left;
   display: block;
+  cursor: pointer;
 }
-
-#sidebar ul li a:hover {
+.sidebar.active a {
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.sidebar a:hover {
   color: #19191a;
-  background: #fff;
+  background: whitesmoke;  
 }
 
-#sidebar ul li a i {
+.sidebar span{
+  transition: font-size 0.5s;
+}
+.sidebar.active span{
+  font-size: 0;
+}
+
+.sidebar a i {
   margin-right: 10px;
 }
-
-#sidebar ul li.active > a,
-a[aria-expanded="true"] {
-  color: #fff;
-  background: #6c6c6d;
-}
-
-a[data-toggle="collapse"] {
-  position: relative;
-}
-
-.dropdown-toggle::after {
+.sidebar.active a i {
   display: block;
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-}
-
-ul ul a {
-  font-size: 0.9em !important;
-  padding-left: 30px !important;
-  background: #6d7fcc;
+  margin-bottom: 5px;
 }
 
 /* ---------------------------------------------------
@@ -328,8 +247,13 @@ ul ul a {
 #content {
   width: 100%;
   padding: 0px;
+  left: 250px;
+  position: relative;
   min-height: 100vh;
-  transition: all 0.3s;
+  transition: all 0.5s;
+}
+#content.active{
+  left: 80px !important;
 }
 
 /* ---------------------------------------------------
@@ -337,7 +261,7 @@ ul ul a {
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
-  #sidebar {
+  .sidebar {
     min-width: 80px;
     max-width: 80px;
     text-align: center;
@@ -351,36 +275,35 @@ ul ul a {
     -ms-transform: translateX(50%);
     transform: translateX(50%);
   }
-  #sidebar.active {
+  .sidebar.active {
     margin-left: 0 !important;
   }
-  #sidebar .sidebar-header h3,
-  #sidebar .CTAs {
+  .sidebar .sidebar-header h3 {
     display: none;
   }
-  #sidebar .sidebar-header strong {
+  .sidebar .sidebar-header strong {
     display: block;
   }
-  #sidebar ul li a {
+  .sidebar a {
     padding: 20px 10px;
   }
-  #sidebar ul li a span {
+  .sidebar a span {
     font-size: 0.85em;
   }
-  #sidebar ul li a i {
+  .sidebar a i {
     margin-right: 0;
     display: block;
   }
-  #sidebar ul ul a {
+  .sidebar ul ul a {
     padding: 10px !important;
   }
-  #sidebar ul li a i {
+  .sidebar a i {
     font-size: 1.3em;
   }
-  #sidebar {
+  .sidebar {
     margin-left: 0;
   }
-  #sidebarCollapse span {
+  .sidebarCollapse span {
     display: none;
   }
 }
