@@ -52,7 +52,10 @@ const state = {
   projectShareableKey: {},
   enableTestEnvironment: false,
 
-  privateProjectOptions:{}
+  privateProjectOptions:{},
+
+  showProjectPassModal: false,
+  accessForSelectedProject: false
 }
 
 // filter methods on the state data
@@ -761,6 +764,12 @@ const mutations = {
   },
   setPrivateProjectOptions(state,status){
     state.privateProjectOptions = status
+  },
+  setProjectPassModal(state,status){
+    state.showProjectPassModal = status
+  },
+  setAccessForSelectedProject(state,status){
+    state.accessForSelectedProject = status
   }
 }
 

@@ -20,36 +20,10 @@
           <p v-html="project.description"></p>
         </b-col>
       </b-row>
-
-      <!--<b-btn v-if="project.restricted" v-b-modal="'private-project' + project.id" variant="primary">{{ buttonText }}</b-btn>-->
     
       <b-btn :to="{ name: 'project', params: { id: project.id } }" variant="primary">{{ buttonText }}</b-btn>
       
     </div>
-
-     <!-- private project modal 
-       <b-modal
-          :id="'private-project' + project.id"
-          hide-footer
-          title="Private project"
-          :ok-title="$t('submit-btn')"
-          :cancel-title="$t('cancel-c')"
-          @show="resetModal"
-          @ok="submitPass"
-        >
-        <b-form ref="form-registration" @submit.prevent="submitPass" class="mt-4">
-          <b-form-group >
-            <b-form-input
-              :id="'private-project' + project.id"
-              type="password"
-              v-model="privateProjectPassword"
-              required
-              :placeholder="$t('login-input-password-placeholder')"
-            ></b-form-input>
-          </b-form-group>
-          <b-button class="mt-3" type="submit" variant="primary"> {{$t('submit-btn')}} </b-button>
-        </b-form>
-      </b-modal>   -->
      
     <div class="overlay"></div>
     <div class="project-bg-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
@@ -65,8 +39,7 @@ export default {
   name: 'ProjectCard',
   data: () => {
     return {
-      defaultImg: require('@/assets/graphic-projects.png'),
-      privateProjectPassword:''
+      defaultImg: require('@/assets/graphic-projects.png')
     }
   },
   props: {
@@ -83,9 +56,6 @@ export default {
     ]),   
   },
   methods:{
-    ...mapActions('project', [
-      'getAccessToProject'
-    ]),
     ...mapMutations('notification', [
       'showError', 'showSuccess'
     ]),
@@ -98,24 +68,6 @@ export default {
       } else {
         return this.defaultImg
       }
-    },
-    submitPass(){
-      this.getAccessToProject({
-        'password':this.privateProjectPassword,
-        'short_name':this.project.short_name
-        }).then((response) => {
-        if (response.status == 'success'){
-          this.$router.push({ name: 'project', params: { id: this.project.id } })
-        } else {
-          this.showError({
-              title: 'Access denied',
-              content: response.status
-            })
-        }
-      })
-    },
-    resetModal() {
-      this.privateProjectPassword = ''
     }
   }
 }

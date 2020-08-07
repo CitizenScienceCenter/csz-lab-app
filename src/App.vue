@@ -61,6 +61,12 @@
              color="#c5202e">
     </loading>
 
+    <project-password-modal 
+      :value='showProjectPassModal' 
+      :project='project'>
+    </project-password-modal>
+
+
   </div>
 
 </template>
@@ -72,6 +78,7 @@ import Loading from 'vue-loading-overlay';
 import GDPR from "./components/GDPR.vue";
 import Footer from "./components/Footer.vue"
 import Header from "./components/Header.vue"
+import ProjectPasswordModal from '@/components/Common/ProjectPasswordModal'
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
@@ -82,7 +89,8 @@ export default {
     Loading,
     GDPR,
     Footer,
-    Header
+    Header,
+    ProjectPasswordModal
   },
   props : {},
   computed: {
@@ -93,7 +101,10 @@ export default {
         isLoadingSpinnerDisplayed: state => state.notification.isLoadingSpinnerDisplayed,
 
         userLogged: state => state.user.logged,
-        userProfile: state => state.user.infos
+        userProfile: state => state.user.infos,
+
+        project: state => state.project.selectedProject,
+        showProjectPassModal : state => state.project.showProjectPassModal
     }),
     language: {
       get() {
