@@ -20,6 +20,10 @@ const state = {
     name: false,
     information: false,
     story: false
+  },
+  editionMode:{
+    editor:false,
+    collapsed:false
   }
 }
 
@@ -83,6 +87,9 @@ const mutations = {
   },
   setStep (state, { step, value }) {
     state.steps = {...state.steps, [step]: value}
+  },
+  setEditorMode(state, payload){
+    state.editionMode = payload;
   }
 }
 

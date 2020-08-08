@@ -3,7 +3,7 @@
     <nav class="sidebar" :class="{ active: hidden }">
       <!-- sidebar header -->
       <div class="sidebar-header">
-        <input type="checkbox" id="check" hidden v-model="hidden" />
+        <input type="checkbox" id="check" hidden v-model="hidden" @change="hideSidebar"/>
         <b-row>
           <b-col cols="10" class="d-flex justify-content-center">
             <h3>Project Editor</h3>
@@ -16,22 +16,19 @@
       <!-- sidebar body -->
       <div class="sidebar-body">
         <ul>
-          <li :class="{selected: checkContent('project')}">
-            <a
-              id="project"
-              @click="changeContent($event)"
-            >
+          <li :class="{ selected: checkContent('project') }">
+            <a id="project" @click="changeContent($event)">
               <i class="fas fa-home"></i>
               <span> Project</span>
             </a>
           </li>
-          <li :class="{selected: checkContent('about')}">
+          <li :class="{ selected: checkContent('about') }">
             <a id="about" @click="changeContent($event)">
               <i class="fas fa-users"></i>
               <span>About</span>
             </a>
           </li>
-          <li :class="{selected: checkContent('tasks')}">
+          <li :class="{ selected: checkContent('tasks') }">
             <a id="tasks" @click="changeContent($event)">
               <b-row>
                 <b-col :cols="!hidden ? '8' : '12'"
@@ -75,7 +72,7 @@
     </nav>
 
     <!-- Page Content  -->
-    <div id="content" :class="{ active: hidden }">
+    <div class="content" :class="{ active: hidden }">
       <div v-show="checkContent('project')">
         <app-cover>
           <h2 class="cover-heading scroll-effect">
@@ -92,11 +89,13 @@
       <div v-show="checkContent('tasks')">
         <h1>Tasks</h1>
         <template v-for="(child, index) in children">
-          <component :is="child" :key="index">
-            <b-button @click="removeComponent(index)" variant="danger"
-              ><i class="fas fa-trash"></i
-            ></b-button>
-          </component>
+          <keep-alive>
+            <component :is="child" :key="index">
+              <b-button @click="removeComponent(index)" variant="danger"
+                ><i class="fas fa-trash"></i
+              ></b-button>
+            </component>
+          </keep-alive>
         </template>
       </div>
     </div>
@@ -104,6 +103,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 import Cover from "@/components/Common/Cover";
 import ProjectCard from "@/components/Discover";
 
@@ -120,14 +120,14 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({ setEditorMode: "project/builder/setEditorMode" }),
     hideSidebar() {
-      this.hidden = !this.hidden;
+      this.editionMode.collapsed = this.hidden;
     },
     changeContent(event) {
       this.currentView = event.currentTarget.id;
     },
     checkContent(view_id) {
-      console.log(view_id);
       return this.currentView === view_id;
     },
 
@@ -139,8 +139,19 @@ export default {
       this.children.splice(idComponent, 1);
     }
   },
+  computed: {
+    ...mapState("project/builder", {
+      editionMode: state => state.editionMode
+    })
+  },
   created() {
     this.currentView = "project";
+    const editionMode = { editor: true, collapsed: false };
+    this.setEditorMode(editionMode);
+  },
+  destroyed(){
+    const editionMode = { editor: false, collapsed: false };
+    this.setEditorMode(editionMode);
   }
 };
 </script>
@@ -167,7 +178,9 @@ export default {
   position: fixed;
   height: 100vh;
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: inherit;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 .sidebar.active {
   min-width: 80px;
@@ -231,7 +244,7 @@ export default {
   font-weight: 600;
   padding-left: 25px;
 }
-.sidebar.active .sidebar-body ul li.selected a{
+.sidebar.active .sidebar-body ul li.selected a {
   padding-left: 15px;
 }
 
@@ -254,15 +267,16 @@ export default {
     CONTENT STYLE
 ----------------------------------------------------- */
 
-#content {
+.content {
   width: calc(100% - 250px);
   padding: 0px;
   left: 250px;
   position: relative;
   min-height: 100vh;
   transition: all 0.5s;
+  z-index: -1;
 }
-#content.active {
+.content.active {
   left: 80px !important;
   width: calc(100% - 80px);
 }
@@ -304,4 +318,18 @@ export default {
     display: none;
   }
 } */
+</style>
+
+<style>
+/* this is a global style config for footer only
+is located into this view due to is relevant just here */
+.footer.editor {
+  left: 250px;
+  width: calc(100% - 250px);
+  transition: all 0.5s ease;
+}
+.footer.editor.collapsed {
+  left: 80px;
+  width: calc(100% - 80px);
+}
 </style>
