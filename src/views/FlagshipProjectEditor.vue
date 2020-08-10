@@ -3,7 +3,13 @@
     <nav class="sidebar" :class="{ active: hidden }">
       <!-- sidebar header -->
       <div class="sidebar-header">
-        <input type="checkbox" id="check" hidden v-model="hidden" @change="hideSidebar"/>
+        <input
+          type="checkbox"
+          id="check"
+          hidden
+          v-model="hidden"
+          @change="hideSidebar"
+        />
         <b-row>
           <b-col cols="10" class="d-flex justify-content-center">
             <h3>Project Editor</h3>
@@ -149,7 +155,7 @@ export default {
     const editionMode = { editor: true, collapsed: false };
     this.setEditorMode(editionMode);
   },
-  destroyed(){
+  destroyed() {
     const editionMode = { editor: false, collapsed: false };
     this.setEditorMode(editionMode);
   }
@@ -181,6 +187,7 @@ export default {
   overflow-y: inherit;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  z-index: 1;
 }
 .sidebar.active {
   min-width: 80px;
@@ -274,7 +281,6 @@ export default {
   position: relative;
   min-height: 100vh;
   transition: all 0.5s;
-  z-index: -1;
 }
 .content.active {
   left: 80px !important;

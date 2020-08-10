@@ -69,7 +69,7 @@ export default {
         this.getProjectsWithCategory({ category })
 
       })
-    })
+    });
   },
   data: () => {
     return {
