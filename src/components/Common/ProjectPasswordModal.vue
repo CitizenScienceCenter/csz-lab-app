@@ -4,13 +4,14 @@
             :visible="value"    
             ref="my-modal"     
             hide-footer
-            title="Private project"
+            :title="$t('private-project-title')"
             :ok-title="$t('submit-btn')"
             :cancel-title="$t('cancel-c')"
             @show="resetModal"
             @ok="submitPass">
             <b-form ref="form-registration" @submit.prevent="submitPass" class="mt-4">
-                <b-form-group >
+                <b-form-group 
+                :description="$t('private-project-content')">
                     <b-form-input
                         :id="'private-project' + project.id"
                         type="password"
@@ -62,12 +63,12 @@ export default {
         'short_name':this.project.short_name
         }).then((response) => {
         if (response.status == 'success'){
-            this.setAccessForSelectedProject(true)
+            this.setAccessForSelectedProject({'access':true,'project_id':this.project.id})
             this.setProjectPassModal(false)
             this.$refs['my-modal'].hide()
             this.$router.push({ name: 'project.task.presenter'})
         } else {
-          this.showError({
+            this.showError({
               title: 'Access denied',
               content: response.status
             })

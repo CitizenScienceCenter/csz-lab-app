@@ -55,7 +55,10 @@ const state = {
   privateProjectOptions:{},
 
   showProjectPassModal: false,
-  accessForSelectedProject: false
+  accessForSelectedProject: {
+    access:false,
+    project_id:null
+  }
 }
 
 // filter methods on the state data
