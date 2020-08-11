@@ -148,11 +148,10 @@ export const routes = [
       },
 
       // Project related pages
-
       {
         path: "project/:id",
-        name:"project",
-        component: Project,
+        name: "project",
+        component:Project,
         props: true,
         beforeEnter: (to, from, next) => {
           console.log(selectedProject.info);
@@ -167,12 +166,11 @@ export const routes = [
       },
       //Flagship project
       {
-        path: "project/:id",
-        name:"project.flagship",
+        path: "fs_project/:id",
+        name: "fs_project",
         component: FlagshipProject,
         props: true,
         beforeEnter: (to, from, next) => {
-          console.log(selectedProject.info);
           if (parseInt(selectedProject.id) !== parseInt(to.params.id)) {
             store.commit(
               "project/menu/setCurrentTab",

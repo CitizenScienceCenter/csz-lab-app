@@ -182,7 +182,7 @@ export default {
     ProjectStatisticsMenu,
     'app-cover': Cover
   },
-  created () {
+  created () { 
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
     this.getProject(this.id).then(project => {

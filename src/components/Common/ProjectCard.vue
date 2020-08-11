@@ -20,12 +20,11 @@
       <b-row class="row">
         <b-col>
           <h3 v-html="project.name"></h3>
-          <p>{{ project.info.flagship }}</p>
           <p v-html="project.description"></p>
         </b-col>
       </b-row>
       <b-button
-        :to="{ name: checkFlagship(), params: { id: project.id } }"
+        @click="selectProject(project.id)"
         variant="primary"
         >{{ buttonText }}</b-button
       >
@@ -39,6 +38,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
   name: "ProjectCard",
   data: () => {
@@ -51,6 +52,7 @@ export default {
     buttonText: String
   },
   methods: {
+    ...mapActions("project", ["getProject"]),
     getBaseUrl() {
       if (this.project.info.thumbnail) {
         const base = process.env.BASE_ENDPOINT_URL;
@@ -63,8 +65,17 @@ export default {
     },
     checkFlagship() {
       return (this.project.info && this.project.info.flagship)
-        ? "project.flagship"
+        ? "fs_project"
         : "project";
+    },
+    async selectProject(id){
+      try {
+        await this.getProject(id);
+        this.$router.push({ name: this.checkFlagship(), params: { 'id': id }})
+      } catch (error) {
+        console.error(error);
+      }
+
     }
   }
 };

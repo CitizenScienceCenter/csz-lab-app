@@ -11,9 +11,15 @@ import osm from './modules/osm'
 import settings from './modules/settings';
 import snakes from './modules/snakes'
 
+import createPersistedState from 'vuex-persistedstate';
+
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
+
+const dataState = createPersistedState({
+  paths: ['project.selectedProject']
+})
 
 export default new Vuex.Store({
   modules: {
@@ -26,5 +32,5 @@ export default new Vuex.Store({
     snakes
   },
   strict: debug,
-  plugins: debug ? [createLogger()] : []
+  plugins: debug ? [createLogger(), dataState] : [dataState]
 })
