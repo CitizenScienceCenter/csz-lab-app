@@ -765,6 +765,7 @@
         "forum-add-comment":"Add comment",
         "forum-delete-topic":"Delete topic",
         "forum-delete-comment":"Delete comment",
+        "forum-edit-comment":"Edit comment",
 
         "DOWNLOAD_TASKS_IN_CSV_ERROR": "DOWNLOAD_TASKS_IN_CSV_ERROR",
         "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR": "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR",
@@ -1556,6 +1557,7 @@
         "forum-add-comment":"Kommentar hinzufügen",
         "forum-delete-topic":"Thema löschen",
         "forum-delete-comment":"Kommentar löschen",
+        "forum-edit-comment":"Kommentar bearbeiten",
 
         "DOWNLOAD_TASKS_IN_CSV_ERROR": "Fehler beim CSV-Download der Aufgaben",
         "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR": "Fehler beim CSV-Download der Aufgaben-Ausführungen",

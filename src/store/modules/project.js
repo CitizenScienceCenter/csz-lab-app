@@ -46,6 +46,7 @@ const state = {
   publishProjectOptions: {},
   projectCommentsOptions: {},
   projectDeletionOptions: {},
+  deleteCommentsOptions : {},
 
   //shareable link
   projectShareableLink: null,
@@ -461,12 +462,6 @@ const actions = {
             title: getTranslationLocale("PUBLISH_PROJECT_ERROR"), 
             content: reason
           }, { root: true }) 
-          // TODO: fix the server and remove the following lines after
-          /*commit('updateSelectedProject', { published: true })
-          commit('notification/showSuccess', {
-            title: 'Project published!',
-            content: 'The project ' + project.name + ' is now public'
-          }, { root: true })*/
           return false
         })
       }
@@ -506,12 +501,6 @@ const actions = {
             title: getTranslationLocale("PUBLISH_PROJECT_ERROR"), 
             content: reason
           }, { root: true }) 
-          // TODO: fix the server and remove the following lines after
-          //commit('updateSelectedProject', { published: false })
-          /*commit('notification/showSuccess', {
-            title: 'Project approval!',
-            content: 'The project ' + project.name + ' is now waiting for approval'
-          }, { root: true })*/
           return false
         })
       }
@@ -581,10 +570,6 @@ const actions = {
     return dispatch('setProjectCommentsOptions', payload.short_name).then(response => {
       if (response) {
         return api.setProjectComment(state.projectCommentsOptions.csrf, payload.short_name, payload.comment).then(value => {
-         /* commit('notification/showSuccess', {
-            title: 'Success',
-            content: 'Comment added!'
-          }, { root: true })*/
           return value.data
         }).catch(reason => {
           commit('setProjectComments',[])
@@ -602,17 +587,9 @@ const actions = {
   getProjectComments ({commit}, payload) {
     return api.getProjectComments(payload.limit,payload.offset,payload.id).then(value => {
       commit('setProjectComments', value.data)
-      /*commit('notification/showSuccess', {
-        title: 'Comments loaded!',
-        content: 'The project ' + short_name + ' has loaded the comments'
-      }, { root: true })*/
       return value.data
     }).catch(reason => {
       commit('setProjectComments',[])
-      /*commit('notification/showError', {
-        title: 'Error!',
-        content: 'Could not load the comments'
-      }, { root: true })*/
       return false
     })
   },
@@ -620,17 +597,9 @@ const actions = {
   getForumThreads ({commit}, payload) {
     return api.getForumThreads(payload.limit,payload.offset).then(value => {
       commit('setForumThreads', value.data)
-      /*commit('notification/showSuccess', {
-        title: 'Comments loaded!',
-        content: 'The project ' + short_name + ' has loaded the comments'
-      }, { root: true })*/
       return value.data
     }).catch(reason => {
       commit('setProjectComments',[])
-      /*commit('notification/showError', {
-        title: 'Error!',
-        content: 'Could not load the comments'
-      }, { root: true })*/
       return false
     })
   },
@@ -638,10 +607,6 @@ const actions = {
   getShareableLink ({ commit }, project) {
     return api.getShareableLink(project.short_name).then(value => {
       commit('setProjectShareableLink', value.data.key )
-      /*commit('notification/showInfo', {
-        title: 'Your Shareable link!', 
-        content: value.data.key
-      }, { root: true })*/
       return value.data
     }).catch(reason => {
       commit('notification/showError', {
@@ -649,7 +614,96 @@ const actions = {
         content: reason
       }, { root: true })
     })
-  }
+  },
+
+  deleteCommentsOptions ({ commit }, comment_id) {
+    return api.deleteCommentsOptions(comment_id).then(value => {
+      commit('deleteCommentsOptions', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Error getting comments options', 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  deleteComment ({ commit, state, dispatch },payload) {
+    return dispatch('deleteCommentsOptions', payload.comment_id).then(response => {
+      if (response) {
+        return api.deleteComment(state.deleteCommentsOptions.csrf, payload.comment_id).then(value => {
+          if (value.data.status === 'success') {
+            //commit('setProjectComments', value.data.data)
+            //return true
+            return dispatch('getProjectComments',{'id':payload.thread_id,'limit':1000,'offset':0})
+
+          } else {
+            commit('notification/showError', {
+              title: getTranslationLocale('error'), 
+              content: 'Could not delete your comment!'
+            }, { root: true })
+            return false
+          } 
+         
+        }).catch(reason => {
+          commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Error',
+            content: 'Could not delete your comment!'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
+  updateProjectComment ({ commit, state, dispatch },payload) {
+    return dispatch('setProjectCommentsOptions', payload.short_name).then(response => {
+      if (response) {
+        return api.updateProjectComment(state.projectCommentsOptions.csrf, payload.short_name, payload.comment).then(value => {
+          return value.data
+        }).catch(reason => {
+          //commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Error',
+            content: 'Could not save your comment. Try again later!'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
+  deleteThread ({ commit, state, dispatch },payload) {
+    return dispatch('deleteCommentsOptions', payload.comment_id).then(response => {
+      if (response) {
+        return api.deleteComment(state.deleteCommentsOptions.csrf, payload.comment_id).then(value => {
+          if (value.data.status === 'success') {
+            return dispatch('getForumThreads',{'limit':1000,'offset':0})
+          } else {
+            commit('notification/showError', {
+              title: getTranslationLocale('error'), 
+              content: 'Could not delete your comment!'
+            }, { root: true })
+            return false
+          } 
+         
+        }).catch(reason => {
+          commit('setProjectComments',[])
+          commit('notification/showError', {
+            title: 'Error',
+            content: 'Could not delete your comment!'
+          }, { root: true })
+          return false
+        })
+      }
+      return false
+    })
+  },
+
 
 }
 
@@ -715,7 +769,10 @@ const mutations = {
   },
   setProjectTestEnvironment(state,status){
     state.enableTestEnvironment = status
-  }
+  },
+  deleteCommentsOptions (state, options) {
+    state.deleteCommentsOptions = options
+  },
 }
 
 export default {

@@ -174,5 +174,35 @@ export default {
         'X-CSRFToken': csrf
       }
     })
-  }
+  },
+
+  deleteCommentsOptions(comment_id){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/forum/comment/' + comment_id + '/delete', {
+      withCredentials: true,
+      data: {}
+    })
+  },
+
+  deleteComment(csrf,comment_id){
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/forum/comment/' + comment_id + '/delete',{}, {
+      withCredentials: true,
+      headers: {
+        'X-CSRFToken': csrf
+      }
+    })
+  },
+
+  updateProjectComment(csrf,projectShortName,comment){
+    console.log(comment)
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/update-comment', {
+      id:comment.id,
+      parentId: comment.parent,
+      content: comment.content
+    }, {
+      withCredentials: true,
+      headers: {
+        'X-CSRFToken': csrf
+      }
+    })
+  },
 }

@@ -1,6 +1,6 @@
-# pybossa-client
+# Citizen Science Center Zurich - Project builder
 
-> Pybossa client
+> Project builder - pybossa-client
 
 ## Build Setup
 
