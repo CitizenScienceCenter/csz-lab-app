@@ -1,11 +1,22 @@
 <template>
   <div>
-    <!-- Do you Know These Snakes? -->
-    <app-cover> </app-cover>
+    <!-- Cover Section? -->
+    <app-cover :project="coverinfo"> </app-cover>
+    <div v-for="(item, index) in description.content" :key="index">
+      <app-content-section
+        :color="description.ctrl ? 'light-greyish' : 'superlight-greyish'"
+        :content="{
+          title: index,
+          description: item,
+          image: 'https://snakes.citizenscience.ch/img/graphic-intro.png'
+        }"
+        :orientation="description.ctrl ? 'right' : 'left'"
+        >{{ description.ctrl=!description.ctrl }}</app-content-section
+      >
+    </div>
 
-    <!--     
-    <!~~ Summary metrics ~~>
-    <app-content-section
+    <!-- Summary metrics -->
+    <!-- <app-content-section
       v-if="challengeState !== 'before'"
       color="greyish"
       class="content-section-condensed stats-section"
@@ -18,8 +29,8 @@
         >
         </sub-section-stats>
       </div>
-    </app-content-section>
-
+    </app-content-section> -->
+    <!--
     <!~~ Help us Identifying Species of Snakes. ~~>
     <app-content-section>
       <div class="content-wrapper">
@@ -323,9 +334,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import Cover from "@/components/Project/Flagship/Cover.vue";
-// import ContentSection from "@/components/shared/ContentSection.vue";
+import ContentSection from "@/components/Project/Flagship/ContentSection.vue";
 // import NewsletterSignup from "@/components/shared/NewsletterSignup.vue";
 // import Footer from "@/components/shared/Footer.vue";
 // import Scores from "@/components/Scores.vue";
@@ -348,11 +359,17 @@ export default {
     // Stats,
     // Ranking,
     // Duration,
-    "app-cover": Cover
-    // "app-content-section": ContentSection,
+    "app-cover": Cover,
+    "app-content-section": ContentSection
     // "app-newsletter-signup": NewsletterSignup,
     // "app-footer": Footer,
     // Scores
+  },
+  data() {
+    return {
+      coverinfo: null,
+      description: { content: null, ctrl: false }
+    };
   },
   metaInfo: function() {
     return {
@@ -366,9 +383,28 @@ export default {
       ]
     };
   },
+  methods: {
+    setCover() {
+      this.coverinfo = {
+        title: this.project.name,
+        subtitle: this.project.description,
+        backgroundImage: this.project.hasOwnProperty("info")
+          ? this.project.info.thumbnail_url
+          : null
+      };
+    },
+    setContent() {
+      if (this.project.hasOwnProperty("long_description")) {
+        this.description.content = JSON.parse(this.project.long_description);
+      }
+    },
+  },
   computed: {
     ...mapState({
-      user: state => state.c3s.user
+      user: state => state.c3s.user,
+      project: state => state.project.selectedProject,
+      results: state => state.project.selectedProjectResults,
+      stats: state => state.project.selectedProjectStats
     })
     // ...mapState({
     //   user: state => state.c3s.user,
@@ -377,6 +413,10 @@ export default {
     //   totalUserCount: state => state.stats.totalUserCount,
     //   totalSubmissionCount: state => state.stats.totalSubmissionCount
     // })
+  },
+  created() {
+    this.setCover();
+    this.setContent();
   },
   mounted() {
     // this.$store.dispatch("stats/updateSubmissionStats");

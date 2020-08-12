@@ -11,7 +11,7 @@
             <div class="col col-large-10 col-xlarge-8">
               <h2
                 class="cover-heading scroll-effect"
-                v-html="project.name"
+                v-html="project.title"
               ></h2>
             </div>
           </div>
@@ -20,7 +20,7 @@
             <div class="col col-large-10 col-xlarge-8">
               <p
                 class="cover-subheading scroll-effect scroll-effect-delayed-1"
-                v-html="project.description"
+                v-html="project.subtitle"
               ></p>
             </div>
           </div>
@@ -30,19 +30,47 @@
               <div
                 class="button-group text-center scroll-effect scroll-effect-delayed-2"
               >
-              <b-button :to="{ name: 'project.task.presenter' }" class="btn-primary">{{ $t('flagshipproject.Home.project-contribute-button') }}</b-button>
-              <b-button :to="{ path: '/about' }" class="btn-secondary btn-secondary-inverted">{{ $t('flagshipproject.Home.project-about-button') }}</b-button>
+                <b-button
+                  :to="{ name: 'project.task.presenter' }"
+                  variant="primary"
+                  >{{
+                    $t("flagshipproject.Home.project-contribute-button")
+                  }}</b-button
+                >
+                <b-button
+                  :to="{ path: '/about' }"
+                  class="btn-secondary btn-secondary-inverted"
+                  >{{
+                    $t("flagshipproject.Home.project-about-button")
+                  }}</b-button
+                >
               </div>
             </div>
           </div>
+          <!-- TODO: is this slot tag required -->
           <slot></slot>
         </b-col>
       </b-row>
     </div>
+    <!-- UZH and ETH logos -->
     <div class="uzh-eth">
-      <span>{{ $t('logo-text') }}</span>
-      <img v-if="this.$i18n.locale === 'en'" alt="University of Zurich / ETH Zurich" src="@/assets/uni_logos/uzh_eth_logo_e_neg.svg" @click="logoClick($event)"/>
-      <img v-else alt="Universität Zürich / ETH Zürich" src="@/assets/uni_logos/uzh_eth_logo_d_neg.svg" @click="logoClick($event)"/>
+      <span>{{ $t("flagshipproject.Home.project-logo-text") }}</span>
+      <img
+        v-if="this.$i18n.locale === 'en'"
+        alt="University of Zurich / ETH Zurich"
+        src="@/assets/shared/uzh_eth_logo_e_neg.svg"
+        @click="logoClick($event)"
+      />
+      <img
+        v-else
+        alt="Universität Zürich / ETH Zürich"
+        src="@/assets/shared/uzh_eth_logo_d_neg.svg"
+        @click="logoClick($event)"
+      />
+    </div>
+    <!-- Goal logos -->
+    <div class="bottom-right-logo">
+      <img src="@/assets/shared/sdg-logo-white.svg" />
     </div>
     <div class="cover-overlay"></div>
   </section>
@@ -50,7 +78,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import project from "@/api/project";
+// import project from "@/api/project";
 
 export default {
   name: "Cover",
@@ -59,20 +87,31 @@ export default {
       imageUrl: ""
     };
   },
+  props: {
+    project: Object
+  },
   methods: {
-    ...mapActions("project", ["getProject"])
+    ...mapActions("project", ["getProject"]),
+    logoClick: function(e) {
+      var rect = e.target.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var width = rect.width;
+      if (x < width / 2) {
+        this.openInNewTab("https://www.uzh.ch");
+      } else {
+        this.openInNewTab("https://www.ethz.ch");
+      }
+    },
+    openInNewTab: function(url) {
+      var win = window.open(url, "_blank");
+      win.focus();
+    }
   },
   computed: {
-    ...mapState("project", {
-      project: state => state.selectedProject,
-      results: state => state.selectedProjectResults,
-      stats: state => state.selectedProjectStats
-    }),
     backgroundImage() {
-      const img =
-        this.project.info && this.project.info.thumbnail_url
-          ? this.project.info.thumbnail_url
-          : require("@/assets/PB-background_opt.jpg");
+      const img = this.project.backgroundImage
+        ? this.project.backgroundImage
+        : require("@/assets/PB-background_opt.jpg");
       return img;
     }
   },
@@ -84,32 +123,7 @@ export default {
       }
     }, 1);
   },
-  async created() {
-    console.log("000000000000000000000000000000");
-    console.log(this.project);
-    const aux = await this.getProject(this.$route.params.id);
-    console.log("#################################");
-    console.log(aux);
-
-    // eager loading: load the project and finally get stats and results
-    // to have a fresh state for all sub components
-    // this.getProject(this.project.id).then(project => {
-    //   if (!project) return false;
-    //   // this.shareable_link = project.info.shareable_link
-    //   // // load some stats
-    //   // this.getStatistics(project)
-    //   // this.getResults(project)
-    //   // // checks if the project is open for anonymous users or not
-    //   // this.getNewTask(project).then(allowed => {
-    //   //   this.isAnonymousProject = !!allowed
-    //   //   // TODO: should go to the home screen?
-    //   // })
-    //   // if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
-    //   //   // has to be loaded to know if the project can be published
-    //   //   this.getProjectTasks(project)
-    //   // }
-    // });
-  }
+  created() {}
 };
 </script>
 
@@ -295,7 +309,7 @@ export default {
         font-size: $font-size-xlarge;
       }
       .cover-subheading {
-        font-size: $font-size-medium ;
+        font-size: $font-size-medium;
       }
     }
   }
@@ -335,7 +349,7 @@ export default {
         font-size: $font-size-xxlarge;
       }
       .cover-subheading {
-        font-size: $font-size-large ;
+        font-size: $font-size-large;
       }
     }
   }
@@ -357,7 +371,7 @@ export default {
         font-size: $font-size-xxxlarge;
       }
       .cover-subheading {
-        font-size: $font-size-xlarge ;
+        font-size: $font-size-xlarge;
       }
     }
   }
