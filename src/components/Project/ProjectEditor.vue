@@ -40,6 +40,22 @@
             <b-form-checkbox v-model="form.allowAnonymousContributors">
               {{ $t('project-editor-anonymous-contributors') }}
             </b-form-checkbox>
+          </b-form-group>
+
+          <b-form-group>
+
+             <b-form-checkbox 
+              v-model="form.protect">
+              {{ $t('project-protect-with-password') }}
+            </b-form-checkbox>
+
+             <b-form-input
+                      v-if="form.protect"
+                      id="project-password"
+                      v-model="form.password"
+                      type="password"
+                      :placeholder="$t('password-editor-current-password')">
+              </b-form-input>
 
           </b-form-group>
 
@@ -177,7 +193,9 @@ export default {
         how: '',
         who: '',
         keepTrack: '',
-        allowAnonymousContributors: true
+        allowAnonymousContributors: true,
+        password: '',
+        protect: null
       },
 
       picture: '',
@@ -203,6 +221,9 @@ export default {
         },
         keepTrack: {
           maxLength: 800
+        },
+        password : {
+          maxLength: 18
         }
       }
     }
@@ -218,7 +239,6 @@ export default {
     ...mapMutations('notification', [
       'showSuccess', 'showError', 'showInfo'
     ]),
-
     initForm (project) {
       this.form.name = project.name
       this.form.shortDescription = project.description
@@ -253,7 +273,9 @@ export default {
               who: this.form.who,
               keepTrack: this.form.keepTrack
             }),
-            allow_anonymous_contributors: this.form.allowAnonymousContributors
+            allow_anonymous_contributors: this.form.allowAnonymousContributors,
+            protect: this.form.protect,
+            password: this.form.password
           }
         }).then(response => {
           if ('form' in response && 'errors' in response.form) {
@@ -357,7 +379,7 @@ export default {
      * @returns {boolean}
      */
     isFormValid () {
-      const formKeys = Object.keys(this.form).filter(el => el !== 'category' && el !== 'allowAnonymousContributors')
+      const formKeys = Object.keys(this.form).filter(el => el !== 'category' && el !== 'allowAnonymousContributors' && el !== 'protect' && el !== 'password')
       let isValidated = true
 
       for (let field of formKeys) {

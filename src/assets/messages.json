@@ -797,7 +797,9 @@
         "modify-draft-modal-content":"This button will delete your Task Presenter design and take you back to Tasks Import (see Step 2 of the '{HowitWorks}' procedure)",
 
         "private-project-title":"Private project",
-        "private-project-content":"This is a private project with restricted access. Please contact the project owner for more information."
+        "private-project-content":"This is a private project with restricted access. Please contact the project owner for more information.",
+        "access-denied":"Access denied",
+        "project-protect-with-password":"Protect project with password"
 
     },
     "de": {
@@ -1591,7 +1593,9 @@
         "modify-draft-modal-content":"Diese Schaltfläche löscht Ihr Task Presenter-Design und bringt Sie zurück zum Aufgabenimport (siehe Schritt 2 der Prozedur '{HowitWorks}').",
 
         "private-project-title":"Privates Projekt",
-        "private-project-content":"Das ist ein privates Projekt mit eingeschränktem Zugriff. Bitte kontaktieren Sie den Projektbesitzer für weitere Informationen"
+        "private-project-content":"Das ist ein privates Projekt mit eingeschränktem Zugriff. Bitte kontaktieren Sie den Projektbesitzer für weitere Informationen",
+        "access-denied":"Zugriff abgelehnt",
+        "project-protect-with-password":"Projekt mit Passwort schützen"
 
 
     }

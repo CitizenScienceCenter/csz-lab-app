@@ -69,8 +69,8 @@ export default {
             this.$router.push({ name: 'project.task.presenter'})
         } else {
             this.showError({
-              title: 'Access denied',
-              content: response.status
+              title: response.status,
+              content: this.$t('access-denied')
             })
         }
       })

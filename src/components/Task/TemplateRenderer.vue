@@ -200,10 +200,11 @@ export default {
             //check if project is private and user has been granted access. if not redirect to project page and show pass modal.
             this.isProjectPrivate({'id':this.project.id}).then(response => {
               //set accessForSelectedProject to array of objects for multiple private projects.
-              if (response.private && 
-                  (this.accessForSelectedProject.access && 
-                    !(this.accessForSelectedProject.project_id==this.project.id)
-                  )) {
+             
+              if (response.private && response.redirect && !(this.accessForSelectedProject.project_id==this.project.id)
+                 /* (this.accessForSelectedProject.access && 
+                    
+                  )*/) {
                 this.setProjectPassModal(true)
                 this.$router.push({ name: 'project', params: { id: this.project.id } })
               } else {
