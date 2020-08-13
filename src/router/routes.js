@@ -154,13 +154,15 @@ export const routes = [
         component: Project,
         props: true,
         beforeEnter: async (to, from, next) => {
-          console.log(selectedProject.info);
+          // This redirect the routing acording the flagship project status
+          const res = await store.dispatch("project/getProject", to.params.id);
+          if(!res || !res.hasOwnProperty("info")){
+            next("/")
+          }
+          if (res.info.flagship) {
+            next(`/fs_project/${to.params.id}`);
+          }
           if (parseInt(selectedProject.id) !== parseInt(to.params.id)) {
-            // This redirect the routing acording the flagship project status
-            const res = await store.dispatch("project/getProject", to.params.id);
-            if(res.hasOwnProperty('info') && res.info.flagship){
-              next(`fs_project/${to.params.id}`)
-            }
             store.commit(
               "project/menu/setCurrentTab",
               store.state.project.menu.tabs.info
@@ -176,12 +178,15 @@ export const routes = [
         component: FlagshipProject,
         props: true,
         beforeEnter: async (to, from, next) => {
+          // This redirect the routing acording the flagship project status
+          const res = await store.dispatch("project/getProject", to.params.id);
+          if(!res || !res.hasOwnProperty("info")){
+            next("/")
+          }
+          if ( !res.info.flagship) {
+            next(`/project/${to.params.id}`);
+          }
           if (parseInt(selectedProject.id) !== parseInt(to.params.id)) {
-            // This redirect the routing acording the flagship project status
-            const res = await store.dispatch("project/getProject", to.params.id);
-            if(!res.hasOwnProperty('info') || !res.info.flagship){
-              next(`project/${to.params.id}`)
-            }
             store.commit(
               "project/menu/setCurrentTab",
               store.state.project.menu.tabs.info

@@ -69,7 +69,13 @@
       />
     </div>
     <!-- Goal logos -->
-    <div class="bottom-right-logo">
+    <div class="bottom-right-logo ">
+      <img
+        class="goal"
+        :src="goalImage(item)"
+        v-for="(item, index) in sdg_icons"
+        :key="index"
+      />
       <img src="@/assets/shared/sdg-logo-white.svg" />
     </div>
     <div class="cover-overlay"></div>
@@ -88,7 +94,8 @@ export default {
     };
   },
   props: {
-    project: Object
+    project: Object,
+    sdg_icons: Array
   },
   methods: {
     ...mapActions("project", ["getProject"]),
@@ -105,6 +112,9 @@ export default {
     openInNewTab: function(url) {
       var win = window.open(url, "_blank");
       win.focus();
+    },
+    goalImage(goal) {
+      return require("@/assets/shared/sdgs/neg/" + goal + ".svg");
     }
   },
   computed: {
@@ -188,6 +198,7 @@ export default {
       height: 100%;
       &.goal {
         margin-right: $spacing-1;
+        display: none;
       }
     }
   }
@@ -288,6 +299,13 @@ export default {
       height: 36px;
       bottom: $spacing-3;
       right: $spacing-3;
+      img {
+        height: 75%;
+        &.goal {
+          margin-right: $spacing-1;
+          display: inline;
+        }
+      }
     }
     .top-right-logo {
       img {
@@ -329,6 +347,13 @@ export default {
       height: 48px;
       bottom: $spacing-3;
       right: $spacing-3;
+      img {
+        height: 100%;
+        &.goal {
+          margin-right: $spacing-1;
+          display: inline;
+        }
+      }
     }
     .top-right-logo {
       top: $spacing-3;

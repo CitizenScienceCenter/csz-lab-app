@@ -1,7 +1,9 @@
 <template>
   <div>
-    <!-- Cover Section? -->
-    <app-cover :project="coverinfo"> </app-cover>
+    <!-- Cover Section -->
+    <app-cover :project="coverinfo" :sdg_icons="sdg_goals"> </app-cover>
+
+    <!-- Content Section -->
     <div v-for="(item, index) in description" :key="index">
       <app-content-section
         :color="item.ctrl_view ? 'light-greyish' : 'superlight-greyish'"
@@ -18,10 +20,10 @@
       </app-content-section>
     </div>
 
+    <!-- Newsletter Section -->
     <app-content-section color="more-greyish">
       <newsletter-signup></newsletter-signup>
     </app-content-section>
-    <!-- <section-newsletter-signup></section-newsletter-signup> -->
 
     <!-- Summary metrics -->
     <!-- <app-content-section
@@ -332,9 +334,7 @@
       This project supports Goal 3 of the UN SDGs: Ensure healthy lives and
       promote well-being for all at all ages, and in particular Target 3.3 on
       ending neglected tropical disease.
-    </section-s-d-g>
-
-    <app-footer></app-footer> -->
+    </section-s-d-g> -->
   </div>
 </template>
 
@@ -344,7 +344,6 @@ import Cover from "@/components/Project/Flagship/Cover.vue";
 import ContentSection from "@/components/Project/Flagship/ContentSection.vue";
 import ContentBlock from "@/components/Project/Flagship/ContentBlock.vue";
 import NewsletterSignup from "@/components/Project/Flagship/NewsletterSignup.vue";
-// import Footer from "@/components/shared/Footer.vue";
 // import Scores from "@/components/Scores.vue";
 // import Duration from "../components/Duration";
 // import Ranking from "../components/Ranking";
@@ -369,12 +368,12 @@ export default {
     "app-content-section": ContentSection,
     "content-block": ContentBlock,
     "newsletter-signup": NewsletterSignup
-    // "app-footer": Footer,
     // Scores
   },
   data() {
     return {
       coverinfo: null,
+      sdg_goals: ["1", "2", "3", "4", "5"],
       description: {}
     };
   },
@@ -391,6 +390,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("project", ["getResults", "getStatistics"]),
     setCover() {
       this.coverinfo = {
         title: this.project.name,
@@ -412,7 +412,7 @@ export default {
           };
         }
       }
-    }
+    },
   },
   computed: {
     ...mapState({
@@ -430,6 +430,8 @@ export default {
     // })
   },
   created() {
+    this.getStatistics(this.project);
+    this.getResults(this.project);
     this.setCover();
     this.setContent();
   },
