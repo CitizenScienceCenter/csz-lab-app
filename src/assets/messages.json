@@ -796,6 +796,13 @@
         
         "modify-draft-modal-content":"This button will delete your Task Presenter design and take you back to Tasks Import (see Step 2 of the '{HowitWorks}' procedure)",
 
+        "NEWSLETTER SIGNUP SECTION": "------------------------------------------",
+        "section-newsletter-heading": "Sign up for our Newsletter",
+        "label-email": "Email",
+        "label-firstname":"First Name",
+        "label-lastname": "Last Name",
+        "button-submit":"Sign Up",
+
         "flagshipproject.Home.project-about-button": "About",
         "flagshipproject.Home.project-contribute-button": "Contribute",
         "flagshipproject.Home.project-logo-text": "A joint initiative by"
@@ -1591,8 +1598,17 @@
 
         "modify-draft-modal-content":"Diese Schaltfläche löscht Ihr Task Presenter-Design und bringt Sie zurück zum Aufgabenimport (siehe Schritt 2 der Prozedur '{HowitWorks}').",
 
+        "NEWSLETTER SIGNUP SECTION": "------------------------------------------",
+        "section-newsletter-heading": "Abonnieren Sie unseren Newsletter",
+        "label-email": "Email Adresse",
+        "label-firstname":"Vorname",
+        "label-lastname": "Nachname",
+        "button-submit":"Anmelden",
+
         "flagshipproject.Home.project-about-button": "Über",
         "flagshipproject.Home.project-contribute-button": "Mitmachen",
         "flagshipproject.Home.project-logo-text": "Ein gemeinsamer Effort von"
+
+
     }
 }

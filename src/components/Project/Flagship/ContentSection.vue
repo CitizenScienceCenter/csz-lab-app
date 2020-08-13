@@ -1,36 +1,6 @@
 <template>
   <section class="content-section" :class="[colorClass]">
-    <div class="content-wrapper">
-      <b-row align-h="around">
-        <b-col
-          cols="12"
-          md="10"
-          lg="4"
-          class="scroll-effect"
-          v-if="content.image"
-          :order="order.image"
-        >
-          <div class="extra-padding-h">
-            <img :src="content.image" />
-          </div>
-        </b-col>
-
-        <b-col
-          cols="12"
-          md="10"
-          class="scroll-effect scroll-effect-delayed-1"
-          :class="{ 'col-lg-6': content.image }"
-          :order="order.description"
-        >
-          <div>
-            <h2 class="heading centered left-aligned-large">
-              {{ content.title }}
-            </h2>
-            <p class="reduced-bottom-margin" v-html="content.description"></p>
-          </div>
-        </b-col>
-      </b-row>
-    </div>
+    <slot></slot>
   </section>
 </template>
 
@@ -40,13 +10,10 @@ export default {
   data: function() {
     return {
       matches: [],
-      order: { image: 1, description: 2 }
     };
   },
   props: {
     color: String,
-    content: Object,
-    orientation: String
   },
   computed: {
     colorClass: function() {
@@ -66,7 +33,7 @@ export default {
         default:
           return "white";
       }
-    }
+    },
   },
   methods: {
     scroll() {
@@ -83,13 +50,6 @@ export default {
       for (let i = 0; i < this.matches.length; i++) {
         this.matches[i].classList.add("scrolled");
       }
-    },
-    setOrderView() {
-      if (this.orientation === "right") {
-        this.order = { image: 2, description: 1 };
-      } else {
-        this.order = { image: 1, description: 2 };
-      }
     }
   },
   mounted: function() {
@@ -103,9 +63,6 @@ export default {
     } else {
       this.unveilAll();
     }
-  },
-  created() {
-    this.setOrderView();
   }
 };
 </script>
@@ -205,6 +162,8 @@ export default {
   }
   .content-wrapper {
     position: relative;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .heading {
     font-size: $font-size-large;
@@ -223,7 +182,7 @@ export default {
       border-radius: 2px;
       position: absolute;
       bottom: 0;
-      left: 0 !important;
+      left: 0;
     }
     &.centered {
       &:after {

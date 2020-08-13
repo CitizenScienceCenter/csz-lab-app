@@ -2,18 +2,26 @@
   <div>
     <!-- Cover Section? -->
     <app-cover :project="coverinfo"> </app-cover>
-    <div v-for="(item, index) in description.content" :key="index">
+    <div v-for="(item, index) in description" :key="index">
       <app-content-section
-        :color="description.ctrl ? 'light-greyish' : 'superlight-greyish'"
-        :content="{
-          title: index,
-          description: item,
-          image: 'https://snakes.citizenscience.ch/img/graphic-intro.png'
-        }"
-        :orientation="description.ctrl ? 'right' : 'left'"
-        >{{ description.ctrl=!description.ctrl }}</app-content-section
+        :color="item.ctrl_view ? 'light-greyish' : 'superlight-greyish'"
       >
+        <content-block
+          :content="{
+            title: item.title,
+            description: item.description,
+            image: 'https://snakes.citizenscience.ch/img/graphic-intro.png'
+          }"
+          :orientation="item.ctrl_view ? 'right' : 'left'"
+          scale="md"
+        ></content-block>
+      </app-content-section>
     </div>
+
+    <app-content-section color="more-greyish">
+      <newsletter-signup></newsletter-signup>
+    </app-content-section>
+    <!-- <section-newsletter-signup></section-newsletter-signup> -->
 
     <!-- Summary metrics -->
     <!-- <app-content-section
@@ -326,9 +334,6 @@
       ending neglected tropical disease.
     </section-s-d-g>
 
-    <!~~ Sign up for our Newsletter ~~>
-    <section-newsletter-signup></section-newsletter-signup>
-
     <app-footer></app-footer> -->
   </div>
 </template>
@@ -337,7 +342,8 @@
 import { mapState, mapActions } from "vuex";
 import Cover from "@/components/Project/Flagship/Cover.vue";
 import ContentSection from "@/components/Project/Flagship/ContentSection.vue";
-// import NewsletterSignup from "@/components/shared/NewsletterSignup.vue";
+import ContentBlock from "@/components/Project/Flagship/ContentBlock.vue";
+import NewsletterSignup from "@/components/Project/Flagship/NewsletterSignup.vue";
 // import Footer from "@/components/shared/Footer.vue";
 // import Scores from "@/components/Scores.vue";
 // import Duration from "../components/Duration";
@@ -360,15 +366,16 @@ export default {
     // Ranking,
     // Duration,
     "app-cover": Cover,
-    "app-content-section": ContentSection
-    // "app-newsletter-signup": NewsletterSignup,
+    "app-content-section": ContentSection,
+    "content-block": ContentBlock,
+    "newsletter-signup": NewsletterSignup
     // "app-footer": Footer,
     // Scores
   },
   data() {
     return {
       coverinfo: null,
-      description: { content: null, ctrl: false }
+      description: {}
     };
   },
   metaInfo: function() {
@@ -395,9 +402,17 @@ export default {
     },
     setContent() {
       if (this.project.hasOwnProperty("long_description")) {
-        this.description.content = JSON.parse(this.project.long_description);
+        const long_description = JSON.parse(this.project.long_description);
+        for (const [key, value] of Object.entries(long_description)) {
+          let ctrl_view = Object.keys(this.description).length % 2 == 0; // this is used for view purposes only
+          this.description[key] = {
+            title: key,
+            description: value,
+            ctrl_view: ctrl_view
+          };
+        }
       }
-    },
+    }
   },
   computed: {
     ...mapState({
