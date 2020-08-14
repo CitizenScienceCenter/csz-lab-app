@@ -30,19 +30,28 @@
               <div
                 class="button-group text-center scroll-effect scroll-effect-delayed-2"
               >
+                <!-- Contribution Button -->
+                <!-- TODO: modify the translation dinamically -->
                 <b-button
                   :to="{ name: 'project.task.presenter' }"
                   variant="primary"
-                  >{{
-                    $t("flagshipproject.Home.project-contribute-button")
-                  }}</b-button
+                  >{{ $t(texto) }}</b-button
                 >
+                <!-- Modify draft Button -->
+                <b-button v-b-modal.draft-project variant="primary">
+                  {{ $t("project-draft-complete") }}</b-button
+                >
+                <!-- Request Aproval button -->
+                <b-button variant="primary" v-b-modal.approve-project>{{
+                  $t("project-draft-approve-your-project")
+                }}</b-button>
+                <!-- Publication submit button -->
                 <b-button
-                  :to="{ path: '/about' }"
-                  class="btn-secondary btn-secondary-inverted"
-                  >{{
-                    $t("flagshipproject.Home.project-about-button")
-                  }}</b-button
+                  variant="primary"
+                  v-b-modal.publish-project
+                  @click="publish()"
+                >
+                  {{ $t("project-draft-publish") }}</b-button
                 >
               </div>
             </div>
@@ -52,8 +61,23 @@
         </b-col>
       </b-row>
     </div>
+
+    <!-- Shareable link section -->
+    <div class="top-left-logo">
+      <span v-if="!shareable_link">
+        Share my link
+        <i class="fas fa-copy"></i
+      ></span>
+      <b-button
+        v-else
+        size="sm"
+        class="share-button btn-secondary btn-secondary-inverted"
+      >
+        {{ $t("project-share-link") }}
+      </b-button>
+    </div>
     <!-- UZH and ETH logos -->
-    <div class="uzh-eth">
+    <div class="bottom-left-logo">
       <span>{{ $t("flagshipproject.Home.project-logo-text") }}</span>
       <img
         v-if="this.$i18n.locale === 'en'"
@@ -90,7 +114,9 @@ export default {
   name: "Cover",
   data() {
     return {
-      imageUrl: ""
+      imageUrl: "",
+      texto: "flagshipproject.Home.project-contribute-button",
+      shareable_link: false
     };
   },
   props: {
@@ -133,7 +159,11 @@ export default {
       }
     }, 1);
   },
-  created() {}
+  created() {
+    this.shareable_link = this.project.hasOwnProperty("info")
+      ? this.project.info.shareable_link
+      : false;
+  }
 };
 </script>
 
@@ -168,7 +198,7 @@ export default {
   .btn {
     margin-right: $spacing-1;
   }
-  .uzh-eth {
+  .bottom-left-logo {
     display: block;
     position: absolute;
     bottom: $spacing-2;
@@ -222,6 +252,30 @@ export default {
         max-height: 56px;
         max-width: none;
       }
+    }
+  }
+  .top-left-logo {
+    position: absolute;
+    top: $spacing-3;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    span {
+      display: block;
+      font-size: $font-size-mini;
+      line-height: 1;
+      margin-bottom: $spacing-1;
+      color: white;
+      margin-left: $spacing-2 !important;
+    }
+    .share-button {
+      position: relative;
+      left: -10px;
+      font-size: $font-size-mini;
+      text-transform: capitalize;
+      height: 27px;
+      width: 90%;
     }
   }
   .content-wrapper {
@@ -288,7 +342,7 @@ export default {
 @media only screen and (min-width: $viewport-tablet-portrait) {
   .cover {
     height: 470px;
-    .uzh-eth {
+    .bottom-left-logo {
       bottom: $spacing-3;
       left: $spacing-3;
       img {
@@ -322,6 +376,15 @@ export default {
         }
       }
     }
+    .top-left-logo {
+      span {
+        font-size: $font-size-small;
+      }
+      .share-button {
+        font-size: $font-size-small;
+        height: 30px;
+      }
+    }
     .content-wrapper {
       .cover-heading {
         font-size: $font-size-xlarge;
@@ -336,7 +399,7 @@ export default {
   .cover {
     height: 80vh;
     max-height: 470px;
-    .uzh-eth {
+    .bottom-left-logo {
       bottom: $spacing-3;
       left: $spacing-3;
       img {

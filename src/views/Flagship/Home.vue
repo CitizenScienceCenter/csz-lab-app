@@ -3,6 +3,14 @@
     <!-- Cover Section -->
     <app-cover :project="coverinfo" :sdg_icons="sdg_goals"> </app-cover>
 
+    <!-- Statistics Section -->
+    <app-content-section
+      color="more-greyish"
+      class="content-section-condensed stats-section"
+    >
+      <stats-block :stats="statsinfo"> </stats-block>
+    </app-content-section>
+
     <!-- Content Section -->
     <div v-for="(item, index) in description" :key="index">
       <app-content-section
@@ -22,7 +30,7 @@
 
     <!-- Newsletter Section -->
     <app-content-section color="more-greyish">
-      <newsletter-signup></newsletter-signup>
+      <newsletter-signup-block></newsletter-signup-block>
     </app-content-section>
 
     <!-- Summary metrics -->
@@ -343,7 +351,8 @@ import { mapState, mapActions } from "vuex";
 import Cover from "@/components/Project/Flagship/Cover.vue";
 import ContentSection from "@/components/Project/Flagship/ContentSection.vue";
 import ContentBlock from "@/components/Project/Flagship/ContentBlock.vue";
-import NewsletterSignup from "@/components/Project/Flagship/NewsletterSignup.vue";
+import NewsletterSignupBlock from "@/components/Project/Flagship/NewsletterSignupBlock.vue";
+import StatsBlock from "@/components/Project/Flagship/StatsBlock.vue";
 // import Scores from "@/components/Scores.vue";
 // import Duration from "../components/Duration";
 // import Ranking from "../components/Ranking";
@@ -367,14 +376,16 @@ export default {
     "app-cover": Cover,
     "app-content-section": ContentSection,
     "content-block": ContentBlock,
-    "newsletter-signup": NewsletterSignup
+    "newsletter-signup-block": NewsletterSignupBlock,
+    "stats-block": StatsBlock
     // Scores
   },
   data() {
     return {
       coverinfo: null,
       sdg_goals: ["1", "2", "3", "4", "5"],
-      description: {}
+      description: {},
+      statsinfo: {}
     };
   },
   metaInfo: function() {
@@ -413,6 +424,38 @@ export default {
         }
       }
     },
+    async setPorjectData() {
+      const res_stats = await this.getStatistics(this.project);
+      this.statsinfo = {
+        overall_progress: {
+          name: "stats.overall_progress",
+          value: res_stats.overall_progress,
+          units: "%"
+        },
+        n_tasks: {
+          name: "stats.n_tasks",
+          value: res_stats.n_tasks
+        },
+        n_completed_tasks: {
+          name: "stats.n_completed_tasks",
+          value: res_stats.n_completed_tasks
+        },
+        n_pending_tasks: {
+          name: "stats.n_pending_tasks",
+          value: res_stats.n_tasks - res_stats.n_completed_tasks
+        },
+        n_volunteers: {
+          name: "stats.n_volunteers",
+          value: res_stats.n_volunteers
+        },
+        avg_contrib_time: {
+          name: "stats.avg_contrib_time",
+          value: res_stats.avg_contrib_time,
+          units: "s"
+        }
+      };
+      await this.getResults(this.project);
+    }
   },
   computed: {
     ...mapState({
@@ -421,17 +464,9 @@ export default {
       results: state => state.project.selectedProjectResults,
       stats: state => state.project.selectedProjectStats
     })
-    // ...mapState({
-    //   user: state => state.c3s.user,
-    //   challengeState: state => state.timer.challengeState,
-    //   totalTaskCount: state => state.stats.totalTaskCount,
-    //   totalUserCount: state => state.stats.totalUserCount,
-    //   totalSubmissionCount: state => state.stats.totalSubmissionCount
-    // })
   },
   created() {
-    this.getStatistics(this.project);
-    this.getResults(this.project);
+    this.setPorjectData();
     this.setCover();
     this.setContent();
   },
