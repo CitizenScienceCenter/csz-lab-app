@@ -64,10 +64,16 @@
 
     <!-- Shareable link section -->
     <div class="top-left-logo">
-      <span v-if="!shareable_link">
-        Share my link
-        <i class="fas fa-copy"></i
-      ></span>
+      <div v-if="project.shareable_link" inline>
+        <span>
+          {{ $t("flagshipproject.Home.project-shareable-link") }}
+        </span>
+        <span
+          @click.stop.prevent="copyToClipboard(project.shareable_link)"
+          class="icon"
+          ><i class="fas fa-copy"></i
+        ></span>
+      </div>
       <b-button
         v-else
         size="sm"
@@ -141,6 +147,14 @@ export default {
     },
     goalImage(goal) {
       return require("@/assets/shared/sdgs/neg/" + goal + ".svg");
+    },
+    async copyToClipboard(info) {
+      try {
+        await navigator.clipboard.writeText(info);
+        alert(`Your link was successfully copied to Clipboard ${info}`);
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   computed: {
@@ -160,9 +174,7 @@ export default {
     }, 1);
   },
   created() {
-    this.shareable_link = this.project.hasOwnProperty("info")
-      ? this.project.info.shareable_link
-      : false;
+    console.log(this.project);
   }
 };
 </script>
@@ -261,13 +273,15 @@ export default {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
+    color: white;
     span {
-      display: block;
+      display: inline;
       font-size: $font-size-mini;
       line-height: 1;
-      margin-bottom: $spacing-1;
-      color: white;
       margin-left: $spacing-2 !important;
+    }
+    .icon {
+      cursor: pointer;
     }
     .share-button {
       position: relative;

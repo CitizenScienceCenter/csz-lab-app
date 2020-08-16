@@ -806,7 +806,8 @@
 
     "flagshipproject.Home.project-about-button": "About",
     "flagshipproject.Home.project-contribute-button": "Contribute",
-    "flagshipproject.Home.project-logo-text": "A joint initiative by"
+    "flagshipproject.Home.project-logo-text": "A joint initiative by",
+    "flagshipproject.Home.project-shareable-link": "Share your link"
   },
   "de": {
     "home-heading": "CITIZEN SCIENCE PROJECT BUILDER",
@@ -1612,6 +1613,7 @@
 
     "flagshipproject.Home.project-about-button": "Über",
     "flagshipproject.Home.project-contribute-button": "Mitmachen",
-    "flagshipproject.Home.project-logo-text": "Ein gemeinsamer Effort von"
+    "flagshipproject.Home.project-logo-text": "Ein gemeinsamer Effort von",
+    "flagshipproject.Home.project-shareable-link": "Link weitergeben"
   }
 }

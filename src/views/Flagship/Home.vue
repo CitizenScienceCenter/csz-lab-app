@@ -403,12 +403,12 @@ export default {
   methods: {
     ...mapActions("project", ["getResults", "getStatistics"]),
     setCover() {
+      const info = this.project.hasOwnProperty("info");
       this.coverinfo = {
         title: this.project.name,
         subtitle: this.project.description,
-        backgroundImage: this.project.hasOwnProperty("info")
-          ? this.project.info.thumbnail_url
-          : null
+        shareable_link: info ? this.project.info.shareable_link : null,
+        backgroundImage: info ? this.project.info.thumbnail_url : null
       };
     },
     setContent() {
