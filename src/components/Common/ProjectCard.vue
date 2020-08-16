@@ -3,7 +3,7 @@
      
     <div class="project-info">
       <b-badge v-if="project.restricted" variant="secondary" class='project-restricted'>
-        Private
+        {{$t('private-c')}}
       </b-badge>
       
       <b-row class="row text-center mb-4">

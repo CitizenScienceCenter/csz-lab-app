@@ -799,7 +799,8 @@
         "private-project-title":"Private project",
         "private-project-content":"This is a private project with restricted access. Please contact the project owner for more information.",
         "access-denied":"Access denied",
-        "project-protect-with-password":"Protect project with password"
+        "project-protect-with-password":"Protect project with password",
+        "private-c":"Private"
 
     },
     "de": {
@@ -1595,7 +1596,8 @@
         "private-project-title":"Privates Projekt",
         "private-project-content":"Das ist ein privates Projekt mit eingeschränktem Zugriff. Bitte kontaktieren Sie den Projektbesitzer für weitere Informationen",
         "access-denied":"Zugriff abgelehnt",
-        "project-protect-with-password":"Projekt mit Passwort schützen"
+        "project-protect-with-password":"Projekt mit Passwort schützen",
+        "private-c":"Privat"
 
 
     }
