@@ -44,9 +44,10 @@
 
           <b-form-group>
 
-             <b-form-checkbox 
-              v-model="form.protect">
-              {{ $t('project-protect-with-password') }}
+            <b-form-checkbox             
+              :checked='project.info.private'
+              @change='privateProjectBoxChanged'>
+            {{ $t('project-protect-with-password') }} 
             </b-form-checkbox>
 
              <b-form-input
@@ -54,7 +55,7 @@
                       id="project-password"
                       v-model="form.password"
                       type="password"
-                      :placeholder="$t('password-editor-current-password')">
+                      :placeholder="$t('password-editor-new-password')">
               </b-form-input>
 
           </b-form-group>
@@ -404,6 +405,9 @@ export default {
       let fieldLength = this.$data['form'][field].replace(/<[^>]*>?/gm, '').length;
       fieldLength = fieldLength < 0 ? 0 : fieldLength
       return fieldLength === 0 ? this.$t('mandatory-field') : this.$t('field-should-not-exceed')+' ' + this.validation[field].maxLength + ' ' + this.$t('characters')
+    },
+    privateProjectBoxChanged(boxValue){
+      this.form.protect = boxValue
     }
   },
   computed: {
