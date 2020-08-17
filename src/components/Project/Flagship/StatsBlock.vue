@@ -5,7 +5,9 @@
         <div v-for="(item, index) in stats" :key="index">
           <b-col>
             <label v-html="$t(item.name)"></label>
-            <span class="value d-block">{{ item.value }} {{ item.units }}</span>
+            <span class="value d-block"
+              >{{ item.value }} {{ item.value != null ? item.units : null }}</span
+            >
           </b-col>
         </div>
       </b-row>
@@ -24,7 +26,7 @@ export default {
 @import "@/styles/themes.scss";
 @import "@/styles/variables.scss";
 .stats-sub-section {
-    text-align: center;
+  text-align: center;
   label {
     margin-right: $spacing-2;
     display: inline-block;

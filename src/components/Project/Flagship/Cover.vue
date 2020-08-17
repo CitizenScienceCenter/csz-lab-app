@@ -30,29 +30,59 @@
               <div
                 class="button-group text-center scroll-effect scroll-effect-delayed-2"
               >
-                <!-- Contribution Button -->
-                <!-- TODO: modify the translation dinamically -->
-                <b-button
-                  :to="{ name: 'project.task.presenter' }"
-                  variant="primary"
-                  >{{ $t(texto) }}</b-button
-                >
-                <!-- Modify draft Button -->
-                <b-button v-b-modal.draft-project variant="primary">
-                  {{ $t("project-draft-complete") }}</b-button
-                >
-                <!-- Request Aproval button -->
-                <b-button variant="primary" v-b-modal.approve-project>{{
-                  $t("project-draft-approve-your-project")
-                }}</b-button>
-                <!-- Publication submit button -->
-                <b-button
-                  variant="primary"
-                  v-b-modal.publish-project
-                  @click="publish()"
-                >
-                  {{ $t("project-draft-publish") }}</b-button
-                >
+                <b-button-group>
+                  <!-- Contribution Button -->
+                  <b-button
+                    ref="btn-contribute"
+                    v-if="project.buttonsBR.contribution_btn.show"
+                    :to="{ name: 'project.task.presenter' }"
+                    variant="primary"
+                    :disabled="project.buttonsBR.contribution_btn.disabled"
+                    >{{ $t(project.buttonsBR.contribution_btn.name) }}</b-button
+                  >
+                  <!-- Test It Button -->
+                  <b-button
+                    ref="btn-test-it"
+                    v-if="project.buttonsBR.test_btn.show"
+                    :to="{ name: 'project.task.presenter' }"
+                    variant="primary"
+                    :disabled="project.buttonsBR.test_btn.disabled"
+                    >{{ $t(project.buttonsBR.test_btn.name) }}</b-button
+                  >
+                  <!-- Modify draft Button -->
+                  <b-button
+                    ref="btn-draft-complete-it"
+                    v-if="project.buttonsBR.modify_draft_btn.show"
+                    v-b-modal.draft-project
+                    variant="primary"
+                    :disabled="project.buttonsBR.modify_draft_btn.disabled"
+                    >{{ $t(project.buttonsBR.modify_draft_btn.name) }}</b-button
+                  >
+                  <!-- Request Aproval button -->
+                  <b-button
+                    ref="btn-approve-it"
+                    v-if="project.buttonsBR.request_approval_btn.show"
+                    variant="success"
+                    v-b-modal.approve-project
+                    :disabled="project.buttonsBR.request_approval_btn.disabled"
+                    >{{
+                      $t(project.buttonsBR.request_approval_btn.name)
+                    }}</b-button
+                  >
+                  <!-- {{ $t("project-draft-published") }} /
+                    {{ $t("project-draft-approve-your-project") }} /
+                    {{ $t("project-draft-pending-approval") }} -->
+                  <!-- Publication submit button -->
+                  <b-button
+                    ref="btn-publish-it"
+                    v-if="project.buttonsBR.publish_btn.show"
+                    variant="primary"
+                    v-b-modal.publish-project
+                    @click="publish()"
+                    :disabled="project.buttonsBR.publish_btn.disabled"
+                    >{{ $t(project.buttonsBR.publish_btn.name) }}
+                  </b-button>
+                </b-button-group>
               </div>
             </div>
           </div>
@@ -63,7 +93,10 @@
     </div>
 
     <!-- Shareable link section -->
-    <div class="top-left-logo">
+    <div
+      class="top-left-logo"
+      v-if="project.buttonsBR.shareable_btn.show"
+    >
       <div v-if="project.shareable_link" inline>
         <span>
           {{ $t("flagshipproject.Home.project-shareable-link") }}
@@ -71,15 +104,17 @@
         <span
           @click.stop.prevent="copyToClipboard(project.shareable_link)"
           class="icon"
-          ><i class="fas fa-copy"></i
-        ></span>
+          ><i class="far fa-copy"></i>
+        </span>
+        <span class="icon"> <i class="far fa-edit"></i> </span>
       </div>
       <b-button
         v-else
         size="sm"
         class="share-button btn-secondary btn-secondary-inverted"
+        :disabled="project.buttonsBR.shareable_btn.disabled"
       >
-        {{ $t("project-share-link") }}
+        {{ $t(project.buttonsBR.shareable_btn.name) }}
       </b-button>
     </div>
     <!-- UZH and ETH logos -->
@@ -121,7 +156,6 @@ export default {
   data() {
     return {
       imageUrl: "",
-      texto: "flagshipproject.Home.project-contribute-button",
       shareable_link: false
     };
   },
@@ -173,9 +207,7 @@ export default {
       }
     }, 1);
   },
-  created() {
-    console.log(this.project);
-  }
+  created() {}
 };
 </script>
 
@@ -282,6 +314,7 @@ export default {
     }
     .icon {
       cursor: pointer;
+      margin-left: $spacing-1 !important;
     }
     .share-button {
       position: relative;

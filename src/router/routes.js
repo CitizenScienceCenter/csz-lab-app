@@ -156,8 +156,8 @@ export const routes = [
         beforeEnter: async (to, from, next) => {
           // This redirect the routing acording the flagship project status
           const res = await store.dispatch("project/getProject", to.params.id);
-          if(!res || !res.hasOwnProperty("info")){
-            next("/")
+          if (!res || !res.hasOwnProperty("info")) {
+            next("/");
           }
           if (res.info.flagship) {
             next(`/fs_project/${to.params.id}`);
@@ -180,10 +180,10 @@ export const routes = [
         beforeEnter: async (to, from, next) => {
           // This redirect the routing acording the flagship project status
           const res = await store.dispatch("project/getProject", to.params.id);
-          if(!res || !res.hasOwnProperty("info")){
-            next("/")
+          if (!res || !res.hasOwnProperty("info")) {
+            next("/");
           }
-          if ( !res.info.flagship) {
+          if (!res.info.flagship) {
             next(`/project/${to.params.id}`);
           }
           if (parseInt(selectedProject.id) !== parseInt(to.params.id)) {
@@ -193,7 +193,7 @@ export const routes = [
             );
           }
           next();
-        }
+        },
       },
       {
         path: "project/:short_name/test/confirm",
