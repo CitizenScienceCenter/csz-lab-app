@@ -233,6 +233,7 @@ a {
   }
   &.btn-secondary,
   &.btn-toggle {
+    font-weight: 700;
     border: 1px solid $secondary;
     color: $white;
     &:active, &:focus {

@@ -4,116 +4,136 @@
     class="cover"
   >
     <div class="content-wrapper">
-      <b-row>
-        <b-col>
-          <!-- cover-heading section -->
-          <div class="row ">
-            <div class="col col-large-10 col-xlarge-8">
-              <h2
-                class="cover-heading scroll-effect"
-                v-html="project.title"
-              ></h2>
-            </div>
-          </div>
-          <!-- subcover-heading section -->
-          <div class="row ">
-            <div class="col col-large-10 col-xlarge-8">
-              <p
-                class="cover-subheading scroll-effect scroll-effect-delayed-1"
-                v-html="project.subtitle"
-              ></p>
-            </div>
-          </div>
-          <!-- Buttons section -->
-          <div class="row ">
-            <div class="col col-large-8">
-              <div
-                class="button-group text-center scroll-effect scroll-effect-delayed-2"
-              >
-                <b-button-group>
-                  <!-- Contribution Button -->
-                  <b-button
-                    ref="btn-contribute"
-                    v-if="project.buttonsBR.contribution_btn.show"
-                    :to="{ name: 'project.task.presenter' }"
-                    variant="primary"
-                    :class="{
-                      'btn-secondary':
-                        project.buttonsBR.contribution_btn.disabled,
-                      'btn-secondary-inverted':
-                        project.buttonsBR.contribution_btn.disabled
-                    }"
-                    :disabled="project.buttonsBR.contribution_btn.disabled"
-                    >{{ $t(project.buttonsBR.contribution_btn.name) }}</b-button
-                  >
-                  <!-- Test It Button -->
-                  <b-button
-                    ref="btn-test-it"
-                    v-if="project.buttonsBR.test_btn.show"
-                    :to="{ name: 'project.task.presenter' }"
-                    variant="primary"
-                    :class="{
-                      'btn-secondary': project.buttonsBR.test_btn.disabled,
-                      'btn-secondary-inverted':
-                        project.buttonsBR.test_btn.disabled
-                    }"
-                    :disabled="project.buttonsBR.test_btn.disabled"
-                    >{{ $t(project.buttonsBR.test_btn.name) }}</b-button
-                  >
-                  <!-- Modify draft Button -->
-                  <b-button
-                    ref="btn-draft-complete-it"
-                    v-if="project.buttonsBR.modify_draft_btn.show"
-                    v-b-modal.draft-project
-                    variant="primary"
-                    :class="{
-                      'btn-secondary':
-                        project.buttonsBR.modify_draft_btn.disabled,
-                      'btn-secondary-inverted':
-                        project.buttonsBR.modify_draft_btn.disabled
-                    }"
-                    :disabled="project.buttonsBR.modify_draft_btn.disabled"
-                    >{{ $t(project.buttonsBR.modify_draft_btn.name) }}</b-button
-                  >
-                  <!-- Request Aproval button -->
-                  <b-button
-                    ref="btn-approve-it"
-                    v-if="project.buttonsBR.request_approval_btn.show"
-                    variant="primary"
-                    v-b-modal.approve-project
-                    :class="{
-                      'btn-secondary':
-                        project.buttonsBR.request_approval_btn.disabled,
-                      'btn-secondary-inverted':
-                        project.buttonsBR.request_approval_btn.disabled
-                    }"
-                    :disabled="project.buttonsBR.request_approval_btn.disabled"
-                    >{{
-                      $t(project.buttonsBR.request_approval_btn.name)
-                    }}</b-button
-                  >
-                  <b-button
-                    ref="btn-publish-it"
-                    v-if="project.buttonsBR.publish_btn.show"
-                    v-b-modal.publish-project
-                    @click="publish()"
-                    variant="primary"
-                    :class="{
-                      'btn-secondary': project.buttonsBR.publish_btn.disabled,
-                      'btn-secondary-inverted':
-                        project.buttonsBR.publish_btn.disabled
-                    }"
-                    :disabled="project.buttonsBR.publish_btn.disabled"
-                    >{{ $t(project.buttonsBR.publish_btn.name) }}
-                  </b-button>
-                </b-button-group>
-              </div>
-            </div>
-          </div>
-          <!-- TODO: is this slot tag required -->
-          <slot></slot>
-        </b-col>
+      <!-- cover-heading section -->
+      <b-row align-h="center">
+        <div class="col col-large-10 col-xlarge-8">
+          <h2 class="cover-heading scroll-effect" v-html="project.title"></h2>
+        </div>
       </b-row>
+      <!-- subcover-heading section -->
+      <b-row align-h="center">
+        <div class="col col-large-10 col-xlarge-8">
+          <p
+            class="cover-subheading scroll-effect scroll-effect-delayed-1"
+            v-html="project.subtitle"
+          ></p>
+        </div>
+      </b-row>
+      <!-- Buttons section -->
+      <b-row align-h="center">
+        <div  class="scroll-effect scroll-effect-delayed-2">
+          <!-- Contribution Button -->
+          <button
+            ref="btn-contribute"
+            v-if="project.buttonsBR.contribution_btn.show"
+            @click="routingTo('project.task.presenter')"
+            class="btn "
+            :class="{
+              'btn-primary': !project.buttonsBR.contribution_btn.disabled,
+              'btn-secondary': project.buttonsBR.contribution_btn.disabled,
+              'btn-secondary-inverted':
+                project.buttonsBR.contribution_btn.disabled
+            }"
+            :disabled="project.buttonsBR.contribution_btn.disabled"
+            >{{ $t(project.buttonsBR.contribution_btn.name) }}</button
+          >
+          <!-- Test It Button -->
+          <button
+            ref="btn-test-it"
+            v-if="project.buttonsBR.test_btn.show"
+            @click="routingTo('project.task.presenter')"
+            class="btn "
+            :class="{
+              'btn-primary': !project.buttonsBR.test_btn.disabled,
+              'btn-secondary': project.buttonsBR.test_btn.disabled,
+              'btn-secondary-inverted': project.buttonsBR.test_btn.disabled
+            }"
+            :disabled="project.buttonsBR.test_btn.disabled"
+            >{{ $t(project.buttonsBR.test_btn.name) }}</button
+          >
+          <!-- Modify draft Button -->
+          <button
+            ref="btn-draft-complete-it"
+            v-if="project.buttonsBR.modify_draft_btn.show"
+            v-b-modal.draft-project
+            class="btn "
+            :class="{
+              'btn-primary': !project.buttonsBR.modify_draft_btn.disabled,
+              'btn-secondary': project.buttonsBR.modify_draft_btn.disabled,
+              'btn-secondary-inverted':
+                !project.buttonsBR.modify_draft_btn.disabled
+            }"
+            :disabled="project.buttonsBR.modify_draft_btn.disabled"
+          >
+            {{ $t(project.buttonsBR.modify_draft_btn.name) }}
+          </button>
+          <!-- Request Aproval button -->
+          <button
+            ref="btn-approve-it"
+            v-if="project.buttonsBR.request_approval_btn.show"
+            v-b-modal.approve-project
+            class="btn "
+            :class="{
+              'btn-primary': !project.buttonsBR.request_approval_btn.disabled,
+              'btn-secondary': project.buttonsBR.request_approval_btn.disabled,
+              'btn-secondary-inverted':
+                project.buttonsBR.request_approval_btn.disabled
+            }"
+            :disabled="project.buttonsBR.request_approval_btn.disabled"
+            >{{ $t(project.buttonsBR.request_approval_btn.name) }}</button
+          >
+          <!-- Submit for publish button -->
+          <button
+            ref="btn-publish-it"
+            v-if="project.buttonsBR.publish_btn.show"
+            v-b-modal.publish-project
+            @click="publish()"
+            class="btn "
+            :class="{
+              'btn-primary': !project.buttonsBR.publish_btn.disabled,
+              'btn-secondary': project.buttonsBR.publish_btn.disabled,
+              'btn-secondary-inverted': project.buttonsBR.publish_btn.disabled
+            }"
+            :disabled="project.buttonsBR.publish_btn.disabled"
+            >{{ $t(project.buttonsBR.publish_btn.name) }}
+          </button>
+        </div>
+      </b-row>
+      <!-- TODO: is this slot tag required -->
+      <slot></slot>
+      <!-- Modals section  -->
+
+      <!-- Shareable link modal -->
+      <b-modal
+        id="project-link"
+        :title="$t('project-share-link')"
+        :ok-title="$t('submit-btn')"
+        :cancel-title="$t('cancel-c')"
+        @ok="getLink"
+      >
+        <b-alert variant="warning" :show="true">
+          {{ $t("shareable-link-modal-content") }} <br />
+          {{ $t("shareable-link-modal-content-note") }}
+        </b-alert>
+      </b-modal>
+      <!-- Draft project Modal -->
+      <b-modal
+        id="draft-project"
+        :title="$t('project-draft-complete')"
+        :ok-title="$t('ok')"
+        :cancel-title="$t('cancel-c')"
+        @ok="draftProject(id)"
+      >
+        <b-alert variant="warning" :show="true">
+          <span
+            v-html="
+              $t('modify-draft-modal-content', {
+                HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>How it works</a>`
+              })
+            "
+          ></span>
+        </b-alert>
+      </b-modal>
     </div>
 
     <!-- Shareable link section -->
@@ -166,40 +186,6 @@
       <img src="@/assets/shared/sdg-logo-white.svg" />
     </div>
     <div class="cover-overlay"></div>
-
-    <!-- Modals section  -->
-
-    <!-- Shareable link modal -->
-    <b-modal
-      id="project-link"
-      :title="$t('project-share-link')"
-      :ok-title="$t('submit-btn')"
-      :cancel-title="$t('cancel-c')"
-      @ok="getLink"
-    >
-      <b-alert variant="warning" :show="true">
-        {{ $t("shareable-link-modal-content") }} <br />
-        {{ $t("shareable-link-modal-content-note") }}
-      </b-alert>
-    </b-modal>
-    <!-- Draft project Modal -->
-    <b-modal
-      id="draft-project"
-      :title="$t('project-draft-complete')"
-      :ok-title="$t('ok')"
-      :cancel-title="$t('cancel-c')"
-      @ok="draftProject(id)"
-    >
-      <b-alert variant="warning" :show="true">
-        <span
-          v-html="
-            $t('modify-draft-modal-content', {
-              HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>How it works</a>`
-            })
-          "
-        ></span>
-      </b-alert>
-    </b-modal>
   </section>
 </template>
 
@@ -237,8 +223,11 @@ export default {
     goalImage(goal) {
       return require("@/assets/shared/sdgs/neg/" + goal + ".svg");
     },
-    draftProject(projectId){
-      this.$router.push({ name: 'task.builder.material', params: { projectId } })
+    draftProject(projectId) {
+      this.$router.push({
+        name: "task.builder.material",
+        params: { projectId }
+      });
     },
     getLink() {
       this.getShareableLink(this.project).then(value => {
@@ -265,6 +254,9 @@ export default {
         this.makeToast("Your link wasn't coppied.", "warning");
         console.log(error);
       }
+    },
+    routingTo(routeName){
+      this.$router.push({ name: routeName})
     }
   },
   computed: {
