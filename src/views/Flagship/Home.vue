@@ -48,6 +48,8 @@ import ContentBlock from "@/components/Project/Flagship/ContentBlock.vue";
 import NewsletterSignupBlock from "@/components/Project/Flagship/NewsletterSignupBlock.vue";
 import StatsBlock from "@/components/Project/Flagship/StatsBlock.vue";
 import project from "../../api/project";
+
+import { getAccessBR } from "@/helper";
 // import Scores from "@/components/Scores.vue";
 // import Duration from "../components/Duration";
 // import Ranking from "../components/Ranking";
@@ -58,15 +60,6 @@ import project from "../../api/project";
 // import SectionSDG from "../components/shared/SectionSDG";
 // import SectionFeedback from "../components/shared/SectionFeedback";
 
-// Default configuration of buttons for cover buttons
-const buttons = {
-  contribution_btn: {},
-  test_btn: {},
-  request_approval_btn: {},
-  modify_draft_btn: {},
-  shareable_btn: {},
-  publish_btn: {}
-};
 export default {
   name: "Home",
   components: {
@@ -114,9 +107,10 @@ export default {
       this.coverinfo = {
         title: this.project.name,
         subtitle: this.project.description,
+        short_name:this.project.short_name,
         shareable_link: info ? this.project.info.shareable_link : null,
         backgroundImage: info ? this.project.info.thumbnail_url : null,
-        buttonsBR: this.getAccessBR()
+        buttonsBR: getAccessBR(this.project, this.accessBR)
       };
     },
     setContent() {
@@ -129,34 +123,6 @@ export default {
             description: value,
             ctrl_view: ctrl_view
           };
-        }
-      }
-    },
-    getAccessBR() {
-      this.clearAccessBR();
-      const info = this.project.hasOwnProperty("info");
-      // validate if project is already published
-      if (this.project.published) {
-        if (this.accessBR.projectOwner) {
-          buttons.contribution_btn.show = true;
-          buttons.contribution_btn.name = "project-contribute";
-          buttons.request_approval_btn.show = true;
-          buttons.request_approval_btn.disabled = true;
-          buttons.request_approval_btn.name = "project-draft-published";
-        }
-      } else {
-        if (info && this.project.info.pending_approval) {
-          buttons.request_approval_btn.show = true;
-          buttons.request_approval_btn.disabled = true;
-          buttons.request_approval_btn.name = "project-draft-pending-approval";
-        }
-      }
-      return buttons;
-    },
-    clearAccessBR() {
-      for (const key in buttons) {
-        if (buttons.hasOwnProperty(key)) {
-          buttons[key] = { show: false, disabled: false, name: null };
         }
       }
     },
@@ -194,6 +160,8 @@ export default {
       };
       // Get project results
       await this.getResults(this.project);
+      // Get the new task if exist for this project
+      await this.getNewTask(this.project);
       if (
         this.isLoggedUserOwnerOfProject(this.project) ||
         this.isLoggedUserAdmin
@@ -202,7 +170,7 @@ export default {
         const tasks = await this.getProjectTasks(this.project);
       }
     },
-    async setLoginControls() {
+    setLoginControls() {
       // This function contains the validation for user actions acoriding the role or project permits
       this.accessBR.projectOwner = this.isLoggedUserOwnerOfProject(
         this.project
@@ -210,7 +178,7 @@ export default {
       // User is logged as admin
       this.accessBR.adminUser = this.isLoggedUserAdmin;
       // checks if the project is open for anonymous users or not
-      this.accessBR.anonymousProject = await !!this.getNewTask(this.project);
+      this.accessBR.anonymousProject = !!this.getCurrentTask;
       // User is admin
     }
   },
@@ -218,7 +186,8 @@ export default {
     ...mapState({
       project: state => state.project.selectedProject
     }),
-    ...mapGetters("user", ["isLoggedUserOwnerOfProject", "isLoggedUserAdmin"])
+    ...mapGetters("user", ["isLoggedUserOwnerOfProject", "isLoggedUserAdmin"]),
+    ...mapGetters("task",["getCurrentTask"])
   },
   created() {
     this.setProjectData();

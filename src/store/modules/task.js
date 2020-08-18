@@ -59,7 +59,9 @@ const state = {
 
 // filter methods on the state data
 const getters = {
-
+  getCurrentTask: state => {
+    return state.currentTask
+  },
 }
 
 // async methods making mutations are placed here

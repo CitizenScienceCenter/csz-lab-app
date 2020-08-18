@@ -3,9 +3,9 @@
     <div class="content-wrapper">
       <b-row align-h="center" class="scroll-effect">
         <div v-for="(item, index) in stats" :key="index">
-          <b-col>
+          <b-col v-if="item.value != null">
             <label v-html="$t(item.name)"></label>
-            <span class="value d-block"
+            <span class="value d-block" 
               >{{ item.value }} {{ item.value != null ? item.units : null }}</span
             >
           </b-col>

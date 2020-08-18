@@ -807,7 +807,8 @@
     "flagshipproject.Home.project-about-button": "About",
     "flagshipproject.Home.project-contribute-button": "Contribute",
     "flagshipproject.Home.project-logo-text": "A joint initiative by",
-    "flagshipproject.Home.project-shareable-link": "Share your link"
+    "flagshipproject.Home.project-shareable-link": "Share your link",
+    "flagshipproject.Home.project-shareable-link-coppied-toast": "Your link was successfully copied to the clipboard."
   },
   "de": {
     "home-heading": "CITIZEN SCIENCE PROJECT BUILDER",
@@ -1508,7 +1509,7 @@
 
     "Error:-Request-failed-with-status-code-502": "Fehler: Anforderung mit Statuscode 502 fehlgeschlagen",
 
-    "shareable-link": "teilbarer link",
+    "shareable-link": "Teilbarer Link",
     "shareable-link-modal-content": "Ihr Projekt wird in einer temporären Umgebung veröffentlicht und Sie erhalten einen Link, den Sie mit anderen zu Testzwecken teilen können. Nur Personen mit dem Link können das Projekt sehen; das Projekt wird noch nicht öffentlich im CS Project Builder angezeigt.",
     "shareable-link-modal-content-note": "Hinweis: Dies ist eine Testumgebung. Alle Antworten zu den Projekt-Tasks, die während des Tests eingegeben werden, werden nicht gespeichert.",
 
@@ -1614,6 +1615,7 @@
     "flagshipproject.Home.project-about-button": "Über",
     "flagshipproject.Home.project-contribute-button": "Mitmachen",
     "flagshipproject.Home.project-logo-text": "Ein gemeinsamer Effort von",
-    "flagshipproject.Home.project-shareable-link": "Link weitergeben"
+    "flagshipproject.Home.project-shareable-link": "Link weitergeben",
+    "flagshipproject.Home.project-shareable-link-coppied-toast": "Ihr Link wurde erfolgreich in die Zwischenablage kopiert."
   }
 }
