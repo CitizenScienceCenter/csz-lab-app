@@ -115,8 +115,7 @@
         repliesOffset: 0,
         replies : [],
         totalRepliesInThread : 0,
-        comment : this.commentsThread,
-        activeDiscussion:null
+        comment : this.commentsThread
       }
     },
     
@@ -148,10 +147,6 @@
       comments(newValue, oldValue) {
         this.replies = newValue.data
         this.totalRepliesInThread = newValue.count
-       
-        /*if(this.activeDiscussion == this.index) { 
-          this.comment[this.activeDiscussion][1] = [] 
-        }*/
         this.buildThreadTree(this.comment,newValue.data)
         this.replyTexts = []
       },
@@ -178,8 +173,11 @@
       },
       buildThreadTree(comments,replies) {
         if(this.activeThread != this.index) return
+        
         console.log('Building comment tree for thread', this.activeThread , ' where index is: ', this.index)
-        this.comment[this.activeThread][1] = []
+        
+        if(this.logged) this.comment[this.activeThread][1] = []
+
         for (let i = 0; i < replies.length; i++) {
           
           if (replies[i].parent) {
