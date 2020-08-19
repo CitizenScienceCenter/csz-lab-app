@@ -17,6 +17,7 @@ Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
+// Create persisted data for selected project 
 const dataState = createPersistedState({
   paths: ['project.selectedProject']
 })

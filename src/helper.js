@@ -222,6 +222,7 @@ export function getAccessBR(project, accessBR) {
   // initialize buttons
   clearAccessBR();
   const info = project.hasOwnProperty("info");
+  // TODO: remove after validate this part
   console.log("###################");
   console.log(`${project.published},  ${project.info.pending_approval}`);
   console.log(accessBR);
@@ -293,6 +294,7 @@ function commonBR(id) {
       break;
   }
 }
+// Clear the AccessBR
 export function clearAccessBR() {
   for (const key in buttons) {
     if (buttons.hasOwnProperty(key)) {

@@ -7,7 +7,7 @@
       <!-- cover-heading section -->
       <b-row align-h="center">
         <div class="col col-large-10 col-xlarge-8">
-          <h2 class="cover-heading scroll-effect" v-html="project.title"></h2>
+          <h2 class="cover-heading scroll-effect" v-html="project.name"></h2>
         </div>
       </b-row>
       <!-- subcover-heading section -->
@@ -15,13 +15,13 @@
         <div class="col col-large-10 col-xlarge-8">
           <p
             class="cover-subheading scroll-effect scroll-effect-delayed-1"
-            v-html="project.subtitle"
+            v-html="project.description"
           ></p>
         </div>
       </b-row>
       <!-- Buttons section -->
-      <b-row align-h="center">
-        <div  class="scroll-effect scroll-effect-delayed-2">
+      <b-row align-h="center" >
+        <div class="btn-group scroll-effect scroll-effect-delayed-2">
           <!-- Contribution Button -->
           <button
             ref="btn-contribute"
@@ -35,8 +35,9 @@
                 project.buttonsBR.contribution_btn.disabled
             }"
             :disabled="project.buttonsBR.contribution_btn.disabled"
-            >{{ $t(project.buttonsBR.contribution_btn.name) }}</button
           >
+            {{ $t(project.buttonsBR.contribution_btn.name) }}
+          </button>
           <!-- Test It Button -->
           <button
             ref="btn-test-it"
@@ -49,8 +50,9 @@
               'btn-secondary-inverted': project.buttonsBR.test_btn.disabled
             }"
             :disabled="project.buttonsBR.test_btn.disabled"
-            >{{ $t(project.buttonsBR.test_btn.name) }}</button
           >
+            {{ $t(project.buttonsBR.test_btn.name) }}
+          </button>
           <!-- Modify draft Button -->
           <button
             ref="btn-draft-complete-it"
@@ -60,8 +62,8 @@
             :class="{
               'btn-primary': !project.buttonsBR.modify_draft_btn.disabled,
               'btn-secondary': project.buttonsBR.modify_draft_btn.disabled,
-              'btn-secondary-inverted':
-                !project.buttonsBR.modify_draft_btn.disabled
+              'btn-secondary-inverted': !project.buttonsBR.modify_draft_btn
+                .disabled
             }"
             :disabled="project.buttonsBR.modify_draft_btn.disabled"
           >
@@ -80,8 +82,9 @@
                 project.buttonsBR.request_approval_btn.disabled
             }"
             :disabled="project.buttonsBR.request_approval_btn.disabled"
-            >{{ $t(project.buttonsBR.request_approval_btn.name) }}</button
           >
+            {{ $t(project.buttonsBR.request_approval_btn.name) }}
+          </button>
           <!-- Submit for publish button -->
           <button
             ref="btn-publish-it"
@@ -95,14 +98,15 @@
               'btn-secondary-inverted': project.buttonsBR.publish_btn.disabled
             }"
             :disabled="project.buttonsBR.publish_btn.disabled"
-            >{{ $t(project.buttonsBR.publish_btn.name) }}
+          >
+            {{ $t(project.buttonsBR.publish_btn.name) }}
           </button>
         </div>
       </b-row>
       <!-- TODO: is this slot tag required -->
       <slot></slot>
-      <!-- Modals section  -->
 
+      <!-- Modals section  -->
       <!-- Shareable link modal -->
       <b-modal
         id="project-link"
@@ -122,7 +126,7 @@
         :title="$t('project-draft-complete')"
         :ok-title="$t('ok')"
         :cancel-title="$t('cancel-c')"
-        @ok="draftProject(id)"
+        @ok="routingTo('task.builder.material', project.id)"
       >
         <b-alert variant="warning" :show="true">
           <span
@@ -132,6 +136,36 @@
               })
             "
           ></span>
+        </b-alert>
+      </b-modal>
+      <!-- Approve Project modal -->
+      <b-modal
+        id="approve-project"
+        :title="$t('project-draft-approve-your-project')"
+        :ok-title="$t('submit-btn')"
+        :cancel-title="$t('cancel-c')"
+        @ok="approve"
+      >
+        <b-alert variant="warning" :show="true">
+          <span
+            v-html="
+              $t('project-draft-approval-warning', {
+                link: `<a target='_blank' href='https://lab.staging.citizenscience.ch/en/about'>criteria</a>`
+              })
+            "
+          ></span>
+        </b-alert>
+      </b-modal>
+      <!-- Publish project modal -->
+      <b-modal
+        id="publish-project"
+        :title="$t('project-draft-publish-your-project')"
+        :ok-title="$t('project-draft-publish-your-project-ok')"
+        :cancel-title="$t('project-draft-publish-your-project-no')"
+        @ok="publish"
+      >
+        <b-alert variant="danger" :show="true">
+          {{ $t("project-draft-danger") }}
         </b-alert>
       </b-modal>
     </div>
@@ -180,7 +214,7 @@
       <img
         class="goal"
         :src="goalImage(item)"
-        v-for="(item, index) in sdg_icons"
+        v-for="(item, index) in project.sdg_icons"
         :key="index"
       />
       <img src="@/assets/shared/sdg-logo-white.svg" />
@@ -190,8 +224,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-// import project from "@/api/project";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "Cover",
@@ -202,10 +235,15 @@ export default {
   },
   props: {
     project: Object,
-    sdg_icons: Array
+    tasks: Object
   },
   methods: {
-    ...mapActions("project", ["getShareableLink"]),
+    ...mapActions("project", [
+      "getShareableLink",
+      "publishProject",
+      "approveProject"
+    ]),
+    ...mapMutations("notification", ["showError", "showSuccess"]),
     logoClick: function(e) {
       var rect = e.target.getBoundingClientRect();
       var x = e.clientX - rect.left;
@@ -223,40 +261,63 @@ export default {
     goalImage(goal) {
       return require("@/assets/shared/sdgs/neg/" + goal + ".svg");
     },
-    draftProject(projectId) {
-      this.$router.push({
-        name: "task.builder.material",
-        params: { projectId }
-      });
-    },
     getLink() {
       this.getShareableLink(this.project).then(value => {
         this.project.shareable_link = value.key;
       });
     },
-    makeToast(data, title = null, variant = null) {
-      this.$bvToast.toast(data, {
-        toaster: "b-toaster-top-center",
-        title: title,
-        variant: variant,
-        solid: true
-      });
-    },
     async copyToClipboard(info) {
       try {
         await navigator.clipboard.writeText(info);
-        this.makeToast(
-          this.$t("flagshipproject.Home.project-shareable-link-coppied-toast"),
-          this.$t("shareable-link"),
-          "info"
-        );
+        this.showSuccess({
+          title: this.$t("shareable-link"),
+          content: this.$t(
+            "flagshipproject.Home.project-shareable-link-coppied-toast"
+          )
+        });
       } catch (error) {
-        this.makeToast("Your link wasn't coppied.", "warning");
-        console.log(error);
+        this.showError({
+          title: this.$t("shareable-link"),
+          content: `Your link wasn't coppied. Please check your profile.`
+        });
       }
     },
-    routingTo(routeName){
-      this.$router.push({ name: routeName})
+    routingTo(routeName, paramsContent) {
+      this.$router.push({ name: routeName, params: { paramsContent } });
+    },
+    approve() {
+      if (this.tasks.taskPresenter.length > 0) {
+        if (this.tasks.projectTasks.length > 0) {
+          this.approveProject(this.project);
+        } else {
+          this.showError({
+            title: "Impossible to approve the project",
+            content: "You must add at least one task to the project"
+          });
+        }
+      } else {
+        this.showError({
+          title: "Impossible to approve the project",
+          content: "You must provide a task presenter to approve the project"
+        });
+      }
+    },
+    publish() {
+      if (this.tasks.taskPresenter.length > 0) {
+        if (this.tasks.projectTasks.length > 0) {
+          this.publishProject(this.project);
+        } else {
+          this.showError({
+            title: "Impossible to publish the project",
+            content: "You must add at least one task to the project"
+          });
+        }
+      } else {
+        this.showError({
+          title: "Impossible to publish the project",
+          content: "You must provide a task presenter to publish the project"
+        });
+      }
     }
   },
   computed: {
@@ -390,8 +451,7 @@ export default {
       left: -10px;
       font-size: $font-size-mini;
       text-transform: capitalize;
-      height: 27px;
-      width: 90%;
+      width: 80%;
     }
   }
   .content-wrapper {
@@ -501,7 +561,8 @@ export default {
       }
       .share-button {
         font-size: $font-size-small;
-        height: 30px;
+        height: 35px;
+        width: 90%;
       }
     }
     .content-wrapper {

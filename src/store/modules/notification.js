@@ -1,6 +1,7 @@
 import { uuid } from '@/helper'
 
 const state = {
+  notifications:[],
   errorNotifications: [],
   infoNotifications: [],
   successNotifications: [],
@@ -26,28 +27,31 @@ const actions = {
 const mutations = {
   showError (state, {title, content}) {
     state.errorNotifications.push({ id: uuid(), message: {title, content} })
+    state.notifications.push({icon:"error", title: title, text: content})
   },
-  closeError (state, id) {
-    state.errorNotifications = state.errorNotifications.filter(value => {
-      return value.id !== id
-    })
-  },
+  // closeError (state, id) {
+  //   state.errorNotifications = state.errorNotifications.filter(value => {
+  //     return value.id !== id
+  //   })
+  // },
   showSuccess (state, {title, content}) {
-    state.successNotifications.push({ id: uuid(), message: {title, content} })
+    state.successNotifications.push({ id: uuid(), message: {title, content} })  
+    state.notifications.push({icon:"success", title: title, text: content})  
   },
-  closeSuccess (state, id) {
-    state.successNotifications = state.successNotifications.filter(value => {
-      return value.id !== id
-    })
-  },
+  // closeSuccess (state, id) {
+  //   state.successNotifications = state.successNotifications.filter(value => {
+  //     return value.id !== id
+  //   })
+  // },
   showInfo (state, {title, content}) {
     state.infoNotifications.push({ id: uuid(), message: {title, content} })
+    state.notifications.push({icon:"info", title: title, text: content})
   },
-  closeInfo (state, id) {
-    state.infoNotifications = state.infoNotifications.filter(value => {
-      return value.id !== id
-    })
-  },
+  // closeInfo (state, id) {
+  //   state.infoNotifications = state.infoNotifications.filter(value => {
+  //     return value.id !== id
+  //   })
+  // },
   showLoading (state, id) {
     state.loadingNotifications.push(id)
   },

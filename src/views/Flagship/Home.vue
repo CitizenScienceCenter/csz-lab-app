@@ -1,12 +1,7 @@
 <template>
   <div>
     <!-- Cover Section -->
-    <app-cover :project="coverinfo" :sdg_icons="sdg_goals"> </app-cover>
-    <!-- Validations for buttons
-      projectOwner
-      adminUser
-      anonymousProject
-     -->
+    <app-cover :project="coverinfo" :tasks="taskinfo"> </app-cover>
 
     <!-- Statistics Section -->
     <app-content-section
@@ -36,7 +31,7 @@
     <!-- Newsletter Section -->
     <app-content-section color="more-greyish">
       <newsletter-signup-block></newsletter-signup-block>
-    </app-content-section>
+    </app-content-section>    
   </div>
 </template>
 
@@ -49,39 +44,22 @@ import NewsletterSignupBlock from "@/components/Project/Flagship/NewsletterSignu
 import StatsBlock from "@/components/Project/Flagship/StatsBlock.vue";
 import project from "../../api/project";
 
-import { getAccessBR } from "@/helper";
-// import Scores from "@/components/Scores.vue";
-// import Duration from "../components/Duration";
-// import Ranking from "../components/Ranking";
-// import Stats from "../components/Stats";
-// import SectionStats from "../components/shared/SectionStats";
-// import SectionNewsletterSignup from "../components/shared/SectionNewsletterSignup";
-// import SubSectionStats from "../components/shared/SubSectionStats";
-// import SectionSDG from "../components/shared/SectionSDG";
-// import SectionFeedback from "../components/shared/SectionFeedback";
+import { getAccessBR } from "@/helper"
 
 export default {
   name: "Home",
   components: {
-    // SectionFeedback,
-    // SectionSDG,
-    // SubSectionStats,
-    // SectionNewsletterSignup,
-    // SectionStats,
-    // Stats,
-    // Ranking,
-    // Duration,
     "app-cover": Cover,
     "app-content-section": ContentSection,
     "content-block": ContentBlock,
     "newsletter-signup-block": NewsletterSignupBlock,
     "stats-block": StatsBlock
-    // Scores
   },
   data() {
     return {
       coverinfo: null,
-      sdg_goals: ["10", "2", "3", "4", "5"],
+      taskinfo: null,
+      sdg_goals: [13],
       description: {},
       statsinfo: {},
       accessBR: {} // Business rules defined to control the user actions
@@ -102,15 +80,44 @@ export default {
   methods: {
     ...mapActions("project", ["getResults", "getStatistics"]),
     ...mapActions("task", ["getProjectTasks", "getNewTask"]),
+    async showAlert() {
+      // Use sweetalert2
+      const Toast = this.$swal.mixin({
+        toast:true,
+        position: "top",
+        showConfirmButton: false,
+        heightAuto:false,
+        timer: 4000
+      });
+      var steps = [
+        {
+          icon: "success",
+          title: "Impossible to approve the project", text:"You must provide a task presenter to approve the project"
+        },
+        { icon: "error", title: "Ooops..." }, { icon: "warning", title: "Caution!!" }
+      ];
+      while (steps) {
+        await Toast.fire(steps.shift());
+        if (steps.length <= 0) {
+          break;
+        }
+      }
+    },
     setCover() {
       const info = this.project.hasOwnProperty("info");
       this.coverinfo = {
-        title: this.project.name,
-        subtitle: this.project.description,
-        short_name:this.project.short_name,
+        id: this.project.id,
+        name: this.project.name,
+        description: this.project.description,
+        short_name: this.project.short_name,
         shareable_link: info ? this.project.info.shareable_link : null,
         backgroundImage: info ? this.project.info.thumbnail_url : null,
-        buttonsBR: getAccessBR(this.project, this.accessBR)
+        buttonsBR: getAccessBR(this.project, this.accessBR),
+        sdg_icons: this.sdg_goals || []
+      };
+      this.taskinfo = {
+        taskPresenter: this.getTaskPresenter,
+        projectTasks: []
       };
     },
     setContent() {
@@ -167,7 +174,8 @@ export default {
         this.isLoggedUserAdmin
       ) {
         // has to be loaded to know if the project can be published
-        const tasks = await this.getProjectTasks(this.project);
+        await this.getProjectTasks(this.project);
+        this.taskinfo.projectTasks = this.getTasksByProject;
       }
     },
     setLoginControls() {
@@ -187,7 +195,11 @@ export default {
       project: state => state.project.selectedProject
     }),
     ...mapGetters("user", ["isLoggedUserOwnerOfProject", "isLoggedUserAdmin"]),
-    ...mapGetters("task",["getCurrentTask"])
+    ...mapGetters("task", [
+      "getCurrentTask",
+      "getTaskPresenter",
+      "getTasksByProject"
+    ])
   },
   created() {
     this.setProjectData();

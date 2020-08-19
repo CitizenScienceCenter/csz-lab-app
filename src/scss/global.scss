@@ -87,6 +87,7 @@ a {
 
 .btn-group {
   display: inline !important;
+  text-align: center;
 }
 
 .breadcrumb {
@@ -211,7 +212,7 @@ a {
   font-size: $font-size-small;
   text-transform: uppercase;
   padding: 0 20px;
-  border-radius: $border-radius;
+  border-radius: $border-radius !important;
   outline: none;
   cursor: pointer;
 
