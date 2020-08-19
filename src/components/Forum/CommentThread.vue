@@ -36,7 +36,7 @@
       </div>
       <div class="comment_discussion">
         <b-collapse 
-          @shown="showCollapse(comment[index][0].id)" 
+          @shown="showCollapse(comment[index][0].id,index)" 
           @hide="hideCollapse(index)" 
           :id="'discussion' +index">
           <div v-if='!logged'>
@@ -77,7 +77,8 @@
                 v-if="replyIndex < repliesShown">
               <b-col md="11">
                 <comment-reply 
-                  :reply="reply">
+                  :reply="reply"
+                  :threadIndex="index">
                 </comment-reply>
               </b-col>
             </b-row>
@@ -96,7 +97,7 @@
 
 <script>
 
-  import {mapState} from 'vuex'
+  import {mapState,mapActions,mapMutations} from 'vuex'
 
   import CommentReply from "./CommentReply";
 
@@ -114,7 +115,8 @@
         repliesOffset: 0,
         replies : [],
         totalRepliesInThread : 0,
-        comment : this.commentsThread
+        comment : this.commentsThread,
+        activeDiscussion:null
       }
     },
     
@@ -135,6 +137,9 @@
       ...mapState('project', {
         comments: state => state.projectComments
       }),
+      ...mapState('comments', {
+        activeThread: state => state.activeThread
+      })
     },
     watch: {
       commentsThread(newValue, oldValue) {
@@ -143,18 +148,28 @@
       comments(newValue, oldValue) {
         this.replies = newValue.data
         this.totalRepliesInThread = newValue.count
-        this.comment[this.index][1] = []
+       
+        /*if(this.activeDiscussion == this.index) { 
+          this.comment[this.activeDiscussion][1] = [] 
+        }*/
         this.buildThreadTree(this.comment,newValue.data)
         this.replyTexts = []
       },
     },
     methods: {
-      showCollapse(parent){
+      ...mapMutations('comments', [
+        'SET_ACTIVE_THREAD'
+      ]),
+      
+      showCollapse(parent,index){
+        
+        this.SET_ACTIVE_THREAD(index)
+
         this.$store.dispatch('project/getProjectComments', {
-              'id':parent,
-              'limit':this.repliesShown+999,
-              'offset':this.repliesOffset
-            });
+          'id':parent,
+          'limit':this.repliesShown+999,
+          'offset':this.repliesOffset
+        });
       },
       hideCollapse(index){
         this.replies = []
@@ -162,13 +177,17 @@
         this.buildThreadTree(this.comment,[])
       },
       buildThreadTree(comments,replies) {
-        console.log('Building comment tree')
+        if(this.activeThread != this.index) return
+        console.log('Building comment tree for thread', this.activeThread , ' where index is: ', this.index)
+        this.comment[this.activeThread][1] = []
         for (let i = 0; i < replies.length; i++) {
           
           if (replies[i].parent) {
             for (let j = 0; j < comments.length; j++) {
+              
               if (replies[i].parent === comments[j][0].id) {
                 let temp = comments[j][1]
+                
                 if(temp.length > 0){
                   if(replies[i].id == temp[0].id){
                     continue
@@ -205,6 +224,7 @@
 
         this.$store.dispatch('project/setProjectComment', {'short_name': 'NA', 'comment': comment}).then(res => {
           if (res.status == 'success') {
+            this.SET_ACTIVE_THREAD(index)
             this.replyTexts[index] = ''
             this.$store.dispatch('project/getProjectComments', {
               'id':parentId,

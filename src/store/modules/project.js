@@ -597,6 +597,7 @@ const actions = {
   getForumThreads ({commit}, payload) {
     return api.getForumThreads(payload.limit,payload.offset).then(value => {
       commit('setForumThreads', value.data)
+      //commit('comments/SET_NUMBER_OF_THREADS', value.count)
       return value.data
     }).catch(reason => {
       commit('setProjectComments',[])

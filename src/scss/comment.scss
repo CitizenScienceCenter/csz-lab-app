@@ -43,6 +43,7 @@
   &__content {
     padding-left: 63px;
     padding-top: 15px;
+    overflow-wrap: break-word;
 
     &_mainthread {
       font-weight: bold;

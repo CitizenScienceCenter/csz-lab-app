@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex'
+  import {mapState, mapActions, mapMutations} from 'vuex'
 
   export default {
     name: "Reply",
@@ -78,6 +78,10 @@
       reply: {
         type: Object,
         default: []
+      },
+      threadIndex:{
+        type: Number,
+        default: null
       }
     },
     computed: {
@@ -86,7 +90,12 @@
       ])
     },
     methods: {
+      ...mapMutations('comments', [
+        'SET_ACTIVE_THREAD'
+      ]),
+
       deleteComment(thread_id,comment_id){
+        this.SET_ACTIVE_THREAD(this.threadIndex)
         this.$store.dispatch('project/deleteComment', {
           'thread_id':thread_id,
           'comment_id':comment_id
@@ -105,6 +114,7 @@
           if (res.status == 'success') {
             this.replyTexts = ''
             this.edit_comment = false
+            this.SET_ACTIVE_THREAD(this.threadIndex)
             this.$store.dispatch('project/getProjectComments', {
               'id':thread_id,
               'limit':1000,
