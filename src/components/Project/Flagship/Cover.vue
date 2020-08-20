@@ -20,7 +20,7 @@
         </div>
       </b-row>
       <!-- Buttons section -->
-      <b-row align-h="center" >
+      <b-row align-h="center">
         <div class="btn-group scroll-effect scroll-effect-delayed-2">
           <!-- Contribution Button -->
           <button
@@ -57,7 +57,17 @@
           <button
             ref="btn-draft-complete-it"
             v-if="project.buttonsBR.modify_draft_btn.show"
-            v-b-modal.draft-project
+            @click="
+              draftModal('task.builder.material', project.id, {
+                icon: 'warning',
+                title: $t('project-draft-complete'),
+                html: $t('modify-draft-modal-content', {
+                  HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>How it works</a>`
+                }),
+                confirmButtonText: $t('ok'),
+                cancelButtonText: $t('cancel-c')
+              })
+            "
             class="btn "
             :class="{
               'btn-primary': !project.buttonsBR.modify_draft_btn.disabled,
@@ -73,7 +83,17 @@
           <button
             ref="btn-approve-it"
             v-if="project.buttonsBR.request_approval_btn.show"
-            v-b-modal.approve-project
+            @click="
+              approveModal({
+                icon: 'warning',
+                title: $t('project-draft-approve-your-project'),
+                html: $t('project-draft-approval-warning', {
+                  link: `<a target='_blank' href='https://lab.staging.citizenscience.ch/en/about'>criteria</a>`
+                }),
+                confirmButtonText: $t('submit-btn'),
+                cancelButtonText: $t('cancel-c')
+              })
+            "
             class="btn "
             :class="{
               'btn-primary': !project.buttonsBR.request_approval_btn.disabled,
@@ -89,8 +109,15 @@
           <button
             ref="btn-publish-it"
             v-if="project.buttonsBR.publish_btn.show"
-            v-b-modal.publish-project
-            @click="publish()"
+            @click="
+              publishModal({
+                icon: 'warning',
+                title: $t('project-draft-publish-your-project'),
+                html: $t('project-draft-danger'),
+                confirmButtonText: $t('project-draft-publish-your-project-ok'),
+                cancelButtonText: $t('project-draft-publish-your-project-no')
+              })
+            "
             class="btn "
             :class="{
               'btn-primary': !project.buttonsBR.publish_btn.disabled,
@@ -105,76 +132,13 @@
       </b-row>
       <!-- TODO: is this slot tag required -->
       <slot></slot>
-
-      <!-- Modals section  -->
-      <!-- Shareable link modal -->
-      <b-modal
-        id="project-link"
-        :title="$t('project-share-link')"
-        :ok-title="$t('submit-btn')"
-        :cancel-title="$t('cancel-c')"
-        @ok="getLink"
-      >
-        <b-alert variant="warning" :show="true">
-          {{ $t("shareable-link-modal-content") }} <br />
-          {{ $t("shareable-link-modal-content-note") }}
-        </b-alert>
-      </b-modal>
-      <!-- Draft project Modal -->
-      <b-modal
-        id="draft-project"
-        :title="$t('project-draft-complete')"
-        :ok-title="$t('ok')"
-        :cancel-title="$t('cancel-c')"
-        @ok="routingTo('task.builder.material', project.id)"
-      >
-        <b-alert variant="warning" :show="true">
-          <span
-            v-html="
-              $t('modify-draft-modal-content', {
-                HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>How it works</a>`
-              })
-            "
-          ></span>
-        </b-alert>
-      </b-modal>
-      <!-- Approve Project modal -->
-      <b-modal
-        id="approve-project"
-        :title="$t('project-draft-approve-your-project')"
-        :ok-title="$t('submit-btn')"
-        :cancel-title="$t('cancel-c')"
-        @ok="approve"
-      >
-        <b-alert variant="warning" :show="true">
-          <span
-            v-html="
-              $t('project-draft-approval-warning', {
-                link: `<a target='_blank' href='https://lab.staging.citizenscience.ch/en/about'>criteria</a>`
-              })
-            "
-          ></span>
-        </b-alert>
-      </b-modal>
-      <!-- Publish project modal -->
-      <b-modal
-        id="publish-project"
-        :title="$t('project-draft-publish-your-project')"
-        :ok-title="$t('project-draft-publish-your-project-ok')"
-        :cancel-title="$t('project-draft-publish-your-project-no')"
-        @ok="publish"
-      >
-        <b-alert variant="danger" :show="true">
-          {{ $t("project-draft-danger") }}
-        </b-alert>
-      </b-modal>
     </div>
 
     <!-- Shareable link section -->
     <div class="top-left-logo" v-if="project.buttonsBR.shareable_btn.show">
       <div v-if="project.shareable_link" inline>
         <span>
-          {{ $t("flagshipproject.Home.project-shareable-link") }}
+          {{ $t("flagshipproject.cover.project-shareable-link") }}
         </span>
         <span
           @click.stop.prevent="copyToClipboard(project.shareable_link)"
@@ -187,7 +151,20 @@
         size="sm"
         class="share-button btn-secondary btn-secondary-inverted"
         :disabled="project.buttonsBR.shareable_btn.disabled"
-        v-b-modal.project-link
+        @click="
+          shareableLinkModal({
+            icon: 'info',
+            title: $t('project-share-link'),
+            html:
+              `<h5>${$t('shareable-link-modal-content')}</h5>` +
+              '<br />' +
+              `<p class='text-left small'>${$t(
+                'shareable-link-modal-content-note'
+              )}</p>`,
+            confirmButtonText: $t('submit-btn'),
+            cancelButtonText: $t('cancel-c')
+          })
+        "
       >
         {{ $t(project.buttonsBR.shareable_btn.name) }}
       </b-button>
@@ -195,7 +172,7 @@
 
     <!-- UZH and ETH logos -->
     <div class="bottom-left-logo">
-      <span>{{ $t("flagshipproject.Home.project-logo-text") }}</span>
+      <span>{{ $t("flagshipproject.cover.project-logo-text") }}</span>
       <img
         v-if="this.$i18n.locale === 'en'"
         alt="University of Zurich / ETH Zurich"
@@ -225,6 +202,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import Swal from "sweetalert2";
 
 export default {
   name: "Cover",
@@ -261,24 +239,32 @@ export default {
     goalImage(goal) {
       return require("@/assets/shared/sdgs/neg/" + goal + ".svg");
     },
-    getLink() {
-      this.getShareableLink(this.project).then(value => {
-        this.project.shareable_link = value.key;
-      });
-    },
     async copyToClipboard(info) {
       try {
         await navigator.clipboard.writeText(info);
         this.showSuccess({
           title: this.$t("shareable-link"),
           content: this.$t(
-            "flagshipproject.Home.project-shareable-link-coppied-toast"
+            "flagshipproject.cover.project-shareable-link-coppied-toast"
           )
         });
       } catch (error) {
         this.showError({
           title: this.$t("shareable-link"),
           content: `Your link wasn't coppied. Please check your profile.`
+        });
+      }
+    },
+    async getLink() {
+      try {
+        const value = await this.getShareableLink(this.project);
+        this.project.shareable_link = value.key;
+        this.showSuccess({
+          title: this.$t("flagshipproject.cover.project-shareable-link-success")
+        });
+      } catch (error) {
+        this.showError({
+          title: this.$t("flagshipproject.cover.project-shareable-link-error")
         });
       }
     },
@@ -317,6 +303,52 @@ export default {
           title: "Impossible to publish the project",
           content: "You must provide a task presenter to publish the project"
         });
+      }
+    },
+    // Modal elements secction
+    async shareableLinkModal(content) {
+      const result = await this.setModalContent(content);
+      if (result.value) {
+        this.getLink();
+      }
+    },
+    async draftModal(routeName, paramsContent, content) {
+      const result = await this.setModalContent(content);
+      if (result.value) {
+        this.routingTo(routeName, paramsContent);
+      }
+    },
+    async approveModal(content) {
+      const result = await this.setModalContent(content);
+      if (result.value) {
+        this.approve();
+      }
+    },
+    async publishModal(content) {
+      const result = await this.setModalContent(content);
+      if (result.value) {
+        this.publish();
+      }
+    },
+    // Common configuration for modal elements
+    async setModalContent(content) {
+      const Modal = Swal.mixin({
+        position: "top",
+        showConfirmButton: true,
+        showCancelButton: true,
+        customClass: {
+          confirmButton: "btn btn-secondary ml-2",
+          cancelButton: "btn btn-primary"
+        },
+        focusConfirm: false,
+        buttonsStyling: false,
+        reverseButtons: true,
+      });
+      try {
+        const result = await Modal.fire(content);
+        return result;
+      } catch (error) {
+        return error;
       }
     }
   },

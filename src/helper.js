@@ -247,7 +247,7 @@ export function getAccessBR(project, accessBR) {
           buttons.request_approval_btn.name =
             "project-draft-approve-your-project";
         } else {
-          commonBR("test");
+          commonBR("publish");
           return buttons;
         }
         // this is executed always if user is not adminUser
@@ -265,7 +265,7 @@ export function getAccessBR(project, accessBR) {
     // Validate if project is not published
     else if (!project.published) {
       commonBR("draft");
-      commonBR("test");
+      commonBR("publish");
       buttons.publish_btn.disabled = !project.info.pending_approval;
       return buttons;
     }
@@ -286,7 +286,7 @@ function commonBR(id) {
       buttons.test_btn.show = true;
       buttons.test_btn.name = "project-draft-test";
       break;
-    case "test":
+    case "publish":
       buttons.publish_btn.show = true;
       buttons.publish_btn.name = "project-draft-publish";
       break;

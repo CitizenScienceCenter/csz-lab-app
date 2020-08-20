@@ -23,8 +23,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "@/styles/themes.scss";
-@import "@/styles/variables.scss";
+@import "@/scss/variables.scss";
 .stats-sub-section {
   text-align: center;
   label {
@@ -36,7 +35,7 @@ export default {
   .value {
     font-size: $font-size-medium;
     font-weight: 800;
-    color: $color-black;
+    color: $black;
   }
 }
 @media only screen and (min-width: $viewport-tablet-portrait) {

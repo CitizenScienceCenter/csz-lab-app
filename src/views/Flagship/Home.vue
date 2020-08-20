@@ -19,8 +19,7 @@
         <content-block
           :content="{
             title: item.title,
-            description: item.description,
-            image: 'https://snakes.citizenscience.ch/img/graphic-intro.png'
+            description: item.description
           }"
           :orientation="item.ctrl_view ? 'right' : 'left'"
           scale="md"
@@ -59,7 +58,7 @@ export default {
     return {
       coverinfo: null,
       taskinfo: null,
-      sdg_goals: [13],
+      sdg_goals: [],
       description: {},
       statsinfo: {},
       accessBR: {} // Business rules defined to control the user actions
@@ -113,7 +112,7 @@ export default {
         shareable_link: info ? this.project.info.shareable_link : null,
         backgroundImage: info ? this.project.info.thumbnail_url : null,
         buttonsBR: getAccessBR(this.project, this.accessBR),
-        sdg_icons: this.sdg_goals || []
+        sdg_icons: info ? this.project.info.sdg_goals || [] :[]
       };
       this.taskinfo = {
         taskPresenter: this.getTaskPresenter,

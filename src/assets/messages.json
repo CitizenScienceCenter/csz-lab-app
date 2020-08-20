@@ -110,7 +110,7 @@
     "project-draft-publish-your-project": "Publish your project",
     "project-draft-publish-your-project-ok": "Yes, publish it",
     "project-draft-publish-your-project-no": "No, do not publish it!",
-    "project-draft-danger": "You are about to publish your project. This CANNOT be undone! Once your project has been published, people will be able to contribute to it. All the task runs (answers) that may have been created during the test phase will be flushed and your project will start fresh. That means that your project should be working properly, so please make sure it does. Otherwise you can work on it and publish it once it works fine.",
+    "project-draft-danger": "You are about to publish your project. This <b>CANNOT</b> be undone! Once your project has been published, people will be able to contribute to it. All the task runs (answers) that may have been created during the test phase will be flushed and your project will start fresh. That means that your project should be working properly, so please make sure it does. Otherwise you can work on it and publish it once it works fine.",
     "project-contribute": "Contribute",
     "project-draft-approval-error-message-title": "Impossible to approve the project",
     "project-draft-approval-error-message-content": "You must add at least one task to the project",
@@ -701,7 +701,7 @@
     "summary-builder-promise-error": "We are not able to submit your template and/or your tasks for the moment.",
 
     "shareable-link": "Your shareable link",
-    "shareable-link-modal-content": " Your project will be published in a temporary environment and you will get a link that you can share with your colleagues for the test purposes. Only people with the link can see the project, the project will not be visible in the CS Project Builder platform ",
+    "shareable-link-modal-content": " The project will be temperary published. The generated link is for test purposes. But only people with link can see the project, this will not be visible in the CS Project Builder platform. ",
     "shareable-link-modal-content-note": "Note: this a test environment, all data contributed while testing will not be saved.",
 
     "GET_ALL_PROJECTS_LOADING_ERROR": "Error during projects loading",
@@ -804,11 +804,15 @@
       "n_pending_tasks": "Pending Tasks"
     },
 
-    "flagshipproject.Home.project-about-button": "About",
-    "flagshipproject.Home.project-contribute-button": "Contribute",
-    "flagshipproject.Home.project-logo-text": "A joint initiative by",
-    "flagshipproject.Home.project-shareable-link": "Share your link",
-    "flagshipproject.Home.project-shareable-link-coppied-toast": "Your link was successfully copied to the clipboard."
+    "flagshipproject": {
+      "cover": {
+        "project-logo-text": "A joint initiative by",
+        "project-shareable-link": "Share your link",
+        "project-shareable-link-coppied-toast": "Your link was successfully copied to the clipboard.",
+        "project-shareable-link-success": "Link successfully generated.",
+        "project-shareable-link-error": "Link was not generated."
+      }
+    }
   },
   "de": {
     "home-heading": "CITIZEN SCIENCE PROJECT BUILDER",
@@ -916,7 +920,7 @@
     "project-draft-publish-your-project": "Projekt veröffentlichen",
     "project-draft-publish-your-project-ok": "Ja, veröffentlichen!",
     "project-draft-publish-your-project-no": "Nein, nicht veröffentlichen!",
-    "project-draft-danger": "Sie veröffentlichen gleich Ihr Projekt. Dies kann nicht rückgängig gemacht werden! Sobald Ihr Projekt veröffentlicht wurde, kann jede/r daran teilnehmen. Alle Aufgaben-Ausführungen (Antworten), die möglicherweise während der Testphase erstellt wurden, werden gelöscht und Ihr Projekt wird neu gestartet. Bitte stellen Sie daher sicher, dass alles gut funktioniert. Falls dies noch nicht der Fall sein sollte, können Sie Ihr Projekt nochmals bearbeiten und veröffentlichen, sobald es einwandfrei läuft.",
+    "project-draft-danger": "Sie veröffentlichen gleich Ihr Projekt. Dies <b>kann nicht</b> rückgängig gemacht werden! Sobald Ihr Projekt veröffentlicht wurde, kann jede/r daran teilnehmen. Alle Aufgaben-Ausführungen (Antworten), die möglicherweise während der Testphase erstellt wurden, werden gelöscht und Ihr Projekt wird neu gestartet. Bitte stellen Sie daher sicher, dass alles gut funktioniert. Falls dies noch nicht der Fall sein sollte, können Sie Ihr Projekt nochmals bearbeiten und veröffentlichen, sobald es einwandfrei läuft.",
     "project-contribute": "Mitmachen",
     "project-draft-approval-error-message-title": "Das Projekt kann nicht genehmigt werden",
     "project-draft-approval-error-message-content": "Sie müssen dem Projekt mindestens eine Aufgabe hinzufügen",
@@ -1510,7 +1514,7 @@
     "Error:-Request-failed-with-status-code-502": "Fehler: Anforderung mit Statuscode 502 fehlgeschlagen",
 
     "shareable-link": "Teilbarer Link",
-    "shareable-link-modal-content": "Ihr Projekt wird in einer temporären Umgebung veröffentlicht und Sie erhalten einen Link, den Sie mit anderen zu Testzwecken teilen können. Nur Personen mit dem Link können das Projekt sehen; das Projekt wird noch nicht öffentlich im CS Project Builder angezeigt.",
+    "shareable-link-modal-content": "Das Projekt wird vorläufig veröffentlicht. Der generierte Link dient zu Testzwecken. Aber nur Personen mit Link können das Projekt sehen, dies wird in der CS Project Builder-Plattform nicht sichtbar sein.",
     "shareable-link-modal-content-note": "Hinweis: Dies ist eine Testumgebung. Alle Antworten zu den Projekt-Tasks, die während des Tests eingegeben werden, werden nicht gespeichert.",
 
     "GET_ALL_PROJECTS_LOADING_ERROR": "Fehler beim Laden der Projekte",
@@ -1612,10 +1616,14 @@
       "n_pending_tasks": "Ausstehende Aufgaben"
     },
 
-    "flagshipproject.Home.project-about-button": "Über",
-    "flagshipproject.Home.project-contribute-button": "Mitmachen",
-    "flagshipproject.Home.project-logo-text": "Ein gemeinsamer Effort von",
-    "flagshipproject.Home.project-shareable-link": "Link weitergeben",
-    "flagshipproject.Home.project-shareable-link-coppied-toast": "Ihr Link wurde erfolgreich in die Zwischenablage kopiert."
+    "flagshipproject": {
+      "cover": {
+        "project-logo-text": "Ein gemeinsamer Effort von",
+        "project-shareable-link": "Link weitergeben",
+        "project-shareable-link-coppied-toast": "Ihr Link wurde erfolgreich in die Zwischenablage kopiert.",
+        "project-shareable-link-success": "Link erfolgreich generiert.",
+        "project-shareable-link-error": "Link nicht generiert."
+      }
+    }
   }
 }
