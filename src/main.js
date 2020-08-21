@@ -22,6 +22,9 @@ import "@/components/Common/globalComponents";
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
+import ZoomOnHover from "vue-zoom-on-hover";
+Vue.use(ZoomOnHover);
+
 Vue.config.productionTip = false;
 //Vue.use(VueDisqus)
 Vue.use(VueRouter);

@@ -33,6 +33,7 @@
 </template>
 <script>
 export default {
+  name: 'StaticContentBlock',
   data() {
     return {
       order: { image: 1, description: 2 }

@@ -1,7 +1,21 @@
 <template>
   <div>
+    <!-- interative content block -->
+    <app-content-section  class="content-section">
+      <interactive-content-block
+        :content="{
+          title: 'Question?',
+          image:'https://objects.citizenscience.ch/75ebb66d-b93c-49cc-b5b1-89c0931ebe62/20190809020225-project_snakes-1159517449106206720-0-photo-large-1024x576-snake.jpg'
+        }"
+        orientation= 'left'
+        scale="lg"
+      ></interactive-content-block>
+    </app-content-section>
+    <!-- https://objects.citizenscience.ch/75ebb66d-b93c-49cc-b5b1-89c0931ebe62/20190715201947-project_snakes-1150862544321568769-0-photo-large-2048x1536-snake.jpg -->
+
     <!-- Cover Section -->
     <app-cover :project="coverinfo" :tasks="taskinfo"> </app-cover>
+    
 
     <!-- Statistics Section -->
     <app-content-section
@@ -16,21 +30,21 @@
       <app-content-section
         :color="item.ctrl_view ? 'light-greyish' : 'superlight-greyish'"
       >
-        <content-block
+        <static-content-block
           :content="{
             title: item.title,
             description: item.description
           }"
           :orientation="item.ctrl_view ? 'right' : 'left'"
           scale="md"
-        ></content-block>
+        ></static-content-block>
       </app-content-section>
     </div>
 
     <!-- Newsletter Section -->
     <app-content-section color="more-greyish">
       <newsletter-signup-block></newsletter-signup-block>
-    </app-content-section>    
+    </app-content-section>
   </div>
 </template>
 
@@ -38,21 +52,23 @@
 import { mapState, mapActions, mapGetters } from "vuex";
 import Cover from "@/components/Project/Flagship/Cover.vue";
 import ContentSection from "@/components/Project/Flagship/ContentSection.vue";
-import ContentBlock from "@/components/Project/Flagship/ContentBlock.vue";
+import StaticContentBlock from "@/components/Project/Flagship/StaticContentBlock.vue";
 import NewsletterSignupBlock from "@/components/Project/Flagship/NewsletterSignupBlock.vue";
 import StatsBlock from "@/components/Project/Flagship/StatsBlock.vue";
-import project from "../../api/project";
 
-import { getAccessBR } from "@/helper"
+import InteractiveContentBlock from "@/components/Project/Flagship/InteractiveContentBlock.vue";
+
+import { getAccessBR } from "@/helper";
 
 export default {
   name: "Home",
   components: {
     "app-cover": Cover,
     "app-content-section": ContentSection,
-    "content-block": ContentBlock,
+    "static-content-block": StaticContentBlock,
     "newsletter-signup-block": NewsletterSignupBlock,
-    "stats-block": StatsBlock
+    "stats-block": StatsBlock,
+    "interactive-content-block": InteractiveContentBlock
   },
   data() {
     return {
@@ -82,18 +98,20 @@ export default {
     async showAlert() {
       // Use sweetalert2
       const Toast = this.$swal.mixin({
-        toast:true,
+        toast: true,
         position: "top",
         showConfirmButton: false,
-        heightAuto:false,
+        heightAuto: false,
         timer: 4000
       });
       var steps = [
         {
           icon: "success",
-          title: "Impossible to approve the project", text:"You must provide a task presenter to approve the project"
+          title: "Impossible to approve the project",
+          text: "You must provide a task presenter to approve the project"
         },
-        { icon: "error", title: "Ooops..." }, { icon: "warning", title: "Caution!!" }
+        { icon: "error", title: "Ooops..." },
+        { icon: "warning", title: "Caution!!" }
       ];
       while (steps) {
         await Toast.fire(steps.shift());
@@ -112,7 +130,7 @@ export default {
         shareable_link: info ? this.project.info.shareable_link : null,
         backgroundImage: info ? this.project.info.thumbnail_url : null,
         buttonsBR: getAccessBR(this.project, this.accessBR),
-        sdg_icons: info ? this.project.info.sdg_goals || [] :[]
+        sdg_icons: info ? this.project.info.sdg_goals || [] : []
       };
       this.taskinfo = {
         taskPresenter: this.getTaskPresenter,
@@ -211,5 +229,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss"></style>

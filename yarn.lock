@@ -9600,6 +9600,11 @@ vue-template-es2015-compiler@^1.6.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
+vue-zoom-on-hover@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-zoom-on-hover/-/vue-zoom-on-hover-1.0.2.tgz#00105a73f5118d4696c18c39724b196875679fe8"
+  integrity sha512-pzrqjumnl6tD7mWvl2oZy6vW+cZltbf8F3siSNt8W7EPEBlKCPsI080rylMkSunxRecKBLVKuIle3bgrRUbF2A==
+
 vue2-editor@^2.10.2:
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/vue2-editor/-/vue2-editor-2.10.2.tgz#57dd2275d66a407c8078330951a9b601840f033f"

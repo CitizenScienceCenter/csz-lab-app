@@ -68,11 +68,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/styles/themes.scss";
-@import "@/styles/variables.scss";
+@import "@/scss/variables.scss";
 .content-section {
   position: relative;
-  padding: $spacing-5 0;
   background: white;
   &.content-section-condensed {
     padding: $spacing-3 0;
@@ -169,7 +167,7 @@ export default {
     font-size: $font-size-large;
     line-height: 1.25;
     font-weight: 700;
-    color: $color-secondary;
+    color: $secondary;
     padding-bottom: $spacing-3;
     margin-bottom: $spacing-3;
     position: relative;
@@ -178,7 +176,7 @@ export default {
       content: "";
       width: 24px;
       height: 4px;
-      background-color: $color-primary;
+      background-color: $primary;
       border-radius: 2px;
       position: absolute;
       bottom: 0;
@@ -220,7 +218,7 @@ export default {
       line-height: 1.333;
       font-style: italic;
       margin-bottom: $spacing-2;
-      color: $color-secondary;
+      color: $secondary;
     }
     &.list-intro,
     &.reduced-bottom-margin {
@@ -247,7 +245,7 @@ export default {
         content: "";
         width: 0.5rem;
         height: 0.5rem;
-        background-color: $color-secondary;
+        background-color: $secondary;
         border-radius: 50%;
         position: absolute;
         top: 0.5rem;
@@ -282,7 +280,7 @@ export default {
       th {
         text-align: left;
         font-size: $font-size-small;
-        color: $color-secondary;
+        color: $secondary;
         padding-bottom: $spacing-1;
       }
       td {

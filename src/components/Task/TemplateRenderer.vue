@@ -71,6 +71,7 @@ import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'TemplateRenderer',
+  
   props: {
 
     // project id
