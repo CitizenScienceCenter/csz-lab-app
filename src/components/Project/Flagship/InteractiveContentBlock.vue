@@ -1,9 +1,9 @@
 <template>
   <div class="content-wrapper">
-    <b-row align-h="center">
+    <b-row align-h="around">
       <b-col
         cols="12"
-        class="snake scroll-effect"
+        class="scroll-effect"
         :class="getViewClasses()"
         v-if="content.image"
         :order="order.image"

@@ -1,21 +1,23 @@
 <template>
   <div>
+    <!-- Cover Section -->
+    <app-cover :project="coverinfo" :tasks="taskinfo"> </app-cover>
+
     <!-- interative content block -->
-    <app-content-section  class="content-section">
+    <app-content-section class="content-section-flat">
       <interactive-content-block
         :content="{
           title: 'Question?',
-          image:'https://objects.citizenscience.ch/75ebb66d-b93c-49cc-b5b1-89c0931ebe62/20190809020225-project_snakes-1159517449106206720-0-photo-large-1024x576-snake.jpg'
+          image:
+            'https://i.pinimg.com/originals/9d/07/36/9d073694132fbe201cf5d1aba3839720.jpg '
         }"
-        orientation= 'left'
+        orientation="left"
         scale="lg"
       ></interactive-content-block>
     </app-content-section>
+    <!-- https://objects.citizenscience.ch/75ebb66d-b93c-49cc-b5b1-89c0931ebe62/20190809020225-project_snakes-1159517449106206720-0-photo-large-1024x576-snake.jpg -->
     <!-- https://objects.citizenscience.ch/75ebb66d-b93c-49cc-b5b1-89c0931ebe62/20190715201947-project_snakes-1150862544321568769-0-photo-large-2048x1536-snake.jpg -->
-
-    <!-- Cover Section -->
-    <app-cover :project="coverinfo" :tasks="taskinfo"> </app-cover>
-    
+    <!-- https://i.pinimg.com/originals/9d/07/36/9d073694132fbe201cf5d1aba3839720.jpg -->
 
     <!-- Statistics Section -->
     <app-content-section

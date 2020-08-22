@@ -5,7 +5,7 @@
       :img-zoom="sourceImage"
       :scale="imageConfig.scale"
       :disabled="imageConfig.disabled"
-      class="zoom-image fluid "
+      class="zoom-image"
     ></zoom-on-hover>
   </div>
 </template>
@@ -27,29 +27,28 @@ export default {
     async setscale() {
       const result = await this.getImage(this.sourceImage);
       if (result < 320) {
-        this.imageConfig.scale = 6;
-      } else if (result < 640) {
         this.imageConfig.scale = 5;
-      } else if (result < 860) {
+      } else if (result < 640) {
         this.imageConfig.scale = 4;
       } else if (result < 1280) {
         this.imageConfig.scale = 3;
       } else {
         this.imageConfig.scale = 2;
       }
+      console.log("height: "+result+" scale: "+this.imageConfig.scale);
     },
-    getImage(url){
-    return new Promise(function(resolve, reject){
-        var img = new Image()
-        img.onload = function(){
-            resolve(img.height)
-        }
-        img.onerror = function(){
-            reject("error")
-        }
-        img.src = url
-    })
-}
+    getImage(url) {
+      return new Promise(function(resolve, reject) {
+        var img = new Image();
+        img.onload = function() {
+          resolve(img.height);
+        };
+        img.onerror = function() {
+          reject("error");
+        };
+        img.src = url;
+      });
+    }
   },
   created() {
     this.setscale();
@@ -62,9 +61,11 @@ export default {
 .zoom-container {
   position: relative;
   .zoom-image {
-    height: 80%;
-    width: 80%;
     cursor: grab;
+    .normal{
+      max-width: 100%; 
+      max-height: 500px
+    }
   }
 }
 </style>
