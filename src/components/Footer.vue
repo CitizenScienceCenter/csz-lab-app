@@ -10,16 +10,14 @@
             </a> &nbsp;
             <a href="http://www.citizencyberlab.org/" class="home-link home-link-platform" target="_blank">
               <img src="@/assets/CCL-logo-all-white.png" />
-            </a> &nbsp;
-
-             <p v-if="this.$i18n.locale === 'en'">Supported by</p>
+            </a> &nbsp;&nbsp;
+        </div>
+        <div  class="logo-wrapper">
+           <p v-if="this.$i18n.locale === 'en'">Supported by</p>
             <p v-else>Unterstützt durch</p>
             <img alt="University of Zurich / ETH Zurich / University of Geneva" src="@/assets/three-uni-logos.svg" @click="logoClick($event)"/>
         </div>
-
       </div>
-
-      
 
       <div class="contact centered">
         <div class="buttons centered" style="text-align: center;">
