@@ -95,6 +95,7 @@
       }
     },
     mounted: function () {
+      this.infos.forum_updates = false
       this.loadComments();
     },
     methods: {
@@ -104,6 +105,14 @@
           //'limit':this.topicsShown,
           'limit':9999,
           'offset':this.topicsOffset
+        }).then(()=>{
+          if(this.logged){
+            this.$store.dispatch('user/userForumInfo', {
+              'timestamp':new Date().getTime(),
+              'topics':this.forumThreads.count,
+              'name':this.infos.name
+            })
+          }
         })
       },
       buildCommentTree() {

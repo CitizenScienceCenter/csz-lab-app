@@ -187,6 +187,17 @@ export default {
           'X-CSRFToken': csrf
         }
     })
-  }
+  },
+
+  userForumInfo (csrf, payload) {
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'account/save_forum_info/' + payload.name, {
+      ...payload
+    }, {
+        withCredentials: true,
+        headers: {
+          'X-CSRFToken': csrf
+        }
+    })
+  },
 
 }

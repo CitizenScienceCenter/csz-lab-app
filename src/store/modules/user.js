@@ -560,6 +560,19 @@ const actions = {
       }, { root: true })
       return false
     })
+  },
+
+  userForumInfo({commit,dispatch},payload) {    
+    return dispatch('getProfileUpdateOptions', payload).then(response => {
+      if (response) {
+        return api.userForumInfo(state.profileUpdateOptions.form.csrf,payload).then(value => {
+          return value.data
+        }).catch(reason => {
+          return false
+        })
+      }
+      return false
+    })
   }
 }
 

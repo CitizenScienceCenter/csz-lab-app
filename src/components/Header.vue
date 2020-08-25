@@ -19,7 +19,12 @@
             <b-nav-item :to="{ name: 'home' }">{{ $t('app-vue-navigation-home') }}</b-nav-item>
             <b-nav-item :to="{ name: 'discover' }">{{ $t('app-vue-navigation-discover') }}</b-nav-item>
             <b-nav-item :to="{ name: 'about' }">{{ $t('app-vue-navigation-about') }}</b-nav-item>
-            <b-nav-item :to="{ name: 'forum' }">Forum</b-nav-item>
+            <b-nav-item :to="{ name: 'forum' }">
+              <span>Forum</span>
+              <b-badge v-if='userProfile.forum_updates' variant="danger" class="badge-circle badge-md badge-floating border-white">
+                !
+              </b-badge>
+            </b-nav-item>
           </b-navbar-nav>
           
           <b-navbar-nav>
