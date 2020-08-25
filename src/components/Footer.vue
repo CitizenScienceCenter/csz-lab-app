@@ -11,8 +11,15 @@
             <a href="http://www.citizencyberlab.org/" class="home-link home-link-platform" target="_blank">
               <img src="@/assets/CCL-logo-all-white.png" />
             </a> &nbsp;
+
+             <p v-if="this.$i18n.locale === 'en'">Supported by</p>
+            <p v-else>Unterstützt durch</p>
+            <img alt="University of Zurich / ETH Zurich / University of Geneva" src="@/assets/three-uni-logos.svg" @click="logoClick($event)"/>
         </div>
+
       </div>
+
+      
 
       <div class="contact centered">
         <div class="buttons centered" style="text-align: center;">
@@ -51,6 +58,18 @@ export default {
     openInNewTab: function(url) {
       var win = window.open(url, '_blank');
       win.focus();
+    },
+    logoClick: function(e) {
+      var rect = e.target.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var width = rect.width;
+      if( x < width/3 ) {
+        this.openInNewTab('https://www.uzh.ch');
+      } else if( x > width/3 && x < (width/3)*2 ) {
+        this.openInNewTab('https://www.ethz.ch');
+      } else {
+        this.openInNewTab(' https://www.unige.ch/en');
+      }
     }
   }
 }
@@ -60,58 +79,9 @@ export default {
   @import '@/styles/themes.scss';
   @import '@/styles/variables.scss';
 
-  .main-app {
-    position: relative;
-    min-height: 100vh;
-  }
-
-  .loginBtn {
-        padding: 0 8px;
-    height: 42px;
-    margin: 14px;
-    font-size: 13px;
-    border: 1px solid #231f20;
-    color: #c5202e;
-    border-radius: 6px;
-    outline: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    background: none;
-  }
-
-
-  .select-options {
-    height:28px;
-    width: 50px;
-    border:0px;
-    border-color: transparent;
-  }
-
-  #dropdownLang > ul{
-    min-width:1rem
-  }
-
-  .beta {
-        margin-left: 4px;
-        font-size: 40px;
-        //font-size: $font-size-tiny;
-        line-height: 100%;
-        text-transform: uppercase;
-        font-weight: 700;
-        //background-color: $color-secondary;
-        //border-radius: $border-radius;
-        padding: 4px;
-        display: flex;
-        align-self: flex-start;
-      }
-
-  .main-content {
-    padding-bottom: 14.5rem;
-  }
-
   .footer {
     background: linear-gradient(120deg, $color-gradient-start, $color-gradient-end );
-    position:absolute; 
+    position:absolute;
     bottom:0px; 
     width:100%; 
     overflow:hidden;
