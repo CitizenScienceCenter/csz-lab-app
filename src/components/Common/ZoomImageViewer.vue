@@ -5,7 +5,7 @@
       :img-zoom="sourceImage"
       :scale="imageConfig.scale"
       :disabled="imageConfig.disabled"
-      class="zoom-image"
+      class="zoom-image shadow"
     ></zoom-on-hover>
   </div>
 </template>
@@ -27,10 +27,12 @@ export default {
     async setscale() {
       const result = await this.getImage(this.sourceImage);
       if (result < 320) {
+        this.imageConfig.scale = 6;
+      } else if (result < 600) {
         this.imageConfig.scale = 5;
-      } else if (result < 640) {
+      } else if (result < 960) {
         this.imageConfig.scale = 4;
-      } else if (result < 1280) {
+      }else if (result < 1280) {
         this.imageConfig.scale = 3;
       } else {
         this.imageConfig.scale = 2;

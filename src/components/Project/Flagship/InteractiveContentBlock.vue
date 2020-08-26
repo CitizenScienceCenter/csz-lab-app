@@ -15,7 +15,7 @@
         cols="12"
         md="6"
         lg="4"
-        class="scroll-effect scroll-effect-delayed-1"
+        class="scroll-effect scroll-effect-delayed-1 my-2"
         :order="order.description"
       >
         <div>

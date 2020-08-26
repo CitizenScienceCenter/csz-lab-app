@@ -76,7 +76,6 @@ export default {
     return {
       coverinfo: null,
       taskinfo: null,
-      sdg_goals: [],
       description: {},
       statsinfo: {},
       accessBR: {} // Business rules defined to control the user actions

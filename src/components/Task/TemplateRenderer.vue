@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-container class="mt-2">
-      <b-row>
-        <b-col cols="12">
+    <div class="mt-2 content-section content-section-flat white">
+      <b-row class="justify-content-center">
+        <b-col cols="11">
           <b-link
             v-if="template"
             :to="{
@@ -86,7 +86,7 @@
           </b-modal>
         </b-col>
       </b-row>
-    </b-container>
+    </div>
   </div>
 </template>
 
