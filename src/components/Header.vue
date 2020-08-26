@@ -19,11 +19,9 @@
             <b-nav-item :to="{ name: 'home' }">{{ $t('app-vue-navigation-home') }}</b-nav-item>
             <b-nav-item :to="{ name: 'discover' }">{{ $t('app-vue-navigation-discover') }}</b-nav-item>
             <b-nav-item :to="{ name: 'about' }">{{ $t('app-vue-navigation-about') }}</b-nav-item>
-            <b-nav-item :to="{ name: 'forum' }">
+            <b-nav-item :to="{ name: 'forum' }" class="notification">
               <span>Forum</span>
-              <b-badge v-if='userProfile.forum_updates' variant="danger" class="badge-circle badge-md badge-floating border-white">
-                !
-              </b-badge>
+              <span v-if='forumUpdated && userLogged' class="badge">!</span>
             </b-nav-item>
           </b-navbar-nav>
           
@@ -82,7 +80,8 @@ export default {
   computed: {
     ...mapState({
         userLogged: state => state.user.logged,
-        userProfile: state => state.user.infos
+        userProfile: state => state.user.infos,
+        forumUpdated: state => state.user.forumUpdated
     })
   }
 }
@@ -98,18 +97,18 @@ export default {
   }
 
   .beta {
-      margin-left: 4px;
-      font-size: 40px;
-        //font-size: $font-size-tiny;
-        line-height: 100%;
-        text-transform: uppercase;
-        font-weight: 700;
-        //background-color: $color-secondary;
-        //border-radius: $border-radius;
-        padding: 4px;
-        display: flex;
-        align-self: flex-start;
-      }
+    margin-left: 4px;
+    font-size: 40px;
+    //font-size: $font-size-tiny;
+    line-height: 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+    //background-color: $color-secondary;
+    //border-radius: $border-radius;
+    padding: 4px;
+    display: flex;
+    align-self: flex-start;
+  }
 
     
   .loginBtn {
@@ -125,4 +124,19 @@ export default {
     text-transform: uppercase;
     background: none;
   }
+
+.notification {
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -1px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  padding: 4px 8px;
+}
 </style>

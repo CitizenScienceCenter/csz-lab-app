@@ -32,7 +32,8 @@ const state = {
   profileUpdateOptions: {},
   resetApiKeyOptions: {},
   forgotPasswordOptions: {},
-  recoverKey:false
+  recoverKey:false,
+  forumUpdated:false
 }
 
 // filter methods on the state data
@@ -250,6 +251,7 @@ const actions = {
         commit('setUserPublishedProjects', value.data.projects_published)
         commit('setLogged')
         dispatch('checkGtag')
+        commit('setUserForumNotificationsValue', value.data.user.forum_updates)
         return value.data
       }
       commit('setLoggedOut')
@@ -622,6 +624,9 @@ const mutations = {
   },
   setUrlRecoverKey(state,value){
     state.recoverKey = value
+  },
+  setUserForumNotificationsValue(state,value){
+    state.forumUpdated = value
   }
 }
 

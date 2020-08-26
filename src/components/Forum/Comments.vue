@@ -50,7 +50,7 @@
 
 <script>
 
-  import {mapState} from 'vuex'
+  import {mapState,mapMutations} from 'vuex'
   import GrowingTextarea from "@/components/GrowingTextarea";
   import CommentThread from "./CommentThread";
 
@@ -95,15 +95,16 @@
       }
     },
     mounted: function () {
-      this.infos.forum_updates = false
       this.loadComments();
     },
     methods: {
+      ...mapMutations('user', [
+        'setUserForumNotificationsValue'
+      ]),
       loadComments: function () {
         //console.log('Loading comments db ...')
         this.$store.dispatch('project/getForumThreads', {
-          //'limit':this.topicsShown,
-          'limit':9999,
+          'limit':9999,  //'limit':this.topicsShown,
           'offset':this.topicsOffset
         }).then(()=>{
           if(this.logged){
@@ -112,6 +113,7 @@
               'topics':this.forumThreads.count,
               'name':this.infos.name
             })
+            this.setUserForumNotificationsValue(false)
           }
         })
       },
