@@ -13,7 +13,7 @@
           :label="$t('task-template-renderer-loading')">
         </b-spinner>
       </div>
-
+      
       <component class="mt-4" ref="presenter" v-if="taskPresenterExists" :is="presenterComponent" :pybossa="this"></component>
       <div class="mt-4" v-else-if="taskPresenterLoaded">
         <b-alert :show="true" variant="warning">{{ $t('task-template-renderer-no-task-presenter') }}</b-alert>
@@ -103,6 +103,7 @@ export default {
       taskPresenterLoaded: false,
       taskLoaded: false,
       showMulti: false,
+      showProjectPassModal:true,
       modal: {
         mediaType: 'image',
         mediaUrl: '#',
@@ -116,7 +117,10 @@ export default {
       // the current project where is displayed the task presenter
       project: state => state.selectedProject,
       // user task progress
-      userProgress: state => state.selectedProjectUserProgress
+      userProgress: state => state.selectedProjectUserProgress,
+      //get access for selected project
+      accessForSelectedProject : state => state.accessForSelectedProject
+
     }),
 
     ...mapState('task', {
@@ -152,7 +156,7 @@ export default {
     ]),
 
     ...mapActions('project', [
-      'getUserProgress', 'getProject'
+      'getUserProgress', 'getProject','isProjectPrivate'
     ]),
 
     ...mapActions('osm', [
@@ -163,14 +167,15 @@ export default {
       'showError'
     ]),
     ...mapMutations('project', [
-      'setSelectedProjectUserProgress'
+      'setSelectedProjectUserProgress',
+      'setProjectPassModal'
     ]),
 
     /**
      * Called when the dynamic component start
      */
     run () {
-      this.newTask()
+      this.newTask()    
     },
 
     /**
@@ -183,18 +188,35 @@ export default {
         if(this.userProgress.total > 0){
           this.setSelectedProjectUserProgress({'done':this.userProgress.done+1,'total':this.userProgress.total})
         }
+        //check if anonymous users are allowed. if not redirect to project page
         if (!allowed) {
           this.showError({
             title: this.$t('template-renderer-not-allowed-contribute'),
             content: this.$t('template-renderer-not-allowed-anonymous')
           })
           this.$router.push({ name: 'project', params: { id: this.project.id } })
+
         } else {
-          if(this.userProgressInPercent < 100 && !allowed.id){
-            this.skipTaskWithOffset({'id':this.project.id,'offset':0})
-          }
-          this.getUserProgress(this.project)
-          this.taskLoaded = true
+            //check if project is private and user has been granted access. if not redirect to project page and show pass modal.
+            this.isProjectPrivate({'id':this.project.id}).then(response => {
+              //set accessForSelectedProject to array of objects for multiple private projects.
+             
+              if (response.private && response.redirect && !(this.accessForSelectedProject.project_id==this.project.id)
+                 /* (this.accessForSelectedProject.access && 
+                    
+                  )*/) {
+                this.setProjectPassModal(true)
+                this.$router.push({ name: 'project', params: { id: this.project.id } })
+              } else {
+                this.setProjectPassModal(false)
+                if(this.userProgressInPercent < 100 && !allowed.id){
+                  this.skipTaskWithOffset({'id':this.project.id,'offset':0})
+                }
+                this.getUserProgress(this.project)
+                this.taskLoaded = true    
+              }
+            })
+          
         }
       })
     },

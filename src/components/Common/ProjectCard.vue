@@ -1,6 +1,11 @@
 <template>
   <div class="project">
+     
     <div class="project-info">
+      <b-badge v-if="project.restricted" variant="secondary" class='project-restricted'>
+        {{$t('private-c')}}
+      </b-badge>
+      
       <b-row class="row text-center mb-4">
         <b-col class="col-image">
           <!--<b-card-img-lazy v-if="project.info.thumbnail_url" :src="project.info.thumbnail_url"></b-card-img-lazy>
@@ -15,16 +20,21 @@
           <p v-html="project.description"></p>
         </b-col>
       </b-row>
-      <b-button :to="{ name: 'project', params: { id: project.id } }" variant="primary">{{ buttonText }}</b-button>
+    
+      <b-btn :to="{ name: 'project', params: { id: project.id } }" variant="primary">{{ buttonText }}</b-btn>
+      
     </div>
-
+     
     <div class="overlay"></div>
     <div class="project-bg-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
-
+    
   </div>
+  
 </template>
 
 <script>
+import { mapMutations, mapActions, mapState,mapGetters } from 'vuex'
+
 export default {
   name: 'ProjectCard',
   data: () => {
@@ -36,7 +46,19 @@ export default {
     project: Object,
     buttonText: String
   },
+  computed:{
+    ...mapState('user', [
+      'infos',
+    ]),
+    ...mapGetters('user', [
+      'isLoggedUserOwnerOfProject',
+      'isLoggedUserAdmin'
+    ]),   
+  },
   methods:{
+    ...mapMutations('notification', [
+      'showError', 'showSuccess'
+    ]),
     getBaseUrl(){
       if(this.project.info.thumbnail){
         const base = process.env.BASE_ENDPOINT_URL
@@ -67,6 +89,13 @@ export default {
       color: white;
       height: 100%;
       padding: $spacing-3 $spacing-2;
+
+      .project-restricted{
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 20px;
+      }
 
       .project-type {
         display: block;

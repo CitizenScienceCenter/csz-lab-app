@@ -205,4 +205,30 @@ export default {
       }
     })
   },
+  },
+
+  setPrivateProjectOptions(projectShortName){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/password', {
+      withCredentials: true,
+      data: {}
+    })
+  },
+
+  getAccessToProject(csrf,projectShortName,password){
+    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/password', {
+      password:password
+    }, {
+      withCredentials: true,
+      headers: {
+        'X-CSRFToken': csrf
+      }
+    })
+  },
+
+  isProjectPrivate(project_id){
+    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + project_id + '/private', {
+      withCredentials: true,
+      data: {}
+    })
+  },
 }

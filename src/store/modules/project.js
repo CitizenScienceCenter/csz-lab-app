@@ -51,7 +51,15 @@ const state = {
   //shareable link
   projectShareableLink: null,
   projectShareableKey: {},
-  enableTestEnvironment: false
+  enableTestEnvironment: false,
+
+  privateProjectOptions:{},
+
+  showProjectPassModal: false,
+  accessForSelectedProject: {
+    access:false,
+    project_id:null
+  }
 }
 
 // filter methods on the state data
@@ -616,6 +624,48 @@ const actions = {
       }, { root: true })
     })
   },
+  },
+
+  setPrivateProjectOptions ({ commit }, short_name) {
+    return api.setPrivateProjectOptions(short_name).then(value => {
+      commit('setPrivateProjectOptions', value.data)
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Error getting private project options', 
+        content: reason
+      }, { root: true })
+      return false
+    })
+  },
+
+  getAccessToProject ({commit, state, dispatch}, privateProject) {
+    return dispatch('setPrivateProjectOptions', privateProject.short_name).then(response => {
+      if (response) {
+        return api.getAccessToProject(state.privateProjectOptions.csrf,privateProject.short_name,privateProject.password).then(value => {
+          return value.data
+        }).catch(reason => {
+          commit('notification/showError', {
+            title: 'password', 
+            content: reason
+          }, { root: true })
+        })
+      }
+      return false
+    })
+  },
+
+  isProjectPrivate({commit, state}, project) {
+    return api.isProjectPrivate(project.id).then(value => {
+      return value.data
+    }).catch(reason => {
+      commit('notification/showError', {
+        title: 'Private project', 
+        content: reason
+      }, { root: true })
+    })
+    return false
+  }
 
   deleteCommentsOptions ({ commit }, comment_id) {
     return api.deleteCommentsOptions(comment_id).then(value => {
@@ -774,6 +824,16 @@ const mutations = {
   deleteCommentsOptions (state, options) {
     state.deleteCommentsOptions = options
   },
+  },
+  setPrivateProjectOptions(state,status){
+    state.privateProjectOptions = status
+  },
+  setProjectPassModal(state,status){
+    state.showProjectPassModal = status
+  },
+  setAccessForSelectedProject(state,status){
+    state.accessForSelectedProject = status
+  }
 }
 
 export default {
