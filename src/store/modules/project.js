@@ -624,7 +624,6 @@ const actions = {
       }, { root: true })
     })
   },
-  },
 
   setPrivateProjectOptions ({ commit }, short_name) {
     return api.setPrivateProjectOptions(short_name).then(value => {
@@ -665,7 +664,7 @@ const actions = {
       }, { root: true })
     })
     return false
-  }
+  },
 
   deleteCommentsOptions ({ commit }, comment_id) {
     return api.deleteCommentsOptions(comment_id).then(value => {
@@ -823,7 +822,6 @@ const mutations = {
   },
   deleteCommentsOptions (state, options) {
     state.deleteCommentsOptions = options
-  },
   },
   setPrivateProjectOptions(state,status){
     state.privateProjectOptions = status

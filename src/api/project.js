@@ -205,7 +205,6 @@ export default {
       }
     })
   },
-  },
 
   setPrivateProjectOptions(projectShortName){
     return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/password', {
