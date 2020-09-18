@@ -8,7 +8,7 @@
       </div>
       <div class="comment__username small text-muted">
         <div>
-          <span>{{ giveDateTime(comment[index][0].created) }}</span>
+          <span>{{ helpers.giveDateTime(comment[index][0].created) }}</span>
           <span v-if="comment[index][0].role">, {{ comment[index][0].role }}</span>
           <b-button variant="warning" @click.prevent="deleteTopic()" style="float:right;display:none;">
             {{$t('forum-delete-topic')}}
@@ -16,6 +16,14 @@
         </div>
         <span class="name">{{ comment[index][0].username }}</span>
       </div>
+
+      <!-- delete topic -->
+      <div class="comment__header">
+        <a v-if="comment[index][0].owner_id == infos.id || infos.admin" href="#"  @click.prevent="deleteThread(comment[index][0].parent,comment[index][0].id)" >
+          {{$t('forum-delete-topic')}}
+        </a>
+      </div>
+      <!-- delete topic -->
     </div>
 
     <div class="comment__content">
@@ -28,7 +36,7 @@
       </div>
       <div class="comment_discussion">
         <b-collapse 
-          @shown="showCollapse(comment[index][0].id)" 
+          @shown="showCollapse(comment[index][0].id,index)" 
           @hide="hideCollapse(index)" 
           :id="'discussion' +index">
           <div v-if='!logged'>
@@ -63,12 +71,15 @@
             </b-row>
           </div>
 
-          <div class="replies" v-if="comment[index][1].length > 0">
+          <div class="replies" >
             <b-row align-h="center" class="mb-4" 
                 v-for="(reply,replyIndex) in comment[index][1]" v-bind:key="replyIndex"
                 v-if="replyIndex < repliesShown">
               <b-col md="11">
-                <CommentReply :reply="reply"></CommentReply>
+                <comment-reply 
+                  :reply="reply"
+                  :threadIndex="index">
+                </comment-reply>
               </b-col>
             </b-row>
             <div v-if="totalRepliesInThread > repliesShown " style="text-align:center;">
@@ -77,6 +88,7 @@
               </b-button>
             </div>
           </div>
+
         </b-collapse>
       </div>
     </div>
@@ -85,7 +97,7 @@
 
 <script>
 
-  import {mapState} from 'vuex'
+  import {mapState,mapActions,mapMutations} from 'vuex'
 
   import CommentReply from "./CommentReply";
 
@@ -98,14 +110,17 @@
       return {
         replyTexts: [],
         defaultImage: require('@/assets/graphic-community.png'),
+        helpers: require('@/helper.js'),
         repliesShown : 4,
         repliesOffset: 0,
         replies : [],
-        totalRepliesInThread : 0
+        totalRepliesInThread : 0,
+        comment : this.commentsThread
       }
     },
+    
     props: {
-      comment: {
+      commentsThread: {
         type: Array,
         default: []
       },
@@ -121,47 +136,72 @@
       ...mapState('project', {
         comments: state => state.projectComments
       }),
+      ...mapState('comments', {
+        activeThread: state => state.activeThread
+      })
+    },
+    watch: {
+      commentsThread(newValue, oldValue) {
+        if(newValue.length != oldValue.length) this.comment = newValue
+      },
+      comments(newValue, oldValue) {
+        this.replies = newValue.data
+        this.totalRepliesInThread = newValue.count
+        this.buildThreadTree(this.comment,newValue.data)
+        this.replyTexts = []
+      },
     },
     methods: {
-      showCollapse(parent){
+      ...mapMutations('comments', [
+        'SET_ACTIVE_THREAD'
+      ]),
+      
+      showCollapse(parent,index){
+        
+        this.SET_ACTIVE_THREAD(index)
+
         this.$store.dispatch('project/getProjectComments', {
-              'id':parent,
-              'limit':this.repliesShown+999,
-              'offset':this.repliesOffset
-            }).then(res => {
-              this.replies = res.data
-              this.totalRepliesInThread = res.count
-              this.buildThreadTree(this.comment,res.data)
-            });
+          'id':parent,
+          'limit':this.repliesShown+999,
+          'offset':this.repliesOffset
+        });
       },
       hideCollapse(index){
         this.replies = []
-        this.comment[index][1] = []
+        this.comment[this.index][1] = []
         this.buildThreadTree(this.comment,[])
       },
       buildThreadTree(comments,replies) {
-        console.log('Building comment tree')
+        if(this.activeThread != this.index) return
+        
+        console.log('Building comment tree for thread', this.activeThread , ' where index is: ', this.index)
+        
+        if(this.logged) this.comment[this.activeThread][1] = []
+
         for (let i = 0; i < replies.length; i++) {
+          
           if (replies[i].parent) {
             for (let j = 0; j < comments.length; j++) {
+              
               if (replies[i].parent === comments[j][0].id) {
                 let temp = comments[j][1]
+                
                 if(temp.length > 0){
                   if(replies[i].id == temp[0].id){
                     continue
                   }
                 }
-                this.comment[j][1].push(replies[i]);
+
+                const found = this.comment[j][1].some(el => el.id === replies[i].id);
+                if (!found){
+                  //this.comment[j][1].splice(0, 0, replies[i]);
+                  this.comment[j][1].push(replies[i]);
+                }
+               
               }
             }
           }
         }
-      },
-      giveDateTime(timestamp) {
-        var date = new Date(timestamp);
-        var date_time = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + ', ' + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
-        //console.log( date_time );
-        return date_time;
       },
       getCollapseId(index) {
         return "google-doc-collapse-" + index
@@ -182,28 +222,22 @@
 
         this.$store.dispatch('project/setProjectComment', {'short_name': 'NA', 'comment': comment}).then(res => {
           if (res.status == 'success') {
+            this.SET_ACTIVE_THREAD(index)
             this.replyTexts[index] = ''
             this.$store.dispatch('project/getProjectComments', {
               'id':parentId,
               'limit':this.repliesShown,
               'offset':this.repliesOffset
-            }).then(res => {
-              //this.replies = res.data
-              this.replies = []
-              this.replies = res.data
-              this.totalRepliesInThread = res.count
-              this.comment[index].push(comment)
-              this.comment[index][1]=res.data
-              console.log(this.comment[index][1])
-              //this.buildCommentTree(this.comment,res.data)   
-                 
             });
           }
         });
 
       },
-      deleteTopic(){
-
+      deleteThread(thread_id,comment_id){
+        this.$store.dispatch('project/deleteThread', {
+          'thread_id':thread_id,
+          'comment_id':comment_id
+          })
       }
     }
 

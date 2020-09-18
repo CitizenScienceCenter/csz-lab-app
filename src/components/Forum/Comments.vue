@@ -31,11 +31,11 @@
         <b-col md="12" class="mt-md-0 mt-4">
           <div v-for="(thread,index) in comments" v-bind:key="index"
               v-if="index < topicsShown">
-              <CommentThread
+              <comment-thread
                 v-bind:key="index"
-                :comment=commentTree
+                :commentsThread=commentTree
                 :index=index
-              />
+              ></comment-thread>
           </div>
 
           <div v-if="numberOfThreads > topicsShown" class="button-group">
@@ -82,34 +82,29 @@
         'logged', 'infos'
       ]),
       ...mapState('project', [
-        'setForumThreads'
+        'forumThreads'
       ]),
     },
     watch: {
-      setForumThreads(newValue, oldValue) {
-        if (newValue.data.length && oldValue.data.length) {
-          if (newValue.data.length > oldValue.data.length) {
-            this.comments = newValue.data
-            this.buildCommentTree()
-          }
-        }
-      },
+      forumThreads(newValue, oldValue) {
+        this.commentTree = []
+        this.comments = newValue.data
+        this.numberOfThreads = newValue.count
+        this.buildCommentTree()
+        this.replyTexts = [] 
+      }
     },
     mounted: function () {
       this.loadComments();
     },
     methods: {
       loadComments: function () {
-        console.log('Loading comments db ...')
+        //console.log('Loading comments db ...')
         this.$store.dispatch('project/getForumThreads', {
           //'limit':this.topicsShown,
           'limit':9999,
           'offset':this.topicsOffset
-        }).then(res => {
-          this.numberOfThreads = res.count
-          this.comments = res.data
-          this.buildCommentTree()          
-        });
+        })
       },
       buildCommentTree() {
         console.log('Building comment tree')
@@ -140,27 +135,6 @@
           }
         }
 
-        for (let i = 0; i < this.comments.length; i++) {
-          if (this.comments[i].parent) {
-
-            //console.log('has parent');
-            var parentFound = false;
-
-            for (let j = 0; j < this.commentTree.length; j++) {
-              //console.log('Parent:' + this.comments[i].parent + ' - CommId: ' + this.commentTree[j][0].id)
-              if (this.comments[i].parent === this.commentTree[j][0].id) {
-                this.addChildToTree(j, this.comments[i]);
-                parentFound = true;
-              }
-            }
-
-            if (!parentFound) {
-              //console.log('parent not found');
-              unfoundChildren.unshift(this.comments[i]);
-            }
-          }
-        }
-
         for (let i = unfoundChildren.length - 1; i >= 0; i--) {
           //console.log('lost child');
           for (let j = 0; j < this.commentTree.length; j++) {
@@ -171,8 +145,8 @@
           }
 
         }
-        //console.log('comment tree generated');
-        //console.log(this.commentTree);
+        console.log('comment tree generated');
+        console.log(this.commentTree);
         //console.log('reply texts');
         //console.log(this.replyTexts);
       },

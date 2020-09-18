@@ -126,7 +126,6 @@
               <b>{{ $t('about-how-step6') }}</b><br>
               {{ $t('about-how-step6-label1') }}
               <ul style="list-style-type: square;margin-left:30px;">
-                <li> {{ $t('about-how-step6-label1') }}</li>
                 <li>{{ $t('about-how-step6-list1') }}</li>
                 <li>{{ $t('about-how-step6-list2') }}</li>
                 <li> {{ $t('about-how-step6-list3') }}</li>

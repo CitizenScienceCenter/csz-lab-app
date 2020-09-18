@@ -155,7 +155,7 @@
         "name-builder-project-title-error":"You must set a title for your project",
         "name-builder-project-character-exceed":"The title length should not exceed",
 
-        "story-builder-project-tip":"This information will form the home page of your project. After you click CONTINUE, you will be able to edit thsi page only at the end of the creation process.",
+        "story-builder-project-tip":"This information will form the home page of your project. After you click CONTINUE, you will be able to edit this page only at the end of the creation process.",
         "story-builder-project-info":"More about your project.",
         "story-builder-project-info-label-1":"What & why",
         "story-builder-project-info-description-1":"Explain in simple terms what is the purpose of your project, and why it is important.",
@@ -765,6 +765,7 @@
         "forum-add-comment":"Add comment",
         "forum-delete-topic":"Delete topic",
         "forum-delete-comment":"Delete comment",
+        "forum-edit-comment":"Edit comment",
 
         "DOWNLOAD_TASKS_IN_CSV_ERROR": "DOWNLOAD_TASKS_IN_CSV_ERROR",
         "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR": "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR",
@@ -794,7 +795,13 @@
         "new-task-was-imported-successfully":"new task was imported successfully",
         "import-the-selected-files":"Import selected files",
         
-        "modify-draft-modal-content":"This button will delete your Task Presenter design and take you back to Tasks Import (see Step 2 of the '{HowitWorks}' procedure)"
+        "modify-draft-modal-content":"This button will delete your Task Presenter design and take you back to Tasks Import (see Step 2 of the '{HowitWorks}' procedure)",
+
+        "private-project-title":"Private project",
+        "private-project-content":"This is a private project with restricted access. Please contact the project owner for more information.",
+        "access-denied":"Access denied",
+        "project-protect-with-password":"Protect project with password",
+        "private-c":"Private"
 
     },
     "de": {
@@ -1556,6 +1563,7 @@
         "forum-add-comment":"Kommentar hinzufügen",
         "forum-delete-topic":"Thema löschen",
         "forum-delete-comment":"Kommentar löschen",
+        "forum-edit-comment":"Kommentar bearbeiten",
 
         "DOWNLOAD_TASKS_IN_CSV_ERROR": "Fehler beim CSV-Download der Aufgaben",
         "DOWNLOAD_TASK_RUNS_IN_CSV_ERROR": "Fehler beim CSV-Download der Aufgaben-Ausführungen",
@@ -1585,7 +1593,13 @@
         "new-task-was-imported-successfully":"neue Aufgabe wurde erfolgreich importiert",
         "import-the-selected-files":"Importieren Sie die ausgewählten Dateien",
 
-        "modify-draft-modal-content":"Diese Schaltfläche löscht Ihr Task Presenter-Design und bringt Sie zurück zum Aufgabenimport (siehe Schritt 2 der Prozedur '{HowitWorks}')."
+        "modify-draft-modal-content":"Diese Schaltfläche löscht Ihr Task Presenter-Design und bringt Sie zurück zum Aufgabenimport (siehe Schritt 2 der Prozedur '{HowitWorks}').",
+
+        "private-project-title":"Privates Projekt",
+        "private-project-content":"Das ist ein privates Projekt mit eingeschränktem Zugriff. Bitte kontaktieren Sie den Projektbesitzer für weitere Informationen",
+        "access-denied":"Zugriff abgelehnt",
+        "project-protect-with-password":"Projekt mit Passwort schützen",
+        "private-c":"Privat"
 
 
     }

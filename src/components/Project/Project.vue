@@ -89,7 +89,7 @@
           </div>
 
           <div v-else-if="isAnonymousProject && !infos.admin">
-            <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn>            
+            <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn>  
           </div>
 
           <div v-else>
@@ -113,7 +113,7 @@
                 </b-modal>
               </div>
               <div v-else>
-                <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn>            
+                <b-btn ref="btn-contribute" :to="{ name: 'project.task.presenter' }" variant="primary" size="lg">{{ $t('project-contribute') }} </b-btn>                
               </div>
 
           </div>

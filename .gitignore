@@ -19,3 +19,6 @@ selenium-debug.log
 
 .now
 now.json
+
+#config/nginx.conf
+#Dockerfile
