@@ -16,16 +16,18 @@
     </div>
     <div class="comment__content">
       
-      <p v-if='!edit_comment'>{{ reply.content.text }}</p>
+      <p v-if='!edit_comment' v-html="reply.content.text"></p>
 
       <div v-else> 
         <b-form-group id="reply-group-1" >
-          <b-form-textarea
-           size="sm"
-            rows="1"
-            max-rows="5"
-            v-model="replyTexts"
-          />
+          <vue-editor id="comment__reply_edit" :editorToolbar="toolbarOptions" v-model="replyTexts">
+            <b-form-textarea
+            size="sm"
+              rows="1"
+              max-rows="5"
+              v-model="replyTexts"
+            />
+          </vue-editor>
         </b-form-group>
 
         <b-button 
@@ -62,16 +64,23 @@
 
 <script>
   import {mapState, mapActions, mapMutations} from 'vuex'
+  import { VueEditor } from "vue2-editor"
 
   export default {
     name: "Reply",
+    components: {
+      VueEditor
+    },
     data() {
       return {
         replyTexts: null,
         edit_comment : false,
         tempComment : null,
         defaultImage: require('@/assets/graphic-community.png'),
-        helpers: require('@/helper.js')
+        helpers: require('@/helper.js'),
+        toolbarOptions: [
+          ["bold", "italic", "link"], [{ list: "bullet" }]
+        ]
       }
     },
     props: {
@@ -138,3 +147,9 @@
   }
 
 </script>
+
+
+<style> 
+#comment__reply_edit .ql-editor { min-height:70px } 
+</style>
+

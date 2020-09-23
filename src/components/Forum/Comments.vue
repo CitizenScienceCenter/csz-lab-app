@@ -9,14 +9,19 @@
       <b-row v-if='infos.admin' class="justify-content-center mt-4">
         <b-col md="12" class="mt-md-0 mt-4">
         
-          <b-form-group id="fieldset-description">
-            <b-form-textarea
-              size="sm"
-              rows="1"
-              max-rows="5"
-              :placeholder="$t('newtopic-heading')"
-              v-model="commentTitle">
-            </b-form-textarea>
+          <b-form-group 
+            id="fieldset-description"
+            label="Create a new topic"
+            label-for="fieldset-description">
+            <vue-editor id="comment__topic" :editorToolbar="toolbarOptions" v-model="commentTitle">
+              <b-form-textarea
+                size="sm"
+                rows="1"
+                max-rows="5"
+                :placeholder="$t('newtopic-heading')"
+                v-model="commentTitle">
+              </b-form-textarea>
+            </vue-editor>
           </b-form-group>
 
           <b-button 
@@ -53,12 +58,14 @@
   import {mapState} from 'vuex'
   import GrowingTextarea from "@/components/GrowingTextarea";
   import CommentThread from "./CommentThread";
+  import { VueEditor } from "vue2-editor"
 
   export default {
     name: "Comments",
     components: {
       GrowingTextarea,
-      CommentThread
+      CommentThread,
+      VueEditor
     },
     data() {
       return {
@@ -74,7 +81,10 @@
         replyTexts: [],
         defaultImage: require('@/assets/graphic-community.png'),
         comments: [],
-        numberOfThreads: 0
+        numberOfThreads: 0,
+        toolbarOptions: [
+          ["bold", "italic", "link"], [{ list: "bullet" }]
+        ]
       }
     },
     computed: {
@@ -318,6 +328,7 @@
 
     }
   }
+
 
   @media only screen and (min-width: $viewport-tablet-portrait) {
 

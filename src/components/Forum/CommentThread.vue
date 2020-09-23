@@ -27,7 +27,7 @@
     </div>
 
     <div class="comment__content">
-      <p class="comment__content_mainthread">{{ comment[index][0].content.title }}</p>
+      <p class="comment__content_mainthread" v-html="comment[index][0].content.title"></p>
       <div class="comment__see-discussion" v-b-toggle="'discussion' + index">
         <i class="fas fa-caret-right arrow_box"></i>
         <span class="small">
@@ -53,13 +53,15 @@
             <b-row align-h="center" class="mb-2">
               <b-col md="11">
                 <b-form-group id="reply-group-1">
-                  <b-form-textarea
-                    size="sm"
-                    rows="1"
-                    max-rows="5"
-                    v-model="replyTexts[index]" 
-                    :placeholder="$t('newtopic-text-placeholder')"/>
-                </b-form-group>
+                  <vue-editor id="comment__reply" :editorToolbar="toolbarOptions" v-model="replyTexts[index]">
+                    <b-form-textarea
+                      size="sm"
+                      rows="1"
+                      max-rows="5"
+                      v-model="replyTexts[index]" 
+                      :placeholder="$t('newtopic-text-placeholder')"/>
+                    </vue-editor>
+                  </b-form-group>
                 <b-button 
                   :disabled="(replyTexts[index]) ? false : true"
                   size="sm" type="submit" variant="secondary"
@@ -98,13 +100,14 @@
 <script>
 
   import {mapState,mapActions,mapMutations} from 'vuex'
-
   import CommentReply from "./CommentReply";
+  import { VueEditor } from "vue2-editor"
 
   export default {
     name: "Thread",
     components: {
-      CommentReply
+      CommentReply,
+      VueEditor
     },
     data() {
       return {
@@ -115,7 +118,10 @@
         repliesOffset: 0,
         replies : [],
         totalRepliesInThread : 0,
-        comment : this.commentsThread
+        comment : this.commentsThread,
+        toolbarOptions: [
+          ["bold", "italic", "link"], [{ list: "bullet" }]
+        ]
       }
     },
     
@@ -244,3 +250,8 @@
   }
 
 </script>
+
+
+<style> 
+#comment__reply .ql-editor { min-height:70px } 
+</style>
