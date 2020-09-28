@@ -302,3 +302,12 @@ export function clearAccessBR() {
     }
   }
 }
+
+// Open URL
+export function openUrl(url, self) {
+  if (!url) {
+    return;
+  }
+  let win = self ? "_self" : "_blank";
+  window.open(url, win).focus();
+}

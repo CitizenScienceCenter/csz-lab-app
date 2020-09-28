@@ -5,7 +5,7 @@
     </b-navbar-brand>
 
     <b-navbar-brand>
-      <a class="home-link home-link-platform" @click="openUrl">
+      <a class="home-link home-link-platform" @click="openUrlTab(true)">
         <img
           alt="Citizen Science Center Zurich"
           class="brand-logo"
@@ -86,6 +86,7 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import { i18n } from "../i18n";
+import { openUrl } from "@/helper";
 export default {
   name: "Header",
   data: () => {
@@ -108,9 +109,8 @@ export default {
     }
   },
   methods: {
-    openUrl(self) {
-      let win = self ? "_self" : "_blank";
-      window.open(process.env.CSC_BASE_URL, win).focus();
+    openUrlTab: function(self) {
+      openUrl(process.env.CSC_BASE_URL, self);
     }
   },
   computed: {

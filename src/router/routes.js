@@ -459,7 +459,7 @@ export const routes = [
           import(
             /* webpackChunkName: "FlagshipProjectEditor" */ "../views/FlagshipProjectEditor.vue"
           )
-      }
+      },
     ]
   }
 ];
