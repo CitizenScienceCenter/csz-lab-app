@@ -5,7 +5,7 @@
       :options="filterOptions"
       :multiple="false"
       :height="500"
-      :taggable="true" 
+      :taggable="false" 
       @tag="addTag"
       @select="selectSpecie"
       group-values="options" 
@@ -15,7 +15,8 @@
       tag-placeholder="Click to add" 
       trackBy="value" 
       label="value"
-      :clearOnSelect="true">
+      :clearOnSelect="false"
+      @close="onTouch">
     </multiselect>
     
     <label class="typo__label"></label>
