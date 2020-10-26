@@ -148,3 +148,12 @@ export function saveJsonObj2File(obj) {
     e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
     a.dispatchEvent(e);
 }
+
+// Open URL
+export function openUrl(url, self) {
+  if (!url) {
+    return;
+  }
+  let win = self ? "_self" : "_blank";
+  window.open(url, win).focus();
+}
