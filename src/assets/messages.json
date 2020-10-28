@@ -597,7 +597,7 @@
         "template-editor-text-3": "",
         "template-editor-text-4":"Image loading...",
         "template-editor-text-5":"Picture not available",
-        "template-editor-text-6":"All tasks have been analysed",
+        "template-editor-text-6":"All the tasks are completed for anonymous contributors. Please login to continue contributing.",
         "template-editor-text-7":"Thank you for contributing",
 
         "template-editor-text-8":"You must complete the form to submit",
@@ -1392,7 +1392,7 @@
         "template-editor-text-3": "Aufgaben erledigt",
         "template-editor-text-4":"Bild wird geladen ...",
         "template-editor-text-5":"Bild nicht verfügbar",
-        "template-editor-text-6":"Geschafft!",
+        "template-editor-text-6":"Alle Aufgaben werden für anonyme Mitwirkende erledigt. Bitte melden Sie sich an, um weiterhin Beiträge zu leisten.",
         "template-editor-text-7":"Vielen Dank für Ihre Teilnahme",
 
         "template-editor-text-8":"Sie müssen das Formular komplett ausfüllen, um es einzureichen",
