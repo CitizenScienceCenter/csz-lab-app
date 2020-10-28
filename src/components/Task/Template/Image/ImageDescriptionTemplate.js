@@ -48,14 +48,15 @@ const component =
               </div>
               <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" label="Image loading..."></b-spinner>
             </div>
-          <b-alert v-else :show="true" variant="danger">Picture not available</b-alert>
+            <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
         </b-col>
       </b-row>
       
       <!-- Task end message -->
       <b-row v-else>
         <b-col>
-          <b-jumbotron header="This the end!" lead="Thanks you for your participation"></b-jumbotron>
+          <b-jumbotron v-if='pybossa.isUserLogged' :header="$t('template-editor-text-6-authenticated')" :lead="$t('template-editor-text-7')"></b-jumbotron>
+          <b-jumbotron v-else :header="$t('template-editor-text-6-anonymous')" :lead="$t('template-editor-text-7')"></b-jumbotron>
         </b-col>
       </b-row>`,
 

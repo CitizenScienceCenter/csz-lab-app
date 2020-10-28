@@ -54,7 +54,8 @@ const component =
       <!-- Task end message -->
       <b-row v-else>
         <b-col>
-          <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')"></b-jumbotron>
+          <b-jumbotron v-if='pybossa.isUserLogged' :header="$t('template-editor-text-6-authenticated')" :lead="$t('template-editor-text-7')"></b-jumbotron>
+          <b-jumbotron v-else :header="$t('template-editor-text-6-anonymous')" :lead="$t('template-editor-text-7')"></b-jumbotron>
         </b-col>
       </b-row>`,
 

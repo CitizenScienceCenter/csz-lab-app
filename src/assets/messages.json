@@ -597,7 +597,7 @@
         "template-editor-text-3": "",
         "template-editor-text-4":"Image loading...",
         "template-editor-text-5":"Picture not available",
-        "template-editor-text-6":"All the tasks are completed for anonymous contributors. Please login to continue contributing.",
+        "template-editor-text-6":"All tasks have been analysed",
         "template-editor-text-7":"Thank you for contributing",
 
         "template-editor-text-8":"You must complete the form to submit",
@@ -801,7 +801,10 @@
         "private-project-content":"This is a private project with restricted access. Please contact the project owner for more information.",
         "access-denied":"Access denied",
         "project-protect-with-password":"Protect project with password",
-        "private-c":"Private"
+        "private-c":"Private",
+
+        "template-editor-text-6-authenticated":"All tasks have been analysed",
+        "template-editor-text-6-anonymous":"All the tasks are completed for anonymous contributors. Please login to continue contributing."
 
     },
     "de": {
@@ -1392,7 +1395,7 @@
         "template-editor-text-3": "Aufgaben erledigt",
         "template-editor-text-4":"Bild wird geladen ...",
         "template-editor-text-5":"Bild nicht verfügbar",
-        "template-editor-text-6":"Alle Aufgaben werden für anonyme Mitwirkende erledigt. Bitte melden Sie sich an, um weiterhin Beiträge zu leisten.",
+        "template-editor-text-6":"Geschafft!",
         "template-editor-text-7":"Vielen Dank für Ihre Teilnahme",
 
         "template-editor-text-8":"Sie müssen das Formular komplett ausfüllen, um es einzureichen",
@@ -1599,7 +1602,10 @@
         "private-project-content":"Das ist ein privates Projekt mit eingeschränktem Zugriff. Bitte kontaktieren Sie den Projektbesitzer für weitere Informationen",
         "access-denied":"Zugriff abgelehnt",
         "project-protect-with-password":"Projekt mit Passwort schützen",
-        "private-c":"Privat"
+        "private-c":"Privat",
+
+        "template-editor-text-6-authenticated":"Geschafft",
+        "template-editor-text-6-anonymous":"Alle Aufgaben werden für anonyme Mitwirkende erledigt. Bitte melden Sie sich an, um weiterhin Beiträge zu leisten.."
 
 
     }
