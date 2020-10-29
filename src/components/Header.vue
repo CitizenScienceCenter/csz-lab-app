@@ -21,7 +21,7 @@
             <b-nav-item :to="{ name: 'about' }">{{ $t('app-vue-navigation-about') }}</b-nav-item>
             <b-nav-item :to="{ name: 'forum' }" class="notification">
               <span>Forum</span>
-              <span v-if='forumUpdated && userLogged' class="badge">!</span>
+              <span v-if='forumUpdated && userLogged' class="badge">{{(forumUpdated.new_topics > 0) ? forumUpdated.new_topics : null}}</span>
             </b-nav-item>
           </b-navbar-nav>
           
@@ -137,6 +137,6 @@ export default {
   border-radius: 50%;
   background-color: red;
   color: white;
-  padding: 4px 8px;
+  padding: 4px 6px;
 }
 </style>
