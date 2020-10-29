@@ -1,60 +1,63 @@
+
 <template>
-  <div>
-    <multiselect 
-      v-model="value" 
-      :options="filterOptions"
-      :multiple="false"
-      :height="500"
-      :taggable="false" 
-      @tag="addTag"
-      @select="selectSpecie"
-      group-values="options" 
-      group-label="label" 
-      :group-select="false" 
-      placeholder="Family, Genus, Binomial or Common Name" 
-      tag-placeholder="Click to add" 
-      trackBy="value" 
-      label="value"
-      :clearOnSelect="false"
-      @close="onTouch">
-    </multiselect>
+    <div>
     
-    <label class="typo__label"></label>
-    <div v-if="value.value != 'Family, Genus, Binomial or Common Name' || value.length >0 " style='margin-bottom:1em'>
-      <a href="#" block v-b-toggle.taxonomy variant="info">More info</a>
-      <b-collapse id="taxonomy" >
-        <b-card-body>
-          <ul>
-            <li v-if="value.value">name: {{ value.value }}</li>
-            <li v-if="value.synonyms">synonyms: {{ value.synonyms.join(',') }}</li>
-            <li v-if="value.type">type: {{ value.type }}</li>
-            <li v-if="value.genus">genus: {{ value.genus }}</li>
-            <li v-if="value.family">family:  {{ value.family }}</li>
-            <li v-if="value.commonName">Common name: {{ value.commonName }}</li>
-          </ul>
-        </b-card-body>
-      </b-collapse>
+    <multiselect
+    v-model="value" 
+    tag-placeholder="Add this as new tag" 
+    placeholder="Family, Genus, Binomial or Common Name" 
+    label="value" 
+    track-by="value"
+    group-values="options" 
+    group-label="label" 
+    :group-select="false" 
+    :options="filterOptions" 
+    :multiple="true" 
+    :taggable="false"
+    @search-change="onChange"
+    @tag="addTag"
+    @select="selectSpecie"
+    @remove="deselectSpecie"
+    :close-on-select="true" 
+    :clear-on-select="true" 
+    :hide-selected="false" 
+    :preserve-search="false"
+    >
+     <span slot="noResult">
+      No options matching the query
+    </span>
+    <span slot="noOptions">
+      No options available
+    </span>
+    </multiselect>
+    <br><br>
+    
     </div>
-  </div>
+    
 </template>
+
 
 <script>
   import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
   import Multiselect from 'vue-multiselect'
   import snakes from '@/assets/snakes.json'
 
-  export default {
-    name: 'DropdownSelectSnakes',
-    components: { Multiselect },
-    data (){
-      return { 
-        value: {"value":"Family, Genus, Binomial or Common Name"},
-        options:snakes
-      }
+    export default {
+    components: {
+        Multiselect
+    },
+    data () {
+        return {
+        options: snakes,
+        value: []
+        }
     },
     computed : {
+
       filterOptions (){
+        
         let filteredRound1,filteredRound2,filteredRound1Options;
+
         let temp = this.options
 
         filteredRound1 = temp.filter((obj)=>{ return obj.label == 'Binomials' })
@@ -69,27 +72,30 @@
         
       }
     },
-    methods : {
-      ...mapActions('snakes', [
-        'addSnake'
-      ]),
-
-      selectSpecie(sp){       
-        this.value = sp
-        this.addSnake(sp.value)
-      },
-      addTag (newTag) {
-        const tag = {
-          value: newTag,
-          code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-        }
-        this.options.push(tag)
-        this.value = tag
-        this.addSnake(tag.value)
-      }
+    methods: {
+        ...mapActions('snakes', [
+            'addSnake'
+        ]),
+        selectSpecie(sp){  
+            this.value.pop()
+            this.addSnake(sp.value)
+        },
+        deselectSpecie({value,id}){
+            this.value = [{"value":"Family, Genus, Binomial or Common Name","type":""}]
+            this.addSnake(null)
+        },
+        addTag (newTag) {
+            const tag = {
+                name: newTag,
+                code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+            }
+            this.options.push(tag)
+            this.value.push(tag)
+        },
+        onChange (value) {},
     }
-    
-  }
+    }
+
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
