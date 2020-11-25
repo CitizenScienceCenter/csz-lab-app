@@ -43,13 +43,21 @@ $success: #109b16;
 $color-primary-shade-40: shade( $primary, 40% );
 $color-primary-shade-20: shade( $primary, 20% );
 $color-primary-shade-10: shade( $primary, 10% );
+$color-primary-tint-30: tint( $primary, 30% );
+$color-primary-tint-40: tint( $primary, 40% );
 $color-primary-tint-50: tint( $primary, 50% );
+$color-primary-tint-80: tint( $primary, 70% );
 $color-primary-tint-80: tint( $primary, 80% );
 $color-primary-tint-90: tint( $primary, 90% );
 $color-primary-tint-95: tint( $primary, 95% );
 
 $color-secondary-shade-20: shade( $secondary, 20% );
 $color-secondary-shade-50: shade( $secondary, 50% );
+$color-secondary-tint-30: tint( $secondary, 30% );
+$color-secondary-tint-40: tint( $secondary, 40% );
+$color-secondary-tint-50: tint( $secondary, 50% );
+$color-secondary-tint-80: tint( $secondary, 70% );
+$color-secondary-tint-80: tint( $secondary, 80% );
 $color-secondary-tint-90: tint( $secondary, 90% );
 $color-secondary-tint-95: tint( $secondary, 95% );
 

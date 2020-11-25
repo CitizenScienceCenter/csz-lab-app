@@ -11,7 +11,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "now-build": "node build/build.js && react-snap"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.2",
@@ -125,14 +126,7 @@
     "minifyHtml": {
       "collapseWhitespace": false,
       "removeComments": false
-    },
-    "puppeteerArgs": [
-      "--disable-setuid-sandbox",
-      "--no-sandbox"
-    ],
-    "concurrency": 1,
-    "inlineCss": false,
-    "puppeteerExecutablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    }
   },
   "browserslist": [
     "> 1%",
