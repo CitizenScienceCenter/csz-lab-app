@@ -2,23 +2,26 @@
   <div>
     <multiselect
       v-model="value"
-      :options="filterOptions"
+      :options="dynamicList"
       :block-keys="['Tab', 'Enter']"
       :multiple="false"
       :height="500"
       :taggable="true"
       @tag="addTag"
       @select="selectSpecie"
+      @search-change="changeSearch"
+      @open="openSelect"
+      @input="valueChange"
       group-values="options"
       group-label="label"
       :group-select="false"
-      placeholder="Family, Genus, Binomial or Common Name"
+      placeholder="Type Family, Genus, Binomial or Common Name"
       tag-placeholder="Click to add"
       trackBy="value"
       label="value"
       :custom-label="customLabel"
       :options-limit="totalItems"
-      :clearOnSelect="true"
+      :clearOnSelect="false"
       :close-on-select="true"
       selectLabel="Please click to select"
       deselectLabel="Selected"
@@ -78,43 +81,49 @@ export default {
   components: { Multiselect },
   data() {
     return {
-      value: { value: "Family, Genus, Binomial or Common Name" },
-      options: snakes,
+      value: { value: "Type Family, Genus, Binomial or Common Name" },
       totalItems: 0,
-      fullList: this.filterOptions,
-      partialList: this.filterOptions
+      fullList: snakes,
+      dynamicList: [],
+      itemSelected: false
     };
   },
   computed: {
+    setTotalItems() {
+      // Get the total of options for dropdown select just for families and genus
+      this.totalItems =
+        this.dynamicList.reduce(function(t, i) {
+          return t + i.options.length;
+        }, 0) +
+        this.dynamicList.length +
+        1; // this consider the rows for groups and tag
+    }
+  },
+  methods: {
+    ...mapActions("snakes", ["addSnake"]),
     filterOptions() {
-      let filteredRound1, filteredRound2, filteredRound1Options;
-      let temp = this.options;
+      let filteredRound1, filteredRound2;
+      const temp = JSON.parse(JSON.stringify(this.fullList));
 
       filteredRound1 = temp.filter(obj => {
         return obj.label == "Binomials";
       });
 
       filteredRound2 = filteredRound1[0].options.filter(obj => {
-        return obj.value != "";
+        return obj.value != "" && obj.value != undefined;
       });
 
       let index = temp.findIndex(x => x.label === "Binomials");
 
       temp[index]["options"] = filteredRound2;
 
-      // Get the total of options for dropdown select just for families and genus
-      this.totalItems = temp.reduce(function(t, i) {
-        return t + i.options.length;
-      }, 0);
       return temp;
-    }
-  },
-  methods: {
-    ...mapActions("snakes", ["addSnake"]),
+    },
 
     selectSpecie(sp) {
       this.value = sp;
       this.addSnake(sp.value);
+      this.itemSelected = true;
     },
     addTag(newTag) {
       const tag = {
@@ -125,12 +134,50 @@ export default {
       this.value = tag;
       this.addSnake(tag.value);
     },
+    changeSearch(searchQuery) {
+      if (searchQuery.length > 0 && searchQuery.length < 2) {
+        this.dynamicList = [];
+        this.setTotalItems;
+        return;
+      }
+      if (!this.itemSelected && searchQuery.length > 0) {
+        searchQuery = searchQuery.toLowerCase();
+        this.dynamicList = this.filterOptions();
+        if (searchQuery) {
+          this.dynamicList.forEach(element => {
+            element.options = element.options.filter(x => {
+              if (
+                x.value.toLowerCase().includes(searchQuery) ||
+                (x.commonName &&
+                  x.commonName.toLowerCase().includes(searchQuery))
+              ) {
+                return x;
+              }
+            });
+          });
+        }
+        this.setTotalItems;
+      }
+    },
+    openSelect() {
+      this.itemSelected = false;
+      this.setTotalItems;
+    },
+    valueChange(newValue) {
+      if (!newValue) {
+        this.value = { value: "Type Family, Genus, Binomial or Common Name" };
+      }
+    },
     customLabel({ value, commonName }) {
       if (commonName) {
         return `${value} – ${commonName}`;
       }
       return `${value}`;
     }
+  },
+  created() {
+    // Initial set of variables
+    this.setTotalItems;
   }
 };
 </script>
@@ -143,6 +190,9 @@ export default {
     background: $color-secondary-tint-30;
     &.multiselect__option--selected {
       background: $color-primary-tint-30;
+      p {
+        font-weight: bold;
+      }
     }
     &.multiselect__option--selected::after {
       content: attr(data-deselect);
@@ -150,6 +200,11 @@ export default {
     }
     .common-name {
       color: whitesmoke;
+    }
+  }
+  .multiselect__option--selected {
+    p {
+      font-weight: bold;
     }
   }
   .multiselect__option--highlight::after {
