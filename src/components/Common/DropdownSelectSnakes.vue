@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <multiselect
@@ -28,6 +29,9 @@
     >
       <template slot="singleLabel" slot-scope="props">
         <p>{{ props.option.value }}</p>
+      </template>
+      <template slot="noOptions" slot-scope="props">
+        <p>Type at least 2 characters</p>
       </template>
       <template slot="option" slot-scope="props">
         <div>
