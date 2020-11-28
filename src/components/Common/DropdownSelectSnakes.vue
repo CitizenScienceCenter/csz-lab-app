@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <multiselect
@@ -16,7 +15,7 @@
       group-values="options"
       group-label="label"
       :group-select="false"
-      placeholder="Type Family, Genus, Binomial or Common Name"
+      :placeholder="defaultText"
       tag-placeholder="Click to add"
       trackBy="value"
       label="value"
@@ -29,9 +28,6 @@
     >
       <template slot="singleLabel" slot-scope="props">
         <p>{{ props.option.value }}</p>
-      </template>
-      <template slot="noOptions" slot-scope="props">
-        <p>Type at least 2 characters</p>
       </template>
       <template slot="option" slot-scope="props">
         <div>
@@ -85,7 +81,9 @@ export default {
   components: { Multiselect },
   data() {
     return {
-      value: { value: "Type Family, Genus, Binomial or Common Name" },
+      value: "",
+      defaultText:
+        "Type at least 2 letters for Family, Genus, Binomial or Common Name",
       totalItems: 0,
       fullList: snakes,
       dynamicList: [],
@@ -169,7 +167,9 @@ export default {
     },
     valueChange(newValue) {
       if (!newValue) {
-        this.value = { value: "Type Family, Genus, Binomial or Common Name" };
+        this.value = {
+          value: this.defaultText
+        };
       }
     },
     customLabel({ value, commonName }) {
