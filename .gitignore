@@ -19,6 +19,7 @@ selenium-debug.log
 
 .now
 now.json
+.vercel
 
 #config/nginx.conf
 #Dockerfile

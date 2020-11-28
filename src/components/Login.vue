@@ -51,6 +51,7 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
+import { openUrl } from "@/helper";
 
 export default {
   name: 'Login',
@@ -97,7 +98,9 @@ export default {
             title: this.$t('login-success-title'),
             content: this.$t('login-success-content')
           })
-          this.$router.push({ name: 'home' })
+          //TODO: validate if routing to CSC home page
+          // this.$router.push({ name: 'home' })
+          openUrl(process.env.CSC_BASE_URL, true)
         } else {
           this.showError(
             {
