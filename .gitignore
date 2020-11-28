@@ -22,3 +22,4 @@ now.json
 
 #config/nginx.conf
 #Dockerfile
+.vercel
