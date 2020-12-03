@@ -16,7 +16,7 @@
       group-label="label"
       :group-select="false"
       :placeholder="defaultText"
-      tag-placeholder="Click to add"
+      tag-placeholder=""
       trackBy="value"
       label="value"
       :custom-label="customLabel"
