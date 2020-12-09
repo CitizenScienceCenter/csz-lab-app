@@ -126,14 +126,7 @@
     "minifyHtml": {
       "collapseWhitespace": false,
       "removeComments": false
-    },
-    "puppeteerArgs": [
-      "--disable-setuid-sandbox",
-      "--no-sandbox"
-    ],
-    "concurrency": 1,
-    "inlineCss": false,
-    "puppeteerExecutablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    }
   },
   "browserslist": [
     "> 1%",

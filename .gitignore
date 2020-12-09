@@ -17,8 +17,9 @@ selenium-debug.log
 *.njsproj
 *.sln
 
+# Vercel deployment
 .now
-now.json
+.vercel
 
 #config/nginx.conf
 #Dockerfile
