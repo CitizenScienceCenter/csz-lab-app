@@ -14,34 +14,40 @@
         <b-button
           :to="{ name: 'project.builder.name' }"
           class="btn-secondary-inverted"
-          >{{ $t("home-create-a-project") }}</b-button
-        >
+          >{{ $t("home-create-a-project") }}
+        </b-button>
       </p>
     </app-cover>
 
     <!-- // TODO: this section would be removed and replaced by a component -->
-    <b-container>
-      <b-row class="mx-auto text-center my-3 scroll-effect">
+    <b-container class="mb-5">
+      <b-row class="mx-auto text-center my-4 scroll-effect">
         <p>
           {{ $t("about-answer-1") }}
         </p>
       </b-row>
       <b-row class="mx-auto">
-        <b-col cols="12" md="6" class="mb-5">
+        <b-col cols="12" md="6" class="mb-3">
           <b-col cols="11" class="mb-5">
             <h1 class="small">{{ $t("home-create-a-project") }}</h1>
-            <p>description</p>
-            <b-btn>Create</b-btn>
+            <p v-html="$t('home-create-project')"></p>
+            <b-button
+              :to="{ name: 'project.builder.name' }"
+              variant="primary"
+              >{{ $t("home-create-a-project") }}</b-button
+            >
           </b-col>
           <b-col cols="11">
             <h1 class="small">Contribute to Existing Projects</h1>
-            <p>description</p>
-            <b-btn>Create</b-btn>
+            <p v-html="$t('home-contribute-existing-projects')"></p>
+            <b-button :to="{ name: 'discover' }" variant="primary">{{
+              $t("home-start-contributing")
+            }}</b-button>
           </b-col>
         </b-col>
         <b-col cols="12" md="6" class="square">
           <h1 class="small">Own Your Data</h1>
-          <p>description</p>
+          <div v-html="$t('home-own-your-data')"></div>
         </b-col>
       </b-row>
     </b-container>
@@ -110,6 +116,34 @@ export default {
 @import "@/scss/variables.scss";
 .square {
   border: 2px solid $primary;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
+}
+ol {
+  margin-bottom: $spacing-4;
+  list-style: none;
+  counter-reset: my-awesome-counter;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  li {
+    counter-increment: my-awesome-counter;
+    margin-bottom: $spacing-2;
+    position: relative;
+    padding-left: $spacing-5;
+    &:before {
+      content: counter(my-awesome-counter) ". ";
+      width: 0.5rem;
+      height: 0.5rem;
+      color: $secondary;
+      font-weight: bold;
+      position: absolute;
+      left: 0em;
+      padding-left: $spacing-2;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 </style>
