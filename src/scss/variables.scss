@@ -6,6 +6,7 @@ $viewport-tablet-portrait: 640px;
 $viewport-large: 1020px;
 $viewport-xlarge: 1281px;
 $viewport-xxlarge: 1420px;
+$viewport-xxxlarge: 1920px;
 
 
 /* Easing */
@@ -95,6 +96,7 @@ $font-size-large: 1rem * pow($font-scale,2);
 $font-size-xlarge: 1rem * pow($font-scale,3);
 $font-size-xxlarge: 1rem * pow($font-scale,4);
 $font-size-xxxlarge: 1rem * pow($font-scale,5);
+$font-size-4xlarge: 1rem * pow($font-scale, 6);
 
 
 /* Spacings */

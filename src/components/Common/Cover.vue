@@ -407,4 +407,16 @@ export default {
     }
   }
 }
+@media only screen and (min-width: $viewport-xxxlarge) {
+  .cover {
+    .content-wrapper {
+      .cover-heading {
+        font-size: $font-size-4xlarge;
+      }
+      .cover-subheading {
+        font-size: $font-size-large;
+      }
+    }
+  }
+}
 </style>
