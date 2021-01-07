@@ -22,9 +22,9 @@
     <!-- // TODO: this section would be removed and replaced by a component -->
     <b-container class="mb-5">
       <b-row class="mx-auto text-center my-4 scroll-effect">
-        <p>
+        <h2 class="font-italic font-weight-light mb-4">
           {{ $t("about-answer-1") }}
-        </p>
+        </h2>
       </b-row>
       <b-row class="mx-auto">
         <b-col cols="12" md="6" class="mb-3">
