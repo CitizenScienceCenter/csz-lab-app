@@ -202,7 +202,7 @@ export default {
     },
 
     checkText(text){
-      return this.helpers.utf8ToUnicode(text);
+      return this.helpers.wtf8ToUnicode(text);
     },
 
     /**

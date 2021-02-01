@@ -209,11 +209,16 @@ export function saveJsonObj2File(obj) {
   a.dispatchEvent(e);
 }
 
-export function utf8ToUnicode(text) {
-  const utf8 = require("utf8");
+export function wtf8ToUnicode(text) {
+  const wtf = require("wtf-8");
   try {
-    return utf8.decode(text);
+    console.log("******************************************************");
+    console.log(text);
+    console.log(wtf.decode(text));
+    console.log("------------------------------------------------------");
+    return wtf.decode(text);
   } catch (error) {
+    console.log(error);
     return text;
   }
 }
