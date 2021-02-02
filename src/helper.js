@@ -213,10 +213,9 @@ export function wtf8ToUnicode(text) {
   const wtf = require("wtf-8");
   try {
     console.log("******************************************************");
-    console.log(text);
-    console.log(wtf.decode(text));
-    console.log("------------------------------------------------------");
-    return wtf.decode(text);
+    const decodedText = wtf.decode(text);
+    console.log(decodedText);
+    return decodedText;
   } catch (error) {
     console.log(error);
     return text;

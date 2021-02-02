@@ -131,8 +131,7 @@ export default {
         mediaUrl: "#",
         pdfPageCount: 1,
         pdfCurrentPage: 1
-      },
-      helpers: require('@/helper.js')
+      }
     };
   },
   computed: {
@@ -199,10 +198,6 @@ export default {
      */
     run() {
       this.newTask();
-    },
-
-    checkText(text){
-      return this.helpers.wtf8ToUnicode(text);
     },
 
     /**
