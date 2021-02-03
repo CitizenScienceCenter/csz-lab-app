@@ -42,8 +42,8 @@ const component = {
         <b-col md="6" class="order-1 order-md-2">
         
           <!-- Author name and tweet text -->
-          <h5 v-if="taskInfo.user && taskInfo.user.name">From: {{ pybossa.checkText(taskInfo.name) }}</h5>
-          <p><i>{{ pybossa.checkText(taskInfo.text) }}</i></p>
+          <h5 v-if="taskInfo.user && taskInfo.user.name">From: {{ taskInfo.name }}</h5>
+          <p><i>{{ taskInfo.text }}</i></p>
           
           <!-- Display urls if available -->
           <ul v-if="taskInfo.entities && taskInfo.entities.urls">

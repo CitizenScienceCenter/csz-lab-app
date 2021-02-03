@@ -115,7 +115,7 @@ export default {
       if (this.presenter || this.template) {
         this.taskPresenterExists = true;
       }
-    });   
+    });
 
     //this.saveFile()
   },
@@ -235,8 +235,8 @@ export default {
               response.private &&
               response.redirect &&
               !(this.accessForSelectedProject.project_id == this.project.id)
-              /* (this.accessForSelectedProject.access && 
-                    
+              /* (this.accessForSelectedProject.access &&
+
                   )*/
             ) {
               this.setProjectPassModal(true);
