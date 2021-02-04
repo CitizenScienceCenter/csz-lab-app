@@ -213,14 +213,11 @@ export function utf8ToUnicode(text) {
   const utf = require("utf8");
   try {
     // Convert \\x to \x
-    console.log("*********************************************");
-    text = text.replace(/\\x([0-9A-Fa-f]{1,4})/g, function() {
+    text = text.replace(/\\x([0-9A-Fa-f]{2})/g, function() {
       // Convert hex to int the char sequence after \x
       return String.fromCharCode(parseInt(arguments[1], 16));
     });
-    console.log(text);
     const final_text = utf.decode(text);
-    console.log(final_text);
     return final_text;
   } catch (error) {
     console.error(error);

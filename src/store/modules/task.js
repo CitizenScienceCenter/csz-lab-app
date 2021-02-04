@@ -298,13 +298,17 @@ const actions = {
         if ("info" in value.data && "error" in value.data.info) {
           return false;
         }
-        if ("info" in value.data && "full_text" in value.data.info) {
+        // modify encoding type from utf-8 to unicode
+        if ("info" in value.data) {
+          const attributes = Object.keys(value.data.info).filter(
+            x => x.toLowerCase().includes("text") //only for text-named attributes
+          );
           const helpers = require("@/helper.js");
-          const text = value.data.info.full_text;
-          value.data.info.full_text = helpers.utf8ToUnicode(text);
+          attributes.forEach(att => {
+            const text = value.data.info[att];
+            value.data.info[att] = helpers.utf8ToUnicode(text);
+          });
         }
-        console.log("######################################");
-        console.log(value.data.info);
 
         commit("setCurrentTask", value.data);
         return value.data;
@@ -342,14 +346,17 @@ const actions = {
           return false;
         }
 
-        if ("info" in value.data && "text" in value.data.info) {
+        // modify encoding type from utf-8 to unicode
+        if ("info" in value.data) {
+          const attributes = Object.keys(value.data.info).filter(
+            x => x.toLowerCase().includes("text") //only for text-named attributes
+          );
           const helpers = require("@/helper.js");
-          const text =
-            "Covid-19 salg\\xc4\\xb1n\\xc4\\xb1 nedeniyle soka\\xc4\\x9fa \\xc3\\xa7\\xc4\\xb1kmalar\\xc4\\xb1 k\\xc4\\xb1s\\xc4\\xb1tlanan ve bug\\xc3\\xbcn 4 saatli\\xc4\\x9fine izin verilen 14 ya\\xc5\\x9f alt\\xc4\\xb1 \\xc3\\xa7ocuklar\\xc4\\xb1m\\xc4\\xb1zla bulu\\xc5\\x9ftuk.Uzun zaman sonra soka\\xc4\\x9fa \\xc3\\xa7\\xc4\\xb1kan \\xc3\\xa7ocuklar\\xc4\\xb1m\\xc4\\xb1z\\xc4\\xb1n y\\xc3\\xbcz\\xc3\\xbcn\\xc3\\xbcn g\\xc3\\xbcld\\xc3\\xbc\\xc4\\x9f\\xc3\\xbcn\\xc3\\xbc g\\xc3\\xb6rmek bizi mutlu etti.\\xc3\\x87ocuklar\\xc4\\xb1m\\xc4\\xb1z\\xc4\\xb1n mutlulu\\xc4\\x9funa ortak oldukkendilerine top hediye";
-          value.data.info.text = helpers.utf8ToUnicode(text);
+          attributes.forEach(att => {
+            const text = value.data.info[att];
+            value.data.info[att] = helpers.utf8ToUnicode(text);
+          });
         }
-        console.log("########################################");
-        console.log(value.data.info);
 
         if (value.data.id) {
           commit("setTaskOffset", payload.offset + 1);
