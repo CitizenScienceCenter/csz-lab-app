@@ -17,15 +17,17 @@ import 'codemirror/lib/codemirror.css'
 import 'vuelayers/lib/style.css'
 import './scss/global.scss'
 import VueGtag from "vue-gtag"
+import Meta from "vue-meta";
 import '@/components/Common/globalComponents'
 
 Vue.config.productionTip = false
 //Vue.use(VueDisqus)
 Vue.use(VueRouter);
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 Vue.use(VueLayers, {
   dataProjection: 'EPSG:4326'
-})
+});
+Vue.use(Meta);
 
 let cookie_enabled = false;
 
