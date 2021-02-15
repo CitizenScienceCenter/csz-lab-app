@@ -1,89 +1,87 @@
 <template>
-  
   <div id="app" class="main-app">
+    <Header />
 
-    <Header/>
-    
-    <div class="main-content" > 
-      <router-view/>
-    </div> 
+    <div class="main-content">
+      <router-view />
+    </div>
 
     <g-d-p-r></g-d-p-r>
 
-    <Footer/>
+    <Footer />
 
     <!-- Notification toasts -->
     <b-toast
-            :key="notification.id"
-            header-class="h5"
-            body-class="h6"
-            v-for="notification in errorNotifications"
-            toaster="b-toaster-top-center"
-            :title="notification.message.title"
-            variant="danger"
-            @hidden="closeError(notification.id)"
-            visible
-            auto-hide-delay="4000">
+      :key="notification.id"
+      header-class="h5"
+      body-class="h6"
+      v-for="notification in errorNotifications"
+      toaster="b-toaster-top-center"
+      :title="notification.message.title"
+      variant="danger"
+      @hidden="closeError(notification.id)"
+      visible
+      auto-hide-delay="4000"
+    >
       <span v-html="notification.message.content"></span>
     </b-toast>
 
     <b-toast
-            :key="notification.id"
-            header-class="h5"
-            body-class="h6"
-            v-for="notification in infoNotifications"
-            toaster="b-toaster-top-center"
-            :title="notification.message.title"
-            variant="info"
-            @hidden="closeInfo(notification.id)"
-            visible
-            auto-hide-delay="4000">
+      :key="notification.id"
+      header-class="h5"
+      body-class="h6"
+      v-for="notification in infoNotifications"
+      toaster="b-toaster-top-center"
+      :title="notification.message.title"
+      variant="info"
+      @hidden="closeInfo(notification.id)"
+      visible
+      auto-hide-delay="4000"
+    >
       <span v-html="notification.message.content"></span>
     </b-toast>
 
     <b-toast
-            :key="notification.id"
-            header-class="h5"
-            body-class="h6"
-            v-for="notification in successNotifications"
-            toaster="b-toaster-top-center"
-            :title="notification.message.title"
-            variant="success"
-            @hidden="closeSuccess(notification.id)"
-            visible
-            auto-hide-delay="4000">
+      :key="notification.id"
+      header-class="h5"
+      body-class="h6"
+      v-for="notification in successNotifications"
+      toaster="b-toaster-top-center"
+      :title="notification.message.title"
+      variant="success"
+      @hidden="closeSuccess(notification.id)"
+      visible
+      auto-hide-delay="4000"
+    >
       <span v-html="notification.message.content"></span>
     </b-toast>
 
-    <loading :active.sync="isLoadingSpinnerDisplayed"
-             :can-cancel="false"
-             :is-full-page="true"
-             color="#c5202e">
+    <loading
+      :active.sync="isLoadingSpinnerDisplayed"
+      :can-cancel="false"
+      :is-full-page="true"
+      color="#c5202e"
+    >
     </loading>
 
-    <project-password-modal 
-      :value='showProjectPassModal' 
-      :project='project'>
+    <project-password-modal :value="showProjectPassModal" :project="project">
     </project-password-modal>
-
-
   </div>
-
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
-import { i18n } from "./i18n"
-import Loading from 'vue-loading-overlay';
+import { mapState, mapMutations, mapActions } from "vuex";
+import { i18n } from "./i18n";
+import Loading from "vue-loading-overlay";
 import GDPR from "./components/GDPR.vue";
-import Footer from "./components/Footer.vue"
-import Header from "./components/Header.vue"
-import ProjectPasswordModal from '@/components/Common/ProjectPasswordModal'
-import 'vue-loading-overlay/dist/vue-loading.css';
+import Footer from "./components/Footer.vue";
+import Header from "./components/Header.vue";
+import ProjectPasswordModal from "@/components/Common/ProjectPasswordModal";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
-  name: 'App',
-  created () {},
+  name: "App",
+  created() {},
   //data: () => {},
   components: {
     Loading,
@@ -92,19 +90,55 @@ export default {
     Header,
     ProjectPasswordModal
   },
-  props : {},
+  metaInfo: function() {
+    return {
+      // if no subcomponents specify a metaInfo.title, this title will be used
+      title: "",
+      // all titles will be injected into this template
+      titleTemplate: "%s | " + this.$t("site-title"),
+      meta: [
+        {
+          vmid: "description", // because it gets overwritten by some
+          name: "description",
+          content: this.$t("site-description")
+        },
+        {
+          vmid: "og:description", // because it gets overwritten by some
+          property: "og:description",
+          content: this.$t("site-description")
+        },
+        {
+          property: "og:type",
+          content: "website"
+        },
+        {
+          vmid: "og:image", // because it gets overwritten by some
+          property: "og:image",
+          content: "@/assets/img/presentation.jpg",
+        },
+      ],
+      link: [
+        {
+          rel: "canonical",
+          href: "https://lab.citizenscience.ch" + this.$route.path,
+        },
+      ],
+    };
+  },
+  props: {},
   computed: {
-      ...mapState({
-        errorNotifications: state => state.notification.errorNotifications,
-        infoNotifications: state => state.notification.infoNotifications,
-        successNotifications: state => state.notification.successNotifications,
-        isLoadingSpinnerDisplayed: state => state.notification.isLoadingSpinnerDisplayed,
+    ...mapState({
+      errorNotifications: state => state.notification.errorNotifications,
+      infoNotifications: state => state.notification.infoNotifications,
+      successNotifications: state => state.notification.successNotifications,
+      isLoadingSpinnerDisplayed: state =>
+        state.notification.isLoadingSpinnerDisplayed,
 
-        userLogged: state => state.user.logged,
-        userProfile: state => state.user.infos,
+      userLogged: state => state.user.logged,
+      userProfile: state => state.user.infos,
 
-        project: state => state.project.selectedProject,
-        showProjectPassModal : state => state.project.showProjectPassModal
+      project: state => state.project.selectedProject,
+      showProjectPassModal: state => state.project.showProjectPassModal
     }),
     language: {
       get() {
@@ -118,35 +152,32 @@ export default {
   watch: {},
   methods: {
     ...mapMutations({
-      closeError: 'notification/closeError',
-      closeInfo: 'notification/closeInfo',
-      closeSuccess: 'notification/closeSuccess'
+      closeError: "notification/closeError",
+      closeInfo: "notification/closeInfo",
+      closeSuccess: "notification/closeSuccess"
     }),
-    ...mapActions('user', [
-      'getAccountProfile'
-    ])
+    ...mapActions("user", ["getAccountProfile"])
   }
-}
+};
 </script>
 
 <style lang="scss">
-  @import '@/styles/themes.scss';
-  @import '@/styles/variables.scss';
+@import "@/styles/themes.scss";
+@import "@/styles/variables.scss";
 
-  .main-app {
-    position: relative;
-    min-height: 100vh;
-  }
+.main-app {
+  position: relative;
+  min-height: 100vh;
+}
 
-  .select-options {
-    height:28px;
-    width: 50px;
-    border:0px;
-    border-color: transparent;
-  }
+.select-options {
+  height: 28px;
+  width: 50px;
+  border: 0px;
+  border-color: transparent;
+}
 
-  .main-content {
-    padding-bottom: 14.5rem;
-  }
-
+.main-content {
+  padding-bottom: 14.5rem;
+}
 </style>

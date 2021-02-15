@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-const component =
-  {
-    template: `
+const component = {
+  template: `
       <!-- This template use https://bootstrap-vue.js.org/ -->
 
       <b-row v-if="pybossa.userProgressInPercent < 100">
@@ -43,7 +42,7 @@ const component =
         <b-col md="6" class="order-1 order-md-2">
         
           <!-- Author name and tweet text -->
-          <h5 v-if="taskInfo.user && taskInfo.user.name">From: {{ taskInfo.user.name }}</h5>
+          <h5 v-if="taskInfo.user && taskInfo.user.name">From: {{ taskInfo.name }}</h5>
           <p><i>{{ taskInfo.text }}</i></p>
           
           <!-- Display urls if available -->
@@ -69,61 +68,59 @@ const component =
         </b-col>
       </b-row>`,
 
-    data: {
-      question: 'Describe the picture',
-      descriptions: [
-        'Write your picture description here'
-      ],
-      answers: [],
-      showAlert: false
-    },
+  data: {
+    question: "Describe the picture",
+    descriptions: ["Write your picture description here"],
+    answers: [],
+    showAlert: false
+  },
 
-    methods: {
-      submit () {
-        if (this.isFormValid()) {
-          this.pybossa.saveTask(this.answers)
-          this.answers.forEach((el, index, array) => {
-            array[index] = ''
-          })
-          this.showAlert = false
-        } else {
-          this.showAlert = true
-        }
-      },
-      skip(){
-	      this.pybossa.skip();
-	    },
-      isFieldValid (field) {
-        return field.length > 0
-      },
-      isFormValid () {
-        return !this.answers.some(el => el.length === 0)
+  methods: {
+    submit() {
+      if (this.isFormValid()) {
+        this.pybossa.saveTask(this.answers);
+        this.answers.forEach((el, index, array) => {
+          array[index] = "";
+        });
+        this.showAlert = false;
+      } else {
+        this.showAlert = true;
       }
     },
-
-    computed: {
-      task () {
-        return this.pybossa.task
-      },
-      taskInfo () {
-        return this.task.info
-      }
+    skip() {
+      this.pybossa.skip();
     },
-
-    created () {
-      this.descriptions.forEach(() => this.answers.push(''))
+    isFieldValid(field) {
+      return field.length > 0;
     },
+    isFormValid() {
+      return !this.answers.some(el => el.length === 0);
+    }
+  },
 
-    mounted () {
-      this.pybossa.run()
+  computed: {
+    task() {
+      return this.pybossa.task;
     },
+    taskInfo() {
+      return this.task.info;
+    }
+  },
 
-    props: {
-      /* Injected by the Pybossa App */
-      pybossa: {
-        required: true
-      }
+  created() {
+    this.descriptions.forEach(() => this.answers.push(""));
+  },
+
+  mounted() {
+    this.pybossa.run();
+  },
+
+  props: {
+    /* Injected by the Pybossa App */
+    pybossa: {
+      required: true
     }
   }
+};
 
 export default component
