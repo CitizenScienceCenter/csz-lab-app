@@ -18,6 +18,15 @@
             "
             active
           >
+            <b-row class="d-flex justify-content-end align-items-center mr-1">
+              <b-col md="4">
+                <b-form-select
+                  v-model="question_type"
+                  :options="types"
+                ></b-form-select>
+              </b-col>
+            </b-row>
+
             <!-- Question section -->
             <b-form-group
               :label="
@@ -30,6 +39,7 @@
               <b-input
                 v-model="question.question"
                 @input="questionUpdated(questionKey)"
+                placeholder="Write your question"
               ></b-input>
               <b-btn
                 @click="deleteQuestion(questionKey)"
@@ -50,25 +60,34 @@
               :state="answerValidated(questionKey, answerKey)"
             >
               <b-row
-                class="d-flex justify-content-left align-items-center ml-1"
+                class="d-flex justify-content-around align-items-center ml-1"
               >
-                <i class="far fa-circle"></i>
+                <div v-show="question_type == '1'">
+                  <i class="far fa-circle fa-lg"></i>
+                </div>
+                <div v-show="question_type == '2'">
+                  <i class="far fa-square fa-lg"></i>
+                </div>
                 <b-col md="10">
                   <b-input
                     v-model="question.answers[answerKey]"
                     @input="answerUpdated(questionKey, answerKey)"
+                    :placeholder="`Option ${answerKey + 1}`"
                   >
                   </b-input>
                 </b-col>
+                <b-col md="1">
+                  <b-btn
+                    @click="deleteAnswer(questionKey, answerKey)"
+                    v-if="question.answers.length > 1"
+                    variant="danger"
+                    size="sm"
+                    class="float-right my-1 "
+                  >
+                    <i class="far fa-trash-alt fa-lg"></i>
+                  </b-btn>
+                </b-col>
               </b-row>
-              <b-btn
-                @click="deleteAnswer(questionKey, answerKey)"
-                v-if="question.answers.length > 2"
-                variant="danger"
-                size="sm"
-                class="float-right mt-1 mb-1"
-                >{{ $t("task-classify-template-delete-answer") }}</b-btn
-              >
             </b-form-group>
 
             <b-btn @click="addAnswer(questionKey)" class="float-right ">{{
@@ -121,8 +140,15 @@ export default {
       firstInteractions: [
         {
           question: true,
-          answers: [true, true]
+          answers: [true]
         }
+      ],
+      question_type: "1",
+      types: [
+        { value: "1", text: "One Choice" },
+        { value: "2", text: "Multiple Choice" },
+        { value: "3", text: "Short Answer" },
+        { value: "4", text: "Long Answer" }
       ]
     };
   },
@@ -154,7 +180,7 @@ export default {
       this.questions[questionKey].answers.push("");
     },
     deleteAnswer(questionKey, answerKey) {
-      if (this.questions[questionKey].answers.length > 2) {
+      if (this.questions[questionKey].answers.length > 1) {
         this.questions[questionKey].answers.splice(answerKey, 1);
         this.firstInteractions[questionKey].answers.splice(answerKey, 1);
       }
@@ -266,7 +292,16 @@ export default {
     }
   },
   computed: {
-    ...mapState("task/builder", ["task", "jobs"])
+    ...mapState("task/builder", ["task", "jobs"]),
+    getIcon() {
+      switch (this.question_type) {
+        case "1":
+          return "fa-circle";
+
+        default:
+          return "fa-square";
+      }
+    }
   }
 };
 </script>
