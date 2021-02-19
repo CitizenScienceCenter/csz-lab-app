@@ -7,100 +7,103 @@
       }}</b-btn>
     </div>
 
-    <b-row>
-      <b-col>
-        <b-tabs content-class="mt-4">
-          <b-tab
-            :key="questionKey"
-            v-for="(question, questionKey) in questions"
-            :title="
+    <b-container>
+      <b-tabs content-class="mt-4">
+        <b-tab
+          :key="questionKey"
+          v-for="(question, questionKey) in questions"
+          :title="
+            $t('task-classify-template-question') + ' ' + (questionKey + 1)
+          "
+          active
+        >
+          <b-row
+            class="d-flex justify-content-end align-items-center mr-1 mb-2"
+          >
+            <b-col md="6" lg="4">
+              <b-form-select
+                v-model="question_type"
+                :options="types"
+              ></b-form-select>
+            </b-col>
+          </b-row>
+
+          <!-- Question section -->
+          <b-form-group
+            :label="
               $t('task-classify-template-question') + ' ' + (questionKey + 1)
             "
-            active
+            :valid-feedback="validQuestionFeedback(question.question)"
+            :invalid-feedback="invalidQuestionFeedback(question.question)"
+            :state="questionValidated(questionKey)"
           >
-            <b-row class="d-flex justify-content-end align-items-center mr-1">
-              <b-col md="4">
-                <b-form-select
-                  v-model="question_type"
-                  :options="types"
-                ></b-form-select>
-              </b-col>
-            </b-row>
-
-            <!-- Question section -->
-            <b-form-group
-              :label="
-                $t('task-classify-template-question') + ' ' + (questionKey + 1)
-              "
-              :valid-feedback="validQuestionFeedback(question.question)"
-              :invalid-feedback="invalidQuestionFeedback(question.question)"
-              :state="questionValidated(questionKey)"
+            <b-input
+              v-model.trim="question.question"
+              @input="questionUpdated(questionKey)"
+              placeholder="Write your question"
+            ></b-input>
+            <b-btn
+              @click="deleteQuestion(questionKey)"
+              v-if="questions.length > 1"
+              variant="danger"
+              size="sm"
+              class="float-right mt-1 mb-1"
+              >{{ $t("task-classify-template-delete-question") }}</b-btn
             >
-              <b-input
-                v-model="question.question"
-                @input="questionUpdated(questionKey)"
-                placeholder="Write your question"
-              ></b-input>
-              <b-btn
-                @click="deleteQuestion(questionKey)"
-                v-if="questions.length > 1"
-                variant="danger"
-                size="sm"
-                class="float-right mt-1 mb-1"
-                >{{ $t("task-classify-template-delete-question") }}</b-btn
-              >
-            </b-form-group>
+          </b-form-group>
 
-            <!-- Answers section -->
-            <b-form-group
-              :key="answerKey"
-              v-for="(answer, answerKey) in question.answers"
-              :valid-feedback="validAnswerFeedback(answer)"
-              :invalid-feedback="invalidAnswerFeedback(answer)"
-              :state="answerValidated(questionKey, answerKey)"
-            >
-              <b-row
-                class="d-flex justify-content-around align-items-center ml-1"
-              >
+          <!-- Answers section -->
+          <b-form-group
+            :key="answerKey"
+            v-for="(answer, answerKey) in question.answers"
+            :valid-feedback="validAnswerFeedback(answer)"
+            :invalid-feedback="invalidAnswerFeedback(answer)"
+            :state="answerValidated(questionKey, answerKey)"
+          >
+           <!-- Section for multiple and unique response -->
+            <b-row class="d-flex justify-content-center align-items-center">
+              <!-- circle and square icon -->
+              <b-col cols="1" class="d-flex justify-content-end">
                 <div v-show="question_type == '1'">
                   <i class="far fa-circle fa-lg"></i>
                 </div>
                 <div v-show="question_type == '2'">
                   <i class="far fa-square fa-lg"></i>
                 </div>
-                <b-col md="10">
-                  <b-input
-                    v-model="question.answers[answerKey]"
-                    @input="answerUpdated(questionKey, answerKey)"
-                    :placeholder="`Option ${answerKey + 1}`"
-                  >
-                  </b-input>
-                </b-col>
-                <b-col md="1">
-                  <b-btn
-                    @click="deleteAnswer(questionKey, answerKey)"
-                    v-if="question.answers.length > 1"
-                    variant="danger"
-                    size="sm"
-                    class="float-right my-1 "
-                  >
-                    <i class="far fa-trash-alt fa-lg"></i>
-                  </b-btn>
-                </b-col>
-              </b-row>
-            </b-form-group>
+              </b-col>
+              <!-- Text input for option text -->
+              <b-col cols="10">
+                <b-input
+                  v-model.trim="question.answers[answerKey]"
+                  @input="answerUpdated(questionKey, answerKey)"
+                  :placeholder="`Option ${answerKey + 1}`"
+                >
+                </b-input>
+              </b-col>
+              <!-- Remove answer button -->
+              <b-col md="1" class="d-flex justify-content-end">
+                <div
+                  type="button"
+                  @click="deleteAnswer(questionKey, answerKey)"
+                  v-if="question.answers.length > minAnswers"
+                  class="float-right my-1 text-primary"
+                >
+                  <i class="far fa-trash-alt fa-lg"></i>
+                </div>
+              </b-col>
+            </b-row>
+          </b-form-group>
 
-            <b-btn @click="addAnswer(questionKey)" class="float-right ">{{
-              $t("task-classify-template-add-answer")
-            }}</b-btn>
-          </b-tab>
-        </b-tabs>
+          <b-btn @click="addAnswer(questionKey)" class="float-right ">{{
+            $t("task-classify-template-add-answer")
+          }}</b-btn>
+        </b-tab>
+      </b-tabs>
+    </b-container>
 
-        <b-btn @click="onSubmit" variant="primary" size="lg" class="mt-4">{{
-          $t("task-classify-template-go")
-        }}</b-btn>
-      </b-col>
-    </b-row>
+    <b-btn @click="onSubmit" variant="primary" size="lg">{{
+      $t("task-classify-template-go")
+    }}</b-btn>
   </div>
 </template>
 
@@ -110,7 +113,6 @@ import { mapMutations, mapState } from "vuex";
 export default {
   name: "JobClassifyEditor",
   created() {
-    debugger;
     if (Array.isArray(this.task.template)) {
       // deep clone
       this.questions = JSON.parse(JSON.stringify(this.task.template));
@@ -131,7 +133,7 @@ export default {
       questions: [
         {
           question: "",
-          answers: [""]
+          answers: ["", ""]
         }
       ],
 
@@ -140,9 +142,10 @@ export default {
       firstInteractions: [
         {
           question: true,
-          answers: [true]
+          answers: [true, true]
         }
       ],
+      minAnswers:2,
       question_type: "1",
       types: [
         { value: "1", text: "One Choice" },
@@ -180,7 +183,7 @@ export default {
       this.questions[questionKey].answers.push("");
     },
     deleteAnswer(questionKey, answerKey) {
-      if (this.questions[questionKey].answers.length > 1) {
+      if (this.questions[questionKey].answers.length > this.minAnswers) {
         this.questions[questionKey].answers.splice(answerKey, 1);
         this.firstInteractions[questionKey].answers.splice(answerKey, 1);
       }

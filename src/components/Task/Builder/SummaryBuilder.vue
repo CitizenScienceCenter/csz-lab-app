@@ -144,6 +144,8 @@ import { buildTemplateFromModel } from '@/helper'
 import ImageCountTemplate from '@/components/Task/Template/Image/ImageCountTemplate'
 import ImageDescribeTemplate from '@/components/Task/Template/Image/ImageDescriptionTemplate'
 import ImageClassificationTemplate from '@/components/Task/Template/Image/ImageClassificationTemplate'
+// TODO: change when generic template works
+import ImageGenericTemplate from '@/components/Task/Template/Image/ImageGenericTemplate';
 import VideoClassificationTemplate from '@/components/Task/Template/Video/VideoClassificationTemplate'
 import VideoDescriptionTemplate from '@/components/Task/Template/Video/VideoDescriptionTemplate'
 import SoundClassificationTemplate from '@/components/Task/Template/Sound/SoundClassificationTemplate'
@@ -204,6 +206,11 @@ export default {
           })
         } else if (this.task.job === this.jobs.classify) {
           template = buildTemplateFromModel(ImageClassificationTemplate, {
+            questions: this.task.template
+          })
+        }else if (this.task.job === "generic") {
+          // TODO: change when generic template works
+          template = buildTemplateFromModel(ImageGenericTemplate, {
             questions: this.task.template
           })
         }
