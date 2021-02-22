@@ -37,9 +37,9 @@
             props.option.$groupLabel
           }}</span>
           <p v-if="props.option.value">{{ props.option.value }}</p>
-          <small class="common-name" v-if="props.option.commonName"
-            >aka: {{ props.option.commonName }}</small
-          >
+          <small class="common-name" v-if="props.option.commonName">
+            aka: {{ props.option.commonName }}
+          </small>
         </div>
       </template>
     </multiselect>
@@ -151,7 +151,7 @@ export default {
               if (
                 x.value.toLowerCase().includes(searchQuery) ||
                 (x.commonName &&
-                  x.commonName.toLowerCase().includes(searchQuery))
+                  x.commonName.some(x => x.toLowerCase().includes(searchQuery)))
               ) {
                 return x;
               }

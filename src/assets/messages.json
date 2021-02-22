@@ -274,6 +274,7 @@
     "task-job-builder-classify": "Classify",
     "task-job-builder-count": "Count",
     "task-job-builder-choose-options": "Choose an option.",
+    "task-job-builder-generic": "Blank",
 
     "task-flickr-callback-access": "Flickr access granted",
     "task-flickr-callback-window": "You can now close this window and continue to import your pictures!",
@@ -1062,6 +1063,7 @@
     "task-job-builder-classify": "Klassifizieren",
     "task-job-builder-count": "Zählen",
     "task-job-builder-choose-options": "Wählen sie eine Option aus",
+    "task-job-builder-generic": "Leer",
 
     "task-flickr-callback-access": "Flickr-Zugriff gewährt",
     "task-flickr-callback-window": "Sie können dieses Fenster jetzt schließen und Ihre Bilder importieren.",

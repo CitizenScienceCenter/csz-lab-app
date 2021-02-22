@@ -12,21 +12,21 @@ const component = {
           <!-- Questions with answers -->
           <b-form-group :key="key" v-for="(question, key) in questions" :label="question.question" label-size="lg">
           
-            <b-form-checkbox-group
-              v-model="answers[key]"
-              :options="question.answers"
-              name="chekbox"
-              stacked
-              v-if="'question.question.includes('multiple')"
-            ></b-form-checkbox-group>
-
             <b-form-radio-group 
               v-model="answers[key]"
               :options="question.answers"
-              name="radiobutton"
+              :name="'question_radio'+key"
               stacked
-              v-else              
-            ></b-form-radio-group>            
+              v-if="question.type==='one_choice'"             
+            ></b-form-radio-group>    
+            
+            <b-form-checkbox-group
+              v-model="answers[key]"
+              :options="question.answers"
+              :name="'question_checkbox'+key"
+              stacked
+              v-if="question.type==='multiple_choice'"
+            ></b-form-checkbox-group>            
             
           </b-form-group>
           
@@ -83,21 +83,31 @@ const component = {
     submit() {
       if (this.isFormValid()) {
         this.pybossa.saveTask(this.answers);
-        this.showAlert = false;
-        this.answers = [];
-        this.questions.forEach(() => this.answers.push(null));
+        this.initialize();
       } else {
         this.showAlert = true;
       }
     },
     skip() {
       this.pybossa.skip();
+      this.initialize();
     },
     isFormValid() {
       return (
         this.answers.length === this.questions.length &&
-        !this.answers.some(el => typeof el === "undefined" || el == null)
+        !this.answers.some(
+          el => typeof el === "undefined" || el == null || el.length <= 0
+        )
       );
+    },
+    initialize() {
+      this.showAlert = false;
+      this.answers = this.questions.map(function(x) {
+        if (x.type === "multiple_choice") {
+          return [];
+        }
+        return null;
+      });
     }
   },
 
@@ -111,7 +121,7 @@ const component = {
   },
 
   created() {
-    this.questions.forEach(() => this.answers.push(null));
+    this.initialize();
   },
 
   mounted() {
@@ -126,4 +136,4 @@ const component = {
   }
 };
 
-export default component
+export default component;

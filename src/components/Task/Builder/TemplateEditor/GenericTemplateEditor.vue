@@ -22,7 +22,7 @@
           >
             <b-col md="6" lg="4">
               <b-form-select
-                v-model="question_type"
+                v-model="question.type"
                 :options="types"
               ></b-form-select>
             </b-col>
@@ -41,6 +41,7 @@
               v-model.trim="question.question"
               @input="questionUpdated(questionKey)"
               placeholder="Write your question"
+              :state="questionValidated(questionKey)"
             ></b-input>
             <b-btn
               @click="deleteQuestion(questionKey)"
@@ -60,14 +61,14 @@
             :invalid-feedback="invalidAnswerFeedback(answer)"
             :state="answerValidated(questionKey, answerKey)"
           >
-           <!-- Section for multiple and unique response -->
+            <!-- Section for multiple and unique response -->
             <b-row class="d-flex justify-content-center align-items-center">
               <!-- circle and square icon -->
               <b-col cols="1" class="d-flex justify-content-end">
-                <div v-show="question_type == '1'">
+                <div v-show="question.type == types[0].value">
                   <i class="far fa-circle fa-lg"></i>
                 </div>
-                <div v-show="question_type == '2'">
+                <div v-show="question.type == types[1].value">
                   <i class="far fa-square fa-lg"></i>
                 </div>
               </b-col>
@@ -77,6 +78,7 @@
                   v-model.trim="question.answers[answerKey]"
                   @input="answerUpdated(questionKey, answerKey)"
                   :placeholder="`Option ${answerKey + 1}`"
+                  :state="answerValidated(questionKey, answerKey)"
                 >
                 </b-input>
               </b-col>
@@ -109,7 +111,11 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-
+const DEFAULT_QUESTION = {
+  question: "",
+  answers: ["", ""],
+  type: "one_choice"
+};
 export default {
   name: "JobClassifyEditor",
   created() {
@@ -129,14 +135,7 @@ export default {
     return {
       maxNbCharactersQuestions: 75,
       maxNbCharactersAnswers: 30,
-
-      questions: [
-        {
-          question: "",
-          answers: ["", ""]
-        }
-      ],
-
+      questions: [JSON.parse(JSON.stringify(DEFAULT_QUESTION))],
       // store all the interactions with the fields
       // if a field is updated, the first interaction is set to false
       firstInteractions: [
@@ -145,13 +144,12 @@ export default {
           answers: [true, true]
         }
       ],
-      minAnswers:2,
-      question_type: "1",
+      minAnswers: 2,
       types: [
-        { value: "1", text: "One Choice" },
-        { value: "2", text: "Multiple Choice" },
-        { value: "3", text: "Short Answer" },
-        { value: "4", text: "Long Answer" }
+        { value: "one_choice", text: "One Choice" },
+        { value: "multiple_choice", text: "Multiple Choice" },
+        { value: "short_answer", text: "Short Answer" },
+        { value: "long_answer", text: "Long Answer" }
       ]
     };
   },
@@ -165,10 +163,7 @@ export default {
         question: true,
         answers: [true, true]
       });
-      this.questions.push({
-        question: "",
-        answers: ["", ""]
-      });
+      this.questions.push(JSON.parse(JSON.stringify(DEFAULT_QUESTION)));
     },
     deleteQuestion(questionKey) {
       if (this.questions.length > 1) {
@@ -295,16 +290,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("task/builder", ["task", "jobs"]),
-    getIcon() {
-      switch (this.question_type) {
-        case "1":
-          return "fa-circle";
-
-        default:
-          return "fa-square";
-      }
-    }
+    ...mapState("task/builder", ["task", "jobs"])
   }
 };
 </script>
