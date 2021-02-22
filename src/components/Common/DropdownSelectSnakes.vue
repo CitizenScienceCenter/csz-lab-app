@@ -37,9 +37,9 @@
             props.option.$groupLabel
           }}</span>
           <p v-if="props.option.value">{{ props.option.value }}</p>
-          <small class="common-name" v-if="props.option.commonName"
-            >aka: {{ props.option.commonName }}</small
-          >
+          <small class="common-name" v-if="props.option.resumedCommonName">
+            aka: {{ props.option.resumedCommonName }}
+          </small>
         </div>
       </template>
     </multiselect>
@@ -148,11 +148,14 @@ export default {
         if (searchQuery) {
           this.dynamicList.forEach(element => {
             element.options = element.options.filter(x => {
-              if (
-                x.value.toLowerCase().includes(searchQuery) ||
-                (x.commonName &&
-                  x.commonName.toLowerCase().includes(searchQuery))
-              ) {
+              if (x.value.toLowerCase().includes(searchQuery)) {
+                return x;
+              }
+              if (x.commonName) {
+                x["resumedCommonName"] = this.getSimilar(
+                  x.commonName,
+                  searchQuery
+                );
                 return x;
               }
             });
@@ -177,6 +180,20 @@ export default {
         return `${value} – ${commonName}`;
       }
       return `${value}`;
+    },
+
+    getSimilar(names, query) {
+      if (Array.isArray(names)) {
+        //Return the 2 most similar elements from array to searching text
+        if (names.some(x => x.toLowerCase().includes(query))) {
+          const [first_match, second_match] = names.filter(x =>
+            x.toLowerCase().includes(query)
+          );
+          return second_match ? first_match + ", " + second_match : first_match;
+        }
+      } else if (names.toLowerCase().includes(query)) {
+        return names;
+      }
     }
   },
   created() {
