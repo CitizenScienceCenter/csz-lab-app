@@ -17,9 +17,21 @@
           "
           active
         >
-          <b-row
-            class="d-flex justify-content-end align-items-center mr-1 mb-2"
-          >
+          <b-row class="d-flex justify-content-between align-items-center mb-3">
+            <b-col
+              md="6"
+              lg="4"
+              class="d-flex justify-content-start align-items-center"
+            >
+              <b-form-checkbox
+                v-model="question.required"
+                name="check-button"
+                class="mr-4"
+                switch
+              >
+                {{ $t("task-classify-template-required") }}
+              </b-form-checkbox>
+            </b-col>
             <b-col md="6" lg="4">
               <b-form-select
                 v-model="question.type"
@@ -31,7 +43,11 @@
           <!-- Question section -->
           <b-form-group
             :label="
-              $t('task-classify-template-question') + ' ' + (questionKey + 1)
+              $t('task-classify-template-question') +
+                ' ' +
+                (questionKey + 1) +
+                '' +
+                isRequired(question.required)
             "
             :valid-feedback="validQuestionFeedback(question.question)"
             :invalid-feedback="invalidQuestionFeedback(question.question)"
@@ -43,14 +59,14 @@
               placeholder="Write your question"
               :state="questionValidated(questionKey)"
             ></b-input>
-            <b-btn
+            <div
+              type="button"
+              class="float-right my-2 text-primary"
               @click="deleteQuestion(questionKey)"
               v-if="questions.length > 1"
-              variant="danger"
-              size="sm"
-              class="float-right mt-1 mb-1"
-              >{{ $t("task-classify-template-delete-question") }}</b-btn
             >
+              <i class="far fa-trash-alt fa-lg"></i>
+            </div>
           </b-form-group>
 
           <!-- Answers section -->
@@ -62,7 +78,7 @@
             :state="answerValidated(questionKey, answerKey)"
           >
             <!-- Section for multiple and unique response -->
-            <b-row class="d-flex justify-content-center align-items-center">
+            <b-row class="d-flex justify-content-start align-items-center">
               <!-- circle and square icon -->
               <b-col cols="1" class="d-flex justify-content-end">
                 <div v-show="question.type == types[0].value">
@@ -83,16 +99,14 @@
                 </b-input>
               </b-col>
               <!-- Remove answer button -->
-              <b-col md="1" class="d-flex justify-content-end">
-                <div
-                  type="button"
-                  @click="deleteAnswer(questionKey, answerKey)"
-                  v-if="question.answers.length > minAnswers"
-                  class="float-right my-1 text-primary"
-                >
-                  <i class="far fa-trash-alt fa-lg"></i>
-                </div>
-              </b-col>
+              <div
+                type="button"
+                @click="deleteAnswer(questionKey, answerKey)"
+                v-if="question.answers.length > minAnswers"
+                class="float-right my-1 text-primary"
+              >
+                <i class="fas fa-times fa-lg"></i>
+              </div>
             </b-row>
           </b-form-group>
 
@@ -114,7 +128,8 @@ import { mapMutations, mapState } from "vuex";
 const DEFAULT_QUESTION = {
   question: "",
   answers: ["", ""],
-  type: "one_choice"
+  type: "one_choice",
+  required: false
 };
 export default {
   name: "JobClassifyEditor",
@@ -201,6 +216,12 @@ export default {
       this.firstInteractions = interactions;
 
       if (this.isFormValid()) {
+        this.questions = this.questions.map(function(x) {
+          if (x.required) {
+            x.question += " *";
+          }
+          return x;
+        });
         // clone the content
         this.setTaskTemplate(JSON.parse(JSON.stringify(this.questions)));
         this.setStep({ step: "template", value: true });
@@ -287,6 +308,10 @@ export default {
     },
     answerUpdated(questionKey, answerKey) {
       this.firstInteractions[questionKey].answers[answerKey] = false;
+    },
+
+    isRequired(condition) {
+      return condition ? "*" : "";
     }
   },
   computed: {

@@ -287,6 +287,7 @@
     "task-classify-template-delete-answer": "Delete answer",
     "task-classify-template-label-before-go": "Add all your questions and answers before you continue!",
     "task-classify-template-go": "Continue",
+    "task-classify-template-required": "Required",
 
     "task-count-template-question": "Question",
     "task-count-template-question-placeholder": "E.g. How many people can you see in the image?",
@@ -1076,6 +1077,7 @@
     "task-classify-template-delete-answer": "Antwort verwerfen",
     "task-classify-template-label-before-go": "Fügen Sie alle Ihre Fragen und Antworten hinzu, bevor Sie fortfahren",
     "task-classify-template-go": "Weiter",
+    "task-classify-template-required": "Erforderlich",
 
     "task-count-template-question": "Frage",
     "task-count-template-question-placeholder": "Z.B. Wie viele Personen können Sie auf dem Bild sehen?",

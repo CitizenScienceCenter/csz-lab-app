@@ -93,12 +93,19 @@ const component = {
       this.initialize();
     },
     isFormValid() {
-      return (
-        this.answers.length === this.questions.length &&
-        !this.answers.some(
-          el => typeof el === "undefined" || el == null || el.length <= 0
-        )
-      );
+      const ctrl = this;
+      let valid = true;
+      Object.keys(this.questions).every(x => {
+        if (
+          ctrl.questions[x].required &&
+          (!!!ctrl.answers[x] || ctrl.answers[x].length <= 0)
+        ) {
+          valid = false;
+          return false;
+        }
+        return true;
+      });
+      return valid;
     },
     initialize() {
       this.showAlert = false;
