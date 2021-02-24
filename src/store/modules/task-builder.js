@@ -17,7 +17,8 @@ const materials = {
 const jobs = {
   classify: 'classify',
   describe: 'describe',
-  count: 'count'
+  count: 'count',
+  generic: 'generic'
 }
 
 // the list of sources available to import files

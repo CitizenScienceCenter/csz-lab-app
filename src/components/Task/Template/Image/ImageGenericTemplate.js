@@ -50,7 +50,7 @@ const component = {
         
         <!-- Image -->
         <b-col md="6" class="order-1 order-md-2">
-          <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center">
+          <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center" style="position: sticky;top: 15%;">
             <div v-if="pybossa.taskLoaded" @click="pybossa.showModal('image', taskInfo.url ? taskInfo.url : taskInfo.link_raw)" class="clickable-element">
               <b-img v-if="taskInfo.url" fluid-grow :src="taskInfo.url" class="shadow" style="min-height: 120px; background-color: grey" alt="Image loading..."></b-img>
               <b-img v-else fluid-grow :src="taskInfo.link_raw" class="shadow" style="min-height: 120px; background-color: grey" alt="Image loading..."></b-img>
@@ -95,10 +95,10 @@ const component = {
     isFormValid() {
       const ctrl = this;
       let valid = true;
-      Object.keys(this.questions).every(x => {
+      this.questions.every((question, key) => {
         if (
-          ctrl.questions[x].required &&
-          (!!!ctrl.answers[x] || ctrl.answers[x].length <= 0)
+          question.required &&
+          (!!!ctrl.answers[key] || ctrl.answers[key].length <= 0)
         ) {
           valid = false;
           return false;

@@ -21,8 +21,8 @@
           <b-col md="5">
             <b-card
               ref="card-generic"
-              :class="{ 'material-selected': selectedJob === 'generic' }"
-              @click="onJobSelected('generic')"
+              :class="{ 'material-selected': selectedJob === jobs.generic }"
+              @click="onJobSelected(jobs.generic)"
               class="text-center material my-2 mt-md-0"
             >
               <i class="fas fa-paper-plane fa-4x"></i>

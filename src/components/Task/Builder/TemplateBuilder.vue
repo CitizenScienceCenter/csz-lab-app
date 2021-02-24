@@ -12,7 +12,7 @@
     </b-row>
 
     <!-- Generic template -->
-    <b-row v-if="task.job === 'generic'">
+    <b-row v-if="task.job === jobs.generic">
       <b-col md="9">
         <GenericTemplateEditor></GenericTemplateEditor>
       </b-col>

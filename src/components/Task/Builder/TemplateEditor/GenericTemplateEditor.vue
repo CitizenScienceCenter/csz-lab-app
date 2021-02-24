@@ -217,7 +217,7 @@ export default {
 
       if (this.isFormValid()) {
         this.questions = this.questions.map(function(x) {
-          if (x.required) {
+          if (x.required && x.question.slice(-1) != "*") {
             x.question += " *";
           }
           return x;
