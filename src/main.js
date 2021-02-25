@@ -31,7 +31,7 @@ Vue.use(Meta);
 
 let cookie_enabled = false;
 
-let cfg = { id: "UA-162894944-1" }
+let cfg = { id: process.env.GTAG_ID };
 localStorage.removeItem('analytics');
 localStorage.removeItem('gdpr');
 if(JSON.parse(localStorage.getItem('gtag'))) {
