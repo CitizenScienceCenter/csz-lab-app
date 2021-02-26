@@ -70,6 +70,18 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'TaskSettingsMenu',
+  metaInfo: function() {
+    return {
+      title: `Project ${this.project.id} - Task Settings`,
+      meta: [
+        {
+          property: "og:title",
+          content: `Project ${this.project.id} - Task Settings`,
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   props: {
     id: {
       required: true

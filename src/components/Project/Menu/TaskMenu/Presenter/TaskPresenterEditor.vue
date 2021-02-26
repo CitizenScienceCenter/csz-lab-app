@@ -41,6 +41,18 @@ export default {
   components: {
     codemirror
   },
+  metaInfo: function() {
+    return {
+      title: `Project ${this.project.id} - Task Editor`,
+      meta: [
+        {
+          property: "og:title",
+          content: `Project ${this.project.id} - Task Editor`,
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   created () {
     this.getProject(this.id).then(() => {
       // if a template is given, the given template will be displayed in priority

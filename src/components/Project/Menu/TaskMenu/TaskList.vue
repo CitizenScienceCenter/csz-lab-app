@@ -40,6 +40,18 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'TaskList',
+  metaInfo: function() {
+    return {
+      title: `Project ${this.project.id} - Task List`,
+      meta: [
+        {
+          property: "og:title",
+          content: `Project ${this.project.id} - Task List`,
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   created () {
     this.getProject(this.id).then(() => {
       this.getProjectTasksPage({
