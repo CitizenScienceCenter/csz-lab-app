@@ -227,12 +227,11 @@ export function utf8ToUnicode(text) {
 
 // This function send event occurence to google analytics
 export function trackEvent(_this, info = undefined) {
-  console.log(_this.$gtag);
   if (info) {
     _this.$gtag.event(info.action, {
       event_category: info.category,
       event_label: info.label,
-      event_value: info.value
+      event_value: 1
     });
   }
 }

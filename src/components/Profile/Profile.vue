@@ -21,6 +21,18 @@ export default {
     ProfileView,
     ProfileEditor
   },
+  metaInfo: function() {
+    return {
+      title: 'Profile',
+      meta: [
+        {
+          property: "og:title",
+          content: 'Profile',
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   data: () => {
     return {
 

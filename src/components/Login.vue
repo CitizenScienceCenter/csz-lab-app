@@ -54,6 +54,18 @@ import { mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Login',
+  metaInfo: function() {
+    return {
+      title: 'Login',
+      meta: [
+        {
+          property: "og:title",
+          content: 'Login',
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   created () {
     // load the auth options
     this.getLoginOptions().then(response => {

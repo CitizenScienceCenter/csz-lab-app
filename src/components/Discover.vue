@@ -58,6 +58,18 @@ export default {
   components: {
     'app-project-card': ProjectCard
   },
+  metaInfo: function() {
+    return {
+      title: 'Discover',
+      meta: [
+        {
+          property: "og:title",
+          content: 'Discover',
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   created () {
     // all categories are loaded during the creation to have all the pagination systems
     this.getCategories().then(() => {

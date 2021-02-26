@@ -26,6 +26,18 @@ export default {
     InformationBuilder,
     NameBuilder
   },
+  metaInfo: function() {
+    return {
+      title: 'Create',
+      meta: [
+        {
+          property: "og:title",
+          content: 'Create',
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   data () {
     return {
 

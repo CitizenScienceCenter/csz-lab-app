@@ -36,6 +36,7 @@
                 :to="{ name: 'project.task.presenter' }"
                 variant="primary"
                 size="lg"
+                @click.native="tracking()"
                 >{{ $t("project-contribute") }}
               </b-btn>
               <br />
@@ -174,7 +175,7 @@
               :to="{ name: 'project.task.presenter' }"
               variant="primary"
               size="lg"
-              @click="tracking()"
+              @click.native="tracking()"
               >{{ $t("project-contribute") }}
             </b-btn>
           </div>
@@ -226,6 +227,7 @@
                 :to="{ name: 'project.task.presenter' }"
                 variant="primary"
                 size="lg"
+                @click.native="tracking()"
                 >{{ $t("project-contribute") }}
               </b-btn>
             </div>
@@ -327,6 +329,18 @@ export default {
     ProjectTasksMenu,
     ProjectStatisticsMenu,
     "app-cover": Cover
+  },
+  metaInfo: function() {
+    return {
+      title: `Project ${this.project.id} - Home`,
+      meta: [
+        {
+          property: "og:title",
+          content: `Project ${this.project.id} - Home`,
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
   },
   created() {
     // eager loading: load the project and finally get stats and results
@@ -443,9 +457,8 @@ export default {
       // Information for gtag event
       const info = {
         category: "contribution",
-        label: `project: ${this.project.short_name}`,
-        action: "contribute",
-        value: this.project.id
+        label: `id: ${this.project.id} - project: ${this.project.short_name}`,
+        action: `contribute: ${this.project.short_name}`,
       };
       trackEvent(this, info);
     }

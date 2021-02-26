@@ -104,6 +104,18 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'TaskExporterMenu',
+  metaInfo: function() {
+    return {
+      title: `Project ${this.project.id} - Task Exporter`,
+      meta: [
+        {
+          property: "og:title",
+          content: `Project ${this.project.id} - Task Exporter`,
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   created () {
     this.getProject(this.id)
   },
