@@ -1,6 +1,8 @@
 <template>
+  <!-- TODO: change all i18n for generic instead classify -->
   <div>
     <div class="clearfix">
+      <!-- Internal header section -->
       <h2 class="float-left">{{ $t("task-classify-template-question") }}</h2>
       <b-btn @click="addQuestion" class="float-right">{{
         $t("task-classify-template-add-question")
@@ -8,37 +10,21 @@
     </div>
 
     <b-container>
+      <!-- All question section: distributed in tabs -->
       <b-tabs content-class="mt-4">
         <b-tab
           :key="questionKey"
           v-for="(question, questionKey) in questions"
-          :title="
-            $t('task-classify-template-question') + ' ' + (questionKey + 1)
-          "
+          :title="`${$t('task-classify-template-question')} ${questionKey + 1}`"
           active
         >
-          <b-row class="d-flex justify-content-between align-items-center mb-3">
-            <b-col
-              md="6"
-              lg="4"
-              class="d-flex justify-content-start align-items-center"
-            >
-              <b-form-checkbox
-                v-model="question.required"
-                name="check-button"
-                class="mr-4"
-                switch
-              >
-                {{ $t("task-classify-template-required") }}
-              </b-form-checkbox>
-            </b-col>
-            <b-col md="6" lg="4">
-              <b-form-select
-                v-model="question.type"
-                :options="types"
-              ></b-form-select>
-            </b-col>
-          </b-row>
+          <!-- Question options row: Top position -->
+          <question-options
+            :types="types"
+            :question="question"
+            :questions="questions"
+            :id="questionKey"
+          ></question-options>
 
           <!-- Question section -->
           <b-form-group
@@ -109,7 +95,7 @@
               </div>
             </b-row>
           </b-form-group>
-
+          <!-- Add answer button -->
           <b-btn @click="addAnswer(questionKey)" class="float-right ">{{
             $t("task-classify-template-add-answer")
           }}</b-btn>
@@ -124,15 +110,27 @@
 </template>
 
 <script>
+import QuestionOptions from "@/components/Task/Builder/TemplateEditor/QuestionOptions.vue";
 import { mapMutations, mapState } from "vuex";
+
+// consts definitions
 const DEFAULT_QUESTION = {
   question: "",
   answers: ["", ""],
   type: "one_choice",
-  required: false
+  required: false,
+  isDependent: false,
+  conditions: {}
 };
+const QUESTION_TYPES = [
+  { value: "one_choice", text: "One Choice" },
+  { value: "multiple_choice", text: "Multiple Choice" },
+  { value: "short_answer", text: "Short Answer" },
+  { value: "long_answer", text: "Long Answer" }
+];
 export default {
   name: "JobClassifyEditor",
+  components: { QuestionOptions },
   created() {
     if (Array.isArray(this.task.template)) {
       // deep clone
@@ -148,8 +146,8 @@ export default {
   },
   data: () => {
     return {
-      maxNbCharactersQuestions: 75,
-      maxNbCharactersAnswers: 30,
+      maxCharQuestion: 75,
+      maxCharAnswer: 30,
       questions: [JSON.parse(JSON.stringify(DEFAULT_QUESTION))],
       // store all the interactions with the fields
       // if a field is updated, the first interaction is set to false
@@ -159,13 +157,8 @@ export default {
           answers: [true, true]
         }
       ],
-      minAnswers: 2,
-      types: [
-        { value: "one_choice", text: "One Choice" },
-        { value: "multiple_choice", text: "Multiple Choice" },
-        { value: "short_answer", text: "Short Answer" },
-        { value: "long_answer", text: "Long Answer" }
-      ]
+      types: QUESTION_TYPES,
+      minAnswers: 2
     };
   },
   methods: {
@@ -259,7 +252,7 @@ export default {
     // question validation
     validQuestionFeedback(question) {
       return (
-        this.maxNbCharactersQuestions -
+        this.maxCharQuestion -
         question.length +
         " " +
         this.$t("characters-left")
@@ -274,17 +267,14 @@ export default {
       const question = this.questions[questionKey].question;
       return (
         (this.firstInteractions[questionKey].question || question.length > 0) &&
-        question.length <= this.maxNbCharactersQuestions
+        question.length <= this.maxCharQuestion
       );
     },
 
     // answer validation
     validAnswerFeedback(answer) {
       return (
-        this.maxNbCharactersAnswers -
-        answer.length +
-        " " +
-        this.$t("characters-left")
+        this.maxCharAnswer - answer.length + " " + this.$t("characters-left")
       );
     },
     invalidAnswerFeedback(answer) {
@@ -298,7 +288,7 @@ export default {
       return (
         (this.firstInteractions[questionKey].answers[answerKey] ||
           answer.length > 0) &&
-        answer.length <= this.maxNbCharactersAnswers
+        answer.length <= this.maxCharAnswer
       );
     },
 
@@ -319,5 +309,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>
