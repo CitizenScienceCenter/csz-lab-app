@@ -13,7 +13,7 @@
         class="mr-4"
         switch
       >
-        {{ $t("task-classify-template-required") }}
+        {{ $t("task-generic-template-required") }}
       </b-form-checkbox>
 
       <!-- Conditional section  -->
@@ -30,34 +30,69 @@
         <div v-show="!getIsDependent">
           <i class="fas fa-link fa-lg icon-color"></i>
         </div>
+        <!-- TODO: i18n -->
         <label class="ml-1">Condition</label>
       </div>
       <!-- Conditional modal -->
-      <b-modal
-        ref="condition-settings"
-        hide-footer
-        title="Using Component Methods"
-      >
-        <div class="d-block text-center">
-          {{ questions }}
+      <b-modal ref="condition-settings" hide-footer hide-header size="lg">
+        <div class="d-block">
+          <label>{{ $t("task-generic-template-conditional-question") }}</label>
+          <multiselect
+            v-model="conditionalQuestion"
+            deselect-label="Selected"
+            select-label="Click to select"
+            :block-keys="['Tab', 'Enter']"
+            label="name"
+            :placeholder="$t('task-generic-template-question-type')"
+            :options="types"
+            :searchable="false"
+            :allow-empty="false"
+          >
+            <template slot="singleLabel" slot-scope="{ option }"
+              ><strong>{{ option.name }}</strong>
+            </template>
+          </multiselect>
         </div>
-        <b-button class="mt-3" variant="outline-danger" @click="hideModal"
-          >Close Me</b-button
+        <!-- TODO: i18n -->
+        <b-button class="mt-3" variant="primary" @click="hideModal"
+          >Confirm</b-button
         >
       </b-modal>
     </b-col>
     <!-- Question type -->
     <b-col md="5" lg="4" v-if="types && types.length > 0 && question">
-      <b-form-select v-model="question.type" :options="types"></b-form-select>
+      <multiselect
+        v-model="typeSelected"
+        deselect-label="Selected"
+        select-label="Click to select"
+        :block-keys="['Tab', 'Enter']"
+        label="name"
+        :placeholder="$t('task-generic-template-question-type')"
+        :options="types"
+        :searchable="false"
+        :allow-empty="false"
+        :preselect-first="true"
+      >
+        <template slot="singleLabel" slot-scope="{ option }"
+          ><strong>{{ option.name }}</strong>
+        </template>
+      </multiselect>
+      <!-- <b-form-select v-model="question.type" :options="types"></b-form-select> -->
     </b-col>
   </b-row>
 </template>
 
 <script>
+import Multiselect from "vue-multiselect";
+
 export default {
   data() {
-    return {};
+    return {
+      typeSelected: null,
+      conditionalQuestion: null
+    };
   },
+  components: { Multiselect },
   props: {
     question: { type: Object, required: true },
     questions: { type: Array },
@@ -77,9 +112,16 @@ export default {
     getIsDependent() {
       return this.question.isDependent;
     }
+  },
+  watch: {
+    typeSelected() {
+      this.question.type = this.typeSelected;
+    }
   }
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
 .icon-color {
   color: rgb(146, 146, 146);

@@ -67,10 +67,10 @@
             <b-row class="d-flex justify-content-start align-items-center">
               <!-- circle and square icon -->
               <b-col cols="1" class="d-flex justify-content-end">
-                <div v-show="question.type == types[0].value">
+                <div v-show="question.type.value == types[0].value">
                   <i class="far fa-circle fa-lg"></i>
                 </div>
-                <div v-show="question.type == types[1].value">
+                <div v-show="question.type.value == types[1].value">
                   <i class="far fa-square fa-lg"></i>
                 </div>
               </b-col>
@@ -114,20 +114,21 @@ import QuestionOptions from "@/components/Task/Builder/TemplateEditor/QuestionOp
 import { mapMutations, mapState } from "vuex";
 
 // consts definitions
+const QUESTION_TYPES = [
+  { value: "one_choice", name: "One Choice" },
+  { value: "multiple_choice", name: "Multiple Choice" },
+  { value: "short_answer", name: "Short Answer" },
+  { value: "long_answer", name: "Long Answer" }
+];
 const DEFAULT_QUESTION = {
   question: "",
   answers: ["", ""],
-  type: "one_choice",
+  type: QUESTION_TYPES[0],
   required: false,
   isDependent: false,
   conditions: {}
 };
-const QUESTION_TYPES = [
-  { value: "one_choice", text: "One Choice" },
-  { value: "multiple_choice", text: "Multiple Choice" },
-  { value: "short_answer", text: "Short Answer" },
-  { value: "long_answer", text: "Long Answer" }
-];
+
 export default {
   name: "JobClassifyEditor",
   components: { QuestionOptions },
