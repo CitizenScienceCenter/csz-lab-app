@@ -28,6 +28,18 @@ export default {
     MaterialBuilder,
     TemplateBuilder
   },
+  metaInfo: function() {
+    return {
+      title: `Project ${this.project.id} - Builder`,
+      meta: [
+        {
+          property: "og:title",
+          content: `Project ${this.project.id} - Builder`,
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   created () {
     this.getProject(this.id)
   },

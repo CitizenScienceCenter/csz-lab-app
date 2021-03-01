@@ -63,6 +63,18 @@ export default {
     GoogleDocImporter,
     LocalCsvImporter
   },
+  metaInfo: function() {
+    return {
+      title: `Project ${this.project.id} - Task Importer`,
+      meta: [
+        {
+          property: "og:title",
+          content: `Project ${this.project.id} - Task Importer`,
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   created () {
     this.getProject(this.id)
 

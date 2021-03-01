@@ -37,7 +37,16 @@
             props.option.$groupLabel
           }}</span>
           <p v-if="props.option.value">{{ props.option.value }}</p>
-          <small class="common-name" v-if="props.option.commonName">
+          <small class="common-name" v-if="props.option.resumedCommonName">
+            aka: {{ props.option.resumedCommonName }}
+          </small>
+          <small
+            class="common-name"
+            v-if="
+              props.option.commonName &&
+                typeof props.option.commonName == 'string'
+            "
+          >
             aka: {{ props.option.commonName }}
           </small>
         </div>
@@ -142,22 +151,26 @@ export default {
         this.setTotalItems;
         return;
       }
-      if (!this.itemSelected && searchQuery.length > 0) {
+      if (!this.itemSelected && searchQuery) {
         searchQuery = searchQuery.toLowerCase();
         this.dynamicList = this.filterOptions();
-        if (searchQuery) {
-          this.dynamicList.forEach(element => {
-            element.options = element.options.filter(x => {
-              if (
-                x.value.toLowerCase().includes(searchQuery) ||
-                (x.commonName &&
-                  x.commonName.some(x => x.toLowerCase().includes(searchQuery)))
-              ) {
+        this.dynamicList.forEach(element => {
+          element.options = element.options.filter(x => {
+            if (x.value.toLowerCase().includes(searchQuery)) {
+              return x;
+            } else if (x.commonName) {
+              if (Array.isArray(x.commonName)) {
+                x["resumedCommonName"] = this.getSimilar(
+                  x.commonName,
+                  searchQuery
+                );
+                return x;
+              } else if (x.commonName.toLowerCase().includes(searchQuery)) {
                 return x;
               }
-            });
+            }
           });
-        }
+        });
         this.setTotalItems;
       }
     },
@@ -177,6 +190,16 @@ export default {
         return `${value} – ${commonName}`;
       }
       return `${value}`;
+    },
+
+    getSimilar(names, query) {
+      //Return the 2 most similar elements from array to searching text
+      if (names.some(x => x.toLowerCase().includes(query))) {
+        const [first_match, second_match] = names.filter(x =>
+          x.toLowerCase().includes(query)
+        );
+        return second_match ? first_match + ", " + second_match : first_match;
+      }
     }
   },
   created() {

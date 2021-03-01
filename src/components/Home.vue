@@ -43,6 +43,18 @@ export default {
     'app-cover': Cover,
     'app-project-card': ProjectCard
   },
+  metaInfo: function() {
+    return {
+      title: 'Home',
+      meta: [
+        {
+          property: "og:title",
+          content: 'Home',
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   created () {
     this.getProjectsWithCategory({
       category: { short_name: 'featured' }

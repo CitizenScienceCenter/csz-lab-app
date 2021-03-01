@@ -113,6 +113,18 @@ import { getFormErrorsAsString, validateEmail,getPybossaTranslation,getFormError
 
 export default {
   name: 'Registration',
+  metaInfo: function() {
+    return {
+      title: 'Register',
+      meta: [
+        {
+          property: "og:title",
+          content: 'Register',
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   data: () => {
     return {
       form: {

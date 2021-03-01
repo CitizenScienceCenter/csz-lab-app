@@ -105,6 +105,18 @@ export default {
       type: String
     }
   },
+  metaInfo: function() {
+    return {
+      title: `Project ${this.project.id} - Presenter`,
+      meta: [
+        {
+          property: "og:title",
+          content: `Project ${this.project.id} - Presenter`,
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
 
   created() {
     // load the project first to have access to the presenter and to the related tasks

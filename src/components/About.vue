@@ -178,7 +178,19 @@
 
 <script>
 export default {
-  name: 'About'
+  name: 'About',
+  metaInfo: function() {
+    return {
+      title: 'About',
+      meta: [
+        {
+          property: "og:title",
+          content: 'About',
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
 }
 </script>
 
