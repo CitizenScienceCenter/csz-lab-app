@@ -67,10 +67,10 @@
             <b-row class="d-flex justify-content-start align-items-center">
               <!-- circle and square icon -->
               <b-col cols="1" class="d-flex justify-content-end">
-                <div v-show="question.type.value == types[0].value">
+                <div v-show="question.type == types[0].value">
                   <i class="far fa-circle fa-lg"></i>
                 </div>
-                <div v-show="question.type.value == types[1].value">
+                <div v-show="question.type == types[1].value">
                   <i class="far fa-square fa-lg"></i>
                 </div>
               </b-col>
