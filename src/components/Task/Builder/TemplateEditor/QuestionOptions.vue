@@ -42,51 +42,75 @@
         no-close-on-backdrop
         no-close-on-esc
       >
-        <!-- Question selection dropdown -->
-        <b-row>
-          <label>{{ $t("task-generic-template-conditional-question") }}</label>
-          <multiselect
-            v-model="questionSelected"
-            :deselect-label="$t('task-generic-template-dropdown-selected')"
-            :select-label="$t('task-generic-template-dropdown-select')"
-            :block-keys="['Tab', 'Enter']"
-            label="name"
-            :placeholder="$t('task-generic-template-conditional-question')"
-            :options="getQuestionList"
-            :searchable="false"
-            :allow-empty="false"
-            class="mb-4"
-          >
-            <template slot="singleLabel" slot-scope="{ option }"
-              ><strong>{{ option.name }}</strong>
-            </template>
-          </multiselect>
-        </b-row>
+        <div class="my-3 mx-2 mx-md-3 mx-xl-4">
+          <!-- Question selection dropdown -->
+          <b-row>
+            <label>{{
+              $t("task-generic-template-conditional-question")
+            }}</label>
+            <multiselect
+              v-model="questionSelected"
+              :deselect-label="$t('task-generic-template-dropdown-selected')"
+              :select-label="$t('task-generic-template-dropdown-select')"
+              :block-keys="['Tab', 'Enter']"
+              label="name"
+              :placeholder="$t('dropdown-placeholder-one-option')"
+              :options="getQuestionList"
+              :searchable="false"
+              :allow-empty="false"
+              class="mb-4"
+            >
+              <template slot="singleLabel" slot-scope="{ option }"
+                ><strong>{{ option.name }}</strong>
+              </template>
+            </multiselect>
+          </b-row>
 
-        <!-- Answers selection dropdown -->
-        <b-row v-if="validateModalAnswers">
-          <label>{{ $t("task-generic-template-conditional-answers") }}</label>
-          <multiselect
-            v-model="answersSelected"
-            :deselect-label="$t('task-generic-template-dropdown-selected')"
-            :select-label="$t('task-generic-template-dropdown-select')"
-            :block-keys="['Tab', 'Enter']"
-            :placeholder="$t('task-generic-template-conditional-answers')"
-            :options="questionSelected.answers"
-            :close-on-select="false"
-            :searchable="false"
-            :multiple="true"
+          <!-- Answers selection dropdown -->
+          <b-row
+            v-if="
+              validateModalAnswers &&
+                !questionSelected.answers.some(x => x == '' || !!!x)
+            "
           >
-            <template slot="singleLabel" slot-scope="{ option }"
-              ><strong>{{ option.name }}</strong>
-            </template>
-          </multiselect>
-          <!-- TODO: i18n -->
-          <small class="icon-color"
-            >If nothing is selected, all answers apply</small
-          >
-        </b-row>
-        <!-- {{ getQuestionList }} -->
+            <label>{{ $t("task-generic-template-conditional-answers") }}</label>
+            <multiselect
+              v-model="answersSelected"
+              :deselect-label="$t('task-generic-template-dropdown-selected')"
+              :select-label="$t('task-generic-template-dropdown-select')"
+              :block-keys="['Tab', 'Enter']"
+              :placeholder="$t('dropdown-placeholder-multiple-option')"
+              :options="questionSelected.answers"
+              :close-on-select="false"
+              :searchable="false"
+              :multiple="true"
+            >
+              <template slot="singleLabel" slot-scope="{ option }"
+                ><strong>{{ option.name }}</strong>
+              </template>
+            </multiselect>
+            <small class="icon-color">
+              <!-- TODO: i18n -->
+              If nothing is selected, all answers apply
+            </small>
+          </b-row>
+
+          <!-- Error messages section -->
+          <b-row>
+            <small
+              class="text-primary"
+              v-if="
+                validateModalAnswers &&
+                  questionSelected.answers.some(x => x == '' || !!!x)
+              "
+            >
+              <!-- TODO: i18n -->
+              The question selected has empty options. Please fill or remove
+              them before use it.
+            </small>
+          </b-row>
+          {{ questionSelected }}
+        </div>
         <template #modal-footer>
           <b-button class="mt-3" variant="primary" @click="confirmModal">
             {{ $t("task-generic-template-modal-confirm-button") }}
@@ -123,6 +147,12 @@
 <script>
 import Multiselect from "vue-multiselect";
 
+const EMPTY_OPTION = {
+  name: "No selection",
+  value: -1,
+  answers: null,
+  type: ""
+};
 export default {
   data() {
     return {
@@ -136,13 +166,35 @@ export default {
   props: {
     question: { type: Object, required: true },
     questions: { type: Array },
-    types: { type: Array },
-    id: { type: Number, required: true }
+    types: { type: Array }
   },
   methods: {
     confirmModal() {
-      this.question.isDependent = true;
+      this.question.isDependent = false;
+      if (this.questionSelected.value >= 0) {
+        this.question.isDependent = true;
+        this.question.condition = {
+          questionId: this.questionSelected.value,
+          answers: this.answersSelected
+        };
+      }
       this.showModal = false;
+    },
+    getConditionalChildren(array, id, result) {
+      let children = array.filter(x => x.condition.questionId == id);
+      let no_children = array.filter(x => x.condition.questionId != id);
+      if (children && children.length > 0) {
+        if (!result) {
+          result = children;
+        } else {
+          result = [...result, ...children];
+        }
+      }
+      children.forEach(
+        x => (result = this.getConditionalChildren(no_children, x.id, result))
+      );
+
+      return result;
     }
   },
   computed: {
@@ -151,31 +203,42 @@ export default {
     },
     getQuestionList() {
       const aux = this;
-      let questionList = [
-        {
-          name: "No selection",
-          value: -1,
-          answers: null
-        }
-      ];
+      let questionList = [EMPTY_OPTION];
+      const copyOfQuestions = JSON.parse(JSON.stringify(this.questions));
+
+      // Get children of the current question
+      const children = this.getConditionalChildren(
+        copyOfQuestions.filter(x => x.id != aux.question.id),
+        this.question.id
+      );
+
+      // Get the question list, which doesn't include the children and itself
       this.questions.forEach((x, i) => {
-        if (i != aux.id) {
+        const childCondition =
+          !!children && Array.isArray(children)
+            ? !children.some(child => child.id == x.id)
+            : true;
+        if (x.id != aux.question.id && childCondition) {
           questionList.push({
             name: `Question ${i + 1}`,
-            value: i,
+            value: x.id,
             answers: x.answers,
             type: x.type
           });
         }
       });
+
+      // Clear the selecteQuestion if condition is empty
+      if (Object.keys(this.question.condition).length === 0) {
+        this.questionSelected = null;
+      }
       return questionList;
     },
     validateModalAnswers() {
       return (
         this.questionSelected &&
         this.questionSelected.type.includes("choice") &&
-        this.questionSelected.answers &&
-        !this.questionSelected.answers.some(x => x == "" || !!!x)
+        this.questionSelected.answers
       );
     }
   },

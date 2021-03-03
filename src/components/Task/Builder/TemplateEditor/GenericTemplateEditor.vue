@@ -23,7 +23,6 @@
             :types="types"
             :question="question"
             :questions="questions"
-            :id="questionKey"
           ></question-options>
 
           <!-- Question section -->
@@ -121,12 +120,13 @@ const QUESTION_TYPES = [
   { value: "long_answer", name: "Long Answer" }
 ];
 const DEFAULT_QUESTION = {
+  id: 0,
   question: "",
   answers: ["", ""],
   type: QUESTION_TYPES[0],
   required: false,
   isDependent: false,
-  conditions: {}
+  condition: {}
 };
 
 export default {
@@ -172,10 +172,18 @@ export default {
         question: true,
         answers: [true, true]
       });
+      DEFAULT_QUESTION.id += 1;
       this.questions.push(JSON.parse(JSON.stringify(DEFAULT_QUESTION)));
     },
     deleteQuestion(questionKey) {
       if (this.questions.length > 1) {
+        const deletedID = this.questions[questionKey].id;
+        this.questions = this.questions.map(function(x) {
+          if (x.condition.questionId == deletedID) {
+            x.condition = {};
+          }
+          return x;
+        });
         this.firstInteractions.splice(questionKey, 1);
         this.questions.splice(questionKey, 1);
       }
