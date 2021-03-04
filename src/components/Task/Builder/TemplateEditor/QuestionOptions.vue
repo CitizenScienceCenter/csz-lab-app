@@ -231,6 +231,15 @@ export default {
       // Clear the selecteQuestion if condition is empty
       if (Object.keys(this.question.condition).length === 0) {
         this.questionSelected = null;
+        this.question.isDependent = false;
+      } else {
+        // Refill the question selected with condition data if exist
+        const condition = this.question.condition;
+        this.questionSelected.value = condition.questionId;
+        this.questionSelected.answers = this.questions.find(
+          x => x.id == condition.questionId
+        ).answers;
+        this.answersSelected = condition.answers;
       }
       return questionList;
     },
