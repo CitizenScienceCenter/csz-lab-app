@@ -6,7 +6,7 @@
       class="d-flex justify-content-start align-items-center"
       v-if="question"
     >
-      <!-- Required question checkbox-->
+      <!-- Required question: checkbox-->
       <b-form-checkbox
         v-model="question.required"
         name="check-button"
@@ -58,6 +58,7 @@
               :options="getQuestionList"
               :searchable="false"
               :allow-empty="false"
+              :preselect-first="true"
               class="mb-4"
             >
               <template slot="singleLabel" slot-scope="{ option }"
@@ -121,7 +122,8 @@
         </template>
       </b-modal>
     </b-col>
-    <!-- Question type -->
+
+    <!-- Question type: dropdown -->
     <b-col md="5" lg="4" v-if="types && types.length > 0 && question">
       <multiselect
         v-model="typeSelected"
@@ -175,8 +177,11 @@ export default {
         this.question.isDependent = true;
         this.question.condition = {
           questionId: this.questionSelected.value,
-          answers: this.answersSelected
+          answers: this.answersSelected,
+          type: this.questionSelected.type
         };
+      } else {
+        this.question.condition = {};
       }
       this.showModal = false;
     },
@@ -190,6 +195,7 @@ export default {
           result = [...result, ...children];
         }
       }
+      // Use of recursive calling for looking all the children of a question
       children.forEach(
         x => (result = this.getConditionalChildren(no_children, x.id, result))
       );
@@ -227,20 +233,6 @@ export default {
           });
         }
       });
-
-      // Clear the selecteQuestion if condition is empty
-      if (Object.keys(this.question.condition).length === 0) {
-        this.questionSelected = null;
-        this.question.isDependent = false;
-      } else {
-        // Refill the question selected with condition data if exist
-        const condition = this.question.condition;
-        this.questionSelected.value = condition.questionId;
-        this.questionSelected.answers = this.questions.find(
-          x => x.id == condition.questionId
-        ).answers;
-        this.answersSelected = condition.answers;
-      }
       return questionList;
     },
     validateModalAnswers() {
@@ -257,13 +249,46 @@ export default {
     },
     questionSelected() {
       this.answersSelected = [];
+    },
+    questions() {
+      // Clear the selecteQuestion if condition is empty or is not selected
+      if (
+        Object.keys(this.question.condition).length === 0 ||
+        this.question.condition.questionId < 0
+      ) {
+        this.questionSelected = null;
+        this.question.isDependent = false;
+      } else {
+        // Refill the question selected with condition data if exist
+        const condition = this.question.condition;
+        this.questionSelected.value = condition.questionId;
+        this.questionSelected.answers = this.questions.find(
+          x => x.id == condition.questionId
+        ).answers;
+        this.answersSelected = condition.answers;
+      }
     }
   }
 };
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-<style scoped>
+<style lang="scss">
+@import "@/scss/variables.scss";
+.multiselect__element {
+  .multiselect__option--highlight {
+    background: $color-secondary-tint-30;
+    &.multiselect__option--selected {
+      background: $color-primary-tint-30;
+    }
+    &.multiselect__option--selected::after {
+      background: $color-primary-tint-30;
+    }
+  }
+  .multiselect__option--highlight::after {
+    background: $color-secondary-tint-30;
+  }
+}
 .icon-color {
   color: rgb(146, 146, 146);
 }

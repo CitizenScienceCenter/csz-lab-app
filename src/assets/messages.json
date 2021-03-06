@@ -326,6 +326,7 @@
     "project-menu-task-presenter-preview": "Preview task presenter",
     "project-menu-task-presenter-update": "Update task presenter",
     "project-menu-task-presenter-message": "This editor is reserved for expert users having coding skills. Edit and update at your own risk",
+    "project-menu-task-presenter-screen-resolution-warning":"Not supported in low screen resolution devices",
     "project-menu-task-presenter-error-update": "Impossible to update the task presenter",
     "project-menu-task-presenter-task-editor": "Task editor",
 
@@ -1124,6 +1125,7 @@
     "project-menu-task-presenter-preview": "Vorschau Task Presenter",
     "project-menu-task-presenter-update": "Task Presenter bearbeiten",
     "project-menu-task-presenter-message": "Dieser Editor ist erfahrenen Benutzern mit Programmierkenntnissen vorbehalten. Das Bearbeiten und Aktualisieren erfolgt auf eigenes Risiko.",
+    "project-menu-task-presenter-screen-resolution-warning":"Wird bei Geräten mit niedriger Bildschirmauflösung nicht unterstützt",
     "project-menu-task-presenter-error-update": "Der Task Presenter kann nicht aktualisiert werden",
     "project-menu-task-presenter-task-editor": "Task Editor",
 

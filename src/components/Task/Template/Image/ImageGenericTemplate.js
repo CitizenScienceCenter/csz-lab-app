@@ -10,10 +10,10 @@ const component = {
         <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
-          <b-form-group :key="key" v-for="(question, key) in questions" :label="question.question" label-size="lg">
+          <b-form-group :key="key" v-for="(question, key) in visibleQuestions" :label="question.question" label-size="lg">
           
             <b-form-radio-group 
-              v-model="answers[key]"
+              v-model="answers[getRelativeKey(question.id)]"
               :options="question.answers"
               :name="'question_radio'+key"
               stacked
@@ -21,7 +21,7 @@ const component = {
             ></b-form-radio-group>    
             
             <b-form-checkbox-group
-              v-model="answers[key]"
+              v-model="answers[getRelativeKey(question.id)]"
               :options="question.answers"
               :name="'question_checkbox'+key"
               stacked
@@ -76,7 +76,8 @@ const component = {
       }
     ],
     answers: [],
-    showAlert: false
+    showAlert: false,
+    visibleQuestions: []
   },
 
   methods: {
@@ -115,6 +116,36 @@ const component = {
         }
         return null;
       });
+    },
+    //TODO: send to renderer
+    updateVisibleQuestions() {
+      const aux = this;
+      this.visibleQuestions = this.questions.filter(function(x, i) {
+        if (x.isDependent) {
+          const index = aux.questions.findIndex(
+            q => q.id == x.condition.questionId
+          );
+          const isCondition = x.condition.answers.some(function(ans) {
+            if (x.condition.type === "multiple_choice") {
+              return aux.answers[index].includes(ans);
+            } else if (x.condition.type === "one_choice") {
+              return aux.answers[index] == ans;
+            }
+            return false;
+          });
+          aux.answers[i] = isCondition
+            ? aux.answers[i]
+            : Array.isArray(aux.answers[i])
+            ? []
+            : null;
+          return isCondition;
+        }
+        return true;
+      });
+    },
+    //TODO: send to renderer
+    getRelativeKey(realId) {
+      return this.questions.findIndex(x => x.id === realId);
     }
   },
 
@@ -129,10 +160,17 @@ const component = {
 
   created() {
     this.initialize();
+    this.updateVisibleQuestions();
   },
 
   mounted() {
     this.pybossa.run();
+  },
+
+  watch: {
+    answers() {
+      this.updateVisibleQuestions();
+    }
   },
 
   props: {
