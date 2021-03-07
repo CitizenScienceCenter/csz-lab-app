@@ -321,7 +321,35 @@ export default {
       this.modal.mediaType = type;
       this.modal.mediaUrl = url;
       this.$refs["presenter-modal"].show();
-    }
+    },
+    updateAnswer(aux) {
+      aux.questions.forEach(function(question, index) {
+        /**Get the children of each parent question*/
+        const children = aux.questions.filter(
+          x => x.condition.questionId == question.id
+        );
+        const parentAnswers = aux.answers[index];
+        children.forEach(function(child) {
+          let res = false;
+          if (child.condition.type === "multiple_choice") {
+            res = child.condition.answers.some(ans =>
+              parentAnswers.includes(ans)
+            );
+          } else if (child.condition.type === "one_choice") {
+            res = child.condition.answers.some(ans => parentAnswers == ans);
+          }
+          const relativeKey = aux.questions.findIndex(x => x.id === child.id);
+          /*Clean answers when question is hide*/
+          aux.answers[relativeKey] = res
+            ? aux.answers[relativeKey]
+            : Array.isArray(aux.answers[relativeKey])
+            ? []
+            : null;
+          /*Show or Hide question according if conditions in parent questions is true*/
+          aux.mask[relativeKey] = res;
+        });
+      });
+    },
   }
 };
 </script>

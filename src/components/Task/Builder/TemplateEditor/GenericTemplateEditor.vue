@@ -218,9 +218,22 @@ export default {
       this.firstInteractions = interactions;
 
       if (this.isFormValid()) {
+        const aux = this;
         this.questions = this.questions.map(function(x) {
+          // Add * to the question text when its required
           if (x.required && x.question.slice(-1) != "*") {
             x.question += " *";
+          }
+          // Add all the answers to condition.answer when questionId is set and answers is empty
+          if (
+            (x.condition.questionId != undefined ||
+              x.condition.questionId >= 0) &&
+            x.condition.answers.length == 0
+          ) {
+            const parent = aux.questions.find(
+              p => p.id == x.condition.questionId
+            );
+            x.condition.answers = parent ? parent.answers : [];
           }
           return x;
         });
