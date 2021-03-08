@@ -43,7 +43,8 @@
               @input="questionUpdated(questionKey)"
               placeholder="Write your question"
               :state="questionValidated(questionKey)"
-            ></b-input>
+            >
+            </b-input>
             <div
               type="button"
               class="float-right my-2 text-primary"
@@ -55,49 +56,79 @@
           </b-form-group>
 
           <!-- Answers section -->
-          <b-form-group
-            :key="answerKey"
-            v-for="(answer, answerKey) in question.answers"
-            :valid-feedback="validAnswerFeedback(answer)"
-            :invalid-feedback="invalidAnswerFeedback(answer)"
-            :state="answerValidated(questionKey, answerKey)"
-          >
-            <!-- Section for multiple and unique response -->
-            <b-row class="d-flex justify-content-start align-items-center">
-              <!-- circle and square icon -->
-              <b-col cols="1" class="d-flex justify-content-end">
-                <div v-show="question.type == types[0].value">
-                  <i class="far fa-circle fa-lg"></i>
-                </div>
-                <div v-show="question.type == types[1].value">
-                  <i class="far fa-square fa-lg"></i>
-                </div>
-              </b-col>
-              <!-- Text input for option text -->
-              <b-col cols="10">
-                <b-input
-                  v-model.trim="question.answers[answerKey]"
-                  @input="answerUpdated(questionKey, answerKey)"
-                  :placeholder="`Option ${answerKey + 1}`"
-                  :state="answerValidated(questionKey, answerKey)"
+          <!-- Multiple and One Choice question types -->
+          <div v-if="types.slice(0, 2).some(x => x.value == question.type)">
+            <b-form-group
+              :key="answerKey"
+              v-for="(answer, answerKey) in question.answers"
+              :valid-feedback="validAnswerFeedback(answer)"
+              :invalid-feedback="invalidAnswerFeedback(answer)"
+              :state="answerValidated(questionKey, answerKey)"
+            >
+              <!-- Options rendering -->
+              <b-row class="d-flex justify-content-start align-items-center">
+                <!-- circle and square icon -->
+                <b-col cols="1" class="d-flex justify-content-end">
+                  <div v-show="question.type == types[0].value">
+                    <i class="far fa-circle fa-lg"></i>
+                  </div>
+                  <div v-show="question.type == types[1].value">
+                    <i class="far fa-square fa-lg"></i>
+                  </div>
+                </b-col>
+
+                <!-- Text input for question options -->
+                <b-col cols="10">
+                  <b-input
+                    v-model.trim="question.answers[answerKey]"
+                    @input="answerUpdated(questionKey, answerKey)"
+                    :placeholder="`Option ${answerKey + 1}`"
+                    :state="answerValidated(questionKey, answerKey)"
+                  >
+                  </b-input>
+                </b-col>
+                <!-- Remove answer button -->
+                <div
+                  type="button"
+                  @click="deleteAnswer(questionKey, answerKey)"
+                  v-if="question.answers.length > minAnswers"
+                  class="float-right my-1 text-primary"
                 >
+                  <i class="fas fa-times fa-lg"></i>
+                </div>
+              </b-row>
+            </b-form-group>
+            <!-- Add answer button -->
+            <b-btn @click="addAnswer(questionKey)" class="float-right ">{{
+              $t("task-classify-template-add-answer")
+            }}</b-btn>
+          </div>
+
+          <!-- Short answer question type -->
+          <div v-if="question.type == types[2].value">
+            <b-row class="d-flex justify-content-start align-items-center">
+              <!-- Text input for question options -->
+              <b-col cols="6">
+                <b-input placeholder="Short answer" disabled class="editor">
                 </b-input>
               </b-col>
-              <!-- Remove answer button -->
-              <div
-                type="button"
-                @click="deleteAnswer(questionKey, answerKey)"
-                v-if="question.answers.length > minAnswers"
-                class="float-right my-1 text-primary"
-              >
-                <i class="fas fa-times fa-lg"></i>
-              </div>
             </b-row>
-          </b-form-group>
-          <!-- Add answer button -->
-          <b-btn @click="addAnswer(questionKey)" class="float-right ">{{
-            $t("task-classify-template-add-answer")
-          }}</b-btn>
+          </div>
+
+          <!-- Long answer question type -->
+          <div v-if="question.type == types[3].value">
+            <b-row class="d-flex justify-content-start align-items-center">
+              <!-- Text area for question options -->
+              <b-col cols="11">
+                <b-form-textarea
+                  size="md"
+                  placeholder="Long answer"
+                  disabled
+                  class="editor"
+                ></b-form-textarea>
+              </b-col>
+            </b-row>
+          </div>
         </b-tab>
       </b-tabs>
     </b-container>
@@ -117,7 +148,8 @@ const QUESTION_TYPES = [
   { value: "one_choice", name: "One Choice" },
   { value: "multiple_choice", name: "Multiple Choice" },
   { value: "short_answer", name: "Short Answer" },
-  { value: "long_answer", name: "Long Answer" }
+  { value: "long_answer", name: "Long Answer" },
+  { value: "dropdown", name: "Dropdown" }
 ];
 const DEFAULT_QUESTION = {
   id: 0,
@@ -307,6 +339,11 @@ export default {
     answerValidated(questionKey, answerKey) {
       const question = this.questions[questionKey];
       const answer = question.answers[answerKey];
+      //Validate type of questionKey
+      if (question.type == this.types[2].value || question.type == this.types[3].value) {
+        this.questions[questionKey].answers = "";
+        return true;
+      }
       return (
         (this.firstInteractions[questionKey].answers[answerKey] ||
           answer.length > 0) &&

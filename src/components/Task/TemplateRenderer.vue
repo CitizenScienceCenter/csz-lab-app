@@ -9,8 +9,9 @@
               name: 'project.task.presenter.editor',
               params: { id: this.id, template: this.template }
             }"
-            >{{ $t("task-template-renderer-go-back-editor") }}</b-link
           >
+            {{ $t("task-template-renderer-go-back-editor") }}
+          </b-link>
           <b-link v-else :to="{ name: 'project', params: { id: this.id } }">{{
             $t("task-template-renderer-go-back-project")
           }}</b-link>
@@ -24,6 +25,7 @@
             </b-spinner>
           </div>
 
+          <!-- Here is rendered the customized template  -->
           <component
             class="mt-4"
             ref="presenter"
@@ -31,6 +33,8 @@
             :is="presenterComponent"
             :pybossa="this"
           ></component>
+          
+          <!-- No template to render -->
           <div class="mt-4" v-else-if="taskPresenterLoaded">
             <b-alert :show="true" variant="warning">{{
               $t("task-template-renderer-no-task-presenter")
@@ -112,9 +116,9 @@ export default {
         {
           property: "og:title",
           content: `Project ${this.project.id} - Presenter`,
-          template: "%s | " + this.$t("site-title"),
-        },
-      ],
+          template: "%s | " + this.$t("site-title")
+        }
+      ]
     };
   },
 
@@ -128,7 +132,7 @@ export default {
         this.taskPresenterExists = true;
       }
     });
-    
+
     //this.saveFile()
   },
   data: () => {
@@ -190,13 +194,11 @@ export default {
   },
   methods: {
     ...mapActions("task", ["getNewTask", "saveTaskRun", "skipTaskWithOffset"]),
-
     ...mapActions("project", [
       "getUserProgress",
       "getProject",
       "isProjectPrivate"
     ]),
-
     ...mapActions("osm", ["qetLocalizationsWithQuery"]),
 
     ...mapMutations("notification", ["showError"]),
@@ -322,13 +324,17 @@ export default {
       this.modal.mediaUrl = url;
       this.$refs["presenter-modal"].show();
     },
+
+    // Control the conditions between questions, receive this from template
     updateAnswer(aux) {
       aux.questions.forEach(function(question, index) {
-        /**Get the children of each parent question*/
+        // Get the children of each parent question
         const children = aux.questions.filter(
           x => x.condition.questionId == question.id
-        );
+        );        
+        // The answers given by user so far
         const parentAnswers = aux.answers[index];
+        // Logic for conditions between questions
         children.forEach(function(child) {
           let res = false;
           if (child.condition.type === "multiple_choice") {
@@ -339,17 +345,17 @@ export default {
             res = child.condition.answers.some(ans => parentAnswers == ans);
           }
           const relativeKey = aux.questions.findIndex(x => x.id === child.id);
-          /*Clean answers when question is hide*/
+          // Clean answers when question is hide
           aux.answers[relativeKey] = res
             ? aux.answers[relativeKey]
             : Array.isArray(aux.answers[relativeKey])
             ? []
             : null;
-          /*Show or Hide question according if conditions in parent questions is true*/
+          // Show or Hide question according if conditions in parent questions is true
           aux.mask[relativeKey] = res;
         });
       });
-    },
+    }
   }
 };
 </script>
