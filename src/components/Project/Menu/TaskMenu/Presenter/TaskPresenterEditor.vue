@@ -176,7 +176,7 @@ export default {
 @import "../../../../../scss/variables.scss";
 
 .CodeMirror {
-  height: 70vh !important;
+  height: 65vh !important;
   border: 1px solid #e9ecef;
   box-shadow: inset 0 1px 1px rgba($black, 0.075);
 }

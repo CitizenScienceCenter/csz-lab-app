@@ -10,14 +10,13 @@ const component = {
         <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
-          <b-form-group :key="key" v-for="(question, key) in questions" :label="question.question" label-size="lg" v-if="mask[key]">
-          
+          <b-form-group :key="key" v-for="(question, key) in questions" :label="question.question" label-size="lg" v-if="mask[key]">          
             <b-form-radio-group 
               v-model="answers[key]"
               :options="question.answers"
               :name="'question_radio'+key"
               stacked
-              v-if="question.type==='one_choice'"           
+              v-if="question.type ==='one_choice'"           
             ></b-form-radio-group>    
             
             <b-form-checkbox-group
@@ -25,9 +24,24 @@ const component = {
               :options="question.answers"
               :name="'question_checkbox'+key"
               stacked
-              v-if="question.type==='multiple_choice'"
-            ></b-form-checkbox-group>            
+              v-if="question.type ==='multiple_choice'"
+            ></b-form-checkbox-group>
             
+            <b-form-input
+              v-model="answers[key]"
+              placeholder="Enter your answer"
+              :name="'question_shor'+key"
+              v-if="question.type ==='short_answer'"
+            ></b-form-input>
+
+            <b-form-textarea
+              v-model="answers[key]"
+              placeholder="Enter your answer"
+              rows="3"
+              max-rows="5"
+              :name="'question_long'+key"
+              v-if="question.type ==='long_answer'"
+            ></b-form-textarea>            
           </b-form-group>
           
           <!-- Submit button -->
@@ -118,7 +132,7 @@ const component = {
         return null;
       });
       this.mask = this.questions.map(x => !x.isDependent);
-    },
+    }
   },
 
   computed: {

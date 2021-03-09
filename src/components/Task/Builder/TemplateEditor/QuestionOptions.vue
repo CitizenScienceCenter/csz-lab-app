@@ -110,7 +110,6 @@
               them before use it.
             </small>
           </b-row>
-          {{ questionSelected }}
         </div>
         <template #modal-footer>
           <b-button class="mt-3" variant="primary" @click="confirmModal">

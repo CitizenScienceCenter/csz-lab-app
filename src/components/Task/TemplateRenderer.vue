@@ -33,7 +33,7 @@
             :is="presenterComponent"
             :pybossa="this"
           ></component>
-          
+
           <!-- No template to render -->
           <div class="mt-4" v-else-if="taskPresenterLoaded">
             <b-alert :show="true" variant="warning">{{
@@ -331,9 +331,9 @@ export default {
         // Get the children of each parent question
         const children = aux.questions.filter(
           x => x.condition.questionId == question.id
-        );        
+        );
         // The answers given by user so far
-        const parentAnswers = aux.answers[index];
+        const parentAnswers = aux.answers[index] || [];
         // Logic for conditions between questions
         children.forEach(function(child) {
           let res = false;
@@ -343,6 +343,11 @@ export default {
             );
           } else if (child.condition.type === "one_choice") {
             res = child.condition.answers.some(ans => parentAnswers == ans);
+          } else if (
+            child.condition.type === "long_answer" ||
+            child.condition.type === "short_answer"
+          ) {
+            res = parentAnswers.length > 0;
           }
           const relativeKey = aux.questions.findIndex(x => x.id === child.id);
           // Clean answers when question is hide

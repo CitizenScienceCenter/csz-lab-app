@@ -56,8 +56,8 @@
           </b-form-group>
 
           <!-- Answers section -->
-          <!-- Multiple and One Choice question types -->
-          <div v-if="types.slice(0, 2).some(x => x.value == question.type)">
+          <!-- Multiple and One Choice question -->
+          <div v-if="types.slice(0, 3).some(x => x.value == question.type)">
             <b-form-group
               :key="answerKey"
               v-for="(answer, answerKey) in question.answers"
@@ -74,6 +74,9 @@
                   </div>
                   <div v-show="question.type == types[1].value">
                     <i class="far fa-square fa-lg"></i>
+                  </div>
+                  <div v-show="question.type == types[2].value">
+                    <h5>{{ answerKey + 1 }}. </h5>
                   </div>
                 </b-col>
 
@@ -105,7 +108,7 @@
           </div>
 
           <!-- Short answer question type -->
-          <div v-if="question.type == types[2].value">
+          <div v-if="question.type == types[3].value">
             <b-row class="d-flex justify-content-start align-items-center">
               <!-- Text input for question options -->
               <b-col cols="6">
@@ -116,7 +119,7 @@
           </div>
 
           <!-- Long answer question type -->
-          <div v-if="question.type == types[3].value">
+          <div v-if="question.type == types[4].value">
             <b-row class="d-flex justify-content-start align-items-center">
               <!-- Text area for question options -->
               <b-col cols="11">
@@ -147,9 +150,9 @@ import { mapMutations, mapState } from "vuex";
 const QUESTION_TYPES = [
   { value: "one_choice", name: "One Choice" },
   { value: "multiple_choice", name: "Multiple Choice" },
+  { value: "dropdown", name: "Dropdown" },
   { value: "short_answer", name: "Short Answer" },
-  { value: "long_answer", name: "Long Answer" },
-  { value: "dropdown", name: "Dropdown" }
+  { value: "long_answer", name: "Long Answer" }
 ];
 const DEFAULT_QUESTION = {
   id: 0,
@@ -340,7 +343,10 @@ export default {
       const question = this.questions[questionKey];
       const answer = question.answers[answerKey];
       //Validate type of questionKey
-      if (question.type == this.types[2].value || question.type == this.types[3].value) {
+      if (
+        question.type == this.types[3].value ||
+        question.type == this.types[4].value
+      ) {
         this.questions[questionKey].answers = "";
         return true;
       }
