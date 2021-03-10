@@ -327,6 +327,7 @@ export default {
 
     // Control the conditions between questions, receive this from template
     updateAnswer(aux) {
+      const ctrl = this;
       aux.questions.forEach(function(question, index) {
         // Get the children of each parent question
         const children = aux.questions.filter(
@@ -337,16 +338,17 @@ export default {
         // Logic for conditions between questions
         children.forEach(function(child) {
           let res = false;
-          if (child.condition.type === "multiple_choice") {
+          const qType = ctrl.getQuestionType(
+            aux.questions,
+            child.condition.questionId
+          );
+          if (qType === "multiple_choice") {
             res = child.condition.answers.some(ans =>
               parentAnswers.includes(ans)
             );
-          } else if (child.condition.type === "one_choice") {
+          } else if (qType === "one_choice" || qType === "dropdown") {
             res = child.condition.answers.some(ans => parentAnswers == ans);
-          } else if (
-            child.condition.type === "long_answer" ||
-            child.condition.type === "short_answer"
-          ) {
+          } else if (qType === "long_answer" || qType === "short_answer") {
             res = parentAnswers.length > 0;
           }
           const relativeKey = aux.questions.findIndex(x => x.id === child.id);
@@ -360,6 +362,10 @@ export default {
           aux.mask[relativeKey] = res;
         });
       });
+    },
+    getQuestionType(questionList, qid) {
+      const parentQuestion = questionList.find(x => x.id == qid);
+      return parentQuestion ? parentQuestion.type : null;
     }
   }
 };

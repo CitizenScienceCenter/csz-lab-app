@@ -76,7 +76,7 @@
                     <i class="far fa-square fa-lg"></i>
                   </div>
                   <div v-show="question.type == types[2].value">
-                    <h5>{{ answerKey + 1 }}. </h5>
+                    <h5>{{ answerKey + 1 }}.</h5>
                   </div>
                 </b-col>
 

@@ -140,7 +140,6 @@
           <strong>{{ option.name }}</strong>
         </template>
       </multiselect>
-      <!-- <b-form-select v-model="question.type" :options="types"></b-form-select> -->
     </b-col>
   </b-row>
 </template>
@@ -151,8 +150,7 @@ import Multiselect from "vue-multiselect";
 const EMPTY_OPTION = {
   name: "No selection",
   value: -1,
-  answers: null,
-  type: ""
+  answers: null
 };
 export default {
   data() {
@@ -176,15 +174,15 @@ export default {
         this.question.isDependent = true;
         this.question.condition = {
           questionId: this.questionSelected.value,
-          answers: this.answersSelected,
-          type: this.questionSelected.type
+          answers: this.answersSelected
         };
       } else {
         this.question.condition = {};
       }
       this.showModal = false;
     },
-    getConditionalChildren(array, id, result) {
+    // Get all the questions dependent of a questions (children, grantchildren,...)
+    getConditionalBranch(array, id, result) {
       let children = array.filter(x => x.condition.questionId == id);
       let no_children = array.filter(x => x.condition.questionId != id);
       if (children && children.length > 0) {
@@ -196,10 +194,15 @@ export default {
       }
       // Use of recursive calling for looking all the children of a question
       children.forEach(
-        x => (result = this.getConditionalChildren(no_children, x.id, result))
+        x => (result = this.getConditionalBranch(no_children, x.id, result))
       );
 
       return result;
+    },
+    // Get question type
+    getQuestionType(qid) {
+      const parentQuestion = this.questions.find(x => x.id == qid);
+      return parentQuestion ? parentQuestion.type : null;
     }
   },
   computed: {
@@ -212,7 +215,7 @@ export default {
       const copyOfQuestions = JSON.parse(JSON.stringify(this.questions));
 
       // Get children of the current question
-      const children = this.getConditionalChildren(
+      const children = this.getConditionalBranch(
         copyOfQuestions.filter(x => x.id != aux.question.id),
         this.question.id
       );
@@ -227,18 +230,20 @@ export default {
           questionList.push({
             name: `Question ${i + 1}`,
             value: x.id,
-            answers: x.answers,
-            type: x.type
+            answers: x.answers
           });
         }
       });
       return questionList;
     },
     validateModalAnswers() {
+      const selected = this.questionSelected;
       return (
-        this.questionSelected &&
-        this.questionSelected.type.includes("choice") &&
-        this.questionSelected.answers
+        selected &&
+        this.types
+          .slice(0, 3)
+          .some(x => x.value == this.getQuestionType(selected.value)) &&
+        selected.answers
       );
     }
   },

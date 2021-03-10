@@ -10,7 +10,7 @@ const component = {
         <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
-          <b-form-group :key="key" v-for="(question, key) in questions" :label="question.question" label-size="lg" v-if="mask[key]">          
+          <b-form-group :key="key" v-for="(question, key) in questions" :label="question.question" label-size="lg" v-if="mask[key]" class="mt-2 mb-4">          
             <b-form-radio-group 
               v-model="answers[key]"
               :options="question.answers"
@@ -26,16 +26,24 @@ const component = {
               stacked
               v-if="question.type ==='multiple_choice'"
             ></b-form-checkbox-group>
+
+            <b-form-select
+              v-model="answers[key]"
+              :options="question.answers"
+              :name="'question_dropdown'+key"
+              v-if="question.type ==='dropdown'"
+              >
+            </b-form-select>
             
             <b-form-input
-              v-model="answers[key]"
+              v-model.trim="answers[key]"
               placeholder="Enter your answer"
               :name="'question_shor'+key"
               v-if="question.type ==='short_answer'"
             ></b-form-input>
 
             <b-form-textarea
-              v-model="answers[key]"
+              v-model.trim="answers[key]"
               placeholder="Enter your answer"
               rows="3"
               max-rows="5"
@@ -45,10 +53,10 @@ const component = {
           </b-form-group>
           
           <!-- Submit button -->
-          <b-btn @click="submit" variant="success">{{$t('submit-btn')}}</b-btn>
+          <b-btn @click="submit" variant="success" class="mt-3">{{$t('submit-btn')}}</b-btn>
 
           <!-- Skip button -->
-          <b-btn @click="skip" variant="secondary">{{$t('skip-btn')}}</b-btn>
+          <b-btn @click="skip" variant="secondary" class="mt-3">{{$t('skip-btn')}}</b-btn>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
