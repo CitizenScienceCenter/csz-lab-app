@@ -10,44 +10,44 @@ const component = {
         <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
-          <b-form-group :key="key" v-for="(question, key) in questions" :label="question.question" label-size="lg" v-if="mask[key]" class="mt-2 mb-4">          
+          <b-form-group :key="question.id" v-for="question in questionList" :label="question.question" label-size="lg" class="mt-2 mb-4">          
             <b-form-radio-group 
-              v-model="answers[key]"
+              v-model="answers[getRelativeId(question.id)].value"
               :options="question.answers"
-              :name="'question_radio'+key"
+              :name="'question_radio'+question.id"
               stacked
               v-if="question.type ==='one_choice'"           
             ></b-form-radio-group>    
             
             <b-form-checkbox-group
-              v-model="answers[key]"
+              v-model="answers[getRelativeId(question.id)].value"
               :options="question.answers"
-              :name="'question_checkbox'+key"
+              :name="'question_checkbox'+question.id"
               stacked
               v-if="question.type ==='multiple_choice'"
             ></b-form-checkbox-group>
 
             <b-form-select
-              v-model="answers[key]"
+              v-model="answers[getRelativeId(question.id)].value"
               :options="question.answers"
-              :name="'question_dropdown'+key"
+              :name="'question_dropdown'+question.id"
               v-if="question.type ==='dropdown'"
               >
             </b-form-select>
             
             <b-form-input
-              v-model.trim="answers[key]"
+              v-model.trim="answers[getRelativeId(question.id)].value"
               placeholder="Enter your answer"
-              :name="'question_shor'+key"
+              :name="'question_shor'+question.id"
               v-if="question.type ==='short_answer'"
             ></b-form-input>
 
             <b-form-textarea
-              v-model.trim="answers[key]"
+              v-model.trim="answers[getRelativeId(question.id)].value"
               placeholder="Enter your answer"
               rows="3"
               max-rows="5"
-              :name="'question_long'+key"
+              :name="'question_long'+question.id"
               v-if="question.type ==='long_answer'"
             ></b-form-textarea>            
           </b-form-group>
@@ -99,7 +99,7 @@ const component = {
     ],
     answers: [],
     showAlert: false,
-    mask: []
+    questionList: []
   },
 
   methods: {
@@ -118,12 +118,9 @@ const component = {
     isFormValid() {
       const ctrl = this;
       let valid = true;
-      this.questions.every((question, key) => {
-        if (
-          question.required &&
-          ctrl.mask[key] &&
-          (!!!ctrl.answers[key] || ctrl.answers[key].length <= 0)
-        ) {
+      this.questionList.every(question => {
+        const ans = ctrl.answers.find(x => x.qid == question.id) || [];
+        if (question.required && (!!!ans.value || ans.value.length <= 0)) {
           valid = false;
           return false;
         }
@@ -133,13 +130,18 @@ const component = {
     },
     initialize() {
       this.showAlert = false;
+      const pb = this.pybossa;
+      this.questionList = this.questions.filter(q => pb.isConditionEmpty(q));
       this.answers = this.questions.map(function(x) {
+        const answer = { qid: x.id, question: x.question, value: null };
         if (x.type === "multiple_choice") {
-          return [];
+          answer.value = [];
         }
-        return null;
+        return answer;
       });
-      this.mask = this.questions.map(x => !x.isDependent);
+    },
+    getRelativeId(realId) {
+      return this.answers.findIndex(a => a.qid == realId);
     }
   },
 
@@ -161,8 +163,11 @@ const component = {
   },
 
   watch: {
-    answers() {
-      this.pybossa.updateAnswer(this);
+    answers: {
+      handler: function() {
+        this.pybossa.updateAnswer(this);
+      },
+      deep: true
     }
   },
 

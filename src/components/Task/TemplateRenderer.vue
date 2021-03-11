@@ -305,10 +305,6 @@ export default {
         project_id: this.project.id,
         task_id: this.task.id,
         info: answer
-        // optional
-        // user_id: 1,
-        // external_uid: '',
-        // media_url: ''
       };
       if (this.isUserLogged) {
         taskRun.user_id = this.userId;
@@ -328,44 +324,66 @@ export default {
     // Control the conditions between questions, receive this from template
     updateAnswer(aux) {
       const ctrl = this;
-      aux.questions.forEach(function(question, index) {
+      aux.questionList.forEach(function(question) {
         // Get the children of each parent question
         const children = aux.questions.filter(
           x => x.condition.questionId == question.id
         );
         // The answers given by user so far
-        const parentAnswers = aux.answers[index] || [];
+        const parentAnswers =
+          aux.answers.find(x => x.qid == question.id).value || [];
         // Logic for conditions between questions
         children.forEach(function(child) {
           let res = false;
-          const qType = ctrl.getQuestionType(
+          const parentQType = ctrl.getQuestionType(
             aux.questions,
             child.condition.questionId
           );
-          if (qType === "multiple_choice") {
+          if (parentQType === "multiple_choice") {
             res = child.condition.answers.some(ans =>
               parentAnswers.includes(ans)
             );
-          } else if (qType === "one_choice" || qType === "dropdown") {
+          } else if (
+            parentQType === "one_choice" ||
+            parentQType === "dropdown"
+          ) {
             res = child.condition.answers.some(ans => parentAnswers == ans);
-          } else if (qType === "long_answer" || qType === "short_answer") {
+          } else if (
+            parentQType === "long_answer" ||
+            parentQType === "short_answer"
+          ) {
             res = parentAnswers.length > 0;
           }
-          const relativeKey = aux.questions.findIndex(x => x.id === child.id);
-          // Clean answers when question is hide
-          aux.answers[relativeKey] = res
-            ? aux.answers[relativeKey]
-            : Array.isArray(aux.answers[relativeKey])
-            ? []
-            : null;
-          // Show or Hide question according if conditions in parent questions is true
-          aux.mask[relativeKey] = res;
+
+          // Check if question has not been already added
+          if (res) {
+            // Add question to question list
+            if (!aux.questionList.some(q => q.id === child.id)) {
+              aux.questionList.push(aux.questions.find(x => x.id === child.id));
+            }
+          } else {
+            // remove question to question list
+            aux.questionList = aux.questionList.filter(x => x.id != child.id);
+            // Clean answers when question is hiden
+            const relativeKey = aux.answers.findIndex(x => x.qid === child.id);
+            aux.answers[relativeKey].value = Array.isArray(
+              aux.answers[relativeKey].value
+            )
+              ? []
+              : null;
+          }
         });
       });
     },
     getQuestionType(questionList, qid) {
       const parentQuestion = questionList.find(x => x.id == qid);
       return parentQuestion ? parentQuestion.type : null;
+    },
+    isConditionEmpty(question) {
+      return (
+        Object.keys(question.condition).length === 0 ||
+        question.condition.questionId < 0
+      );
     }
   }
 };
