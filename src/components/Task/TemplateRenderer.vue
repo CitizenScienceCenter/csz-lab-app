@@ -365,12 +365,15 @@ export default {
             // remove question to question list
             aux.questionList = aux.questionList.filter(x => x.id != child.id);
             // Clean answers when question is hiden
-            const relativeKey = aux.answers.findIndex(x => x.qid === child.id);
-            aux.answers[relativeKey].value = Array.isArray(
-              aux.answers[relativeKey].value
-            )
-              ? []
-              : null;
+            const rk = aux.answers.findIndex(x => x.qid === child.id);
+            if (
+              Array.isArray(aux.answers[rk].value) &&
+              aux.answers[rk].value.length > 0
+            ) {
+              aux.answers[rk].value = [];
+            } else if (aux.answers[rk].value != null) {
+              aux.answers[rk].value = null;
+            }
           }
         });
       });

@@ -1,7 +1,9 @@
 import Vue from 'vue'
 
-import DropdownSelectSnakes from "@/components/Common/DropdownSelectSnakes";
-
 Vue.component('DropdownSelectSnakes', 
     () => import('@/components/Common/DropdownSelectSnakes')
 )
+
+Vue.component("CommonEditorElements", () =>
+  import("@/components/Common/CommonEditorElements")
+);

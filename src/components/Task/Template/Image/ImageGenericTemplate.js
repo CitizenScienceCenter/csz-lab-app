@@ -11,45 +11,7 @@ const component = {
         
           <!-- Questions with answers -->
           <b-form-group :key="question.id" v-for="question in questionList" :label="question.question" label-size="lg" class="mt-2 mb-4">          
-            <b-form-radio-group 
-              v-model="answers[getRelativeId(question.id)].value"
-              :options="question.answers"
-              :name="'question_radio'+question.id"
-              stacked
-              v-if="question.type ==='one_choice'"           
-            ></b-form-radio-group>    
-            
-            <b-form-checkbox-group
-              v-model="answers[getRelativeId(question.id)].value"
-              :options="question.answers"
-              :name="'question_checkbox'+question.id"
-              stacked
-              v-if="question.type ==='multiple_choice'"
-            ></b-form-checkbox-group>
-
-            <b-form-select
-              v-model="answers[getRelativeId(question.id)].value"
-              :options="question.answers"
-              :name="'question_dropdown'+question.id"
-              v-if="question.type ==='dropdown'"
-              >
-            </b-form-select>
-            
-            <b-form-input
-              v-model.trim="answers[getRelativeId(question.id)].value"
-              placeholder="Enter your answer"
-              :name="'question_shor'+question.id"
-              v-if="question.type ==='short_answer'"
-            ></b-form-input>
-
-            <b-form-textarea
-              v-model.trim="answers[getRelativeId(question.id)].value"
-              placeholder="Enter your answer"
-              rows="3"
-              max-rows="5"
-              :name="'question_long'+question.id"
-              v-if="question.type ==='long_answer'"
-            ></b-form-textarea>            
+            <common-editor-elements :answers="answers" :question="question" :context="context"/>            
           </b-form-group>
           
           <!-- Submit button -->
@@ -139,9 +101,6 @@ const component = {
         }
         return answer;
       });
-    },
-    getRelativeId(realId) {
-      return this.answers.findIndex(a => a.qid == realId);
     }
   },
 
@@ -151,6 +110,9 @@ const component = {
     },
     taskInfo() {
       return this.task.info;
+    },
+    context() {
+      return this;
     }
   },
 
@@ -163,12 +125,7 @@ const component = {
   },
 
   watch: {
-    answers: {
-      handler: function() {
-        this.pybossa.updateAnswer(this);
-      },
-      deep: true
-    }
+    /* Watch no nested elements */
   },
 
   props: {

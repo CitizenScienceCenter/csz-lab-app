@@ -40,7 +40,6 @@
           >
             <b-input
               v-model.trim="question.question"
-              @input="questionUpdated(questionKey)"
               placeholder="Write your question"
               :state="questionValidated(questionKey)"
             >
@@ -84,7 +83,6 @@
                 <b-col cols="10">
                   <b-input
                     v-model.trim="question.answers[answerKey]"
-                    @input="answerUpdated(questionKey, answerKey)"
                     :placeholder="`Option ${answerKey + 1}`"
                     :state="answerValidated(questionKey, answerKey)"
                   >
@@ -163,6 +161,8 @@ const DEFAULT_QUESTION = {
   isDependent: false,
   condition: {}
 };
+const MAXQUESTIONS = 30;
+const MAXANSWERS = 20;
 
 export default {
   name: "JobClassifyEditor",
@@ -171,13 +171,6 @@ export default {
     if (Array.isArray(this.task.template)) {
       // deep clone
       this.questions = JSON.parse(JSON.stringify(this.task.template));
-      this.firstInteractions = [];
-      for (let question of this.questions) {
-        this.firstInteractions.push({
-          question: false,
-          answers: [false, false]
-        });
-      }
     }
   },
   data: () => {
@@ -185,30 +178,25 @@ export default {
       maxCharQuestion: 75,
       maxCharAnswer: 30,
       questions: [JSON.parse(JSON.stringify(DEFAULT_QUESTION))],
-      // store all the interactions with the fields
-      // if a field is updated, the first interaction is set to false
-      firstInteractions: [
-        {
-          question: true,
-          answers: [true, true]
-        }
-      ],
       types: QUESTION_TYPES,
       minAnswers: 2
     };
   },
   methods: {
     ...mapMutations("task/builder", ["setTaskTemplate", "setStep"]),
-    ...mapMutations("notification", ["showError"]),
+    ...mapMutations("notification", ["showError", "showInfo"]),
 
     // question methods
     addQuestion() {
-      this.firstInteractions.push({
-        question: true,
-        answers: [true, true]
-      });
-      DEFAULT_QUESTION.id += 1;
-      this.questions.push(JSON.parse(JSON.stringify(DEFAULT_QUESTION)));
+      if (this.questions.length < MAXQUESTIONS) {
+        DEFAULT_QUESTION.id += 1;
+        this.questions.push(JSON.parse(JSON.stringify(DEFAULT_QUESTION)));
+      } else {
+        this.showInfo({
+          title: this.$t("task-generic-template-maxquestions"),
+          content: this.$t("task-generic-template-maxquestions")
+        });
+      }
     },
     deleteQuestion(questionKey) {
       if (this.questions.length > 1) {
@@ -219,20 +207,24 @@ export default {
           }
           return x;
         });
-        this.firstInteractions.splice(questionKey, 1);
         this.questions.splice(questionKey, 1);
       }
     },
 
     // answer methods
     addAnswer(questionKey) {
-      this.firstInteractions[questionKey].answers.push(true);
-      this.questions[questionKey].answers.push("");
+      if (this.questions[questionKey].answers.length < MAXANSWERS) {
+        this.questions[questionKey].answers.push("");
+      } else {
+        this.showInfo({
+          title: this.$t("task-generic-template-maxanswers"),
+          content: this.$t("task-generic-template-maxanswers")
+        });
+      }
     },
     deleteAnswer(questionKey, answerKey) {
       if (this.questions[questionKey].answers.length > this.minAnswers) {
         this.questions[questionKey].answers.splice(answerKey, 1);
-        this.firstInteractions[questionKey].answers.splice(answerKey, 1);
       }
     },
 
@@ -240,18 +232,6 @@ export default {
      * Called when the user submit the form
      */
     onSubmit() {
-      // set all first interactions to false to show all the errors
-      const interactions = [];
-      for (const questionInteraction of this.firstInteractions) {
-        const interaction = {
-          question: false,
-          answers: new Array(questionInteraction.answers.length).fill(false)
-        };
-        interactions.push(interaction);
-      }
-      // give a new array reference to update the view
-      this.firstInteractions = interactions;
-
       if (this.isFormValid()) {
         const aux = this;
         this.questions = this.questions.map(function(x) {
@@ -322,10 +302,7 @@ export default {
     },
     questionValidated(questionKey) {
       const question = this.questions[questionKey].question;
-      return (
-        (this.firstInteractions[questionKey].question || question.length > 0) &&
-        question.length <= this.maxCharQuestion
-      );
+      return question.length > 0 && question.length <= this.maxCharQuestion;
     },
 
     // answer validation
@@ -350,19 +327,7 @@ export default {
         this.questions[questionKey].answers = "";
         return true;
       }
-      return (
-        (this.firstInteractions[questionKey].answers[answerKey] ||
-          answer.length > 0) &&
-        answer.length <= this.maxCharAnswer
-      );
-    },
-
-    // interaction updates
-    questionUpdated(questionKey) {
-      this.firstInteractions[questionKey].question = false;
-    },
-    answerUpdated(questionKey, answerKey) {
-      this.firstInteractions[questionKey].answers[answerKey] = false;
+      return answer.length > 0 && answer.length <= this.maxCharAnswer;
     },
 
     isRequired(condition) {
