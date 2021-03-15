@@ -13,7 +13,7 @@
         class="mr-4"
         switch
       >
-        {{ $t("task-generic-template-required") }}
+        {{ $t("task-template-options-required") }}
       </b-form-checkbox>
 
       <!-- Conditional section  -->
@@ -31,7 +31,7 @@
           <i class="fas fa-link fa-lg icon-color"></i>
         </div>
         <label class="ml-1">{{
-          $t("task-generic-template-conditional-button")
+          $t("task-template-options-conditional-button")
         }}</label>
       </div>
       <!-- Conditional modal -->
@@ -46,15 +46,15 @@
           <!-- Question selection dropdown -->
           <b-row>
             <label>{{
-              $t("task-generic-template-conditional-question")
+              $t("task-template-options-conditional-question")
             }}</label>
             <multiselect
               v-model="questionSelected"
-              :deselect-label="$t('task-generic-template-dropdown-selected')"
-              :select-label="$t('task-generic-template-dropdown-select')"
+              :deselect-label="$t('task-template-options-dropdown-selected')"
+              :select-label="$t('task-template-options-dropdown-select')"
               :block-keys="['Tab', 'Enter']"
               label="name"
-              :placeholder="$t('dropdown-placeholder-one-option')"
+              :placeholder="$t('task-template-options-dropdown-placeholder-question')"
               :options="getQuestionList"
               :searchable="false"
               :allow-empty="false"
@@ -74,13 +74,13 @@
                 !questionSelected.answers.some(x => x == '' || !!!x)
             "
           >
-            <label>{{ $t("task-generic-template-conditional-answers") }}</label>
+            <label>{{ $t("task-template-options-conditional-answers") }}</label>
             <multiselect
               v-model="answersSelected"
-              :deselect-label="$t('task-generic-template-dropdown-selected')"
-              :select-label="$t('task-generic-template-dropdown-select')"
+              :deselect-label="$t('task-template-options-dropdown-selected')"
+              :select-label="$t('task-template-options-dropdown-select')"
               :block-keys="['Tab', 'Enter']"
-              :placeholder="$t('dropdown-placeholder-multiple-option')"
+              :placeholder="$t('task-template-options-dropdown-placeholder-answers')"
               :options="questionSelected.answers"
               :close-on-select="false"
               :searchable="false"
@@ -91,8 +91,7 @@
               </template>
             </multiselect>
             <small class="icon-color">
-              <!-- TODO: i18n -->
-              If nothing is selected, all answers apply
+              {{$t('task-template-options-modal-message-info')}}
             </small>
           </b-row>
 
@@ -105,18 +104,16 @@
                   questionSelected.answers.some(x => x == '' || !!!x)
               "
             >
-              <!-- TODO: i18n -->
-              The question selected has empty options. Please fill or remove
-              them before use it.
+             {{$t('task-template-options-modal-message-error')}}
             </small>
           </b-row>
         </div>
         <template #modal-footer>
           <b-button class="mt-3" variant="primary" @click="confirmModal">
-            {{ $t("task-generic-template-modal-confirm-button") }}
+            {{ $t("task-template-options-modal-confirm-button") }}
           </b-button>
           <b-button class="mt-3" variant="secondary" @click="showModal = false">
-            {{ $t("task-generic-template-modal-close-button") }}
+            {{ $t("task-template-options-modal-close-button") }}
           </b-button>
         </template>
       </b-modal>
@@ -126,11 +123,11 @@
     <b-col md="5" lg="4" v-if="types && types.length > 0 && question">
       <multiselect
         v-model="typeSelected"
-        :deselect-label="$t('task-generic-template-dropdown-selected')"
-        :select-label="$t('task-generic-template-dropdown-select')"
+        :deselect-label="$t('task-template-options-dropdown-selected')"
+        :select-label="$t('task-template-options-dropdown-select')"
+        :selectedLabel="$t('task-template-options-dropdown-selected')"
         :block-keys="['Tab', 'Enter']"
         label="name"
-        :placeholder="$t('task-generic-template-question-type')"
         :options="types"
         :searchable="false"
         :allow-empty="false"

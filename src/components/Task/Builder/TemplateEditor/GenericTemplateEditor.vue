@@ -1,11 +1,10 @@
 <template>
-  <!-- TODO: change all i18n for generic instead classify -->
   <div>
     <div class="clearfix">
       <!-- Internal header section -->
-      <h2 class="float-left">{{ $t("task-classify-template-question") }}</h2>
+      <h2 class="float-left">{{ $t("task-template-question") }}</h2>
       <b-btn @click="addQuestion" class="float-right">{{
-        $t("task-classify-template-add-question")
+        $t("task-template-add-question")
       }}</b-btn>
     </div>
 
@@ -15,7 +14,7 @@
         <b-tab
           :key="questionKey"
           v-for="(question, questionKey) in questions"
-          :title="`${$t('task-classify-template-question')} ${questionKey + 1}`"
+          :title="`${$t('task-template-question')} ${questionKey + 1}`"
           active
         >
           <!-- Question options row: Top position -->
@@ -28,7 +27,7 @@
           <!-- Question section -->
           <b-form-group
             :label="
-              $t('task-classify-template-question') +
+              $t('task-template-question') +
                 ' ' +
                 (questionKey + 1) +
                 '' +
@@ -40,7 +39,7 @@
           >
             <b-input
               v-model.trim="question.question"
-              placeholder="Write your question"
+              :placeholder="$t('task-template-question-placeholder')"
               :state="questionValidated(questionKey)"
             >
             </b-input>
@@ -101,7 +100,7 @@
             </b-form-group>
             <!-- Add answer button -->
             <b-btn @click="addAnswer(questionKey)" class="float-right ">{{
-              $t("task-classify-template-add-answer")
+              $t("task-template-add-answer")
             }}</b-btn>
           </div>
 
@@ -110,7 +109,11 @@
             <b-row class="d-flex justify-content-start align-items-center">
               <!-- Text input for question options -->
               <b-col cols="6">
-                <b-input placeholder="Short answer" disabled class="editor">
+                <b-input
+                  :placeholder="$t('task-template-options-question-short')"
+                  disabled
+                  class="editor"
+                >
                 </b-input>
               </b-col>
             </b-row>
@@ -123,7 +126,7 @@
               <b-col cols="11">
                 <b-form-textarea
                   size="md"
-                  placeholder="Long answer"
+                  :placeholder="$t('task-template-options-question-long')"
                   disabled
                   class="editor"
                 ></b-form-textarea>
@@ -135,7 +138,7 @@
     </b-container>
 
     <b-btn @click="onSubmit" variant="primary" size="lg">{{
-      $t("task-classify-template-go")
+      $t("task-template-go")
     }}</b-btn>
   </div>
 </template>

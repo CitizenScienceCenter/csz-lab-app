@@ -26,14 +26,14 @@
 
     <b-form-input
       v-model.trim="answers[getRelativeId(question.id)].value"
-      placeholder="Enter your answer"
+      :placeholder="$t('template-editor-generic-text-placeholder')"
       :name="'question_shor' + question.id"
       v-if="question.type === 'short_answer'"
     ></b-form-input>
 
     <b-form-textarea
       v-model.trim="answers[getRelativeId(question.id)].value"
-      placeholder="Enter your answer"
+      :placeholder="$t('template-editor-generic-text-placeholder')"
       rows="3"
       max-rows="5"
       :name="'question_long' + question.id"
