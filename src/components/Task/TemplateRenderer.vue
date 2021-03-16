@@ -1,97 +1,95 @@
 <template>
-  <div>
-    <b-container class="mt-4">
-      <b-row>
-        <b-col>
-          <b-link
-            v-if="template"
-            :to="{
-              name: 'project.task.presenter.editor',
-              params: { id: this.id, template: this.template }
-            }"
-          >
-            {{ $t("task-template-renderer-go-back-editor") }}
-          </b-link>
-          <b-link v-else :to="{ name: 'project', params: { id: this.id } }">{{
-            $t("task-template-renderer-go-back-project")
-          }}</b-link>
+  <b-container class="mt-4">
+    <b-row>
+      <b-col>
+        <b-link
+          v-if="template"
+          :to="{
+            name: 'project.task.presenter.editor',
+            params: { id: this.id, template: this.template }
+          }"
+        >
+          {{ $t("task-template-renderer-go-back-editor") }}
+        </b-link>
+        <b-link v-else :to="{ name: 'project', params: { id: this.id } }">{{
+          $t("task-template-renderer-go-back-project")
+        }}</b-link>
 
-          <div v-if="!taskPresenterLoaded" class="mt-4 text-center">
-            <b-spinner
-              variant="primary"
-              style="width: 3rem; height: 3rem;"
-              :label="$t('task-template-renderer-loading')"
+        <div v-if="!taskPresenterLoaded" class="mt-4 text-center">
+          <b-spinner
+            variant="primary"
+            style="width: 3rem; height: 3rem;"
+            :label="$t('task-template-renderer-loading')"
+          >
+          </b-spinner>
+        </div>
+
+        <!-- Here is rendered the customized template  -->
+        <component
+          class="mt-4"
+          ref="presenter"
+          v-if="taskPresenterExists"
+          :is="presenterComponent"
+          :pybossa="this"
+        ></component>
+
+        <!-- No template to render -->
+        <div class="mt-4" v-else-if="taskPresenterLoaded">
+          <b-alert :show="true" variant="warning">{{
+            $t("task-template-renderer-no-task-presenter")
+          }}</b-alert>
+        </div>
+
+        <b-modal
+          scrollable
+          dialog-class="task-presenter-modal"
+          content-class="task-presenter-modal-content"
+          header-class="task-presenter-modal-header"
+          body-class="task-presenter-modal-body"
+          size="xl"
+          :hide-footer="true"
+          ref="presenter-modal"
+          id="presenter-modal"
+          header-close-variant="light"
+        >
+          <template v-slot:modal-header="{ close }">
+            <b-button
+              size="lg"
+              variant="outline-light"
+              class="font-weight-bold"
+              style="margin-left: auto"
+              @click="close()"
+              >X</b-button
             >
-            </b-spinner>
-          </div>
+          </template>
 
-          <!-- Here is rendered the customized template  -->
-          <component
-            class="mt-4"
-            ref="presenter"
-            v-if="taskPresenterExists"
-            :is="presenterComponent"
-            :pybossa="this"
-          ></component>
+          <template v-slot="body">
+            <div v-if="modal.mediaType === 'image'">
+              <b-img class="w-100" :src="modal.mediaUrl"></b-img>
+            </div>
 
-          <!-- No template to render -->
-          <div class="mt-4" v-else-if="taskPresenterLoaded">
-            <b-alert :show="true" variant="warning">{{
-              $t("task-template-renderer-no-task-presenter")
-            }}</b-alert>
-          </div>
-
-          <b-modal
-            scrollable
-            dialog-class="task-presenter-modal"
-            content-class="task-presenter-modal-content"
-            header-class="task-presenter-modal-header"
-            body-class="task-presenter-modal-body"
-            size="xl"
-            :hide-footer="true"
-            ref="presenter-modal"
-            id="presenter-modal"
-            header-close-variant="light"
-          >
-            <template v-slot:modal-header="{ close }">
-              <b-button
-                size="lg"
-                variant="outline-light"
-                class="font-weight-bold"
-                style="margin-left: auto"
-                @click="close()"
-                >X</b-button
+            <div v-else-if="modal.mediaType === 'pdf'">
+              <b-pagination
+                v-model="modal.pdfCurrentPage"
+                v-if="modal.pdfPageCount > 1"
+                :total-rows="modal.pdfPageCount"
+                :per-page="1"
+                align="fill"
               >
-            </template>
-
-            <template v-slot="body">
-              <div v-if="modal.mediaType === 'image'">
-                <b-img class="w-100" :src="modal.mediaUrl"></b-img>
-              </div>
-
-              <div v-else-if="modal.mediaType === 'pdf'">
-                <b-pagination
-                  v-model="modal.pdfCurrentPage"
-                  v-if="modal.pdfPageCount > 1"
-                  :total-rows="modal.pdfPageCount"
-                  :per-page="1"
-                  align="fill"
-                >
-                </b-pagination>
-                <pdf
-                  class="w-100"
-                  @num-pages="modal.pdfPageCount = $event"
-                  :src="modal.mediaUrl"
-                  :page="modal.pdfCurrentPage"
-                >
-                </pdf>
-              </div>
-            </template>
-          </b-modal>
-        </b-col>
-      </b-row>
-    </b-container>
-  </div>
+              </b-pagination>
+              <pdf
+                class="w-100"
+                @num-pages="modal.pdfPageCount = $event"
+                :src="modal.mediaUrl"
+                :page="modal.pdfCurrentPage"
+              >
+              </pdf>
+            </div>
+          </template>
+        </b-modal>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
