@@ -235,3 +235,8 @@ export function trackEvent(_this, info = undefined) {
     });
   }
 }
+
+// Get the width screen size using javascript.get
+export function getWidthScreen() {
+  return window.screen.width;
+}

@@ -176,8 +176,4 @@ export default {
   border: 0px;
   border-color: transparent;
 }
-
-.main-content {
-  padding-bottom: 14.5rem;
-}
 </style>

@@ -79,7 +79,7 @@ export default {
 
   .footer {
     background: linear-gradient(120deg, $color-gradient-start, $color-gradient-end );
-    position:absolute;
+    position:relative;
     bottom:0px; 
     width:100%; 
     overflow:hidden;
