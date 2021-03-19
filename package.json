@@ -24,11 +24,11 @@
     "file-saver": "^2.0.2",
     "moment": "^2.24.0",
     "portal-vue": "^2.1.4",
+    "secure-ls": "^1.2.6",
     "slug": "^1.1.0",
     "utf8": "^3.0.0",
     "vercel": "^21.0.1",
     "vue": "^2.5.2",
-    "vue-analytics": "^5.22.1",
     "vue-codemirror": "^4.0.6",
     "vue-cropperjs": "^3.0.0",
     "vue-gtag": "^1.11.0",
@@ -40,7 +40,8 @@
     "vue-router": "^3.0.1",
     "vue2-editor": "^2.10.2",
     "vuelayers": "^0.11.4",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@kazupon/vue-i18n-loader": "^0.3.0",
