@@ -165,27 +165,46 @@ const actions = {
   forgotPassword ({ commit, dispatch }, email) {
     return dispatch('getForgotPasswordOptions').then(value => {
       if (value) {
-        return api.forgotPassword(state.forgotPasswordOptions.form.csrf, email).then(response => {
-          if (response.data.status === 'success') {
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('notifications-messages-forgot-pass-title'), 
-              content: getPybossaTranslation(response.data.flash)
-            }, { root: true })
-            return true
-          } else {
-            commit('notification/showError', {
-              title: getTranslationLocale('error'), 
-              content: getPybossaTranslation(response.data.flash)
-            }, { root: true })
-            return false
-          }
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale('notifications-messages-reset-response-error'), 
-            content: reason
-          }, { root: true })
-          return false
-        })
+        return api
+          .forgotPassword(value.form.csrf, email)
+          .then(response => {
+            if (response.data.status === "success") {
+              commit(
+                "notification/showSuccess",
+                {
+                  title: getTranslationLocale(
+                    "notifications-messages-forgot-pass-title"
+                  ),
+                  content: getPybossaTranslation(response.data.flash)
+                },
+                { root: true }
+              );
+              return true;
+            } else {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("error"),
+                  content: getPybossaTranslation(response.data.flash)
+                },
+                { root: true }
+              );
+              return false;
+            }
+          })
+          .catch(reason => {
+            commit(
+              "notification/showError",
+              {
+                title: getTranslationLocale(
+                  "notifications-messages-reset-response-error"
+                ),
+                content: reason
+              },
+              { root: true }
+            );
+            return false;
+          });
       }
       return false
     })

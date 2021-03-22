@@ -114,15 +114,15 @@ export default {
         {
           vmid: "og:image", // because it gets overwritten by some
           property: "og:image",
-          content: "@/assets/img/presentation.jpg",
-        },
+          content: "@/assets/img/presentation.jpg"
+        }
       ],
       link: [
         {
           rel: "canonical",
-          href: "https://lab.citizenscience.ch" + this.$route.path,
-        },
-      ],
+          href: "https://lab.citizenscience.ch" + this.$route.path
+        }
+      ]
     };
   },
   props: {},
@@ -178,6 +178,16 @@ export default {
 }
 
 .main-content {
-  padding-bottom: 14.5rem;
+  padding-bottom: 20rem;
+}
+@media only screen and (min-width: $viewport-tablet-portrait) {
+  .main-content {
+    padding-bottom: 17rem;
+  }
+}
+@media only screen and (min-width: $viewport-large) {
+  .main-content {
+    padding-bottom: 15rem;
+  }
 }
 </style>
