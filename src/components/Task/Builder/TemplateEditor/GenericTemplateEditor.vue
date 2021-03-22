@@ -171,6 +171,7 @@ export default {
   name: "JobClassifyEditor",
   components: { QuestionOptions },
   created() {
+    this.types = this.questionTypes;
     if (Array.isArray(this.task.template)) {
       // deep clone
       this.questions = JSON.parse(JSON.stringify(this.task.template));
@@ -181,7 +182,7 @@ export default {
       maxCharQuestion: 75,
       maxCharAnswer: 30,
       questions: [JSON.parse(JSON.stringify(DEFAULT_QUESTION))],
-      types: QUESTION_TYPES,
+      types: [],
       minAnswers: 2
     };
   },
@@ -338,7 +339,8 @@ export default {
     }
   },
   computed: {
-    ...mapState("task/builder", ["task", "jobs"])
+    ...mapState("task/builder", ["task", "jobs"]),
+    ...mapState("settings", ["questionTypes"])
   }
 };
 </script>

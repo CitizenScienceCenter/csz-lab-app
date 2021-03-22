@@ -100,7 +100,7 @@
 
     <!-- Template section -->
     <b-row>
-      <b-col md="8" offset-md="2" class="container greyish jumbotron">
+      <b-col md="8" offset-md="2" class="container greyish jumbotron mb-4">
         <ul class="list-unstyled">
           <!-- Template -->
           <b-media tag="li" vertical-align="top">
@@ -175,19 +175,22 @@
             <!-- Generic template -->
             <ol v-if="task.job === jobs.generic">
               <li :key="q" v-for="(question, q) in task.template" class="mb-2">
-                <small class="mr-1 text-secondary"><i class="fas fa-dot-circle"></i></small><label class="mb-1">{{ question.question }}</label>
+                <small class="mr-1 text-secondary"
+                  ><i class="fas fa-dot-circle"></i></small
+                ><label class="mb-1">{{ question.question }}</label>
+                <small>({{ getQuestionType(question.type) }})</small>
                 <ul class="list-unstyled ml-4">
-                    <li
-                      :key="a"
-                      v-for="(answer, a) in task.template[q].answers"
-                      class="mb-0"
-                    >
-                      <label>{{
-                        $t("task-summary-builder-answer") + " " + (a + 1)
-                      }}</label>
-                      <small>{{ answer }}</small>
-                    </li>
-                  </ul>
+                  <li
+                    :key="a"
+                    v-for="(answer, a) in task.template[q].answers"
+                    class="mb-0"
+                  >
+                    <label>{{
+                      $t("task-summary-builder-answer") + " " + (a + 1)
+                    }}</label>
+                    <small>{{ answer }}</small>
+                  </li>
+                </ul>
               </li>
             </ol>
           </b-media>
@@ -240,6 +243,7 @@ export default {
     ]),
     ...mapState("project", ["selectedProject"]),
     ...mapGetters("task/builder", ["getBucketFileLink"]),
+    ...mapState("settings", ["questionTypes"]),
 
     // Get icons section
     getMaterialIcon() {
@@ -448,6 +452,10 @@ export default {
           }
         }
       );
+    },
+    getQuestionType(key) {
+      const qt = this.questionTypes.find(x => x.value == key);
+      return qt ? qt.name : "No type";
     }
   }
 };

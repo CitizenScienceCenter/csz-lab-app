@@ -176,4 +176,17 @@ export default {
   border: 0px;
   border-color: transparent;
 }
+.main-content {
+  padding-bottom: 20rem;
+}
+@media only screen and (min-width: $viewport-tablet-portrait) {
+  .main-content {
+    padding-bottom: 17rem;
+  }
+}
+@media only screen and (min-width: $viewport-large) {
+  .main-content {
+    padding-bottom: 15rem;
+  }
+}
 </style>

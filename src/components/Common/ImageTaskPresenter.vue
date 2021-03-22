@@ -17,7 +17,7 @@
         :show-remove-button="false"
         :show-loading="true"
         :loading-size="10"
-        :zoom-speed="10"
+        :zoom-speed="5"
         placeholder=""
         :placeholder-font-size="20"
         :accept="'image/*'"
