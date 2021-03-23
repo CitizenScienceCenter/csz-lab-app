@@ -19,9 +19,10 @@
         :disable-drag-and-drop="true"
         :disable-click-to-choose="true"
         :disable-scroll-to-zoom="true"
+        :disable-pinch-to-zoom="true"
         :show-loading="true"
         :loading-size="10"
-        :zoom-speed="5"
+        :zoom-speed="10"
         placeholder=""
         :placeholder-font-size="20"
         :accept="'image/*'"
@@ -34,7 +35,9 @@
         <img v-if="info.url" slot="initial" :src="info.url" />
         <img v-else slot="initial" :src="info.link_raw" />
       </beauty-img>
-      <div class="buttons-img ">
+
+      <!-- buttons for bigscreens -->
+      <div class="buttons-img d-none d-md-block">
         <transition name="fade">
           <b-form-input
             v-model="currentZoom"
@@ -45,6 +48,7 @@
             v-if="isZoom"
             orient="vertical"
             @input="onSliderChange"
+            class="mb-2"
           ></b-form-input>
         </transition>
         <button class="button-img mb-3" @click="toogleZoom()">
@@ -57,6 +61,16 @@
           class="button-img"
         >
           <i class="fas fa-expand fa-lg"></i>
+        </button>
+      </div>
+
+      <!-- Buttons for small screens -->
+      <div class="buttons-img d-block d-md-none">
+        <button class="button-img mb-3" @click="onButtonsChange(true)">
+          <i class="fas fa-search-plus fa-lg"></i>
+        </button>
+        <button class="button-img mb-3" @click="onButtonsChange(false)">
+          <i class="fas fa-search-minus fa-lg"></i>
         </button>
       </div>
     </b-skeleton-wrapper>
@@ -84,6 +98,9 @@ export default {
   },
   computed: {
     getSize() {
+      if (getWidthScreen() < 360) {
+        return 300;
+      }
       if (getWidthScreen() < 640) {
         return 350;
       }
@@ -106,6 +123,14 @@ export default {
     onSliderChange(value) {
       var increment = value;
       this.imgObject.scaleRatio = +increment;
+    },
+    onButtonsChange(value) {
+      if (value) {
+        this.imgObject.zoomIn();
+      } else {
+        this.imgObject.zoomOut();
+      }
+      console.log(this.imgObject.scaleRatio);
     },
     onZoom() {
       this.currentZoom = this.imgObject.scaleRatio;
@@ -130,29 +155,50 @@ export default {
     background: rgba(255, 255, 255, 0.6);
     height: 2.5em;
     width: 2.5em;
-    box-shadow: 1px 1px 5px $black;
+    box-shadow: 2px 1px 5px $black;
   }
   .button-img:hover {
     background: rgba(255, 255, 255, 0.9);
-    height: 2.6em;
-    width: 2.6em;
+    height: 2.7em;
+    width: 2.7em;
+  }
+  .button-img:active {
+    background: rgba(255, 255, 255, 0.8);
+    height: 2.7em;
+    width: 2.7em;
   }
 }
 // Slide vertical style
 input[type="range"][orient="vertical"] {
   -webkit-appearance: none;
   height: 250px;
-  width: 10px;
+  width: 7px;
   border-radius: 5px;
-  background: #ccc;
+  background: rgba(255, 255, 255, 0.5);
   outline: none;
   writing-mode: bt-lr; /* IE */
   -webkit-appearance: slider-vertical; /* WebKit */
-  box-shadow: 1px 1px 5px $black;
+  box-shadow: 3px 1px 5px $black;
 }
+input[type="range"]::-webkit-slider-thumb {
+  background: $primary;
+  transform: scale(1.25);
+}
+
+input[type="range"]::-moz-range-thumb {
+  background: $primary;
+  transform: scale(1.25);
+}
+
+input[type="range"]::-ms-thumb {
+  background: $primary;
+  transform: scale(1.25);
+}
+
 // Slide transition
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
