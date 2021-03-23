@@ -87,7 +87,8 @@ export default {
       imgObject: {},
       currentZoom: 0,
       minZoom: 0,
-      maxZoom: 0
+      maxZoom: 0,
+      timing: null
     };
   },
   props: {
@@ -113,9 +114,13 @@ export default {
   methods: {
     toogleZoom() {
       this.isZoom = !this.isZoom;
+      if (this.isZoom) {
+        // slider for zoom will be visible for 3 seconds
+        this.timing = setTimeout(this.hideSlider, 3000);
+      }
     },
     onNewImage() {
-      this.isZoom = false;
+      this.hideSlider();
       this.currentZoom = this.imgObject.scaleRatio;
       this.minZoom = this.imgObject.scaleRatio * 1;
       this.maxZoom = this.imgObject.scaleRatio * 4;
@@ -123,6 +128,9 @@ export default {
     onSliderChange(value) {
       var increment = value;
       this.imgObject.scaleRatio = +increment;
+      // if slider is used the 3 seconds is restarted
+      clearTimeout(this.timing);
+      this.timing = setTimeout(this.hideSlider, 3000);
     },
     onButtonsChange(value) {
       if (value) {
@@ -130,10 +138,12 @@ export default {
       } else {
         this.imgObject.zoomOut();
       }
-      console.log(this.imgObject.scaleRatio);
     },
     onZoom() {
       this.currentZoom = this.imgObject.scaleRatio;
+    },
+    hideSlider() {
+      this.isZoom = false;
     }
   }
 };
@@ -168,39 +178,36 @@ export default {
     width: 2.7em;
   }
 }
-// Slide vertical style
+// Slider vertical style
 input[type="range"][orient="vertical"] {
   -webkit-appearance: none;
   height: 250px;
   width: 7px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.7);
   outline: none;
   writing-mode: bt-lr; /* IE */
   -webkit-appearance: slider-vertical; /* WebKit */
   box-shadow: 3px 1px 5px $black;
 }
-input[type="range"]::-webkit-slider-thumb {
-  background: $primary;
-  transform: scale(1.25);
-}
-
 input[type="range"]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px $black;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
   background: $primary;
-  transform: scale(1.25);
-}
-
-input[type="range"]::-ms-thumb {
-  background: $primary;
-  transform: scale(1.25);
+  cursor: pointer;
 }
 
 // Slide transition
-.fade-enter-active,
-.fade-leave-active {
+.fade-enter-active {
   transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
