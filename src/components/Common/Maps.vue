@@ -9,11 +9,13 @@
       @update:bounds="boundsUpdated"
     >
       <l-tile-layer :url="url"></l-tile-layer>
-      <l-marker
-        v-for="(location, index) in locations"
-        :key="index"
-        :lat-lng="location"
-      ></l-marker>
+      <v-marker-cluster>
+        <v-marker
+          v-for="(location, index) in locations"
+          :key="index"
+          :lat-lng="location"
+        ></v-marker>
+      </v-marker-cluster>
     </l-map>
   </div>
 </template>
@@ -22,18 +24,25 @@
 import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 import { Icon } from "leaflet";
 
+import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
+
 const DummyLocations = [
-  { lat: 46.857687895771015, lng: 7.143336159214287 },
   { lat: 2.4471708623464177, lng: -76.60543462886939 },
+  { lat: 2.4471708623464177, lng: -76.60543462886939 },
+  { lat: 2.4471708623464177, lng: -75.60543462886939 },
   { lat: 47.3937203599115, lng: 8.544738061411797 },
-  { lat: 47.3744092665564, lng: -8.550949011575966 }
+  { lat: 47.3744092665564, lng: -98.550949011575966 },
+  { lat: 40.857687895771015, lng: -90.143336159214287 },  
+  { lat: 47.3937203599115, lng: 8.544738061411797 },
+  { lat: 47.3744092665564, lng: -98.550949011575966 }
 ];
 
 export default {
   components: {
     LMap,
     LTileLayer,
-    LMarker
+    "v-marker": LMarker,
+    "v-marker-cluster": Vue2LeafletMarkerCluster
   },
   data() {
     return {
@@ -41,7 +50,6 @@ export default {
       zoom: 3,
       center: [47.41322, -1.219482],
       bounds: null,
-      markerLatLng: [47.31322, -1.319482],
       locations: []
     };
   },
@@ -78,7 +86,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .maps {
   height: 75vh;
   width: 75vh;

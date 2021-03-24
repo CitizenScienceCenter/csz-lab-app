@@ -17,7 +17,11 @@ import "./scss/global.scss";
 import VueGtag from "vue-gtag";
 import Meta from "vue-meta";
 import "@/components/Common/globalComponents";
+
+// Leaflet map styles
 import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 Vue.config.productionTip = false;
 //Vue.use(VueDisqus)
