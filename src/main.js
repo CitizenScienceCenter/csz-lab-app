@@ -17,6 +17,7 @@ import "./scss/global.scss";
 import VueGtag from "vue-gtag";
 import Meta from "vue-meta";
 import "@/components/Common/globalComponents";
+import "leaflet/dist/leaflet.css";
 
 Vue.config.productionTip = false;
 //Vue.use(VueDisqus)

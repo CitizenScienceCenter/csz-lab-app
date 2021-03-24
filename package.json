@@ -22,6 +22,7 @@
     "bootstrap-vue": "^2.0.0-rc.19",
     "es6-promise": "^4.2.6",
     "file-saver": "^2.0.2",
+    "leaflet": "^1.7.1",
     "moment": "^2.24.0",
     "portal-vue": "^2.1.4",
     "secure-ls": "^1.2.6",
@@ -39,6 +40,7 @@
     "vue-pdf": "^4.0.7",
     "vue-router": "^3.0.1",
     "vue2-editor": "^2.10.2",
+    "vue2-leaflet": "^2.7.0",
     "vuelayers": "^0.11.4",
     "vuex": "^3.1.0",
     "vuex-persistedstate": "^4.0.0-beta.3"

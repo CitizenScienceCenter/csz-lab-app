@@ -1,52 +1,60 @@
 <template>
-  <vl-map
-    :load-tiles-while-animating="true"
-    :load-tiles-while-interacting="true"
-    class="map"
-  >
-    <vl-view
-      :zoom.sync="zoom"
-      :center.sync="center"
-      :rotation.sync="rotation"
-      :min-zoom="minZoom"
-    ></vl-view>
-
-    <vl-feature>
-      <vl-geom-multi-point :coordinates="locations"></vl-geom-multi-point>
-      <vl-style-box>
-        <vl-style-icon
-          :src="icon"
-          :anchor="[0.5, 1]"
-          :scale="0.3"
-        ></vl-style-icon>
-      </vl-style-box>
-    </vl-feature>
-
-    <vl-layer-tile id="osm">
-      <vl-source-osm></vl-source-osm>
-    </vl-layer-tile>
-  </vl-map>
+  <div class="maps">
+    <l-map
+      style="height: 80%; width: 100%"
+      :zoom="zoom"
+      :center="center"
+      @update:zoom="zoomUpdated"
+      @update:center="centerUpdated"
+      @update:bounds="boundsUpdated"
+    >
+      <l-tile-layer :url="url"></l-tile-layer>
+      <l-marker
+        v-for="(location, index) in locations"
+        :key="index"
+        :lat-lng="location"
+      ></l-marker>
+    </l-map>
+  </div>
 </template>
 
 <script>
+import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+import { Icon } from "leaflet";
+
 const DummyLocations = [
-  { lat: 7.143336159214287, lng: 46.857687895771015 },
-  { lat: -76.60543462886939, lng: 2.4471708623464177 },
-  { lat: 8.544738061411797, lng: 47.3937203599115 },
-  { lat: -8.550949011575966, lng: 47.3744092665564 }
+  { lat: 46.857687895771015, lng: 7.143336159214287 },
+  { lat: 2.4471708623464177, lng: -76.60543462886939 },
+  { lat: 47.3937203599115, lng: 8.544738061411797 },
+  { lat: 47.3744092665564, lng: -8.550949011575966 }
 ];
+
 export default {
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker
+  },
   data() {
     return {
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       zoom: 3,
-      minZoom: 3,
-      center: [47.3744092665564, 8.550949011575966],
-      rotation: 0,
-      locations: [],
-      icon: require("@/assets/location_pin.png")
+      center: [47.41322, -1.219482],
+      bounds: null,
+      markerLatLng: [47.31322, -1.319482],
+      locations: []
     };
   },
   methods: {
+    zoomUpdated(zoom) {
+      this.zoom = zoom;
+    },
+    centerUpdated(center) {
+      this.center = center;
+    },
+    boundsUpdated(bounds) {
+      this.bounds = bounds;
+    },
     setData() {
       this.locations = DummyLocations.map(x => [x.lat, x.lng]);
       const [minLat, maxLat, minLng, maxLng] = [
@@ -59,13 +67,19 @@ export default {
     }
   },
   created() {
+    delete Icon.Default.prototype._getIconUrl;
+    Icon.Default.mergeOptions({
+      iconRetinaUrl: require("@/assets/location_pin.png"),
+      iconUrl: require("@/assets/location_pin.png"),
+      shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+    });
     this.setData();
   }
 };
 </script>
 
 <style scoped>
-.map {
+.maps {
   height: 75vh;
   width: 75vh;
   position: relative;
