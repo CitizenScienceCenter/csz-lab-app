@@ -42,6 +42,12 @@ export const routes = [
         name: "home",
         component: Home
       },
+      // TODO: delete when will be done
+      {
+        path: "maps",
+        name: "maps",
+        component: () => import("@/components/Common/Maps.vue")
+      },
       {
         path: "login",
         name: "login",
@@ -388,7 +394,10 @@ export const routes = [
             store.commit("task/builder/setCurrentStep", "template");
             next();
           } else {
-            next({ name: "task.builder.job", params: { id: to.params.id } });
+            next({
+              name: "task.builder.job",
+              params: { id: to.params.id }
+            });
           }
         }
       },
@@ -419,7 +428,10 @@ export const routes = [
             store.commit("task/builder/setCurrentStep", "summary");
             next();
           } else {
-            next({ name: "task.builder.source", params: { id: to.params.id } });
+            next({
+              name: "task.builder.source",
+              params: { id: to.params.id }
+            });
           }
         }
       },
