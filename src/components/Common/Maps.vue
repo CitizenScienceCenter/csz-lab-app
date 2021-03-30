@@ -15,27 +15,42 @@
       <v-tile-layer :url="url" :attribution="attribution"></v-tile-layer>
       <v-control-zoom position="bottomright"></v-control-zoom>
 
+      <v-feature-group>
+        <v-polygon :lat-lngs="area.latlngs" :color="area.color">
+          <v-popup>
+            <div v-if="toolbar.editionMode && toolbar.tools.polygon">
+              <b-button
+                variant="outline-danger"
+                size="sm"
+                @click="removeArea(area)"
+              >
+                <i class="fas fa-trash"></i>
+              </b-button>
+            </div>
+            <p v-else>{{ area.latlngs }}</p>
+          </v-popup>
+        </v-polygon>
+      </v-feature-group>
+
       <v-marker-cluster>
         <v-marker
           v-for="(location, index) in locations"
           :key="`marker${index}`"
           :lat-lng="location"
-          @click="clickOnMarker(location, index)"
         >
+          <v-popup>
+            <b-button
+              variant="outline-danger"
+              size="sm"
+              @click="removeMarker(location, index)"
+              v-if="toolbar.editionMode && toolbar.tools.marker"
+            >
+              <i class="fas fa-trash"></i>
+            </b-button>
+            <p v-else>{{ getLocation(location) }}</p>
+          </v-popup>
         </v-marker>
-        <v-popup
-          v-for="(location, index) in locations"
-          :key="`popup${index}`"
-          :lat-lng="location"
-          :content="getLocation(location)"
-        />
       </v-marker-cluster>
-
-      <v-polygon
-        :lat-lngs="polygon.latlngs"
-        :color="polygon.color"
-        @click="clickOnPoligon"
-      ></v-polygon>
 
       <v-control :position="'bottomleft'" class="custom-buttons">
         <button
@@ -67,7 +82,8 @@ import {
   LControlZoom,
   LControl,
   LPopup,
-  LPolygon
+  LPolygon,
+  LFeatureGroup
 } from "vue2-leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import VGeosearch from "vue2-leaflet-geosearch";
@@ -98,6 +114,7 @@ export default {
     "v-control": LControl,
     "v-popup": LPopup,
     "v-polygon": LPolygon,
+    "v-feature-group": LFeatureGroup,
     VGeosearch
   },
   data() {
@@ -114,14 +131,14 @@ export default {
         autoClose: true,
         keepResult: false
       },
-      polygon: {
+      area: {
         latlngs: [],
-        color: "green",
-        fill: true,
-        fillColor: "red"
+        color: "green"
       },
-      searchActive: false,
-      toolbar: { editionMode: false, tools: { marker: false, polygon: false } }
+      toolbar: {
+        editionMode: false,
+        tools: { search: false, marker: false, polygon: false }
+      }
     };
   },
   methods: {
@@ -134,37 +151,39 @@ export default {
     boundsUpdated(bounds) {
       this.bounds = bounds;
     },
-    clickOnMarker(location, index) {
+    removeMarker(location, index) {
       // Remove marker when edition mode is on
       if (this.toolbar.editionMode) {
         this.locations.splice(index, 1);
         return;
       }
     },
-    clickOnPoligon(event) {
-      console.log(event);
+    removeArea(area) {
+      this.area = { latlngs: [], color: "green" };
+      const areaPopup = document.getElementsByClassName("leaflet-popup")[0];
+      areaPopup.parentNode.removeChild(areaPopup);
     },
     clickOnMap(event) {
       // Add marker when edition mode is on
       if (this.toolbar.editionMode) {
         // Get the search geolocation event through div class
-        this.searchActive = document
+        this.toolbar.search = document
           .getElementsByClassName("geosearch")[0]
           .classList.contains("active");
         if (
           (event.containerPoint.x >= 10 && event.containerPoint.x <= 40) ||
           (event.containerPoint.y >= 10 && event.containerPoint.y <= 40)
         ) {
-          this.searchActive = true;
+          this.toolbar.search = true;
           return;
         }
-        if (!this.searchActive) {
+        if (!this.toolbar.search) {
           if (this.toolbar.tools.marker) {
             this.locations.push(event.latlng);
             return;
           }
           if (this.toolbar.tools.polygon) {
-            this.polygon.latlngs.push([event.latlng.lat, event.latlng.lng]);
+            this.area.latlngs.push([event.latlng.lat, event.latlng.lng]);
             return;
           }
         }
