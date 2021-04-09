@@ -37,6 +37,7 @@
             :invalid-feedback="invalidQuestionFeedback(question.question)"
             :state="questionValidated(questionKey)"
           >
+            <div class="required-star" v-if="question.required">*</div>
             <b-input
               v-model.trim="question.question"
               :placeholder="$t('task-template-question-placeholder')"
@@ -239,10 +240,6 @@ export default {
       if (this.isFormValid()) {
         const aux = this;
         this.questions = this.questions.map(function(x) {
-          // Add * to the question text when its required
-          if (x.required && x.question.slice(-1) != "*") {
-            x.question += " *";
-          }
           // Add all the answers to condition.answer when questionId is set and answers is empty
           if (
             (x.condition.questionId != undefined ||
@@ -344,3 +341,14 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+@import "@/styles/themes.scss";
+@import "@/styles/variables.scss";
+.required-star {
+  position: absolute;
+  font-size: 35px;
+  right: 3%;
+  color: $color-primary;
+  font-weight: bold;
+}
+</style>

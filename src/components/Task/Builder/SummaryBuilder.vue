@@ -174,24 +174,66 @@
             </ul>
             <!-- Generic template -->
             <ol v-if="task.job === jobs.generic">
-              <li :key="q" v-for="(question, q) in task.template" class="mb-2">
-                <small class="mr-1 text-secondary"
-                  ><i class="fas fa-dot-circle"></i></small
-                ><label class="mb-1">{{ question.question }}</label>
-                <small>({{ getQuestionType(question.type) }})</small>
-                <ul class="list-unstyled ml-4">
-                  <li
-                    :key="a"
-                    v-for="(answer, a) in task.template[q].answers"
-                    class="mb-0"
+              <div class="accordion" role="tablist">
+                <b-card
+                  no-body
+                  class="mb-1"
+                  v-for="(question, q) in task.template"
+                  :key="q"
+                  style="background-color: rgba(255,255,255,0.3);"
+                >
+                  <b-card-header header-tag="header" class="p-0" role="tab">
+                    <b-button
+                      block
+                      v-b-toggle="`gquestion-${q}`"
+                      class="text-left"
+                      variant="secondary"
+                    >
+                      <span class="font-weight-bold">
+                        {{ $t("task-summary-builder-question") }}
+                        {{ q + 1 }}:
+                      </span>
+                      <span class="text-capitalize">{{
+                        question.question
+                      }}</span>
+                      <span
+                        class="text-primary font-weight-bold h5"
+                        v-if="question.required"
+                        >*</span
+                      ></b-button
+                    >
+                  </b-card-header>
+                  <b-collapse
+                    :id="`gquestion-${q}`"
+                    accordion="questions-accordion"
+                    role="tabpanel"
+                    visible
                   >
-                    <label>{{
-                      $t("task-summary-builder-answer") + " " + (a + 1)
-                    }}</label>
-                    <small>{{ answer }}</small>
-                  </li>
-                </ul>
-              </li>
+                    <b-card-body>
+                      <b-card-text>
+                        <ul class="list-unstyled ml-4">
+                          <li
+                            :key="a"
+                            v-for="(answer, a) in task.template[q].answers"
+                            class="mb-0"
+                          >
+                            <label>
+                              {{
+                                $t("task-summary-builder-answer") +
+                                  " " +
+                                  (a + 1)
+                              }}
+                            </label>
+                            <small>{{ answer }}</small>
+                          </li>
+                        </ul>
+                        <small class="text-primary">Question type: </small>
+                        <small>{{ getQuestionType(question.type) }}</small>
+                      </b-card-text>
+                    </b-card-body>
+                  </b-collapse>
+                </b-card>
+              </div>
             </ol>
           </b-media>
         </ul>

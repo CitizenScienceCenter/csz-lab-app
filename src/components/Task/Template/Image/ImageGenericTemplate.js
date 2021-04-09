@@ -10,7 +10,8 @@ const component = {
         <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
-          <b-form-group :key="question.id" v-for="question in questionList" :label="question.question" label-size="lg" class="mt-2 mb-4">          
+          <b-form-group :key="question.id" v-for="question in questionList" label-size="lg" class="mt-2 mb-4">            
+            <label>{{question.question}} <span v-if="question.required" class="text-primary font-weight-bold h5">*</span></label>          
             <common-editor-elements :answers="answers" :question="question" :context="context"/>            
           </b-form-group>
           
@@ -97,7 +98,7 @@ const component = {
         }
         return answer;
       });
-    },
+    }
   },
 
   computed: {
