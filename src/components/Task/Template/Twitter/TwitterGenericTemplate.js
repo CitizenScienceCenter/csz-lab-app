@@ -7,7 +7,7 @@ const component = {
       <b-row v-if="pybossa.userProgressInPercent < 100">
         
         <!-- Form zone -->
-        <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
+        <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
           <b-form-group :key="question.id" v-for="question in questionList" label-size="lg" class="mt-2 mb-4">            
@@ -33,14 +33,28 @@ const component = {
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
         
-        <!-- Image -->
-        <b-col md="7" class="order-1 order-md-2">
-          <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center" style="position: sticky;top: 15%;">
-            <image-task-presenter :info="taskInfo" :pybossa="pybossa" :loading="!pybossa.taskLoaded" class="shadow"/>
+        <!-- Tweet -->
+        <b-col md="6" class="order-1 order-md-2">
+          <div style="position: sticky;top: 15%;">
+            <!-- Author name and tweet text -->
+            <h5 v-if="taskInfo.user && taskInfo.user.name">From: {{ taskInfo.user.name }}</h5>
+            <p><i>{{ taskInfo.text }}</i></p>
+          
+            <!-- Display urls if available -->
+            <ul v-if="taskInfo.entities && taskInfo.entities.urls">
+              <li v-for="link in taskInfo.entities.urls"><a :href="link.url" target="_blank">{{ link.url }}</a></li>
+            </ul>
+        
+            <!-- Display picture if available -->
+            <div v-if="taskInfo.entities && taskInfo.entities.media && taskInfo.entities.media.length > 0" class="text-center">
+              <div v-if="pybossa.taskLoaded">
+                <b-img fluid-grow :src="taskInfo.entities.media[0].media_url_https" class="shadow" style="height: 50vh; background-color: grey" :alt="$t('template-editor-text-4')"></b-img>
+              </div>
+              <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-4')"></b-spinner>
+            </div>
           </div>
-          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
-        </b-col>        
-      </b-row>      
+        </b-col>
+      </b-row>    
       
       <!-- Task end message -->
       <b-row v-else>

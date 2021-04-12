@@ -40,7 +40,7 @@ const component =
         <!-- Sound -->
         <b-col md="8" class="order-1 order-md-2">
           <div v-if="pybossa.taskLoaded">
-            <audio v-if="taskInfo.audio_url" :src="taskInfo.audio_url" controls></audio>
+            <audio v-if="taskInfo.link" :src="taskInfo.link" controls></audio>
             <div v-else-if="taskInfo.embed" v-html="taskInfo.embed"></div>
             <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-12') }}</b-alert>
           </div>

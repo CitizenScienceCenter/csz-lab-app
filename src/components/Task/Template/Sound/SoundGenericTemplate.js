@@ -7,7 +7,7 @@ const component = {
       <b-row v-if="pybossa.userProgressInPercent < 100">
         
         <!-- Form zone -->
-        <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
+        <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
           <b-form-group :key="question.id" v-for="question in questionList" label-size="lg" class="mt-2 mb-4">            
@@ -33,14 +33,18 @@ const component = {
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
         
-        <!-- Image -->
-        <b-col md="7" class="order-1 order-md-2">
-          <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center" style="position: sticky;top: 15%;">
-            <image-task-presenter :info="taskInfo" :pybossa="pybossa" :loading="!pybossa.taskLoaded" class="shadow"/>
+        <!-- Sound -->
+        <b-col md="6" class="order-1 order-md-2">
+          <div v-if="pybossa.taskLoaded" class="text-center" style="position: sticky;top: 15%;">
+            <audio v-if="taskInfo.link" :src="taskInfo.link" controls style="width: 90%;" preload="auto"></audio>
+            <div v-else-if="taskInfo.embed" v-html="taskInfo.embed"></div>
+            <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-12') }}</b-alert>
           </div>
-          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
-        </b-col>        
-      </b-row>      
+          <div v-else class="text-center">
+            <b-spinner style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-13')"></b-spinner>
+          </div>
+        </b-col>
+      </b-row>    
       
       <!-- Task end message -->
       <b-row v-else>

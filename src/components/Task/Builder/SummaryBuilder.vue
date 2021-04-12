@@ -269,9 +269,13 @@ import VideoClassificationTemplate from "@/components/Task/Template/Video/VideoC
 import VideoDescriptionTemplate from "@/components/Task/Template/Video/VideoDescriptionTemplate";
 import SoundClassificationTemplate from "@/components/Task/Template/Sound/SoundClassificationTemplate";
 import SoundDescriptionTemplate from "@/components/Task/Template/Sound/SoundDescriptionTemplate";
+// TODO: change when generic template works
+import SoundGenericTemplate from "@/components/Task/Template/Sound/SoundGenericTemplate";
 import PdfDescriptionTemplate from "@/components/Task/Template/Document/PdfDescriptionTemplate";
 import TwitterClassificationTemplate from "@/components/Task/Template/Twitter/TwitterClassificationTemplate";
 import TwitterDescriptionTemplate from "@/components/Task/Template/Twitter/TwitterDescriptionTemplate";
+// TODO: change when generic template works
+import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
 
 export default {
   name: "SummaryBuilder",
@@ -386,6 +390,11 @@ export default {
             question: this.task.template.question,
             descriptions: this.task.template.descriptions
           });
+        }else if (this.task.job === this.jobs.generic) {
+          // TODO: change when generic template works
+          template = buildTemplateFromModel(SoundGenericTemplate, {
+            questions: this.task.template
+          });
         }
       }
 
@@ -423,6 +432,11 @@ export default {
           template = buildTemplateFromModel(TwitterDescriptionTemplate, {
             question: this.task.template.question,
             descriptions: this.task.template.descriptions
+          });
+        }else if (this.task.job === this.jobs.generic) {
+          // TODO: change when generic template works
+          template = buildTemplateFromModel(TwitterGenericTemplate, {
+            questions: this.task.template
           });
         }
       }

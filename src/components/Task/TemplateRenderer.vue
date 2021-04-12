@@ -61,7 +61,7 @@
         >
       </template>
 
-      <template v-slot="body">
+      <template>
         <div v-if="modal.mediaType === 'image'">
           <b-img class="w-100" :src="modal.mediaUrl"></b-img>
         </div>
