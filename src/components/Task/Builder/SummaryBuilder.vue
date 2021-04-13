@@ -267,6 +267,8 @@ import ImageClassificationTemplate from "@/components/Task/Template/Image/ImageC
 import ImageGenericTemplate from "@/components/Task/Template/Image/ImageGenericTemplate";
 import VideoClassificationTemplate from "@/components/Task/Template/Video/VideoClassificationTemplate";
 import VideoDescriptionTemplate from "@/components/Task/Template/Video/VideoDescriptionTemplate";
+// TODO: change when generic template works
+import VideoGenericTemplate from "@/components/Task/Template/Video/VideoGenericTemplate";
 import SoundClassificationTemplate from "@/components/Task/Template/Sound/SoundClassificationTemplate";
 import SoundDescriptionTemplate from "@/components/Task/Template/Sound/SoundDescriptionTemplate";
 // TODO: change when generic template works
@@ -408,6 +410,11 @@ export default {
           template = buildTemplateFromModel(VideoDescriptionTemplate, {
             question: this.task.template.question,
             descriptions: this.task.template.descriptions
+          });
+        }else if (this.task.job === this.jobs.generic) {
+          // TODO: change when generic template works
+          template = buildTemplateFromModel(VideoGenericTemplate, {
+            questions: this.task.template
           });
         }
       }

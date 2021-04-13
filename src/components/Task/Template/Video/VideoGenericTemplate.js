@@ -7,7 +7,7 @@ const component = {
       <b-row v-if="pybossa.userProgressInPercent < 100">
         
         <!-- Form zone -->
-        <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
+        <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
           <b-form-group :key="question.id" v-for="question in questionList" label-size="lg" class="mt-2 mb-4">            
@@ -33,15 +33,15 @@ const component = {
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
         
-        <!-- Sound -->
-        <b-col md="6" class="order-1 order-md-2">
-          <div v-if="pybossa.taskLoaded" class="text-center" style="position: sticky;top: 15%;">
-            <b-embed v-if="taskInfo.audio_url" type="iframe" :src="taskInfo.audio_url" style="width: 90%; height:10%" controls></b-embed>
-            <div v-else-if="taskInfo.embed" v-html="taskInfo.embed"></div>
-            <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-12') }}</b-alert>
+        <!-- Video -->
+        <b-col md="7" class="order-1 order-md-2">
+          <div v-if="pybossa.taskLoaded">
+            <b-embed v-if="taskInfo.video_url" type="iframe" allowfullscreen :src="taskInfo.video_url"></b-embed>
+            <div v-else-if="taskInfo && taskInfo.oembed" v-html="taskInfo.oembed"></div>
+            <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-15') }}</b-alert>
           </div>
           <div v-else class="text-center">
-            <b-spinner style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-13')"></b-spinner>
+            <b-spinner style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-14')"></b-spinner>
           </div>
         </b-col>
       </b-row>    
