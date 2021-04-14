@@ -33,13 +33,37 @@ const component = {
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
         
-        <!-- Video -->
+        <!-- PDF section -->
         <b-col md="7" class="order-1 order-md-2">
-          <div class="text-center" style="position: sticky;top: 15%;">
-            <media v-if="taskInfo.video_url" :link="taskInfo.video_url" type="video" :loading="!pybossa.taskLoaded"></media>
-            <div v-else-if="taskInfo && taskInfo.oembed" v-html="taskInfo.oembed"></div>
-            <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-15') }}</b-alert>
+          <div v-if="taskInfo.pdf_url" class="text-center">
+            <div v-if="pybossa.taskLoaded && taskInfo.page && taskInfo.page.length > 0" 
+                 class="clickable-element" 
+                 @click="pybossa.showModal('pdf', taskInfo.pdf_url)">
+              <pdf
+                class="w-100 shadow"
+                :src="taskInfo.pdf_url"
+                :page="parseInt(taskInfo.page)">
+              </pdf>
+            </div>
+            <div v-else-if="pybossa.taskLoaded">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="pageCount"
+                :per-page="1"
+                align="center">
+              </b-pagination>
+              <div class="clickable-element" @click="pybossa.showModal('pdf', taskInfo.pdf_url)">
+                <pdf 
+                  class="w-100 shadow"
+                  @num-pages="pageCount = $event"
+                  :src="taskInfo.pdf_url"
+                  :page="currentPage">
+                </pdf>
+              </div>
+            </div>
+            <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-4')"></b-spinner>
           </div>
+          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-10')}}</b-alert>
         </b-col>
       </b-row>    
       
@@ -59,7 +83,9 @@ const component = {
     ],
     answers: [],
     showAlert: false,
-    questionList: []
+    questionList: [],
+    pageCount: 0,
+    currentPage: 1
   },
 
   methods: {

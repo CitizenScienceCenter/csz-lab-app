@@ -274,6 +274,8 @@ import SoundDescriptionTemplate from "@/components/Task/Template/Sound/SoundDesc
 // TODO: change when generic template works
 import SoundGenericTemplate from "@/components/Task/Template/Sound/SoundGenericTemplate";
 import PdfDescriptionTemplate from "@/components/Task/Template/Document/PdfDescriptionTemplate";
+// TODO: change when generic template works
+import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import TwitterClassificationTemplate from "@/components/Task/Template/Twitter/TwitterClassificationTemplate";
 import TwitterDescriptionTemplate from "@/components/Task/Template/Twitter/TwitterDescriptionTemplate";
 // TODO: change when generic template works
@@ -392,7 +394,7 @@ export default {
             question: this.task.template.question,
             descriptions: this.task.template.descriptions
           });
-        }else if (this.task.job === this.jobs.generic) {
+        } else if (this.task.job === this.jobs.generic) {
           // TODO: change when generic template works
           template = buildTemplateFromModel(SoundGenericTemplate, {
             questions: this.task.template
@@ -411,7 +413,7 @@ export default {
             question: this.task.template.question,
             descriptions: this.task.template.descriptions
           });
-        }else if (this.task.job === this.jobs.generic) {
+        } else if (this.task.job === this.jobs.generic) {
           // TODO: change when generic template works
           template = buildTemplateFromModel(VideoGenericTemplate, {
             questions: this.task.template
@@ -425,6 +427,11 @@ export default {
           template = buildTemplateFromModel(PdfDescriptionTemplate, {
             question: this.task.template.question,
             descriptions: this.task.template.descriptions
+          });
+        } else if (this.task.job === this.jobs.generic) {
+          // TODO: change when generic template works
+          template = buildTemplateFromModel(PdfGenericTemplate, {
+            questions: this.task.template
           });
         }
       }
@@ -440,7 +447,7 @@ export default {
             question: this.task.template.question,
             descriptions: this.task.template.descriptions
           });
-        }else if (this.task.job === this.jobs.generic) {
+        } else if (this.task.job === this.jobs.generic) {
           // TODO: change when generic template works
           template = buildTemplateFromModel(TwitterGenericTemplate, {
             questions: this.task.template

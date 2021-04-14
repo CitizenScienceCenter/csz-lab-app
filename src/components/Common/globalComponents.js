@@ -11,3 +11,7 @@ Vue.component("CommonEditorElements", () =>
 Vue.component("ImageTaskPresenter", () =>
   import("@/components/Common/ImageTaskPresenter")
 );
+
+Vue.component("Media", () =>
+  import("@/components/Common/Media")
+);

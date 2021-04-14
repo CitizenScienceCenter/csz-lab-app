@@ -365,7 +365,10 @@ export default {
               aux.answers[rk].value.length > 0
             ) {
               aux.answers[rk].value = [];
-            } else if (aux.answers[rk].value != null) {
+            } else if (
+              !Array.isArray(aux.answers[rk].value) &&
+              aux.answers[rk].value != null
+            ) {
               aux.answers[rk].value = null;
             }
           }

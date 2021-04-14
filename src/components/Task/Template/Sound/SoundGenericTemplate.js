@@ -35,13 +35,10 @@ const component = {
         
         <!-- Sound -->
         <b-col md="6" class="order-1 order-md-2">
-          <div v-if="pybossa.taskLoaded" class="text-center" style="position: sticky;top: 15%;">
-            <b-embed v-if="taskInfo.audio_url" type="iframe" :src="taskInfo.audio_url" style="width: 90%; height:10%" controls></b-embed>
+          <div class="text-center" style="position: sticky;top: 15%;">
+            <media v-if="taskInfo.audio_url" :link="taskInfo.audio_url" type="audio" :loading="!pybossa.taskLoaded"></media>
             <div v-else-if="taskInfo.embed" v-html="taskInfo.embed"></div>
             <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-12') }}</b-alert>
-          </div>
-          <div v-else class="text-center">
-            <b-spinner style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-13')"></b-spinner>
           </div>
         </b-col>
       </b-row>    
