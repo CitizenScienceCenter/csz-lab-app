@@ -8,6 +8,7 @@
       }}</b-btn>
     </div>
 
+    <!-- Questions section -->
     <b-container>
       <!-- All question section: distributed in tabs -->
       <b-tabs content-class="mt-4">
@@ -138,6 +139,7 @@
       </b-tabs>
     </b-container>
 
+    <!-- Continue Button -->
     <b-btn @click="onSubmit" variant="primary" size="lg">{{
       $t("task-template-go")
     }}</b-btn>

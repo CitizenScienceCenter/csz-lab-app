@@ -6,12 +6,13 @@ const errors = {
 
 // all the types of data available for a task
 const materials = {
-  image: 'image',
-  sound: 'sound',
-  video: 'video',
-  pdf: 'pdf',
-  tweet: 'tweet'
-}
+  image: "image",
+  sound: "sound",
+  video: "video",
+  pdf: "pdf",
+  tweet: "tweet",
+  geocoding: "geocoding"
+};
 
 // all the types of jobs available
 const jobs = {
