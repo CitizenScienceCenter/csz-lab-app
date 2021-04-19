@@ -19,6 +19,10 @@ import Meta from "vue-meta";
 import "@/components/Common/globalComponents";
 import Croppa from "vue-croppa";
 
+// Leaflet map styles
+import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 Vue.config.productionTip = false;
 //Vue.use(VueDisqus)
 Vue.use(VueRouter);
@@ -28,28 +32,18 @@ Vue.use(VueLayers, {
 });
 Vue.use(Meta);
 
-let cookie_enabled = false;
+// Analytics configuration
 
 let cfg = { id: process.env.GTAG_ID };
-localStorage.removeItem("analytics");
-localStorage.removeItem("gdpr");
-if (JSON.parse(localStorage.getItem("gtag"))) {
-  const data = JSON.parse(localStorage.getItem("gtag"));
-  if (data["status"] == true) {
-    cookie_enabled = true;
-  } else {
-    cookie_enabled = false;
-  }
-  if (data["id"]) {
-    Object.assign(cfg, { params: { user_id: data["id"].toString() } });
-  }
+const userLogged = store.state["user"];
+if (userLogged.logged) {
+  cfg["params"] = { user_id: userLogged.infos.id };
 }
-//console.log(cfg)
 Vue.use(
   VueGtag,
   {
-    config: cfg,
-    enabled: cookie_enabled
+    config: { id: process.env.GTAG_ID },
+    enabled: store.getters["settings/getGtag"] // enable/disable analytics tracking
   },
   router
 );

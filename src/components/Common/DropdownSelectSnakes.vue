@@ -100,6 +100,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("snakes", ["snake"]),
     setTotalItems() {
       // Get the total of options for dropdown select just for families and genus
       this.totalItems =
@@ -205,6 +206,13 @@ export default {
   created() {
     // Initial set of variables
     this.setTotalItems;
+  },
+  watch: {
+    snake() {
+      if (!this.snake) {
+        this.value = "";
+      }
+    }
   }
 };
 </script>
