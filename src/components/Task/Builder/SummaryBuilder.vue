@@ -281,6 +281,9 @@ import TwitterDescriptionTemplate from "@/components/Task/Template/Twitter/Twitt
 // TODO: change when generic template works
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
 
+// TODO: change when generic template works
+import GeoCodingGenericTemplate from "@/components/Task/Template/GeoCoding/GeoCodingGenericTemplate";
+
 export default {
   name: "SummaryBuilder",
   computed: {
@@ -308,6 +311,8 @@ export default {
           return "fas fa-file-pdf";
         case this.materials.tweet:
           return "fab fa-twitter";
+        case this.materials.geocoding:
+          return "fas fa-map-marked-alt";
         default:
           return "fas fa-file";
       }
@@ -450,6 +455,16 @@ export default {
         } else if (this.task.job === this.jobs.generic) {
           // TODO: change when generic template works
           template = buildTemplateFromModel(TwitterGenericTemplate, {
+            questions: this.task.template
+          });
+        }
+      }
+
+      // Geocoding template generation
+      if (this.task.material === this.materials.geocoding) {
+        if (this.task.job === this.jobs.generic) {
+          // TODO: change when generic template works
+          template = buildTemplateFromModel(GeoCodingGenericTemplate, {
             questions: this.task.template
           });
         }
