@@ -119,7 +119,10 @@
           >
             <b-card
               ref="card-geo-coding"
-              @click="selectGeoCoding"
+              :class="{
+                'material-selected': selectedMaterial === materials.geocoding
+              }"
+              @click="onMaterialSelected(materials.geocoding)"
               class="text-center material"
             >
               <i class="fas fa-map-marked-alt fa-4x"></i><br />
