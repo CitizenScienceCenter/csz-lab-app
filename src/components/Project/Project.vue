@@ -354,7 +354,6 @@ export default {
       // checks if the project is open for anonymous users or not
       this.getNewTask(project).then(allowed => {
         this.isAnonymousProject = !!allowed;
-        // TODO: should go to the home screen?
       });
       if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
         // has to be loaded to know if the project can be published

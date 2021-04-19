@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 const component = {
-  // TODO: change when generic template works
   template: `
       <!-- This template use https://bootstrap-vue.js.org/ -->
 

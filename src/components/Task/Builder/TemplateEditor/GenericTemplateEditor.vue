@@ -139,6 +139,7 @@
       </b-tabs>
     </b-container>
 
+<!-- TODO: Create component for maps settings with markers, # of markers, area, center, zoom and prompt -->
     <!-- Continue Button -->
     <b-btn @click="onSubmit" variant="primary" size="lg">{{
       $t("task-template-go")

@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: find the differences with the info tab -->
   <b-row align-h="between" align-v="start">
     <b-col>
       <h1>#{{ stats.hasOwnProperty('overall_progress') ? stats.overall_progress+'%': 'NaN' }}</h1>

@@ -466,6 +466,7 @@ export default {
           // TODO: change when generic template works
           template = buildTemplateFromModel(GeoCodingGenericTemplate, {
             questions: this.task.template
+            //TODO: include the map settings
           });
         }
       }
