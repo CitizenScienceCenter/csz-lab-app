@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-const component =
-  {
-    template: `
+const component = {
+  template: `
       <!-- This template use https://bootstrap-vue.js.org/ -->
 
       <b-row v-if="pybossa.userProgressInPercent < 100">
@@ -57,73 +56,75 @@ const component =
         </b-col>
       </b-row>`,
 
-    data: {
-      questions: [
-        {
-          question: 'What kind of music do you hear?',
-          answers: [
-            'Rock',
-            'Jazz',
-            'Electro',
-            'Hip-Hop'
-          ]
-        },
-        {
-          question: 'What is your tempo estimation?',
-          answers: [
-            '< 50bpm',
-            'Between 50 and 100bpm',
-            'Between 100 and 200bpm',
-            '> 200bpm'
-          ]
-        }
-      ],
-      answers: [],
-      showAlert: false
-    },
-
-    methods: {
-      submit () {
-        if (this.isFormValid()) {
-          this.pybossa.saveTask(this.answers)
-          this.showAlert = false
-          this.answers = []
-          this.questions.forEach(() => this.answers.push(null))
-        } else {
-          this.showAlert = true
-        }
+  data: {
+    questions: [
+      {
+        question: "What kind of music do you hear?",
+        answers: ["Rock", "Jazz", "Electro", "Hip-Hop"]
       },
-      skip(){
-	      this.pybossa.skip();
-	    },
-      isFormValid () {
-        return this.answers.length === this.questions.length && !this.answers.some(el => typeof el === 'undefined' || el == null)
+      {
+        question: "What is your tempo estimation?",
+        answers: [
+          "< 50bpm",
+          "Between 50 and 100bpm",
+          "Between 100 and 200bpm",
+          "> 200bpm"
+        ]
+      }
+    ],
+    answers: [],
+    showAlert: false
+  },
+
+  methods: {
+    submit() {
+      if (this.isFormValid()) {
+        this.pybossa.saveTask(this.answers);
+        this.initialize();
+      } else {
+        this.showAlert = true;
       }
     },
-
-    computed: {
-      task () {
-        return this.pybossa.task
-      },
-      taskInfo () {
-        return this.task.info
-      }
+    skip() {
+      this.pybossa.skip();
+      this.initialize();
     },
-
-    created () {
-      this.questions.forEach(() => this.answers.push(null))
+    isFormValid() {
+      return (
+        this.answers.length === this.questions.length &&
+        !this.answers.some(el => typeof el === "undefined" || el == null)
+      );
     },
+    initialize() {
+      this.showAlert = false;
+      this.answers = [];
+      this.questions.forEach(() => this.answers.push(null));
+    }
+  },
 
-    mounted () {
-      this.pybossa.run()
+  computed: {
+    task() {
+      return this.pybossa.task;
     },
+    taskInfo() {
+      return this.task.info;
+    }
+  },
 
-    props: {
-      /* Injected by the Pybossa App */
-      pybossa: {
-        required: true
-      }
+  created() {
+    this.initialize();
+  },
+
+  mounted() {
+    this.pybossa.run();
+  },
+
+  props: {
+    /* Injected by the Pybossa App */
+    pybossa: {
+      required: true
     }
   }
+};
 
 export default component

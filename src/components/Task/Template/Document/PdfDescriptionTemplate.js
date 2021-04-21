@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-const component =
-  {
-    template: `
+const component = {
+  template: `
       <!-- This template use https://bootstrap-vue.js.org/ and https://github.com/FranckFreiburger/vue-pdf -->
 
       <b-row v-if="pybossa.userProgressInPercent < 100">
@@ -83,68 +82,67 @@ const component =
         </b-col>
       </b-row>`,
 
-    /* All template data */
-    data: {
-      question: 'Transcribe the following page',
-      descriptions: [
-        'Write here the transcription'
-      ],
-      answers: [],
-      showAlert: false,
-      pageCount: 0,
-      currentPage: 1
-    },
+  /* All template data */
+  data: {
+    question: "Transcribe the following page",
+    descriptions: ["Write here the transcription"],
+    answers: [],
+    showAlert: false,
+    pageCount: 0,
+    currentPage: 1
+  },
 
-    methods: {
-      submit () {
-        if (this.isFormValid()) {
-          this.pybossa.saveTask(this.answers)
-          this.answers.forEach((el, index, array) => {
-            array[index] = ''
-          })
-          this.showAlert = false
-        } else {
-          this.showAlert = true
-        }
-      },
-      skip(){
-	      this.pybossa.skip();
-	    },
-      isFieldValid (field) {
-        return field.length > 0
-      },
-      isFormValid () {
-        return !this.answers.some(el => el.length === 0)
+  methods: {
+    submit() {
+      if (this.isFormValid()) {
+        this.pybossa.saveTask(this.answers);
+        this.initialize();
+      } else {
+        this.showAlert = true;
       }
     },
-
-    computed: {
-      task () {
-        return this.pybossa.task
-      },
-      taskInfo () {
-        return this.task.info
-      }
+    skip() {
+      this.pybossa.skip();
+      this.initialize();
     },
-
-    watch: {
-
+    isFieldValid(field) {
+      return field.length > 0;
     },
-
-    created () {
-      this.descriptions.forEach(() => this.answers.push(''))
+    isFormValid() {
+      return !this.answers.some(el => el.length === 0);
     },
+    initialize() {
+      this.showAlert = false;
+      this.answers = [];
+      this.descriptions.forEach(() => this.answers.push(""));
+    }
+  },
 
-    mounted () {
-      this.pybossa.run()
+  computed: {
+    task() {
+      return this.pybossa.task;
     },
+    taskInfo() {
+      return this.task.info;
+    }
+  },
 
-    props: {
-      /* Injected by the Pybossa App */
-      pybossa: {
-        required: true
-      }
+  watch: {},
+
+  created() {
+    this.initialize();
+  },
+
+  mounted() {
+    this.pybossa.run();
+  },
+
+  props: {
+    /* Injected by the Pybossa App */
+    pybossa: {
+      required: true
     }
   }
+};
 
-export default component
+export default component;

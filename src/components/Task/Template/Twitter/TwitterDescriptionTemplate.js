@@ -79,22 +79,25 @@ const component = {
     submit() {
       if (this.isFormValid()) {
         this.pybossa.saveTask(this.answers);
-        this.answers.forEach((el, index, array) => {
-          array[index] = "";
-        });
-        this.showAlert = false;
+        this.initialize();
       } else {
         this.showAlert = true;
       }
     },
     skip() {
       this.pybossa.skip();
+      this.initialize();
     },
     isFieldValid(field) {
       return field.length > 0;
     },
     isFormValid() {
       return !this.answers.some(el => el.length === 0);
+    },
+    initialize() {
+      this.showAlert = false;
+      this.answers = [];
+      this.descriptions.forEach(() => this.answers.push(""));
     }
   },
 
@@ -108,7 +111,7 @@ const component = {
   },
 
   created() {
-    this.descriptions.forEach(() => this.answers.push(""));
+    this.initialize();
   },
 
   mounted() {
@@ -123,4 +126,4 @@ const component = {
   }
 };
 
-export default component
+export default component;
