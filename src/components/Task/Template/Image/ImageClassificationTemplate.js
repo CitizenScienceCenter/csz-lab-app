@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-const component =
-  {
-    template: `
+const component = {
+  template: `
       <!-- This template use https://bootstrap-vue.js.org/ -->
 
       <b-row v-if="pybossa.userProgressInPercent < 100">
@@ -59,61 +58,66 @@ const component =
         </b-col>
       </b-row>`,
 
-    data: {
-      questions: [
-        {
-          question: '',
-          answers: [
-            ''
-          ]
-        }
-      ],
-      answers: [],
-      showAlert: false
-    },
+  data: {
+    questions: [
+      {
+        question: "",
+        answers: [""]
+      }
+    ],
+    answers: [],
+    showAlert: false
+  },
 
-    methods: {
-      submit () {
-        if (this.isFormValid()) {
-          this.pybossa.saveTask(this.answers)
-          this.showAlert = false
-          this.answers = []
-          this.questions.forEach(() => this.answers.push(null))
-        } else {
-          this.showAlert = true
-        }
-      },
-      skip(){
-	      this.pybossa.skip();
-	    },
-      isFormValid () {
-        return this.answers.length === this.questions.length && !this.answers.some(el => typeof el === 'undefined' || el == null)
+  methods: {
+    submit() {
+      if (this.isFormValid()) {
+        this.pybossa.saveTask(this.answers);
+        this.initialize();
+      } else {
+        this.showAlert = true;
       }
     },
-
-    computed: {
-      task () {
-        return this.pybossa.task
-      },
-      taskInfo () {
-        return this.task.info
-      }
+    skip() {
+      this.pybossa.skip();
+      this.initialize();
     },
-
-    created () {
-      this.questions.forEach(() => this.answers.push(null))
+    isFormValid() {
+      return (
+        this.answers.length === this.questions.length &&
+        !this.answers.some(el => typeof el === "undefined" || el == null)
+      );
     },
+    initialize() {
+      this.showAlert = false;
+      this.answers = [];
+      this.questions.forEach(() => this.answers.push(null));
+    }
+  },
 
-    mounted () {
-      this.pybossa.run()
+  computed: {
+    task() {
+      return this.pybossa.task;
     },
+    taskInfo() {
+      return this.task.info;
+    }
+  },
 
-    props: {
-      /* Injected by the Pybossa App */
-      pybossa: {
-        required: true
-      }
+  created() {
+    this.initialize();
+  },
+
+  mounted() {
+    this.pybossa.run();
+  },
+
+  props: {
+    /* Injected by the Pybossa App */
+    pybossa: {
+      required: true
     }
   }
+};
 
-export default component
+export default component;
