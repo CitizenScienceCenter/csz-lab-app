@@ -21,6 +21,7 @@ const component = {
           <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
         </b-col>
       </b-row>
+
       <!-- Form -->
         <b-row class="mt-2">
           <b-col> 
@@ -162,7 +163,7 @@ const component = {
       if (this.isFormValid()) {
         if (this.markedPlaces.length > 0) {
           this.answers.push({
-            coordinates: this.markedPlaces[0].geometry.coordinates
+            coordinates: this.markedPlaces[0].geometry.coordinates // geoMarkers and geoArea
           });
         }
         this.pybossa.saveTask(this.answers);

@@ -42,12 +42,6 @@ export const routes = [
         name: "home",
         component: Home
       },
-      // TODO: delete when will be done
-      {
-        path: "maps",
-        name: "maps",
-        component: () => import("@/components/Common/Maps.vue")
-      },
       {
         path: "login",
         name: "login",
