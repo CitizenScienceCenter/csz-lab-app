@@ -25,7 +25,7 @@
               <b-button
                 variant="outline-danger"
                 size="sm"
-                @click="removeArea(area)"
+                @click="removeArea()"
               >
                 <i class="fas fa-trash"></i>
               </b-button>
@@ -181,8 +181,8 @@ export default {
         return;
       }
     },
-    removeArea(area) {
-      this.area = { latlngs: [], color: "blue" };
+    removeArea() {
+      this.area.latlngs= [];
       const areaPopup = document.getElementsByClassName("leaflet-popup")[0];
       areaPopup.parentNode.removeChild(areaPopup);
     },
@@ -214,8 +214,7 @@ export default {
             }
 
             this.locations.push({
-              ...event.latlng,
-              ...{ address: await this.getPointInfo(event.latlng) }
+              ...event.latlng
             });
             return;
           }
@@ -287,6 +286,15 @@ export default {
     });
     this.setData();
     this.setMapStyle();
+  },
+  watch: {
+    locations() {
+      this.locations.forEach(async loc => {
+        if (!loc.address) {
+          loc["address"] = await this.getPointInfo(loc);
+        }
+      });
+    }
   }
 };
 </script>
