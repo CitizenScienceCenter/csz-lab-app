@@ -46,10 +46,7 @@ const component = {
         
             <!-- Display picture if available -->
             <div v-if="taskInfo.entities && taskInfo.entities.media && taskInfo.entities.media.length > 0" class="text-center">
-              <div v-if="pybossa.taskLoaded">
-                <b-img fluid-grow :src="taskInfo.entities.media[0].media_url_https" class="shadow" style="height: 50vh; background-color: grey" :alt="$t('template-editor-text-4')"></b-img>
-              </div>
-              <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-4')"></b-spinner>
+              <image-task-presenter :link="taskInfo.entities.media[0].media_url_https" :pybossa="pybossa" :loading="!pybossa.taskLoaded"/>
             </div>
           </div>
         </b-col>

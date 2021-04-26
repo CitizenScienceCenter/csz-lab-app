@@ -35,7 +35,7 @@ const component = {
         <!-- Image -->
         <b-col md="7" class="order-1 order-md-2">
           <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center" style="position: sticky;top: 15%;">
-            <image-task-presenter :info="taskInfo" :pybossa="pybossa" :loading="!pybossa.taskLoaded"/>
+            <image-task-presenter :link="taskInfo.url || taskInfo.link_raw" :pybossa="pybossa" :loading="!pybossa.taskLoaded"/>
           </div>
           <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
         </b-col>        

@@ -4,11 +4,12 @@
       <template #loading>
         <b-skeleton
           type="input"
+          animation="throb"
           v-if="type === 'audio'"
         ></b-skeleton>
 
         <b-skeleton-img
-          animation="wave"
+          animation="throb"
           v-if="type === 'video'"
         ></b-skeleton-img>
       </template>

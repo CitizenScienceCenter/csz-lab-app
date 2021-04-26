@@ -35,7 +35,10 @@ const component = {
         <!-- Sound -->
         <b-col md="6" class="order-1 order-md-2">
           <div class="text-center" style="position: sticky;top: 15%;">
-            <media v-if="taskInfo.audio_url" :link="taskInfo.audio_url" type="audio" :loading="!pybossa.taskLoaded"></media>
+            <media v-if="taskInfo.link_raw || taskInfo.audio_url"
+              :link="taskInfo.link_raw || taskInfo.audio_url"
+              type="audio" :loading="!pybossa.taskLoaded">
+            </media>
             <div v-else-if="taskInfo.embed" v-html="taskInfo.embed"></div>
             <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-12') }}</b-alert>
           </div>

@@ -34,13 +34,13 @@ const component = {
         
         <!-- PDF section -->
         <b-col md="7" class="order-1 order-md-2">
-          <div v-if="taskInfo.pdf_url" class="text-center">
+          <div v-if="taskInfo.link_raw || taskInfo.pdf_url" class="text-center">
             <div v-if="pybossa.taskLoaded && taskInfo.page && taskInfo.page.length > 0" 
                  class="clickable-element" 
-                 @click="pybossa.showModal('pdf', taskInfo.pdf_url)">
+                 @click="pybossa.showModal('pdf', taskInfo.link_raw || taskInfo.pdf_url)">
               <pdf
                 class="w-100 shadow"
-                :src="taskInfo.pdf_url"
+                :src="taskInfo.link_raw || taskInfo.pdf_url"
                 :page="parseInt(taskInfo.page)">
               </pdf>
             </div>
@@ -51,11 +51,11 @@ const component = {
                 :per-page="1"
                 align="center">
               </b-pagination>
-              <div class="clickable-element" @click="pybossa.showModal('pdf', taskInfo.pdf_url)">
+              <div class="clickable-element" @click="pybossa.showModal('pdf', taskInfo.link_raw || taskInfo.pdf_url)">
                 <pdf 
                   class="w-100 shadow"
                   @num-pages="pageCount = $event"
-                  :src="taskInfo.pdf_url"
+                  :src="taskInfo.link_raw || taskInfo.pdf_url"
                   :page="currentPage">
                 </pdf>
               </div>

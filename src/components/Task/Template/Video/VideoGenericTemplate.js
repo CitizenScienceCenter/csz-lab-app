@@ -35,7 +35,10 @@ const component = {
         <!-- Video -->
         <b-col md="7" class="order-1 order-md-2">
           <div class="text-center" style="position: sticky;top: 15%;">
-            <media v-if="taskInfo.video_url" :link="taskInfo.video_url" type="video" :loading="!pybossa.taskLoaded"></media>
+            <media v-if="taskInfo.link_raw || taskInfo.video_url"
+              :link="taskInfo.link_raw || taskInfo.video_url"
+              type="video" :loading="!pybossa.taskLoaded">
+            </media>
             <div v-else-if="taskInfo && taskInfo.oembed" v-html="taskInfo.oembed"></div>
             <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-15') }}</b-alert>
           </div>

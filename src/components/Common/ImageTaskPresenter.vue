@@ -3,7 +3,7 @@
     <b-skeleton-wrapper :loading="loading">
       <template #loading>
         <b-skeleton-img
-          animation="wave"
+          animation="throb"
           no-aspect
           :height="`${getSize}px`"
         ></b-skeleton-img>
@@ -32,8 +32,7 @@
         @new-image-drawn="onNewImage"
         @zoom="onZoom"
       >
-        <img v-if="info.url" slot="initial" :src="info.url" />
-        <img v-else slot="initial" :src="info.link_raw" />
+        <img v-if="link" slot="initial" :src="link" :alt="link"/>
       </beauty-img>
 
       <!-- buttons for bigscreens -->
@@ -54,12 +53,7 @@
         <button class="button-img mb-3" @click="toogleZoom()">
           <i class="fas fa-binoculars fa-lg"></i>
         </button>
-        <button
-          @click="
-            pybossa.showModal('image', info.url ? info.url : info.link_raw)
-          "
-          class="button-img"
-        >
+        <button @click="pybossa.showModal('image', link)" class="button-img">
           <i class="fas fa-expand fa-lg"></i>
         </button>
       </div>
@@ -93,7 +87,7 @@ export default {
   },
   props: {
     pybossa: Object,
-    info: Object,
+    link: String,
     loading: Boolean,
     isVisible: true
   },
