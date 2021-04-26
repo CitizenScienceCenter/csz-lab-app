@@ -255,7 +255,9 @@ export default {
             } else {
               this.setProjectPassModal(false);
               if (this.userProgressInPercent < 100 && !allowed.id) {
-                this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
+                // this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
+                this.newTask();
+                return;
               }
               this.getUserProgress(this.project);
               this.taskLoaded = true;
@@ -282,8 +284,8 @@ export default {
         } else {
           if (this.userProgressInPercent < 100 && !allowed.id) {
             // this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
-            this.skip()
-            return
+            this.skip();
+            return;
           }
           this.getUserProgress(this.project);
           this.taskLoaded = true;
