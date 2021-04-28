@@ -306,7 +306,6 @@ export default {
   width: 100%;
   position: relative;
   margin: auto;
-  padding-bottom: 100px;
   &.edition {
     cursor: pointer;
   }

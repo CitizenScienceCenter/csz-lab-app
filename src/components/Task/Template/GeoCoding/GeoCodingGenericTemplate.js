@@ -3,7 +3,7 @@ const component = {
   template: `
       <!-- This template use https://bootstrap-vue.js.org/ and https://vuelayers.github.io -->
 
-      <div>
+      <div v-if="pybossa.userProgressInPercent < 100">        
         <b-row>
           <!-- Left column -->
           <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
@@ -14,16 +14,16 @@ const component = {
             </b-form-group>
           </b-col>
           <!-- right columns - Image -->
-       <b-col md="7" class="order-1 order-md-2">
-          <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center" style="position: sticky;top: 15%;">
-            <image-task-presenter :info="taskInfo" :pybossa="pybossa" :loading="!pybossa.taskLoaded"/>
-          </div>
-          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
-        </b-col>
-      </b-row>
+          <b-col md="7" class="order-1 order-md-2">
+            <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center" style="position: sticky;top: 15%;">
+              <image-task-presenter :link="taskInfo.url || taskInfo.link_raw" :pybossa="pybossa" :loading="!pybossa.taskLoaded"/>
+            </div>
+            <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
+          </b-col>
+        </b-row>
 
-      <!-- Form -->
-        <b-row class="mt-2">
+        <!-- Form -->
+        <b-row class="mt-4">
           <b-col> 
             <label>{{ question }}</label>
             <p class="h6">{{ ifyes }}</p>
@@ -31,104 +31,52 @@ const component = {
             <p>Suggested area: {{ localizationName }}</p>
           </b-col> 
         </b-row>
-        <b-row v-if="!jobDone">
-          <b-col>            
-            <div class="mt-4">
-              <b-btn @click="addMarker" :disabled="markedPlaces.length > 0" variant="primary" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-1') }}</b-btn>
-              <b-btn @click="deleteMarker" v-if="markedPlaces.length > 0" variant="danger" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-2') }}</b-btn>
-              <!--<b-btn @click="skipTask" v-if="markedPlaces.length === 0" class="mt-2 mt-md-0">{{ $t('template-editor-geo-text-3') }}</b-btn>-->
-            </div>
-            
-            <p class="mt-2">Task: <b-badge variant="warning">{{ task.id }}</b-badge></p>
-            
-          </b-col>
-        </b-row>
       
-        <b-row v-if="!jobDone">
+        <b-row class="mt-1">
           <b-col>
             <!-- Map -->
-            <vl-map
-                  :load-tiles-while-animating="true"
-                  :load-tiles-while-interacting="true"
-                  style="height: 400px"
-            >
-              <vl-view :zoom.sync="zoom" :center.sync="center" :rotation.sync="rotation"></vl-view>
-        
-              <!-- City marker -->
-              <vl-feature id="city-marker">
-                <vl-geom-point :coordinates="localization"></vl-geom-point>
-                <vl-style-box>
-                  <vl-style-icon src="https://i.imgur.com/IYuHNue.png" :scale="0.5" :anchor="[0.5, 1]"></vl-style-icon>
-                </vl-style-box>
-              </vl-feature>
-              
-              <!-- Display a bounding box over the current location -->
-              <vl-feature v-if="boundingbox.length > 0">
-                <vl-geom-polygon :coordinates="boundingbox"></vl-geom-polygon>
-              </vl-feature>
-        
-              <!-- Display all the points -->
-              <vl-feature :key="index" v-for="(pointer, index) in markedPlaces">
-                <vl-geom-point :coordinates="pointer.geometry.coordinates"></vl-geom-point>
-                <vl-style-box>
-                  <vl-style-icon src="https://i.imgur.com/FlxUAyh.png" :scale="0.5" :anchor="[0.5, 1]"></vl-style-icon>
-                </vl-style-box>
-              </vl-feature>
-              
-              <!-- Drawer -->
-              <vl-layer-vector id="draw-pane">
-                <vl-source-vector ident="draw-target" :features.sync="markedPlaces"></vl-source-vector>
-              </vl-layer-vector>
-              <vl-interaction-draw v-if="canAddMarker && markedPlaces.length === 0" source="draw-target" type="point"></vl-interaction-draw>
-        
-              <!-- Display the Open street map -->
-              <vl-layer-tile id="osm">
-                <vl-source-osm></vl-source-osm>
-              </vl-layer-tile>
-            </vl-map>
-    
+            <maps class="mb-2" style="height: 500px" can_mark can_draw :locations="markedPlaces"></maps>
+
             <!-- Selected position coordinates -->
-            <div class="mt-2">
+            <div>
             {{ $t('template-editor-geo-text-4') }}: 
               <ul>
-                <li>Longitude <b-badge>{{ markedPlaces.length > 0 ? markedPlaces[0].geometry.coordinates[0] : '-' }}</b-badge></li>
-                <li>Latitude <b-badge>{{ markedPlaces.length > 0 ? markedPlaces[0].geometry.coordinates[1] : '-' }}</b-badge></li>
+                <li>Longitude <b-badge>{{ markedPlaces.length > 0 ? markedPlaces[0].lng : '-' }}</b-badge></li>
+                <li>Latitude <b-badge>{{ markedPlaces.length > 0 ? markedPlaces[0].lat : '-' }}</b-badge></li>
               </ul>
-            </div>
-            
+            </div>            
           </b-col>
         </b-row>
-        
-        <!-- Submit button -->
-        <b-row v-if="!jobDone">
+                
+        <b-row>
           <b-col>
+            <!-- Form validation errors -->
+            <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
+              {{$t('template-editor-text-8')}}
+            </b-alert>
+
+            <!-- Submit button -->
             <b-button @click="submit" variant="success" class="mt-2">{{ $t('template-editor-geo-text-5') }}</b-button>
             <!-- Skip button -->
             <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
           </b-col>
         </b-row>
-        
-        <!-- Task end message -->
-        <b-row v-if="jobDone">
-          <b-col>
-            <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')"></b-jumbotron>
-          </b-col>
-        </b-row>
-      </div>`,
+      </div>
+
+      <!-- Task end message -->
+      <b-row v-else>
+        <b-col>
+          <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')"></b-jumbotron>
+        </b-col>
+      </b-row>`,
 
   data: {
-    zoom: 15,
-    center: [0, 0],
-    rotation: 0,
-
     localizationName: "",
     localization: [0, 0],
     boundingbox: [],
 
     canAddMarker: false,
     markedPlaces: [],
-
-    jobDone: false,
 
     questions: [
       {
@@ -163,7 +111,7 @@ const component = {
       if (this.isFormValid()) {
         if (this.markedPlaces.length > 0) {
           this.answers.push({
-            coordinates: this.markedPlaces[0].geometry.coordinates // geoMarkers and geoArea
+            coordinates: this.markedPlaces[0].geometry.coordinates
           });
         }
         this.pybossa.saveTask(this.answers);
@@ -249,8 +197,6 @@ const component = {
             this.center = this.localization;
           }
         });
-      } else {
-        this.jobDone = true;
       }
     }
   },
