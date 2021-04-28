@@ -107,9 +107,18 @@
             <template v-slot:aside>
               <i class="fas fa-code icon-secondary-big"></i>
             </template>
-            <h1 class="small text-muted m-0 pb-1 mb-2">
-              {{ $t("task-summary-builder-template") }}
-            </h1>
+            <b-row class="d-flex justify-content-between">
+              <h1 class="small text-muted m-0 pb-1 mb-2">
+                {{ $t("task-summary-builder-template") }}
+              </h1>
+              <div
+                class="mr-3 collapse-button"
+                :class="{ collapsed: !collapsed }"
+                @click="toggleAccordion"
+              >
+                <i class="fas fa-angle-double-up fa-2x"></i>
+              </div>
+            </b-row>
             <!-- Describe template -->
             <ul v-if="task.job === jobs.describe" class="list-unstyled">
               <li>
@@ -174,7 +183,7 @@
             </ul>
             <!-- Generic template -->
             <ol v-if="task.job === jobs.generic">
-              <div class="accordion" role="tablist">
+              <div class="accordion mt-2" role="tablist">
                 <b-card
                   no-body
                   class="mb-1"
@@ -188,6 +197,7 @@
                       v-b-toggle="`gquestion-${q}`"
                       class="text-left"
                       variant="secondary"
+                      @click="setCollapsed(false)"
                     >
                       <span class="font-weight-bold">
                         {{ $t("task-summary-builder-question") }}
@@ -199,9 +209,10 @@
                       <span
                         class="text-primary font-weight-bold h5"
                         v-if="question.required"
-                        >*</span
-                      ></b-button
-                    >
+                        >
+                        *
+                      </span>
+                    </b-button >
                   </b-card-header>
                   <b-collapse
                     :id="`gquestion-${q}`"
@@ -286,6 +297,11 @@ import GeoCodingGenericTemplate from "@/components/Task/Template/GeoCoding/GeoCo
 
 export default {
   name: "SummaryBuilder",
+  data() {
+    return {
+      collapsed: false
+    };
+  },
   computed: {
     ...mapState("task/builder", [
       "task",
@@ -542,6 +558,25 @@ export default {
     getQuestionType(key) {
       const qt = this.questionTypes.find(x => x.value == key);
       return qt ? qt.name : "No type";
+    },
+    toggleAccordion() {
+      this.collapsed = !this.collapsed;
+      const aja = document.getElementsByClassName("collapse");
+      for (let i in aja) {
+        if (aja[i].id && aja[i].id.includes("gquestion")) {
+          if (this.collapsed && !aja[i].classList.contains("show")) {
+            aja[i].classList.add("show");
+            aja[i].removeAttribute("style");
+          } else if (!this.collapsed && aja[i].classList.contains("show")) {
+            aja[i].classList.remove("show");
+            aja[i].setAttribute("style", "display:none");
+          }
+        }
+      }
+      console.log(aja);
+    },
+    setCollapsed(value) {
+      this.collapsed = value;
     }
   }
 };
@@ -554,6 +589,20 @@ export default {
   color: $secondary;
   width: 3em;
   height: auto;
+}
+
+.collapse-button {
+  color: $secondary;
+  cursor: pointer;
+  transition-duration: 0.8s;
+  transition-property: transform;
+  &.collapsed {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
 }
 
 legend {
