@@ -28,22 +28,22 @@ const component = {
             <label>{{ question }}</label>
             <p class="h6">{{ ifyes }}</p>
             <p class="h6">{{ ifnot }}</p>
-            <p>Suggested area: {{ localizationName }}</p>
           </b-col> 
         </b-row>
       
-        <b-row class="mt-1">
+        <b-row class="mt-2">
           <b-col>
             <!-- Map -->
-            <maps class="mb-2" style="height: 500px" can_mark can_draw :locations="markedPlaces"></maps>
+            <maps class="mb-2" style="height: 500px" can_mark can_draw :locations="markedPlaces" :area="area"></maps>
 
             <!-- Selected position coordinates -->
             <div>
             {{ $t('template-editor-geo-text-4') }}: 
-              <ul>
-                <li>Longitude <b-badge>{{ markedPlaces.length > 0 ? markedPlaces[0].lng : '-' }}</b-badge></li>
-                <li>Latitude <b-badge>{{ markedPlaces.length > 0 ? markedPlaces[0].lat : '-' }}</b-badge></li>
-              </ul>
+              <span v-for="(place, index) in markedPlaces" :key="index" class="mr-1">
+                <b-badge>
+                  {{ place.lat }} - {{ place.lng }}
+                </b-badge>
+              </span>
             </div>            
           </b-col>
         </b-row>
@@ -71,11 +71,8 @@ const component = {
       </b-row>`,
 
   data: {
-    localizationName: "",
-    localization: [0, 0],
-    boundingbox: [],
-    
     markedPlaces: [],
+    area: { latlngs: [] },
 
     questions: [
       {
@@ -96,12 +93,12 @@ const component = {
     skipTask() {
       this.pybossa.saveTask(null);
     },
-
     submit() {
       if (this.isFormValid()) {
         if (this.markedPlaces.length > 0) {
           this.answers.push({
-            coordinates: this.markedPlaces[0].geometry.coordinates
+            coordinates: this.markedPlaces,
+            area: this.area
           });
         }
         this.pybossa.saveTask(this.answers);
@@ -138,6 +135,8 @@ const component = {
         }
         return answer;
       });
+      this.markedPlaces = [];
+      this.area = { latlngs: [] };
     }
   },
 
@@ -153,43 +152,7 @@ const component = {
     }
   },
 
-  watch: {
-    task(task) {
-      this.canAddMarker = false;
-      this.markedPlaces = [];
-
-      if (task.info) {
-        this.pybossa.qetLocalizationsWithQuery(task.info.city).then(results => {
-          if (results.length > 0) {
-            const place = results[0];
-
-            this.localization = [parseFloat(place.lon), parseFloat(place.lat)];
-
-            const box = place.boundingbox.map(coordinate => {
-              return parseFloat(coordinate);
-            });
-
-            const latA = box[0];
-            const latB = box[1];
-            const lonA = box[2];
-            const lonB = box[3];
-            this.boundingbox = [
-              [
-                [lonA, latA],
-                [lonA, latB],
-                [lonB, latB],
-                [lonB, latA],
-                [lonA, latA]
-              ]
-            ];
-
-            this.localizationName = place.display_name;
-            this.center = this.localization;
-          }
-        });
-      }
-    }
-  },
+  watch: {},
 
   created() {
     this.initialize();
