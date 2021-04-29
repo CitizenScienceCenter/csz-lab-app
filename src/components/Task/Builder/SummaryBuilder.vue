@@ -197,7 +197,7 @@
                       v-b-toggle="`gquestion-${q}`"
                       class="text-left"
                       variant="secondary"
-                      @click="setCollapsed(false)"
+                      @click="collapseButtonOrientation()"
                     >
                       <span class="font-weight-bold">
                         {{ $t("task-summary-builder-question") }}
@@ -209,10 +209,10 @@
                       <span
                         class="text-primary font-weight-bold h5"
                         v-if="question.required"
-                        >
+                      >
                         *
                       </span>
-                    </b-button >
+                    </b-button>
                   </b-card-header>
                   <b-collapse
                     :id="`gquestion-${q}`"
@@ -561,22 +561,35 @@ export default {
     },
     toggleAccordion() {
       this.collapsed = !this.collapsed;
-      const aja = document.getElementsByClassName("collapse");
-      for (let i in aja) {
-        if (aja[i].id && aja[i].id.includes("gquestion")) {
-          if (this.collapsed && !aja[i].classList.contains("show")) {
-            aja[i].classList.add("show");
-            aja[i].removeAttribute("style");
-          } else if (!this.collapsed && aja[i].classList.contains("show")) {
-            aja[i].classList.remove("show");
-            aja[i].setAttribute("style", "display:none");
+      const tabCollapse = document.getElementsByClassName("collapse");
+      for (let i in tabCollapse) {
+        if (tabCollapse[i].id && tabCollapse[i].id.includes("gquestion")) {
+          if (this.collapsed && !tabCollapse[i].classList.contains("show")) {
+            tabCollapse[i].classList.add("show");
+            tabCollapse[i].removeAttribute("style");
+          } else if (
+            !this.collapsed &&
+            tabCollapse[i].classList.contains("show")
+          ) {
+            tabCollapse[i].classList.remove("show");
+            tabCollapse[i].style.display = "none";
           }
         }
       }
-      console.log(aja);
     },
-    setCollapsed(value) {
-      this.collapsed = value;
+    collapseButtonOrientation() {
+      this.collapsed = true;
+      const tabCollapse = document.getElementsByClassName("collapse");
+      for (let i in tabCollapse) {
+        if (
+          tabCollapse[i].id &&
+          tabCollapse[i].id.includes("gquestion") &&
+          !tabCollapse[i].classList.contains("show")
+        ) {
+          this.collapsed = false;
+          break;
+        }
+      }
     }
   }
 };

@@ -5,7 +5,7 @@ const component = {
 
       <div v-if="pybossa.userProgressInPercent < 100">        
         <b-row>
-          <!-- Left column -->
+          <!-- Left column - Questions-->
           <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
             <!-- Questions with answers -->
             <b-form-group :key="question.id" v-for="question in questionList" label-size="lg" class="mt-2 mb-4">            
@@ -22,7 +22,7 @@ const component = {
           </b-col>
         </b-row>
 
-        <!-- Form -->
+        <!-- Map Section -->
         <b-row class="mt-4">
           <b-col> 
             <label>{{ question }}</label>
@@ -74,8 +74,7 @@ const component = {
     localizationName: "",
     localization: [0, 0],
     boundingbox: [],
-
-    canAddMarker: false,
+    
     markedPlaces: [],
 
     questions: [
@@ -94,15 +93,6 @@ const component = {
   },
 
   methods: {
-    addMarker() {
-      this.canAddMarker = true;
-    },
-
-    deleteMarker() {
-      this.canAddMarker = false;
-      this.markedPlaces = [];
-    },
-
     skipTask() {
       this.pybossa.saveTask(null);
     },

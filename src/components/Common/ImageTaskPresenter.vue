@@ -23,8 +23,8 @@
         :show-loading="true"
         :loading-size="10"
         :zoom-speed="10"
-        placeholder=""
-        :placeholder-font-size="20"
+        placeholder="Loading Image..."
+        :placeholder-font-size="30"
         :accept="'image/*'"
         initial-position="center center"
         initial-size="cover"
@@ -32,7 +32,7 @@
         @new-image-drawn="onNewImage"
         @zoom="onZoom"
       >
-        <img v-if="link" slot="initial" :src="link" :alt="link"/>
+        <img v-if="link" slot="initial" :src="link" :alt="link" />
       </beauty-img>
 
       <!-- buttons for bigscreens -->
