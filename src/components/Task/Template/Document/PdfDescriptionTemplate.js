@@ -115,6 +115,7 @@ const component = {
       this.showAlert = false;
       this.answers = [];
       this.descriptions.forEach(() => this.answers.push(""));
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   },
 

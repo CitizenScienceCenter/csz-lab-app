@@ -309,6 +309,8 @@
     "task-template-options-modal-message-error": "The selected question contains empty options. Please fill or remove them before use it.",
     "task-template-options-modal-confirm-button": "Confirm",
     "task-template-options-modal-close-button": "Close",
+    "task-generic-template-maxquestions-title":"Max question reached",
+    "task-generic-template-maxquestions":"The maximun number of question allowed was reached.",
 
     "task-count-template-question": "Question",
     "task-count-template-question-placeholder": "E.g. How many people can you see in the image?",
@@ -1123,6 +1125,8 @@
     "task-template-options-modal-message-error": "Die ausgewählte Frage enthält leere Optionen. Bitte füllen Sie diese aus oder entfernen Sie sie, bevor Sie sie verwenden.",
     "task-template-options-modal-confirm-button": "Bestätigen",
     "task-template-options-modal-close-button": "Schließen",
+    "task-generic-template-maxquestions-title":"Max Frage erreicht",
+    "task-generic-template-maxquestions":"Die maximal erlaubte Anzahl von Fragen wurde erreicht.",
 
     "task-count-template-question": "Frage",
     "task-count-template-question-placeholder": "Z.B. Wie viele Personen können Sie auf dem Bild sehen?",

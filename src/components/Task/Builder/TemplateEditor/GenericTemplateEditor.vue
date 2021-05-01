@@ -138,8 +138,11 @@
         </b-tab>
       </b-tabs>
     </b-container>
+    <div class="mb-4">
+      <map-settings :settings="mapSettings"></map-settings>
+    </div>
 
-<!-- TODO: Create component for maps settings with markers, # of markers, area, center, zoom and prompt -->
+    <!-- TODO: Create component for maps settings with markers, # of markers, area, center, zoom and prompt -->
     <!-- Continue Button -->
     <b-btn @click="onSubmit" variant="primary" size="lg">{{
       $t("task-template-go")
@@ -149,6 +152,7 @@
 
 <script>
 import QuestionOptions from "@/components/Task/Builder/TemplateEditor/QuestionOptions.vue";
+import MapSettings from "@/components/Task/Builder/TemplateEditor/MapSettings.vue";
 import { mapMutations, mapState } from "vuex";
 
 // consts definitions
@@ -173,7 +177,7 @@ const MAXANSWERS = 20;
 
 export default {
   name: "JobClassifyEditor",
-  components: { QuestionOptions },
+  components: { QuestionOptions, MapSettings },
   created() {
     this.types = this.questionTypes;
     if (Array.isArray(this.task.template)) {
@@ -187,7 +191,8 @@ export default {
       maxCharAnswer: 30,
       questions: [JSON.parse(JSON.stringify(DEFAULT_QUESTION))],
       types: [],
-      minAnswers: 2
+      minAnswers: 2,
+      mapSettings: {}
     };
   },
   methods: {
@@ -201,7 +206,7 @@ export default {
         this.questions.push(JSON.parse(JSON.stringify(DEFAULT_QUESTION)));
       } else {
         this.showInfo({
-          title: this.$t("task-generic-template-maxquestions"),
+          title: this.$t("task-generic-template-maxquestions-title"),
           content: this.$t("task-generic-template-maxquestions")
         });
       }

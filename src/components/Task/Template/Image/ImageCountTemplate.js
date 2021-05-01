@@ -60,6 +60,7 @@ const component = {
     },
     initialize() {
       this.count = 0;
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   },
 

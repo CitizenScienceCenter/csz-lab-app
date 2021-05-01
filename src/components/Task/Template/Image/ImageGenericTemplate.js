@@ -97,6 +97,7 @@ const component = {
         }
         return answer;
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   },
 

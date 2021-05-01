@@ -92,6 +92,7 @@ const component = {
       this.showAlert = false;
       this.answers = [];
       this.questions.forEach(() => this.answers.push(null));
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   },
 

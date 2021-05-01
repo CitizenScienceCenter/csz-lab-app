@@ -110,7 +110,7 @@ export default {
     mapSettings: {
       type: Object,
       default: () => ({
-        zoom: 10,
+        zoom: 1,
         center: [47.38454197098293, 8.542212126985232],
         maxMarkers: 0,
         mapType: "Road"

@@ -3,7 +3,7 @@ const component = {
   template: `
       <!-- This template use https://bootstrap-vue.js.org/ and https://vuelayers.github.io -->
 
-      <div v-if="pybossa.userProgressInPercent < 100">        
+      <div v-if="pybossa.userProgressInPercent < 100" >        
         <b-row>
           <!-- Left column - Questions-->
           <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
@@ -31,7 +31,7 @@ const component = {
           </b-col> 
         </b-row>
       
-        <b-row class="mt-2">
+        <b-row class="my-2">
           <b-col>
             <!-- Map -->
             <maps class="mb-2" style="height: 500px" can_mark can_draw :locations="markedPlaces" :area="area"></maps>
@@ -59,6 +59,16 @@ const component = {
             <b-button @click="submit" variant="success" class="mt-2">{{ $t('template-editor-geo-text-5') }}</b-button>
             <!-- Skip button -->
             <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
+
+            <!-- User progress -->
+            <p class="mt-2">
+              {{$t('template-editor-text-2')}}:
+              <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>
+              {{$t('template-editor-text-2a')}}
+              <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge>
+              {{$t('template-editor-text-3')}}
+            </p>
+            <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
           </b-col>
         </b-row>
       </div>
@@ -137,6 +147,7 @@ const component = {
       });
       this.markedPlaces = [];
       this.area = { latlngs: [] };
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   },
 

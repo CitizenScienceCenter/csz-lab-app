@@ -15,6 +15,7 @@
     <b-row v-if="task.job === jobs.generic">
       <b-col md="9">
         <GenericTemplateEditor></GenericTemplateEditor>
+        
       </b-col>
       <b-col md="3" class="text-muted">
         <p class="small"><i class="fas fa-info-circle"></i> <br>
