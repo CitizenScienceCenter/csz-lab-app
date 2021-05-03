@@ -43,11 +43,7 @@
           </b-row>
         </b-col>
       </b-row>
-      <!-- // TODO: remove in next commit -->
-      <maps style="height: 600px" can_mark can_draw></maps>
     </b-container>
-
-    
   </div>
 </template>
 
@@ -55,15 +51,12 @@
 import { mapState, mapActions } from "vuex";
 import Cover from "./Common/Cover";
 import ProjectCard from "./Common/ProjectCard";
-// TODO: remove in next commit
-import Maps from "@/components/Common/Maps";
 
 export default {
   name: "Home",
   components: {
     "app-cover": Cover,
-    "app-project-card": ProjectCard,
-    Maps
+    "app-project-card": ProjectCard
   },
   metaInfo: function() {
     return {
@@ -96,5 +89,4 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped></style>

@@ -54,7 +54,9 @@
               :select-label="$t('task-template-options-dropdown-select')"
               :block-keys="['Tab', 'Enter']"
               label="name"
-              :placeholder="$t('task-template-options-dropdown-placeholder-question')"
+              :placeholder="
+                $t('task-template-options-dropdown-placeholder-question')
+              "
               :options="getQuestionList"
               :searchable="false"
               :allow-empty="false"
@@ -80,7 +82,9 @@
               :deselect-label="$t('task-template-options-dropdown-selected')"
               :select-label="$t('task-template-options-dropdown-select')"
               :block-keys="['Tab', 'Enter']"
-              :placeholder="$t('task-template-options-dropdown-placeholder-answers')"
+              :placeholder="
+                $t('task-template-options-dropdown-placeholder-answers')
+              "
               :options="questionSelected.answers"
               :close-on-select="false"
               :searchable="false"
@@ -91,7 +95,7 @@
               </template>
             </multiselect>
             <small class="icon-color">
-              {{$t('task-template-options-modal-message-info')}}
+              {{ $t("task-template-options-modal-message-info") }}
             </small>
           </b-row>
 
@@ -104,7 +108,7 @@
                   questionSelected.answers.some(x => x == '' || !!!x)
               "
             >
-             {{$t('task-template-options-modal-message-error')}}
+              {{ $t("task-template-options-modal-message-error") }}
             </small>
           </b-row>
         </div>
@@ -209,6 +213,9 @@ export default {
     getQuestionList() {
       const aux = this;
       let questionList = [EMPTY_OPTION];
+      if (!this.questions || this.questions.length > 0) {
+        return;
+      }
       const copyOfQuestions = JSON.parse(JSON.stringify(this.questions));
 
       // Get children of the current question
