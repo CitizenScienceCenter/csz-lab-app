@@ -34,7 +34,13 @@ const component = {
         <b-row class="my-2">
           <b-col>
             <!-- Map -->
-            <maps class="mb-2" style="height: 500px" can_mark can_draw :locations="markedPlaces" :area="area"></maps>
+            <maps class="mb-2" style="height: 500px"
+              :can_mark="mapSettings.markers"
+              :can_draw="mapSettings.area"
+              :mapSettings="mapSettings"
+              :locations="markedPlaces"
+              :area="area">
+            </maps>
 
             <!-- Selected position coordinates -->
             <div>
@@ -81,6 +87,7 @@ const component = {
       </b-row>`,
 
   data: {
+    mapSettings: {},
     markedPlaces: [],
     area: { latlngs: [] },
 

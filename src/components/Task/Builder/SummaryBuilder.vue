@@ -481,8 +481,8 @@ export default {
         if (this.task.job === this.jobs.generic) {
           // TODO: change when generic template works
           template = buildTemplateFromModel(GeoCodingGenericTemplate, {
-            questions: this.task.template
-            //TODO: include the map settings
+            questions: this.task.template,
+            mapSettings: this.task.mapSettings
           });
         }
       }

@@ -2,7 +2,7 @@
   <div class="maps">
     <v-map
       ref="maps"
-      :zoom="zoom"
+      :zoom="parseInt(zoom)"
       :center="center"
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
@@ -110,7 +110,7 @@ export default {
     mapSettings: {
       type: Object,
       default: () => ({
-        zoom: 1,
+        zoom: 3,
         center: [47.38454197098293, 8.542212126985232],
         maxMarkers: 0,
         mapType: "Road"

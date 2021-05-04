@@ -37,13 +37,12 @@
           <b-form-input
             placeholder="1"
             type="number"
-            v-model="settings.max_markers"
+            v-model="settings.maxMarkers"
             :disabled="!settings.markers"
           ></b-form-input>
         </b-form-group>
       </b-col>
     </b-row>
-
     <b-row>
       <b-col cols="12" sm="8">
         <b-form-group :label="$t('task-template-map-center')">
@@ -85,8 +84,10 @@ export default {
           required: false,
           markers: false,
           area: false,
-          max_markers: 0,
-          center: "0,0"
+          zoom:5,
+          maxMarkers: 0,
+          center: "0,0",
+          type:"Road"
         };
       }
     }
@@ -94,7 +95,7 @@ export default {
   methods: {
     isRequired(condition) {
       return condition ? "*" : "";
-    }
+    },
   },
   filters: {
     capitalize: value => {

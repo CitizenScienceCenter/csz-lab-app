@@ -213,7 +213,7 @@ export default {
     getQuestionList() {
       const aux = this;
       let questionList = [EMPTY_OPTION];
-      if (!this.questions || this.questions.length > 0) {
+      if (!this.questions || this.questions.length == 0) {
         return;
       }
       const copyOfQuestions = JSON.parse(JSON.stringify(this.questions));

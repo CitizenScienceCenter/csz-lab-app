@@ -38,7 +38,8 @@ const state = {
     job: null, // the kind of task (classify, describe...)
     template: null, // configuration of the task
     source: null, // contains the selected source (dropbox, flickr...)
-    sourceContent: null // contains the files got from the source
+    sourceContent: null, // contains the files got from the source
+    mapSettings: null
   },
   // steps info
   currentStep: "material",
@@ -179,6 +180,7 @@ const actions = {
       commit("setTaskTemplate", null);
       commit("setTaskSource", null);
       commit("setTaskSourceContent", null);
+      commit("setMapSettings", null);
       commit("setBucketFiles", []);
       commit("setBucketName", "");
       commit("setDropboxFiles", []);
@@ -215,6 +217,9 @@ const mutations = {
   },
   setTaskTemplate(state, template) {
     state.task = { ...state.task, template };
+  },
+  setMapSettings(state, mapSettings) {
+    state.task = { ...state.task, mapSettings };
   },
   setTaskSource(state, source) {
     state.task = { ...state.task, source };

@@ -138,11 +138,11 @@
         </b-tab>
       </b-tabs>
     </b-container>
-    <div class="mb-4">
+
+    <div class="mb-4" v-if="geoProject">
       <map-settings :settings="mapSettings"></map-settings>
     </div>
 
-    <!-- TODO: Create component for maps settings with markers, # of markers, area, center, zoom and prompt -->
     <!-- Continue Button -->
     <b-btn @click="onSubmit" variant="primary" size="lg">{{
       $t("task-template-go")
@@ -184,6 +184,18 @@ export default {
       // deep clone
       this.questions = JSON.parse(JSON.stringify(this.task.template));
     }
+    if (this.task.material === "geocoding") {
+      this.mapSettings = {
+        question: "",
+        required: false,
+        markers: false,
+        area: false,
+        zoom:5,
+        maxMarkers: 0,
+        center: "0,0",
+        mapType: "Road"
+      };
+    }
   },
   data: () => {
     return {
@@ -196,7 +208,11 @@ export default {
     };
   },
   methods: {
-    ...mapMutations("task/builder", ["setTaskTemplate", "setStep"]),
+    ...mapMutations("task/builder", [
+      "setTaskTemplate",
+      "setStep",
+      "setMapSettings"
+    ]),
     ...mapMutations("notification", ["showError", "showInfo"]),
 
     // question methods
@@ -261,6 +277,11 @@ export default {
           }
           return x;
         });
+
+        if (this.task.material === "geocoding") {
+          this.mapSettings.center = this.mapSettings.center.split(",");
+          this.setMapSettings(this.mapSettings);
+        }
         // clone the content
         this.setTaskTemplate(JSON.parse(JSON.stringify(this.questions)));
         this.setStep({ step: "template", value: true });
@@ -345,7 +366,10 @@ export default {
   },
   computed: {
     ...mapState("task/builder", ["task", "jobs"]),
-    ...mapState("settings", ["questionTypes"])
+    ...mapState("settings", ["questionTypes"]),
+    geoProject() {
+      return this.task.material === "geocoding";
+    }
   }
 };
 </script>
