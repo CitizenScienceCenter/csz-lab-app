@@ -224,7 +224,7 @@ const actions = {
   },
 
 
-  resetPassword ({ commit, dispatch }, form) {
+  resetPassword ({ state, commit, dispatch }, form) {
     return dispatch('getResetPasswordOptions',state.recoverKey).then(value => {
       if (value) {
         return api.resetPassword(state.resetPasswordOptions.form.csrf, form, state.recoverKey).then(response => {
