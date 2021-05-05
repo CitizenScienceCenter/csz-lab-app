@@ -25,9 +25,10 @@ const component = {
         <!-- Map Section -->
         <b-row class="mt-4">
           <b-col> 
-            <label>{{ question }}</label>
-            <p class="h6">{{ ifyes }}</p>
-            <p class="h6">{{ ifnot }}</p>
+            <label>
+              {{mapSettings.question}}
+              <span v-if="mapSettings.required" class="text-primary font-weight-bold h5">*</span>
+            </label>
           </b-col> 
         </b-row>
       
@@ -62,7 +63,7 @@ const component = {
             </b-alert>
 
             <!-- Submit button -->
-            <b-button @click="submit" variant="success" class="mt-2">{{ $t('template-editor-geo-text-5') }}</b-button>
+            <b-button @click="submit" variant="success" class="mt-2">{{ $t('submit-btn') }}</b-button>
             <!-- Skip button -->
             <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
 

@@ -35,14 +35,7 @@ const actions = {
       const res = await api.getAddress(query.lat, query.lng);
       return res.data;
     } catch (error) {
-      commit(
-        "notification/showError",
-        {
-          title: errors.GET_LOCALIZATIONS_WITH_QUERY_ERROR,
-          content: error
-        },
-        { root: true }
-      );
+      console.log(error);
       return;
     }
   }

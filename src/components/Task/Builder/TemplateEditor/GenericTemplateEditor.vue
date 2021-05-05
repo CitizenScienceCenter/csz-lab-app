@@ -140,7 +140,10 @@
     </b-container>
 
     <div class="mb-4" v-if="geoProject">
-      <map-settings :settings="mapSettings"></map-settings>
+      <map-settings
+        :settings="mapSettings"
+        @onValid="mapSettingsValidation"
+      ></map-settings>
     </div>
 
     <!-- Continue Button -->
@@ -185,14 +188,15 @@ export default {
       this.questions = JSON.parse(JSON.stringify(this.task.template));
     }
     if (this.task.material === "geocoding") {
+      this.mapValid = false;
       this.mapSettings = {
         question: "",
         required: false,
         markers: false,
         area: false,
-        zoom:5,
-        maxMarkers: 0,
-        center: "0,0",
+        zoom: null,
+        maxMarkers: null,
+        center: "",
         mapType: "Road"
       };
     }
@@ -204,7 +208,8 @@ export default {
       questions: [JSON.parse(JSON.stringify(DEFAULT_QUESTION))],
       types: [],
       minAnswers: 2,
-      mapSettings: {}
+      mapSettings: {},
+      mapValid: false
     };
   },
   methods: {
@@ -279,6 +284,10 @@ export default {
         });
 
         if (this.task.material === "geocoding") {
+          // Get the integer part
+          this.mapSettings.maxMarkers = Math.trunc(this.mapSettings.maxMarkers);
+
+          // Convert string to array format: lat, lng
           this.mapSettings.center = this.mapSettings.center.split(",");
           this.setMapSettings(this.mapSettings);
         }
@@ -312,8 +321,18 @@ export default {
           }
         }
       }
+      const questionsValid =
+        countInvalidQuestions === 0 && countInvalidAnswers === 0;
+      // add validation for map settings
+      if (this.task.material === "geocoding") {
+        return questionsValid && this.mapValid;
+      }
+      return questionsValid;
+    },
 
-      return countInvalidQuestions === 0 && countInvalidAnswers === 0;
+    // set the map setting validity from MapSettings component
+    mapSettingsValidation({ isValid }) {
+      this.mapValid = isValid;
     },
 
     // question validation

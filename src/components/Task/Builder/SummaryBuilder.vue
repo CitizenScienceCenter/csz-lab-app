@@ -203,7 +203,7 @@
                         {{ $t("task-summary-builder-question") }}
                         {{ q + 1 }}:
                       </span>
-                      <span class="text-capitalize">{{
+                      <span class="text-capitalize white-space">{{
                         question.question
                       }}</span>
                       <span
@@ -235,7 +235,7 @@
                                   (a + 1)
                               }}
                             </label>
-                            <small>{{ answer }}</small>
+                            <small class="white-space">{{ answer }}</small>
                           </li>
                         </ul>
                         <small class="text-primary">Question type: </small>
@@ -616,6 +616,10 @@ export default {
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
   }
+}
+
+.white-space{
+  white-space: pre-wrap; 
 }
 
 legend {
