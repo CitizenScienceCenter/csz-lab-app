@@ -69,7 +69,7 @@ const state = {
     [materials.pdf]: [sources.amazon, sources.dropbox],
     [materials.tweet]: [sources.twitter],
     [materials.video]: [sources.amazon, sources.dropbox],
-    [materials.geocoding]: [sources.amazon, sources.dropbox]
+    [materials.geocoding]: [sources.amazon, sources.dropbox, sources.flickr]
   },
   // available extensions for each material type
   materialExtensions: {

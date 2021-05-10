@@ -7,16 +7,20 @@
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
-      :options="{ zoomControl: false }"
+      :options="{ zoomControl: false, scrollWheelZoom: scrollToZoom }"
       @click="clickOnMap"
     >
-      <v-geosearch :options="geosearchOptions" ref="geosearch"></v-geosearch>
+      <v-geosearch
+        :options="geosearchOptions"
+        ref="geosearch"
+        v-if="!hideIcons"
+      ></v-geosearch>
       <v-tile-layer :url="source" :attribution="attribution"></v-tile-layer>
       <v-tile-layer
         url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.png"
         v-if="mapSettings.mapType === 'Aerial'"
       ></v-tile-layer>
-      <v-control-zoom position="bottomright"></v-control-zoom>
+      <v-control-zoom position="bottomright" v-if="!hideIcons"></v-control-zoom>
 
       <v-feature-group>
         <v-polygon :lat-lngs="area.latlngs" :color="area.color">
@@ -55,7 +59,11 @@
         </v-marker>
       </v-marker-cluster>
 
-      <v-control :position="'bottomleft'" class="custom-buttons">
+      <v-control
+        :position="'bottomleft'"
+        class="custom-buttons"
+        v-if="!hideIcons"
+      >
         <button
           class="custom-button mb-1"
           @click="toggleEditionMode('marker')"
@@ -74,7 +82,7 @@
         </button>
       </v-control>
 
-      <v-control>
+      <v-control v-if="!hideIcons">
         <b-form-select
           v-model="mapSettings.mapType"
           :options="mapTypes"
@@ -107,11 +115,13 @@ export default {
   props: {
     can_mark: { type: Boolean, default: false },
     can_draw: { type: Boolean, default: false },
+    hideIcons: { type: Boolean, default: false },
+    scrollToZoom: { type: Boolean, default: true },
     mapSettings: {
       type: Object,
       default: () => ({
         zoom: 3,
-        center: [47.38454197098293, 8.542212126985232],
+        center: [0,0],
         maxMarkers: 0,
         mapType: "Road"
       })
@@ -182,7 +192,7 @@ export default {
       }
     },
     removeArea() {
-      this.area.latlngs= [];
+      this.area.latlngs = [];
       const areaPopup = document.getElementsByClassName("leaflet-popup")[0];
       areaPopup.parentNode.removeChild(areaPopup);
     },
@@ -233,10 +243,22 @@ export default {
       }
       if (this.locations.length > 0) {
         const [minLat, maxLat, minLng, maxLng] = [
-          Math.min.apply(Math, this.locations.map(x => x.lat)),
-          Math.max.apply(Math, this.locations.map(x => x.lat)),
-          Math.min.apply(Math, this.locations.map(x => x.lng)),
-          Math.max.apply(Math, this.locations.map(x => x.lng))
+          Math.min.apply(
+            Math,
+            this.locations.map(x => x.lat)
+          ),
+          Math.max.apply(
+            Math,
+            this.locations.map(x => x.lat)
+          ),
+          Math.min.apply(
+            Math,
+            this.locations.map(x => x.lng)
+          ),
+          Math.max.apply(
+            Math,
+            this.locations.map(x => x.lng)
+          )
         ];
         this.center = [(maxLat + minLat) / 2, (maxLng + minLng) / 2];
         this.locations.forEach(
@@ -294,6 +316,13 @@ export default {
           loc["address"] = await this.getPointInfo(loc);
         }
       });
+    },
+    mapSettings: {
+      handler() {
+        this.zoom = this.mapSettings.zoom;
+        this.center = this.mapSettings.center;
+      },
+      deep: true
     }
   }
 };

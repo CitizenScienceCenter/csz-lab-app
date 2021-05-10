@@ -28,23 +28,26 @@
       :state="validate('map_editor')"
     >
       <b-row>
-        <b-col cols="12" md="5" class="mb-1">
+        <b-col
+          cols="12"
+          sm="8"
+          lg="6"
+          class="d-flex justify-content-between mb-1"
+        >
           <b-form-checkbox v-model="settings.area" inline>
-            {{ $t("task-template-area-checkbox") }}
+            {{ $t("task-template-map-area-checkbox") }}
           </b-form-checkbox>
-        </b-col>
-        <b-col cols="7" md="4">
           <b-form-checkbox v-model="settings.markers" inline>
-            {{ $t("task-template-markers-checkbox") }}
+            {{ $t("task-template-map-markers-checkbox") }}
           </b-form-checkbox>
         </b-col>
-        <b-col cols="5" md="3">
+        <b-col cols="12" sm="4" lg="2" v-if="settings.markers">
           <b-form-group
             :invalid-feedback="invalidFeedback('n_markers')"
             :state="validate('n_markers')"
           >
             <b-form-input
-              placeholder="Number"
+              placeholder="Max."
               type="number"
               v-model="settings.maxMarkers"
               :disabled="!settings.markers"
@@ -68,16 +71,20 @@
       </b-col>
       <b-col cols="12" sm="4">
         <b-form-group
-          :label="$t('task-template-map-zoom')"
-          :invalid-feedback="invalidFeedback('zoom')"
-          :state="validate('zoom')"
+          :label="`${$t('task-template-map-zoom')}: ${settings.zoom}`"
         >
-          <b-input v-model.trim="settings.zoom" placeholder="Zoom"> </b-input>
+        <b-form-input v-model="settings.zoom" type="range" min="1" max="18"></b-form-input>
         </b-form-group>
       </b-col>
     </b-row>
-
-    <maps style="height: 400px" canMarker></maps>
+    <maps
+      class="mt-2"
+      style="height: 300px; width:90%"
+      :mapSettings="mapSettings"
+      hideIcons
+      :scrollToZoom="false"
+    >
+    </maps>
   </div>
 </template>
 
@@ -94,7 +101,8 @@ export default {
       maxCharQuestion: 100,
       markers: { min: 1, max: 100 },
       zoom: { min: 1, max: 18 },
-      isValid: false
+      isValid: false,
+      mapSettings: { center: [0, 0], zoom: 4, mapType: "Road" }
     };
   },
   props: {
@@ -153,17 +161,10 @@ export default {
               return "Max. " + this.markers.max;
             }
           }
+          break;
         // Center invalid message
         case "center":
           return this.$t("task-template-error-valid-center-map");
-        // Zoom invalid message
-        case "zoom":
-          if (this.settings.zoom < this.zoom.min) {
-            return "Min. " + this.zoom.min;
-          }
-          if (this.settings.zoom > this.zoom.max) {
-            return "Max. " + this.zoom.max;
-          }
         default:
           break;
       }
@@ -180,25 +181,18 @@ export default {
         // Markers and area validation
         case "map_editor":
           return this.settings.markers || this.settings.area;
-        // Number of markers invalid message
+        // Number of markers validation
         case "n_markers":
           return (
             this.settings.maxMarkers >= this.markers.min &&
             this.settings.maxMarkers <= this.markers.max
           );
-        // Center invalid message
+        // Center validation
         case "center":
           const coordinates = this.settings.center.split(",");
           return (
             coordinates.length == 2 && coordinates.every(x => !isNaN(x) && x)
           );
-        // Zoom invalid message
-        case "zoom":
-          return (
-            this.settings.zoom >= this.zoom.min &&
-            this.settings.zoom <= this.zoom.max
-          );
-
         default:
           break;
       }
@@ -208,7 +202,13 @@ export default {
   watch: {
     settings: {
       handler() {
-        const params = ["question", "map_editor", "center", "zoom"];
+        this.mapSettings.zoom = parseInt(this.settings.zoom) || 1;
+        if (this.validate("center")) {
+          this.mapSettings.center = this.settings.center
+            .split(",")
+            .map(x => parseFloat(x));
+        }
+        const params = ["question", "map_editor", "center"];
         let aux = params.every(x => this.validate(x));
         if (aux && this.settings.markers) {
           aux = this.validate("n_markers");

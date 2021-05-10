@@ -116,9 +116,9 @@
           <b-button class="mt-3" variant="primary" @click="confirmModal">
             {{ $t("task-template-options-modal-confirm-button") }}
           </b-button>
-          <b-button class="mt-3" variant="secondary" @click="showModal = false">
+          <!-- <b-button class="mt-3" variant="secondary" @click="showModal = false">
             {{ $t("task-template-options-modal-close-button") }}
-          </b-button>
+          </b-button> -->
         </template>
       </b-modal>
     </b-col>
@@ -126,6 +126,7 @@
     <!-- Question type: dropdown -->
     <b-col md="5" lg="4" v-if="types && types.length > 0 && question">
       <multiselect
+        class="mt-3 mt-md-1"
         v-model="typeSelected"
         :deselect-label="$t('task-template-options-dropdown-selected')"
         :select-label="$t('task-template-options-dropdown-select')"
