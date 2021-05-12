@@ -27,7 +27,6 @@ const component = {
           <b-col> 
             <label>
               {{mapSettings.question}}
-              <span v-if="mapSettings.required" class="text-primary font-weight-bold h5">*</span>
             </label>
           </b-col> 
         </b-row>

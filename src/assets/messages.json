@@ -319,6 +319,7 @@
     "task-template-map-zoom": "Map zoom",
     "task-template-error-valid-center-map": "Coordinates contain errors. Format allowed: lat,lon",
     "task-template-valid-center-map": "Coordinates valid.",
+    "task-template-error-valid-zoom-map":"Invalid zoom value",
 
     "task-count-template-question": "Question",
     "task-count-template-question-placeholder": "E.g. How many people can you see in the image?",
@@ -1143,6 +1144,7 @@
     "task-template-map-zoom": "Karte Zoom",
     "task-template-error-valid-center-map": "Koordinaten enthalten Fehler. Format erlaubt: lat,lon",
     "task-template-valid-center-map": "Koordinaten gültig.",
+    "task-template-error-valid-zoom-map":"Ungültiger Zoomwert",
 
     "task-count-template-question": "Frage",
     "task-count-template-question-placeholder": "Z.B. Wie viele Personen können Sie auf dem Bild sehen?",

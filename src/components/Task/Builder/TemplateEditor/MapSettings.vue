@@ -4,9 +4,6 @@
       <h2 class="float-left">{{ $t("task-template-map-settings") }}</h2>
     </b-row>
 
-    <!-- Required checkbox -->
-    <question-options :question="settings"></question-options>
-
     <!-- Question section  -->
     <b-form-group
       :label="$t('task-template-question') + '' + isRequired(settings.required)"
@@ -72,6 +69,8 @@
       <b-col cols="12" sm="4">
         <b-form-group
           :label="`${$t('task-template-map-zoom')}: ${settings.zoom}`"
+          :invalid-feedback="invalidFeedback('zoom')"
+          :state="validate('zoom')"
         >
         <b-form-input v-model="settings.zoom" type="range" min="1" max="18"></b-form-input>
         </b-form-group>
@@ -89,13 +88,9 @@
 </template>
 
 <script>
-import QuestionOptions from "@/components/Task/Builder/TemplateEditor/QuestionOptions.vue";
 
 export default {
   name: "MapSettings",
-  components: {
-    QuestionOptions
-  },
   data() {
     return {
       maxCharQuestion: 100,
@@ -111,7 +106,6 @@ export default {
       default: function() {
         return {
           question: "",
-          required: false,
           markers: false,
           area: false,
           zoom: 5,
@@ -165,6 +159,9 @@ export default {
         // Center invalid message
         case "center":
           return this.$t("task-template-error-valid-center-map");
+        // Zoom invalid message
+        case "zoom":
+          return this.$t("task-template-error-valid-zoom-map");
         default:
           break;
       }
@@ -193,6 +190,9 @@ export default {
           return (
             coordinates.length == 2 && coordinates.every(x => !isNaN(x) && x)
           );
+        // Zoom validation
+        case "zoom":
+          return !!this.settings.zoom
         default:
           break;
       }

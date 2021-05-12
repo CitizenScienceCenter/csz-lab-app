@@ -191,7 +191,6 @@ export default {
       this.mapValid = false;
       this.mapSettings = {
         question: "",
-        required: false,
         markers: false,
         area: false,
         zoom: null,
