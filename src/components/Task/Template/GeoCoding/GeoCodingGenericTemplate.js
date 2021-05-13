@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 const component = {
   template: `
-      <!-- This template use https://bootstrap-vue.js.org/ and https://vuelayers.github.io -->
 
       <div v-if="pybossa.userProgressInPercent < 100" >        
         <b-row>
