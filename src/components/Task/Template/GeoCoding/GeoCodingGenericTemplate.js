@@ -141,6 +141,7 @@ const component = {
       return valid;
     },
     initialize() {
+      const mime = this.pybossa.getFileType(this.taskInfo.url || this.taskInfo.link_raw);
       this.showAlert = false;
       const pb = this.pybossa;
       this.questionList = this.questions.filter(q => pb.isConditionEmpty(q));

@@ -90,6 +90,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+import { getMIME } from "@/helper.js";
 
 export default {
   name: "TemplateRenderer",
@@ -388,6 +389,11 @@ export default {
         Object.keys(question.condition).length === 0 ||
         question.condition.questionId < 0
       );
+    },
+
+    // get the mime type for media file
+    getFileType(file) {
+      return getMIME(file);
     }
   }
 };
