@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 const component = {
   template: `
-
       <div v-if="pybossa.userProgressInPercent < 100" >        
         <b-row>
           <!-- Left column - Questions-->
@@ -38,7 +37,8 @@ const component = {
               :can_draw="mapSettings.area"
               :mapSettings="mapSettings"
               :locations="markedPlaces"
-              :area="area">
+              :area="area"
+              :taskLoaded="pybossa.taskLoaded">
             </maps>
 
             <!-- Selected position coordinates -->
@@ -87,22 +87,19 @@ const component = {
 
   data: {
     mapSettings: {},
-    markedPlaces: [],
-    area: { latlngs: [] },
-
     questions: [
       {
         question: "",
         answers: [""]
       }
     ],
+    questionList: [],
+
     answers: [],
     showAlert: false,
-    questionList: [],
-    question: "Do you know the location of this fountain?",
-    ifyes:
-      "If yes, please ADD A MARKER in the map, in the exact location, and SAVE THE COORDINATES.",
-    ifnot: "If not, please SKIP to next question."
+    markedPlaces: [],
+    area: { latlngs: [] },
+    mapCenter: ""
   },
 
   methods: {
@@ -141,7 +138,10 @@ const component = {
       return valid;
     },
     initialize() {
-      const mime = this.pybossa.getFileType(this.taskInfo.url || this.taskInfo.link_raw);
+      const mime = this.pybossa.getFileType(
+        this.taskInfo.url || this.taskInfo.link_raw
+      );
+
       this.showAlert = false;
       const pb = this.pybossa;
       this.questionList = this.questions.filter(q => pb.isConditionEmpty(q));

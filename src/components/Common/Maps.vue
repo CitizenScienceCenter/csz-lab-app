@@ -121,7 +121,7 @@ export default {
       type: Object,
       default: () => ({
         zoom: 3,
-        center: [0,0],
+        center: [0, 0],
         maxMarkers: 0,
         mapType: "Road"
       })
@@ -138,7 +138,8 @@ export default {
       default: () => [
         // { info: "Information", lat: 2.44717086234641, lng: -76.605434628869 }, Data model
       ]
-    }
+    },
+    taskLoaded: Boolean
   },
   components: {
     "v-map": LMap,
@@ -169,7 +170,8 @@ export default {
         editionMode: false,
         search: false,
         tools: { marker: false, polygon: false }
-      }
+      },
+      INITIAL_SETTINGS: {}
     };
   },
   methods: {
@@ -243,22 +245,10 @@ export default {
       }
       if (this.locations.length > 0) {
         const [minLat, maxLat, minLng, maxLng] = [
-          Math.min.apply(
-            Math,
-            this.locations.map(x => x.lat)
-          ),
-          Math.max.apply(
-            Math,
-            this.locations.map(x => x.lat)
-          ),
-          Math.min.apply(
-            Math,
-            this.locations.map(x => x.lng)
-          ),
-          Math.max.apply(
-            Math,
-            this.locations.map(x => x.lng)
-          )
+          Math.min.apply(Math, this.locations.map(x => x.lat)),
+          Math.max.apply(Math, this.locations.map(x => x.lat)),
+          Math.min.apply(Math, this.locations.map(x => x.lng)),
+          Math.max.apply(Math, this.locations.map(x => x.lng))
         ];
         this.center = [(maxLat + minLat) / 2, (maxLng + minLng) / 2];
         this.locations.forEach(
@@ -299,6 +289,11 @@ export default {
       return details.display_name || `${position.lat} - ${position.lng}`;
     }
   },
+  computed: {
+    computedModel: function() {
+      return Object.assign({}, this.mapSettings);
+    }
+  },
   created() {
     delete Icon.Default.prototype._getIconUrl;
     Icon.Default.mergeOptions({
@@ -308,6 +303,7 @@ export default {
     });
     this.setData();
     this.setMapStyle();
+    this.INITIAL_SETTINGS = JSON.parse(JSON.stringify(this.mapSettings));
   },
   watch: {
     locations() {
@@ -317,8 +313,14 @@ export default {
         }
       });
     },
-    mapSettings: {
-      handler() {
+    taskLoaded() {
+      // for Task presenter initialization asumes the initial map conditions
+      this.zoom = this.INITIAL_SETTINGS.zoom;
+      this.center = this.INITIAL_SETTINGS.center;
+    },
+    computedModel: {
+      handler(n, o) {
+        if (n.mapType != o.mapType) return;
         this.zoom = this.mapSettings.zoom;
         this.center = this.mapSettings.center;
       },

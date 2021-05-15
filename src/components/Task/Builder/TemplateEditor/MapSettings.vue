@@ -208,7 +208,7 @@ export default {
             .split(",")
             .map(x => parseFloat(x));
         }
-        const params = ["question", "map_editor", "center"];
+        const params = ["question", "map_editor", "center", "zoom"];
         let aux = params.every(x => this.validate(x));
         if (aux && this.settings.markers) {
           aux = this.validate("n_markers");
