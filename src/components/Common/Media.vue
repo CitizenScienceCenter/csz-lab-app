@@ -1,50 +1,27 @@
 <template>
   <div>
-    <b-skeleton-wrapper :loading="!ready">
+    <!-- Audio multimedia -->
+    <b-skeleton-wrapper :loading="loading" v-if="type === 'video'">
       <template #loading>
-        <b-skeleton
-          type="input"
-          animation="throb"
-          v-if="type === 'audio'"
-        ></b-skeleton>
-
-        <b-skeleton-img
-          animation="throb"
-          v-if="type === 'video'"
-        ></b-skeleton-img>
+        <b-skeleton-img animation="throb"></b-skeleton-img>
       </template>
+      <b-embed type="video" :src="link" allowfullscreen controls> </b-embed>
     </b-skeleton-wrapper>
 
-    <!-- Audio multimedia -->
-    <audio
-      controls
-      :src="link"
-      @canplay="onReady"
-      style="width:85%"
-      v-show="ready"
-      v-if="type === 'audio'"
-    ></audio>
-
     <!-- Video multimedia -->
-    <b-embed
-      type="video"
-      :src="link"
-      allowfullscreen
-      controls
-      @canplay="onReady"
-      v-show="ready"
-      v-if="type === 'video'"
-    >
-    </b-embed>
+    <b-skeleton-wrapper :loading="loading" v-if="type === 'audio'">
+      <template #loading>
+        <b-skeleton type="input" animation="throb"></b-skeleton>
+      </template>
+      <audio controls :src="link" style="width:85%"></audio>
+    </b-skeleton-wrapper>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      ready: false
-    };
+    return {};
   },
   props: {
     link: String,
@@ -54,19 +31,9 @@ export default {
       default: "video"
     }
   },
-  methods: {
-    onReady() {
-      this.ready = true;
-    }
-  },
-  watch: {
-    loading() {
-      if (this.loading) {
-        this.ready = false;
-      }
-    }
-  }
+  methods: {},
+  watch: {}
 };
 </script>
 
-<style></style>
+<style scoped></style>

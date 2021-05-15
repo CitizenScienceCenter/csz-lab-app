@@ -11,10 +11,25 @@ const component = {
               <common-editor-elements :answers="answers" :question="question" :context="context"/>            
             </b-form-group>
           </b-col>
-          <!-- right columns - Image -->
+          <!-- right columns - Media -->
           <b-col md="7" class="order-1 order-md-2">
-            <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center" style="position: sticky;top: 15%;">
-              <image-task-presenter :link="taskInfo.url || taskInfo.link_raw" :pybossa="pybossa" :loading="!pybossa.taskLoaded"/>
+            <div v-if="taskInfo.link_raw || taskInfo.url || taskInfo.video_url || taskInfo.audio_url"
+              class="text-center" style="position: sticky;top: 15%;">
+              <image-task-presenter
+                v-if="mime=='img'"
+                :link="taskInfo.url || taskInfo.link_raw"
+                :pybossa="pybossa"
+                :loading="!pybossa.taskLoaded"
+              />
+              <media
+                v-else-if="mime=='video'"
+                :link="taskInfo.link_raw || taskInfo.video_url"
+                type="video" :loading="!pybossa.taskLoaded">
+              </media>
+              <media v-else-if="mime=='audio'"
+                :link="taskInfo.link_raw || taskInfo.audio_url"
+                type="audio" :loading="!pybossa.taskLoaded">
+              </media>
             </div>
             <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
           </b-col>
@@ -96,10 +111,11 @@ const component = {
     questionList: [],
 
     answers: [],
-    showAlert: false,
     markedPlaces: [],
     area: { latlngs: [] },
-    mapCenter: ""
+
+    showAlert: false,
+    mime: null
   },
 
   methods: {
@@ -138,10 +154,6 @@ const component = {
       return valid;
     },
     initialize() {
-      const mime = this.pybossa.getFileType(
-        this.taskInfo.url || this.taskInfo.link_raw
-      );
-
       this.showAlert = false;
       const pb = this.pybossa;
       this.questionList = this.questions.filter(q => pb.isConditionEmpty(q));
@@ -163,6 +175,9 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
+      this.mime = this.pybossa.getFileType(
+        this.task.info.url || this.task.info.link_raw
+      );
       return this.task && this.task.info ? this.task.info : {};
     },
     context() {

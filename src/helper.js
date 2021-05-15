@@ -276,6 +276,5 @@ export function getMIME(raw_url) {
 
   const url = new URL(raw_url);
   const extension = url.pathname.split(".")[1];
-  console.log(types);
   return types.get(extension);
 }

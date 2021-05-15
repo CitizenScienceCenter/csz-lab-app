@@ -117,7 +117,7 @@ export default {
       this.hideSlider();
       this.currentZoom = this.imgObject.scaleRatio;
       this.minZoom = this.imgObject.scaleRatio * 1;
-      this.maxZoom = this.imgObject.scaleRatio * 4;
+      this.maxZoom = this.imgObject.scaleRatio * 10;
     },
     onSliderChange(value) {
       var increment = value;
