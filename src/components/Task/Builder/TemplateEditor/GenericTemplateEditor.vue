@@ -188,6 +188,12 @@ export default {
       this.questions = JSON.parse(JSON.stringify(this.task.template));
     }
     if (this.task.material === "geocoding") {
+      if (this.task.mapSettings) {
+        this.mapValid = true; // if mapSettings already exist the data is valid
+        this.mapSettings = JSON.parse(JSON.stringify(this.task.mapSettings));
+        this.mapSettings.center = this.mapSettings.center.join(",");
+        return;
+      }
       this.mapValid = false;
       this.mapSettings = {
         question: "",

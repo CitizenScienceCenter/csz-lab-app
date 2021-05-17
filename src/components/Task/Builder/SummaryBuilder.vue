@@ -238,8 +238,100 @@
                             <small class="white-space">{{ answer }}</small>
                           </li>
                         </ul>
-                        <small class="text-primary">Question type: </small>
-                        <small>{{ getQuestionType(question.type) }}</small>
+                        <div>
+                          <small class="text-primary">Question type: </small>
+                          <small>{{ getQuestionType(question.type) }}</small>
+                        </div>
+                        <div v-if="'questionId' in question.condition">
+                          <small class="text-primary"
+                            >{{
+                              $t("task-template-options-conditional-button")
+                            }}:
+                          </small>
+                          <small>{{$t("task-summary-builder-question")}} {{
+                            getConditionalQuestion(
+                              question.condition.questionId
+                            ) + 1
+                          }}</small>
+                        </div>
+                      </b-card-text>
+                    </b-card-body>
+                  </b-collapse>
+                </b-card>
+
+                <!-- Summary card for map settings when geocoding template is used -->
+                <b-card
+                  v-if="task.material == 'geocoding'"
+                  no-body
+                  class="mb-1"
+                  style="background-color: rgba(255,255,255,0.3);"
+                >
+                  <b-card-header header-tag="header" class="p-0" role="tab">
+                    <b-button
+                      block
+                      v-b-toggle="'gquestion-map'"
+                      class="text-left"
+                      variant="secondary"
+                      @click="collapseButtonOrientation()"
+                    >
+                      <span class="font-weight-bold">Map Settings</span>
+                    </b-button>
+                  </b-card-header>
+                  <b-collapse
+                    id="gquestion-map"
+                    accordion="questions-accordion"
+                    role="tabpanel"
+                    visible
+                  >
+                    <b-card-body>
+                      <b-card-text>
+                        <ul class="list-unstyled ml-4">
+                          <li class="mb-1">
+                            <label class="text-capitalize">
+                              {{ $t("task-summary-builder-question") }}:
+                            </label>
+                            <small class="white-space">{{
+                              task.mapSettings.question
+                            }}</small>
+                          </li>
+                          <li class="mb-1">
+                            <label class="text-capitalize">
+                              {{ $t("task-template-map-center") }}:
+                            </label>
+                            <small class="white-space">{{
+                              task.mapSettings.center.join(", ")
+                            }}</small>
+                          </li>
+                          <li class="mb-1">
+                            <label class="text-capitalize">
+                              {{ $t("task-template-map-zoom") }}:
+                            </label>
+                            <small class="white-space">{{
+                              task.mapSettings.zoom
+                            }}</small>
+                          </li>
+                          <li class="mb-1 d-flex">
+                            <b-form-checkbox
+                              v-model="task.mapSettings.area"
+                              disabled
+                              class="mr-2"
+                            >
+                              <span class="text-label">
+                                {{ $t("task-template-map-area-checkbox") }}
+                              </span>
+                            </b-form-checkbox>
+                            <b-form-checkbox
+                              v-model="task.mapSettings.markers"
+                              disabled
+                              class="mr-2"
+                            >
+                              <span class="text-label">
+                                {{ $t("task-template-map-markers-checkbox") }}:
+                                {{ task.mapSettings.maxMarkers }}
+                              </span>
+                            </b-form-checkbox>
+                          </li>
+                        </ul>
                       </b-card-text>
                     </b-card-body>
                   </b-collapse>
@@ -559,6 +651,10 @@ export default {
       const qt = this.questionTypes.find(x => x.value == key);
       return qt ? qt.name : "No type";
     },
+    getConditionalQuestion(id) {
+      const qid = this.task.template.findIndex(x => x.id === id);
+      return qid;
+    },
     toggleAccordion() {
       this.collapsed = !this.collapsed;
       const tabCollapse = document.getElementsByClassName("collapse");
@@ -618,8 +714,8 @@ export default {
   }
 }
 
-.white-space{
-  white-space: pre-wrap; 
+.white-space {
+  white-space: pre-wrap;
 }
 
 legend {
@@ -631,5 +727,8 @@ legend {
 
 .jumbotron {
   padding: 1rem !important;
+}
+.text-label {
+  color: $secondary;
 }
 </style>
