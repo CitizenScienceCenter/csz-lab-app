@@ -219,12 +219,6 @@ export default {
         id: this.project.id,
         offset: this.offset
       }).then(allowed => {
-        if (this.userProgress.total > 0) {
-          this.setSelectedProjectUserProgress({
-            done: this.userProgress.done + 1,
-            total: this.userProgress.total
-          });
-        }
         //check if anonymous users are allowed. if not redirect to project page
         if (!allowed) {
           this.showError({
@@ -256,7 +250,7 @@ export default {
             } else {
               this.setProjectPassModal(false);
               if (this.userProgressInPercent < 100 && !allowed.id) {
-                // this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
+                this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
                 this.newTask();
                 return;
               }
@@ -284,7 +278,7 @@ export default {
           });
         } else {
           if (this.userProgressInPercent < 100 && !allowed.id) {
-            // this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
+            this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
             this.skip();
             return;
           }
@@ -309,6 +303,13 @@ export default {
         taskRun.user_id = this.userId;
       }
       this.saveTaskRun(JSON.stringify(taskRun)).then(() => {
+        // increase user progress when current task is done
+        if (this.userProgress.total > 0) {
+          this.setSelectedProjectUserProgress({
+            done: this.userProgress.done + 1,
+            total: this.userProgress.total
+          });
+        }
         // load a new task when current task saved
         this.newTask();
       });

@@ -162,9 +162,9 @@ export const routes = [
                       
                     }
                   })*/
-
           const selectedProjectId = store.state.project.selectedProject.id;
           if (parseInt(selectedProjectId) !== parseInt(to.params.id)) {
+            store.commit("project/setLoadingProject", false);
             store.commit(
               "project/menu/setCurrentTab",
               store.state.project.menu.tabs.info

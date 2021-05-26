@@ -1,227 +1,205 @@
 <template>
   <div>
-    <app-cover :imageUrl="getBaseUrl()">
+    <app-cover :imageUrl="getBaseUrl">
       <b-row class="mt-4">
         <!-- Avatar -->
         <b-col cols="5" sm="4" md="3">
-          <div
-            class="div-image"
-            v-if="'info' in project && 'thumbnail_url' in project.info"
-            :style="{ 'background-image': 'url(' + getBaseUrl() + ')' }"
-          ></div>
-          <!--<b-img v-else blank-color="#777" :blank="true" thumbnail rounded="circle" width="auto" height="auto"></b-img>-->
-          <div
-            class="div-image"
-            v-else
-            :style="{ 'background-image': 'url(' + defaultImage + ')' }"
-          ></div>
+          <b-skeleton-wrapper :loading="!loading">
+            <template #loading>
+              <b-skeleton
+                class="div-image"
+                type="avatar"
+                no-aspect
+              ></b-skeleton>
+            </template>
+            <div
+              class="div-image"
+              v-if="'info' in project && 'thumbnail_url' in project.info"
+              :style="{ 'background-image': 'url(' + getBaseUrl + ')' }"
+            ></div>
+            <!--<b-img v-else blank-color="#777" :blank="true" thumbnail rounded="circle" width="auto" height="auto"></b-img>-->
+            <div
+              class="div-image"
+              v-else
+              :style="{ 'background-image': 'url(' + defaultImage + ')' }"
+            ></div>
+          </b-skeleton-wrapper>
         </b-col>
 
         <!-- Header -->
         <b-col cols="7" sm="8" md="9">
-          <h1>{{ project.name }}</h1>
-          <p>{{ project.description }}</p>
+          <b-skeleton-wrapper :loading="!loading">
+            <template #loading>
+              <b-skeleton
+                animation="wave"
+                width="40%"
+                height="2em"
+                class="mb-4"
+              ></b-skeleton>
+              <b-skeleton
+                animation="wave"
+                width="20%"
+                height="1.5em"
+                class="mb-5"
+              ></b-skeleton>
+              <b-skeleton
+                animation="wave"
+                width="50%"
+                height="2.5em"
+                class="mb-4"
+              ></b-skeleton>
+            </template>
+            <h1>{{ project.name }}</h1>
+            <p>{{ project.description }}</p>
 
-          <div v-if="isLoggedUserOwnerOfProject(project)">
-            <div v-if="project.published">
-              <b-btn
-                ref="btn-approve-it"
-                variant="success"
-                class="mt-2"
-                disabled
-                >{{ $t("project-draft-published") }}</b-btn
-              >
-              <b-btn
-                ref="btn-contribute"
-                :to="{ name: 'project.task.presenter' }"
-                variant="primary"
-                size="lg"
-                @click.native="tracking()"
-                >{{ $t("project-contribute") }}
-              </b-btn>
-              <br />
-            </div>
+            <div v-if="isLoggedUserOwnerOfProject(project)">
+              <div v-if="project.published">
+                <b-btn
+                  ref="btn-approve-it"
+                  variant="success"
+                  class="mt-2"
+                  disabled
+                  >{{ $t("project-draft-published") }}</b-btn
+                >
+                <b-btn
+                  ref="btn-contribute"
+                  :to="{ name: 'project.task.presenter' }"
+                  variant="primary"
+                  size="lg"
+                  @click.native="tracking()"
+                  >{{ $t("project-contribute") }}
+                </b-btn>
+                <br />
+              </div>
 
-            <div
-              v-else-if="
-                !project.published &&
-                  !project.info.pending_approval &&
-                  !localPendingApproval
-              "
-            >
-              <b-btn
-                ref="btn-draft-complete-it"
-                v-b-modal.draft-project
-                class="mt-2"
-                variant="primary"
+              <div
+                v-else-if="
+                  !project.published &&
+                    !project.info.pending_approval &&
+                    !localPendingApproval
+                "
               >
-                {{ $t("project-draft-complete") }}</b-btn
-              >
-              <b-btn
-                ref="btn-test-it"
-                :to="{ name: 'project.task.presenter' }"
-                variant="primary"
-                class="mt-2"
-                >{{ $t("project-draft-test") }}</b-btn
-              >
-              &ensp;&ensp;&ensp;
-              <b-btn
-                ref="btn-share-it"
-                v-b-modal.project-link
-                variant="primary"
-                class="mt-2"
-                >{{ $t("project-share-link") }}</b-btn
-              >
+                <b-btn
+                  ref="btn-draft-complete-it"
+                  v-b-modal.draft-project
+                  class="mt-2"
+                  variant="primary"
+                >
+                  {{ $t("project-draft-complete") }}</b-btn
+                >
+                <b-btn
+                  ref="btn-test-it"
+                  :to="{ name: 'project.task.presenter' }"
+                  variant="primary"
+                  class="mt-2"
+                  >{{ $t("project-draft-test") }}</b-btn
+                >
+                &ensp;&ensp;&ensp;
+                <b-btn
+                  ref="btn-share-it"
+                  v-b-modal.project-link
+                  variant="primary"
+                  class="mt-2"
+                  >{{ $t("project-share-link") }}</b-btn
+                >
 
-              <b-btn
-                v-if="shareable_link"
-                class="mt-2"
-                variant="secondary"
-                @click="makeToast('info', shareable_link)"
-              >
-                My link
-              </b-btn>
-              <br />
-              <b-modal
-                id="draft-project"
-                :title="$t('project-draft-complete')"
-                :ok-title="$t('ok')"
-                :cancel-title="$t('cancel-c')"
-                @ok="draftProject(id)"
-              >
-                <b-alert variant="warning" :show="true">
-                  <span
-                    v-html="
-                      $t('modify-draft-modal-content', {
-                        HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>How it works</a>`
-                      })
-                    "
-                  ></span>
-                </b-alert>
-              </b-modal>
-              <b-modal
-                id="project-link"
-                :title="$t('project-share-link')"
-                :ok-title="$t('submit-btn')"
-                :cancel-title="$t('cancel-c')"
-                @ok="getLink"
-              >
-                <b-alert variant="warning" :show="true">
-                  {{ $t("shareable-link-modal-content") }} <br />
-                  {{ $t("shareable-link-modal-content-note") }}
-                </b-alert>
-              </b-modal>
+                <b-btn
+                  v-if="shareable_link"
+                  class="mt-2"
+                  variant="secondary"
+                  @click="makeToast('info', shareable_link)"
+                >
+                  My link
+                </b-btn>
+                <br />
+                <b-modal
+                  id="draft-project"
+                  :title="$t('project-draft-complete')"
+                  :ok-title="$t('ok')"
+                  :cancel-title="$t('cancel-c')"
+                  @ok="draftProject(id)"
+                >
+                  <b-alert variant="warning" :show="true">
+                    <span
+                      v-html="
+                        $t('modify-draft-modal-content', {
+                          HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>How it works</a>`
+                        })
+                      "
+                    ></span>
+                  </b-alert>
+                </b-modal>
+                <b-modal
+                  id="project-link"
+                  :title="$t('project-share-link')"
+                  :ok-title="$t('submit-btn')"
+                  :cancel-title="$t('cancel-c')"
+                  @ok="getLink"
+                >
+                  <b-alert variant="warning" :show="true">
+                    {{ $t("shareable-link-modal-content") }} <br />
+                    {{ $t("shareable-link-modal-content-note") }}
+                  </b-alert>
+                </b-modal>
 
-              <div v-if="!infos.admin">
+                <div v-if="!infos.admin">
+                  <b-btn
+                    ref="btn-approve-it"
+                    variant="primary"
+                    class="mt-2"
+                    v-b-modal.approve-project
+                    >{{ $t("project-draft-approve-your-project") }}</b-btn
+                  ><br />
+                </div>
+                <div v-else>
+                  <b-btn
+                    ref="btn-publish-it"
+                    variant="primary"
+                    class="mt-2"
+                    v-b-modal.publish-project
+                    @click="publish()"
+                  >
+                    {{ $t("project-draft-publish") }}</b-btn
+                  ><br />
+                </div>
+              </div>
+
+              <div
+                v-else-if="
+                  !project.published &&
+                    (project.info.pending_approval || localPendingApproval)
+                "
+              >
                 <b-btn
                   ref="btn-approve-it"
                   variant="primary"
                   class="mt-2"
                   v-b-modal.approve-project
-                  >{{ $t("project-draft-approve-your-project") }}</b-btn
+                  disabled
+                  >{{ $t("project-draft-pending-approval") }}</b-btn
                 ><br />
               </div>
-              <div v-else>
-                <b-btn
-                  ref="btn-publish-it"
-                  variant="primary"
-                  class="mt-2"
-                  v-b-modal.publish-project
-                  @click="publish()"
-                >
-                  {{ $t("project-draft-publish") }}</b-btn
-                ><br />
-              </div>
-            </div>
 
-            <div
-              v-else-if="
-                !project.published &&
-                  (project.info.pending_approval || localPendingApproval)
-              "
-            >
-              <b-btn
-                ref="btn-approve-it"
-                variant="primary"
-                class="mt-2"
-                v-b-modal.approve-project
-                disabled
-                >{{ $t("project-draft-pending-approval") }}</b-btn
-              ><br />
-            </div>
-
-            <b-modal
-              id="approve-project"
-              :title="$t('project-draft-approve-your-project')"
-              :ok-title="$t('submit-btn')"
-              :cancel-title="$t('cancel-c')"
-              @ok="approve"
-            >
-              <b-alert variant="warning" :show="true">
-                <span
-                  v-html="
-                    $t('project-draft-approval-warning', {
-                      link: `<a target='_blank' href='https://lab.staging.citizenscience.ch/en/about'>criteria</a>`
-                    })
-                  "
-                ></span>
-              </b-alert>
-            </b-modal>
-          </div>
-
-          <div v-else-if="isAnonymousProject && !infos.admin">
-            <b-btn
-              ref="btn-contribute"
-              :to="{ name: 'project.task.presenter' }"
-              variant="primary"
-              size="lg"
-              @click.native="tracking()"
-              >{{ $t("project-contribute") }}
-            </b-btn>
-          </div>
-
-          <div v-else>
-            <div v-if="!project.published && isAnonymousProject">
-              <b-btn
-                ref="btn-draft-complete-it"
-                :to="{ name: 'task.builder.material', params: { id } }"
-                class="mt-2"
-                variant="primary"
-              >
-                {{ $t("project-draft-complete") }}</b-btn
-              >
-              <b-btn
-                ref="btn-test-it"
-                :to="{ name: 'project.task.presenter' }"
-                variant="primary"
-                class="mt-2"
-                >{{ $t("project-draft-test") }}</b-btn
-              ><br />
-
-              <b-btn
-                ref="btn-publish-it"
-                variant="primary"
-                class="mt-2"
-                v-b-modal.publish-project
-                :disabled="!project.info.pending_approval"
-              >
-                {{ $t("project-draft-publish") }}</b-btn
-              ><br />
-
-              <!-- Publish project modal -->
               <b-modal
-                id="publish-project"
-                :title="$t('project-draft-publish-your-project')"
-                :ok-title="$t('project-draft-publish-your-project-ok')"
-                :cancel-title="$t('project-draft-publish-your-project-no')"
-                @ok="publish"
+                id="approve-project"
+                :title="$t('project-draft-approve-your-project')"
+                :ok-title="$t('submit-btn')"
+                :cancel-title="$t('cancel-c')"
+                @ok="approve"
               >
-                <b-alert variant="danger" :show="true">
-                  {{ $t("project-draft-danger") }}
+                <b-alert variant="warning" :show="true">
+                  <span
+                    v-html="
+                      $t('project-draft-approval-warning', {
+                        link: `<a target='_blank' href='https://lab.staging.citizenscience.ch/en/about'>criteria</a>`
+                      })
+                    "
+                  ></span>
                 </b-alert>
               </b-modal>
             </div>
-            <div v-else>
+
+            <div v-else-if="isAnonymousProject && !infos.admin">
               <b-btn
                 ref="btn-contribute"
                 :to="{ name: 'project.task.presenter' }"
@@ -231,73 +209,157 @@
                 >{{ $t("project-contribute") }}
               </b-btn>
             </div>
-          </div>
+
+            <div v-else>
+              <div v-if="!project.published && isAnonymousProject">
+                <b-btn
+                  ref="btn-draft-complete-it"
+                  :to="{ name: 'task.builder.material', params: { id } }"
+                  class="mt-2"
+                  variant="primary"
+                >
+                  {{ $t("project-draft-complete") }}</b-btn
+                >
+                <b-btn
+                  ref="btn-test-it"
+                  :to="{ name: 'project.task.presenter' }"
+                  variant="primary"
+                  class="mt-2"
+                  >{{ $t("project-draft-test") }}</b-btn
+                ><br />
+
+                <b-btn
+                  ref="btn-publish-it"
+                  variant="primary"
+                  class="mt-2"
+                  v-b-modal.publish-project
+                  :disabled="!project.info.pending_approval"
+                >
+                  {{ $t("project-draft-publish") }}</b-btn
+                ><br />
+
+                <!-- Publish project modal -->
+                <b-modal
+                  id="publish-project"
+                  :title="$t('project-draft-publish-your-project')"
+                  :ok-title="$t('project-draft-publish-your-project-ok')"
+                  :cancel-title="$t('project-draft-publish-your-project-no')"
+                  @ok="publish"
+                >
+                  <b-alert variant="danger" :show="true">
+                    {{ $t("project-draft-danger") }}
+                  </b-alert>
+                </b-modal>
+              </div>
+              <div v-else>
+                <b-btn
+                  ref="btn-contribute"
+                  :to="{ name: 'project.task.presenter' }"
+                  variant="primary"
+                  size="lg"
+                  @click.native="tracking()"
+                  >{{ $t("project-contribute") }}
+                </b-btn>
+              </div>
+            </div>
+          </b-skeleton-wrapper>
         </b-col>
       </b-row>
     </app-cover>
     <b-container>
       <b-row class="mt-5">
         <b-col cols="12">
-          <b-tabs
-            pills
-            content-class="mt-5 mb-5"
-            active-nav-item-class="font-weight-bold"
-            fill
-          >
-            <b-tab
-              :title="$t('info-c')"
-              :active="currentTab === tabs.info"
-              @click="setCurrentTab(tabs.info)"
-              style="outline: none"
+          <b-skeleton-wrapper :loading="!loading">
+            <template #loading>
+              <div class="d-flex justify-content-between mb-5">
+                <b-skeleton type="button" width="20%"></b-skeleton>
+                <b-skeleton type="button" width="20%"></b-skeleton>
+                <b-skeleton type="button" width="20%"></b-skeleton>
+                <b-skeleton type="button" width="20%"></b-skeleton>
+              </div>
+              <b-skeleton
+                animation="wave"
+                width="85%"
+                class="mb-3"
+              ></b-skeleton>
+              <b-skeleton
+                animation="wave"
+                width="60%"
+                class="mb-3"
+              ></b-skeleton>
+              <b-skeleton
+                animation="wave"
+                width="70%"
+                class="mb-3"
+              ></b-skeleton>
+              <b-skeleton
+                animation="wave"
+                width="55%"
+                class="mb-3"
+              ></b-skeleton>
+              <b-skeleton animation="wave" width="90%"></b-skeleton>
+            </template>
+            <b-tabs
+              pills
+              content-class="mt-5 mb-5"
+              active-nav-item-class="font-weight-bold"
+              fill
             >
-              <ProjectInfoMenu></ProjectInfoMenu>
-            </b-tab>
+              <b-tab
+                :title="$t('info-c')"
+                :active="currentTab === tabs.info"
+                @click="setCurrentTab(tabs.info)"
+                style="outline: none"
+              >
+                <ProjectInfoMenu></ProjectInfoMenu>
+              </b-tab>
 
-            <b-tab
-              :title="$t('statistics-c')"
-              :active="currentTab === tabs.statistics"
-              @click="setCurrentTab(tabs.statistics)"
-              style="outline: none"
-            >
-              <ProjectStatisticsMenu></ProjectStatisticsMenu>
-            </b-tab>
+              <b-tab
+                :title="$t('statistics-c')"
+                :active="currentTab === tabs.statistics"
+                @click="setCurrentTab(tabs.statistics)"
+                style="outline: none"
+              >
+                <ProjectStatisticsMenu></ProjectStatisticsMenu>
+              </b-tab>
 
-            <!-- Temporary removed -->
-            <b-tab
-              v-if="false"
-              :title="'Results (' + results.n_results + ')'"
-              :active="currentTab === tabs.results"
-              @click="setCurrentTab(tabs.results)"
-              style="outline: none"
-            >
-              <ProjectResultsMenu></ProjectResultsMenu>
-            </b-tab>
+              <!-- Temporary removed -->
+              <b-tab
+                v-if="false"
+                :title="'Results (' + results.n_results + ')'"
+                :active="currentTab === tabs.results"
+                @click="setCurrentTab(tabs.results)"
+                style="outline: none"
+              >
+                <ProjectResultsMenu></ProjectResultsMenu>
+              </b-tab>
 
-            <b-tab
-              ref="tab-tasks"
-              v-if="isLoggedUserOwnerOfProject(project) || infos.admin"
-              :title="$t('tasks-c')"
-              :active="currentTab === tabs.tasks"
-              @click="setCurrentTab(tabs.tasks)"
-              style="outline: none"
-            >
-              <ProjectTasksMenu></ProjectTasksMenu>
-            </b-tab>
+              <b-tab
+                ref="tab-tasks"
+                v-if="isLoggedUserOwnerOfProject(project) || infos.admin"
+                :title="$t('tasks-c')"
+                :active="currentTab === tabs.tasks"
+                @click="setCurrentTab(tabs.tasks)"
+                style="outline: none"
+              >
+                <ProjectTasksMenu></ProjectTasksMenu>
+              </b-tab>
 
-            <b-tab
-              ref="tab-settings"
-              v-if="isLoggedUserOwnerOfProject(project) || infos.admin"
-              :title="$t('settings-c')"
-              :active="currentTab === tabs.settings"
-              @click="setCurrentTab(tabs.settings)"
-              style="outline: none"
-            >
-              <!-- v-if used to render the component only if the tab is active -->
-              <ProjectEditor
-                v-if="currentTab === tabs.settings"
-              ></ProjectEditor>
-            </b-tab>
-          </b-tabs>
+              <b-tab
+                ref="tab-settings"
+                v-if="isLoggedUserOwnerOfProject(project) || infos.admin"
+                :title="$t('settings-c')"
+                :active="currentTab === tabs.settings"
+                @click="setCurrentTab(tabs.settings)"
+                style="outline: none"
+              >
+                <!-- v-if used to render the component only if the tab is active -->
+                <ProjectEditor
+                  v-if="currentTab === tabs.settings"
+                ></ProjectEditor>
+              </b-tab>
+            </b-tabs>
+          </b-skeleton-wrapper>
         </b-col>
       </b-row>
     </b-container>
@@ -337,9 +399,9 @@ export default {
         {
           property: "og:title",
           content: `Project ${this.project.id} - Home`,
-          template: "%s | " + this.$t("site-title"),
-        },
-      ],
+          template: "%s | " + this.$t("site-title")
+        }
+      ]
     };
   },
   created() {
@@ -359,7 +421,14 @@ export default {
         // has to be loaded to know if the project can be published
         this.getProjectTasks(project);
       }
+      this.setLoadingProject(true);
     });
+  },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
   },
   data: () => {
     return {
@@ -383,6 +452,7 @@ export default {
       "getResults",
       "getStatistics"
     ]),
+    ...mapMutations("project", ["setLoadingProject"]),
     ...mapActions("task", ["getProjectTasks", "getNewTask"]),
     ...mapMutations("project/menu", ["setCurrentTab"]),
     ...mapMutations("notification", ["showError"]),
@@ -427,16 +497,6 @@ export default {
         });
       }
     },
-    getBaseUrl() {
-      if (this.project.info.thumbnail) {
-        const base = process.env.BASE_ENDPOINT_URL;
-        const container = this.project.info.container;
-        const picname = this.project.info.thumbnail;
-        return base + "uploads/" + container + "/" + picname;
-      } else {
-        return this.defaultImage;
-      }
-    },
     makeToast(variant = null, data) {
       this.$bvToast.toast(data, {
         toaster: "b-toaster-top-center",
@@ -457,7 +517,7 @@ export default {
       const info = {
         category: "contribution",
         label: `id: ${this.project.id} - project: ${this.project.short_name}`,
-        action: `contribute: ${this.project.short_name}`,
+        action: `contribute: ${this.project.short_name}`
       };
       trackEvent(this, info);
     }
@@ -466,12 +526,23 @@ export default {
     ...mapState("project", {
       project: state => state.selectedProject,
       results: state => state.selectedProjectResults,
-      stats: state => state.selectedProjectStats
+      stats: state => state.selectedProjectStats,
+      loading: state => state.loading
     }),
     ...mapState("task", ["taskPresenter", "projectTasks"]),
     ...mapState("project/menu", ["currentTab", "tabs"]),
     ...mapState("user", ["infos"]),
-    ...mapGetters("user", ["isLoggedUserOwnerOfProject", "isLoggedUserAdmin"])
+    ...mapGetters("user", ["isLoggedUserOwnerOfProject", "isLoggedUserAdmin"]),
+    getBaseUrl() {
+      if (this.loading && this.project.info.thumbnail) {
+        const base = process.env.BASE_ENDPOINT_URL;
+        const container = this.project.info.container;
+        const picname = this.project.info.thumbnail;
+        return base + "uploads/" + container + "/" + picname;
+      } else {
+        return this.defaultImage;
+      }
+    }
   }
 };
 </script>
