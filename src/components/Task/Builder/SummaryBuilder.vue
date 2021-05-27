@@ -48,17 +48,20 @@
             <legend class="m-0">{{ task.source.toUpperCase() }}</legend>
             <b-media tag="li" vertical-align="top">
               <template v-slot:aside>
-                <i class="fas fa-tasks icon-secondary-big"></i>
+                <i class="fas fa-list-ul icon-secondary-medium"></i>
               </template>
               <span
                 v-if="
                   task.source !== sources.flickr &&
                     task.source !== sources.twitter
                 "
-                ><b>{{ task.sourceContent.length }}</b>
-                {{ $t("task-summary-builder-tasks") }}</span
-              >
-              <ul
+                >
+                <b>{{ task.sourceContent.length }}</b>
+                {{ $t("task-summary-builder-tasks") }}
+              </span>
+              
+              <!-- list of file removed from this interface -->
+              <!-- <ul
                 v-if="
                   task.source !== sources.flickr &&
                     task.source !== sources.twitter
@@ -81,17 +84,17 @@
                     file
                   }}</b-link>
                 </li>
-              </ul>
-              <p v-else-if="task.source === sources.flickr">
+              </ul> -->
+              <span v-else-if="task.source === sources.flickr">
                 {{ $t("task-summary-builder-flickr-import") }} (<span
                   class="font-italic"
                   >{{ task.sourceContent }}</span
                 >)
-              </p>
-              <p v-else-if="task.source === sources.twitter">
+              </span>
+              <span v-else-if="task.source === sources.twitter">
                 {{ task.sourceContent.maxTweets + "" }}
                 {{ $t("task-summary-builder-tweets-import") }}
-              </p>
+              </span>
             </b-media>
           </b-media>
         </ul>
@@ -697,6 +700,11 @@ export default {
 .icon-secondary-big {
   color: $secondary;
   width: 3em;
+  height: auto;
+}
+.icon-secondary-medium {
+  color: $secondary;
+  width: 2em;
   height: auto;
 }
 
