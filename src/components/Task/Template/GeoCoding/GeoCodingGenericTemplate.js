@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 const component = {
   template: `
-      <div v-if="pybossa.userProgressInPercent < 100" >        
+      <div v-if="userProgress < 100" >        
         <b-row>
           <!-- Left column - Questions-->
           <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
@@ -182,6 +182,11 @@ const component = {
     },
     context() {
       return this;
+    },
+    userProgress() {
+      return isNaN(this.pybossa.userProgressInPercent)
+        ? 0
+        : this.pybossa.userProgressInPercent;
     }
   },
 

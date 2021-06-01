@@ -118,6 +118,11 @@ export default {
   },
 
   created() {
+    // Initialize the User progress each time template is loaded
+    this.setSelectedProjectUserProgress({
+      done: 0,
+      total: 0
+    });
     // load the project first to have access to the presenter and to the related tasks
     this.getProject(this.id).then(() => {
       this.taskPresenterLoaded = true;

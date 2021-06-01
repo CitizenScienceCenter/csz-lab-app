@@ -98,7 +98,8 @@ export default {
         mode: "vue",
         theme: "default",
         lineNumbers: true,
-        viewportMargin: Infinity
+        viewportMargin: Infinity,
+        smartIndent: false
       }
     };
   },

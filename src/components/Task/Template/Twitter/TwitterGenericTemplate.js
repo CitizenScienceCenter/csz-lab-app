@@ -3,7 +3,7 @@ const component = {
   template: `
       <!-- This template use https://bootstrap-vue.js.org/ -->
 
-      <b-row v-if="pybossa.userProgressInPercent < 100">
+      <b-row v-if="userProgress < 100">
         
         <!-- Form zone -->
         <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
@@ -121,6 +121,11 @@ const component = {
     },
     context() {
       return this;
+    },
+    userProgress() {
+      return isNaN(this.pybossa.userProgressInPercent)
+        ? 0
+        : this.pybossa.userProgressInPercent;
     }
   },
 
