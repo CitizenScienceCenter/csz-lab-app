@@ -42,7 +42,7 @@ const component =
         <!-- Sound -->
         <b-col md="8" class="order-1 order-md-2">
           <div v-if="pybossa.taskLoaded">
-            <audio v-if="taskInfo.audio_url" :src="taskInfo.audio_url" controls></audio>
+            <audio v-if="taskInfo.link" :src="taskInfo.link" controls></audio>
             <div v-else-if="taskInfo.embed" v-html="taskInfo.embed"></div>
             <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-12') }}</b-alert>
           </div>
@@ -72,22 +72,26 @@ const component =
       submit () {
         if (this.isFormValid()) {
           this.pybossa.saveTask(this.answers)
-          this.answers.forEach((el, index, array) => {
-            array[index] = ''
-          })
-          this.showAlert = false
+          this.initialize();
         } else {
           this.showAlert = true
         }
       },
       skip(){
-	      this.pybossa.skip();
+        this.pybossa.skip();
+        this.initialize();
 	    },
       isFieldValid (field) {
         return field.length > 0
       },
       isFormValid () {
         return !this.answers.some(el => el.length === 0)
+      },
+      initialize() {
+        this.showAlert = false;
+        this.answers = [];
+        this.descriptions.forEach(() => this.answers.push(""));
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     },
 
@@ -101,7 +105,7 @@ const component =
     },
 
     created () {
-      this.descriptions.forEach(() => this.answers.push(''))
+      this.initialize();
     },
 
     mounted () {

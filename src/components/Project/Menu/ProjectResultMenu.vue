@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: find what to display in this component exactly -->
   <b-row align-h="between" align-v="center">
     <b-col>
       <b>{{ results.n_results }}</b><br>

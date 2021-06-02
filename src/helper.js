@@ -235,3 +235,46 @@ export function trackEvent(_this, info = undefined) {
     });
   }
 }
+
+// Get the width screen size using javascript.get
+export function getWidthScreen() {
+  return window.screen.width;
+}
+
+// Get MIME type for url file
+export function getMIME(raw_url) {
+  const img_ext = new Set([
+    "png",
+    "jpg",
+    "jpeg",
+    "gif",
+    "bmp",
+    "svg",
+    "tif",
+    "tiff",
+    "webp"
+  ]);
+  const video_ext = new Set(["avi", "mp4", "mpeg", "ogv", "webm", "3gp"]);
+  const audio_ext = new Set([
+    "aac",
+    "mid",
+    "midi",
+    "mp3",
+    "oga",
+    "opus",
+    "wav",
+    "weba"
+  ]);
+
+  const types = new Map();
+  //add images to the Map
+  img_ext.forEach(img => types.set(img, "img"));
+  //add video to the Map
+  video_ext.forEach(video => types.set(video, "video"));
+  //add audio to the Map
+  audio_ext.forEach(audio => types.set(audio, "audio"));
+
+  const url = new URL(raw_url);
+  const extension = url.pathname.split(".")[1];
+  return types.get(extension);
+}

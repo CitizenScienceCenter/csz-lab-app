@@ -1,7 +1,16 @@
+const QUESTION_TYPES = [
+  { value: "one_choice", name: "One Choice" },
+  { value: "multiple_choice", name: "Multiple Choice" },
+  { value: "dropdown", name: "Dropdown" },
+  { value: "short_answer", name: "Short Answer" },
+  { value: "long_answer", name: "Long Answer" }
+];
+
 const state = {
-    language: 'en',
-    gdpr:false
-}
+  language: "en",
+  gdpr: false,
+  questionTypes: QUESTION_TYPES
+};
 
 const getters = {
     getGtag: state =>{

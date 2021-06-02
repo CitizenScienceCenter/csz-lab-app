@@ -417,6 +417,10 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, te
   border-bottom: 1px solid $primary;
   border-radius: 0;
   outline: none;
+  
+  &.editor{
+    border-bottom: 1.5px dashed $primary;
+  }
 
   &:focus {
     outline: none;
@@ -432,6 +436,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, te
 textarea {
   height: auto;
   resize: none;
+  background: transparent !important;
   padding-top: calc( ( 40px - #{$font-size-normal} * 1.5)/2 );
   padding-bottom: calc( ( 40px - #{$font-size-normal} * 1.5)/2 );
   overflow: hidden;

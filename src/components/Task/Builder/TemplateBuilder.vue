@@ -11,6 +11,26 @@
       </b-col>
     </b-row>
 
+    <!-- Generic template -->
+    <b-row v-if="task.job === jobs.generic">
+      <b-col md="9">
+        <GenericTemplateEditor></GenericTemplateEditor>
+        
+      </b-col>
+      <b-col md="3" class="text-muted">
+        <p class="small"><i class="fas fa-info-circle"></i> <br>
+        {{ $t('task-template-builder-formulate-questions') }}<br><br>
+        {{ $t('task-template-builder-formulate-example') }}
+              <br>
+              <i>{{ $t('task-template-builder-formulate-questions-1') }}</i><br>
+              <i>{{ $t('task-template-builder-formulate-questions-2') }}</i><br>
+              <i>{{ $t('task-template-builder-formulate-questions-3') }}</i><br>
+              <i>{{ $t('task-template-builder-formulate-questions-4') }}</i><br>
+        </p>
+        <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: this.selectedProject.id } }"> {{ $t('task-template-builder-expert-path') }} </b-link>.</p>
+      </b-col>
+    </b-row>
+
     <b-row v-if="task.job === jobs.classify">
       <b-col md="9">
         <ClassifyTemplateEditor></ClassifyTemplateEditor>
@@ -67,6 +87,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import GenericTemplateEditor from '@/components/Task/Builder/TemplateEditor/GenericTemplateEditor'
 import ClassifyTemplateEditor from '@/components/Task/Builder/TemplateEditor/ClassifyTemplateEditor'
 import CountTemplateEditor from '@/components/Task/Builder/TemplateEditor/CountTemplateEditor'
 import DescribeTemplateEditor from '@/components/Task/Builder/TemplateEditor/DescribeTemplateEditor'
@@ -74,6 +95,7 @@ import DescribeTemplateEditor from '@/components/Task/Builder/TemplateEditor/Des
 export default {
   name: 'TemplateBuilder',
   components: {
+    GenericTemplateEditor,
     ClassifyTemplateEditor,
     CountTemplateEditor,
     DescribeTemplateEditor

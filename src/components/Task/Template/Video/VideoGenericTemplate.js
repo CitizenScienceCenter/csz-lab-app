@@ -3,28 +3,22 @@ const component = {
   template: `
       <!-- This template use https://bootstrap-vue.js.org/ -->
 
-      <b-row v-if="pybossa.userProgressInPercent < 100">
+      <b-row v-if="userProgress < 100">
         
         <!-- Form zone -->
-        <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
+        <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
-          <b-form-group :key="key" v-for="(question, key) in questions" :label="question.question" label-size="lg">
-          
-            <b-form-radio-group 
-              v-model="answers[key]"
-              buttons
-              button-variant="outline-primary"
-              :options="question.answers">
-            </b-form-radio-group>
-            
+          <b-form-group :key="question.id" v-for="question in questionList" label-size="lg" class="mt-2 mb-4">            
+            <label>{{question.question}} <span v-if="question.required" class="text-primary font-weight-bold h5">*</span></label>          
+            <common-editor-elements :answers="answers" :question="question" :context="context"/>            
           </b-form-group>
           
           <!-- Submit button -->
-          <b-btn @click="submit" variant="success">{{$t('submit-btn')}}</b-btn>
+          <b-btn @click="submit" variant="success" class="mt-3">{{$t('submit-btn')}}</b-btn>
 
           <!-- Skip button -->
-          <b-btn @click="skip" variant="secondary">{{$t('skip-btn')}}</b-btn>
+          <b-btn @click="skip" variant="secondary" class="mt-3">{{$t('skip-btn')}}</b-btn>
           
           <!-- Form validation errors -->
           <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
@@ -38,18 +32,18 @@ const component = {
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
         
-        <!-- Image -->
-        <b-col md="6" class="order-1 order-md-2">
-          <div v-if="taskInfo.url || taskInfo.link_raw" class="text-center">
-            <div v-if="pybossa.taskLoaded" @click="pybossa.showModal('image', taskInfo.url ? taskInfo.url : taskInfo.link_raw)" class="clickable-element">
-              <b-img v-if="taskInfo.url" fluid-grow :src="taskInfo.url" class="shadow" style="min-height: 120px; background-color: grey" alt="Image loading..."></b-img>
-              <b-img v-else fluid-grow :src="taskInfo.link_raw" class="shadow" style="min-height: 120px; background-color: grey" alt="Image loading..."></b-img>
-            </div>
-            <b-spinner v-else style="width: 4rem; height: 4rem;" variant="primary" :label="$t('template-editor-text-4')"></b-spinner>
+        <!-- Video -->
+        <b-col md="7" class="order-1 order-md-2">
+          <div class="text-center" style="position: sticky;top: 15%;">
+            <media v-if="taskInfo.link_raw || taskInfo.video_url"
+              :link="taskInfo.link_raw || taskInfo.video_url"
+              type="video" :loading="!pybossa.taskLoaded">
+            </media>
+            <div v-else-if="taskInfo && taskInfo.oembed" v-html="taskInfo.oembed"></div>
+            <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-15') }}</b-alert>
           </div>
-          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
         </b-col>
-      </b-row>
+      </b-row>    
       
       <!-- Task end message -->
       <b-row v-else>
@@ -66,7 +60,8 @@ const component = {
       }
     ],
     answers: [],
-    showAlert: false
+    showAlert: false,
+    questionList: []
   },
 
   methods: {
@@ -83,15 +78,29 @@ const component = {
       this.initialize();
     },
     isFormValid() {
-      return (
-        this.answers.length === this.questions.length &&
-        !this.answers.some(el => typeof el === "undefined" || el == null)
-      );
+      const ctrl = this;
+      let valid = true;
+      this.questionList.every(question => {
+        const ans = ctrl.answers.find(x => x.qid == question.id) || [];
+        if (question.required && (!!!ans.value || ans.value.length <= 0)) {
+          valid = false;
+          return false;
+        }
+        return true;
+      });
+      return valid;
     },
     initialize() {
       this.showAlert = false;
-      this.answers = [];
-      this.questions.forEach(() => this.answers.push(null));
+      const pb = this.pybossa;
+      this.questionList = this.questions.filter(q => pb.isConditionEmpty(q));
+      this.answers = this.questions.map(function(x) {
+        const answer = { qid: x.id, question: x.question, value: null };
+        if (x.type === "multiple_choice") {
+          answer.value = [];
+        }
+        return answer;
+      });
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   },
@@ -102,6 +111,14 @@ const component = {
     },
     taskInfo() {
       return this.task.info;
+    },
+    context() {
+      return this;
+    },
+    userProgress() {
+      return isNaN(this.pybossa.userProgressInPercent)
+        ? 0
+        : this.pybossa.userProgressInPercent;
     }
   },
 
@@ -111,6 +128,10 @@ const component = {
 
   mounted() {
     this.pybossa.run();
+  },
+
+  watch: {
+    /* Watch no nested elements */
   },
 
   props: {

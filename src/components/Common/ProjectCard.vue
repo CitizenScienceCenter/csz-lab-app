@@ -10,8 +10,12 @@
         <b-col class="col-image">
           <!--<b-card-img-lazy v-if="project.info.thumbnail_url" :src="project.info.thumbnail_url"></b-card-img-lazy>
           <b-card-img-lazy v-else :src="'https://dummyimage.com/334x250/777777/fff&text=' + project.name"></b-card-img-lazy>-->
-          <div v-if="project.info.thumbnail_url" class="project-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
-          <div v-else class="project-image" :style="{ 'background-image': 'url(' + defaultImg + ')'  }"></div>
+          <div v-if="project.info.thumbnail_url">
+            <b-img-lazy :src="getBaseUrl()" rounded="circle" class="project-image"></b-img-lazy>
+          </div>
+          <div v-else>
+            <b-img-lazy :src="defaultImg" rounded="circle" class="project-image"></b-img-lazy>
+          </div>
         </b-col>
       </b-row>
       <b-row class="row">
@@ -26,7 +30,9 @@
     </div>
      
     <div class="overlay"></div>
-    <div class="project-bg-image" :style="{ backgroundImage: 'url('+ getBaseUrl() +')' }"></div>
+    <div>
+      <b-img-lazy :src="getBaseUrl()" class="project-bg-image"></b-img-lazy>
+    </div>
     
   </div>
   

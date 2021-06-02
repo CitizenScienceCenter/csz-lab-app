@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-const component =
-  {
-    template: `
+const component = {
+  template: `
       <!-- This template use https://bootstrap-vue.js.org/ -->
 
       <b-row v-if="pybossa.userProgressInPercent < 100">
@@ -44,44 +43,50 @@ const component =
         </b-col>
       </b-row>`,
 
-    /* All template data */
-    data: {
-      question: '',
-      count: 0
+  /* All template data */
+  data: {
+    question: "",
+    count: 0
+  },
+
+  methods: {
+    answer(answer) {
+      this.pybossa.saveTask(answer);
+      this.initialize();
     },
-
-    methods: {
-      answer (answer) {
-        this.pybossa.saveTask(answer)
-      },
-      skip(){
-	      this.pybossa.skip();
-	    }
+    skip() {
+      this.pybossa.skip();
+      this.initialize();
     },
+    initialize() {
+      this.count = 0;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  },
 
-    computed: {
-      task () {
-        return this.pybossa.task
-      },
-      taskInfo () {
-        return this.task.info
-      }
+  computed: {
+    task() {
+      return this.pybossa.task;
     },
+    taskInfo() {
+      return this.task.info;
+    }
+  },
 
-    created () {
+  created() {
+    this.initialize();
+  },
 
-    },
+  mounted() {
+    this.pybossa.run();
+  },
 
-    mounted () {
-      this.pybossa.run()
-    },
-
-    props: {
-      /* Injected by the Pybossa App */
-      pybossa: {
-        required: true
-      }
+  props: {
+    /* Injected by the Pybossa App */
+    pybossa: {
+      required: true
     }
   }
+};
 
-export default component
+export default component;

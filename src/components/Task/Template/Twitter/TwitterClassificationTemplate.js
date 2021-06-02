@@ -81,21 +81,26 @@ const component = {
     submit() {
       if (this.isFormValid()) {
         this.pybossa.saveTask(this.answers);
-        this.showAlert = false;
-        this.answers = [];
-        this.questions.forEach(() => this.answers.push(null));
+        this.initialize();
       } else {
         this.showAlert = true;
       }
     },
     skip() {
       this.pybossa.skip();
+      this.initialize();
     },
     isFormValid() {
       return (
         this.answers.length === this.questions.length &&
         !this.answers.some(el => typeof el === "undefined" || el == null)
       );
+    },
+    initialize() {
+      this.showAlert = false;
+      this.answers = [];
+      this.questions.forEach(() => this.answers.push(null));
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   },
 
@@ -109,7 +114,7 @@ const component = {
   },
 
   created() {
-    this.questions.forEach(() => this.answers.push(null));
+    this.initialize();
   },
 
   mounted() {
@@ -124,4 +129,4 @@ const component = {
   }
 };
 
-export default component
+export default component;

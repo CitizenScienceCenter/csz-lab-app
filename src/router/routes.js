@@ -162,9 +162,9 @@ export const routes = [
                       
                     }
                   })*/
-
           const selectedProjectId = store.state.project.selectedProject.id;
           if (parseInt(selectedProjectId) !== parseInt(to.params.id)) {
+            store.commit("project/setLoadingProject", false);
             store.commit(
               "project/menu/setCurrentTab",
               store.state.project.menu.tabs.info
@@ -388,7 +388,10 @@ export const routes = [
             store.commit("task/builder/setCurrentStep", "template");
             next();
           } else {
-            next({ name: "task.builder.job", params: { id: to.params.id } });
+            next({
+              name: "task.builder.job",
+              params: { id: to.params.id }
+            });
           }
         }
       },
@@ -419,7 +422,10 @@ export const routes = [
             store.commit("task/builder/setCurrentStep", "summary");
             next();
           } else {
-            next({ name: "task.builder.source", params: { id: to.params.id } });
+            next({
+              name: "task.builder.source",
+              params: { id: to.params.id }
+            });
           }
         }
       },

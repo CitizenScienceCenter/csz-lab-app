@@ -176,7 +176,6 @@ export default {
   border: 0px;
   border-color: transparent;
 }
-
 .main-content {
   padding-bottom: 20rem;
 }
