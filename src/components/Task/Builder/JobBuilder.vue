@@ -14,6 +14,12 @@
       </b-col>
     </b-row>
 
+    <b-row>
+      <b-col md="6" class="mt-md-0 mt-4">
+        <load-data></load-data>
+      </b-col>
+    </b-row>
+
     <b-row class="mt-4">
       <b-col md="9">
         <b-row>
@@ -106,11 +112,16 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import LoadData from "@/components/Task/Builder/TemplateEditor/CSLogger/LoadData";
 
 export default {
   name: "JobSelector",
+  components: {
+    LoadData
+  },
   created() {
     this.selectedJob = this.task.job;
+    this.setLocalCsvImporterVisible(false);
   },
   data: () => {
     return {
@@ -128,6 +139,7 @@ export default {
       "setStep",
       "setTaskTemplate"
     ]),
+    ...mapMutations("task/importer", ["setLocalCsvImporterVisible"]),
 
     onJobSelected(jobType) {
       this.selectedJob = jobType;

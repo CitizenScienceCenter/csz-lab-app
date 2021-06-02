@@ -113,20 +113,19 @@
             md="4"
             class="mt-2 mt-md-0"
             v-b-popover.hover.bottom="
-              $t('task-material-builder-popover-geocoding')
+              $t('task-material-builder-cslogger')
             "
-            :title="$t('task-material-builder-popover-geocoding-warning')"
           >
             <b-card
-              ref="card-geo-coding"
+              ref="card-cslogger"
               :class="{
-                'material-selected': selectedMaterial === materials.geocoding
+                'material-selected': selectedMaterial === materials.cslogger
               }"
-              @click="onMaterialSelected(materials.geocoding)"
+              @click="onMaterialSelected(materials.cslogger)"
               class="text-center material"
             >
-              <i class="fas fa-map-marked-alt fa-4x"></i><br />
-              <div class="m-2">Geo-coding</div>
+              <i class="fas fa-question fa-4x"></i><br />
+              <div class="m-2">CS Logger</div>
             </b-card>
           </b-col>
         </b-row>

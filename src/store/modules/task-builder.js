@@ -11,7 +11,7 @@ const materials = {
   video: "video",
   pdf: "pdf",
   tweet: "tweet",
-  geocoding: "geocoding"
+  cslogger: "cslogger"
 };
 
 // all the types of jobs available
@@ -68,8 +68,7 @@ const state = {
     [materials.sound]: [sources.amazon, sources.dropbox],
     [materials.pdf]: [sources.amazon, sources.dropbox],
     [materials.tweet]: [sources.twitter],
-    [materials.video]: [sources.amazon, sources.dropbox],
-    [materials.geocoding]: [sources.amazon, sources.dropbox, sources.flickr]
+    [materials.video]: [sources.amazon, sources.dropbox]
   },
   // available extensions for each material type
   materialExtensions: {
