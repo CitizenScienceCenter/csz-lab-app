@@ -69,25 +69,29 @@ const getters = {
    * @param state
    * @return {function({id: *}): T[]}
    */
-  getProjectsWithCategory: state => ({id}) => {
+  getProjectsWithCategory: state => ({ id }) => {
     return state.projects.filter(project => {
-      return project.category_id === id
-    })
+      return project.category_id === id;
+    });
   },
   getUserProgressInPercent: state => {
-    return state.selectedProjectUserProgress.done / state.selectedProjectUserProgress.total * 100
+    return (
+      (state.selectedProjectUserProgress.done /
+        state.selectedProjectUserProgress.total) *
+      100
+    );
   },
   getUserProgress: state => {
-    return state.selectedProjectUserProgress
+    return state.selectedProjectUserProgress;
   },
   projects: state => {
-    let projects = []
+    let projects = [];
     for (const categoryId in state.categoryProjects) {
-      if (categoryId !== 'featured') {
-        projects = projects.concat(state.categoryProjects[categoryId])
+      if (categoryId !== "featured") {
+        projects = projects.concat(state.categoryProjects[categoryId]);
       }
     }
-    return projects
+    return projects;
   },
 
   globalPagination: state => {
@@ -97,21 +101,21 @@ const getters = {
       per_page: 20,
       prev: false,
       total: 0
-    }
+    };
 
     for (const categoryId in state.categoryPagination) {
-      if (categoryId !== 'featured') {
-        pagination.total += state.categoryPagination[categoryId].total
+      if (categoryId === "thinking") {
+        pagination.total += state.categoryPagination[categoryId].total;
       }
     }
 
-    return pagination
+    return pagination;
   },
 
-  comments:state => {
-    return state.projectComments
+  comments: state => {
+    return state.projectComments;
   }
-}
+};
 
 // async methods making mutations are placed here
 const actions = {
