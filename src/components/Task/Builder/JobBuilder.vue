@@ -8,35 +8,49 @@
     <!-- Job type selection title -->
     <b-row class="mt-4">
       <b-col>
-        <h1 class="text-center centered small">
+        <h1 class="text-center centered small" v-if="task.material === 'cslogger'">
+          {{ $t("task-job-builder-builder-cslogger-title") }}
+        </h1>
+        <h1 class="text-center centered small" v-else>
           {{ $t("task-job-builder-files-purpose") }}
         </h1>
       </b-col>
     </b-row>
 
-    <b-row>
-      <b-col md="6" class="mt-md-0 mt-4">
+    <!-- CS Logger import files module -->
+    <b-row v-if="task.material === 'cslogger'" class="centered mt-3 justify-content-between">
+      <b-col md="8" class="mt-md-0 mt-4">
+        <h2 class="mb-4">{{ $t("task-job-builder-cslogger-import-title") }}</h2>
         <load-data></load-data>
+      </b-col>
+
+      <b-col md="3" class="text-muted">
+        <p class="small">
+          <i class="fas fa-info-circle"></i><br />
+          {{ $t("task-job-builder-cslogger-info1") }}
+        </p>
+        <p class="small">
+          {{ $t("task-job-builder-cslogger-info2") }}
+        </p>
       </b-col>
     </b-row>
 
-    <b-row class="mt-4">
+    <b-row class="mt-4" v-else>
       <b-col md="9">
         <b-row>
-          <!-- This is a generic type of job -->
-          <b-col md="5">
+          <!-- These are the specific type of jobs according the material -->
+          <b-col md="5" v-for="job in materialJobs[task.material]" :key="job">
+            <!-- This is a generic type of job -->
             <b-card
               ref="card-generic"
               :class="{ 'material-selected': selectedJob === jobs.generic }"
-              @click="onJobSelected(jobs.generic)"
+              v-if="job === jobs.generic"
+              @click="onJobSelected(job)"
               class="text-center material my-2 mt-md-0"
             >
               <i class="fas fa-paper-plane fa-4x"></i>
               <div class="m-2">{{ $t("task-job-builder-generic") }}</div>
             </b-card>
-          </b-col>
-          <!-- These are the specific type of jobs according the material -->
-          <b-col md="5" v-for="job in materialJobs[task.material]" :key="job">
             <b-card
               ref="card-describe"
               :class="{ 'material-selected': selectedJob === jobs.describe }"

@@ -56,11 +56,11 @@ const state = {
   sources: sources,
   // available jobs for each material type
   materialJobs: {
-    [materials.image]: [jobs.classify, jobs.describe, jobs.count],
-    [materials.sound]: [jobs.classify, jobs.describe],
-    [materials.pdf]: [jobs.describe],
-    [materials.tweet]: [jobs.classify, jobs.describe],
-    [materials.video]: [jobs.classify, jobs.describe]
+    [materials.image]: [jobs.generic, jobs.classify, jobs.describe, jobs.count],
+    [materials.sound]: [jobs.generic, jobs.classify, jobs.describe],
+    [materials.pdf]: [jobs.generic, jobs.describe],
+    [materials.tweet]: [jobs.generic, jobs.classify, jobs.describe],
+    [materials.video]: [jobs.generic, jobs.classify, jobs.describe]
   },
   // available sources for each material type
   materialSources: {
