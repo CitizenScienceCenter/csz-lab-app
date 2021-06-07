@@ -10,16 +10,13 @@ const materials = {
   sound: "sound",
   video: "video",
   pdf: "pdf",
-  tweet: "tweet",
-  geocoding: "geocoding"
+  tweet: "tweet"
 };
 
 // all the types of jobs available
 const jobs = {
-  classify: "classify",
-  describe: "describe",
-  count: "count",
-  generic: "generic"
+  generic: "generic",
+  map_generic: "map_generic"
 };
 
 // the list of sources available to import files
@@ -56,11 +53,11 @@ const state = {
   sources: sources,
   // available jobs for each material type
   materialJobs: {
-    [materials.image]: [jobs.classify, jobs.describe, jobs.count],
-    [materials.sound]: [jobs.classify, jobs.describe],
-    [materials.pdf]: [jobs.describe],
-    [materials.tweet]: [jobs.classify, jobs.describe],
-    [materials.video]: [jobs.classify, jobs.describe]
+    [materials.image]: [jobs.generic, jobs.map_generic],
+    [materials.sound]: [jobs.generic, jobs.map_generic],
+    [materials.video]: [jobs.generic, jobs.map_generic],
+    [materials.tweet]: [jobs.generic, jobs.map_generic],
+    [materials.pdf]: [jobs.generic]
   },
   // available sources for each material type
   materialSources: {
@@ -68,8 +65,7 @@ const state = {
     [materials.sound]: [sources.amazon, sources.dropbox],
     [materials.pdf]: [sources.amazon, sources.dropbox],
     [materials.tweet]: [sources.twitter],
-    [materials.video]: [sources.amazon, sources.dropbox],
-    [materials.geocoding]: [sources.amazon, sources.dropbox, sources.flickr]
+    [materials.video]: [sources.amazon, sources.dropbox]
   },
   // available extensions for each material type
   materialExtensions: {

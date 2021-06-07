@@ -17,21 +17,33 @@
     <b-row class="mt-4">
       <b-col md="9">
         <b-row>
-          <!-- This is a generic type of job -->
-          <b-col md="5">
-            <b-card
-              ref="card-generic"
-              :class="{ 'material-selected': selectedJob === jobs.generic }"
-              @click="onJobSelected(jobs.generic)"
-              class="text-center material my-2 mt-md-0"
-            >
-              <i class="fas fa-paper-plane fa-4x"></i>
-              <div class="m-2">{{ $t("task-job-builder-generic") }}</div>
-            </b-card>
-          </b-col>
           <!-- These are the specific type of jobs according the material -->
           <b-col md="5" v-for="job in materialJobs[task.material]" :key="job">
             <b-card
+              ref="card-generic"
+              :class="{ 'material-selected': selectedJob === jobs.generic }"
+              v-if="job === jobs.generic"
+              @click="onJobSelected(jobs.generic)"
+              class="text-center material my-2 mt-md-0"
+            >
+              <i class="fas fa-tasks fa-4x"></i>
+              <div class="m-2">{{ $t("task-job-builder-generic") }}</div>
+            </b-card>
+
+            <b-card
+              ref="card-map_generic"
+              :class="{ 'material-selected': selectedJob === jobs.map_generic }"
+              v-if="job === jobs.map_generic"
+              @click="onJobSelected(jobs.map_generic)"
+              class="text-center material my-2 mt-md-0"
+            >
+              <i class="fas fa-map-marker-alt fa-4x"></i>
+              <i class="fas fa-tasks fa-lg"></i>
+              <div class="m-2">{{ $t("task-job-builder-generic-geo") }}</div>
+            </b-card>
+
+            <!-- TODO: CLEAN THIS CODE-->
+            <!-- <b-card
               ref="card-describe"
               :class="{ 'material-selected': selectedJob === jobs.describe }"
               v-if="job === jobs.describe"
@@ -62,7 +74,7 @@
             >
               <i class="fas fa-calculator fa-4x"></i><br />
               <div class="m-2">{{ $t("task-job-builder-count") }}</div>
-            </b-card>
+            </b-card> -->
           </b-col>
         </b-row>
       </b-col>

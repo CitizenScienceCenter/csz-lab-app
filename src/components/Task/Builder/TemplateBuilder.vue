@@ -31,7 +31,8 @@
       </b-col>
     </b-row>
 
-    <b-row v-if="task.job === jobs.classify">
+    <!-- TODO: CLEAN THIS CODE -->
+    <!-- <b-row v-if="task.job === jobs.classify">
       <b-col md="9">
         <ClassifyTemplateEditor></ClassifyTemplateEditor>
       </b-col>
@@ -81,7 +82,7 @@
           <p class="small">{{ $t('task-template-builder-template-not-working') }} <b-link :to="{ name: 'project.task.presenter.settings', params: { id: 'id' in this.selectedProject ? this.selectedProject.id : 0 } }">{{ $t('task-template-builder-expert-path') }}</b-link></p>
         
       </b-col>
-    </b-row>
+    </b-row> -->
   </div>
 </template>
 
