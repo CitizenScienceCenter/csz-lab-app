@@ -169,7 +169,13 @@ export default {
         }
       ];
     }
-  }
+  },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
+  },
 };
 </script>
 
