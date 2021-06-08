@@ -8,7 +8,10 @@
     <!-- Job type selection title -->
     <b-row class="mt-4">
       <b-col>
-        <h1 class="text-center centered small" v-if="task.material === 'cslogger'">
+        <h1
+          class="text-center centered small"
+          v-if="task.material === 'cslogger'"
+        >
           {{ $t("task-job-builder-builder-cslogger-title") }}
         </h1>
         <h1 class="text-center centered small" v-else>
@@ -18,10 +21,13 @@
     </b-row>
 
     <!-- CS Logger import files module -->
-    <b-row v-if="task.material === 'cslogger'" class="centered mt-3 justify-content-between">
+    <b-row
+      v-if="task.material === 'cslogger'"
+      class="centered mt-3 justify-content-between"
+    >
       <b-col md="8" class="mt-md-0 mt-4">
         <h2 class="mb-4">{{ $t("task-job-builder-cslogger-import-title") }}</h2>
-        <load-data></load-data>
+        <load-data @onContinue="onContinue"></load-data>
       </b-col>
 
       <b-col md="3" class="text-muted">
@@ -134,8 +140,10 @@ export default {
     LoadData
   },
   created() {
-    this.selectedJob = this.task.job;
-    this.setLocalCsvImporterVisible(false);
+    this.selectedJob = null;
+    if (this.task.material != "cslogger") {
+      this.selectedJob = this.task.job;
+    }
   },
   data: () => {
     return {
@@ -153,7 +161,6 @@ export default {
       "setStep",
       "setTaskTemplate"
     ]),
-    ...mapMutations("task/importer", ["setLocalCsvImporterVisible"]),
 
     onJobSelected(jobType) {
       this.selectedJob = jobType;
@@ -169,6 +176,11 @@ export default {
     goBack() {
       // invalidate job step and go to material selection
       this.setStep({ step: "job", value: false });
+    },
+    // trigger onSubmit since loadData component for CSLogger
+    onContinue() {
+      this.onJobSelected(this.jobs.generic);
+      this.onSubmit();
     }
   }
 };

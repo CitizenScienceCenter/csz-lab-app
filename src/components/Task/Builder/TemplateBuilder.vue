@@ -116,7 +116,7 @@ export default {
     goBack () {
       // go back to job selection
       this.setCurrentStep('material')
-      this.setStep({ step: 'job', value: false })
+      this.setStep({ step: 'template', value: false })
     }
   },
   filters: {
