@@ -18,13 +18,16 @@
       <b-col md="9">
         <b-row>
           <!-- These are the specific type of jobs according the material -->
-          <b-col md="5" v-for="job in materialJobs[task.material]" :key="job">
+          <b-col cols="12" md="5" v-for="job in materialJobs[task.material]" :key="job">
             <b-card
               ref="card-generic"
               :class="{ 'material-selected': selectedJob === jobs.generic }"
               v-if="job === jobs.generic"
               @click="onJobSelected(jobs.generic)"
               class="text-center material my-2 mt-md-0"
+              v-b-popover.hover.bottom="
+                $t('task-job-builder-popover-generic')
+              "
             >
               <i class="fas fa-tasks fa-4x"></i>
               <div class="m-2">{{ $t("task-job-builder-generic") }}</div>
@@ -36,6 +39,9 @@
               v-if="job === jobs.map_generic"
               @click="onJobSelected(jobs.map_generic)"
               class="text-center material my-2 mt-md-0"
+              v-b-popover.hover.bottom="
+                $t('task-job-builder-popover-generic-geo')
+              "
             >
               <i class="fas fa-map-marker-alt fa-4x"></i>
               <i class="fas fa-tasks fa-lg"></i>

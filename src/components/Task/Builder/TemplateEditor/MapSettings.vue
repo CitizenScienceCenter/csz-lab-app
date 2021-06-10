@@ -78,7 +78,7 @@
     </b-row>
     <maps
       class="mt-2"
-      style="height: 300px; width:90%"
+      style="height: 350px; width:100%"
       :mapSettings="mapSettings"
       hideIcons
       :scrollToZoom="false"

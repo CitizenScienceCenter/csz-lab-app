@@ -274,8 +274,8 @@
     "task-job-builder-classify": "Classify",
     "task-job-builder-count": "Count",
     "task-job-builder-choose-options": "Choose an option.",
-    "task-job-builder-generic": "Classify / Describe",
-    "task-job-builder-generic-geo": "Geo / Classify / Describe",
+    "task-job-builder-generic": "Generic",
+    "task-job-builder-generic-geo": "Geo/Generic",
 
     "task-flickr-callback-access": "Flickr access granted",
     "task-flickr-callback-window": "You can now close this window and continue to import your pictures!",
@@ -297,6 +297,7 @@
     "task-template-go": "Continue",
 
     "task-template-options-required": "Required",
+    "task-template-options-only-numbers":"Only numbers",
     "task-template-options-question-short": "Short answer",
     "task-template-options-question-long": "Long answer",
     "task-template-options-conditional-question": "Conditional Question",
@@ -1100,8 +1101,8 @@
     "task-job-builder-classify": "Klassifizieren",
     "task-job-builder-count": "Zählen",
     "task-job-builder-choose-options": "Wählen sie eine Option aus",
-    "task-job-builder-generic": "Klassifizieren / Beschreiben",
-    "task-job-builder-generic-geo": "Geo / Klassifizieren / Beschreiben",
+    "task-job-builder-generic": "Generisch",
+    "task-job-builder-generic-geo": "Geo/Generisch",
 
     "task-flickr-callback-access": "Flickr-Zugriff gewährt",
     "task-flickr-callback-window": "Sie können dieses Fenster jetzt schließen und Ihre Bilder importieren.",
@@ -1123,6 +1124,7 @@
     "task-template-go": "Weiter",
 
     "task-template-options-required": "Erforderlich",
+    "task-template-options-only-numbers":"Nur Zahlen",
     "task-template-options-question-short": "Kurze Antwort",
     "task-template-options-question-long": "Lange Antwort",
     "task-template-options-conditional-question": "Konditionalfrage",

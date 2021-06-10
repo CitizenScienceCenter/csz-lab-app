@@ -93,10 +93,12 @@ a {
   background: linear-gradient(120deg,rgba(22,73,107,.025),rgba(153,42,61,.025)) !important;
 }
 // Content Style
-.container {
+.container {  
   //padding: 0 !important;
   margin-bottom: 142px;
-
+  &.small-bottom{
+    margin-bottom: 50px;
+  }
   &.superlight-greyish {
     background: linear-gradient(120deg, rgba($color-gradient-start, 0.025), rgba($color-gradient-end, 0.025) );
   }

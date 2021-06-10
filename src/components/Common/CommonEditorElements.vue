@@ -29,6 +29,7 @@
       :placeholder="$t('template-editor-generic-text-placeholder')"
       :name="'question_shor' + question.id"
       v-if="question.type === 'short_answer'"
+      :type="{'number':question.isNumber}"
     ></b-form-input>
 
     <b-form-textarea
