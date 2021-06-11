@@ -35,6 +35,7 @@
           <i class="fas fa-info-circle"></i><br />
           {{ $t("task-job-builder-cslogger-info1") }}
         </p>
+        <!-- TODO: here include the allowed file extensions -->
         <p class="small">
           {{ $t("task-job-builder-cslogger-info2") }}
         </p>
