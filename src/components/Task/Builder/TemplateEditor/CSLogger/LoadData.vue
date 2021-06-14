@@ -183,16 +183,23 @@ export default {
 
       // csv file validation
       if (ext === "csv") {
-        this.valid[ext] = true;
-        if (this.csvFile.size > size) {
+        if (this.getExt(this.csvFile) === "csv") {
+          this.valid[ext] = true;
+          if (this.csvFile.size > size) {
+            this.valid[ext] = false;
+            this.error_message[ext] = this.$t(
+              "taks-import-cslogger-invalid-size"
+            );
+          }
+        } else {
           this.valid[ext] = false;
           this.error_message[ext] = this.$t(
-            "taks-import-cslogger-invalid-size"
+            "taks-import-cslogger-invalid-format"
           );
         }
       }
       // media multiple files validation
-      else if (ext === "media") {
+      if (ext === "media") {
         if (
           this.mediaFiles.every(x =>
             this.allowed_files.includes(this.getExt(x.name))
@@ -222,7 +229,7 @@ export default {
       if (getWidthScreen() < 1020) return 2;
       if (getWidthScreen() < 1280) return 3;
       return 4;
-    },
+    }
   },
   watch: {
     csvFile() {
