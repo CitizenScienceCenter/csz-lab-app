@@ -27,9 +27,8 @@
     <b-form-input
       v-model.trim="answers[getRelativeId(question.id)].value"
       :placeholder="$t('template-editor-survey-text-placeholder')"
-      :name="'question_shor' + question.id"
+      :name="'question_short' + question.id"
       v-if="question.type === 'short_answer'"
-      :type="{ number: question.isNumber }"
     ></b-form-input>
 
     <b-form-textarea

@@ -487,11 +487,12 @@ export default {
       ) {
         if (this.task.job === this.jobs.survey) {
           template = buildTemplateFromModel(SurveyGenericTemplate, {
-            question: this.task.template
+            questions: this.task.template
           });
         } else if (this.task.job === this.jobs.geo_survey) {
           template = buildTemplateFromModel(GeoSurveyGenericTemplate, {
-            questions: this.task.template
+            questions: this.task.template,
+            mapSettings: this.task.mapSettings
           });
         }
       }

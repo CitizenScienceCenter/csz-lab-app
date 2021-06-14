@@ -112,7 +112,7 @@ export default {
           question: "",
           markers: false,
           area: false,
-          zoom: 3,
+          zoom: 1,
           maxMarkers: 0,
           center: "0,0",
           type: "Road"
@@ -125,7 +125,7 @@ export default {
       center: [0, 0],
       zoom: this.settings.zoom,
       mapType: this.settings.mapType,
-      static_map: this.settings.static_map
+      static_map: true
     };
   },
   methods: {

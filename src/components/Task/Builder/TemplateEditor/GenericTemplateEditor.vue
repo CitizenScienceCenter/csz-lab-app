@@ -118,14 +118,6 @@
                 >
                 </b-input>
               </b-col>
-              <b-col cols="6">
-                <b-form-checkbox
-                  id="short-ans-checkbox"
-                  v-model="question.isNumber"
-                >
-                  {{ $t("task-template-options-only-numbers") }}
-                </b-form-checkbox>
-              </b-col>
             </b-row>
           </div>
 
@@ -170,7 +162,6 @@ import { mapMutations, mapState } from "vuex";
 /**
 required when the question is mandatory
 isDependent when one question has a conditional question
-isNumber only for shortAnswer question types
 condition the parent question reference
 */
 const DEFAULT_QUESTION = {
@@ -180,7 +171,6 @@ const DEFAULT_QUESTION = {
   type: "",
   required: false,
   isDependent: false,
-  isNumber: false,
   condition: {}
 };
 const MAXQUESTIONS = 30;
@@ -211,7 +201,7 @@ export default {
         zoom: 1,
         maxMarkers: null,
         center: "",
-        static_map: true,
+        static_map: false,
         mapType: "Road"
       };
     }

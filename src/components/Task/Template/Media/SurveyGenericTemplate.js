@@ -72,7 +72,8 @@ const component = {
     ],
     answers: [],
     showAlert: false,
-    questionList: []
+    questionList: [],
+    mime: null
   },
 
   methods: {
@@ -121,7 +122,10 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
-      return this.task.info;
+      this.mime = this.pybossa.getFileType(
+        this.task.info.url || this.task.info.link_raw
+      );
+      return this.task && this.task.info ? this.task.info : {};
     },
     context() {
       return this;
