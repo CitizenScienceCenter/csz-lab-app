@@ -7,7 +7,7 @@
     </b-row>
     <b-row class="mt-4 mb-2">
       <b-col>
-        <h1 class="text-center centered small">{{ task.job | capitalize }}</h1>
+        <h1 class="text-center centered small">{{ task.material | capitalize }} Task</h1>
       </b-col>
     </b-row>
 

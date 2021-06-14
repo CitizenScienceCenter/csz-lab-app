@@ -18,34 +18,37 @@
       <b-col md="9">
         <b-row>
           <!-- These are the specific type of jobs according the material -->
-          <b-col cols="12" md="5" v-for="job in materialJobs[task.material]" :key="job">
+          <b-col
+            cols="12"
+            md="5"
+            v-for="job in materialJobs[task.material]"
+            :key="job"
+          >
             <b-card
-              ref="card-generic"
-              :class="{ 'material-selected': selectedJob === jobs.generic }"
-              v-if="job === jobs.generic"
-              @click="onJobSelected(jobs.generic)"
+              ref="card-survey"
+              :class="{ 'material-selected': selectedJob === jobs.survey }"
+              v-if="job === jobs.survey"
+              @click="onJobSelected(jobs.survey)"
               class="text-center material my-2 mt-md-0"
-              v-b-popover.hover.bottom="
-                $t('task-job-builder-popover-generic')
-              "
+              v-b-popover.hover.bottom="$t('task-job-builder-popover-survey')"
             >
               <i class="fas fa-tasks fa-4x"></i>
-              <div class="m-2">{{ $t("task-job-builder-generic") }}</div>
+              <div class="m-2">{{ $t("task-job-builder-survey") }}</div>
             </b-card>
 
             <b-card
-              ref="card-map_generic"
-              :class="{ 'material-selected': selectedJob === jobs.map_generic }"
-              v-if="job === jobs.map_generic"
-              @click="onJobSelected(jobs.map_generic)"
+              ref="card-geo_survey"
+              :class="{ 'material-selected': selectedJob === jobs.geo_survey }"
+              v-if="job === jobs.geo_survey"
+              @click="onJobSelected(jobs.geo_survey)"
               class="text-center material my-2 mt-md-0"
               v-b-popover.hover.bottom="
-                $t('task-job-builder-popover-generic-geo')
+                $t('task-job-builder-popover-survey-geo')
               "
             >
               <i class="fas fa-map-marker-alt fa-4x"></i>
               <i class="fas fa-tasks fa-lg"></i>
-              <div class="m-2">{{ $t("task-job-builder-generic-geo") }}</div>
+              <div class="m-2">{{ $t("task-job-builder-survey-geo") }}</div>
             </b-card>
 
             <!-- TODO: CLEAN THIS CODE-->

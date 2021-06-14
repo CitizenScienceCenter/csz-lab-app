@@ -55,11 +55,12 @@
                   task.source !== sources.flickr &&
                     task.source !== sources.twitter
                 "
-                >
+              >
                 <b>{{ task.sourceContent.length }}</b>
                 {{ $t("task-summary-builder-tasks") }}
               </span>
-              
+
+              <!-- TODO: CLEAN THIS CODE -->
               <!-- list of file removed from this interface -->
               <!-- <ul
                 v-if="
@@ -122,8 +123,10 @@
                 <i class="fas fa-angle-double-up fa-2x"></i>
               </div>
             </b-row>
-            <!-- Describe template -->
-            <ul v-if="task.job === jobs.describe" class="list-unstyled">
+
+            <!-- TODO: CLEAN THIS CODE -->
+            <!-- Describe template-->
+            <!-- <ul v-if="task.job === jobs.describe" class="list-unstyled">
               <li>
                 <b-button v-b-toggle.collapse-1 variant="outline-secondary">{{
                   $t("task-summary-builder-question")
@@ -141,9 +144,9 @@
                   </ul>
                 </b-collapse>
               </li>
-            </ul>
+            </ul> -->
             <!-- Classify template -->
-            <ul v-if="task.job === jobs.classify" class="list-unstyled">
+            <!-- <ul v-if="task.job === jobs.classify" class="list-unstyled">
               <li :key="q" v-for="(question, q) in task.template" class="mb-2">
                 <b-button
                   v-b-toggle="'collapse-' + (q + 1)"
@@ -172,9 +175,9 @@
                   <hr />
                 </b-collapse>
               </li>
-            </ul>
+            </ul> -->
             <!-- Count template -->
-            <ul v-if="task.job === jobs.count" class="list-unstyled">
+            <!-- <ul v-if="task.job === jobs.count" class="list-unstyled">
               <li>
                 <b-button v-b-toggle.collapse-3 variant="outline-secondary">{{
                   $t("task-summary-builder-question")
@@ -183,9 +186,10 @@
                   <p>{{ task.template }}</p>
                 </b-collapse>
               </li>
-            </ul>
-            <!-- Generic template -->
-            <ol v-if="task.job === jobs.generic">
+            </ul> -->
+
+            <!-- Template summary -->
+            <ol>
               <div class="accordion mt-2" role="tablist">
                 <b-card
                   no-body
@@ -251,11 +255,14 @@
                               $t("task-template-options-conditional-button")
                             }}:
                           </small>
-                          <small>{{$t("task-summary-builder-question")}} {{
-                            getConditionalQuestion(
-                              question.condition.questionId
-                            ) + 1
-                          }}</small>
+                          <small
+                            >{{ $t("task-summary-builder-question") }}
+                            {{
+                              getConditionalQuestion(
+                                question.condition.questionId
+                              ) + 1
+                            }}</small
+                          >
                         </div>
                       </b-card-text>
                     </b-card-body>
@@ -264,7 +271,7 @@
 
                 <!-- Summary card for map settings when geocoding template is used -->
                 <b-card
-                  v-if="task.material == 'geocoding'"
+                  v-if="task.job == 'geo_survey'"
                   no-body
                   class="mb-1"
                   style="background-color: rgba(255,255,255,0.3);"
@@ -363,32 +370,30 @@
 
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
-
 import { buildTemplateFromModel } from "@/helper";
 
-import ImageCountTemplate from "@/components/Task/Template/Image/ImageCountTemplate";
-import ImageDescribeTemplate from "@/components/Task/Template/Image/ImageDescriptionTemplate";
-import ImageClassificationTemplate from "@/components/Task/Template/Image/ImageClassificationTemplate";
-// TODO: change when generic template works
-import ImageGenericTemplate from "@/components/Task/Template/Image/ImageGenericTemplate";
-import VideoClassificationTemplate from "@/components/Task/Template/Video/VideoClassificationTemplate";
-import VideoDescriptionTemplate from "@/components/Task/Template/Video/VideoDescriptionTemplate";
-// TODO: change when generic template works
-import VideoGenericTemplate from "@/components/Task/Template/Video/VideoGenericTemplate";
-import SoundClassificationTemplate from "@/components/Task/Template/Sound/SoundClassificationTemplate";
-import SoundDescriptionTemplate from "@/components/Task/Template/Sound/SoundDescriptionTemplate";
-// TODO: change when generic template works
-import SoundGenericTemplate from "@/components/Task/Template/Sound/SoundGenericTemplate";
-import PdfDescriptionTemplate from "@/components/Task/Template/Document/PdfDescriptionTemplate";
-// TODO: change when generic template works
+import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGenericTemplate";
+import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
-import TwitterClassificationTemplate from "@/components/Task/Template/Twitter/TwitterClassificationTemplate";
-import TwitterDescriptionTemplate from "@/components/Task/Template/Twitter/TwitterDescriptionTemplate";
-// TODO: change when generic template works
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
 
-// TODO: change when generic template works
-import GeoCodingGenericTemplate from "@/components/Task/Template/GeoCoding/GeoCodingGenericTemplate";
+// TODO: CLEAN THIS CODE
+// import ImageCountTemplate from "@/components/Task/Template/Image/ImageCountTemplate";
+// import ImageDescribeTemplate from "@/components/Task/Template/Image/ImageDescriptionTemplate";
+// import ImageClassificationTemplate from "@/components/Task/Template/Image/ImageClassificationTemplate";
+
+// import VideoClassificationTemplate from "@/components/Task/Template/Video/VideoClassificationTemplate";
+// import VideoDescriptionTemplate from "@/components/Task/Template/Video/VideoDescriptionTemplate";
+
+// import SoundClassificationTemplate from "@/components/Task/Template/Sound/SoundClassificationTemplate";
+// import SoundDescriptionTemplate from "@/components/Task/Template/Sound/SoundDescriptionTemplate";
+
+// import PdfDescriptionTemplate from "@/components/Task/Template/Document/PdfDescriptionTemplate";
+
+// import TwitterClassificationTemplate from "@/components/Task/Template/Twitter/TwitterClassificationTemplate";
+// import TwitterDescriptionTemplate from "@/components/Task/Template/Twitter/TwitterDescriptionTemplate";
+
+// import GeoCodingGenericTemplate from "@/components/Task/Template/GeoCoding/GeoCodingGenericTemplate";
 
 export default {
   name: "SummaryBuilder",
@@ -422,20 +427,16 @@ export default {
           return "fas fa-file-pdf";
         case this.materials.tweet:
           return "fab fa-twitter";
-        case this.materials.geocoding:
-          return "fas fa-map-marked-alt";
         default:
           return "fas fa-file";
       }
     },
     getJobIcon() {
       switch (this.task.job) {
-        case this.jobs.describe:
-          return "fas fa-edit";
-        case this.jobs.classify:
-          return "fas fa-filter";
-        case this.jobs.count:
-          return "fas fa-calculator";
+        case this.jobs.survey:
+          return "fas fa-tasks";
+        case this.jobs.geo_survey:
+          return "fas fa-map-marker-alt";
         default:
           return "fas fa-paper-plane";
       }
@@ -477,110 +478,134 @@ export default {
       let template = null;
 
       // Image template generation
-      if (this.task.material === this.materials.image) {
-        if (this.task.job === this.jobs.count) {
-          template = buildTemplateFromModel(ImageCountTemplate, {
+      if (
+        [
+          this.materials.image,
+          this.materials.sound,
+          this.materials.video
+        ].includes(this.task.material)
+      ) {
+        if (this.task.job === this.jobs.survey) {
+          template = buildTemplateFromModel(SurveyGenericTemplate, {
             question: this.task.template
           });
-        } else if (this.task.job === this.jobs.describe) {
-          template = buildTemplateFromModel(ImageDescribeTemplate, {
-            question: this.task.template.question,
-            descriptions: this.task.template.descriptions
-          });
-        } else if (this.task.job === this.jobs.classify) {
-          template = buildTemplateFromModel(ImageClassificationTemplate, {
-            questions: this.task.template
-          });
-        } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
-          template = buildTemplateFromModel(ImageGenericTemplate, {
+        } else if (this.task.job === this.jobs.geo_survey) {
+          template = buildTemplateFromModel(GeoSurveyGenericTemplate, {
             questions: this.task.template
           });
         }
       }
+      // TODO: CLEAN THIS CODE
+      // if (this.task.job === this.jobs.count) {
+      //   template = buildTemplateFromModel(ImageCountTemplate, {
+      //     question: this.task.template
+      //   });
+      // } else if (this.task.job === this.jobs.describe) {
+      //   template = buildTemplateFromModel(ImageDescribeTemplate, {
+      //     question: this.task.template.question,
+      //     descriptions: this.task.template.descriptions
+      //   });
+      // } else if (this.task.job === this.jobs.classify) {
+      //   template = buildTemplateFromModel(ImageClassificationTemplate, {
+      //     questions: this.task.template
+      //   });
 
-      // Sound template generation
-      if (this.task.material === this.materials.sound) {
-        if (this.task.job === this.jobs.classify) {
-          template = buildTemplateFromModel(SoundClassificationTemplate, {
-            questions: this.task.template
-          });
-        } else if (this.task.job === this.jobs.describe) {
-          template = buildTemplateFromModel(SoundDescriptionTemplate, {
-            question: this.task.template.question,
-            descriptions: this.task.template.descriptions
-          });
-        } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
-          template = buildTemplateFromModel(SoundGenericTemplate, {
-            questions: this.task.template
-          });
-        }
-      }
+      // }
 
-      // Video template generation
-      if (this.task.material === this.materials.video) {
-        if (this.task.job === this.jobs.classify) {
-          template = buildTemplateFromModel(VideoClassificationTemplate, {
-            questions: this.task.template
-          });
-        } else if (this.task.job === this.jobs.describe) {
-          template = buildTemplateFromModel(VideoDescriptionTemplate, {
-            question: this.task.template.question,
-            descriptions: this.task.template.descriptions
-          });
-        } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
-          template = buildTemplateFromModel(VideoGenericTemplate, {
-            questions: this.task.template
-          });
-        }
-      }
+      // // Sound template generation
+      // if (this.task.material === this.materials.sound) {
+      //   if (this.task.job === this.jobs.classify) {
+      //     template = buildTemplateFromModel(SoundClassificationTemplate, {
+      //       questions: this.task.template
+      //     });
+      //   } else if (this.task.job === this.jobs.describe) {
+      //     template = buildTemplateFromModel(SoundDescriptionTemplate, {
+      //       question: this.task.template.question,
+      //       descriptions: this.task.template.descriptions
+      //     });
+      //   } else if (this.task.job === this.jobs.survey) {
+      //
+      //     template = buildTemplateFromModel(SoundGenericTemplate, {
+      //       questions: this.task.template
+      //     });
+      //   }
+      // }
+
+      // // Video template generation
+      // if (this.task.material === this.materials.video) {
+      //   if (this.task.job === this.jobs.classify) {
+      //     template = buildTemplateFromModel(VideoClassificationTemplate, {
+      //       questions: this.task.template
+      //     });
+      //   } else if (this.task.job === this.jobs.describe) {
+      //     template = buildTemplateFromModel(VideoDescriptionTemplate, {
+      //       question: this.task.template.question,
+      //       descriptions: this.task.template.descriptions
+      //     });
+      //   } else if (this.task.job === this.jobs.survey) {
+      //
+      //     template = buildTemplateFromModel(VideoGenericTemplate, {
+      //       questions: this.task.template
+      //     });
+      //   }
+      // }
 
       // Pdf template generation
       if (this.task.material === this.materials.pdf) {
-        if (this.task.job === this.jobs.describe) {
-          template = buildTemplateFromModel(PdfDescriptionTemplate, {
-            question: this.task.template.question,
-            descriptions: this.task.template.descriptions
-          });
-        } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
+        if (this.task.job === this.jobs.survey) {
           template = buildTemplateFromModel(PdfGenericTemplate, {
             questions: this.task.template
           });
         }
+        // TODO: CLEAN THIS CODE
+        // if (this.task.job === this.jobs.describe) {
+        //   template = buildTemplateFromModel(PdfDescriptionTemplate, {
+        //     question: this.task.template.question,
+        //     descriptions: this.task.template.descriptions
+        //   });
+        // } else if (this.task.job === this.jobs.survey) {
+        //    template = buildTemplateFromModel(PdfGenericTemplate, {
+        //     questions: this.task.template
+        //   });
+        // }
       }
 
       // Tweet template generation
       if (this.task.material === this.materials.tweet) {
-        if (this.task.job === this.jobs.classify) {
-          template = buildTemplateFromModel(TwitterClassificationTemplate, {
-            questions: this.task.template
-          });
-        } else if (this.task.job === this.jobs.describe) {
-          template = buildTemplateFromModel(TwitterDescriptionTemplate, {
-            question: this.task.template.question,
-            descriptions: this.task.template.descriptions
-          });
-        } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
+        if (this.task.job === this.jobs.survey) {
           template = buildTemplateFromModel(TwitterGenericTemplate, {
             questions: this.task.template
           });
         }
+        // TODO: CLEAN THIS CODE
+        // if (this.task.job === this.jobs.classify) {
+        //   template = buildTemplateFromModel(TwitterClassificationTemplate, {
+        //     questions: this.task.template
+        //   });
+        // } else if (this.task.job === this.jobs.describe) {
+        //   template = buildTemplateFromModel(TwitterDescriptionTemplate, {
+        //     question: this.task.template.question,
+        //     descriptions: this.task.template.descriptions
+        //   });
+        // } else if (this.task.job === this.jobs.survey) {
+
+        //   template = buildTemplateFromModel(TwitterGenericTemplate, {
+        //     questions: this.task.template
+        //   });
+        // }
       }
 
-      // Geocoding template generation
-      if (this.task.material === this.materials.geocoding) {
-        if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
-          template = buildTemplateFromModel(GeoCodingGenericTemplate, {
-            questions: this.task.template,
-            mapSettings: this.task.mapSettings
-          });
-        }
-      }
+      // TODO: CLEAN THIS CODE
+      // // Geocoding template generation
+      // if (this.task.material === this.materials.geocoding) {
+      //   if (this.task.job === this.jobs.survey) {
+
+      //     template = buildTemplateFromModel(GeoCodingGenericTemplate, {
+      //       questions: this.task.template,
+      //       mapSettings: this.task.mapSettings
+      //     });
+      //   }
+      // }
 
       // store the generated template for the selected project
       const templatePromise = this.saveTaskPresenter({

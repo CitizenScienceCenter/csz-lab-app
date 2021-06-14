@@ -15,8 +15,8 @@ const materials = {
 
 // all the types of jobs available
 const jobs = {
-  generic: "generic",
-  map_generic: "map_generic"
+  survey: "survey",
+  geo_survey: "geo_survey"
 };
 
 // the list of sources available to import files
@@ -53,11 +53,11 @@ const state = {
   sources: sources,
   // available jobs for each material type
   materialJobs: {
-    [materials.image]: [jobs.generic, jobs.map_generic],
-    [materials.sound]: [jobs.generic, jobs.map_generic],
-    [materials.video]: [jobs.generic, jobs.map_generic],
-    [materials.tweet]: [jobs.generic, jobs.map_generic],
-    [materials.pdf]: [jobs.generic]
+    [materials.image]: [jobs.survey, jobs.geo_survey],
+    [materials.sound]: [jobs.survey, jobs.geo_survey],
+    [materials.video]: [jobs.survey, jobs.geo_survey],
+    [materials.tweet]: [jobs.survey, jobs.geo_survey],
+    [materials.pdf]: [jobs.survey]
   },
   // available sources for each material type
   materialSources: {

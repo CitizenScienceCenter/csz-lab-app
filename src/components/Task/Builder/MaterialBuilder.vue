@@ -176,8 +176,8 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
+// TODO CLEAN THE CODE
 // import { buildTemplateFromModel } from "@/helper";
-
 // import GeoCodingTemplate from "@/components/Task/Template/GeoCoding/GeoCodingTemplate";
 
 export default {

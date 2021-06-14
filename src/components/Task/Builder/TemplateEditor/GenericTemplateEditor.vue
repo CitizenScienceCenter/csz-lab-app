@@ -145,8 +145,8 @@
           </div>
         </b-tab>
       </b-tabs>
-      <br>
-      <!-- Component for maps in geo/generic projects -->
+      <br />
+      <!-- Component for maps in geo/survey projects -->
       <div v-if="geoProject" class="mt-5">
         <map-settings
           :settings="mapSettings"
@@ -196,7 +196,7 @@ export default {
       // deep clone of questions
       this.questions = JSON.parse(JSON.stringify(this.task.template));
     }
-    if (this.task.job === "map_generic") {
+    if (this.task.job === "geo_survey") {
       if (this.task.mapSettings) {
         this.mapValid = true; // if mapSettings already exist the data is valid
         this.mapSettings = JSON.parse(JSON.stringify(this.task.mapSettings));
@@ -208,9 +208,10 @@ export default {
         question: "",
         markers: false,
         area: false,
-        zoom: null,
+        zoom: 1,
         maxMarkers: null,
         center: "",
+        static_map: true,
         mapType: "Road"
       };
     }
@@ -241,8 +242,8 @@ export default {
         this.questions.push(JSON.parse(JSON.stringify(DEFAULT_QUESTION)));
       } else {
         this.showInfo({
-          title: this.$t("task-generic-template-maxquestions-title"),
-          content: this.$t("task-generic-template-maxquestions")
+          title: this.$t("task-survey-template-maxquestions-title"),
+          content: this.$t("task-survey-template-maxquestions")
         });
       }
     },
@@ -265,8 +266,8 @@ export default {
         this.questions[questionKey].answers.push("");
       } else {
         this.showInfo({
-          title: this.$t("task-generic-template-maxanswers"),
-          content: this.$t("task-generic-template-maxanswers")
+          title: this.$t("task-survey-template-maxanswers"),
+          content: this.$t("task-survey-template-maxanswers")
         });
       }
     },
@@ -297,7 +298,7 @@ export default {
           return x;
         });
 
-        if (this.task.job === "map_generic") {
+        if (this.task.job === "geo_survey") {
           // Get the integer part
           this.mapSettings.maxMarkers = Math.trunc(this.mapSettings.maxMarkers);
 
@@ -338,7 +339,7 @@ export default {
       const questionsValid =
         countInvalidQuestions === 0 && countInvalidAnswers === 0;
       // add validation for map settings
-      if (this.task.job === "map_generic") {
+      if (this.task.job === "geo_survey") {
         return questionsValid && this.mapValid;
       }
       return questionsValid;
@@ -401,7 +402,7 @@ export default {
     ...mapState("task/builder", ["task", "jobs"]),
     ...mapState("settings", ["questionTypes"]),
     geoProject() {
-      return this.task.job === "map_generic";
+      return this.task.job === "geo_survey";
     }
   }
 };
