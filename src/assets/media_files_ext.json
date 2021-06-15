@@ -1,5 +1,5 @@
 {
-  "image": [".png", ".jpg", ".gif", ".bmp", ".svg", ".tif", ".webp"],
+  "image": [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".tif", ".webp"],
   "sound": [".aac", ".mid", ".midi", ".mp3", ".wav", ".weba"],
   "video":[".avi", ".mp4", ".mpeg", ".ogv", ".webm", ".3gp"],
   "documents": [".pdf"]

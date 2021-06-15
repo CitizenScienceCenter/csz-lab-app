@@ -1,151 +1,274 @@
-import axios from 'axios'
+import axios from "axios";
 
-axios.defaults.headers['Content-Type'] = 'application/json'
+axios.defaults.headers["Content-Type"] = "application/json";
 
 export default {
-  getAmazonS3TasksImportationOptions (projectShortName) {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=s3', {
-      data: {},
-      withCredentials: true
-    })
-  },
-
-  importAmazonS3Tasks (csrf, project, bucket, files) {
-    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + project.short_name + '/tasks/import?type=s3', {
-      bucket: bucket,
-      form_name: 's3',
-      ...files.reduce((result, item, index) => {
-        result['files-' + index] = item
-        return result
-      }, {})
-    }, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrf
+  getAmazonS3TasksImportationOptions(projectShortName) {
+    return axios.get(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=s3",
+      {
+        data: {},
+        withCredentials: true
       }
-    })
+    );
   },
 
-  getGoogleDocsTasksImportationOptions (projectShortName) {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=gdocs', {
-      data: {},
-      withCredentials: true
-    })
-  },
-
-  importGoogleDocsTasks (csrf, projectShortName, link) {
-    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=gdocs', {
-      googledocs_url: link
-    }, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrf
+  importAmazonS3Tasks(csrf, project, bucket, files) {
+    return axios.post(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        project.short_name +
+        "/tasks/import?type=s3",
+      {
+        bucket: bucket,
+        form_name: "s3",
+        ...files.reduce((result, item, index) => {
+          result["files-" + index] = item;
+          return result;
+        }, {})
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrf
+        }
       }
-    })
+    );
   },
 
-  getLocalCsvTasksImportationOptions (projectShortName) {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=localCSV', {
-      data: {},
-      withCredentials: true
-    })
-  },
-
-  importLocalCsvTasks (csrf, projectShortName, file) {
-    const data = new FormData()
-    data.append('file', file)
-
-    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=localCSV&response_format=json', data, {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'X-CSRFToken': csrf
+  getGoogleDocsTasksImportationOptions(projectShortName) {
+    return axios.get(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=gdocs",
+      {
+        data: {},
+        withCredentials: true
       }
-    })
+    );
   },
 
-  getOnlineCsvTasksImportationOptions (projectShortName) {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=csv', {
-      data: {},
-      withCredentials: true
-    })
-  },
-
-  importOnlineCsvTasks (csrf, projectShortName, link) {
-    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=csv', {
-      csv_url: link
-    }, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrf
+  importGoogleDocsTasks(csrf, projectShortName, link) {
+    return axios.post(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=gdocs",
+      {
+        googledocs_url: link
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrf
+        }
       }
-    })
+    );
   },
 
-  getDropboxTasksImportationOptions (projectShortName) {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=dropbox', {
-      data: {},
-      withCredentials: true
-    })
+  getLocalCsvTasksImportationOptions(projectShortName) {
+    return axios.get(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=localCSV",
+      {
+        data: {},
+        withCredentials: true
+      }
+    );
   },
 
-  importDropboxTasks (csrf, projectShortName, files) {
-    const data = {
-      form_name: 'dropbox',
-      ...files.reduce((result, item, index) => {
-        result['files-' + index] = JSON.stringify(item)
-        return result
-      }, {})
-    }
+  importLocalCsvTasks(csrf, projectShortName, file) {
+    const data = new FormData();
+    data.append("file", file);
 
     return axios.post(
-      process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=dropbox',
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=localCSV&response_format=json",
       data,
       {
         withCredentials: true,
         headers: {
-          'X-CSRFToken': csrf
+          "Content-Type": "multipart/form-data",
+          "X-CSRFToken": csrf
         }
-      })
-  },
-
-  getFlickrTasksImportationOptions (projectShortName) {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=flickr', {
-      data: {},
-      withCredentials: true
-    })
-  },
-
-  importFlickrTasks (csrf, projectShortName, albumId) {
-    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=flickr', {
-      form_name: 'flickr',
-      album_id: albumId
-    }, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrf
       }
-    })
+    );
   },
 
-  getTwitterTasksImportationOptions (projectShortName) {
-    return axios.get(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=twitter', {
-      data: {},
-      withCredentials: true
-    })
-  },
-
-  importTwitterTasks (csrf, projectShortName, source, maxTweets) {
-    return axios.post(process.env.BASE_ENDPOINT_URL + 'project/' + projectShortName + '/tasks/import?type=twitter', {
-      form_name: 'twitter',
-      max_tweets: maxTweets,
-      source: source
-    }, {
-      withCredentials: true,
-      headers: {
-        'X-CSRFToken': csrf
+  getOnlineCsvTasksImportationOptions(projectShortName) {
+    return axios.get(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=csv",
+      {
+        data: {},
+        withCredentials: true
       }
-    })
+    );
+  },
+
+  importOnlineCsvTasks(csrf, projectShortName, link) {
+    return axios.post(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=csv",
+      {
+        csv_url: link
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrf
+        }
+      }
+    );
+  },
+
+  getDropboxTasksImportationOptions(projectShortName) {
+    return axios.get(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=dropbox",
+      {
+        data: {},
+        withCredentials: true
+      }
+    );
+  },
+
+  importDropboxTasks(csrf, projectShortName, files) {
+    const data = {
+      form_name: "dropbox",
+      ...files.reduce((result, item, index) => {
+        result["files-" + index] = JSON.stringify(item);
+        return result;
+      }, {})
+    };
+
+    return axios.post(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=dropbox",
+      data,
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrf
+        }
+      }
+    );
+  },
+
+  getFlickrTasksImportationOptions(projectShortName) {
+    return axios.get(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=flickr",
+      {
+        data: {},
+        withCredentials: true
+      }
+    );
+  },
+
+  importFlickrTasks(csrf, projectShortName, albumId) {
+    return axios.post(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=flickr",
+      {
+        form_name: "flickr",
+        album_id: albumId
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrf
+        }
+      }
+    );
+  },
+
+  getTwitterTasksImportationOptions(projectShortName) {
+    return axios.get(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=twitter",
+      {
+        data: {},
+        withCredentials: true
+      }
+    );
+  },
+
+  importTwitterTasks(csrf, projectShortName, source, maxTweets) {
+    return axios.post(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import?type=twitter",
+      {
+        form_name: "twitter",
+        max_tweets: maxTweets,
+        source: source
+      },
+      {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrf
+        }
+      }
+    );
+  },
+
+  importLocalCSLoggerFile(csrf, projectShortName, file, category = "media") {
+    const data = new FormData();
+    data.append("file", file);
+
+    const parameters = {
+      type: "cslogger",
+      response_format: "json",
+      category: category //Category: *) report: csv file; *) media: mime file
+    };
+
+    const url = new URL(
+      process.env.BASE_ENDPOINT_URL +
+        "project/" +
+        projectShortName +
+        "/tasks/import"
+    );
+
+    url.search = new URLSearchParams(parameters).toString();
+    return new Promise(function(resolve, reject) {
+      setTimeout(() => {
+        console.log(file.name);
+        resolve({ status: "ok", file_name: file.name });
+      }, Math.floor(Math.random() * 1000 + 1000));
+    });
+
+    //TODO: uncomment when endpoint is working
+
+    // return axios.post(url, data, {
+    //   withCredentials: true,
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //     "X-CSRFToken": csrf
+    //   }
+    // });
   }
-
-}
+};

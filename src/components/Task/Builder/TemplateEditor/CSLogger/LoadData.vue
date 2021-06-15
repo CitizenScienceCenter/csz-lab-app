@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import { getWidthScreen } from "@/helper.js";
 import media_ext from "@/assets/media_files_ext.json";
 
@@ -117,7 +118,8 @@ export default {
       valid: { csv: null, media: null },
       error_message: { csv: null, zip: null },
       allowed_files: "",
-      progress: 0
+      progress: 0,
+      failed_files: []
     };
   },
   created() {
@@ -127,6 +129,9 @@ export default {
     this.allowed_files = `${img}, ${audio}, ${video}`;
   },
   computed: {
+    ...mapState("project", {
+      project: state => state.selectedProject
+    }),
     validateCSV() {
       if (this.valid.csv) return true;
       if (!this.valid.csv && this.valid.csv != null) return false;
@@ -156,21 +161,41 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      importLocalCSLoggerFile: "task/importer/importLocalCSLoggerFile"
+    }),
     async onSubmit() {
       const aux = this;
       this.loaded = null; // Response from server if file was successfully received
       this.loading = true;
       this.progress = 0;
-      // TODO: send data and wait for validations
-      this.mediaFiles.forEach((file, i) => {
-        // const res = await function ();
-        setTimeout(() => {
-          aux.progress++;
-          if (aux.progress >= aux.mediaFiles.length) {
-            this.loading = false;
-            this.loaded = "ok";
+      const res_csv = await this.importLocalCSLoggerFile({
+        file: this.csvFile,
+        category: "report"
+      });
+      // TODO: Define the correct expected responses both success as fail
+      if (res_csv.status !== "ok") {
+        this.loading = false;
+        this.loaded = null;
+        return;
+      }
+      // TODO: Define the correct expected responses both success as fail
+      this.mediaFiles.forEach(async file => {
+        const res = await this.importLocalCSLoggerFile({
+          file: file,
+          category: "media"
+        }).then(res => {
+          if (res.status == "ok") {
+            aux.progress++;
+            if (aux.progress >= aux.mediaFiles.length) {
+              this.loading = false;
+              this.loaded = "ok";
+            }
+          } else {
+            //TODO: Pending for show failed files upload
+            aux.failed_files.push(res.file_name);
           }
-        }, i * 500);
+        });
       });
     },
     next() {
@@ -183,7 +208,7 @@ export default {
 
       // csv file validation
       if (ext === "csv") {
-        if (this.getExt(this.csvFile) === "csv") {
+        if (this.getExt(this.csvFile.name) === "csv") {
           this.valid[ext] = true;
           if (this.csvFile.size > size) {
             this.valid[ext] = false;
