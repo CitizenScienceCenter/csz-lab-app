@@ -369,25 +369,25 @@ import { buildTemplateFromModel } from "@/helper";
 import ImageCountTemplate from "@/components/Task/Template/Image/ImageCountTemplate";
 import ImageDescribeTemplate from "@/components/Task/Template/Image/ImageDescriptionTemplate";
 import ImageClassificationTemplate from "@/components/Task/Template/Image/ImageClassificationTemplate";
-// TODO: change when generic template works
+
 import ImageGenericTemplate from "@/components/Task/Template/Image/ImageGenericTemplate";
 import VideoClassificationTemplate from "@/components/Task/Template/Video/VideoClassificationTemplate";
 import VideoDescriptionTemplate from "@/components/Task/Template/Video/VideoDescriptionTemplate";
-// TODO: change when generic template works
+
 import VideoGenericTemplate from "@/components/Task/Template/Video/VideoGenericTemplate";
 import SoundClassificationTemplate from "@/components/Task/Template/Sound/SoundClassificationTemplate";
 import SoundDescriptionTemplate from "@/components/Task/Template/Sound/SoundDescriptionTemplate";
-// TODO: change when generic template works
+
 import SoundGenericTemplate from "@/components/Task/Template/Sound/SoundGenericTemplate";
 import PdfDescriptionTemplate from "@/components/Task/Template/Document/PdfDescriptionTemplate";
-// TODO: change when generic template works
+
 import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import TwitterClassificationTemplate from "@/components/Task/Template/Twitter/TwitterClassificationTemplate";
 import TwitterDescriptionTemplate from "@/components/Task/Template/Twitter/TwitterDescriptionTemplate";
-// TODO: change when generic template works
+
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
 
-// TODO: change when generic template works
+
 import GeoCodingGenericTemplate from "@/components/Task/Template/GeoCoding/GeoCodingGenericTemplate";
 
 export default {
@@ -492,7 +492,7 @@ export default {
             questions: this.task.template
           });
         } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
+          
           template = buildTemplateFromModel(ImageGenericTemplate, {
             questions: this.task.template
           });
@@ -511,7 +511,7 @@ export default {
             descriptions: this.task.template.descriptions
           });
         } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
+          
           template = buildTemplateFromModel(SoundGenericTemplate, {
             questions: this.task.template
           });
@@ -530,7 +530,7 @@ export default {
             descriptions: this.task.template.descriptions
           });
         } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
+          
           template = buildTemplateFromModel(VideoGenericTemplate, {
             questions: this.task.template
           });
@@ -545,7 +545,7 @@ export default {
             descriptions: this.task.template.descriptions
           });
         } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
+          
           template = buildTemplateFromModel(PdfGenericTemplate, {
             questions: this.task.template
           });
@@ -564,7 +564,7 @@ export default {
             descriptions: this.task.template.descriptions
           });
         } else if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
+          
           template = buildTemplateFromModel(TwitterGenericTemplate, {
             questions: this.task.template
           });
@@ -574,7 +574,7 @@ export default {
       // Geocoding template generation
       if (this.task.material === this.materials.geocoding) {
         if (this.task.job === this.jobs.generic) {
-          // TODO: change when generic template works
+          
           template = buildTemplateFromModel(GeoCodingGenericTemplate, {
             questions: this.task.template,
             mapSettings: this.task.mapSettings

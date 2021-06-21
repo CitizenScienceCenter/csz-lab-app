@@ -8,41 +8,13 @@
     <!-- Job type selection title -->
     <b-row class="mt-4">
       <b-col>
-        <h1
-          class="text-center centered small"
-          v-if="task.material === 'cslogger'"
-        >
-          {{ $t("task-job-builder-builder-cslogger-title") }}
-        </h1>
-        <h1 class="text-center centered small" v-else>
+        <h1 class="text-center centered small">
           {{ $t("task-job-builder-files-purpose") }}
         </h1>
       </b-col>
     </b-row>
 
-    <!-- CS Logger import files module -->
-    <b-row
-      v-if="task.material === 'cslogger'"
-      class="centered mt-3 justify-content-between"
-    >
-      <b-col md="8" class="mt-md-0 mt-4">
-        <h2 class="mb-4">{{ $t("task-job-builder-cslogger-import-title") }}</h2>
-        <load-data @onContinue="onContinue"></load-data>
-      </b-col>
-
-      <b-col md="3" class="text-muted">
-        <p class="small">
-          <i class="fas fa-info-circle"></i><br />
-          {{ $t("task-job-builder-cslogger-info1") }}
-        </p>
-        <!-- TODO: here include the allowed file extensions -->
-        <p class="small">
-          {{ $t("task-job-builder-cslogger-info2") }}
-        </p>
-      </b-col>
-    </b-row>
-
-    <b-row class="mt-4" v-else>
+    <b-row class="mt-4">
       <b-col md="9">
         <b-row>
           <!-- These are the specific type of jobs according the material -->
@@ -133,12 +105,10 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import LoadData from "@/components/Task/Builder/TemplateEditor/CSLogger/LoadData";
 
 export default {
   name: "JobSelector",
   components: {
-    LoadData
   },
   created() {
     this.selectedJob = null;
@@ -178,11 +148,6 @@ export default {
       // invalidate job step and go to material selection
       this.setStep({ step: "job", value: false });
     },
-    // trigger onSubmit since loadData component for CSLogger
-    onContinue() {
-      this.onJobSelected(this.jobs.generic);
-      this.onSubmit();
-    }
   }
 };
 </script>

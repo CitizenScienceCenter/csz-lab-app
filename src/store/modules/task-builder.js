@@ -28,7 +28,8 @@ const sources = {
   dropbox: "dropbox",
   amazon: "amazon",
   flickr: "flickr",
-  twitter: "twitter"
+  twitter: "twitter",
+  cslogger: "cslogger"
 };
 
 // global state for this module
@@ -61,7 +62,8 @@ const state = {
     [materials.sound]: [jobs.generic, jobs.classify, jobs.describe],
     [materials.pdf]: [jobs.generic, jobs.describe],
     [materials.tweet]: [jobs.generic, jobs.classify, jobs.describe],
-    [materials.video]: [jobs.generic, jobs.classify, jobs.describe]
+    [materials.video]: [jobs.generic, jobs.classify, jobs.describe],
+    [materials.cslogger]: [jobs.generic]
   },
   // available sources for each material type
   materialSources: {
@@ -69,7 +71,8 @@ const state = {
     [materials.sound]: [sources.amazon, sources.dropbox],
     [materials.pdf]: [sources.amazon, sources.dropbox],
     [materials.tweet]: [sources.twitter],
-    [materials.video]: [sources.amazon, sources.dropbox]
+    [materials.video]: [sources.amazon, sources.dropbox],
+    [materials.cslogger]: [sources.cslogger]
   },
   // available extensions for each material type
   materialExtensions: {

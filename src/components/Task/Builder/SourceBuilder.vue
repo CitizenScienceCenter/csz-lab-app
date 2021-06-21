@@ -5,7 +5,29 @@
         <h1 class="text-center centered small"> {{ $t('task-source-builder-select-source') }} </h1>
         <b-link v-if="selectedSource && materialSources[task.material].length > 1" @click="goBack">{{ $t('task-source-builder-other-source') }}</b-link>
 
-        <b-row class="mt-4" v-if="!selectedSource">
+        <!-- CS Logger import files module -->
+        <b-row
+          v-if="task.material === 'cslogger'"
+          class="centered mt-3 justify-content-between"
+        >
+          <b-col md="8" class="mt-md-0 mt-4">
+            <h2 class="mb-4">{{ $t("task-job-builder-cslogger-import-title") }}</h2>
+            <load-data @onContinue="onContinue"></load-data>
+          </b-col>
+
+          <b-col md="3" class="text-muted">
+            <p class="small">
+              <i class="fas fa-info-circle"></i><br />
+              {{ $t("task-job-builder-cslogger-info1") }}
+            </p>
+            <!-- Allowed files for media -->
+            <p class="small">
+              {{ $t("task-job-builder-cslogger-info2") }}
+            </p>
+          </b-col>
+        </b-row>
+        
+        <b-row class="mt-4" v-else-if="!selectedSource">
           <b-col md="9">
             <b-row>
 
@@ -57,6 +79,7 @@ import DropboxSourceEditor from '@/components/Task/Builder/SourceEditor/DropboxS
 import AmazonSourceEditor from '@/components/Task/Builder/SourceEditor/AmazonSourceEditor'
 import FlickrSourceEditor from '@/components/Task/Builder/SourceEditor/FlickrSourceEditor'
 import TwitterSourceEditor from '@/components/Task/Builder/SourceEditor/TwitterSourceEditor'
+import LoadData from "@/components/Task/Builder/TemplateEditor/CSLogger/LoadData";
 
 export default {
   name: 'SourceBuilder',
@@ -64,7 +87,8 @@ export default {
     TwitterSourceEditor,
     FlickrSourceEditor,
     AmazonSourceEditor,
-    DropboxSourceEditor
+    DropboxSourceEditor,
+    LoadData
   },
   data: () => {
     return {
@@ -90,6 +114,10 @@ export default {
 
     goBack () {
       this.selectedSource = null
+    },
+    onContinue() {
+      this.setStep({ step: 'source', value: true })
+      this.setTaskSource(this.sources.cslogger)
     }
   },
   computed: {

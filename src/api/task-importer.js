@@ -257,7 +257,8 @@ export default {
     return new Promise(function(resolve, reject) {
       setTimeout(() => {
         console.log(file.name);
-        resolve({ status: "ok", file_name: file.name });
+        //TODO: Possible response from server
+        resolve({ status: "ok", name: file.name, url: 'http://'+file.name, contId: "contribution id" });
       }, Math.floor(Math.random() * 1000 + 1000));
     });
 

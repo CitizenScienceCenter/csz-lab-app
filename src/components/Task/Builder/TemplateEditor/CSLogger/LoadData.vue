@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 import { getWidthScreen } from "@/helper.js";
 import media_ext from "@/assets/media_files_ext.json";
 
@@ -164,36 +164,44 @@ export default {
     ...mapActions({
       importLocalCSLoggerFile: "task/importer/importLocalCSLoggerFile"
     }),
+    ...mapMutations({
+      setTaskSourceContent: "task/builder/setTaskSourceContent"
+    }),
     async onSubmit() {
       const aux = this;
       this.loaded = null; // Response from server if file was successfully received
       this.loading = true;
       this.progress = 0;
-      const res_csv = await this.importLocalCSLoggerFile({
+      this.importLocalCSLoggerFile({
         file: this.csvFile,
         category: "report"
+      }).then(res => {
+        // TODO: Define the correct expected responses both success as fail
+        if (res.status !== "ok") {
+          this.loading = false;
+          this.loaded = null;
+          return;
+        }
       });
+
       // TODO: Define the correct expected responses both success as fail
-      if (res_csv.status !== "ok") {
-        this.loading = false;
-        this.loaded = null;
-        return;
-      }
-      // TODO: Define the correct expected responses both success as fail
-      this.mediaFiles.forEach(async file => {
-        const res = await this.importLocalCSLoggerFile({
+      let media_res = [];
+      this.mediaFiles.forEach(file => {
+        this.importLocalCSLoggerFile({
           file: file,
           category: "media"
         }).then(res => {
           if (res.status == "ok") {
+            media_res.push(res);
             aux.progress++;
             if (aux.progress >= aux.mediaFiles.length) {
               this.loading = false;
               this.loaded = "ok";
+              aux.setTaskSourceContent(aux.groupBy("contId", media_res));
             }
           } else {
             //TODO: Pending for show failed files upload
-            aux.failed_files.push(res.file_name);
+            aux.failed_files.push(res.name);
           }
         });
       });
@@ -254,6 +262,14 @@ export default {
       if (getWidthScreen() < 1020) return 2;
       if (getWidthScreen() < 1280) return 3;
       return 4;
+    },
+    // group array of object by key and return grouped array of arrays
+    groupBy(key, array) {
+      const group_obj = array.reduce((r, a) => {
+        r[a[key]] = [...(r[a[key]] || []), a];
+        return r;
+      }, {});
+      return Object.values(group_obj) || [];
     }
   },
   watch: {

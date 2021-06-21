@@ -242,7 +242,6 @@ export function getWidthScreen() {
   return window.screen.width;
 }
 
-//TODO: Check the necessity of this function 
 // Get MIME type for url file
 export function getMIME(raw_url) {
   const img_ext = new Set(media_ext.image);

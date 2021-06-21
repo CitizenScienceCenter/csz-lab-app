@@ -789,11 +789,13 @@ const actions = {
 
   //** Citizen Science Logger Section **/
   // TODO: new action for any kind of file import
-  async importLocalCSLoggerFile({ commit, rootState }, { file, category }) {
+  async importLocalCSLoggerFile({ dispatch, rootState }, { file, category }) {
     //FIXME: Category: *report: csv file; *media: mime file
     try {
+      // TODO: pending to define the cslogger options endpoint
+      const options = await dispatch("getLocalCsvTasksImportationOptions", rootState.project.selectedProject)
       const res = await api.importLocalCSLoggerFile(
-        rootState.user.loginOptions.form.csrf,
+        options.form.csrf,
         rootState.project.selectedProject.short_name,
         file,
         category
