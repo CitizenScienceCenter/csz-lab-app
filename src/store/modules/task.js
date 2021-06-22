@@ -18,6 +18,7 @@ import BasicTemplate from "@/components/Task/Template/BasicTemplate";
 import DocumentTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import TwitterTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
 import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGenericTemplate";
+import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 
 const errors = {
   GET_PROJECT_TASKS_LOADING_ERROR: "Error during project tasks loading",
@@ -56,6 +57,7 @@ const state = {
     image: "image",
     video: "video",
     document: "document",
+    geo: "geo",
     twitter: "twitter"
   },
 
@@ -137,6 +139,12 @@ const actions = {
           return false;
         });
     } else {
+      const commons = [
+        state.templates.image,
+        state.templates.sound,
+        state.templates.video
+      ];
+      template = commons.includes(template) ? "media" : template;
       switch (template) {
         //TODO: CLEAN THIS CODE
         // case state.templates.sound:
@@ -151,9 +159,7 @@ const actions = {
         //     buildTemplateFromModel(GeoSurveyGenericTemplate, {})
         //   );
         //   break;
-        case state.templates.image ||
-          state.templates.sound ||
-          state.templates.video:
+        case 'media':
           commit(
             "setTaskPresenter",
             buildTemplateFromModel(SurveyGenericTemplate, {})
@@ -163,6 +169,12 @@ const actions = {
           commit(
             "setTaskPresenter",
             buildTemplateFromModel(DocumentTemplate, {})
+          );
+          break;
+        case state.templates.geo:
+          commit(
+            "setTaskPresenter",
+            buildTemplateFromModel(GeoSurveyGenericTemplate, {})
           );
           break;
         case state.templates.twitter:
