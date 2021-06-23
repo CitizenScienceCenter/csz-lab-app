@@ -11,10 +11,6 @@ import {
 } from "@/helper";
 
 import BasicTemplate from "@/components/Task/Template/BasicTemplate";
-//TODO: CLEAN THIS CODE
-// import ImageTemplate from "@/components/Task/Template/Image/ImageClassificationTemplate";
-// import VideoTemplate from "@/components/Task/Template/Video/VideoDescriptionTemplate";
-// import SoundTemplate from "@/components/Task/Template/Sound/SoundClassificationTemplate";
 import DocumentTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import TwitterTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
 import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGenericTemplate";
@@ -139,6 +135,7 @@ const actions = {
           return false;
         });
     } else {
+      // For image, sound and video the templates is similar
       const commons = [
         state.templates.image,
         state.templates.sound,
@@ -146,19 +143,6 @@ const actions = {
       ];
       template = commons.includes(template) ? "media" : template;
       switch (template) {
-        //TODO: CLEAN THIS CODE
-        // case state.templates.sound:
-        //   commit("setTaskPresenter", buildTemplateFromModel(SoundTemplate, {}));
-        //   break;
-        // case state.templates.video:
-        //   commit("setTaskPresenter", buildTemplateFromModel(VideoTemplate, {}));
-        //   break;
-        // case state.templates.geocoding:
-        //   commit(
-        //     "setTaskPresenter",
-        //     buildTemplateFromModel(GeoSurveyGenericTemplate, {})
-        //   );
-        //   break;
         case 'media':
           commit(
             "setTaskPresenter",

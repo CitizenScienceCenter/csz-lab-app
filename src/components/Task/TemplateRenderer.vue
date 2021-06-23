@@ -124,7 +124,7 @@ export default {
       total: 0
     });
     // load the project first to have access to the presenter and to the related tasks
-    this.getProject(this.id).then(() => {
+    this.getProject(this.id).then(result => {
       this.taskPresenterLoaded = true;
       // if the project presenter exists or a template is given (with the task presenter editor), it will be displayed
       // otherwise an alert is displayed to indicate that the presenter is not already configured

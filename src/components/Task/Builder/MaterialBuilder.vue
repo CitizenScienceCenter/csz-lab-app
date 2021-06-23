@@ -108,29 +108,6 @@
               <div class="m-2">Tweets</div>
             </b-card>
           </b-col>
-
-          <!-- TODO: CLEAN THIS CODE -->
-
-          <!-- <b-col
-            md="4"
-            class="mt-2 mt-md-0"
-            v-b-popover.hover.bottom="
-              $t('task-material-builder-popover-geocoding')
-            "
-            :title="$t('task-material-builder-popover-geocoding-warning')"
-          >
-            <b-card
-              ref="card-geo-coding"
-              :class="{
-                'material-selected': selectedMaterial === materials.geocoding
-              }"
-              @click="onMaterialSelected(materials.geocoding)"
-              class="text-center material"
-            >
-              <i class="fas fa-map-marked-alt fa-4x"></i><br />
-              <div class="m-2">Geo-coding</div>
-            </b-card>
-          </b-col> -->
         </b-row>
       </b-col>
 
@@ -176,9 +153,6 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-// TODO CLEAN THE CODE
-// import { buildTemplateFromModel } from "@/helper";
-// import GeoCodingTemplate from "@/components/Task/Template/GeoCoding/GeoCodingTemplate";
 
 export default {
   name: "MaterialBuilder",

@@ -50,40 +50,6 @@
               <i class="fas fa-tasks fa-lg"></i>
               <div class="m-2">{{ $t("task-job-builder-survey-geo") }}</div>
             </b-card>
-
-            <!-- TODO: CLEAN THIS CODE-->
-            <!-- <b-card
-              ref="card-describe"
-              :class="{ 'material-selected': selectedJob === jobs.describe }"
-              v-if="job === jobs.describe"
-              @click="onJobSelected(job)"
-              class="text-center material my-2 mt-md-0"
-            >
-              <i class="fas fa-edit fa-4x"></i>
-              <div class="m-2">{{ $t("task-job-builder-describe") }}</div>
-            </b-card>
-
-            <b-card
-              ref="card-classify"
-              :class="{ 'material-selected': selectedJob === jobs.classify }"
-              v-if="job === jobs.classify"
-              @click="onJobSelected(job)"
-              class="text-center material my-2 mt-md-0"
-            >
-              <i class="fas fa-filter fa-4x"></i><br />
-              <div class="m-2">{{ $t("task-job-builder-classify") }}</div>
-            </b-card>
-
-            <b-card
-              ref="card-count"
-              :class="{ 'material-selected': selectedJob === jobs.count }"
-              v-if="job === jobs.count"
-              @click="onJobSelected(job)"
-              class="text-center material my-2 mt-md-0"
-            >
-              <i class="fas fa-calculator fa-4x"></i><br />
-              <div class="m-2">{{ $t("task-job-builder-count") }}</div>
-            </b-card> -->
           </b-col>
         </b-row>
       </b-col>

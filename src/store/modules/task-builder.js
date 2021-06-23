@@ -56,7 +56,7 @@ const state = {
     [materials.image]: [jobs.survey, jobs.geo_survey],
     [materials.sound]: [jobs.survey, jobs.geo_survey],
     [materials.video]: [jobs.survey, jobs.geo_survey],
-    [materials.tweet]: [jobs.survey, jobs.geo_survey],
+    [materials.tweet]: [jobs.survey],
     [materials.pdf]: [jobs.survey]
   },
   // available sources for each material type

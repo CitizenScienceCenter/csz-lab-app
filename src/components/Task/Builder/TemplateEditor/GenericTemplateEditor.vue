@@ -3,7 +3,7 @@
     <div class="clearfix">
       <!-- Internal header section -->
       <h2 class="float-left">{{ $t("task-template-question") }}</h2>
-      <b-btn @click="addQuestion" class="float-right">{{
+      <b-btn @click.prevent="addQuestion" class="float-right">{{
         $t("task-template-add-question")
       }}</b-btn>
     </div>
@@ -11,12 +11,11 @@
     <!-- Questions section -->
     <b-container class="small-bottom">
       <!-- All question section: distributed in tabs -->
-      <b-tabs content-class="my-4">
+      <b-tabs content-class="my-4" v-model="current_tab">
         <b-tab
           :key="questionKey"
           v-for="(question, questionKey) in questions"
           :title="`${$t('task-template-question')} ${questionKey + 1}`"
-          active
         >
           <!-- Question options row: Top position -->
           <question-options
@@ -214,7 +213,8 @@ export default {
       types: [],
       minAnswers: 2,
       mapSettings: {},
-      mapValid: false
+      mapValid: false,
+      current_tab: 0
     };
   },
   methods: {
@@ -393,6 +393,11 @@ export default {
     ...mapState("settings", ["questionTypes"]),
     geoProject() {
       return this.task.job === "geo_survey";
+    }
+  },
+  watch: {
+    questions() {
+      this.current_tab = this.questions.length;
     }
   }
 };

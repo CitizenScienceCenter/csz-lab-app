@@ -59,33 +59,6 @@
                 <b>{{ task.sourceContent.length }}</b>
                 {{ $t("task-summary-builder-tasks") }}
               </span>
-
-              <!-- TODO: CLEAN THIS CODE -->
-              <!-- list of file removed from this interface -->
-              <!-- <ul
-                v-if="
-                  task.source !== sources.flickr &&
-                    task.source !== sources.twitter
-                "
-              >
-                <li :key="key" v-for="(file, key) in task.sourceContent">
-                  <b-link
-                    v-if="task.source === sources.amazon"
-                    :href="getBucketFileLink(file)"
-                    target="_blank"
-                    >{{ file }}</b-link
-                  >
-                  <b-link
-                    v-else-if="task.source === sources.dropbox"
-                    :href="file.link"
-                    target="_blank"
-                    >{{ file.name }}</b-link
-                  >
-                  <b-link v-else :href="file" target="_blank">{{
-                    file
-                  }}</b-link>
-                </li>
-              </ul> -->
               <span v-else-if="task.source === sources.flickr">
                 {{ $t("task-summary-builder-flickr-import") }} (<span
                   class="font-italic"
@@ -105,251 +78,8 @@
     <!-- Template section -->
     <b-row>
       <b-col md="8" offset-md="2" class="container greyish jumbotron mb-4">
-        <ul class="list-unstyled">
-          <!-- Template -->
-          <b-media tag="li" vertical-align="top">
-            <template v-slot:aside>
-              <i class="fas fa-code icon-secondary-big"></i>
-            </template>
-            <b-row class="d-flex justify-content-between">
-              <h1 class="small text-muted m-0 pb-1 mb-2">
-                {{ $t("task-summary-builder-template") }}
-              </h1>
-              <div
-                class="mr-3 collapse-button"
-                :class="{ collapsed: !collapsed }"
-                @click="toggleAccordion"
-              >
-                <i class="fas fa-angle-double-up fa-2x"></i>
-              </div>
-            </b-row>
-
-            <!-- TODO: CLEAN THIS CODE -->
-            <!-- Describe template-->
-            <!-- <ul v-if="task.job === jobs.describe" class="list-unstyled">
-              <li>
-                <b-button v-b-toggle.collapse-1 variant="outline-secondary">{{
-                  $t("task-summary-builder-question")
-                }}</b-button>
-                <b-collapse id="collapse-1" class="mt-2">
-                  <p class="mb-0">{{ task.template.question }}</p>
-                  <ul class="list-unstyled ml-4">
-                    <li
-                      :key="index"
-                      v-for="(description, index) in task.template.descriptions"
-                    >
-                      <label>{{ $t("description") + " " + (index + 1) }}</label>
-                      <p class="mb-0">{{ description }}</p>
-                    </li>
-                  </ul>
-                </b-collapse>
-              </li>
-            </ul> -->
-            <!-- Classify template -->
-            <!-- <ul v-if="task.job === jobs.classify" class="list-unstyled">
-              <li :key="q" v-for="(question, q) in task.template" class="mb-2">
-                <b-button
-                  v-b-toggle="'collapse-' + (q + 1)"
-                  variant="outline-secondary"
-                  >{{
-                    $t("task-summary-builder-question") + " " + (q + 1)
-                  }}</b-button
-                >
-                <b-collapse
-                  :id="'collapse-' + (q + 1)"
-                  :visible="q === 0 ? true : false"
-                  class="mt-2"
-                >
-                  <p class="mb-0">{{ question.question }}</p>
-                  <ul class="list-unstyled ml-4">
-                    <li
-                      :key="a"
-                      v-for="(answer, a) in task.template[q].answers"
-                    >
-                      <label>{{
-                        $t("task-summary-builder-answer") + " " + (a + 1)
-                      }}</label>
-                      <p class="mb-0">{{ answer }}</p>
-                    </li>
-                  </ul>
-                  <hr />
-                </b-collapse>
-              </li>
-            </ul> -->
-            <!-- Count template -->
-            <!-- <ul v-if="task.job === jobs.count" class="list-unstyled">
-              <li>
-                <b-button v-b-toggle.collapse-3 variant="outline-secondary">{{
-                  $t("task-summary-builder-question")
-                }}</b-button>
-                <b-collapse id="collapse-3" class="mt-2">
-                  <p>{{ task.template }}</p>
-                </b-collapse>
-              </li>
-            </ul> -->
-
-            <!-- Template summary -->
-            <ol>
-              <div class="accordion mt-2" role="tablist">
-                <b-card
-                  no-body
-                  class="mb-1"
-                  v-for="(question, q) in task.template"
-                  :key="q"
-                  style="background-color: rgba(255,255,255,0.3);"
-                >
-                  <b-card-header header-tag="header" class="p-0" role="tab">
-                    <b-button
-                      block
-                      v-b-toggle="`gquestion-${q}`"
-                      class="text-left"
-                      variant="secondary"
-                      @click="collapseButtonOrientation()"
-                    >
-                      <span class="font-weight-bold">
-                        {{ $t("task-summary-builder-question") }}
-                        {{ q + 1 }}:
-                      </span>
-                      <span class="text-capitalize white-space">{{
-                        question.question
-                      }}</span>
-                      <span
-                        class="text-primary font-weight-bold h5"
-                        v-if="question.required"
-                      >
-                        *
-                      </span>
-                    </b-button>
-                  </b-card-header>
-                  <b-collapse
-                    :id="`gquestion-${q}`"
-                    accordion="questions-accordion"
-                    role="tabpanel"
-                    visible
-                  >
-                    <b-card-body>
-                      <b-card-text>
-                        <ul class="list-unstyled ml-4">
-                          <li
-                            :key="a"
-                            v-for="(answer, a) in task.template[q].answers"
-                            class="mb-0"
-                          >
-                            <label>
-                              {{
-                                $t("task-summary-builder-answer") +
-                                  " " +
-                                  (a + 1)
-                              }}
-                            </label>
-                            <small class="white-space">{{ answer }}</small>
-                          </li>
-                        </ul>
-                        <div>
-                          <small class="text-primary">Question type: </small>
-                          <small>{{ getQuestionType(question.type) }}</small>
-                        </div>
-                        <div v-if="'questionId' in question.condition">
-                          <small class="text-primary"
-                            >{{
-                              $t("task-template-options-conditional-button")
-                            }}:
-                          </small>
-                          <small
-                            >{{ $t("task-summary-builder-question") }}
-                            {{
-                              getConditionalQuestion(
-                                question.condition.questionId
-                              ) + 1
-                            }}</small
-                          >
-                        </div>
-                      </b-card-text>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-
-                <!-- Summary card for map settings when geocoding template is used -->
-                <b-card
-                  v-if="task.job == 'geo_survey'"
-                  no-body
-                  class="mb-1"
-                  style="background-color: rgba(255,255,255,0.3);"
-                >
-                  <b-card-header header-tag="header" class="p-0" role="tab">
-                    <b-button
-                      block
-                      v-b-toggle="'gquestion-map'"
-                      class="text-left"
-                      variant="secondary"
-                      @click="collapseButtonOrientation()"
-                    >
-                      <span class="font-weight-bold">Map Settings</span>
-                    </b-button>
-                  </b-card-header>
-                  <b-collapse
-                    id="gquestion-map"
-                    accordion="questions-accordion"
-                    role="tabpanel"
-                    visible
-                  >
-                    <b-card-body>
-                      <b-card-text>
-                        <ul class="list-unstyled ml-4">
-                          <li class="mb-1">
-                            <label class="text-capitalize">
-                              {{ $t("task-summary-builder-question") }}:
-                            </label>
-                            <small class="white-space">{{
-                              task.mapSettings.question
-                            }}</small>
-                          </li>
-                          <li class="mb-1">
-                            <label class="text-capitalize">
-                              {{ $t("task-template-map-center") }}:
-                            </label>
-                            <small class="white-space">{{
-                              task.mapSettings.center.join(", ")
-                            }}</small>
-                          </li>
-                          <li class="mb-1">
-                            <label class="text-capitalize">
-                              {{ $t("task-template-map-zoom") }}:
-                            </label>
-                            <small class="white-space">{{
-                              task.mapSettings.zoom
-                            }}</small>
-                          </li>
-                          <li class="mb-1 d-flex">
-                            <b-form-checkbox
-                              v-model="task.mapSettings.area"
-                              disabled
-                              class="mr-2"
-                            >
-                              <span class="text-label">
-                                {{ $t("task-template-map-area-checkbox") }}
-                              </span>
-                            </b-form-checkbox>
-                            <b-form-checkbox
-                              v-model="task.mapSettings.markers"
-                              disabled
-                              class="mr-2"
-                            >
-                              <span class="text-label">
-                                {{ $t("task-template-map-markers-checkbox") }}:
-                                {{ task.mapSettings.maxMarkers }}
-                              </span>
-                            </b-form-checkbox>
-                          </li>
-                        </ul>
-                      </b-card-text>
-                    </b-card-body>
-                  </b-collapse>
-                </b-card>
-              </div>
-            </ol>
-          </b-media>
-        </ul>
+        <!-- Template -->
+        <template-summary></template-summary>
       </b-col>
     </b-row>
     <b-row>
@@ -371,29 +101,12 @@
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 import { buildTemplateFromModel } from "@/helper";
+import TemplateSummary from "@/components/Task/Builder/TemplateEditor/TemplateSummary.vue";
 
 import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGenericTemplate";
 import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
-
-// TODO: CLEAN THIS CODE
-// import ImageCountTemplate from "@/components/Task/Template/Image/ImageCountTemplate";
-// import ImageDescribeTemplate from "@/components/Task/Template/Image/ImageDescriptionTemplate";
-// import ImageClassificationTemplate from "@/components/Task/Template/Image/ImageClassificationTemplate";
-
-// import VideoClassificationTemplate from "@/components/Task/Template/Video/VideoClassificationTemplate";
-// import VideoDescriptionTemplate from "@/components/Task/Template/Video/VideoDescriptionTemplate";
-
-// import SoundClassificationTemplate from "@/components/Task/Template/Sound/SoundClassificationTemplate";
-// import SoundDescriptionTemplate from "@/components/Task/Template/Sound/SoundDescriptionTemplate";
-
-// import PdfDescriptionTemplate from "@/components/Task/Template/Document/PdfDescriptionTemplate";
-
-// import TwitterClassificationTemplate from "@/components/Task/Template/Twitter/TwitterClassificationTemplate";
-// import TwitterDescriptionTemplate from "@/components/Task/Template/Twitter/TwitterDescriptionTemplate";
-
-// import GeoCodingGenericTemplate from "@/components/Task/Template/GeoCoding/GeoCodingGenericTemplate";
 
 export default {
   name: "SummaryBuilder",
@@ -401,6 +114,9 @@ export default {
     return {
       collapsed: false
     };
+  },
+  components: {
+    TemplateSummary
   },
   computed: {
     ...mapState("task/builder", [
@@ -412,7 +128,6 @@ export default {
     ]),
     ...mapState("project", ["selectedProject"]),
     ...mapGetters("task/builder", ["getBucketFileLink"]),
-    ...mapState("settings", ["questionTypes"]),
 
     // Get icons section
     getMaterialIcon() {
@@ -496,60 +211,6 @@ export default {
           });
         }
       }
-      // TODO: CLEAN THIS CODE
-      // if (this.task.job === this.jobs.count) {
-      //   template = buildTemplateFromModel(ImageCountTemplate, {
-      //     question: this.task.template
-      //   });
-      // } else if (this.task.job === this.jobs.describe) {
-      //   template = buildTemplateFromModel(ImageDescribeTemplate, {
-      //     question: this.task.template.question,
-      //     descriptions: this.task.template.descriptions
-      //   });
-      // } else if (this.task.job === this.jobs.classify) {
-      //   template = buildTemplateFromModel(ImageClassificationTemplate, {
-      //     questions: this.task.template
-      //   });
-
-      // }
-
-      // // Sound template generation
-      // if (this.task.material === this.materials.sound) {
-      //   if (this.task.job === this.jobs.classify) {
-      //     template = buildTemplateFromModel(SoundClassificationTemplate, {
-      //       questions: this.task.template
-      //     });
-      //   } else if (this.task.job === this.jobs.describe) {
-      //     template = buildTemplateFromModel(SoundDescriptionTemplate, {
-      //       question: this.task.template.question,
-      //       descriptions: this.task.template.descriptions
-      //     });
-      //   } else if (this.task.job === this.jobs.survey) {
-      //
-      //     template = buildTemplateFromModel(SoundGenericTemplate, {
-      //       questions: this.task.template
-      //     });
-      //   }
-      // }
-
-      // // Video template generation
-      // if (this.task.material === this.materials.video) {
-      //   if (this.task.job === this.jobs.classify) {
-      //     template = buildTemplateFromModel(VideoClassificationTemplate, {
-      //       questions: this.task.template
-      //     });
-      //   } else if (this.task.job === this.jobs.describe) {
-      //     template = buildTemplateFromModel(VideoDescriptionTemplate, {
-      //       question: this.task.template.question,
-      //       descriptions: this.task.template.descriptions
-      //     });
-      //   } else if (this.task.job === this.jobs.survey) {
-      //
-      //     template = buildTemplateFromModel(VideoGenericTemplate, {
-      //       questions: this.task.template
-      //     });
-      //   }
-      // }
 
       // Pdf template generation
       if (this.task.material === this.materials.pdf) {
@@ -558,17 +219,6 @@ export default {
             questions: this.task.template
           });
         }
-        // TODO: CLEAN THIS CODE
-        // if (this.task.job === this.jobs.describe) {
-        //   template = buildTemplateFromModel(PdfDescriptionTemplate, {
-        //     question: this.task.template.question,
-        //     descriptions: this.task.template.descriptions
-        //   });
-        // } else if (this.task.job === this.jobs.survey) {
-        //    template = buildTemplateFromModel(PdfGenericTemplate, {
-        //     questions: this.task.template
-        //   });
-        // }
       }
 
       // Tweet template generation
@@ -578,35 +228,7 @@ export default {
             questions: this.task.template
           });
         }
-        // TODO: CLEAN THIS CODE
-        // if (this.task.job === this.jobs.classify) {
-        //   template = buildTemplateFromModel(TwitterClassificationTemplate, {
-        //     questions: this.task.template
-        //   });
-        // } else if (this.task.job === this.jobs.describe) {
-        //   template = buildTemplateFromModel(TwitterDescriptionTemplate, {
-        //     question: this.task.template.question,
-        //     descriptions: this.task.template.descriptions
-        //   });
-        // } else if (this.task.job === this.jobs.survey) {
-
-        //   template = buildTemplateFromModel(TwitterGenericTemplate, {
-        //     questions: this.task.template
-        //   });
-        // }
       }
-
-      // TODO: CLEAN THIS CODE
-      // // Geocoding template generation
-      // if (this.task.material === this.materials.geocoding) {
-      //   if (this.task.job === this.jobs.survey) {
-
-      //     template = buildTemplateFromModel(GeoCodingGenericTemplate, {
-      //       questions: this.task.template,
-      //       mapSettings: this.task.mapSettings
-      //     });
-      //   }
-      // }
 
       // store the generated template for the selected project
       const templatePromise = this.saveTaskPresenter({
@@ -675,46 +297,6 @@ export default {
           }
         }
       );
-    },
-    getQuestionType(key) {
-      const qt = this.questionTypes.find(x => x.value == key);
-      return qt ? qt.name : "No type";
-    },
-    getConditionalQuestion(id) {
-      const qid = this.task.template.findIndex(x => x.id === id);
-      return qid;
-    },
-    toggleAccordion() {
-      this.collapsed = !this.collapsed;
-      const tabCollapse = document.getElementsByClassName("collapse");
-      for (let i in tabCollapse) {
-        if (tabCollapse[i].id && tabCollapse[i].id.includes("gquestion")) {
-          if (this.collapsed && !tabCollapse[i].classList.contains("show")) {
-            tabCollapse[i].classList.add("show");
-            tabCollapse[i].removeAttribute("style");
-          } else if (
-            !this.collapsed &&
-            tabCollapse[i].classList.contains("show")
-          ) {
-            tabCollapse[i].classList.remove("show");
-            tabCollapse[i].style.display = "none";
-          }
-        }
-      }
-    },
-    collapseButtonOrientation() {
-      this.collapsed = true;
-      const tabCollapse = document.getElementsByClassName("collapse");
-      for (let i in tabCollapse) {
-        if (
-          tabCollapse[i].id &&
-          tabCollapse[i].id.includes("gquestion") &&
-          !tabCollapse[i].classList.contains("show")
-        ) {
-          this.collapsed = false;
-          break;
-        }
-      }
     }
   }
 };
@@ -732,20 +314,6 @@ export default {
   color: $secondary;
   width: 2em;
   height: auto;
-}
-
-.collapse-button {
-  color: $secondary;
-  cursor: pointer;
-  transition-duration: 0.8s;
-  transition-property: transform;
-  &.collapsed {
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
 }
 
 .white-space {
