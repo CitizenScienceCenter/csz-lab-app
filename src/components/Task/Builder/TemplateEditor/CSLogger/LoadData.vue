@@ -79,7 +79,7 @@
         class="mr-1"
         >{{ $t("cslogger-load-data") }}</b-button
       >
-      <span class="text-primary ml-2" v-if="loading">
+      <span class="text-primary ml-2 smooth" v-if="loading">
         {{ $t("taks-import-cslogger-loading") }}
         <i class="fas fa-spinner fa-pulse"></i>
         <b-progress
@@ -176,7 +176,7 @@ export default {
         file: this.csvFile,
         category: "report"
       }).then(res => {
-        // TODO: Define the correct expected responses both success as fail
+        // TODO-CSLogger: Define the correct expected responses both success as fail
         if (res.status !== "ok") {
           this.loading = false;
           this.loaded = null;
@@ -184,7 +184,7 @@ export default {
         }
       });
 
-      // TODO: Define the correct expected responses both success as fail
+      // TODO-CSLogger: Define the correct expected responses both success as fail
       let media_res = [];
       this.mediaFiles.forEach(file => {
         this.importLocalCSLoggerFile({
@@ -200,7 +200,7 @@ export default {
               aux.setTaskSourceContent(aux.groupBy("contId", media_res));
             }
           } else {
-            //TODO: Pending for show failed files upload
+            //TODO-CSLogger: Pending for show failed files upload
             aux.failed_files.push(res.name);
           }
         });
@@ -285,3 +285,9 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+@import "@/scss/variables.scss";
+.smooth {
+  transition: all $transition-duration-short $transition-timing-function;
+}
+</style>

@@ -55,11 +55,11 @@
                   task.source !== sources.flickr &&
                     task.source !== sources.twitter
                 "
-                >
+              >
                 <b>{{ task.sourceContent.length }}</b>
                 {{ $t("task-summary-builder-tasks") }}
               </span>
-              
+
               <!-- list of file removed from this interface -->
               <!-- <ul
                 v-if="
@@ -251,11 +251,14 @@
                               $t("task-template-options-conditional-button")
                             }}:
                           </small>
-                          <small>{{$t("task-summary-builder-question")}} {{
-                            getConditionalQuestion(
-                              question.condition.questionId
-                            ) + 1
-                          }}</small>
+                          <small
+                            >{{ $t("task-summary-builder-question") }}
+                            {{
+                              getConditionalQuestion(
+                                question.condition.questionId
+                              ) + 1
+                            }}</small
+                          >
                         </div>
                       </b-card-text>
                     </b-card-body>
@@ -387,7 +390,6 @@ import TwitterDescriptionTemplate from "@/components/Task/Template/Twitter/Twitt
 
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
 
-
 import GeoCodingGenericTemplate from "@/components/Task/Template/GeoCoding/GeoCodingGenericTemplate";
 
 export default {
@@ -422,8 +424,8 @@ export default {
           return "fas fa-file-pdf";
         case this.materials.tweet:
           return "fab fa-twitter";
-        case this.materials.geocoding:
-          return "fas fa-map-marked-alt";
+        case this.materials.cslogger:
+          return "fas fa-question";
         default:
           return "fas fa-file";
       }
@@ -450,6 +452,8 @@ export default {
           return "fab fa-dropbox";
         case this.sources.amazon:
           return "fab fa-aws";
+        case this.sources.cslogger:
+          return "fas fa-question";
         default:
           return "fas fa-file";
       }
@@ -492,7 +496,6 @@ export default {
             questions: this.task.template
           });
         } else if (this.task.job === this.jobs.generic) {
-          
           template = buildTemplateFromModel(ImageGenericTemplate, {
             questions: this.task.template
           });
@@ -511,7 +514,6 @@ export default {
             descriptions: this.task.template.descriptions
           });
         } else if (this.task.job === this.jobs.generic) {
-          
           template = buildTemplateFromModel(SoundGenericTemplate, {
             questions: this.task.template
           });
@@ -530,7 +532,6 @@ export default {
             descriptions: this.task.template.descriptions
           });
         } else if (this.task.job === this.jobs.generic) {
-          
           template = buildTemplateFromModel(VideoGenericTemplate, {
             questions: this.task.template
           });
@@ -545,7 +546,6 @@ export default {
             descriptions: this.task.template.descriptions
           });
         } else if (this.task.job === this.jobs.generic) {
-          
           template = buildTemplateFromModel(PdfGenericTemplate, {
             questions: this.task.template
           });
@@ -564,18 +564,16 @@ export default {
             descriptions: this.task.template.descriptions
           });
         } else if (this.task.job === this.jobs.generic) {
-          
           template = buildTemplateFromModel(TwitterGenericTemplate, {
             questions: this.task.template
           });
         }
       }
 
-      // Geocoding template generation
-      if (this.task.material === this.materials.geocoding) {
+      // TODO-CSLogger: This section will contain the CSLogger template
+      if (this.task.material === this.materials.cslogger) {
         if (this.task.job === this.jobs.generic) {
-          
-          template = buildTemplateFromModel(GeoCodingGenericTemplate, {
+          template = buildTemplateFromModel(ImageGenericTemplate, {
             questions: this.task.template,
             mapSettings: this.task.mapSettings
           });
@@ -607,8 +605,12 @@ export default {
           files: this.task.sourceContent
         });
       }
+      // TODO-CSLogger: Reuse the dropbox import function for CSLogger
       // Dropbox
-      else if (this.task.source === this.sources.dropbox) {
+      else if (
+        this.task.source === this.sources.dropbox ||
+        this.task.source === this.sources.cslogger
+      ) {
         sourcePromise = this.importDropboxTasks({
           project: this.selectedProject,
           files: this.task.sourceContent

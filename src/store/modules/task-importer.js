@@ -788,19 +788,15 @@ const actions = {
   },
 
   //** Citizen Science Logger Section **/
-  // TODO: new action for any kind of file import
   async importLocalCSLoggerFile({ dispatch, rootState }, { file, category }) {
-    //FIXME: Category: *report: csv file; *media: mime file
+    // Category: *report: csv file; *media: mime file
     try {
-      // TODO: pending to define the cslogger options endpoint
-      const options = await dispatch("getLocalCsvTasksImportationOptions", rootState.project.selectedProject)
       const res = await api.importLocalCSLoggerFile(
-        options.form.csrf,
         rootState.project.selectedProject.short_name,
         file,
         category
       );
-      //TODO: pending for server response
+      //TODO-CSLogger: pending for server response
       return res;
     } catch (error) {
       console.log(error);

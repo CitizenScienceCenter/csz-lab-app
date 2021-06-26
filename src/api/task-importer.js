@@ -236,7 +236,7 @@ export default {
     );
   },
 
-  importLocalCSLoggerFile(csrf, projectShortName, file, category = "media") {
+  importLocalCSLoggerFile(projectShortName, file, category = "media") {
     const data = new FormData();
     data.append("file", file);
 
@@ -257,18 +257,23 @@ export default {
     return new Promise(function(resolve, reject) {
       setTimeout(() => {
         console.log(file.name);
-        //TODO: Possible response from server
-        resolve({ status: "ok", name: file.name, url: 'http://'+file.name, contId: "contribution id" });
+        //TODO-CSLogger: Possible response from server
+        resolve({
+          status: "ok",
+          id: file.name + "id",
+          name: file.name,
+          link: "http://" + file.name,
+          contId: "contribution id"
+        });
       }, Math.floor(Math.random() * 1000 + 1000));
     });
 
-    //TODO: uncomment when endpoint is working
+    //TODO-CSLogger: uncomment when endpoint is working
 
     // return axios.post(url, data, {
     //   withCredentials: true,
     //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //     "X-CSRFToken": csrf
+    //     "Content-Type": "multipart/form-data"
     //   }
     // });
   }
