@@ -181,6 +181,11 @@ export default {
       collapsed: false
     };
   },
+  created() {
+    if (this.task.template.length < 2) {
+      this.collapsed = true;
+    }
+  },
   computed: {
     ...mapState({
       task: state => state.task.builder.task,
