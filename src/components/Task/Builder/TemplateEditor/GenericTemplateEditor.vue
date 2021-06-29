@@ -227,6 +227,7 @@ export default {
 
     // question methods
     addQuestion() {
+      const aux = this;
       if (this.questions.length < MAXQUESTIONS) {
         DEFAULT_QUESTION.id += 1;
         this.questions.push(JSON.parse(JSON.stringify(DEFAULT_QUESTION)));
@@ -236,6 +237,10 @@ export default {
           content: this.$t("task-survey-template-maxquestions")
         });
       }
+      // focus in new tab automatically
+      setTimeout(function() {
+        aux.current_tab = aux.questions.length - 1;
+      }, 200);
     },
     deleteQuestion(questionKey) {
       if (this.questions.length > 1) {
