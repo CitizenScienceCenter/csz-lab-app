@@ -797,6 +797,35 @@ const actions = {
         category
       );
       //TODO-CSLogger: pending for server response
+      // .then(value => {
+      //         if ("status" in value.data && value.data.status === "message") {
+      //           let flash = value.data.flash.split(" ");
+      //           let message = flash.slice(1).join(" ");
+      //           commit(
+      //             "notification/showSuccess",
+      //             {
+      //               title: getTranslationLocale("success"),
+      //               content: isNaN(flash[0])
+      //                 ? getPybossaTranslation(value.data.flash)
+      //                 : flash[0] + " " + getPybossaTranslation(message)
+      //             },
+      //             { root: true }
+      //           );
+      //           return value.data;
+      //         }
+      //         return false;
+      //       })
+      //       .catch(reason => {
+      //         commit(
+      //           "notification/showError",
+      //           {
+      //             title: getTranslationLocale("POST_DROPBOX_TASKS_ERROR"),
+      //             content: reason
+      //           },
+      //           { root: true }
+      //         );
+      //         return false;
+      //       });
       return res;
     } catch (error) {
       console.log(error);

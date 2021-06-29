@@ -605,11 +605,12 @@ export default {
           files: this.task.sourceContent
         });
       }
-      // TODO-CSLogger: Reuse the dropbox import function for CSLogger
+      // TODO-CSLogger: Reuse the dropbox import function for CSLogger or 
+      // the uploading task done in Source step is enough
+
       // Dropbox
       else if (
-        this.task.source === this.sources.dropbox ||
-        this.task.source === this.sources.cslogger
+        this.task.source === this.sources.dropbox
       ) {
         sourcePromise = this.importDropboxTasks({
           project: this.selectedProject,

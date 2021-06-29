@@ -172,17 +172,18 @@ export default {
       this.loaded = null; // Response from server if file was successfully received
       this.loading = true;
       this.progress = 0;
-      this.importLocalCSLoggerFile({
+      const res = await this.importLocalCSLoggerFile({
         file: this.csvFile,
         category: "report"
-      }).then(res => {
-        // TODO-CSLogger: Define the correct expected responses both success as fail
-        if (res.status !== "ok") {
-          this.loading = false;
-          this.loaded = null;
-          return;
-        }
       });
+      // TODO-CSLogger: Define the correct expected responses both success as fail
+      if (res.status !== "ok") {
+        this.valid.csv = false;
+        this.error_message.csv = this.$t("taks-import-cslogger-upload-error");
+        this.loading = false;
+        this.loaded = null;
+        return;
+      }
 
       // TODO-CSLogger: Define the correct expected responses both success as fail
       let media_res = [];
@@ -197,6 +198,7 @@ export default {
             if (aux.progress >= aux.mediaFiles.length) {
               this.loading = false;
               this.loaded = "ok";
+              // TODO-CSLogger: Check if contId or groupId
               aux.setTaskSourceContent(aux.groupBy("contId", media_res));
             }
           } else {
