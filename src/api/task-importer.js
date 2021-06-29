@@ -256,10 +256,9 @@ export default {
     url.search = new URLSearchParams(parameters).toString();
     return new Promise(function(resolve, reject) {
       setTimeout(() => {
-        console.log(file.name);
         //TODO-CSLogger: Possible response from server
         resolve({
-          status: "ok",
+          status: category == "report" ? "ok" : "ok",
           id: file.name + "id",
           name: file.name,
           link: "http://" + file.name,

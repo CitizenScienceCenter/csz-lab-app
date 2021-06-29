@@ -79,7 +79,7 @@ import DropboxSourceEditor from '@/components/Task/Builder/SourceEditor/DropboxS
 import AmazonSourceEditor from '@/components/Task/Builder/SourceEditor/AmazonSourceEditor'
 import FlickrSourceEditor from '@/components/Task/Builder/SourceEditor/FlickrSourceEditor'
 import TwitterSourceEditor from '@/components/Task/Builder/SourceEditor/TwitterSourceEditor'
-import LoadData from "@/components/Task/Builder/TemplateEditor/CSLogger/LoadData";
+import LoadCSLoggerData from "@/components/Task/Builder/TemplateEditor/CSLogger/LoadCSLoggerData";
 
 export default {
   name: 'SourceBuilder',
@@ -88,7 +88,7 @@ export default {
     FlickrSourceEditor,
     AmazonSourceEditor,
     DropboxSourceEditor,
-    LoadData
+    LoadData:LoadCSLoggerData
   },
   data: () => {
     return {

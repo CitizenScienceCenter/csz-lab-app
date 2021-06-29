@@ -71,6 +71,7 @@
       </div>
     </b-form-group>
 
+    <!-- Buttons: load and next -->
     <div>
       <b-button
         type="submit"
@@ -99,6 +100,38 @@
         {{ $t("next-btn") }}
       </b-btn>
     </div>
+
+    <!-- uploading files failed -->
+    <b-card
+      no-body
+      overlay
+      header-border-variant="primary"
+      class="mt-4"
+      v-if="failed_files.length > 0"
+    >
+      <b-card-header
+        header-border-variant="danger"
+        class="p-0 d-flex justify-content-between"
+      >
+        <span class="ml-2 font-weight-bold text-primary">
+          {{ $t("taks-import-cslogger-failed-files-title") }}
+        </span>
+        <span class="mr-2 font-weight-bold">{{ failed_files.length }} files</span>
+      </b-card-header>
+      <b-card-body class="overflow-body">
+        <b-card-text>
+          <ul>
+            <li
+              v-for="file in failed_files"
+              :key="file.id"
+              class="mr-2 text-h6"
+            >
+              <small>{{ file.name }}</small>
+            </li>
+          </ul>
+        </b-card-text>
+      </b-card-body>
+    </b-card>
   </b-form>
 </template>
 
@@ -108,6 +141,7 @@ import { getWidthScreen } from "@/helper.js";
 import media_ext from "@/assets/media_files_ext.json";
 
 export default {
+  name: "LoadCSLoggerData",
   data() {
     return {
       qfiles: 0,
@@ -172,6 +206,9 @@ export default {
       this.loaded = null; // Response from server if file was successfully received
       this.loading = true;
       this.progress = 0;
+      this.error_message = { ...{ media: null, csv: null } };
+
+      // CSV file uploading
       const res = await this.importLocalCSLoggerFile({
         file: this.csvFile,
         category: "report"
@@ -194,16 +231,16 @@ export default {
         }).then(res => {
           if (res.status == "ok") {
             media_res.push(res);
-            aux.progress++;
-            if (aux.progress >= aux.mediaFiles.length) {
-              this.loading = false;
-              this.loaded = "ok";
-              // TODO-CSLogger: Check if contId or groupId
-              aux.setTaskSourceContent(aux.groupBy("contId", media_res));
-            }
           } else {
             //TODO-CSLogger: Pending for show failed files upload
-            aux.failed_files.push(res.name);
+            aux.failed_files.push(res);
+          }
+          aux.progress++; // increment after each response
+          if (aux.progress >= aux.mediaFiles.length) {
+            // TODO-CSLogger: Check if contId or groupId
+            aux.setTaskSourceContent(aux.groupBy("contId", media_res));
+            this.loading = false;
+            this.loaded = "ok";
           }
         });
       });
@@ -276,11 +313,9 @@ export default {
   },
   watch: {
     csvFile() {
-      console.log(this.csvFile);
       this.validate("csv", 500000); // 0,5 Mb
     },
     mediaFiles() {
-      console.log(this.mediaFiles);
       this.qfiles = this.getSize();
       this.validate("media", 300000000); // 300 Mb
     }
@@ -291,5 +326,9 @@ export default {
 @import "@/scss/variables.scss";
 .smooth {
   transition: all $transition-duration-short $transition-timing-function;
+}
+.overflow-body {
+  max-height: 25vh;
+  overflow-y: auto;
 }
 </style>
