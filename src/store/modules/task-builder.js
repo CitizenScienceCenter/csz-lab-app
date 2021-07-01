@@ -60,8 +60,8 @@ const state = {
     [materials.sound]: [jobs.survey, jobs.geo_survey],
     [materials.video]: [jobs.survey, jobs.geo_survey],
     [materials.tweet]: [jobs.survey],
-    [materials.pdf]: [jobs.survey]
-    [materials.cslogger]: [jobs.generic]
+    [materials.pdf]: [jobs.survey],
+    [materials.cslogger]: [jobs.survey]
   },
   // available sources for each material type
   materialSources: {
@@ -69,7 +69,7 @@ const state = {
     [materials.sound]: [sources.amazon, sources.dropbox],
     [materials.pdf]: [sources.amazon, sources.dropbox],
     [materials.tweet]: [sources.twitter],
-    [materials.cslogger]: [sources.cslogger]
+    [materials.cslogger]: [sources.cslogger],
     [materials.video]: [sources.amazon, sources.dropbox],
   },
   // available extensions for each material type

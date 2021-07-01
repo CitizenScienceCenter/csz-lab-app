@@ -107,6 +107,7 @@ import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGeneri
 import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
+import CSLoggerTemplate from "@/components/Task/Template/CSLoggerTemplate";
 
 export default {
   name: "SummaryBuilder",
@@ -236,10 +237,9 @@ export default {
 
       // TODO-CSLogger: This section will contain the CSLogger template
       if (this.task.material === this.materials.cslogger) {
-        if (this.task.job === this.jobs.generic) {
-          template = buildTemplateFromModel(ImageGenericTemplate, {
-            questions: this.task.template,
-            mapSettings: this.task.mapSettings
+        if (this.task.job === this.jobs.survey) {
+          template = buildTemplateFromModel(CSLoggerTemplate, {
+            questions: this.task.template
           });
         }
       }
