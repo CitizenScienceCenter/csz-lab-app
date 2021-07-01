@@ -3,20 +3,19 @@
     <div class="clearfix">
       <!-- Internal header section -->
       <h2 class="float-left">{{ $t("task-template-question") }}</h2>
-      <b-btn @click="addQuestion" class="float-right">{{
+      <b-btn @click.prevent="addQuestion" class="float-right">{{
         $t("task-template-add-question")
       }}</b-btn>
     </div>
 
     <!-- Questions section -->
-    <b-container>
+    <b-container class="small-bottom">
       <!-- All question section: distributed in tabs -->
-      <b-tabs content-class="mt-4">
+      <b-tabs content-class="my-4" v-model="current_tab">
         <b-tab
           :key="questionKey"
           v-for="(question, questionKey) in questions"
           :title="`${$t('task-template-question')} ${questionKey + 1}`"
-          active
         >
           <!-- Question options row: Top position -->
           <question-options
@@ -68,7 +67,7 @@
               <!-- Options rendering -->
               <b-row class="d-flex justify-content-start align-items-center">
                 <!-- circle and square icon -->
-                <b-col cols="1" class="d-flex justify-content-end">
+                <b-col cols="1" class="d-flex justify-content-end ml-2 ml-md-0">
                   <div v-show="question.type == types[0].value">
                     <i class="far fa-circle fa-lg"></i>
                   </div>
@@ -81,7 +80,7 @@
                 </b-col>
 
                 <!-- Text input for question options -->
-                <b-col cols="10">
+                <b-col cols="9" md="10">
                   <b-input
                     v-model.trim="question.answers[answerKey]"
                     :placeholder="`Option ${answerKey + 1}`"
@@ -137,14 +136,15 @@
           </div>
         </b-tab>
       </b-tabs>
+      <br />
+      <!-- Component for maps in geo/survey projects -->
+      <div v-if="geoProject" class="mt-5">
+        <map-settings
+          :settings="mapSettings"
+          @onValid="mapSettingsValidation"
+        ></map-settings>
+      </div>
     </b-container>
-
-    <div class="mb-4" v-if="geoProject">
-      <map-settings
-        :settings="mapSettings"
-        @onValid="mapSettingsValidation"
-      ></map-settings>
-    </div>
 
     <!-- Continue Button -->
     <b-btn @click="onSubmit" variant="primary" size="lg">{{
@@ -158,19 +158,16 @@ import QuestionOptions from "@/components/Task/Builder/TemplateEditor/QuestionOp
 import MapSettings from "@/components/Task/Builder/TemplateEditor/MapSettings.vue";
 import { mapMutations, mapState } from "vuex";
 
-// consts definitions
-const QUESTION_TYPES = [
-  { value: "one_choice", name: "One Choice" },
-  { value: "multiple_choice", name: "Multiple Choice" },
-  { value: "dropdown", name: "Dropdown" },
-  { value: "short_answer", name: "Short Answer" },
-  { value: "long_answer", name: "Long Answer" }
-];
+/**
+required when the question is mandatory
+isDependent when one question has a conditional question
+condition the parent question reference
+*/
 const DEFAULT_QUESTION = {
   id: 0,
   question: "",
   answers: ["", ""],
-  type: QUESTION_TYPES[0],
+  type: "",
   required: false,
   isDependent: false,
   condition: {}
@@ -179,15 +176,16 @@ const MAXQUESTIONS = 30;
 const MAXANSWERS = 20;
 
 export default {
-  name: "JobClassifyEditor",
+  name: "JobGenericEditor",
   components: { QuestionOptions, MapSettings },
   created() {
     this.types = this.questionTypes;
+    this.type = this.types[0];
     if (Array.isArray(this.task.template)) {
-      // deep clone
+      // deep clone of questions
       this.questions = JSON.parse(JSON.stringify(this.task.template));
     }
-    if (this.task.material === "geocoding") {
+    if (this.task.job === "geo_survey") {
       if (this.task.mapSettings) {
         this.mapValid = true; // if mapSettings already exist the data is valid
         this.mapSettings = JSON.parse(JSON.stringify(this.task.mapSettings));
@@ -199,9 +197,10 @@ export default {
         question: "",
         markers: false,
         area: false,
-        zoom: null,
+        zoom: 1,
         maxMarkers: null,
         center: "",
+        static_map: false,
         mapType: "Road"
       };
     }
@@ -214,7 +213,8 @@ export default {
       types: [],
       minAnswers: 2,
       mapSettings: {},
-      mapValid: false
+      mapValid: false,
+      current_tab: 0
     };
   },
   methods: {
@@ -227,15 +227,20 @@ export default {
 
     // question methods
     addQuestion() {
+      const aux = this;
       if (this.questions.length < MAXQUESTIONS) {
         DEFAULT_QUESTION.id += 1;
         this.questions.push(JSON.parse(JSON.stringify(DEFAULT_QUESTION)));
       } else {
         this.showInfo({
-          title: this.$t("task-generic-template-maxquestions-title"),
-          content: this.$t("task-generic-template-maxquestions")
+          title: this.$t("task-survey-template-maxquestions-title"),
+          content: this.$t("task-survey-template-maxquestions")
         });
       }
+      // focus in new tab automatically
+      setTimeout(function() {
+        aux.current_tab = aux.questions.length - 1;
+      }, 200);
     },
     deleteQuestion(questionKey) {
       if (this.questions.length > 1) {
@@ -256,8 +261,8 @@ export default {
         this.questions[questionKey].answers.push("");
       } else {
         this.showInfo({
-          title: this.$t("task-generic-template-maxanswers"),
-          content: this.$t("task-generic-template-maxanswers")
+          title: this.$t("task-survey-template-maxanswers"),
+          content: this.$t("task-survey-template-maxanswers")
         });
       }
     },
@@ -288,7 +293,7 @@ export default {
           return x;
         });
 
-        if (this.task.material === "geocoding") {
+        if (this.task.job === "geo_survey") {
           // Get the integer part
           this.mapSettings.maxMarkers = Math.trunc(this.mapSettings.maxMarkers);
 
@@ -296,7 +301,7 @@ export default {
           this.mapSettings.center = this.mapSettings.center.split(",");
           this.setMapSettings(this.mapSettings);
         }
-        // clone the content
+        // Clone the content
         this.setTaskTemplate(JSON.parse(JSON.stringify(this.questions)));
         this.setStep({ step: "template", value: true });
       } else {
@@ -329,7 +334,7 @@ export default {
       const questionsValid =
         countInvalidQuestions === 0 && countInvalidAnswers === 0;
       // add validation for map settings
-      if (this.task.material === "geocoding") {
+      if (this.task.job === "geo_survey") {
         return questionsValid && this.mapValid;
       }
       return questionsValid;
@@ -392,7 +397,12 @@ export default {
     ...mapState("task/builder", ["task", "jobs"]),
     ...mapState("settings", ["questionTypes"]),
     geoProject() {
-      return this.task.material === "geocoding";
+      return this.task.job === "geo_survey";
+    }
+  },
+  watch: {
+    questions() {
+      this.current_tab = this.questions.length;
     }
   }
 };

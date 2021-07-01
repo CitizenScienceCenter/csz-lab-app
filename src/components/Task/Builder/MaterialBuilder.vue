@@ -173,9 +173,6 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-import { buildTemplateFromModel } from "@/helper";
-
-import GeoCodingTemplate from "@/components/Task/Template/GeoCoding/GeoCodingTemplate";
 
 export default {
   name: "MaterialBuilder",
@@ -192,19 +189,6 @@ export default {
     ...mapMutations("task", ["setTaskTemplate"]),
     ...mapActions("task/builder", ["reset"]),
     ...mapActions("task", ["saveTaskPresenter"]),
-
-    selectGeoCoding() {
-      const template = buildTemplateFromModel(GeoCodingTemplate, {});
-      this.saveTaskPresenter({
-        project: this.selectedProject,
-        template: template
-      }).then(() => {
-        this.$router.push({
-          name: "project.task.presenter.editor",
-          params: { id: this.selectedProject.id }
-        });
-      });
-    },
 
     onMaterialSelected(materialType) {
       this.selectedMaterial = materialType;

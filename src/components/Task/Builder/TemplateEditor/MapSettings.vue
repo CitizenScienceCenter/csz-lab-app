@@ -72,13 +72,18 @@
           :invalid-feedback="invalidFeedback('zoom')"
           :state="validate('zoom')"
         >
-        <b-form-input v-model="settings.zoom" type="range" min="1" max="18"></b-form-input>
+          <b-form-input
+            v-model="settings.zoom"
+            type="range"
+            min="1"
+            max="18"
+          ></b-form-input>
         </b-form-group>
       </b-col>
     </b-row>
     <maps
       class="mt-2"
-      style="height: 300px; width:90%"
+      style="height: 350px; width:100%"
       :mapSettings="mapSettings"
       hideIcons
       :scrollToZoom="false"
@@ -88,7 +93,6 @@
 </template>
 
 <script>
-
 export default {
   name: "MapSettings",
   data() {
@@ -97,7 +101,7 @@ export default {
       markers: { min: 1, max: 100 },
       zoom: { min: 1, max: 18 },
       isValid: false,
-      mapSettings: { center: [0, 0], zoom: 4, mapType: "Road" }
+      mapSettings: {}
     };
   },
   props: {
@@ -108,13 +112,21 @@ export default {
           question: "",
           markers: false,
           area: false,
-          zoom: 5,
+          zoom: 1,
           maxMarkers: 0,
           center: "0,0",
           type: "Road"
         };
       }
     }
+  },
+  created() {
+    this.mapSettings = {
+      center: [0, 0],
+      zoom: this.settings.zoom,
+      mapType: this.settings.mapType,
+      static_map: true
+    };
   },
   methods: {
     isRequired(condition) {
@@ -192,7 +204,7 @@ export default {
           );
         // Zoom validation
         case "zoom":
-          return !!this.settings.zoom
+          return !!this.settings.zoom;
         default:
           break;
       }
@@ -208,6 +220,7 @@ export default {
             .split(",")
             .map(x => parseFloat(x));
         }
+        // allowed parameters
         const params = ["question", "map_editor", "center", "zoom"];
         let aux = params.every(x => this.validate(x));
         if (aux && this.settings.markers) {

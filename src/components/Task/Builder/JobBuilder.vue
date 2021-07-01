@@ -18,49 +18,37 @@
       <b-col md="9">
         <b-row>
           <!-- These are the specific type of jobs according the material -->
-          <b-col md="5" v-for="job in materialJobs[task.material]" :key="job">
-            <!-- This is a generic type of job -->
+          <b-col
+            cols="12"
+            md="5"
+            v-for="job in materialJobs[task.material]"
+            :key="job"
+          >
             <b-card
-              ref="card-generic"
-              :class="{ 'material-selected': selectedJob === jobs.generic }"
-              v-if="job === jobs.generic"
-              @click="onJobSelected(job)"
+              ref="card-survey"
+              :class="{ 'material-selected': selectedJob === jobs.survey }"
+              v-if="job === jobs.survey"
+              @click="onJobSelected(jobs.survey)"
               class="text-center material my-2 mt-md-0"
+              v-b-popover.hover.bottom="$t('task-job-builder-popover-survey')"
             >
-              <i class="fas fa-paper-plane fa-4x"></i>
-              <div class="m-2">{{ $t("task-job-builder-generic") }}</div>
-            </b-card>
-            <b-card
-              ref="card-describe"
-              :class="{ 'material-selected': selectedJob === jobs.describe }"
-              v-if="job === jobs.describe"
-              @click="onJobSelected(job)"
-              class="text-center material my-2 mt-md-0"
-            >
-              <i class="fas fa-edit fa-4x"></i>
-              <div class="m-2">{{ $t("task-job-builder-describe") }}</div>
+              <i class="fas fa-tasks fa-4x"></i>
+              <div class="m-2">{{ $t("task-job-builder-survey") }}</div>
             </b-card>
 
             <b-card
-              ref="card-classify"
-              :class="{ 'material-selected': selectedJob === jobs.classify }"
-              v-if="job === jobs.classify"
-              @click="onJobSelected(job)"
+              ref="card-geo_survey"
+              :class="{ 'material-selected': selectedJob === jobs.geo_survey }"
+              v-if="job === jobs.geo_survey"
+              @click="onJobSelected(jobs.geo_survey)"
               class="text-center material my-2 mt-md-0"
+              v-b-popover.hover.bottom="
+                $t('task-job-builder-popover-survey-geo')
+              "
             >
-              <i class="fas fa-filter fa-4x"></i><br />
-              <div class="m-2">{{ $t("task-job-builder-classify") }}</div>
-            </b-card>
-
-            <b-card
-              ref="card-count"
-              :class="{ 'material-selected': selectedJob === jobs.count }"
-              v-if="job === jobs.count"
-              @click="onJobSelected(job)"
-              class="text-center material my-2 mt-md-0"
-            >
-              <i class="fas fa-calculator fa-4x"></i><br />
-              <div class="m-2">{{ $t("task-job-builder-count") }}</div>
+              <i class="fas fa-map-marker-alt fa-4x"></i>
+              <i class="fas fa-tasks fa-lg"></i>
+              <div class="m-2">{{ $t("task-job-builder-survey-geo") }}</div>
             </b-card>
           </b-col>
         </b-row>

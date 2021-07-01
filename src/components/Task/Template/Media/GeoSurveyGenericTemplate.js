@@ -192,7 +192,7 @@ const component = {
 
   watch: {},
 
-  created() {
+  created() {    
     this.initialize();
   },
 

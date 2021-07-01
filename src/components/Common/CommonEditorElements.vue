@@ -26,14 +26,14 @@
 
     <b-form-input
       v-model.trim="answers[getRelativeId(question.id)].value"
-      :placeholder="$t('template-editor-generic-text-placeholder')"
-      :name="'question_shor' + question.id"
+      :placeholder="$t('template-editor-survey-text-placeholder')"
+      :name="'question_short' + question.id"
       v-if="question.type === 'short_answer'"
     ></b-form-input>
 
     <b-form-textarea
       v-model.trim="answers[getRelativeId(question.id)].value"
-      :placeholder="$t('template-editor-generic-text-placeholder')"
+      :placeholder="$t('template-editor-survey-text-placeholder')"
       rows="3"
       max-rows="5"
       :name="'question_long' + question.id"
@@ -45,15 +45,14 @@
 <script>
 export default {
   props: {
-    answers: { type: Array, default:[], required: true},
-    question: { type: Object, required: true},
+    answers: { type: Array, default: [], required: true },
+    question: { type: Object, required: true },
     context: Object
   },
   methods: {
     getRelativeId(realId) {
       return this.answers.findIndex(a => a.qid == realId);
-    },
-    
+    }
   },
   watch: {
     answers: {
@@ -62,6 +61,6 @@ export default {
       },
       deep: true
     }
-  },
+  }
 };
 </script>

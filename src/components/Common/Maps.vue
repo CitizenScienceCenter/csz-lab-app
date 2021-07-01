@@ -1,5 +1,5 @@
 <template>
-  <div class="maps">
+  <div class="maps" :class="{ 'no-movement': static_map }">
     <v-map
       ref="maps"
       :zoom="parseInt(zoom)"
@@ -123,7 +123,8 @@ export default {
         zoom: 3,
         center: [0, 0],
         maxMarkers: 0,
-        mapType: "Road"
+        mapType: "Road",
+        static_map: false
       })
     },
     area: {
@@ -161,6 +162,7 @@ export default {
       center: [],
       bounds: null,
       mapTypes: ["Road", "Aerial"],
+      static_map: false,
       geosearchOptions: {
         provider: new OpenStreetMapProvider(),
         autoClose: true,
@@ -242,13 +244,26 @@ export default {
       if (this.mapSettings) {
         this.zoom = this.mapSettings.zoom;
         this.center = this.mapSettings.center;
+        this.static_map = this.mapSettings.static_map;
       }
       if (this.locations.length > 0) {
         const [minLat, maxLat, minLng, maxLng] = [
-          Math.min.apply(Math, this.locations.map(x => x.lat)),
-          Math.max.apply(Math, this.locations.map(x => x.lat)),
-          Math.min.apply(Math, this.locations.map(x => x.lng)),
-          Math.max.apply(Math, this.locations.map(x => x.lng))
+          Math.min.apply(
+            Math,
+            this.locations.map(x => x.lat)
+          ),
+          Math.max.apply(
+            Math,
+            this.locations.map(x => x.lat)
+          ),
+          Math.min.apply(
+            Math,
+            this.locations.map(x => x.lng)
+          ),
+          Math.max.apply(
+            Math,
+            this.locations.map(x => x.lng)
+          )
         ];
         this.center = [(maxLat + minLat) / 2, (maxLng + minLng) / 2];
         this.locations.forEach(
@@ -337,8 +352,9 @@ export default {
   width: 100%;
   position: relative;
   margin: auto;
-  &.edition {
-    cursor: pointer;
+  &.no-movement {
+    pointer-events: none;
+    cursor: none;
   }
 }
 .custom-buttons {

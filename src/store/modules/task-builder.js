@@ -17,10 +17,8 @@ const materials = {
 
 // all the types of jobs available
 const jobs = {
-  classify: "classify",
-  describe: "describe",
-  count: "count",
-  generic: "generic"
+  survey: "survey",
+  geo_survey: "geo_survey"
 };
 
 // the list of sources available to import files
@@ -58,11 +56,11 @@ const state = {
   sources: sources,
   // available jobs for each material type
   materialJobs: {
-    [materials.image]: [jobs.generic, jobs.classify, jobs.describe, jobs.count],
-    [materials.sound]: [jobs.generic, jobs.classify, jobs.describe],
-    [materials.pdf]: [jobs.generic, jobs.describe],
-    [materials.tweet]: [jobs.generic, jobs.classify, jobs.describe],
-    [materials.video]: [jobs.generic, jobs.classify, jobs.describe],
+    [materials.image]: [jobs.survey, jobs.geo_survey],
+    [materials.sound]: [jobs.survey, jobs.geo_survey],
+    [materials.video]: [jobs.survey, jobs.geo_survey],
+    [materials.tweet]: [jobs.survey],
+    [materials.pdf]: [jobs.survey]
     [materials.cslogger]: [jobs.generic]
   },
   // available sources for each material type
@@ -71,8 +69,8 @@ const state = {
     [materials.sound]: [sources.amazon, sources.dropbox],
     [materials.pdf]: [sources.amazon, sources.dropbox],
     [materials.tweet]: [sources.twitter],
-    [materials.video]: [sources.amazon, sources.dropbox],
     [materials.cslogger]: [sources.cslogger]
+    [materials.video]: [sources.amazon, sources.dropbox],
   },
   // available extensions for each material type
   materialExtensions: {

@@ -6,7 +6,7 @@ const component = {
       <b-row v-if="userProgress < 100">
         
         <!-- Form zone -->
-        <b-col md="6" class="mt-4 mt-md-0 order-2 order-md-1">
+        <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
         
           <!-- Questions with answers -->
           <b-form-group :key="question.id" v-for="question in questionList" label-size="lg" class="mt-2 mb-4">            
@@ -32,18 +32,29 @@ const component = {
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
         
-        <!-- Sound -->
-        <b-col md="6" class="order-1 order-md-2">
-          <div class="text-center" style="position: sticky;top: 15%;">
-            <media v-if="taskInfo.link_raw || taskInfo.audio_url"
-              :link="taskInfo.link_raw || taskInfo.audio_url"
-              type="audio" :loading="!pybossa.taskLoaded">
-            </media>
-            <div v-else-if="taskInfo.embed" v-html="taskInfo.embed"></div>
-            <b-alert v-else :show="true" variant="danger">{{ $t('template-editor-text-12') }}</b-alert>
-          </div>
-        </b-col>
-      </b-row>    
+        <!-- right columns - Media -->
+        <b-col md="7" class="order-1 order-md-2">
+          <div v-if="taskInfo.link_raw || taskInfo.url || taskInfo.video_url || taskInfo.audio_url"
+              class="text-center" style="position: sticky;top: 15%;">
+              <image-task-presenter
+                v-if="mime=='img'"
+                :link="taskInfo.url || taskInfo.link_raw"
+                :pybossa="pybossa"
+                :loading="!pybossa.taskLoaded"
+              />
+              <media
+                v-else-if="mime=='video'"
+                :link="taskInfo.link_raw || taskInfo.video_url"
+                type="video" :loading="!pybossa.taskLoaded">
+              </media>
+              <media v-else-if="mime=='audio'"
+                :link="taskInfo.link_raw || taskInfo.audio_url"
+                type="audio" :loading="!pybossa.taskLoaded">
+              </media>
+            </div>
+          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
+        </b-col>        
+      </b-row>      
       
       <!-- Task end message -->
       <b-row v-else>
@@ -61,7 +72,8 @@ const component = {
     ],
     answers: [],
     showAlert: false,
-    questionList: []
+    questionList: [],
+    mime: null
   },
 
   methods: {
@@ -110,7 +122,10 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
-      return this.task.info;
+      this.mime = this.pybossa.getFileType(
+        this.task.info.url || this.task.info.link_raw
+      );
+      return this.task && this.task.info ? this.task.info : {};
     },
     context() {
       return this;

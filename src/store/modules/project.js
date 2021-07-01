@@ -108,7 +108,7 @@ const getters = {
     };
 
     for (const categoryId in state.categoryPagination) {
-      if (categoryId !== "featured") {
+      if (categoryId == "thinking") {
         pagination.total += state.categoryPagination[categoryId].total;
       }
     }
