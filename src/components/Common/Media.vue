@@ -61,7 +61,7 @@ export default {
 @import "@/scss/variables.scss";
 .animation {
   width: 400px;
-  height: 200px;
+  height: 100px;
   margin: 50px auto;
 }
 span {
