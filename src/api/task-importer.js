@@ -262,7 +262,7 @@ export default {
           id: file.name + "id",
           name: file.name,
           link: "http://" + file.name,
-          contId: "contribution id"
+          groupid: "group id"
         });
       }, Math.floor(Math.random() * 1000 + 1000));
     });

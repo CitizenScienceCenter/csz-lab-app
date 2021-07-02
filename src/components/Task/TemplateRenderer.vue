@@ -259,6 +259,7 @@ export default {
                 this.newTask();
                 return;
               }
+              // TODO-CSLogger: validate this function for integration
               this.getUserProgress(this.project);
               this.taskLoaded = true;
             }

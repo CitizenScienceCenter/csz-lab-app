@@ -25,8 +25,8 @@ const component = {
               {{$t('template-editor-text-8')}}
             </b-alert>
              
+            <!-- TODO-CSLogger:Validate User Progress for integration -->
             <!-- User progress -->
-            <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
             <p class="mt-2"> 
                 {{$t('template-editor-text-2')}}: 
                 <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>  
@@ -135,9 +135,11 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
+      /*TODO-CSLogger:Replace dummy_data for this.task.info, which should be an array*/
       const dummy_data = [
         {
           id: "id:u4NsxyxRMUAAAAAAAAAACw",
+          groupid: "id:u4Nsxyx",
           name: "24397968409_6b053863f7_c.jpg",
           bytes: 144089,
           link_raw:
@@ -147,6 +149,7 @@ const component = {
         },
         {
           id: "id:u4NsxyxRMUAAAAAAAAAAEA",
+          groupid: "id:u4Nsxyx",
           name: "zapsplat_horror_strings_stabs_psycho_57646.mp3",
           bytes: 163370,
           link_raw:
@@ -154,6 +157,7 @@ const component = {
         },
         {
           id: "id:u4NsxyxRMUAAAAAAAAAAFg",
+          groupid: "id:u4Nsxyx",
           name: "Pexels Videos 1711832.mp4",
           bytes: 4817861,
           link_raw:
@@ -169,6 +173,7 @@ const component = {
       return this;
     },
     userProgress() {
+      /*TODO-CSLogger:Validate User Progress*/
       return isNaN(this.pybossa.userProgressInPercent)
         ? 0
         : this.pybossa.userProgressInPercent;

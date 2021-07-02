@@ -237,8 +237,8 @@ export default {
           }
           aux.progress++; // increment after each response
           if (aux.progress >= aux.mediaFiles.length) {
-            // TODO-CSLogger: Check if contId or groupId
-            aux.setTaskSourceContent(aux.groupBy("contId", media_res));
+            // TODO-CSLogger: Check if contId or groupid
+            aux.setTaskSourceContent(aux.groupBy("groupid", media_res));
             this.loading = false;
             this.loaded = "ok";
           }
