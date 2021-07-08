@@ -209,27 +209,27 @@ export default {
       this.error_message = { ...{ media: null, csv: null } };
 
       // CSV file uploading
-      const res = await this.importLocalCSLoggerFile({
-        file: this.csvFile,
-        category: "report"
-      });
+      // const res = await this.importLocalCSLoggerFile({
+      //   file: this.csvFile,
+      //   category: "report"
+      // });
       // TODO-CSLogger: Define the correct expected responses both success as fail
-      if (res.status !== "ok") {
-        this.valid.csv = false;
-        this.error_message.csv = this.$t("taks-import-cslogger-upload-error");
-        this.loading = false;
-        this.loaded = null;
-        return;
-      }
+      // if (res && res.status !== 200) {
+      //   this.valid.csv = false;
+      //   this.error_message.csv = this.$t("taks-import-cslogger-upload-error");
+      //   this.loading = false;
+      //   this.loaded = null;
+      //   return;
+      // }
 
       // TODO-CSLogger: Define the correct expected responses both success as fail
       let media_res = [];
       this.mediaFiles.forEach(file => {
         this.importLocalCSLoggerFile({
           file: file,
-          category: "media"
+          csv: this.csvFile,
         }).then(res => {
-          if (res.status == "ok") {
+          if (res.status == 200) {
             media_res.push(res);
           } else {
             //TODO-CSLogger: Pending for show failed files upload

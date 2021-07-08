@@ -236,14 +236,15 @@ export default {
     );
   },
 
-  importLocalCSLoggerFile(projectShortName, file, category = "media") {
+  importLocalCSLoggerFile(projectShortName, file, csv) {
     const data = new FormData();
     data.append("file", file);
+    data.append("csv", csv);
+    data.append("csv_filename", csv.name);
 
     const parameters = {
       type: "cslogger",
       response_format: "json",
-      category: category //Category: *) report: csv file; *) media: mime file
     };
 
     const url = new URL(
@@ -254,26 +255,26 @@ export default {
     );
 
     url.search = new URLSearchParams(parameters).toString();
-    return new Promise(function(resolve, reject) {
-      setTimeout(() => {
-        //TODO-CSLogger: Possible response from server
-        resolve({
-          status: category == "report" ? "ok" : "ok",
-          id: file.name + "id",
-          name: file.name,
-          link: "http://" + file.name,
-          groupid: "group id"
-        });
-      }, Math.floor(Math.random() * 1000 + 1000));
-    });
+    // return new Promise(function(resolve, reject) {
+    //   setTimeout(() => {
+    //     //TODO-CSLogger: Possible response from server
+    //     resolve({
+    //       status: 200,
+    //       id: file.name + "id",
+    //       name: file.name,
+    //       link: "http://" + file.name,
+    //       groupid: "group id"
+    //     });
+    //   }, Math.floor(Math.random() * 1000 + 1000));
+    // });
 
     //TODO-CSLogger: uncomment when endpoint is working
 
-    // return axios.post(url, data, {
-    //   withCredentials: true,
-    //   headers: {
-    //     "Content-Type": "multipart/form-data"
-    //   }
-    // });
+    return axios.post(url, data, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
   }
 };
