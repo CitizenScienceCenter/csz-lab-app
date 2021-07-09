@@ -238,8 +238,8 @@ export default {
 
   importLocalCSLoggerFile(projectShortName, file, csv) {
     const data = new FormData();
-    data.append("file", file);
-    data.append("csv", csv);
+    data.append("file", csv);
+    data.append("media", file);
     data.append("csv_filename", csv.name);
 
     const parameters = {

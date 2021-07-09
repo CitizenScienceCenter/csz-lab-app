@@ -116,7 +116,9 @@
         <span class="ml-2 font-weight-bold text-primary">
           {{ $t("taks-import-cslogger-failed-files-title") }}
         </span>
-        <span class="mr-2 font-weight-bold">{{ failed_files.length }} files</span>
+        <span class="mr-2 font-weight-bold"
+          >{{ failed_files.length }} files</span
+        >
       </b-card-header>
       <b-card-body class="overflow-body">
         <b-card-text>
@@ -227,9 +229,9 @@ export default {
       this.mediaFiles.forEach(file => {
         this.importLocalCSLoggerFile({
           file: file,
-          csv: this.csvFile,
+          csv: this.csvFile
         }).then(res => {
-          if (res.status == 200) {
+          if (res && res.status == 200) {
             media_res.push(res);
           } else {
             //TODO-CSLogger: Pending for show failed files upload
