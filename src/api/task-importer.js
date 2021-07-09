@@ -259,11 +259,11 @@ export default {
     //   setTimeout(() => {
     //     //TODO-CSLogger: Possible response from server
     //     resolve({
-    //       status: 200,
+    //       status: 500,
     //       id: file.name + "id",
     //       name: file.name,
     //       link: "http://" + file.name,
-    //       groupid: "group id"
+    //       taskid: "group id"
     //     });
     //   }, Math.floor(Math.random() * 1000 + 1000));
     // });

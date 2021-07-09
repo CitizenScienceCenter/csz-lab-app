@@ -80,6 +80,7 @@
         class="mr-1"
         >{{ $t("cslogger-load-data") }}</b-button
       >
+      <!-- loading spinner and message -->
       <span class="text-primary ml-2 smooth" v-if="loading">
         {{ $t("taks-import-cslogger-loading") }}
         <i class="fas fa-spinner fa-pulse"></i>
@@ -120,7 +121,11 @@
           >{{ failed_files.length }} files</span
         >
       </b-card-header>
+
       <b-card-body class="overflow-body">
+        <b-card-sub-title class="mb-2" v-if="media_res.length == 0">{{
+          $t("task-import-cslogger-no-tasks-error")
+        }}</b-card-sub-title>
         <b-card-text>
           <ul>
             <li
@@ -155,7 +160,8 @@ export default {
       error_message: { csv: null, zip: null },
       allowed_files: "",
       progress: 0,
-      failed_files: []
+      failed_files: [],
+      media_res: []
     };
   },
   created() {
@@ -209,6 +215,8 @@ export default {
       this.loading = true;
       this.progress = 0;
       this.error_message = { ...{ media: null, csv: null } };
+      this.media_res = [];
+      this.failed_files = [];
 
       // CSV file uploading
       // const res = await this.importLocalCSLoggerFile({
@@ -225,14 +233,14 @@ export default {
       // }
 
       // TODO-CSLogger: Define the correct expected responses both success as fail
-      let media_res = [];
+      
       this.mediaFiles.forEach(file => {
         this.importLocalCSLoggerFile({
           file: file,
           csv: this.csvFile
         }).then(res => {
           if (res && res.status == 200) {
-            media_res.push(res);
+            aux.media_res.push(res);
           } else {
             //TODO-CSLogger: Pending for show failed files upload
             aux.failed_files.push(res);
@@ -240,9 +248,9 @@ export default {
           aux.progress++; // increment after each response
           if (aux.progress >= aux.mediaFiles.length) {
             // TODO-CSLogger: Check if contId or groupid
-            aux.setTaskSourceContent(aux.groupBy("groupid", media_res));
+            aux.setTaskSourceContent(aux.groupBy("taskid", aux.media_res));
             this.loading = false;
-            this.loaded = "ok";
+            if (aux.media_res.length > 0) this.loaded = "ok";
           }
         });
       });
