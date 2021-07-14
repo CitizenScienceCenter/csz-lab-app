@@ -233,27 +233,32 @@ export default {
       // }
 
       // TODO-CSLogger: Define the correct expected responses both success as fail
-      
-      this.mediaFiles.forEach(file => {
-        this.importLocalCSLoggerFile({
-          file: file,
+
+      this.importLocalCSLoggerFile({
+          file: this.mediaFiles,
           csv: this.csvFile
-        }).then(res => {
-          if (res && res.status == 200) {
-            aux.media_res.push(res);
-          } else {
-            //TODO-CSLogger: Pending for show failed files upload
-            aux.failed_files.push(res);
-          }
-          aux.progress++; // increment after each response
-          if (aux.progress >= aux.mediaFiles.length) {
-            // TODO-CSLogger: Check if contId or groupid
-            aux.setTaskSourceContent(aux.groupBy("taskid", aux.media_res));
-            this.loading = false;
-            if (aux.media_res.length > 0) this.loaded = "ok";
-          }
-        });
-      });
+        })
+      
+      // this.mediaFiles.forEach(file => {
+      //   this.importLocalCSLoggerFile({
+      //     file: file,
+      //     csv: this.csvFile
+      //   }).then(res => {
+      //     if (res && res.status == 200) {
+      //       aux.media_res.push(res);
+      //     } else {
+      //       //TODO-CSLogger: Pending for show failed files upload
+      //       aux.failed_files.push(res);
+      //     }
+      //     aux.progress++; // increment after each response
+      //     if (aux.progress >= aux.mediaFiles.length) {
+      //       // TODO-CSLogger: Check if contId or groupid
+      //       aux.setTaskSourceContent(aux.groupBy("taskid", aux.media_res));
+      //       this.loading = false;
+      //       if (aux.media_res.length > 0) this.loaded = "ok";
+      //     }
+      //   });
+      // });
     },
     next() {
       this.$emit("onContinue");
