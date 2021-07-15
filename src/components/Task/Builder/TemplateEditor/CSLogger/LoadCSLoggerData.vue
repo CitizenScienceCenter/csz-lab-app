@@ -84,12 +84,13 @@
       <span class="text-primary ml-2 smooth" v-if="loading">
         {{ $t("taks-import-cslogger-loading") }}
         <i class="fas fa-spinner fa-pulse"></i>
-        <b-progress
+        <!-- CLEAN: with only one request this progress bar doesn't make sense -->
+        <!-- <b-progress
           :value="progress"
           :max="mediaFiles.length"
           show-progress
           class="mt-2"
-        ></b-progress>
+        ></b-progress> -->
       </span>
       <b-btn
         ref="btn-submit-job"
@@ -103,6 +104,7 @@
     </div>
 
     <!-- uploading files failed -->
+    <!-- TODO: validate if error will be returned from server -->
     <b-card
       no-body
       overlay
