@@ -52,8 +52,9 @@
               </template>
               <span
                 v-if="
-                  task.source !== sources.flickr &&
-                    task.source !== sources.twitter
+                  ![sources.twitter, sources.flickr, sources.cslogger].includes(
+                    task.source
+                  )
                 "
               >
                 <b>{{ task.sourceContent.length }}</b>
@@ -69,6 +70,9 @@
                 {{ task.sourceContent.maxTweets + "" }}
                 {{ $t("task-summary-builder-tweets-import") }}
               </span>
+              <small v-else-if="task.source === sources.cslogger">
+                {{ task.sourceContent }}
+              </small>
             </b-media>
           </b-media>
         </ul>
@@ -235,7 +239,7 @@ export default {
         }
       }
 
-      // TODO-CSLogger: This section will contain the CSLogger template
+      // CSLogger template generation
       if (this.task.material === this.materials.cslogger) {
         if (this.task.job === this.jobs.survey) {
           template = buildTemplateFromModel(CSLoggerTemplate, {
@@ -244,13 +248,13 @@ export default {
         }
       }
 
-      // store the generated template for the selected project
+      // Store the generated template for the selected project
       const templatePromise = this.saveTaskPresenter({
         project: this.selectedProject,
         template: template
       });
 
-      // store the generated template for the selected project
+      // Store the generated template for the selected project
       const categoryPromise = this.saveTaskCategory({
         project: this.selectedProject,
         category: this.task.material
@@ -269,13 +273,9 @@ export default {
           files: this.task.sourceContent
         });
       }
-      // TODO-CSLogger: Reuse the dropbox import function for CSLogger or 
-      // the uploading task done in Source step is enough
 
       // Dropbox
-      else if (
-        this.task.source === this.sources.dropbox
-      ) {
+      else if (this.task.source === this.sources.dropbox) {
         sourcePromise = this.importDropboxTasks({
           project: this.selectedProject,
           files: this.task.sourceContent

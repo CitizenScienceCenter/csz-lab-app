@@ -235,7 +235,7 @@
     "task-template-builder-describe-tip7": "How are they dressed?",
 
     "task-summary-builder-rock": "Check the summary of your project before creating it",
-    "task-summary-builder-material": "material",
+    "task-summary-builder-material": "Material",
     "task-summary-builder-job": "Job",
     "task-summary-builder-tasks": "Tasks",
     "task-summary-builder-importer": "Importer",
@@ -645,6 +645,7 @@
     "template-editor-text-13": "Audio media loading...",
     "template-editor-text-14": "Video loading...",
     "template-editor-text-15": "Video media not available...",
+    "template-editor-text-16": "Media not available",
 
     "template-editor-geo-text-1": "Add a marker",
     "template-editor-geo-text-2": "Delete a marker",
@@ -1475,6 +1476,7 @@
     "template-editor-text-13": "Audio wird geladen...",
     "template-editor-text-14": "Video wird geladen...",
     "template-editor-text-15": "Video nicht verfügbar...",
+    "template-editor-text-16": "Media nicht verfügbar",
 
     "template-editor-geo-text-1": "Fügen Sie einen Marker hinzu",
     "template-editor-geo-text-2": "Löschen Sie einen Marker",

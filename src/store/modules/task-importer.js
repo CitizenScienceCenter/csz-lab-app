@@ -788,11 +788,11 @@ const actions = {
   },
 
   //** Citizen Science Logger Section **/
-  async importLocalCSLoggerFile({ dispatch, rootState }, { file, csv }) {
+  async importLocalCSLoggerFile({ dispatch, rootState }, { files, csv }) {
     try {
       const res = await api.importLocalCSLoggerFile(
         rootState.project.selectedProject.short_name,
-        file,
+        files,
         csv
       );
       //TODO-CSLogger: pending for server response
@@ -825,7 +825,6 @@ const actions = {
       //         );
       //         return false;
       //       });
-      console.log(res);
       return res;
     } catch (error) {
       console.log(error);

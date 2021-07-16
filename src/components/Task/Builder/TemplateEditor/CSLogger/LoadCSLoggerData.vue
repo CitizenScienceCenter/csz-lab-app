@@ -13,14 +13,17 @@
           required
           :state="validateCSV"
         ></b-file>
+        <!-- Valid csv message in green color -->
         <span class="text-secondary" v-show="valid.csv">
           <i class="fas fa-check-circle"></i>
           <small> {{ $t("taks-import-cslogger-valid") }}</small>
         </span>
+        <!-- Invalid csv message in red color -->
         <span class="text-primary" v-show="!valid.csv && valid.csv != null">
           <i class="fas fa-exclamation-triangle"></i>
           <small>{{ error_message.csv }}</small>
         </span>
+        <!-- Hint for max size of the csv file -->
         <small class="text-muted" v-if="valid.csv == null">
           <i>Max. size 500Kb</i>
         </small>
@@ -49,24 +52,27 @@
               >{{ name }}</b-badge
             >
             <b-badge
-              v-if="names.length > qfiles"
+              v-if="names.length > qfiles_onscreen"
               variant="primary"
               class="ml-1"
             >
-              + {{ names.length - qfiles }} More
+              + {{ names.length - qfiles_onscreen }} More
             </b-badge>
           </template>
         </b-file>
+        <!-- Valid media message in green color -->
         <span class="text-secondary" v-show="valid.media">
           <i class="fas fa-check-circle"></i>
           <small> {{ $t("taks-import-cslogger-valid") }}</small>
         </span>
+        <!-- Invalid media message in red color -->
         <span class="text-primary" v-show="!valid.media && valid.media != null">
           <i class="fas fa-exclamation-triangle"></i>
           <small>{{ error_message.media }}</small>
         </span>
+        <!-- Hint for max size of the total of files -->
         <small class="text-muted" v-if="valid.media == null">
-          <i>Max. size 300Mb</i>
+          <i>Max. size 200Mb</i>
         </small>
       </div>
     </b-form-group>
@@ -78,26 +84,23 @@
         variant="secondary"
         :disabled="!isValid"
         class="mr-1"
-        >{{ $t("cslogger-load-data") }}</b-button
       >
-      <!-- loading spinner and message -->
+        {{ $t("cslogger-load-data") }}
+      </b-button>
+      <!-- spinner and message for sending files-->
       <span class="text-primary ml-2 smooth" v-if="loading">
         {{ $t("taks-import-cslogger-loading") }}
         <i class="fas fa-spinner fa-pulse"></i>
-        <!-- CLEAN: with only one request this progress bar doesn't make sense -->
-        <!-- <b-progress
-          :value="progress"
-          :max="mediaFiles.length"
-          show-progress
-          class="mt-2"
-        ></b-progress> -->
+      </span>
+      <span class="text-primary ml-2 smooth" v-if="loaded === false">
+        {{ $t("taks-import-cslogger-loaded") }}
       </span>
       <b-btn
         ref="btn-submit-job"
         @click="next()"
         variant="primary"
         size="lg"
-        v-if="!loading && loaded"
+        v-if="loading === false && loaded"
       >
         {{ $t("next-btn") }}
       </b-btn>
@@ -120,8 +123,8 @@
           {{ $t("taks-import-cslogger-failed-files-title") }}
         </span>
         <span class="mr-2 font-weight-bold"
-          >{{ failed_files.length }} files</span
-        >
+          >{{ failed_files.length }} files
+        </span>
       </b-card-header>
 
       <b-card-body class="overflow-body">
@@ -153,17 +156,16 @@ export default {
   name: "LoadCSLoggerData",
   data() {
     return {
-      qfiles: 0,
+      qfiles_onscreen: 0,
       csvFile: null,
       mediaFiles: null,
-      loading: false,
+      loading: null,
       loaded: null,
       valid: { csv: null, media: null },
-      error_message: { csv: null, zip: null },
+      error_message: { csv: null, media: null },
       allowed_files: "",
-      progress: 0,
-      failed_files: [],
-      media_res: []
+      failed_files: [], //TODO: Server must respond which files are not attached or were wrong
+      media_res: [] // TODO: Server must respond with created tasks
     };
   },
   created() {
@@ -192,15 +194,17 @@ export default {
     file_names() {
       // Formatting the file names to show in input field
       const aux = this;
-      const file_names = this.mediaFiles.slice(0, this.qfiles).map(function(x) {
-        // if file name is long
-        if (x.name.length > 10) {
-          const ext = aux.getExt(x.name);
-          // Return a reduced file name
-          return `${x.name.slice(0, 7)}~.${ext}`;
-        }
-        return x.name;
-      });
+      const file_names = this.mediaFiles
+        .slice(0, this.qfiles_onscreen)
+        .map(function(x) {
+          // if file name is long
+          if (x.name.length > 10) {
+            const ext = aux.getExt(x.name);
+            // Return a reduced file name
+            return `${x.name.slice(0, 7)}~.${ext}`;
+          }
+          return x.name;
+        });
       return file_names;
     }
   },
@@ -213,9 +217,8 @@ export default {
     }),
     async onSubmit() {
       const aux = this;
-      this.loaded = null; // Response from server if file was successfully received
+      this.loaded = null;
       this.loading = true;
-      this.progress = 0;
       this.error_message = { ...{ media: null, csv: null } };
       this.media_res = [];
       this.failed_files = [];
@@ -225,7 +228,6 @@ export default {
       //   file: this.csvFile,
       //   category: "report"
       // });
-      // TODO-CSLogger: Define the correct expected responses both success as fail
       // if (res && res.status !== 200) {
       //   this.valid.csv = false;
       //   this.error_message.csv = this.$t("taks-import-cslogger-upload-error");
@@ -237,10 +239,32 @@ export default {
       // TODO-CSLogger: Define the correct expected responses both success as fail
 
       this.importLocalCSLoggerFile({
-          file: this.mediaFiles,
-          csv: this.csvFile
-        })
-      
+        files: this.mediaFiles,
+        csv: this.csvFile
+      }).then(res => {
+        this.loading = false;
+        if (res && res.status == 200) {
+          //TODO: Check how the response is comming and failed files?
+          // aux.media_res = res.media ? [...res.media] : [];
+          // aux.failed_files = res.failed_files ? [...res.failed_files] : [];
+          // aux.loaded = false;
+          // if (aux.media_res.length > 0) {
+          //   aux.loaded = true;
+          //   aux.setTaskSourceContent(aux.groupBy("taskid", aux.media_res));
+          // }
+          let flash = res.data.flash ? res.data.flash.split(" ") : "No data";
+          if (!isNaN(flash[0])) {
+            flash = flash.slice(0, 3).join(" ");
+          } else {
+            flash = "Tasks already included";
+          }
+          this.setTaskSourceContent(flash);
+          aux.loaded = true;
+        } else {
+          aux.loaded = false;
+        }
+      });
+
       // this.mediaFiles.forEach(file => {
       //   this.importLocalCSLoggerFile({
       //     file: file,
@@ -249,12 +273,10 @@ export default {
       //     if (res && res.status == 200) {
       //       aux.media_res.push(res);
       //     } else {
-      //       //TODO-CSLogger: Pending for show failed files upload
       //       aux.failed_files.push(res);
       //     }
       //     aux.progress++; // increment after each response
       //     if (aux.progress >= aux.mediaFiles.length) {
-      //       // TODO-CSLogger: Check if contId or groupid
       //       aux.setTaskSourceContent(aux.groupBy("taskid", aux.media_res));
       //       this.loading = false;
       //       if (aux.media_res.length > 0) this.loaded = "ok";
@@ -333,8 +355,8 @@ export default {
       this.validate("csv", 500000); // 0,5 Mb
     },
     mediaFiles() {
-      this.qfiles = this.getSize();
-      this.validate("media", 300000000); // 300 Mb
+      this.qfiles_onscreen = this.getSize();
+      this.validate("media", 200000000); // 200 Mb
     }
   }
 };

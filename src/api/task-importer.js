@@ -236,18 +236,17 @@ export default {
     );
   },
 
-  importLocalCSLoggerFile(projectShortName, file, csv) {
+  async importLocalCSLoggerFile(projectShortName, files, csv) {
     const data = new FormData();
-    data.append("file", csv);    
+    data.append("file", csv);
     data.append("csv_filename", csv.name);
-    file.forEach(file => {
+    files.forEach(file => {
       data.append(`media-${file.name}`, file);
     });
-    
 
     const parameters = {
       type: "cslogger",
-      response_format: "json",
+      response_format: "json"
     };
 
     const url = new URL(
@@ -262,17 +261,17 @@ export default {
     //   setTimeout(() => {
     //     //TODO-CSLogger: Possible response from server
     //     resolve({
-    //       status: 500,
-    //       id: file.name + "id",
-    //       name: file.name,
-    //       link: "http://" + file.name,
-    //       taskid: "group id"
+    //       status: 200,
+    //       media: files.map(x => ({
+    //         name: x.name,
+    //         url: `https://${x.name}.com`
+    //       })),
+    //       taskid: "task_id_number"
     //     });
-    //   }, Math.floor(Math.random() * 1000 + 1000));
+    //   }, Math.floor(Math.random() * 1000 + 5000));
     // });
 
     //TODO-CSLogger: uncomment when endpoint is working
-
     return axios.post(url, data, {
       withCredentials: true,
       headers: {

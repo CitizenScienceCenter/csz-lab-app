@@ -73,11 +73,10 @@ export default {
     };
   },
   created() {
-    const aux = this
     this.getProject(this.id).then(() => {
       // if a template is given, the given template will be displayed in priority
-      if (this.taskPresenter) {
-        this.code = this.taskPresenter;
+      if (this.template) {
+        this.code = this.template;
       }
       // otherwise the project task presenter template will be displayed
       else {
@@ -176,7 +175,7 @@ export default {
     setTimeout(function() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 2);
-  },
+  }
 };
 </script>
 
