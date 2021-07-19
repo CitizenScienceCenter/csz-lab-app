@@ -153,48 +153,14 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
-      return this.task && this.task.info ? JSON.parse(this.task.info.csloggerTasks) : [];
-      /*TODO-CSLogger:Replace dummy_data for this.task.info, which should be an array
-      const dummy_data = [
-        {
-          id: "id:u4NsxyxRMUAAAAAAAAAACw",
-          groupid: "id:u4Nsxyx",
-          question: "Image question",
-          name: "24397968409_6b053863f7_c.jpg",
-          bytes: 144089,
-          link_raw:
-            "https://www.dropbox.com/s/h0n5gek4u0rz87v/24397968409_6b053863f7_c.jpg?raw=1",
-          thumbnailLink:
-            "https://uc5a5528b62339a16a852284eca5.previews.dropboxusercontent.com/p/thumb/ABPV_XNxnlSau3btZq5MQTvN1i-ddEuVURpWO_CiG0XCoThBXYaGQLAiiq4lLPjyEWYEPGbU0DKKbEhRF5pamLR7G17rqOkNSLN7KDVRZ98Pt70mBQfviyGnb2c5Ja8bGgDcMkHnE0oCnL-Cs2ufKM-GuCG2FHKtRQz9r2AZ24ft0bgxV3mIBYDuUfPyVP01DWQvUWfJlAsd76QVv6JF75XXMCXICdO5N4h9b5UDfRkiO4ItDirPnb10d0tWwu7IQ6wHow48Saqu6Szq7fMb5hI1DC8CSAmQAbpsMqYtLdSxY6VoKSJAyoQsjrBEiBqWdWoBLOwgHZqHJecs1xTkHvszKxbBD-O4cgTCApd5kiZeLQ/p.jpeg?bounding_box=75&mode=fit"
-        },
-        {
-          id: "id:u4NsxyxRMUAAAAAAAAAAEA",
-          groupid: "id:u4Nsxyx",
-          question: "Audio question",
-          name: "zapsplat_horror_strings_stabs_psycho_57646.mp3",
-          bytes: 163370,
-          link_raw:
-            "https://www.dropbox.com/s/a7jt8fzae8nsecm/zapsplat_horror_strings_stabs_psycho_57646.mp3?raw=1"
-        },
-        {
-          id: "id:u4NsxyxRMUAAAAAAAAAAFg",
-          groupid: "id:u4Nsxyx",
-          name: "Pexels Videos 1711832.mp4",
-          question: "Video question",
-          bytes: 4817861,
-          link_raw:
-            "https://www.dropbox.com/s/lam6iodti2vb5ef/Pexels%20Videos%201711832.mp4?raw=1",
-          thumbnailLink:
-            "https://uc97eb2cbc52bedcd41fb437229b.previews.dropboxusercontent.com/p/thumb/ABPjweWO5tg7EWiZMgvZC9kAucztIw1aYvAiKmseDl2VAlybRZOmLj_ZFKrjvkm4r2YnhTmyj-Oym2KBW08-tphGuLt-Gn8w0IAgR-TL_7xv37lvHR6yb0mAXdlRJHidvVatFbEStvicrmL622xTK0lz5YAczLQbagNipuF1RbkdTJnTrl_pFkTDx_r32DsNauUHTVabNyIHIzytWos8r6izLzJIPiV82_tHhQVo6pDKvI7gqsbNC_dTsC1fz7gjrZLMNTDX9vB2gneyu-4e14-hN_gIsv2mDnenVEzZEvX2wxttWJ3f4VhFqW7ZXK-wOZ6mgTKPv0rJaDkJMwuO-voddiRRotjbMdada3YqOXR_eUZCLO89GiUDjIjFKPAXoTDNLcoe7FpAt58hP97f-PiMKiIa4SqsaEOebsoeeSExRg/p.jpeg?bounding_box=75&mode=fit"
-        }
-      ];
-      return dummy_data;*/
+      return this.task && this.task.info
+        ? JSON.parse(this.task.info.csloggerTasks)
+        : [];
     },
     context() {
       return this;
     },
     userProgress() {
-      /*TODO-CSLogger:Validate User Progress*/
       return isNaN(this.pybossa.userProgressInPercent)
         ? 0
         : this.pybossa.userProgressInPercent;
