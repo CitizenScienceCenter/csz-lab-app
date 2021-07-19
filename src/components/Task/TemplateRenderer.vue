@@ -123,7 +123,7 @@ export default {
       done: 0,
       total: 0
     });
-    // load the project first to have access to the presenter and to the related tasks
+    // load the project first to have access to the presenter and to the related tasks 
     this.getProject(this.id).then(result => {
       this.taskPresenterLoaded = true;
       // if the project presenter exists or a template is given (with the task presenter editor), it will be displayed
@@ -327,7 +327,7 @@ export default {
       this.$refs["presenter-modal"].show();
     },
 
-    // Control the conditions between questions, receive this from template
+    // Control the conditions between questions, received from template
     updateAnswer(aux) {
       const ctrl = this;
       aux.questionList.forEach(function(question) {

@@ -3,7 +3,7 @@ const component = {
   template: `
         <!-- This template use https://bootstrap-vue.js.org/ -->
   
-        <b-row v-if="userProgress < 100">
+        <b-row v-if="userProgress < 100 && taskInfo.length > 0">
         <!-- Form zone -->
         <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
           <!-- Questions with answers -->
@@ -31,7 +31,6 @@ const component = {
             {{$t('template-editor-text-8')}}
           </b-alert>
 
-          <!-- TODO-CSLogger:Validate User Progress for integration -->
           <!-- User progress -->
           <p class="mt-2">
             {{$t('template-editor-text-2')}}:

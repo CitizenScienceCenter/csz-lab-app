@@ -70,9 +70,9 @@
                 {{ task.sourceContent.maxTweets + "" }}
                 {{ $t("task-summary-builder-tweets-import") }}
               </span>
-              <small v-else-if="task.source === sources.cslogger">
+              <span v-else-if="task.source === sources.cslogger">
                 {{ task.sourceContent }}
-              </small>
+              </span>
             </b-media>
           </b-media>
         </ul>
