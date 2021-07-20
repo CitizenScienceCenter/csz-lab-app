@@ -53,14 +53,19 @@ export default {
       this.audio_animation = value;
     }
   },
-  watch: {}
+  watch: {
+    link() {
+      // new audio link restart the audio animation
+      this.audio_animation = false;
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
 .animation {
-  width: 400px;
+  width: 250px;
   height: 50px;
   margin: 50px auto;
 }
@@ -130,6 +135,16 @@ span {
   25% {
     transform: scaleY(4);
     background-color: $secondary;
+  }
+}
+@media only screen and (min-width: $viewport-tablet-portrait) {
+  .animation {
+    width: 350px;
+  }
+}
+@media only screen and (min-width: $viewport-xlarge) {
+  .animation {
+    width: 450px;
   }
 }
 </style>

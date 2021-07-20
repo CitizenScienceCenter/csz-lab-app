@@ -8,6 +8,7 @@
       </b-col>
     </b-row>
 
+    <!-- Labels section -->
     <b-row class="mt-4">
       <b-col md="4" offset-md="2">
         <ul class="list-unstyled">
@@ -19,7 +20,9 @@
             <h1 class="small text-muted m-0 pb-1">
               {{ $t("task-summary-builder-material") }}
             </h1>
-            <legend class="mt-0 mb-0">{{ task.material.toUpperCase() }}</legend>
+            <legend class="mt-0 mb-0">
+              {{ task.material.toUpperCase() }}
+            </legend>
           </b-media>
 
           <!-- Job -->
@@ -86,10 +89,11 @@
         <template-summary></template-summary>
       </b-col>
     </b-row>
+    <!-- Create button -->
     <b-row>
       <b-col class="text-center">
         <b-btn
-          @click="onSubmit"
+          @click.prevent="onSubmit"
           v-b-tooltip.hover
           :title="$t('task-summary-builder-onsubmit')"
           variant="primary"
@@ -191,7 +195,11 @@ export default {
     ...mapActions("task/builder", {
       resetTaskBuilder: "reset"
     }),
-    ...mapMutations("notification", ["showSuccess", "showError"]),
+    ...mapMutations("notification", [
+      "showSuccess",
+      "showError",
+      "showLoadingSpinner"
+    ]),
 
     onSubmit() {
       /// -----------------------------------------------------------
@@ -200,6 +208,10 @@ export default {
 
       // the generated template
       let template = null;
+
+      // Loading overlay for cslogger, due to the task where created one step before
+      if (this.task.material === this.materials.cslogger)
+        this.showLoadingSpinner(true);
 
       // Image template generation
       if (
@@ -314,6 +326,7 @@ export default {
               content: this.$t("summary-builder-promise-error")
             });
           }
+          this.showLoadingSpinner(false);
         }
       );
     }

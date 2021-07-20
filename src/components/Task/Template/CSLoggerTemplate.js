@@ -43,40 +43,53 @@ const component = {
           <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
         </b-col>
 
-        <!-- right columns - Media -->
+        <!-- Right column - Media -->
         <b-col
           md="7"
           class="order-1 order-md-2"
-          style="overflow-y: auto; height: 75vh; position: sticky; top: 10%"
+          style="overflow-y: auto; height: 75vh; z-index: 0"
         >
-          <b-card
-            v-for="resource in taskInfo"
-            :key="resource.id"
-            class="text-center mb-2"
-            :sub-title="resource.question"
+          <!-- Content wrapped for overlay for loading time -->
+          <b-overlay
+            :show="!pybossa.taskLoaded"
+            rounded
+            no-center
+            variant="light"
+            opacity="1"
+            class="text-center"
           >
-            <image-task-presenter
-              v-if="getMime(resource.url)=='img'"
-              :link="resource.url"
-              :pybossa="pybossa"
-              :loading="!pybossa.taskLoaded"
-            />
-            <media
-              v-else-if="getMime(resource.url)=='video'"
-              :link="resource.url"
-              type="video"
-              :loading="!pybossa.taskLoaded"
+            <!-- Each media element contained into a card element-->
+            <b-card
+              v-for="resource in taskInfo"
+              :key="resource.id"
+              class="mb-2"
+              align="center"
+              border-variant="light"
+              :sub-title="resource.question"
             >
-            </media>
-            <media
-              v-else-if="getMime(resource.url)=='audio'"
-              :link="resource.url"
-              type="audio"
-              :loading="!pybossa.taskLoaded"
-            >
-            </media>
-            <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
-          </b-card>          
+              <!-- Image -->
+              <image-task-presenter
+                v-if="getMime(resource.url)=='img'"
+                :link="resource.url"
+                :pybossa="pybossa"
+              />
+              <!-- Video -->
+              <media v-else-if="getMime(resource.url)=='video'" :link="resource.url" type="video">
+              </media>
+              <!-- Audio -->
+              <media v-else-if="getMime(resource.url)=='audio'" :link="resource.url" type="audio">
+              </media>
+              <!-- No recognized element -->
+              <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
+            </b-card>
+            <!-- Message and spinner for loading time -->
+            <template #overlay>
+              <div class="sticky-top pt-4">
+                <h2>{{$t('template-editor-text-17')}}</h2>
+                <b-spinner variant="primary" role="loading"></b-spinner>
+              </div>
+            </template>
+          </b-overlay>
         </b-col>
       </b-row>
 

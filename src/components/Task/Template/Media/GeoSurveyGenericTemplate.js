@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 const component = {
   template: `
-      <div v-if="userProgress < 100" >        
+      <div v-if="userProgress < 100 && taskInfo" >        
         <b-row>
           <!-- Left column - Questions-->
           <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
@@ -178,7 +178,7 @@ const component = {
       this.mime = this.pybossa.getFileType(
         this.task.info.url || this.task.info.link_raw
       );
-      return this.task && this.task.info ? this.task.info : {};
+      return this.task && this.task.info ? this.task.info : null;
     },
     context() {
       return this;

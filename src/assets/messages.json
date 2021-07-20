@@ -646,6 +646,7 @@
     "template-editor-text-14": "Video loading...",
     "template-editor-text-15": "Video media not available...",
     "template-editor-text-16": "Media not available",
+    "template-editor-text-17": "Loading media...",
 
     "template-editor-geo-text-1": "Add a marker",
     "template-editor-geo-text-2": "Delete a marker",
@@ -1477,6 +1478,7 @@
     "template-editor-text-14": "Video wird geladen...",
     "template-editor-text-15": "Video nicht verfügbar...",
     "template-editor-text-16": "Media nicht verfügbar",
+    "template-editor-text-17": "Media wird geladen...",
 
     "template-editor-geo-text-1": "Fügen Sie einen Marker hinzu",
     "template-editor-geo-text-2": "Löschen Sie einen Marker",
