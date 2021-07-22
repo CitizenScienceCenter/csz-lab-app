@@ -1,5 +1,6 @@
 import { i18n } from "./i18n.js";
 import media_ext from "@/assets/media_files_ext.json";
+import Papa from "papaparse";
 
 export function uuid() {
   let dt = new Date().getTime();
@@ -264,4 +265,26 @@ export function getMIME(raw_url) {
   }
 
   return types.get(`.${extension}`);
+}
+
+// group array of object by key and return grouped array of arrays
+export function groupBy(key, array) {
+  const group_obj = array.reduce((r, a) => {
+    r[a[key]] = [...(r[a[key]] || []), a];
+    return r;
+  }, {});
+  return Object.values(group_obj) || [];
+}
+
+// convert CSV file to Json format
+export async function csvToJson(csv) {
+  return new Promise((resolve, reject) => {
+    Papa.parse(csv, {
+      header: true,
+      complete: results => {
+        resolve(results.data);
+        reject(results.error);
+      }
+    });
+  });
 }

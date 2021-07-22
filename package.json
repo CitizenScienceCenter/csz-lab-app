@@ -25,6 +25,7 @@
     "leaflet-geosearch": "3.0.1",
     "moment": "^2.24.0",
     "node-sass": "4.14.1",
+    "papaparse": "^5.3.1",
     "portal-vue": "^2.1.4",
     "secure-ls": "^1.2.6",
     "slug": "^1.1.0",

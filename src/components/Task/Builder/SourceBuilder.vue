@@ -18,7 +18,7 @@
         >
           <b-col md="8" class="mt-md-0 mt-4">
             <h2 class="mb-4">{{ $t("task-job-builder-cslogger-import-title") }}</h2>
-            <load-data @onContinue="onContinue"></load-data>
+            <load-data></load-data>
           </b-col>
 
           <b-col md="3" class="text-muted">
@@ -29,6 +29,7 @@
             <!-- Allowed files for media -->
             <p class="small">
               {{ $t("task-job-builder-cslogger-info2") }}
+              warning regarding total media files size
             </p>
           </b-col>
         </b-row>
@@ -146,8 +147,6 @@ export default {
   },
   methods: {
     ...mapMutations("task/builder", [
-      "setStep",
-      "setTaskSource",
       "setTaskSourceContent"
     ]),
 
@@ -161,10 +160,6 @@ export default {
     goBack () {
       this.selectedSource = null
     },
-    onContinue() {
-      this.setStep({ step: 'source', value: true })
-      this.setTaskSource(this.sources.cslogger)
-    }
   },
   computed: {
     ...mapState("task/builder", [

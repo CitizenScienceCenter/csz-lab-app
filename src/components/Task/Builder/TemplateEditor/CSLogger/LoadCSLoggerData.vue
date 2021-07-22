@@ -41,11 +41,12 @@
           browse-text="Search"
           required
           :state="validateMedia"
+          :disabled="!csvFile"
         >
           <!-- Show the first file names according screen size -->
           <template slot="file-name" slot-scope="{ names }">
             <b-badge
-              variant="primary"
+              variant="secondary"
               v-for="(name, index) in file_names"
               :key="index"
               class="ml-1"
@@ -53,7 +54,7 @@
             >
             <b-badge
               v-if="names.length > qfiles_onscreen"
-              variant="primary"
+              variant="secondary"
               class="ml-1"
             >
               + {{ names.length - qfiles_onscreen }} More
@@ -71,49 +72,43 @@
           <small>{{ error_message.media }}</small>
         </span>
         <!-- Hint for max size of the total of files -->
-        <small class="text-muted" v-if="valid.media == null">
+        <small class="text-muted" v-if="valid.media == null && csvFile">
           <i>Max. size 200Mb</i>
+        </small>
+        <small class="text-muted float-right">
+          <i>Total: {{ Math.floor(total_size/1000000) }}Mb</i>
+        </small>
+        <!-- Hint for csvFile null for media field -->
+        <small class="text-muted" v-if="!csvFile">
+          <i>{{ $t("taks-import-cslogger-csv-loaded") }}</i>
         </small>
       </div>
     </b-form-group>
 
-    <!-- Buttons: load and next -->
+    <!-- Continue button-->
     <div>
       <b-button
         type="submit"
-        variant="secondary"
+        variant="primary"
         :disabled="!isValid"
         class="mr-1"
       >
-        {{ $t("cslogger-load-data") }}
+        {{ $t("cslogger-continue") }}
       </b-button>
       <!-- spinner and message for sending files-->
-      <span class="text-primary ml-2 smooth" v-if="loading">
-        {{ $t("taks-import-cslogger-loading") }}
+      <span class="text-primary ml-2 smooth" v-if="validating">
+        {{ $t("taks-import-cslogger-validating") }}
         <i class="fas fa-spinner fa-pulse"></i>
       </span>
-      <span class="text-primary ml-2 smooth" v-if="loaded === false">
-        {{ $t("taks-import-cslogger-loaded") }}
-      </span>
-      <b-btn
-        ref="btn-submit-job"
-        @click="next()"
-        variant="primary"
-        size="lg"
-        v-if="loading === false && loaded"
-      >
-        {{ $t("next-btn") }}
-      </b-btn>
     </div>
 
-    <!-- uploading files failed -->
-    <!-- TODO: validate if error will be returned from server -->
+    <!-- Files not included into csv-->
     <b-card
       no-body
       overlay
       header-border-variant="primary"
       class="mt-4"
-      v-if="failed_files.length > 0"
+      v-if="extra_media.length > 0"
     >
       <b-card-header
         header-border-variant="danger"
@@ -123,22 +118,15 @@
           {{ $t("taks-import-cslogger-failed-files-title") }}
         </span>
         <span class="mr-2 font-weight-bold"
-          >{{ failed_files.length }} files
+          >{{ extra_media.length }} files
         </span>
       </b-card-header>
 
       <b-card-body class="overflow-body">
-        <b-card-sub-title class="mb-2" v-if="media_res.length == 0">{{
-          $t("task-import-cslogger-no-tasks-error")
-        }}</b-card-sub-title>
         <b-card-text>
           <ul>
-            <li
-              v-for="file in failed_files"
-              :key="file.id"
-              class="mr-2 text-h6"
-            >
-              <small>{{ file.name }}</small>
+            <li v-for="file in extra_media" :key="file" class="mr-2 text-h6">
+              <small>{{ file }}</small>
             </li>
           </ul>
         </b-card-text>
@@ -148,24 +136,29 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
-import { getWidthScreen } from "@/helper.js";
+import { mapState, mapMutations } from "vuex";
+import { getWidthScreen, csvToJson, groupBy } from "@/helper.js";
 import media_ext from "@/assets/media_files_ext.json";
+
+const MAX_SIZE_MEDIA = 200000000; // 200Mb
+const MAX_SIZE_CSV = 500000; // 500Kb
 
 export default {
   name: "LoadCSLoggerData",
   data() {
     return {
-      qfiles_onscreen: 0,
+      MAX_SIZE_MEDIA,
+      MAX_SIZE_CSV,
       csvFile: null,
       mediaFiles: null,
-      loading: null,
-      loaded: null,
+      json_csvFile: null,
+      validating: false,
       valid: { csv: null, media: null },
       error_message: { csv: null, media: null },
       allowed_files: "",
-      failed_files: [], //TODO: Server must respond which files are not attached or were wrong
-      media_res: [] // TODO: Server must respond with created tasks
+      extra_media: [],
+      qfiles_onscreen: 0,
+      total_size: 0
     };
   },
   created() {
@@ -178,6 +171,7 @@ export default {
     ...mapState("project", {
       project: state => state.selectedProject
     }),
+    ...mapState("task/builder", ["sources"]),
     validateCSV() {
       if (this.valid.csv) return true;
       if (!this.valid.csv && this.valid.csv != null) return false;
@@ -209,86 +203,34 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      importLocalCSLoggerFile: "task/importer/importLocalCSLoggerFile"
-    }),
     ...mapMutations({
-      setTaskSourceContent: "task/builder/setTaskSourceContent"
+      setTaskSourceContent: "task/builder/setTaskSourceContent",
+      setStep: "task/builder/setStep",
+      setTaskSource: "task/builder/setTaskSource"
     }),
-    async onSubmit() {
-      const aux = this;
-      this.loaded = null;
-      this.loading = true;
+
+    onSubmit() {
       this.error_message = { ...{ media: null, csv: null } };
-      this.media_res = [];
-      this.failed_files = [];
-
-      // CSV file uploading
-      // const res = await this.importLocalCSLoggerFile({
-      //   file: this.csvFile,
-      //   category: "report"
-      // });
-      // if (res && res.status !== 200) {
-      //   this.valid.csv = false;
-      //   this.error_message.csv = this.$t("taks-import-cslogger-upload-error");
-      //   this.loading = false;
-      //   this.loaded = null;
-      //   return;
-      // }
-
-      // TODO-CSLogger: Define the correct expected responses both success as fail
-
-      this.importLocalCSLoggerFile({
-        files: this.mediaFiles,
+      // validate number of tasks according activity_id
+      const number_of_tasks = this.getNumberOfTasks(
+        "activity_id",
+        this.json_csvFile
+      );
+      // Prepair data to send
+      const dataObj = {
+        n_tasks: number_of_tasks,
+        files: this.mediaFiles.filter(x => !this.extra_media.includes(x.name)),
         csv: this.csvFile
-      }).then(res => {
-        this.loading = false;
-        if (res && res.status == 200) {
-          //TODO: Check how the response is comming and failed files?
-          // aux.media_res = res.media ? [...res.media] : [];
-          // aux.failed_files = res.failed_files ? [...res.failed_files] : [];
-          // aux.loaded = false;
-          // if (aux.media_res.length > 0) {
-          //   aux.loaded = true;
-          //   aux.setTaskSourceContent(aux.groupBy("taskid", aux.media_res));
-          // }
-          let flash = res.data.flash ? res.data.flash.split(" ") : "No data";
-          if (!isNaN(flash[0])) {
-            flash = flash.slice(0, 3).join(" ");
-          } else {
-            flash = "Tasks already included";
-          }
-          this.setTaskSourceContent(flash);
-          aux.loaded = true;
-        } else {
-          aux.loaded = false;
-        }
-      });
+      };
+      this.setTaskSourceContent(dataObj);
+      this.setTaskSource(this.sources.cslogger);
+      this.setStep({ step: "source", value: true });
+    },
 
-      // this.mediaFiles.forEach(file => {
-      //   this.importLocalCSLoggerFile({
-      //     file: file,
-      //     csv: this.csvFile
-      //   }).then(res => {
-      //     if (res && res.status == 200) {
-      //       aux.media_res.push(res);
-      //     } else {
-      //       aux.failed_files.push(res);
-      //     }
-      //     aux.progress++; // increment after each response
-      //     if (aux.progress >= aux.mediaFiles.length) {
-      //       aux.setTaskSourceContent(aux.groupBy("taskid", aux.media_res));
-      //       this.loading = false;
-      //       if (aux.media_res.length > 0) this.loaded = "ok";
-      //     }
-      //   });
-      // });
-    },
-    next() {
-      this.$emit("onContinue");
-    },
-    validate(ext, size) {
-      this.loaded = null;
+    // Validate files
+    async validate(ext, size) {
+      this.validating = true;
+      this.extra_media = [];
       this.valid[ext] = null;
       this.error_message[ext] = null;
 
@@ -301,6 +243,9 @@ export default {
             this.error_message[ext] = this.$t(
               "taks-import-cslogger-invalid-size"
             );
+          } else {
+            // convert CSV file into json format
+            this.json_csvFile = await csvToJson(this.csvFile);
           }
         } else {
           this.valid[ext] = false;
@@ -317,11 +262,23 @@ export default {
           )
         ) {
           this.valid[ext] = true;
-          if (this.mediaFiles.reduce((sum, val) => sum + val.size, 0) > size) {
+          // Validate max size
+          this.total_size = this.mediaFiles.reduce(
+            (sum, val) => sum + val.size,
+            0
+          );
+          if (this.total_size > size) {
             this.valid[ext] = false;
             this.error_message[ext] = this.$t(
               "taks-import-cslogger-invalid-size"
             );
+          } else {
+            // get the files not included into csv
+            const media_names = this.mediaFiles.map(x => x.name);
+            this.extra_media = media_names.filter(
+              x => !this.json_csvFile.some(row => row.response.includes(x))
+            );
+            this.validating = false;
           }
         } else {
           this.valid[ext] = false;
@@ -330,6 +287,12 @@ export default {
           );
         }
       }
+    },
+    getNumberOfTasks(activityId, array) {
+      // convert array into a grouped array
+      const groups = groupBy(activityId, array);
+      // return only the task with at least one resource available as response
+      return groups.filter(g => g.some(el => el.response)).length;
     },
     getExt(name) {
       return name.split(".").pop();
@@ -340,23 +303,18 @@ export default {
       if (getWidthScreen() < 1020) return 2;
       if (getWidthScreen() < 1280) return 3;
       return 4;
-    },
-    // group array of object by key and return grouped array of arrays
-    groupBy(key, array) {
-      const group_obj = array.reduce((r, a) => {
-        r[a[key]] = [...(r[a[key]] || []), a];
-        return r;
-      }, {});
-      return Object.values(group_obj) || [];
     }
   },
   watch: {
     csvFile() {
-      this.validate("csv", 500000); // 0,5 Mb
+      this.validate("csv", MAX_SIZE_CSV);
+      this.mediaFiles = null;
     },
     mediaFiles() {
-      this.qfiles_onscreen = this.getSize();
-      this.validate("media", 200000000); // 200 Mb
+      if (this.mediaFiles) {
+        this.qfiles_onscreen = this.getSize();
+        this.validate("media", MAX_SIZE_MEDIA);
+      }
     }
   }
 };

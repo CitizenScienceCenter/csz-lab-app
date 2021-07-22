@@ -257,21 +257,6 @@ export default {
     );
 
     url.search = new URLSearchParams(parameters).toString();
-    // return new Promise(function(resolve, reject) {
-    //   setTimeout(() => {
-    //     //TODO-CSLogger: Possible response from server
-    //     resolve({
-    //       status: 200,
-    //       media: files.map(x => ({
-    //         name: x.name,
-    //         url: `https://${x.name}.com`
-    //       })),
-    //       taskid: "task_id_number"
-    //     });
-    //   }, Math.floor(Math.random() * 1000 + 5000));
-    // });
-
-    //TODO-CSLogger: uncomment when endpoint is working
     return axios.post(url, data, {
       withCredentials: true,
       headers: {

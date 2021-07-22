@@ -243,9 +243,6 @@ export default {
               response.private &&
               response.redirect &&
               !(this.accessForSelectedProject.project_id == this.project.id)
-              /* (this.accessForSelectedProject.access &&
-
-                  )*/
             ) {
               this.setProjectPassModal(true);
               this.$router.push({
@@ -259,7 +256,6 @@ export default {
                 this.newTask();
                 return;
               }
-              // TODO-CSLogger: validate this function for integration
               this.getUserProgress(this.project);
               this.taskLoaded = true;
             }

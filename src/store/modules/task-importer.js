@@ -28,7 +28,9 @@ const errors = {
     "Impossible to load your Flickr albums. Ensure that Pybossa is authorized to access your account",
   GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR:
     "Error when loading twitter importer options",
-  POST_TWITTER_TASKS_ERROR: "Error when importing twitter tasks"
+  POST_TWITTER_TASKS_ERROR: "Error when importing twitter tasks",
+  POST_CSLOGGER_IMPORTER_LOADING_ERROR:
+    "Error when loading CSLogger files",
 };
 
 const state = {
@@ -788,46 +790,42 @@ const actions = {
   },
 
   //** Citizen Science Logger Section **/
-  async importLocalCSLoggerFile({ dispatch, rootState }, { files, csv }) {
+  async importLocalCSLoggerFile({ commit, rootState }, { files, csv }) {
+    commit("notification/showLoadingSpinner", true, { root: true });
     try {
       const res = await api.importLocalCSLoggerFile(
         rootState.project.selectedProject.short_name,
         files,
         csv
       );
-      //TODO-CSLogger: pending for server response
-      // .then(value => {
-      //         if ("status" in value.data && value.data.status === "message") {
-      //           let flash = value.data.flash.split(" ");
-      //           let message = flash.slice(1).join(" ");
-      //           commit(
-      //             "notification/showSuccess",
-      //             {
-      //               title: getTranslationLocale("success"),
-      //               content: isNaN(flash[0])
-      //                 ? getPybossaTranslation(value.data.flash)
-      //                 : flash[0] + " " + getPybossaTranslation(message)
-      //             },
-      //             { root: true }
-      //           );
-      //           return value.data;
-      //         }
-      //         return false;
-      //       })
-      //       .catch(reason => {
-      //         commit(
-      //           "notification/showError",
-      //           {
-      //             title: getTranslationLocale("POST_DROPBOX_TASKS_ERROR"),
-      //             content: reason
-      //           },
-      //           { root: true }
-      //         );
-      //         return false;
-      //       });
-      return res;
-    } catch (error) {
-      console.log(error);
+      if ("status" in res.data && res.data.status === "message") {
+        let flash = res.data.flash.split(" ");
+        let message = flash.slice(1).join(" ");
+        commit(
+          "notification/showSuccess",
+          {
+            title: getTranslationLocale("success"),
+            content: isNaN(flash[0])
+              ? getPybossaTranslation(res.data.flash)
+              : flash[0] + " " + getPybossaTranslation(message)
+          },
+          { root: true }
+        );
+        return res.data;
+      }
+      return false;
+    } catch (reason) {
+      commit(
+        "notification/showError",
+        {
+          title: getTranslationLocale("POST_CSLOGGER_IMPORTER_LOADING_ERROR"),
+          content: reason
+        },
+        { root: true }
+      );
+      return false;
+    } finally {
+      commit("notification/showLoadingSpinner", false, { root: true });
     }
   }
 };

@@ -74,7 +74,8 @@
                 {{ $t("task-summary-builder-tweets-import") }}
               </span>
               <span v-else-if="task.source === sources.cslogger">
-                {{ task.sourceContent }}
+                {{ task.sourceContent.n_tasks }}
+                {{ $t("task-summary-builder-tasks") }}
               </span>
             </b-media>
           </b-media>
@@ -190,15 +191,15 @@ export default {
       "importAmazonS3Tasks",
       "importDropboxTasks",
       "importFlickrTasks",
-      "importTwitterTasks"
+      "importTwitterTasks",
+      "importLocalCSLoggerFile"
     ]),
     ...mapActions("task/builder", {
       resetTaskBuilder: "reset"
     }),
     ...mapMutations("notification", [
       "showSuccess",
-      "showError",
-      "showLoadingSpinner"
+      "showError"
     ]),
 
     onSubmit() {
@@ -208,10 +209,6 @@ export default {
 
       // the generated template
       let template = null;
-
-      // Loading overlay for cslogger, due to the task where created one step before
-      if (this.task.material === this.materials.cslogger)
-        this.showLoadingSpinner(true);
 
       // Image template generation
       if (
@@ -309,6 +306,14 @@ export default {
         });
       }
 
+      // CSLogger
+      else if (this.task.source === this.sources.cslogger) {
+        sourcePromise = this.importLocalCSLoggerFile({
+          files: this.task.sourceContent.files,
+          csv: this.task.sourceContent.csv
+        });
+      }
+
       /// --------------------------------------------------
 
       // test if all calls have been done correctly and redirects to the project detail page
@@ -326,7 +331,6 @@ export default {
               content: this.$t("summary-builder-promise-error")
             });
           }
-          this.showLoadingSpinner(false);
         }
       );
     }
