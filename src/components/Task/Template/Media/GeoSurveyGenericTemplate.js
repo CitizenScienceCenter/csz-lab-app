@@ -1,104 +1,123 @@
 // eslint-disable-next-line no-unused-vars
 const component = {
   template: `
-      <div v-if="userProgress < 100" >        
-        <b-row>
-          <!-- Left column - Questions-->
-          <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
-            <!-- Questions with answers -->
-            <b-form-group :key="question.id" v-for="question in questionList" label-size="lg" class="mt-2 mb-4">            
-              <label>{{question.question}} <span v-if="question.required" class="text-primary font-weight-bold h5">*</span></label>          
-              <common-editor-elements :answers="answers" :question="question" :context="context"/>            
-            </b-form-group>
-          </b-col>
-          <!-- right columns - Media -->
-          <b-col md="7" class="order-1 order-md-2">
-            <div v-if="taskInfo.link_raw || taskInfo.url || taskInfo.video_url || taskInfo.audio_url"
-              class="text-center" style="position: sticky;top: 15%;">
-              <image-task-presenter
-                v-if="mime=='img'"
-                :link="taskInfo.url || taskInfo.link_raw"
-                :pybossa="pybossa"
-                :loading="!pybossa.taskLoaded"
-              />
-              <media
-                v-else-if="mime=='video'"
-                :link="taskInfo.link_raw || taskInfo.video_url"
-                type="video" :loading="!pybossa.taskLoaded">
-              </media>
-              <media v-else-if="mime=='audio'"
-                :link="taskInfo.link_raw || taskInfo.audio_url"
-                type="audio" :loading="!pybossa.taskLoaded">
-              </media>
-            </div>
-            <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
-          </b-col>
-        </b-row>
-
-        <!-- Map Section -->
-        <b-row class="mt-4">
-          <b-col> 
-            <label>
-              {{mapSettings.question}}
-            </label>
-          </b-col> 
-        </b-row>
-      
-        <b-row class="my-2">
-          <b-col>
-            <!-- Map -->
-            <maps class="mb-2" style="height: 500px"
-              :can_mark="mapSettings.markers"
-              :can_draw="mapSettings.area"
-              :mapSettings="mapSettings"
-              :locations="markedPlaces"
-              :area="area"
-              :taskLoaded="pybossa.taskLoaded">
-            </maps>
-
-            <!-- Selected position coordinates -->
-            <div>
-            {{ $t('template-editor-geo-text-4') }}: 
-              <span v-for="(place, index) in markedPlaces" :key="index" class="mr-1">
-                <b-badge>
-                  {{ place.lat }} - {{ place.lng }}
-                </b-badge>
-              </span>
-            </div>            
-          </b-col>
-        </b-row>
-                
-        <b-row>
-          <b-col>
-            <!-- Form validation errors -->
-            <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
-              {{$t('template-editor-text-8')}}
-            </b-alert>
-
-            <!-- Submit button -->
-            <b-button @click="submit" variant="success" class="mt-2">{{ $t('submit-btn') }}</b-button>
-            <!-- Skip button -->
-            <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
-
-            <!-- User progress -->
-            <p class="mt-2">
-              {{$t('template-editor-text-2')}}:
-              <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>
-              {{$t('template-editor-text-2a')}}
-              <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge>
-              {{$t('template-editor-text-3')}}
-            </p>
-            <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
-          </b-col>
-        </b-row>
-      </div>
-
-      <!-- Task end message -->
-      <b-row v-else>
-        <b-col>
-          <b-jumbotron :header="$t('template-editor-text-6')" :lead="$t('template-editor-text-7')"></b-jumbotron>
-        </b-col>
-      </b-row>`,
+  <!-- This template use https://bootstrap-vue.js.org/ -->
+  <div v-if="userProgress < 100 && taskInfo">
+    <b-row class="d-flex justify-content-center">
+      <!-- Left column - Questions-->
+      <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1" v-if="questionList.length > 0">
+        <!-- Questions with answers -->
+        <b-form-group
+          :key="question.id"
+          v-for="question in questionList"
+          label-size="lg"
+          class="mt-2 mb-4"
+        >
+          <label
+            >{{question.question}}
+            <span v-if="question.required" class="text-primary font-weight-bold h5">*</span></label
+          >
+          <common-editor-elements :answers="answers" :question="question" :context="context" />
+        </b-form-group>
+      </b-col>
+      <!-- right columns - Media -->
+      <b-col :md="[questionList.length > 0 ? 7:10]" class="order-1 order-md-2">
+        <div
+          v-if="taskInfo.link_raw || taskInfo.url || taskInfo.video_url || taskInfo.audio_url"
+          class="text-center"
+          style="position: sticky; top: 15%"
+        >
+          <image-task-presenter
+            v-if="mime=='img'"
+            :link="taskInfo.url || taskInfo.link_raw"
+            :pybossa="pybossa"
+            :loading="!pybossa.taskLoaded"
+          />
+          <media
+            v-else-if="mime=='video'"
+            :link="taskInfo.link_raw || taskInfo.video_url"
+            type="video"
+            :loading="!pybossa.taskLoaded"
+          >
+          </media>
+          <media
+            v-else-if="mime=='audio'"
+            :link="taskInfo.link_raw || taskInfo.audio_url"
+            type="audio"
+            :loading="!pybossa.taskLoaded"
+          >
+          </media>
+        </div>
+        <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
+      </b-col>
+    </b-row>
+  
+    <!-- Map Section -->
+    <b-row class="mt-4">
+      <b-col>
+        <label> {{mapSettings.question}} </label>
+      </b-col>
+    </b-row>
+  
+    <b-row class="my-2">
+      <b-col>
+        <!-- Map -->
+        <maps
+          class="mb-2"
+          style="height: 500px"
+          :can_mark="mapSettings.markers"
+          :can_draw="mapSettings.area"
+          :mapSettings="mapSettings"
+          :locations="markedPlaces"
+          :area="area"
+          :taskLoaded="pybossa.taskLoaded"
+        >
+        </maps>
+  
+        <!-- Selected position coordinates -->
+        <div v-if="mapSettings.markers">
+          {{ $t('template-editor-geo-text-4') }}:
+          <span v-for="(place, index) in markedPlaces" :key="index" class="mr-1">
+            <b-badge> {{ place.lat }} - {{ place.lng }} </b-badge>
+          </span>
+        </div>
+      </b-col>
+    </b-row>
+  
+    <b-row>
+      <b-col>
+        <!-- Form validation errors -->
+        <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
+          {{$t('template-editor-text-8')}}
+        </b-alert>
+  
+        <!-- Submit button -->
+        <b-button @click="submit" variant="success" class="mt-2">{{ $t('submit-btn') }}</b-button>
+        <!-- Skip button -->
+        <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
+  
+        <!-- User progress -->
+        <p class="mt-2">
+          {{$t('template-editor-text-2')}}:
+          <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>
+          {{$t('template-editor-text-2a')}}
+          <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge>
+          {{$t('template-editor-text-3')}}
+        </p>
+        <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
+      </b-col>
+    </b-row>
+  </div>
+  
+  <!-- Task end message -->
+  <b-row v-else>
+    <b-col>
+      <b-jumbotron
+        :header="$t('template-editor-text-6')"
+        :lead="$t('template-editor-text-7')"
+      ></b-jumbotron>
+    </b-col>
+  </b-row>`,
 
   data: {
     mapSettings: {},
@@ -124,12 +143,20 @@ const component = {
     },
     submit() {
       if (this.isFormValid()) {
-        if (this.markedPlaces.length > 0) {
-          this.answers.push({
-            coordinates: this.markedPlaces,
-            area: this.area
-          });
+        if (this.mapSettings.markers && this.markedPlaces.length == 0) {
+          this.showAlert = true;
+          return;
         }
+        if (this.mapSettings.area && this.area.latlngs.length == 0) {
+          this.showAlert = true;
+          return;
+        }
+        this.answers.push({
+          question: this.mapSettings.question,
+          coordinates: this.markedPlaces,
+          area: this.area
+        });
+
         this.pybossa.saveTask(this.answers);
         this.initialize();
       } else {
@@ -178,7 +205,7 @@ const component = {
       this.mime = this.pybossa.getFileType(
         this.task.info.url || this.task.info.link_raw
       );
-      return this.task && this.task.info ? this.task.info : {};
+      return this.task && this.task.info ? this.task.info : null;
     },
     context() {
       return this;
@@ -192,7 +219,7 @@ const component = {
 
   watch: {},
 
-  created() {    
+  created() {
     this.initialize();
   },
 
