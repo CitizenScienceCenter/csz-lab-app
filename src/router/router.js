@@ -15,7 +15,6 @@ const publicRoutes = [
 
 router.beforeEach((to, from, next) => {
     
-    console.log(to.params);
     console.log('navigate to: '+to.path );
     console.log('split:');
 

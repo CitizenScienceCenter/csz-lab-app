@@ -76,8 +76,8 @@ export default {
     const aux = this
     this.getProject(this.id).then(() => {
       // if a template is given, the given template will be displayed in priority
-      if (this.taskPresenter) {
-        this.code = this.taskPresenter;
+      if (this.template) {
+        this.code = this.template;
       }
       // otherwise the project task presenter template will be displayed
       else {
@@ -184,7 +184,7 @@ export default {
 @import "../../../../../scss/variables.scss";
 
 .CodeMirror {
-  height: 65vh !important;
+  height: 80vh !important;
   border: 1px solid #e9ecef;
   box-shadow: inset 0 1px 1px rgba($black, 0.075);
 }

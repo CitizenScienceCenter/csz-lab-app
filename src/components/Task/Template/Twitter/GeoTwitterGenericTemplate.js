@@ -5,12 +5,7 @@ const component = {
   <div v-if="userProgress < 100 && taskInfo">
     <b-row class="d-flex justify-content-center">
       <!-- Left column - Questions-->
-      <b-col
-        :md="questionList.length > 0 ? 5:12"
-        :lg="questionList.length > 0 ? 5:6"
-        class="mt-4 mt-lg-0 order-2"
-        :class="questionList.length > 0 ? 'order-md-1':'order-lg-1'"
-      >
+      <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1" v-if="questionList.length > 0">
         <!-- Questions with answers -->
         <b-form-group
           :key="question.id"
@@ -18,37 +13,15 @@ const component = {
           label-size="lg"
           class="mt-2 mb-4"
         >
-          <label>
-            {{question.question}}
-            <span v-if="question.required" class="text-primary font-weight-bold h5">*</span>
-          </label>
+          <label
+            >{{question.question}}
+            <span v-if="question.required" class="text-primary font-weight-bold h5">*</span></label
+          >
           <common-editor-elements :answers="answers" :question="question" :context="context" />
         </b-form-group>
-        <!-- Map Section when NO questions exist -->
-        <div v-if="questionList.length == 0">
-          <!-- Map question -->
-          <label> {{mapSettings.question}} </label>
-          <!-- Map -->
-          <maps
-            class="my-2"
-            style="height: 50vh"
-            :can_mark="mapSettings.markers"
-            :can_draw="mapSettings.area"
-            :mapSettings="mapSettings"
-            :locations="markedPlaces"
-            :area="area"
-            :taskLoaded="pybossa.taskLoaded"
-          >
-          </maps>
-        </div>
       </b-col>
       <!-- right columns - Media -->
-      <b-col
-        :md="questionList.length > 0 ? 7:12"
-        :lg="questionList.length > 0 ? 7:6"
-        class="order-1"
-        :class="questionList.length > 0 ? 'order-md-2':'order-lg-2'"
-      >
+      <b-col :md="[questionList.length > 0 ? 7:10]" class="order-1 order-md-2">
         <div
           v-if="taskInfo.link_raw || taskInfo.url || taskInfo.video_url || taskInfo.audio_url"
           class="text-center"
@@ -78,15 +51,19 @@ const component = {
         <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
       </b-col>
     </b-row>
-
-    <!-- Map Section when questions exist -->
-    <b-row class="my-4" v-if="questionList.length > 0">
+  
+    <!-- Map Section -->
+    <b-row class="mt-4">
       <b-col>
-        <!-- Map question -->
         <label> {{mapSettings.question}} </label>
+      </b-col>
+    </b-row>
+  
+    <b-row class="my-2">
+      <b-col>
         <!-- Map -->
         <maps
-          class="my-2"
+          class="mb-2"
           style="height: 500px"
           :can_mark="mapSettings.markers"
           :can_draw="mapSettings.area"
@@ -96,21 +73,29 @@ const component = {
           :taskLoaded="pybossa.taskLoaded"
         >
         </maps>
+  
+        <!-- Selected position coordinates -->
+        <div v-if="mapSettings.markers">
+          {{ $t('template-editor-geo-text-4') }}:
+          <span v-for="(place, index) in markedPlaces" :key="index" class="mr-1">
+            <b-badge> {{ place.lat }} - {{ place.lng }} </b-badge>
+          </span>
+        </div>
       </b-col>
     </b-row>
-
+  
     <b-row>
       <b-col>
         <!-- Form validation errors -->
         <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
           {{$t('template-editor-text-8')}}
         </b-alert>
-
+  
         <!-- Submit button -->
         <b-button @click="submit" variant="success" class="mt-2">{{ $t('submit-btn') }}</b-button>
         <!-- Skip button -->
         <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
-
+  
         <!-- User progress -->
         <p class="mt-2">
           {{$t('template-editor-text-2')}}:
@@ -123,7 +108,7 @@ const component = {
       </b-col>
     </b-row>
   </div>
-
+  
   <!-- Task end message -->
   <b-row v-else>
     <b-col>
