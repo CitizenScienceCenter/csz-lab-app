@@ -107,6 +107,7 @@ import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGeneri
 import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
+import GeoTwitterGenericTemplate from "@/components/Task/Template/Twitter/GeoTwitterGenericTemplate";
 
 export default {
   name: "SummaryBuilder",
@@ -226,6 +227,11 @@ export default {
         if (this.task.job === this.jobs.survey) {
           template = buildTemplateFromModel(TwitterGenericTemplate, {
             questions: this.task.template
+          });
+        } else if (this.task.job === this.jobs.geo_survey) {
+          template = buildTemplateFromModel(GeoTwitterGenericTemplate, {
+            questions: this.task.template,
+            mapSettings: this.task.mapSettings
           });
         }
       }

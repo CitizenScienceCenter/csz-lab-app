@@ -5,7 +5,12 @@ const component = {
   <div v-if="userProgress < 100 && taskInfo">
     <b-row class="d-flex justify-content-center">
       <!-- Left column - Questions-->
-      <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1" v-if="questionList.length > 0">
+      <b-col
+        :md="questionList.length > 0 ? 5:12"
+        :lg="questionList.length > 0 ? 5:6"
+        class="mt-4 mt-lg-0 order-2"
+        :class="questionList.length > 0 ? 'order-md-1':'order-lg-1'"
+      >
         <!-- Questions with answers -->
         <b-form-group
           :key="question.id"
@@ -13,57 +18,78 @@ const component = {
           label-size="lg"
           class="mt-2 mb-4"
         >
-          <label
-            >{{question.question}}
-            <span v-if="question.required" class="text-primary font-weight-bold h5">*</span></label
-          >
+          <label>
+            {{question.question}}
+            <span v-if="question.required" class="text-primary font-weight-bold h5">*</span>
+          </label>
           <common-editor-elements :answers="answers" :question="question" :context="context" />
         </b-form-group>
-      </b-col>
-      <!-- right columns - Media -->
-      <b-col :md="[questionList.length > 0 ? 7:10]" class="order-1 order-md-2">
-        <div
-          v-if="taskInfo.link_raw || taskInfo.url || taskInfo.video_url || taskInfo.audio_url"
-          class="text-center"
-          style="position: sticky; top: 15%"
-        >
-          <image-task-presenter
-            v-if="mime=='img'"
-            :link="taskInfo.url || taskInfo.link_raw"
-            :pybossa="pybossa"
-            :loading="!pybossa.taskLoaded"
-          />
-          <media
-            v-else-if="mime=='video'"
-            :link="taskInfo.link_raw || taskInfo.video_url"
-            type="video"
-            :loading="!pybossa.taskLoaded"
+        <!-- Map Section when NO questions exist -->
+        <div v-if="questionList.length == 0">
+          <!-- Map question -->
+          <label> {{mapSettings.question}} </label>
+          <!-- Map -->
+          <maps
+            class="my-2"
+            style="height: 50vh"
+            :can_mark="mapSettings.markers"
+            :can_draw="mapSettings.area"
+            :mapSettings="mapSettings"
+            :locations="markedPlaces"
+            :area="area"
+            :taskLoaded="pybossa.taskLoaded"
           >
-          </media>
-          <media
-            v-else-if="mime=='audio'"
-            :link="taskInfo.link_raw || taskInfo.audio_url"
-            type="audio"
-            :loading="!pybossa.taskLoaded"
-          >
-          </media>
+          </maps>
         </div>
-        <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
+      </b-col>
+      <!-- right columns - Tweet -->
+      <b-col
+        :md="questionList.length > 0 ? 7:12"
+        :lg="questionList.length > 0 ? 7:6"
+        class="order-1"
+        :class="questionList.length > 0 ? 'order-md-2':'order-lg-2'"
+      >
+        <div style="position: sticky;top: 15%;">
+          <!-- Author name and tweet text -->
+          <h5 v-if="taskInfo.user && taskInfo.user.name">From: {{ taskInfo.user.name }}</h5>
+          <p><i>{{ taskInfo.text }}</i></p>
+        
+          <!-- Display urls if available -->
+          <ul v-if="taskInfo.entities && taskInfo.entities.urls">
+            <li v-for="link in taskInfo.entities.urls"><a :href="link.url" target="_blank">{{ link.url }}</a></li>
+          </ul>
+      
+          <!-- Display picture if available -->
+          <div
+            v-if="taskInfo.extended_entities && taskInfo.extended_entities.media && taskInfo.extended_entities.media.length > 0"
+            class="text-center"
+          >
+            <image-task-presenter
+              v-if="taskInfo.extended_entities.media[0].type == 'photo'"
+              :link="getMedia('photo')"
+              :pybossa="pybossa"
+              :loading="!pybossa.taskLoaded"
+            />
+            <media
+              v-else-if="['video', 'animated_gif'].includes(taskInfo.extended_entities.media[0].type)"
+              :link="getMedia('video')"
+              type="video"
+              :loading="!pybossa.taskLoaded"
+            >
+            </media>
+          </div>
+        </div>
       </b-col>
     </b-row>
-  
-    <!-- Map Section -->
-    <b-row class="mt-4">
+
+    <!-- Map Section when questions exist -->
+    <b-row class="my-4" v-if="questionList.length > 0">
       <b-col>
+        <!-- Map question -->
         <label> {{mapSettings.question}} </label>
-      </b-col>
-    </b-row>
-  
-    <b-row class="my-2">
-      <b-col>
         <!-- Map -->
         <maps
-          class="mb-2"
+          class="my-2"
           style="height: 500px"
           :can_mark="mapSettings.markers"
           :can_draw="mapSettings.area"
@@ -73,29 +99,21 @@ const component = {
           :taskLoaded="pybossa.taskLoaded"
         >
         </maps>
-  
-        <!-- Selected position coordinates -->
-        <div v-if="mapSettings.markers">
-          {{ $t('template-editor-geo-text-4') }}:
-          <span v-for="(place, index) in markedPlaces" :key="index" class="mr-1">
-            <b-badge> {{ place.lat }} - {{ place.lng }} </b-badge>
-          </span>
-        </div>
       </b-col>
     </b-row>
-  
+
     <b-row>
       <b-col>
         <!-- Form validation errors -->
         <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
           {{$t('template-editor-text-8')}}
         </b-alert>
-  
+
         <!-- Submit button -->
         <b-button @click="submit" variant="success" class="mt-2">{{ $t('submit-btn') }}</b-button>
         <!-- Skip button -->
         <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
-  
+
         <!-- User progress -->
         <p class="mt-2">
           {{$t('template-editor-text-2')}}:
@@ -108,7 +126,7 @@ const component = {
       </b-col>
     </b-row>
   </div>
-  
+
   <!-- Task end message -->
   <b-row v-else>
     <b-col>
@@ -133,8 +151,7 @@ const component = {
     markedPlaces: [],
     area: { latlngs: [] },
 
-    showAlert: false,
-    mime: null
+    showAlert: false
   },
 
   methods: {
@@ -194,6 +211,16 @@ const component = {
       this.markedPlaces = [];
       this.area = { latlngs: [] };
       window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    getMedia(type) {
+      if (type == "photo") {
+        return this.taskInfo.extended_entities.media[0].media_url_https;
+      }
+      if (type == "video") {
+        return this.taskInfo.extended_entities.media[0].video_info.variants.find(
+          x => x.content_type.includes("video")
+        ).url;
+      }
     }
   },
 
@@ -202,9 +229,6 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
-      this.mime = this.pybossa.getFileType(
-        this.task.info.url || this.task.info.link_raw
-      );
       return this.task && this.task.info ? this.task.info : null;
     },
     context() {

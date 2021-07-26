@@ -52,7 +52,7 @@ const component = {
                 type="audio" :loading="!pybossa.taskLoaded">
               </media>
             </div>
-          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-11')}}</b-alert>
+          <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
         </b-col>        
       </b-row>      
       
