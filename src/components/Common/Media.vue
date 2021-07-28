@@ -13,14 +13,6 @@
       <template #loading>
         <b-skeleton type="input" animation="throb"></b-skeleton>
       </template>
-      <audio
-        controls
-        :src="link"
-        style="width:85%"
-        @play="audio_animation=true"
-        @pause="audio_animation=false"
-        @ended="audio_animation=false"
-      ></audio>
       <div class="animation" >
         <span
           v-for="index in 15"
@@ -29,6 +21,14 @@
           class="mr-2"
         ></span>
       </div>
+      <audio
+        controls
+        :src="link"
+        style="width:85%"
+        @play="audio_animation=true"
+        @pause="audio_animation=false"
+        @ended="audio_animation=false"
+      ></audio>
     </b-skeleton-wrapper>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
 @import "@/scss/variables.scss";
 .animation {
   width: 400px;
-  height: 100px;
+  height: 50px;
   margin: 50px auto;
 }
 span {

@@ -3,7 +3,7 @@ const component = {
   template: `
       <!-- This template use https://bootstrap-vue.js.org/ -->
 
-      <b-row v-if="userProgress < 100">
+      <b-row v-if="userProgress < 100 && taskInfo">
         
         <!-- Form zone -->
         <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
@@ -125,7 +125,7 @@ const component = {
       this.mime = this.pybossa.getFileType(
         this.task.info.url || this.task.info.link_raw
       );
-      return this.task && this.task.info ? this.task.info : {};
+      return this.task && this.task.info ? this.task.info : null;
     },
     context() {
       return this;

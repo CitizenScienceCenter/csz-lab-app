@@ -73,7 +73,6 @@ export default {
     };
   },
   created() {
-    const aux = this
     this.getProject(this.id).then(() => {
       // if a template is given, the given template will be displayed in priority
       if (this.template) {

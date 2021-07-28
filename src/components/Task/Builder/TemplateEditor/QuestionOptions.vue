@@ -160,8 +160,8 @@ export default {
       typeSelected: null,
       showModal: false,
       questionSelected: null,
-      answersSelected: []
-      answers
+      answersSelected: [],
+      isClosedModal: false
     };
   },
   components: { Multiselect },
@@ -189,11 +189,11 @@ export default {
     closeModal() {
       this.showModal = false;
       if (this.question.isDependent) {
-        const previous_question = this.getQuestionList;
-        this.questionSelected = previous_question.find(
+        this.questionSelected = this.getQuestionList.find(
           x => x.value === this.question.condition.questionId
         );
         this.answersSelected = this.question.condition.answers;
+        this.isClosedModal = true;
       } else {
         this.questionSelected = null;
         this.answersSelected = [];
@@ -274,6 +274,10 @@ export default {
       this.question.type = this.typeSelected.value;
     },
     questionSelected() {
+      if (this.isClosedModal) {
+        this.isClosedModal = false;
+        return;
+      }
       this.answersSelected = [];
     },
     questions() {

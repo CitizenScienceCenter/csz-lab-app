@@ -8,6 +8,7 @@
       </b-col>
     </b-row>
 
+    <!-- Labels section -->
     <b-row class="mt-4">
       <b-col md="4" offset-md="2">
         <ul class="list-unstyled">
@@ -82,10 +83,11 @@
         <template-summary></template-summary>
       </b-col>
     </b-row>
+    <!-- Create button -->
     <b-row>
       <b-col class="text-center">
         <b-btn
-          @click="onSubmit"
+          @click.prevent="onSubmit"
           v-b-tooltip.hover
           :title="$t('task-summary-builder-onsubmit')"
           variant="primary"

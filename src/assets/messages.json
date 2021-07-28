@@ -578,7 +578,7 @@
 
     "task-settings-delete": "Delete Tasks",
     "task-settings-delete-header": "Delete all tasks and tasks runs",
-    "task-settings-delete-danzer-note": "If you delete all the tasks and task runs they will be gone forever! You cannot undo this action!",
+    "task-settings-delete-danger-note": "If you delete all the tasks and task runs they will be gone forever! You cannot undo this action!",
     "task-settings-delete-confirm-note": "Are you sure you want to delete all the project tasks and associated task runs?",
     "task-settings-delete-confirm-no": "No, do not delete anything!",
 
@@ -1315,7 +1315,7 @@
 
     "task-settings-delete": "Aufgaben löschen",
     "task-settings-delete-header": "Alle Aufgaben und Aufgaben-Ausführungen löschen",
-    "Task-settings-delete-danzer-note": "wenn sie die Aufgaben und Aufgaben-Ausführungen löschen, sind sie für immer verschwunden. Sie können diese Aktion nicht rückgängig machen!",
+    "task-settings-delete-danger-note": "wenn sie die Aufgaben und Aufgaben-Ausführungen löschen, sind sie für immer verschwunden. Sie können diese Aktion nicht rückgängig machen!",
     "task-settings-delete-confirm-note": "Sind Sie sicher, dass Sie alle Aufgaben und zugehörigen Ausführungen löschen möchten?",
     "task-settings-delete-confirm-no": "Nein, nichts löschen!",
 
