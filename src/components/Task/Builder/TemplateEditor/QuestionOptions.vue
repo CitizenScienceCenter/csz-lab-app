@@ -116,9 +116,9 @@
           <b-button class="mt-3" variant="primary" @click="confirmModal">
             {{ $t("task-template-options-modal-confirm-button") }}
           </b-button>
-          <!-- <b-button class="mt-3" variant="secondary" @click="showModal = false">
+          <b-button class="mt-3" variant="secondary" @click="closeModal">
             {{ $t("task-template-options-modal-close-button") }}
-          </b-button> -->
+          </b-button>
         </template>
       </b-modal>
     </b-col>
@@ -161,6 +161,7 @@ export default {
       showModal: false,
       questionSelected: null,
       answersSelected: []
+      answers
     };
   },
   components: { Multiselect },
@@ -170,6 +171,7 @@ export default {
     types: { type: Array }
   },
   methods: {
+    // set the options selected for conditional question and close modal
     confirmModal() {
       this.question.isDependent = false;
       if (this.questionSelected.value >= 0) {
@@ -183,6 +185,21 @@ export default {
       }
       this.showModal = false;
     },
+    // no change the options previously selected and close modal
+    closeModal() {
+      this.showModal = false;
+      if (this.question.isDependent) {
+        const previous_question = this.getQuestionList;
+        this.questionSelected = previous_question.find(
+          x => x.value === this.question.condition.questionId
+        );
+        this.answersSelected = this.question.condition.answers;
+      } else {
+        this.questionSelected = null;
+        this.answersSelected = [];
+      }
+    },
+
     // Get all the questions dependent of a questions (children, grantchildren,...)
     getConditionalBranch(array, id, result) {
       let children = array.filter(x => x.condition.questionId == id);
