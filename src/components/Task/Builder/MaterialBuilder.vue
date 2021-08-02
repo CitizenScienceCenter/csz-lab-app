@@ -32,9 +32,6 @@
               }"
               @click="onMaterialSelected(materials.image)"
               class="text-center material"
-              v-b-popover.hover.bottom="
-                $t('task-material-builder-popover-images')
-              "
             >
               <i class="fas fa-images fa-4x"></i><br />
               <div class="m-2">{{ $t("task-material-builder-images") }}</div>
@@ -49,9 +46,6 @@
               }"
               @click="onMaterialSelected(materials.sound)"
               class="text-center material"
-              v-b-popover.hover.bottom="
-                $t('task-material-builder-popover-sounds')
-              "
             >
               <i class="fas fa-music fa-4x"></i><br />
               <div class="m-2">{{ $t("task-material-builder-sounds") }}</div>
@@ -66,9 +60,6 @@
               }"
               @click="onMaterialSelected(materials.video)"
               class="text-center material"
-              v-b-popover.hover.bottom="
-                $t('task-material-builder-popover-video')
-              "
             >
               <i class="fas fa-play fa-4x"></i><br />
               <div class="m-2">{{ $t("task-material-builder-video") }}</div>
@@ -85,7 +76,6 @@
               }"
               @click="onMaterialSelected(materials.pdf)"
               class="text-center material"
-              v-b-popover.hover.bottom="$t('task-material-builder-popover-pdf')"
             >
               <i class="fas fa-file-pdf fa-4x"></i><br />
               <div class="m-2">PDFs</div>
@@ -100,9 +90,6 @@
               }"
               @click="onMaterialSelected(materials.tweet)"
               class="text-center material"
-              v-b-popover.hover.bottom="
-                $t('task-material-builder-popover-tweet')
-              "
             >
               <i class="fab fa-twitter fa-4x"></i><br />
               <div class="m-2">Tweets</div>
@@ -111,15 +98,10 @@
         </b-row>
       </b-col>
 
-      <b-col md="3" class="text-muted">
-        <p class="small">
-          <i class="fas fa-info-circle"></i>
-          {{ $t("task-material-builder-file-types") }}
-        </p>
-        <p class="small">
-          {{ $t("task-material-builder-file-label-1") }}
-          {{ $t("task-material-builder-file-label-2") }}
-        </p>
+      <b-col md="3" align-self="start">
+        <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
+        <p v-html="$t('task-material-builder-file-types')" class="small"></p>
+        <p v-html="$t('task-material-builder-file-label-1')" class="small"></p>
         <p class="small">
           {{ $t("task-source-builder-options-next-label") }}
           <b-link
@@ -129,8 +111,9 @@
                 id: 'id' in this.selectedProject ? this.selectedProject.id : 0
               }
             }"
-            >{{ $t("task-template-builder-expert-path") }}</b-link
           >
+            {{ $t("task-template-builder-expert-path") }}
+          </b-link>
         </p>
       </b-col>
     </b-row>
@@ -209,5 +192,10 @@ export default {
 .material-selected {
   background-color: $secondary;
   color: white;
+}
+.icon-secondary-big {
+  color: $secondary;
+  width: 2.5em;
+  height: auto;
 }
 </style>

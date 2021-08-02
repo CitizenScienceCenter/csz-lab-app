@@ -82,7 +82,10 @@
 
         <b-col md="3" align-self="start">
           <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
-          <p v-html="$t('story-builder-project-tip')" class="text-muted"></p>
+          <p
+            v-html="$t('story-builder-project-tip')"
+            class="text-muted small"
+          ></p>
         </b-col>
       </b-row>
 

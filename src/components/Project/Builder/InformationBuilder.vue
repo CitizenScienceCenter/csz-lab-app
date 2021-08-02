@@ -61,8 +61,14 @@
 
         <b-col md="3" align-self="start">
           <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
-          <p v-html="$t('information-builder-tip1')" class="text-muted"></p>
-          <p v-html="$t('information-builder-tip2')" class="text-muted"></p>
+          <p
+            v-html="$t('information-builder-tip1')"
+            class="text-muted small"
+          ></p>
+          <p
+            v-html="$t('information-builder-tip2')"
+            class="text-muted small"
+          ></p>
         </b-col>
       </b-row>
 
