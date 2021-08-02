@@ -257,11 +257,16 @@ export default {
     );
 
     url.search = new URLSearchParams(parameters).toString();
-    return axios.post(url, data, {
+    const config = {
+      onUploadProgress: function(progressEvent) {
+        var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        console.log(percentCompleted)
+      },
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data"
       }
-    });
+    }
+    return axios.post(url, data, config);
   }
 };

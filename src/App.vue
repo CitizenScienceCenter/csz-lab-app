@@ -56,6 +56,7 @@
       <span v-html="notification.message.content"></span>
     </b-toast>
 
+    <!-- TODO: change for new loading component, must be wrapper -->
     <loading
       :active.sync="isLoadingSpinnerDisplayed"
       :can-cancel="false"
@@ -72,6 +73,10 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import { i18n } from "./i18n";
+// TODO: Implement a new component for loading with :
+// custom text(title and subtitle), hide btn, progress bar, spinner
+// remove vue-loading-overlay
+// TODO: verify showLoadingSpinner
 import Loading from "vue-loading-overlay";
 import GDPR from "./components/GDPR.vue";
 import Footer from "./components/Footer.vue";
