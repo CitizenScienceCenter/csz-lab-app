@@ -142,6 +142,7 @@
           <strong>{{ option.name }}</strong>
         </template>
       </multiselect>
+      <span class="small text-muted">{{$t('task-template-options-type-question')}}</span>
     </b-col>
   </b-row>
 </template>
