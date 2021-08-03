@@ -116,9 +116,9 @@
           <b-button class="mt-3" variant="primary" @click="confirmModal">
             {{ $t("task-template-options-modal-confirm-button") }}
           </b-button>
-          <!-- <b-button class="mt-3" variant="secondary" @click="showModal = false">
+          <b-button class="mt-3" variant="secondary" @click="closeModal">
             {{ $t("task-template-options-modal-close-button") }}
-          </b-button> -->
+          </b-button>
         </template>
       </b-modal>
     </b-col>
@@ -142,6 +142,7 @@
           <strong>{{ option.name }}</strong>
         </template>
       </multiselect>
+      <span class="small text-muted">{{$t('task-template-options-type-question')}}</span>
     </b-col>
   </b-row>
 </template>
@@ -160,7 +161,8 @@ export default {
       typeSelected: null,
       showModal: false,
       questionSelected: null,
-      answersSelected: []
+      answersSelected: [],
+      isClosedModal: false
     };
   },
   components: { Multiselect },
@@ -170,6 +172,7 @@ export default {
     types: { type: Array }
   },
   methods: {
+    // set the options selected for conditional question and close modal
     confirmModal() {
       this.question.isDependent = false;
       if (this.questionSelected.value >= 0) {
@@ -183,6 +186,21 @@ export default {
       }
       this.showModal = false;
     },
+    // no change the options previously selected and close modal
+    closeModal() {
+      this.showModal = false;
+      if (this.question.isDependent) {
+        this.questionSelected = this.getQuestionList.find(
+          x => x.value === this.question.condition.questionId
+        );
+        this.answersSelected = this.question.condition.answers;
+        this.isClosedModal = true;
+      } else {
+        this.questionSelected = null;
+        this.answersSelected = [];
+      }
+    },
+
     // Get all the questions dependent of a questions (children, grantchildren,...)
     getConditionalBranch(array, id, result) {
       let children = array.filter(x => x.condition.questionId == id);
@@ -257,6 +275,10 @@ export default {
       this.question.type = this.typeSelected.value;
     },
     questionSelected() {
+      if (this.isClosedModal) {
+        this.isClosedModal = false;
+        return;
+      }
       this.answersSelected = [];
     },
     questions() {

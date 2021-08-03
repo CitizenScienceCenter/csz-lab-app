@@ -30,7 +30,6 @@
               v-if="job === jobs.survey"
               @click="onJobSelected(jobs.survey)"
               class="text-center material my-2 mt-md-0"
-              v-b-popover.hover.bottom="$t('task-job-builder-popover-survey')"
             >
               <i class="fas fa-tasks fa-4x"></i>
               <div class="m-2">{{ $t("task-job-builder-survey") }}</div>
@@ -42,40 +41,55 @@
               v-if="job === jobs.geo_survey"
               @click="onJobSelected(jobs.geo_survey)"
               class="text-center material my-2 mt-md-0"
-              v-b-popover.hover.bottom="
-                $t('task-job-builder-popover-survey-geo')
-              "
             >
               <i class="fas fa-map-marker-alt fa-4x"></i>
               <i class="fas fa-tasks fa-lg"></i>
               <div class="m-2">{{ $t("task-job-builder-survey-geo") }}</div>
             </b-card>
           </b-col>
+          <b-col cols="12" class="mt-4 d-none d-md-block">
+            <b-btn
+              ref="btn-submit-job"
+              v-if="selectedJob"
+              @click="onSubmit"
+              variant="primary"
+              size="lg"
+            >
+              {{ $t("next-btn") }}</b-btn
+            >
+          </b-col>
         </b-row>
       </b-col>
 
-      <b-col md="3" class="text-muted">
-        <p class="small">
-          <i class="fas fa-info-circle"></i><br />
-          {{ $t("task-job-builder-choose-options") }}
-        </p>
-        <p class="small">
-          {{ $t("task-source-builder-options-next-label") }}
-          <b-link
-            :to="{
-              name: 'project.task.presenter.settings',
-              params: {
-                id: 'id' in this.selectedProject ? this.selectedProject.id : 0
-              }
-            }"
-          >
-            {{ $t("task-template-builder-expert-path") }}
-          </b-link>
-        </p>
+      <b-col md="3" align-self="start">
+        <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
+        <div v-if="selectedJob == jobs.survey">
+          <p
+            v-html="$t('task-job-builder-info-survey')"
+            class="text-muted small"
+          ></p>
+          <p
+            v-html="$t('task-job-builder-info-survey-example')"
+            class="text-muted small"
+          ></p>
+        </div>
+        <div v-else-if="selectedJob == jobs.geo_survey">
+          <p
+            v-html="$t('task-job-builder-info-survey-geo')"
+            class="text-muted small"
+          ></p>
+          <p
+            v-html="$t('task-job-builder-info-survey-geo-example')"
+            class="text-muted small"
+          ></p>
+        </div>
+        <div v-else>
+          <p v-html="$t('task-job-builder-info')" class="text-muted small"></p>
+        </div>
       </b-col>
     </b-row>
 
-    <b-row class="mt-4 mb-4">
+    <b-row class="mt-4 mb-4 d-block d-md-none">
       <b-col>
         <b-btn
           ref="btn-submit-job"

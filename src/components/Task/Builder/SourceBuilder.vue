@@ -76,24 +76,17 @@
             </b-row>
           </b-col>
           <!-- Information section - left side -->
-          <b-col md="3" class="text-muted">
-            <p class="small">
-              <i class="fas fa-info-circle"></i>
-              {{ $t("task-source-builder-choose-options") }}
-            </p>
-            <p class="small">
-              {{ $t("task-source-builder-options-next-label") }}
-              <b-link
-                :to="{
-                  name: 'project.task.presenter.settings',
-                  params: {
-                    id:
-                      'id' in this.selectedProject ? this.selectedProject.id : 0
-                  }
-                }"
-                >{{ $t("task-template-builder-expert-path") }}</b-link
-              >
-            </p>
+          <b-col md="3" align-self="start">
+            <!-- TODO: Define the specific information according source. Pending import standarization -->
+            <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
+            <p
+              v-html="$t('task-source-builder-info')"
+              class="text-muted small"
+            ></p>
+            <p
+              v-html="$t('task-source-builder-choose-authorized')"
+              class="small text-primary"
+            ></p>
           </b-col>
         </b-row>
 

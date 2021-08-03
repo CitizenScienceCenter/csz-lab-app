@@ -1,7 +1,7 @@
 <template>
   <b-media tag="li" vertical-align="top">
     <template v-slot:aside>
-      <i class="fas fa-code icon-secondary-big"></i>
+      <i class="fas fa-code icon-summary"></i>
     </template>
     <b-row class="d-flex justify-content-between">
       <h1 class="small text-muted m-0 pb-1 mb-2">
@@ -239,7 +239,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
-.icon-secondary-big {
+.icon-summary {
   color: $secondary;
   width: 3em;
   height: auto;

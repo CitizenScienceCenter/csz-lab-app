@@ -1,13 +1,12 @@
 <template>
   <div>
     <b-breadcrumb :items="items"></b-breadcrumb>
-
     <b-container>
       <h1>{{ $t("task-settings-delete-header") }}</h1>
 
       <b-alert :show="true" variant="danger">
         <b>{{ $t("danger-zone") }}</b>
-        {{ $t("task-settings-delete-danzer-note") }}
+        {{ $t("task-settings-delete-danger-note") }}
       </b-alert>
 
       <b-list-group>

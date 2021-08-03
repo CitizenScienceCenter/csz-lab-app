@@ -1,8 +1,15 @@
 <template>
   <div>
+    <!-- Component for maps in geo/survey projects -->
+    <div v-if="geoProject" class="mb-5">
+      <map-settings
+        :settings="mapSettings"
+        @onValid="mapSettingsValidation"
+      ></map-settings>
+    </div>
     <div class="clearfix">
       <!-- Internal header section -->
-      <h2 class="float-left">{{ $t("task-template-question") }}</h2>
+      <h2 class="float-left">{{ $t("task-template-questions") }}</h2>
       <b-btn @click.prevent="addQuestion" class="float-right">{{
         $t("task-template-add-question")
       }}</b-btn>
@@ -10,6 +17,9 @@
 
     <!-- Questions section -->
     <b-container class="small-bottom">
+      <h2 class="text-center text-muted" v-if="questions.length == 0">
+        {{ $t("task-template-no-questions") }}
+      </h2>
       <!-- All question section: distributed in tabs -->
       <b-tabs content-class="my-4" v-model="current_tab">
         <b-tab
@@ -48,7 +58,7 @@
               type="button"
               class="float-right my-2 text-primary"
               @click="deleteQuestion(questionKey)"
-              v-if="questions.length > 1"
+              v-if="questions.length > minQuestions"
             >
               <i class="far fa-trash-alt fa-lg"></i>
             </div>
@@ -56,7 +66,10 @@
 
           <!-- Answers section -->
           <!-- Multiple and One Choice question -->
-          <div v-if="types.slice(0, 3).some(x => x.value == question.type)">
+          <div
+            v-if="types.slice(0, 3).some(x => x.value == question.type)"
+            class="ans-overflow"
+          >
             <b-form-group
               :key="answerKey"
               v-for="(answer, answerKey) in question.answers"
@@ -99,10 +112,6 @@
                 </div>
               </b-row>
             </b-form-group>
-            <!-- Add answer button -->
-            <b-btn @click="addAnswer(questionKey)" class="float-right ">{{
-              $t("task-template-add-answer")
-            }}</b-btn>
           </div>
 
           <!-- Short answer question type -->
@@ -134,16 +143,16 @@
               </b-col>
             </b-row>
           </div>
+          <!-- Add answer button -->
+          <b-btn
+            v-if="types.slice(0, 3).some(x => x.value == question.type)"
+            @click="addAnswer(questionKey)"
+            class="float-right "
+            >{{ $t("task-template-add-answer") }}</b-btn
+          >
         </b-tab>
       </b-tabs>
       <br />
-      <!-- Component for maps in geo/survey projects -->
-      <div v-if="geoProject" class="mt-5">
-        <map-settings
-          :settings="mapSettings"
-          @onValid="mapSettingsValidation"
-        ></map-settings>
-      </div>
     </b-container>
 
     <!-- Continue Button -->
@@ -181,11 +190,15 @@ export default {
   created() {
     this.types = this.questionTypes;
     this.type = this.types[0];
+    this.minQuestions = 1;
+    this.questions = [JSON.parse(JSON.stringify(DEFAULT_QUESTION))];
     if (Array.isArray(this.task.template)) {
       // deep clone of questions
       this.questions = JSON.parse(JSON.stringify(this.task.template));
     }
     if (this.task.job === "geo_survey") {
+      // For geo/survey the questions are optional, thus the minQuestion could be 0
+      this.minQuestions = 0;
       if (this.task.mapSettings) {
         this.mapValid = true; // if mapSettings already exist the data is valid
         this.mapSettings = JSON.parse(JSON.stringify(this.task.mapSettings));
@@ -209,7 +222,8 @@ export default {
     return {
       maxCharQuestion: 75,
       maxCharAnswer: 30,
-      questions: [JSON.parse(JSON.stringify(DEFAULT_QUESTION))],
+      minQuestions: 0,
+      questions: [],
       types: [],
       minAnswers: 2,
       mapSettings: {},
@@ -243,7 +257,7 @@ export default {
       }, 200);
     },
     deleteQuestion(questionKey) {
-      if (this.questions.length > 1) {
+      if (this.questions.length > this.minQuestions) {
         const deletedID = this.questions[questionKey].id;
         this.questions = this.questions.map(function(x) {
           if (x.condition.questionId == deletedID) {
@@ -261,7 +275,7 @@ export default {
         this.questions[questionKey].answers.push("");
       } else {
         this.showInfo({
-          title: this.$t("task-survey-template-maxanswers"),
+          title: this.$t("task-survey-template-maxanswers-title"),
           content: this.$t("task-survey-template-maxanswers")
         });
       }
@@ -416,5 +430,10 @@ export default {
   right: 3%;
   color: $color-primary;
   font-weight: bold;
+}
+.ans-overflow {
+  overflow-y: auto;
+  max-height: 40vh;
+  overflow-x: hidden;
 }
 </style>

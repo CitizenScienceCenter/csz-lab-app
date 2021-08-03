@@ -42,40 +42,43 @@ const component = {
           </maps>
         </div>
       </b-col>
-      <!-- right columns - Media -->
+      <!-- right columns - Tweet -->
       <b-col
         :md="questionList.length > 0 ? 7:12"
         :lg="questionList.length > 0 ? 7:6"
         class="order-1"
         :class="questionList.length > 0 ? 'order-md-2':'order-lg-2'"
       >
-        <div
-          v-if="taskInfo.link_raw || taskInfo.url || taskInfo.video_url || taskInfo.audio_url"
-          class="text-center"
-          style="position: sticky; top: 15%"
-        >
-          <image-task-presenter
-            v-if="mime=='img'"
-            :link="taskInfo.url || taskInfo.link_raw"
-            :pybossa="pybossa"
-            :loading="!pybossa.taskLoaded"
-          />
-          <media
-            v-else-if="mime=='video'"
-            :link="taskInfo.link_raw || taskInfo.video_url"
-            type="video"
-            :loading="!pybossa.taskLoaded"
+        <div style="position: sticky;top: 15%;">
+          <!-- Author name and tweet text -->
+          <h5 v-if="taskInfo.user && taskInfo.user.name">From: {{ taskInfo.user.name }}</h5>
+          <p><i>{{ taskInfo.text }}</i></p>
+        
+          <!-- Display urls if available -->
+          <ul v-if="taskInfo.entities && taskInfo.entities.urls">
+            <li v-for="link in taskInfo.entities.urls"><a :href="link.url" target="_blank">{{ link.url }}</a></li>
+          </ul>
+      
+          <!-- Display media if available -->
+          <div
+            v-if="taskInfo.extended_entities && taskInfo.extended_entities.media && taskInfo.extended_entities.media.length > 0"
+            class="text-center"
           >
-          </media>
-          <media
-            v-else-if="mime=='audio'"
-            :link="taskInfo.link_raw || taskInfo.audio_url"
-            type="audio"
-            :loading="!pybossa.taskLoaded"
-          >
-          </media>
+            <image-task-presenter
+              v-if="taskInfo.extended_entities.media[0].type == 'photo'"
+              :link="getMedia('photo')"
+              :pybossa="pybossa"
+              :loading="!pybossa.taskLoaded"
+            />
+            <media
+              v-else-if="['video', 'animated_gif'].includes(taskInfo.extended_entities.media[0].type)"
+              :link="getMedia('video')"
+              type="video"
+              :loading="!pybossa.taskLoaded"
+            >
+            </media>
+          </div>
         </div>
-        <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
       </b-col>
     </b-row>
 
@@ -148,8 +151,7 @@ const component = {
     markedPlaces: [],
     area: { latlngs: [] },
 
-    showAlert: false,
-    mime: null
+    showAlert: false
   },
 
   methods: {
@@ -209,6 +211,16 @@ const component = {
       this.markedPlaces = [];
       this.area = { latlngs: [] };
       window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    getMedia(type) {
+      if (type == "photo") {
+        return this.taskInfo.extended_entities.media[0].media_url_https;
+      }
+      if (type == "video") {
+        return this.taskInfo.extended_entities.media[0].video_info.variants.find(
+          x => x.content_type.includes("video")
+        ).url;
+      }
     }
   },
 
@@ -217,9 +229,6 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
-      this.mime = this.pybossa.getFileType(
-        this.task.info.url || this.task.info.link_raw
-      );
       return this.task && this.task.info ? this.task.info : null;
     },
     context() {

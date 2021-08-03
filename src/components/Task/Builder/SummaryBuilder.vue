@@ -15,7 +15,7 @@
           <!-- Material -->
           <b-media tag="li" vertical-align="top" class="mb-4">
             <template v-slot:aside>
-              <i class="icon-secondary-big" :class="getMaterialIcon"></i>
+              <i class="icon-summary" :class="getMaterialIcon"></i>
             </template>
             <h1 class="small text-muted m-0 pb-1">
               {{ $t("task-summary-builder-material") }}
@@ -28,7 +28,7 @@
           <!-- Job -->
           <b-media tag="li" vertical-align="top" class="mb-4">
             <template v-slot:aside>
-              <i class="icon-secondary-big" :class="getJobIcon"></i>
+              <i class="icon-summary" :class="getJobIcon"></i>
             </template>
             <h1 class="small text-muted m-0 pb-1">
               {{ $t("task-summary-builder-job") }}
@@ -43,7 +43,7 @@
         <ul class="list-unstyled">
           <b-media tag="li" vertical-align="top">
             <template v-slot:aside>
-              <i class="icon-secondary-big" :class="getSourceIcon"></i>
+              <i class="icon-summary" :class="getSourceIcon"></i>
             </template>
             <h1 class="small text-muted mt-0 mb-0 pb-1">
               {{ $t("task-summary-builder-importer") }}
@@ -116,6 +116,7 @@ import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGeneri
 import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
+import GeoTwitterGenericTemplate from "@/components/Task/Template/Twitter/GeoTwitterGenericTemplate";
 import CSLoggerTemplate from "@/components/Task/Template/CSLoggerTemplate";
 
 export default {
@@ -245,6 +246,11 @@ export default {
           template = buildTemplateFromModel(TwitterGenericTemplate, {
             questions: this.task.template
           });
+        } else if (this.task.job === this.jobs.geo_survey) {
+          template = buildTemplateFromModel(GeoTwitterGenericTemplate, {
+            questions: this.task.template,
+            mapSettings: this.task.mapSettings
+          });
         }
       }
 
@@ -341,7 +347,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../../scss/variables.scss";
 
-.icon-secondary-big {
+.icon-summary {
   color: $secondary;
   width: 3em;
   height: auto;
