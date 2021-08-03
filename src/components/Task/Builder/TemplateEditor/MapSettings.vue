@@ -20,11 +20,42 @@
     </b-form-group>
 
     <!-- Map Editor section  -->
-    <b-form-group
+    <b-row>
+      <!-- Map center -->
+      <b-col cols="12" sm="8">
+        <b-form-group
+          :label="$t('task-template-map-center')"
+          :valid-feedback="validFeedback('center')"
+          :invalid-feedback="invalidFeedback('center')"
+          :state="validate('center')"
+        >
+          <b-input v-model.trim="settings.center" placeholder="lat, long">
+          </b-input>
+        </b-form-group>
+      </b-col>
+      <!-- Map zoom -->
+      <b-col cols="12" sm="4">
+        <b-form-group
+          :label="`${$t('task-template-map-zoom')}: ${settings.zoom}`"
+          :invalid-feedback="invalidFeedback('zoom')"
+          :state="validate('zoom')"
+        >
+          <b-form-input
+            v-model="settings.zoom"
+            type="range"
+            min="1"
+            max="18"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+    </b-row>
+
+    <!-- Map interactions: draw area and markers -->
+    <b-form-group :label="$t('task-template-map-interactions-label')"
       :invalid-feedback="invalidFeedback('map_editor')"
-      :state="validate('map_editor')"
+      :state="validate('map_editor')"      
     >
-      <b-row>
+      <b-row class="my-2 align-items-center">
         <b-col
           cols="12"
           sm="8"
@@ -48,39 +79,13 @@
               type="number"
               v-model="settings.maxMarkers"
               :disabled="!settings.markers"
+              size="sm"
             ></b-form-input>
           </b-form-group>
         </b-col>
       </b-row>
     </b-form-group>
 
-    <b-row>
-      <b-col cols="12" sm="8">
-        <b-form-group
-          :label="$t('task-template-map-center')"
-          :valid-feedback="validFeedback('center')"
-          :invalid-feedback="invalidFeedback('center')"
-          :state="validate('center')"
-        >
-          <b-input v-model.trim="settings.center" placeholder="lat, long">
-          </b-input>
-        </b-form-group>
-      </b-col>
-      <b-col cols="12" sm="4">
-        <b-form-group
-          :label="`${$t('task-template-map-zoom')}: ${settings.zoom}`"
-          :invalid-feedback="invalidFeedback('zoom')"
-          :state="validate('zoom')"
-        >
-          <b-form-input
-            v-model="settings.zoom"
-            type="range"
-            min="1"
-            max="18"
-          ></b-form-input>
-        </b-form-group>
-      </b-col>
-    </b-row>
     <maps
       class="mt-2"
       style="height: 350px; width:100%"

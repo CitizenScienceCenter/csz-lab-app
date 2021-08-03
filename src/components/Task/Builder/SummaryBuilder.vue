@@ -15,7 +15,7 @@
           <!-- Material -->
           <b-media tag="li" vertical-align="top" class="mb-4">
             <template v-slot:aside>
-              <i class="icon-secondary-big" :class="getMaterialIcon"></i>
+              <i class="icon-summary" :class="getMaterialIcon"></i>
             </template>
             <h1 class="small text-muted m-0 pb-1">
               {{ $t("task-summary-builder-material") }}
@@ -26,7 +26,7 @@
           <!-- Job -->
           <b-media tag="li" vertical-align="top" class="mb-4">
             <template v-slot:aside>
-              <i class="icon-secondary-big" :class="getJobIcon"></i>
+              <i class="icon-summary" :class="getJobIcon"></i>
             </template>
             <h1 class="small text-muted m-0 pb-1">
               {{ $t("task-summary-builder-job") }}
@@ -41,7 +41,7 @@
         <ul class="list-unstyled">
           <b-media tag="li" vertical-align="top">
             <template v-slot:aside>
-              <i class="icon-secondary-big" :class="getSourceIcon"></i>
+              <i class="icon-summary" :class="getSourceIcon"></i>
             </template>
             <h1 class="small text-muted mt-0 mb-0 pb-1">
               {{ $t("task-summary-builder-importer") }}
@@ -313,7 +313,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../../scss/variables.scss";
 
-.icon-secondary-big {
+.icon-summary {
   color: $secondary;
   width: 3em;
   height: auto;

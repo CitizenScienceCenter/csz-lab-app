@@ -100,8 +100,14 @@
 
       <b-col md="3" align-self="start">
         <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
-        <p v-html="$t('task-material-builder-file-types')" class="small"></p>
-        <p v-html="$t('task-material-builder-file-label-1')" class="small"></p>
+        <p
+          v-html="$t('task-material-builder-file-types')"
+          class="small text-muted"
+        ></p>
+        <p
+          v-html="$t('task-material-builder-file-label-1')"
+          class="small text-muted"
+        ></p>
         <p class="small">
           {{ $t("task-source-builder-options-next-label") }}
           <b-link
@@ -192,10 +198,5 @@ export default {
 .material-selected {
   background-color: $secondary;
   color: white;
-}
-.icon-secondary-big {
-  color: $secondary;
-  width: 2.5em;
-  height: auto;
 }
 </style>

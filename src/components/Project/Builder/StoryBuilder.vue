@@ -220,10 +220,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/variables.scss";
-.icon-secondary-big {
-  color: $secondary;
-  width: 2.5em;
-  height: auto;
-}
 </style>

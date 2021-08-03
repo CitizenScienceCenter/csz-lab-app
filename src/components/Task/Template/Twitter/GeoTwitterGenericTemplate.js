@@ -59,7 +59,7 @@ const component = {
             <li v-for="link in taskInfo.entities.urls"><a :href="link.url" target="_blank">{{ link.url }}</a></li>
           </ul>
       
-          <!-- Display picture if available -->
+          <!-- Display media if available -->
           <div
             v-if="taskInfo.extended_entities && taskInfo.extended_entities.media && taskInfo.extended_entities.media.length > 0"
             class="text-center"

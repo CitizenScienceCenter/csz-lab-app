@@ -447,6 +447,12 @@ textarea {
   }
 }
 
+.icon-secondary-big {
+  color: $secondary;
+  width: 2.5em;
+  height: auto;
+}
+
 @media only screen and (min-width: $viewport-mobile-large) {
 
   html {

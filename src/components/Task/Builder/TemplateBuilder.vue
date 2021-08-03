@@ -23,9 +23,29 @@
       <!-- Information section - left side -->
       <b-col md="3" align-self="start">
         <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
-        <p v-html="$t('task-template-builder-how-to-map-settings')" class="text-muted small mb-5" v-if="task.job == jobs.geo_survey"></p>
-        <p v-html="$t('task-template-builder-how-to-survey')" class="text-muted small"></p>
-        <p v-html="$t('task-template-builder-how-to-condition')" class="text-muted small"></p>
+        <p
+          v-html="$t('task-template-builder-how-to-map-settings')"
+          class="text-muted small mb-0"
+          v-if="task.job == jobs.geo_survey"
+        ></p>
+        <p
+          v-html="$t('task-template-builder-how-to-required')"
+          class="small mb-5 text-primary"
+          v-if="task.job == jobs.geo_survey"
+        ></p>
+        <p
+          v-html="$t('task-template-builder-how-to-survey')"
+          class="text-muted small"
+        ></p>
+        <p
+          v-html="$t('task-template-builder-how-to-condition')"
+          class="text-muted small"
+        ></p>
+        <p
+          v-html="$t('task-template-builder-how-to-required')"
+          class="small mb-5 text-primary"
+          v-if="task.job == jobs.survey"
+        ></p>
       </b-col>
     </b-row>
   </div>
@@ -68,10 +88,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/variables.scss";
-.icon-secondary-big {
-  color: $secondary;
-  width: 2.5em;
-  height: auto;
-}
 </style>

@@ -165,9 +165,4 @@ export default {
   background-color: $secondary;
   color: white;
 }
-.icon-secondary-big {
-  color: $secondary;
-  width: 2.5em;
-  height: auto;
-}
 </style>

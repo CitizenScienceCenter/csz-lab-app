@@ -57,7 +57,7 @@ const component = {
             </li>
           </ul>
 
-          <!-- Display picture if available -->
+          <!-- Display media if available -->
           <div
             v-if="taskInfo.extended_entities && taskInfo.extended_entities.media && taskInfo.extended_entities.media.length > 0"
             class="text-center"
