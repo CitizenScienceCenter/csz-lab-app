@@ -13,7 +13,7 @@
       <template #loading>
         <b-skeleton type="input" animation="throb"></b-skeleton>
       </template>
-      <div class="animation" >
+      <div class="animation">
         <span
           v-for="index in 15"
           :key="index"
@@ -25,9 +25,9 @@
         controls
         :src="link"
         style="width:85%"
-        @play="audio_animation=true"
-        @pause="audio_animation=false"
-        @ended="audio_animation=false"
+        @play="audio_animation = true"
+        @pause="audio_animation = false"
+        @ended="audio_animation = false"
       ></audio>
     </b-skeleton-wrapper>
   </div>
@@ -37,7 +37,7 @@
 export default {
   data() {
     return {
-      audio_animation: false,
+      audio_animation: false
     };
   },
   props: {
@@ -53,14 +53,19 @@ export default {
       this.audio_animation = value;
     }
   },
-  watch: {}
+  watch: {
+    link() {
+      // new audio link restart the audio animation
+      this.audio_animation = false;
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
 .animation {
-  width: 400px;
+  width: 250px;
   height: 50px;
   margin: 50px auto;
 }
@@ -72,7 +77,7 @@ span {
   height: 25px;
   animation: wave 1.5s linear infinite;
   transition: 0.5s;
-  &.pause{
+  &.pause {
     height: 5px;
     animation: wave 0s linear infinite;
   }
@@ -108,7 +113,7 @@ span {
   animation-delay: 0.9s;
 }
 .a11 {
-  animation-delay: 1.0s;
+  animation-delay: 1s;
 }
 .a12 {
   animation-delay: 1.1s;
@@ -130,6 +135,16 @@ span {
   25% {
     transform: scaleY(4);
     background-color: $secondary;
+  }
+}
+@media only screen and (min-width: $viewport-tablet-portrait) {
+  .animation {
+    width: 350px;
+  }
+}
+@media only screen and (min-width: $viewport-xlarge) {
+  .animation {
+    width: 450px;
   }
 }
 </style>
