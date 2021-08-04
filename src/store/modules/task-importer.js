@@ -123,38 +123,50 @@ const actions = {
    * @param files
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
-  importAmazonS3Tasks ({ commit, state, dispatch }, { project, bucket, files }) {
+  importAmazonS3Tasks({ commit, state, dispatch }, { project, bucket, files }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getAmazonS3TasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importAmazonS3Tasks(
-          state.amazonS3TasksImportationOptions.form.csrf,
-          project,
-          bucket,
-          files
-        ).then(value => {
-          if ('status' in value.data && value.data.status === 'message') {
-            commit('notification/showSuccess', {
-              title: 'Success',
-              content: value.data.flash
-            }, { root: true })
-            return value.data
-          }
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_AMAZON_S3_TASKS_ERROR"), 
-            content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getAmazonS3TasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importAmazonS3Tasks(
+              state.amazonS3TasksImportationOptions.form.csrf,
+              project,
+              bucket,
+              files
+            )
+            .then(value => {
+              if ("status" in value.data && value.data.status === "message") {
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: "Success",
+                    content: value.data.flash
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_AMAZON_S3_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -185,43 +197,61 @@ const actions = {
    * @param link
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
-  importGoogleDocsTasks ({ commit, state, dispatch }, { project, link }) {
+  importGoogleDocsTasks({ commit, state, dispatch }, { project, link }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getGoogleDocsTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importGoogleDocsTasks(
-          state.googleDocsTasksImportationOptions.form.csrf,
-          project.short_name,
-          link
-        ).then(value => {
-          if ('flash' in value.data) {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          commit('notification/showError', {
-            title: 'Error',
-            content: 'It seems that there is a problem with your link...'
-          }, { root: true })
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_GOOGLE_DOCS_TASKS_ERROR"),
-            content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getGoogleDocsTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importGoogleDocsTasks(
+              state.googleDocsTasksImportationOptions.form.csrf,
+              project.short_name,
+              link
+            )
+            .then(value => {
+              if ("flash" in value.data) {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              commit(
+                "notification/showError",
+                {
+                  title: "Error",
+                  content: "It seems that there is a problem with your link..."
+                },
+                { root: true }
+              );
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_GOOGLE_DOCS_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -252,43 +282,61 @@ const actions = {
    * @param file
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
-  importLocalCsvTasks ({ commit, state, dispatch }, { project, file }) {
+  importLocalCsvTasks({ commit, state, dispatch }, { project, file }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getLocalCsvTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importLocalCsvTasks(
-          state.localCsvTasksImportationOptions.form.csrf,
-          project.short_name,
-          file
-        ).then(value => {
-          if ('flash' in value.data) {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          commit('notification/showError', {
-            title: 'Error',
-            content: 'It seems that there is a problem with your file...'
-          }, { root: true })
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_CSV_FILE_TASKS_ERROR"),
-            content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getLocalCsvTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importLocalCsvTasks(
+              state.localCsvTasksImportationOptions.form.csrf,
+              project.short_name,
+              file
+            )
+            .then(value => {
+              if ("flash" in value.data) {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              commit(
+                "notification/showError",
+                {
+                  title: "Error",
+                  content: "It seems that there is a problem with your file..."
+                },
+                { root: true }
+              );
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_CSV_FILE_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -319,43 +367,61 @@ const actions = {
    * @param link
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
-  importOnlineCsvTasks ({ commit, state, dispatch }, { project, link }) {
+  importOnlineCsvTasks({ commit, state, dispatch }, { project, link }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getOnlineCsvTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importOnlineCsvTasks(
-          state.onlineCsvTasksImportationOptions.form.csrf,
-          project.short_name,
-          link
-        ).then(value => {
-          if ('flash' in value.data) {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          commit('notification/showError', {
-            title: 'Error',
-            content: 'It seems that there is a problem with your link...'
-          }, { root: true })
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_CSV_TASKS_ERROR"),
-            content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getOnlineCsvTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importOnlineCsvTasks(
+              state.onlineCsvTasksImportationOptions.form.csrf,
+              project.short_name,
+              link
+            )
+            .then(value => {
+              if ("flash" in value.data) {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              commit(
+                "notification/showError",
+                {
+                  title: "Error",
+                  content: "It seems that there is a problem with your link..."
+                },
+                { root: true }
+              );
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_CSV_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -386,38 +452,53 @@ const actions = {
    * @param files
    * @returns {*}
    */
-  importDropboxTasks ({ commit, state, dispatch }, { project, files }) {
+  importDropboxTasks({ commit, state, dispatch }, { project, files }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getDropboxTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importDropboxTasks(
-          state.dropboxTasksImportationOptions.form.csrf,
-          project.short_name,
-          files
-        ).then(value => {
-          if ('status' in value.data && value.data.status === 'message') {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_DROPBOX_TASKS_ERROR"), content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getDropboxTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importDropboxTasks(
+              state.dropboxTasksImportationOptions.form.csrf,
+              project.short_name,
+              files
+            )
+            .then(value => {
+              if ("status" in value.data && value.data.status === "message") {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_DROPBOX_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -448,38 +529,53 @@ const actions = {
    * @param files
    * @returns {*}
    */
-  importFlickrTasks ({ commit, state, dispatch }, { project, albumId }) {
+  importFlickrTasks({ commit, state, dispatch }, { project, albumId }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getFlickrTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importFlickrTasks(
-          state.flickrTasksImportationOptions.form.csrf,
-          project.short_name,
-          albumId
-        ).then(value => {
-          if ('status' in value.data && value.data.status === 'message') {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_FLICKR_TASKS_ERROR"), content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getFlickrTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importFlickrTasks(
+              state.flickrTasksImportationOptions.form.csrf,
+              project.short_name,
+              albumId
+            )
+            .then(value => {
+              if ("status" in value.data && value.data.status === "message") {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_FLICKR_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -543,39 +639,97 @@ const actions = {
    * @param maxTweets
    * @return {Promise<any> | * | Promise<any> | Thenable<any> | PromiseLike<any> | Promise<any>}
    */
-  importTwitterTasks ({ commit, state, dispatch }, { project, source, maxTweets }) {
+  importTwitterTasks(
+    { commit, state, dispatch },
+    { project, source, maxTweets }
+  ) {
+    commit("notification/showLoadingOverlay", true, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
+    return dispatch("getTwitterTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importTwitterTasks(
+              state.twitterTasksImportationOptions.form.csrf,
+              project.short_name,
+              source,
+              maxTweets
+            )
+            .then(value => {
+              if ("status" in value.data && value.data.status === "message") {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_TWITTER_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
+  },
 
-    return dispatch('getTwitterTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importTwitterTasks(
-          state.twitterTasksImportationOptions.form.csrf,
-          project.short_name,
-          source,
-          maxTweets
-        ).then(value => {
-          if ('status' in value.data && value.data.status === 'message') {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_TWITTER_TASKS_ERROR"), content: reason
-          }, { root: true })
-          return false
-        })
+  //** Citizen Science Logger Section **/
+  async importLocalCSLoggerFile({ commit, rootState }, { files, csv }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+    try {
+      const res = await api.importLocalCSLoggerFile(
+        rootState.project.selectedProject.short_name,
+        files,
+        csv
+      );
+      if ("status" in res.data && res.data.status === "message") {
+        let flash = res.data.flash.split(" ");
+        let message = flash.slice(1).join(" ");
+        commit(
+          "notification/showSuccess",
+          {
+            title: getTranslationLocale("success"),
+            content: isNaN(flash[0])
+              ? getPybossaTranslation(res.data.flash)
+              : flash[0] + " " + getPybossaTranslation(message)
+          },
+          { root: true }
+        );
+        return res.data;
       }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+      return false;
+    } catch (reason) {
+      commit(
+        "notification/showError",
+        {
+          title: getTranslationLocale("POST_CSLOGGER_IMPORTER_LOADING_ERROR"),
+          content: reason
+        },
+        { root: true }
+      );
+      return false;
+    } finally {
+      commit("notification/showLoadingOverlay", false, { root: true });
+    }
   }
 
 }
