@@ -835,7 +835,9 @@
     "private-project-content": "This is a private project with restricted access. Please contact the project owner for more information.",
     "access-denied": "Access denied",
     "project-protect-with-password": "Protect project with password",
-    "private-c": "Private"
+    "private-c": "Private",
+
+    "loading-hide-btn":"Continue in background" 
   },
   "de": {
     "site-title": "CS Project Builder",
@@ -1670,6 +1672,8 @@
     "private-project-content": "Das ist ein privates Projekt mit eingeschränktem Zugriff. Bitte kontaktieren Sie den Projektbesitzer für weitere Informationen",
     "access-denied": "Zugriff abgelehnt",
     "project-protect-with-password": "Projekt mit Passwort schützen",
-    "private-c": "Privat"
+    "private-c": "Privat",
+
+    "loading-hide-btn":"Weiter im Hintergrund" 
   }
 }

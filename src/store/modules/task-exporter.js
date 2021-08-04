@@ -28,7 +28,7 @@ const getters = {
 const actions = {
   exportTasksInCsv ({ commit, state }, project) {
 
-    commit('notification/showLoadingSpinner', true, { root: true })
+    commit('notification/showLoadingOverlay', true, { root: true })
 
     return api.exportTasksInCsv(project.short_name).then(value => {
       commit('setTasksCsvBlob', value.data)
@@ -41,13 +41,13 @@ const actions = {
       }, { root: true })
       return false
     }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
+        commit('notification/showLoadingOverlay', false, { root: true })
     )
   },
 
   exportTaskRunsInCsv ({ commit, state }, project) {
 
-    commit('notification/showLoadingSpinner', true, { root: true })
+    commit('notification/showLoadingOverlay', true, { root: true })
 
     return api.exportTaskRunsInCsv(project.short_name).then(value => {
       commit('setTaskRunsCsvBlob', value.data)
@@ -60,13 +60,13 @@ const actions = {
       }, { root: true })
       return false
     }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
+        commit('notification/showLoadingOverlay', false, { root: true })
     )
   },
 
   exportResultsInCsv ({ commit, state }, project) {
 
-    commit('notification/showLoadingSpinner', true, { root: true })
+    commit('notification/showLoadingOverlay', true, { root: true })
 
     return api.exportResultsInCsv(project.short_name).then(value => {
       commit('setResultsCsvBlob', value.data)
@@ -79,13 +79,13 @@ const actions = {
       }, { root: true })
       return false
     }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
+        commit('notification/showLoadingOverlay', false, { root: true })
     )
   },
 
   exportTasksInJson ({ commit, state }, project) {
 
-    commit('notification/showLoadingSpinner', true, { root: true })
+    commit('notification/showLoadingOverlay', true, { root: true })
 
     return api.exportTasksInJson(project.short_name).then(value => {
       commit('setTasksJsonBlob', value.data)
@@ -98,13 +98,13 @@ const actions = {
       }, { root: true })
       return false
     }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
+        commit('notification/showLoadingOverlay', false, { root: true })
     )
   },
 
   exportTaskRunsInJson ({ commit, state }, project) {
 
-    commit('notification/showLoadingSpinner', true, { root: true })
+    commit('notification/showLoadingOverlay', true, { root: true })
 
     return api.exportTaskRunsInJson(project.short_name).then(value => {
       commit('setTaskRunsJsonBlob', value.data)
@@ -117,13 +117,13 @@ const actions = {
       }, { root: true })
       return false
     }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
+        commit('notification/showLoadingOverlay', false, { root: true })
     )
   },
 
   exportResultsInJson ({ commit, state }, project) {
 
-    commit('notification/showLoadingSpinner', true, { root: true })
+    commit('notification/showLoadingOverlay', true, { root: true })
 
     return api.exportResultsInJson(project.short_name).then(value => {
       commit('setResultsJsonBlob', value.data)
@@ -136,7 +136,7 @@ const actions = {
       }, { root: true })
       return false
     }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
+        commit('notification/showLoadingOverlay', false, { root: true })
     )
   }
 }

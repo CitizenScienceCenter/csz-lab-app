@@ -77,15 +77,26 @@ export default {
       "getTaskDeletionOptions",
       "deleteAllTasks"
     ]),
-    ...mapMutations("notification", ["showLoadingSpinner"]),
+    ...mapMutations("notification", [
+      "showLoadingOverlay",
+      "setLoadingConfig"
+    ]),
 
     deleteTasks() {
-      this.showLoadingSpinner(true);
+      this.showLoadingOverlay(true);
+      const overlay_config = {
+        label: "Deleting tasks...",
+        sublabel: "This process could take a while, please wait. ",
+        progress: null,
+        finite: false,
+        hideBtn: false
+      };
+      this.setLoadingConfig(overlay_config);
       this.deleteAllTasks(this.project).then(success => {
         if (success) {
           this.goBack();
         }
-        this.showLoadingSpinner(false);
+        this.showLoadingOverlay(false);
       });
     },
 

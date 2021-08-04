@@ -153,7 +153,7 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   importAmazonS3Tasks({ commit, state, dispatch }, { project, bucket, files }) {
-    commit("notification/showLoadingSpinner", true, { root: true });
+    commit("notification/showLoadingOverlay", true, { root: true });
 
     return dispatch("getAmazonS3TasksImportationOptions", project)
       .then(response => {
@@ -194,7 +194,7 @@ const actions = {
         return false;
       })
       .finally(() =>
-        commit("notification/showLoadingSpinner", false, { root: true })
+        commit("notification/showLoadingOverlay", false, { root: true })
       );
   },
 
@@ -236,7 +236,7 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   importGoogleDocsTasks({ commit, state, dispatch }, { project, link }) {
-    commit("notification/showLoadingSpinner", true, { root: true });
+    commit("notification/showLoadingOverlay", true, { root: true });
 
     return dispatch("getGoogleDocsTasksImportationOptions", project)
       .then(response => {
@@ -288,7 +288,7 @@ const actions = {
         return false;
       })
       .finally(() =>
-        commit("notification/showLoadingSpinner", false, { root: true })
+        commit("notification/showLoadingOverlay", false, { root: true })
       );
   },
 
@@ -330,7 +330,7 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   importLocalCsvTasks({ commit, state, dispatch }, { project, file }) {
-    commit("notification/showLoadingSpinner", true, { root: true });
+    commit("notification/showLoadingOverlay", true, { root: true });
 
     return dispatch("getLocalCsvTasksImportationOptions", project)
       .then(response => {
@@ -382,7 +382,7 @@ const actions = {
         return false;
       })
       .finally(() =>
-        commit("notification/showLoadingSpinner", false, { root: true })
+        commit("notification/showLoadingOverlay", false, { root: true })
       );
   },
 
@@ -424,7 +424,7 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   importOnlineCsvTasks({ commit, state, dispatch }, { project, link }) {
-    commit("notification/showLoadingSpinner", true, { root: true });
+    commit("notification/showLoadingOverlay", true, { root: true });
 
     return dispatch("getOnlineCsvTasksImportationOptions", project)
       .then(response => {
@@ -476,7 +476,7 @@ const actions = {
         return false;
       })
       .finally(() =>
-        commit("notification/showLoadingSpinner", false, { root: true })
+        commit("notification/showLoadingOverlay", false, { root: true })
       );
   },
 
@@ -518,7 +518,7 @@ const actions = {
    * @returns {*}
    */
   importDropboxTasks({ commit, state, dispatch }, { project, files }) {
-    commit("notification/showLoadingSpinner", true, { root: true });
+    commit("notification/showLoadingOverlay", true, { root: true });
 
     return dispatch("getDropboxTasksImportationOptions", project)
       .then(response => {
@@ -562,7 +562,7 @@ const actions = {
         return false;
       })
       .finally(() =>
-        commit("notification/showLoadingSpinner", false, { root: true })
+        commit("notification/showLoadingOverlay", false, { root: true })
       );
   },
 
@@ -605,7 +605,7 @@ const actions = {
    * @returns {*}
    */
   importFlickrTasks({ commit, state, dispatch }, { project, albumId }) {
-    commit("notification/showLoadingSpinner", true, { root: true });
+    commit("notification/showLoadingOverlay", true, { root: true });
 
     return dispatch("getFlickrTasksImportationOptions", project)
       .then(response => {
@@ -649,7 +649,7 @@ const actions = {
         return false;
       })
       .finally(() =>
-        commit("notification/showLoadingSpinner", false, { root: true })
+        commit("notification/showLoadingOverlay", false, { root: true })
       );
   },
 
@@ -740,7 +740,7 @@ const actions = {
     { commit, state, dispatch },
     { project, source, maxTweets }
   ) {
-    commit("notification/showLoadingSpinner", true, { root: true });
+    commit("notification/showLoadingOverlay", true, { root: true });
 
     return dispatch("getTwitterTasksImportationOptions", project)
       .then(response => {
@@ -785,13 +785,13 @@ const actions = {
         return false;
       })
       .finally(() =>
-        commit("notification/showLoadingSpinner", false, { root: true })
+        commit("notification/showLoadingOverlay", false, { root: true })
       );
   },
 
   //** Citizen Science Logger Section **/
   async importLocalCSLoggerFile({ commit, rootState }, { files, csv }) {
-    commit("notification/showLoadingSpinner", true, { root: true });
+    commit("notification/showLoadingOverlay", true, { root: true });
     try {
       const res = await api.importLocalCSLoggerFile(
         rootState.project.selectedProject.short_name,
@@ -825,7 +825,7 @@ const actions = {
       );
       return false;
     } finally {
-      commit("notification/showLoadingSpinner", false, { root: true });
+      commit("notification/showLoadingOverlay", false, { root: true });
     }
   }
 };
