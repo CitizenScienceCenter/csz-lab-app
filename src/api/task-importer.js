@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "@/store/index.js";
 
 axios.defaults.headers["Content-Type"] = "application/json";
 
@@ -259,14 +260,33 @@ export default {
     url.search = new URLSearchParams(parameters).toString();
     const config = {
       onUploadProgress: function(progressEvent) {
-        var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-        console.log(percentCompleted)
+        var percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        let up_config = {};
+        if (percentCompleted < 100) {
+          up_config = {
+            label: "Sending files...",
+            progress: { value: percentCompleted, max: 100 },
+            finite: true
+          };
+        } else {
+          up_config = {
+            label: "Creating tasks...",
+            sublabel:
+              "This process could take a while, please wait. ",
+            progress: null,
+            finite: false,
+            hideBtn: false
+          };
+        }
+        store.commit("notification/setLoadingConfig", up_config);
       },
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data"
       }
-    }
+    };
     return axios.post(url, data, config);
   }
 };
