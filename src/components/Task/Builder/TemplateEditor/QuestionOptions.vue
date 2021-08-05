@@ -142,7 +142,9 @@
           <strong>{{ option.name }}</strong>
         </template>
       </multiselect>
-      <span class="small text-muted">{{$t('task-template-options-type-question')}}</span>
+      <span class="small text-muted">{{
+        $t("task-template-options-type-question")
+      }}</span>
     </b-col>
   </b-row>
 </template>
@@ -171,7 +173,24 @@ export default {
     questions: { type: Array },
     types: { type: Array }
   },
+  created() {
+    if (this.question) {
+      this.typeSelected =
+        this.types.find(x => x.value == this.question.type) || this.types[0];
+      if (this.question.isDependent) {
+        this.fillConditional();
+      }
+    }
+  },
   methods: {
+    // Fill conditional with previous data
+    fillConditional() {
+      const condition = this.question.condition;
+      this.questionSelected = this.getQuestionList.find(
+        x => x.value == condition.questionId
+      );
+      this.answersSelected = condition.answers;
+    },
     // set the options selected for conditional question and close modal
     confirmModal() {
       this.question.isDependent = false;
@@ -190,10 +209,7 @@ export default {
     closeModal() {
       this.showModal = false;
       if (this.question.isDependent) {
-        this.questionSelected = this.getQuestionList.find(
-          x => x.value === this.question.condition.questionId
-        );
-        this.answersSelected = this.question.condition.answers;
+        this.fillConditional();
         this.isClosedModal = true;
       } else {
         this.questionSelected = null;
@@ -271,15 +287,22 @@ export default {
     }
   },
   watch: {
-    typeSelected() {
+    typeSelected(newVal, oldVal) {
       this.question.type = this.typeSelected.value;
+      // validate if type of question includes options or not
+      if (newVal && oldVal && newVal.options && !oldVal.options) {
+        this.question.answers = ["", ""];
+      }
     },
-    questionSelected() {
+    questionSelected(newVal, oldVal) {
       if (this.isClosedModal) {
         this.isClosedModal = false;
         return;
       }
-      this.answersSelected = [];
+      // Validate if replace an previos question or is the first one
+      if (oldVal) {
+        this.answersSelected = [];
+      }
     },
     questions() {
       // Clear the selecteQuestion if condition is empty or is not selected
@@ -291,12 +314,7 @@ export default {
         this.question.isDependent = false;
       } else {
         // Refill the question selected with condition data if exist
-        const condition = this.question.condition;
-        this.questionSelected.value = condition.questionId;
-        this.questionSelected.answers = this.questions.find(
-          x => x.id == condition.questionId
-        ).answers;
-        this.answersSelected = condition.answers;
+        this.fillConditional();
       }
     }
   }

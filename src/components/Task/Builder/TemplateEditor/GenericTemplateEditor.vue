@@ -200,7 +200,7 @@ export default {
       // For geo/survey the questions are optional, thus the minQuestion could be 0
       this.minQuestions = 0;
       if (this.task.mapSettings) {
-        this.mapValid = true; // if mapSettings already exist the data is valid
+        this.mapValid = true; // if mapSettings already exist asumes data as valid
         this.mapSettings = JSON.parse(JSON.stringify(this.task.mapSettings));
         this.mapSettings.center = this.mapSettings.center.join(",");
         return;
@@ -214,7 +214,8 @@ export default {
         maxMarkers: null,
         center: "",
         static_map: false,
-        mapType: "Road"
+        mapType: "Road",
+        required:true
       };
     }
   },
