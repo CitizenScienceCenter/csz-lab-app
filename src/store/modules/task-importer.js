@@ -154,6 +154,14 @@ const actions = {
    */
   importAmazonS3Tasks({ commit, state, dispatch }, { project, bucket, files }) {
     commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
     return dispatch("getAmazonS3TasksImportationOptions", project)
       .then(response => {
@@ -237,6 +245,14 @@ const actions = {
    */
   importGoogleDocsTasks({ commit, state, dispatch }, { project, link }) {
     commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
     return dispatch("getGoogleDocsTasksImportationOptions", project)
       .then(response => {
@@ -331,6 +347,14 @@ const actions = {
    */
   importLocalCsvTasks({ commit, state, dispatch }, { project, file }) {
     commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
     return dispatch("getLocalCsvTasksImportationOptions", project)
       .then(response => {
@@ -425,6 +449,14 @@ const actions = {
    */
   importOnlineCsvTasks({ commit, state, dispatch }, { project, link }) {
     commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
     return dispatch("getOnlineCsvTasksImportationOptions", project)
       .then(response => {
@@ -519,6 +551,14 @@ const actions = {
    */
   importDropboxTasks({ commit, state, dispatch }, { project, files }) {
     commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
     return dispatch("getDropboxTasksImportationOptions", project)
       .then(response => {
@@ -606,6 +646,14 @@ const actions = {
    */
   importFlickrTasks({ commit, state, dispatch }, { project, albumId }) {
     commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
     return dispatch("getFlickrTasksImportationOptions", project)
       .then(response => {
@@ -741,6 +789,14 @@ const actions = {
     { project, source, maxTweets }
   ) {
     commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
     return dispatch("getTwitterTasksImportationOptions", project)
       .then(response => {
@@ -792,6 +848,7 @@ const actions = {
   //** Citizen Science Logger Section **/
   async importLocalCSLoggerFile({ commit, rootState }, { files, csv }) {
     commit("notification/showLoadingOverlay", true, { root: true });
+
     try {
       const res = await api.importLocalCSLoggerFile(
         rootState.project.selectedProject.short_name,

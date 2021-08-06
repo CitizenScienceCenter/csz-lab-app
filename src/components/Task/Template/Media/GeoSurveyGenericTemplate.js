@@ -217,10 +217,13 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
-      this.mime = this.pybossa.getFileType(
-        this.task.info.url || this.task.info.link_raw
-      );
-      return this.task && this.task.info ? this.task.info : null;
+      if (this.task && this.task.info) {
+        this.mime = this.pybossa.getFileType(
+          this.task.info.url || this.task.info.link_raw
+        );
+        return this.task.info;
+      }
+      return null;
     },
     context() {
       return this;

@@ -1,9 +1,9 @@
 const QUESTION_TYPES = [
-  { value: "one_choice", name: "One Choice" },
-  { value: "multiple_choice", name: "Multiple Choice" },
-  { value: "dropdown", name: "Dropdown" },
-  { value: "short_answer", name: "Short Answer"},
-  { value: "long_answer", name: "Long Answer" }
+  { value: "one_choice", name: "One Choice", options: true },
+  { value: "multiple_choice", name: "Multiple Choice", options: true },
+  { value: "dropdown", name: "Dropdown", options: true },
+  { value: "short_answer", name: "Short Answer", options: false },
+  { value: "long_answer", name: "Long Answer", options: false }
 ];
 
 const state = {

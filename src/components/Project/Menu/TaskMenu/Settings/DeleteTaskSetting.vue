@@ -85,8 +85,8 @@ export default {
     deleteTasks() {
       this.showLoadingOverlay(true);
       const overlay_config = {
-        label: "Deleting tasks...",
-        sublabel: "This process could take a while, please wait. ",
+        label: this.$t('task-settings-delete-loading-label'),
+        sublabel: this.$t('task-settings-delete-loading-sublabel'),
         progress: null,
         finite: false,
         hideBtn: false
