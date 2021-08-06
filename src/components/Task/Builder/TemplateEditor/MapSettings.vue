@@ -127,7 +127,7 @@ export default {
   },
   created() {
     this.mapSettings = {
-      center: [0, 0],
+      center: this.settings.center ? this.settings.center.split(",") : [0, 0],
       zoom: this.settings.zoom,
       mapType: this.settings.mapType,
       static_map: true
