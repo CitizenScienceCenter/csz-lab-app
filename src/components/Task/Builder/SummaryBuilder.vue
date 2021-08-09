@@ -187,9 +187,6 @@ export default {
         pdf: {
           survey: PdfGenericTemplate,
           geo_survey: GeoPdfGenericTemplate
-        },
-        cslogger: {
-          survey: CSLoggerTemplate
         }
       };
       // Media template generation (images, sounds and videos)
