@@ -222,6 +222,10 @@ export default {
       if (this.task.material === this.materials.tweet) {
         return templates.twitter[this.task.job];
       }
+      // CSLogger template generation
+      if (this.task.material === this.materials.cslogger) {
+        return templates.cslogger[this.task.job];
+      }
       return null;
     }
   },
@@ -249,15 +253,6 @@ export default {
 
       // the generated template
       let template = this.createTemplate(this.getTemplate);
-
-      // CSLogger template generation
-      if (this.task.material === this.materials.cslogger) {
-        if (this.task.job === this.jobs.survey) {
-          template = buildTemplateFromModel(CSLoggerTemplate, {
-            questions: this.task.template
-          });
-        }
-      }
 
       // Store the generated template for the selected project
       const templatePromise = this.saveTaskPresenter({
