@@ -1,4 +1,5 @@
 import api from "@/api/aws";
+import media_ext from "@/assets/media_files_ext.json";
 
 const errors = {
   GET_BUCKET_FILES_ERROR: "Error during bucket files loading"
@@ -57,7 +58,7 @@ const state = {
     [materials.sound]: [jobs.survey, jobs.geo_survey],
     [materials.video]: [jobs.survey, jobs.geo_survey],
     [materials.tweet]: [jobs.survey, jobs.geo_survey],
-    [materials.pdf]: [jobs.survey]
+    [materials.pdf]: [jobs.survey, jobs.geo_survey]
   },
   // available sources for each material type
   materialSources: {
@@ -69,11 +70,11 @@ const state = {
   },
   // available extensions for each material type
   materialExtensions: {
-    [materials.image]: [".jpg", ".jpeg", ".png"],
-    [materials.sound]: [".mp3", ".aac"],
-    [materials.pdf]: [".pdf"],
+    [materials.image]: media_ext.image,
+    [materials.sound]: media_ext.sound,
+    [materials.pdf]: media_ext.documents,
     [materials.tweet]: [],
-    [materials.video]: [".mp4"]
+    [materials.video]: media_ext.video
   },
 
   // aws s3 bucket

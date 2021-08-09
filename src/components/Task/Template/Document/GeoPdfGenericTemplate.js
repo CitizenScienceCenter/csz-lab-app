@@ -1,10 +1,16 @@
 // eslint-disable-next-line no-unused-vars
 const component = {
   template: `
-      <!-- This template use https://bootstrap-vue.js.org/ -->
-      <b-row v-if="userProgress < 100 && taskInfo">
-      <!-- Form zone -->
-      <b-col md="5" class="mt-4 mt-md-0 order-2 order-md-1">
+  <!-- This template use https://bootstrap-vue.js.org/ -->
+  <div v-if="userProgress < 100 && taskInfo">
+    <b-row class="d-flex justify-content-center">
+      <!-- Left column - Questions-->
+      <b-col
+        :md="questionList.length > 0 ? 5:12"
+        :lg="questionList.length > 0 ? 5:6"
+        class="mt-4 mt-lg-0 order-2"
+        :class="questionList.length > 0 ? 'order-md-1':'order-lg-1'"
+      >
         <!-- Questions with answers -->
         <b-form-group
           :key="question.id"
@@ -18,34 +24,32 @@ const component = {
           </label>
           <common-editor-elements :answers="answers" :question="question" :context="context" />
         </b-form-group>
-    
-        <!-- Submit button -->
-        <b-btn @click="submit" variant="success" class="mt-3">{{$t('submit-btn')}}</b-btn>
-    
-        <!-- Skip button -->
-        <b-btn @click="skip" variant="secondary" class="mt-3">{{$t('skip-btn')}}</b-btn>
-    
-        <!-- Form validation errors -->
-        <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
-          {{$t('template-editor-text-8')}}
-        </b-alert>
-    
-        <!-- User progress -->
-        <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
-        <p class="mt-2">
-          {{$t('template-editor-text-2')}}:
-          <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>
-          {{$t('template-editor-text-2a')}}
-          <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge>
-          {{$t('template-editor-text-3')}}
-        </p>
-    
-        <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
+        <!-- Map Section when NO questions exist -->
+        <div v-if="questionList.length == 0">
+          <!-- Map question -->
+          <label> {{mapSettings.question}} </label>
+          <!-- Map -->
+          <maps
+            class="my-2"
+            style="height: 50vh"
+            :can_mark="mapSettings.markers"
+            :can_draw="mapSettings.area"
+            :mapSettings="mapSettings"
+            :locations="markedPlaces"
+            :area="area"
+            :taskLoaded="pybossa.taskLoaded"
+          >
+          </maps>
+        </div>
       </b-col>
-    
-      <!-- PDF section -->
-      <b-col md="7" class="order-1 order-md-2">
-        <div 
+      <!-- right columns - PDF document -->
+      <b-col
+        :md="questionList.length > 0 ? 7:12"
+        :lg="questionList.length > 0 ? 7:6"
+        class="order-1 text-center""
+        :class="questionList.length > 0 ? 'order-md-2':'order-lg-2'"
+      >
+        <div
           v-if="taskInfo.link_raw || taskInfo.pdf_url"
           class="text-center"
           style="position: sticky; top: 15%"
@@ -88,34 +92,101 @@ const component = {
         <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-10')}}</b-alert>
       </b-col>
     </b-row>
-    
-    <!-- Task end message -->
-    <b-row v-else>
+
+    <!-- Map Section -->
+    <b-row class="my-4" v-if="questionList.length > 0">
       <b-col>
-        <b-jumbotron
-          :header="$t('template-editor-text-6')"
-          :lead="$t('template-editor-text-7')"
-        ></b-jumbotron>
+        <!-- Map question -->
+        <label> {{mapSettings.question}} </label>
+        <!-- Map -->
+        <maps
+          class="my-2"
+          style="height: 500px"
+          :can_mark="mapSettings.markers"
+          :can_draw="mapSettings.area"
+          :mapSettings="mapSettings"
+          :locations="markedPlaces"
+          :area="area"
+          :taskLoaded="pybossa.taskLoaded"
+        >
+        </maps>
       </b-col>
-    </b-row>`,
+    </b-row>
+
+    <b-row>
+      <b-col>
+        <!-- Form validation errors -->
+        <b-alert variant="danger" v-model="showAlert" class="mt-2" dismissible>
+          {{$t('template-editor-text-8')}}
+        </b-alert>
+
+        <!-- Submit button -->
+        <b-button @click="submit" variant="success" class="mt-2">{{ $t('submit-btn') }}</b-button>
+        <!-- Skip button -->
+        <b-button @click="skip" variant="secondary" class="mt-2">{{$t('skip-btn')}}</b-button>
+
+        <!-- User progress -->
+        <p class="mt-2">
+          {{$t('template-editor-text-2')}}:
+          <b-badge variant="primary">{{ pybossa.userProgress.done }}</b-badge>
+          {{$t('template-editor-text-2a')}}
+          <b-badge variant="primary">{{ pybossa.userProgress.total }}</b-badge>
+          {{$t('template-editor-text-3')}}
+        </p>
+        <b-progress :value="pybossa.userProgressInPercent" :max="100"></b-progress>
+      </b-col>
+    </b-row>
+  </div>
+
+  <!-- Task end message -->
+  <b-row v-else>
+    <b-col>
+      <b-jumbotron
+        :header="$t('template-editor-text-6')"
+        :lead="$t('template-editor-text-7')"
+      ></b-jumbotron>
+    </b-col>
+  </b-row>`,
 
   data: {
+    mapSettings: {},
     questions: [
       {
         question: "",
         answers: [""]
       }
     ],
-    answers: [],
-    showAlert: false,
     questionList: [],
+
+    answers: [],
+    markedPlaces: [],
+    area: { latlngs: [] },
+
+    showAlert: false,
     pageCount: 0,
     currentPage: 1
   },
 
   methods: {
+    skipTask() {
+      this.pybossa.saveTask(null);
+    },
     submit() {
       if (this.isFormValid()) {
+        if (this.mapSettings.markers && this.markedPlaces.length == 0) {
+          this.showAlert = true;
+          return;
+        }
+        if (this.mapSettings.area && this.area.latlngs.length == 0) {
+          this.showAlert = true;
+          return;
+        }
+        this.answers.push({
+          question: this.mapSettings.question,
+          coordinates: this.markedPlaces,
+          area: this.area
+        });
+
         this.pybossa.saveTask(this.answers);
         this.initialize();
       } else {
@@ -150,6 +221,8 @@ const component = {
         }
         return answer;
       });
+      this.markedPlaces = [];
+      this.area = { latlngs: [] };
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   },
@@ -171,16 +244,16 @@ const component = {
     }
   },
 
+  watch: {
+    /* Watch no nested elements */
+  },
+
   created() {
     this.initialize();
   },
 
   mounted() {
     this.pybossa.run();
-  },
-
-  watch: {
-    /* Watch no nested elements */
   },
 
   props: {

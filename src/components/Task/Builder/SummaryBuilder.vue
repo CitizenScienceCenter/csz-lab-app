@@ -108,6 +108,7 @@ import TemplateSummary from "@/components/Task/Builder/TemplateEditor/TemplateSu
 import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGenericTemplate";
 import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
+import GeoPdfGenericTemplate from "@/components/Task/Template/Document/GeoPdfGenericTemplate";
 import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
 import GeoTwitterGenericTemplate from "@/components/Task/Template/Twitter/GeoTwitterGenericTemplate";
 
@@ -172,6 +173,44 @@ export default {
         default:
           return "fas fa-file";
       }
+    },
+    getTemplate() {
+      const templates = {
+        media: {
+          survey: SurveyGenericTemplate,
+          geo_survey: GeoSurveyGenericTemplate
+        },
+        twitter: {
+          survey: TwitterGenericTemplate,
+          geo_survey: GeoTwitterGenericTemplate
+        },
+        pdf: {
+          survey: PdfGenericTemplate,
+          geo_survey: GeoPdfGenericTemplate
+        },
+        cslogger: {
+          survey: CSLoggerTemplate
+        }
+      };
+      // Media template generation (images, sounds and videos)
+      if (
+        [
+          this.materials.image,
+          this.materials.sound,
+          this.materials.video
+        ].includes(this.task.material)
+      ) {
+        return templates.media[this.task.job];
+      }
+      // Pdf template generation
+      if (this.task.material === this.materials.pdf) {
+        return templates.pdf[this.task.job];
+      }
+      // Twitter template generation
+      if (this.task.material === this.materials.tweet) {
+        return templates.twitter[this.task.job];
+      }
+      return null;
     }
   },
   methods: {
@@ -193,50 +232,7 @@ export default {
       /// -----------------------------------------------------------
 
       // the generated template
-      let template = null;
-
-      // Image template generation
-      if (
-        [
-          this.materials.image,
-          this.materials.sound,
-          this.materials.video
-        ].includes(this.task.material)
-      ) {
-        if (this.task.job === this.jobs.survey) {
-          template = buildTemplateFromModel(SurveyGenericTemplate, {
-            questions: this.task.template
-          });
-        } else if (this.task.job === this.jobs.geo_survey) {
-          template = buildTemplateFromModel(GeoSurveyGenericTemplate, {
-            questions: this.task.template,
-            mapSettings: this.task.mapSettings
-          });
-        }
-      }
-
-      // Pdf template generation
-      if (this.task.material === this.materials.pdf) {
-        if (this.task.job === this.jobs.survey) {
-          template = buildTemplateFromModel(PdfGenericTemplate, {
-            questions: this.task.template
-          });
-        }
-      }
-
-      // Tweet template generation
-      if (this.task.material === this.materials.tweet) {
-        if (this.task.job === this.jobs.survey) {
-          template = buildTemplateFromModel(TwitterGenericTemplate, {
-            questions: this.task.template
-          });
-        } else if (this.task.job === this.jobs.geo_survey) {
-          template = buildTemplateFromModel(GeoTwitterGenericTemplate, {
-            questions: this.task.template,
-            mapSettings: this.task.mapSettings
-          });
-        }
-      }
+      let template = this.createTemplate(this.getTemplate);
 
       // store the generated template for the selected project
       const templatePromise = this.saveTaskPresenter({
@@ -305,6 +301,19 @@ export default {
           }
         }
       );
+    },
+    // send template to server according type of job
+    createTemplate(template) {
+      if (this.task.job === this.jobs.survey) {
+        return buildTemplateFromModel(template, {
+          questions: this.task.template
+        });
+      } else if (this.task.job === this.jobs.geo_survey) {
+        return buildTemplateFromModel(template, {
+          questions: this.task.template,
+          mapSettings: this.task.mapSettings
+        });
+      }
     }
   }
 };
