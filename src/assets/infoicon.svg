@@ -7,8 +7,31 @@
    viewBox="0 0 50.40752 47.483322"
    version="1.1"
    id="svg5"
+   sodipodi:docname="infoicon.svg"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview904"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.2009921"
+     inkscape:cx="-43.389524"
+     inkscape:cy="81.781302"
+     inkscape:window-width="1920"
+     inkscape:window-height="970"
+     inkscape:window-x="1440"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g29542" />
   <defs
      id="defs2">
     <rect
@@ -36,12 +59,12 @@
          d="m 56.276969,39.976063 c 1.161423,-2.063037 44.962301,-2.212943 46.222361,0 1.11923,1.96563 -0.36793,22.817109 -2.06024,29.736976 -0.464648,1.899965 -9.502206,1.089996 -14.940041,1.130985 -2.417237,0.01822 -5.830929,7.41953 -6.396832,7.418118 -0.699767,-0.0017 -4.565853,-7.478911 -6.543882,-7.477695 C 61.627659,70.791147 57.6756,70.804217 57.340314,69.04845 56.182812,62.987039 54.943696,42.344355 56.276969,39.976063 Z" />
       <text
          xml:space="preserve"
-         transform="matrix(0.49202216,0,0,0.51288885,27.741513,16.42624)"
+         transform="matrix(0.57253065,0,0,0.57558545,22.357938,11.649705)"
          id="text6893"
-         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:33.247px;line-height:1.25;font-family:Avenir;-inkscape-font-specification:'Avenir, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect6895);fill:#ffffff;fill-opacity:1;stroke:none"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:33.247px;line-height:1.25;font-family:'PT Sans';-inkscape-font-specification:'PT Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect6895);fill:#ffffff;fill-opacity:1;stroke:none"><tspan
            x="63.298828"
-           y="83.503811"
-           id="tspan29646">Hint!</tspan></text>
+           y="83.346986"
+           id="tspan10049">Hint!</tspan></text>
     </g>
   </g>
 </svg>
