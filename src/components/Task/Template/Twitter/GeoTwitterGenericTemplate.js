@@ -82,7 +82,7 @@ const component = {
       </b-col>
     </b-row>
 
-    <!-- Map Section when questions exist -->
+    <!-- Map Section -->
     <b-row class="my-4" v-if="questionList.length > 0">
       <b-col>
         <!-- Map question -->
@@ -241,8 +241,9 @@ const component = {
     }
   },
 
-  watch: {},
-
+  watch: {
+    /* Watch no nested elements */
+  },
   created() {
     this.initialize();
   },

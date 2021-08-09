@@ -60,7 +60,7 @@ const state = {
     [materials.sound]: [jobs.survey, jobs.geo_survey],
     [materials.video]: [jobs.survey, jobs.geo_survey],
     [materials.tweet]: [jobs.survey, jobs.geo_survey],
-    [materials.pdf]: [jobs.survey],
+    [materials.pdf]: [jobs.survey, jobs.geo_survey]
     [materials.cslogger]: [jobs.survey]
   },
   // available sources for each material type
