@@ -199,6 +199,8 @@ export default {
     if (this.task.job === "geo_survey") {
       // For geo/survey the questions are optional, thus the minQuestion could be 0
       this.minQuestions = 0;
+      // therefore the questions could be empty too
+      this.questions = [];
       if (this.task.mapSettings) {
         this.mapValid = true; // if mapSettings already exist asumes data as valid
         this.mapSettings = JSON.parse(JSON.stringify(this.task.mapSettings));
@@ -210,12 +212,13 @@ export default {
         question: "",
         markers: false,
         area: false,
-        zoom: 1,
+        zoom: 5,
         maxMarkers: null,
-        center: "",
+        // Center positioned in Citizen Science Center Zurich by default
+        center: "47.38440837506529, 8.542299170672376",
         static_map: false,
         mapType: "Road",
-        required:true
+        required: true
       };
     }
   },
