@@ -1,17 +1,21 @@
 <template>
   <div>
     <b-row class="mb-4">
-      <h2 class="float-left">{{ $t("task-template-map-settings") }}</h2>
+      <h2 class="float-left ">
+        {{ $t("task-template-map-settings") }}
+        <span class="required-star" v-if="settings.required">
+          {{ isRequired(settings.required) }}
+        </span>
+      </h2>
     </b-row>
 
     <!-- Question section  -->
     <b-form-group
-      :label="$t('task-template-question') + '' + isRequired(settings.required)"
+      :label="$t('task-template-question')"
       :valid-feedback="validFeedback('question')"
       :invalid-feedback="invalidFeedback('question')"
       :state="validate('question')"
     >
-      <div class="required-star" v-if="settings.required">*</div>
       <b-input
         v-model.trim="settings.question"
         :placeholder="$t('task-template-question-placeholder')"
@@ -51,9 +55,10 @@
     </b-row>
 
     <!-- Map interactions: draw area and markers -->
-    <b-form-group :label="$t('task-template-map-interactions-label')"
+    <b-form-group
+      :label="$t('task-template-map-interactions-label')"
       :invalid-feedback="invalidFeedback('map_editor')"
-      :state="validate('map_editor')"      
+      :state="validate('map_editor')"
     >
       <b-row class="my-2 align-items-center">
         <b-col
@@ -255,9 +260,7 @@ export default {
 @import "@/styles/themes.scss";
 @import "@/styles/variables.scss";
 .required-star {
-  position: absolute;
   font-size: 35px;
-  right: 3%;
   color: $color-primary;
   font-weight: bold;
 }
