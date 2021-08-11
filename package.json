@@ -1,6 +1,6 @@
 {
   "name": "pybossa-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pybossa client",
   "author": "Vincent Peillex <vincent@mobilethinking.ch>, Nikos Georgomanolis <nikolaos.georgomanolis@uzh.ch>",
   "private": true,
