@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row class="mb-4">
+    <b-row class="mb-4 pl-2">
       <h2 class="float-left ">
         {{ $t("task-template-map-settings") }}
         <span class="required-star" v-if="settings.required">

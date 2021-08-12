@@ -21,16 +21,11 @@
       </b-col>
 
       <!-- Information section - left side -->
-      <b-col md="3" align-self="start">
+      <b-col md="3" align-self="start" class="pr-0 pt-4 pt-md-0">
         <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
         <p
           v-html="$t('task-template-builder-how-to-map-settings')"
           class="text-muted small mb-0"
-          v-if="task.job == jobs.geo_survey"
-        ></p>
-        <p
-          v-html="$t('task-template-builder-how-to-required')"
-          class="small mb-5 text-primary"
           v-if="task.job == jobs.geo_survey"
         ></p>
         <p
@@ -40,11 +35,6 @@
         <p
           v-html="$t('task-template-builder-how-to-condition')"
           class="text-muted small"
-        ></p>
-        <p
-          v-html="$t('task-template-builder-how-to-required')"
-          class="small mb-5 text-primary"
-          v-if="task.job == jobs.survey"
         ></p>
       </b-col>
     </b-row>
@@ -59,6 +49,12 @@ export default {
   name: "TemplateBuilder",
   components: {
     GenericTemplateEditor
+  },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
   },
   computed: {
     ...mapState("task/builder", ["task", "jobs"]),
@@ -87,5 +83,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

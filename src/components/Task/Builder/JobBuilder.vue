@@ -61,7 +61,8 @@
         </b-row>
       </b-col>
 
-      <b-col md="3" align-self="start">
+      <!-- Side information -->
+      <b-col md="3" align-self="start" class="pt-4 pt-md-0">
         <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
         <div v-if="selectedJob == jobs.survey">
           <p
@@ -122,6 +123,12 @@ export default {
     return {
       selectedJob: null
     };
+  },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
   },
   computed: {
     ...mapState("task/builder", ["task", "jobs", "materialJobs"]),

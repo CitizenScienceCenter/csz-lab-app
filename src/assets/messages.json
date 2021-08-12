@@ -213,10 +213,9 @@
     "task-template-renderer-loading": "Task presenter loading...",
     "task-template-renderer-no-task-presenter": "The project does not contains a task presenter",
 
-    "task-template-builder-how-to-survey": "<strong>Instructions for Survey</strong>:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li> Choose the type of question (dropdown menu on the Survey Section top-right)</li><li> Enter the question and the possible answers</li><li> Set optionality (use “Required” switch)</li><li> Add more answers if necessary (button on bottom-right)</li><li> Add more questions if necessary (button on top-right)</li><li> If necessary, add “Condition” between questions</li></ul>",
-    "task-template-builder-how-to-condition": "Example for <strong>Condition</strong>:<br/><em>Question 1: Are the dogs in the image?<ul style='list-style-type: circle' class='ml-3'><li>Yes</li> <li>No</li> <li>I can't say</li></ul>Question 2: How many dogs in the image?</em><p class='mt-2'><strong>Condition:</strong> on Question 2: display only if the answer to Question 1 is “Yes”</p>",
-    "task-template-builder-how-to-map-settings": "<strong>Instructions for Map Settings</strong>:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li> Write the prompt or question.</li><li> Check \"Draw area\" and/or \"Markers\"(this requires set max. number)</li><li> Ingress the default map center in lat, long format</li><li> You can define the default map zoom</li></ul>",
-    "task-template-builder-how-to-required":"<strong><em>* This section is required</em></strong>",
+    "task-template-builder-how-to-survey": "<strong>Instructions for Survey</strong>:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>Add a question (button \"Add Question\")</li><li> Choose the type of question (dropdown menu)</li><li> Enter the question and the possible answers</li><li> Set optionality (use \"Required\" switch)</li><li>Add more answers if necessary (button \"Add Answer\")</li><li> Add more questions if necessary (button \"Add Question\")</li><li> If necessary, add \"Condition\" between questions</li></ul>",
+    "task-template-builder-how-to-condition": "<p class='mb-2'>Example for <strong>Condition</strong>:</p><em>Question 1: Are the dogs in the image?<ul style='list-style-type: circle' class='ml-3 mb-0'><li>Answer 1: Yes</li> <li>Answer 2: No</li> <li>Answer 3: I can't say</li></ul>Question 2: How many dogs in the image?</em><p class='mt-3'><strong>Condition:</strong> <em>Question 2</em> will be visible only if the answer to <em>Question 1</em> is \"Yes\". <br/> When on Question 2, click on \"Condition\", then select <em>Question 1</em> as conditional question and select \"Yes\" as conditional answer.</p>",
+    "task-template-builder-how-to-map-settings": "<strong>Instructions for Map Settings</strong>:<br/><ul style='list-style-type: disc' class ='ml-3'><li> Write the prompt or question.</li><li>Enter the coordinates (lat,lon) for the center of displayed map.</li><li>You can also define the default map zoom.</li><li>Choose the contributor’s interaction(s) with the map: draw an area and/or put a marker (define how many markers).</li></ul>",
 
     "task-template-builder-template-not-working": "For experts: If this template doesn't exactly fit your project, you can try our ",
     "task-template-builder-expert-path": "expert path",
@@ -249,9 +248,9 @@
 
     "task-source-builder-select-source": "Select your files",
     "task-source-builder-other-source": "Go back: select another source",
-    "task-source-builder-info":"<p>Select the source of your data.</p>Your data should be available via a public url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
+    "task-source-builder-info":"<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
     "task-source-builder-choose-authorized": "Make sure you are authorised to use the data, ie. use free licensed files (Creative Commons or alike), your own files, or copyright files that you are authorised to use.",
-    "task-source-builder-options-next-label": "For experts: If this template doesn't exactly fit your project, you can try our",
+    "task-source-builder-options-next-label": "For developers: If this template doesn't exactly fit your project, you can try our",
 
     "task-material-builder-back-to-project": "Preview Project ",
     "task-material-builder-items": "Select the type of files that you will work with.",
@@ -259,16 +258,16 @@
     "task-material-builder-sounds": "Sounds",
     "task-material-builder-video": "Videos",
     "task-material-builder-file-types": "Select the type of files that you will use for your project.",
-    "task-material-builder-file-label-1": "You can use multiple file-types for your project: <ul style='list-style-type:disc' class='ml-3 mt-1'><li> Images (*.jpg, *.png or *.svg)</li> <li> Videos (*.mp4 or *.avi)</li> <li> Audios (*.mp3 or *.wav)</li> <li> Documents (*.pdf)</li> <li> Tweets</li> </ul>",
+    "task-material-builder-file-label-1": "You can choose from multiple options to create your project: <ul style='list-style-type:disc' class='ml-3 mt-1'><li> Images (*.jpg, *.png or *.svg)</li> <li> Videos (*.mp4 or *.avi)</li> <li> Audios (*.mp3 or *.wav)</li> <li> Documents (*.pdf)</li> <li> Tweets</li> </ul>",
 
     "task-job-builder-files-purpose": "What do you want your contributors to do?",
     "task-job-builder-describe": "Describe",
     "task-job-builder-classify": "Classify",
     "task-job-builder-count": "Count",
     "task-job-builder-info": "Here you can create the survey for your task presenter. You can select between Survey or Geo/Survey",
-    "task-job-builder-info-survey": "<strong>Survey</strong> <br/>Build a questionnaire, including single and multiple-choice questions, dropdown, and free text. You can set optionality conditional questions.",
+    "task-job-builder-info-survey": "<strong>Survey</strong> <br/>Build a questionnaire, including single and multiple-choice questions, dropdown, and free text. You can set required and conditional questions.",
     "task-job-builder-info-survey-example": "Example: <br/><em>Question: do you see a fountain in the image?<ul style='list-style-type:circle' class='ml-3'><li>Yes</li><li>No</li><li>I can't say</li></ul></em>",
-    "task-job-builder-info-survey-geo": "<strong>Geo/Survey</strong> <br/>Build a questionnaire and also to ask contributors to locate a point or draw an area on a map.",
+    "task-job-builder-info-survey-geo": "<strong>Geo/Survey</strong> <br/>In addition to a questionnaire you can also ask the contributors to locate a point or draw an area on a map.",
     "task-job-builder-info-survey-geo-example": "Example: <br/><em>Question: do you see a fountain in the image?<ul style='list-style-type:circle' class='ml-3'><li>Yes</li><li>No</li><li>I can't say</li></ul><p class='mt-2'>Geo Question: If you know the location of the fountain, please mark it on the map.</p> </em>",
     "task-job-builder-survey": "Survey",
     "task-job-builder-survey-geo": "Geo/Survey",
@@ -320,7 +319,7 @@
     "task-template-error-map-editor": "Select at least one option.",
     "task-template-map-center": "Map center",
     "task-template-map-zoom": "Map zoom",
-    "task-template-error-valid-center-map": "Coordinates contain errors. Format allowed: lat,lon",
+    "task-template-error-valid-center-map": "Format allowed: lat,lon",
     "task-template-valid-center-map": "Coordinates valid.",
     "task-template-error-valid-zoom-map": "Invalid zoom value",
 
@@ -1055,10 +1054,9 @@
     "task-template-renderer-loading": "Task presenter lädt...",
     "task-template-renderer-no-task-presenter": "Das Projekt enthält keinen Task Presenter",
 
-    "task-template-builder-how-to-survey": "<strong>Instructions for Survey</strong>:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li> Choose the type of question (dropdown menu on the Survey Section top-right)</li><li> Enter the question and the possible answers</li><li> Set optionality (use “Required” switch)</li><li> Add more answers if necessary (button on bottom-right)</li><li> Add more questions if necessary (button on top-right)</li><li> If necessary, add “Condition” between questions</li></ul>",
-    "task-template-builder-how-to-condition": "Example for <strong>Condition</strong>:<br/><em>Question 1: Are the dogs in the image?<ul style='list-style-type: circle' class='ml-3'><li>Yes</li> <li>No</li> <li>I can't say</li></ul>Question 2: How many dogs in the image?</em><p class='mt-2'><strong>Condition:</strong> on Question 2: display only if the answer to Question 1 is “Yes”</p>",
-    "task-template-builder-how-to-map-settings": "<strong>Instructions for Map Settings</strong>:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li> Write the prompt or question.</li><li> Check \"Draw area\" and/or \"Markers\"(this requires set max. number)</li><li> Ingress the default map center in lat, long format</li><li> You can define the default map zoom</li></ul>",
-    "task-template-builder-how-to-required":"<strong><em>* This section is required</em></strong>",
+    "task-template-builder-how-to-survey": "<strong>Instructions for Survey</strong>:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>Add a question (button \"Add Question\")</li><li> Choose the type of question (dropdown menu)</li><li> Enter the question and the possible answers</li><li> Set optionality (use \"Required\" switch)</li><li>Add more answers if necessary (button \"Add Answer\")</li><li> Add more questions if necessary (button \"Add Question\")</li><li> If necessary, add \"Condition\" between questions</li></ul>",
+    "task-template-builder-how-to-condition": "<p class='mb-2'>Example for <strong>Condition</strong>:</p><em>Question 1: Are the dogs in the image?<ul style='list-style-type: circle' class='ml-3 mb-0'><li>Answer 1: Yes</li> <li>Answer 2: No</li> <li>Answer 3: I can't say</li></ul>Question 2: How many dogs in the image?</em><p class='mt-3'><strong>Condition:</strong> <em>Question 2</em> will be visible only if the answer to <em>Question 1</em> is \"Yes\". <br/> When on Question 2, click on \"Condition\", then select <em>Question 1</em> as conditional question and select \"Yes\" as conditional answer.</p>",
+    "task-template-builder-how-to-map-settings": "<strong>Instructions for Map Settings</strong>:<br/><ul style='list-style-type: disc' class ='ml-3'><li> Write the prompt or question.</li><li>Enter the coordinates (lat,lon) for the center of displayed map.</li><li>You can also define the default map zoom.</li><li>Choose the contributor’s interaction(s) with the map: draw an area and/or put a marker (define how many markers).</li></ul>",
 
     "task-template-builder-template-not-working": "Für Expertinnen und Experten: Wenn diese Vorlage nicht genau zu Ihrem Projekt passt, probieren sie unseren",
     "task-template-builder-expert-path": "Experten-Pfad",
@@ -1082,9 +1080,9 @@
 
     "task-source-builder-select-source": "Wählen Sie Ihre Dateien aus",
     "task-source-builder-other-source": "Zurück: Andere Quelle auswählen",
-    "task-source-builder-info":"<p>Select the source of your data.</p>Your data should be available via a public url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
+    "task-source-builder-info":"<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
     "task-source-builder-choose-authorized": "Stellen Sie sicher, dass Sie zur Verwendung der Daten berechtigt sind, d.h. verwenden Sie kostenlos lizenzierte Dateien (Creative Commons oder ähnliches), Ihre eigenen Dateien oder Copyright-Bilder, zu deren Verwendung Sie berechtigt sind.",
-    "task-source-builder-options-next-label": "Für Expertinnen und Experten: Wenn diese Vorlage nicht genau zu Ihrem Projekt passt, probieren sie unseren",
+    "task-source-builder-options-next-label": "Für Entwickler*innen: Wenn diese Vorlage nicht genau zu Ihrem Projekt passt, probieren sie unseren",
 
     "task-material-builder-back-to-project": "Vorschau des Projekts",
     "task-material-builder-items": "Wählen Sie den Dateityp aus, mit dem Sie arbeiten möchten.",
@@ -1092,7 +1090,7 @@
     "task-material-builder-sounds": "Töne",
     "task-material-builder-video": "Videos",
     "task-material-builder-file-types": "Wählen Sie den Dateityp aus, den Sie für Ihr Projekt verwenden möchten.",
-    "task-material-builder-file-label-1": "You can use multiple file-types for your project: <ul style='list-style-type:disc' class='ml-3 mt-1'><li> Images (*.jpg, *.png or *.svg)</li> <li> Videos (*.mp4 or *.avi)</li> <li> Audios (*.mp3 or *.wav)</li> <li> Documents (*.pdf)</li> <li> Tweets</li> </ul>",
+    "task-material-builder-file-label-1": "You can choose from multiple options to create your project: <ul style='list-style-type:disc' class='ml-3 mt-1'><li> Images (*.jpg, *.png or *.svg)</li> <li> Videos (*.mp4 or *.avi)</li> <li> Audios (*.mp3 or *.wav)</li> <li> Documents (*.pdf)</li> <li> Tweets</li> </ul>",
 
     "task-job-builder-files-purpose": "Was sollen Ihre Projektteilnehmer*innen tun?",
     "task-job-builder-describe": "Beschreiben",
@@ -1153,7 +1151,7 @@
     "task-template-error-map-editor": "Wählen Sie mindestens eine Option aus.",
     "task-template-map-center": "Karte Center",
     "task-template-map-zoom": "Karte Zoom",
-    "task-template-error-valid-center-map": "Koordinaten enthalten Fehler. Format erlaubt: lat,lon",
+    "task-template-error-valid-center-map": "Format erlaubt: lat,lon",
     "task-template-valid-center-map": "Koordinaten gültig.",
     "task-template-error-valid-zoom-map": "Ungültiger Zoomwert",
 
