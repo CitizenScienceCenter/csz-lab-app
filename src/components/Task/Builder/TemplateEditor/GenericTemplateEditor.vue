@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Component for maps in geo/survey projects -->
-    <div v-if="geoProject" class="mb-5">
+    <div v-if="geoProject" class="mb-5 clearfix">
       <map-settings
         :settings="mapSettings"
         @onValid="mapSettingsValidation"
@@ -213,7 +213,7 @@ export default {
         markers: false,
         area: false,
         zoom: 5,
-        maxMarkers: null,
+        maxMarkers: 1,
         // Center positioned in Citizen Science Center Zurich by default
         center: "47.38440837506529, 8.542299170672376",
         static_map: false,

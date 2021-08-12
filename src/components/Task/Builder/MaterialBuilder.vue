@@ -98,7 +98,7 @@
         </b-row>
       </b-col>
 
-      <b-col md="3" align-self="start">
+      <b-col md="3" align-self="start" class="pt-4 pt-md-0">
         <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
         <p
           v-html="$t('task-material-builder-file-types')"
@@ -152,6 +152,12 @@ export default {
     return {
       selectedMaterial: null
     };
+  },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
   },
   methods: {
     ...mapMutations("task/builder", ["setTaskMaterial", "setStep"]),

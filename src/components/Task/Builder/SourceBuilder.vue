@@ -113,6 +113,12 @@ export default {
   created() {
     this.selectedSource = this.task.source;
   },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
+  },
   methods: {
     ...mapMutations("task/builder", [
       "setStep",
