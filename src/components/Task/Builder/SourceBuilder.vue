@@ -76,7 +76,7 @@
             </b-row>
           </b-col>
           <!-- Information section - left side -->
-          <b-col md="3" align-self="start">
+          <b-col md="3" align-self="start" class="pt-4 pt-md-0">
             <!-- TODO: Define the specific information according source. Pending import standarization -->
             <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
             <p
