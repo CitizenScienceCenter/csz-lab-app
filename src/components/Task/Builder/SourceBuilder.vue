@@ -53,7 +53,7 @@
             </b-row>
           </b-col>
           <!-- Information section - left side -->
-          <b-col md="3" align-self="start">
+          <b-col md="3" align-self="start" class="pt-4 pt-md-0">
             <!-- TODO: Define the specific information according source. Pending import standarization -->
             <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
             <p
@@ -112,6 +112,12 @@ export default {
   },
   created() {
     this.selectedSource = this.task.source;
+  },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
   },
   methods: {
     ...mapMutations("task/builder", [

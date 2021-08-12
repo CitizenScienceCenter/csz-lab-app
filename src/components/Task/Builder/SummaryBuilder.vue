@@ -122,6 +122,12 @@ export default {
   components: {
     TemplateSummary
   },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
+  },
   computed: {
     ...mapState("task/builder", [
       "task",
