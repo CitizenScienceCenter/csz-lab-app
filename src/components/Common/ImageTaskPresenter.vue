@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-skeleton-wrapper :loading="loading">
+    <b-skeleton-wrapper :loading="loading && refresh">
       <template #loading>
         <b-skeleton-img
           animation="throb"
@@ -26,13 +26,13 @@
         placeholder="Loading Image..."
         :placeholder-font-size="30"
         :accept="'image/*'"
-        initial-position="center center"
+        initial-position="center"
         initial-size="cover"
         auto-sizing
         @new-image-drawn="onNewImage"
         @zoom="onZoom"
       >
-        <img v-if="link" slot="initial" :src="link" :alt="link" />
+        <img v-if="link" :src="link" :alt="link" slot="initial" />
       </beauty-img>
 
       <!-- buttons for bigscreens -->
@@ -82,7 +82,8 @@ export default {
       currentZoom: 0,
       minZoom: 0,
       maxZoom: 0,
-      timing: null
+      timing: null,
+      refresh: true
     };
   },
   props: {
@@ -118,6 +119,7 @@ export default {
       this.currentZoom = this.imgObject.scaleRatio;
       this.minZoom = this.imgObject.scaleRatio * 1;
       this.maxZoom = this.imgObject.scaleRatio * 10;
+      this.refresh = true;
     },
     onSliderChange(value) {
       var increment = value;
@@ -138,6 +140,13 @@ export default {
     },
     hideSlider() {
       this.isZoom = false;
+    }
+  },
+  watch: {
+    link() {
+      // Refresh component each time link is changed
+      this.refresh = false;
+      this.imgObject.refresh();
     }
   }
 };
