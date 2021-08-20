@@ -76,7 +76,7 @@
           <i>Max. size 200Mb</i>
         </small>
         <small class="text-muted float-right">
-          <i>Total: {{ Math.floor(total_size/1000000) }}Mb</i>
+          <i>Total: {{ Math.floor(total_size / 1000000) }}Mb</i>
         </small>
         <!-- Hint for csvFile null for media field -->
         <small class="text-muted" v-if="!csvFile">
@@ -108,24 +108,52 @@
       overlay
       header-border-variant="primary"
       class="mt-4"
-      v-if="extra_media.length > 0"
+      v-if="extra_media.length + pending_media.length > 0"
     >
-      <b-card-header
-        header-border-variant="danger"
-        class="p-0 d-flex justify-content-between"
-      >
+      <b-card-header header-border-variant="danger" class="p-0 ">
         <span class="ml-2 font-weight-bold text-primary">
           {{ $t("taks-import-cslogger-failed-files-title") }}
-        </span>
-        <span class="mr-2 font-weight-bold"
-          >{{ extra_media.length }} files
         </span>
       </b-card-header>
 
       <b-card-body class="overflow-body">
-        <b-card-text>
+        <b-card-text v-if="pending_media.length > 0">
+          <b-card-sub-title class="d-flex justify-content-between mb-2">
+            <small class="text-secondary font-weight-bold">
+              {{ $t("taks-import-cslogger-failed-files-pending") }}
+            </small>
+            <small class="font-weight-bold">
+              {{ pending_media.length }}
+              {{ $t("taks-import-cslogger-files-label") }}
+            </small>
+          </b-card-sub-title>
           <ul>
-            <li v-for="file in extra_media" :key="file" class="mr-2 text-h6">
+            <li
+              v-for="(file, index) in pending_media"
+              :key="index"
+              class="mx-2 text-h6"
+            >
+              <small>{{ file }}</small>
+            </li>
+          </ul>
+        </b-card-text>
+        <hr v-if="extra_media.length > 0 && pending_media.length > 0" />
+        <b-card-text v-if="extra_media.length > 0">
+          <b-card-sub-title class="d-flex justify-content-between mb-2">
+            <small class="text-secondary font-weight-bold">
+              {{ $t("taks-import-cslogger-failed-files-extra") }}
+            </small>
+            <small class="font-weight-bold">
+              {{ extra_media.length }}
+              {{ $t("taks-import-cslogger-files-label") }}
+            </small>
+          </b-card-sub-title>
+          <ul>
+            <li
+              v-for="(file, index) in extra_media"
+              :key="index"
+              class="mx-2 text-h6"
+            >
               <small>{{ file }}</small>
             </li>
           </ul>
@@ -157,6 +185,7 @@ export default {
       error_message: { csv: null, media: null },
       allowed_files: "",
       extra_media: [],
+      pending_media: [],
       qfiles_onscreen: 0,
       total_size: 0
     };
@@ -216,7 +245,7 @@ export default {
         "activity_id",
         this.json_csvFile
       );
-      // Prepair data to send
+      // Prepair data to send. Excluding the extra_media no contained into csv
       const dataObj = {
         n_tasks: number_of_tasks,
         files: this.mediaFiles.filter(x => !this.extra_media.includes(x.name)),
@@ -231,6 +260,7 @@ export default {
     async validate(ext, size) {
       this.validating = true;
       this.extra_media = [];
+      this.pending_media = [];
       this.valid[ext] = null;
       this.error_message[ext] = null;
 
@@ -273,11 +303,19 @@ export default {
               "taks-import-cslogger-invalid-size"
             );
           } else {
-            // get the files not included into csv
             const media_names = this.mediaFiles.map(x => x.name);
+            const csv_responses = this.json_csvFile.map(function(x) {
+              return x.response;
+            });
+            // get the files not included into CSV
             this.extra_media = media_names.filter(
-              x => !this.json_csvFile.some(row => row.response.includes(x))
+              x => !csv_responses.some(y => y.includes(x))
             );
+            // get the files not included into MEDIA
+            this.pending_media = csv_responses
+              .filter(x => !media_names.some(y => x.includes(y)))
+              .map(y => y.substr(y.lastIndexOf(":") + 1).trim());
+
             this.validating = false;
           }
         } else {
@@ -290,6 +328,7 @@ export default {
     },
     getNumberOfTasks(activityId, array) {
       // convert array into a grouped array
+      // TODO: validate group by indicator (userId, activityId, etc)
       const groups = groupBy(activityId, array);
       // return only the task with at least one resource available as response
       return groups.filter(g => g.some(el => el.response)).length;
