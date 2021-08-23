@@ -78,7 +78,7 @@
       <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
       <p
         class="small text-muted"
-        v-html="$t('task-import-amazon-files-allowed')"
+        v-html="$t('taks-import-amazon-files-allowed')"
       ></p>
       <p class="small text-primary" v-html="$t('task-source-builder-choose-authorized')">
       </p>

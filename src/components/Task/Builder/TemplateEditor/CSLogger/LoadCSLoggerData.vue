@@ -5,7 +5,7 @@
       <div class="mb-3">
         <label>{{ $t("taks-import-cslogger-csv-label") }}</label>
         <b-file
-          :placeholder="$t('taks-import-cslogger-csv')"
+          :placeholder="$t('taks-import-cslogger-csv-placeholder')"
           accept=".csv"
           v-model="csvFile"
           class="mb-1"
@@ -33,7 +33,7 @@
       <div class="mb-4">
         <label>{{ $t("taks-import-cslogger-media-label") }}</label>
         <b-file
-          :placeholder="$t('taks-import-cslogger-media')"
+          :placeholder="$t('taks-import-cslogger-media-placeholder')"
           multiple
           :accept="allowed_files"
           v-model="mediaFiles"
@@ -41,7 +41,7 @@
           browse-text="Search"
           required
           :state="validateMedia"
-          :disabled="!csvFile"
+          :disabled="!csvFile && !validateCSV"
         >
           <!-- Show the first file names according screen size -->
           <template slot="file-name" slot-scope="{ names }">
@@ -73,7 +73,7 @@
         </span>
         <!-- Hint for max size of the total of files -->
         <small class="text-muted" v-if="valid.media == null && csvFile">
-          <i>Max. size 200Mb</i>
+          <i>Max. 200Mb</i>
         </small>
         <small class="text-muted float-right">
           <i>Total: {{ Math.floor(total_size / 1000000) }}Mb</i>
@@ -93,7 +93,7 @@
         :disabled="!isValid"
         class="mr-1"
       >
-        {{ $t("cslogger-continue") }}
+        {{ $t("continue") }}
       </b-button>
       <!-- spinner and message for sending files-->
       <span class="text-primary ml-2 smooth" v-if="validating">
@@ -108,7 +108,7 @@
       overlay
       header-border-variant="primary"
       class="mt-4"
-      v-if="extra_media.length + pending_media.length > 0"
+      v-if="extra_media.length + missing_media.length > 0"
     >
       <b-card-header header-border-variant="danger" class="p-0 ">
         <span class="ml-2 font-weight-bold text-primary">
@@ -117,19 +117,19 @@
       </b-card-header>
 
       <b-card-body class="overflow-body">
-        <b-card-text v-if="pending_media.length > 0">
+        <b-card-text v-if="missing_media.length > 0">
           <b-card-sub-title class="d-flex justify-content-between mb-2">
             <small class="text-secondary font-weight-bold">
-              {{ $t("taks-import-cslogger-failed-files-pending") }}
+              {{ $t("taks-import-cslogger-failed-files-missing") }}
             </small>
             <small class="font-weight-bold">
-              {{ pending_media.length }}
+              {{ missing_media.length }}
               {{ $t("taks-import-cslogger-files-label") }}
             </small>
           </b-card-sub-title>
           <ul>
             <li
-              v-for="(file, index) in pending_media"
+              v-for="(file, index) in missing_media"
               :key="index"
               class="mx-2 text-h6"
             >
@@ -137,7 +137,7 @@
             </li>
           </ul>
         </b-card-text>
-        <hr v-if="extra_media.length > 0 && pending_media.length > 0" />
+        <hr v-if="extra_media.length > 0 && missing_media.length > 0" />
         <b-card-text v-if="extra_media.length > 0">
           <b-card-sub-title class="d-flex justify-content-between mb-2">
             <small class="text-secondary font-weight-bold">
@@ -185,7 +185,7 @@ export default {
       error_message: { csv: null, media: null },
       allowed_files: "",
       extra_media: [],
-      pending_media: [],
+      missing_media: [],
       qfiles_onscreen: 0,
       total_size: 0
     };
@@ -260,7 +260,7 @@ export default {
     async validate(ext, size) {
       this.validating = true;
       this.extra_media = [];
-      this.pending_media = [];
+      this.missing_media = [];
       this.valid[ext] = null;
       this.error_message[ext] = null;
 
@@ -312,7 +312,7 @@ export default {
               x => !csv_responses.some(y => y.includes(x))
             );
             // get the files not included into MEDIA
-            this.pending_media = csv_responses
+            this.missing_media = csv_responses
               .filter(x => !media_names.some(y => x.includes(y)))
               .map(y => y.substr(y.lastIndexOf(":") + 1).trim());
 

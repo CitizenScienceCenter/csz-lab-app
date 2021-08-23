@@ -65,7 +65,7 @@
       <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
       <p
         class="small text-muted"
-        v-html="$t('task-import-dropbox-files-allowed')"
+        v-html="$t('taks-import-dropbox-files-allowed')"
       ></p>
       <p class="small text-primary" v-html="$t('dropbox-license')"></p>
     </b-col>

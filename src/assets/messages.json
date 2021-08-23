@@ -243,27 +243,29 @@
     "task-summary-builder-description": "Description",
     "task-summary-builder-answer": "Answer",
     "task-summary-builder-onsubmit": "You will create your project overview page, and your “task presenter” to interact with the contributors. Your project will not be public. It will be visible only to you, and you will still be able to modify it.",
-    "task-summary-builder-loading-label":"Creating tasks...",
-    "task-summary-builder-loading-sublabel":"This process could take a while, please wait.",
+    "task-summary-builder-loading-label": "Creating tasks...",
+    "task-summary-builder-loading-sublabel": "This process could take a while, please wait.",
 
     "task-source-builder-select-source": "Select your files",
     "task-source-builder-other-source": "Go back: select another source",
-    "task-source-builder-info":"<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
+    "task-source-builder-info": "<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
     "task-source-builder-choose-authorized": "Make sure you are authorised to use the data, ie. use free licensed files (Creative Commons or alike), your own files, or copyright files that you are authorised to use.",
     "task-source-builder-options-next-label": "For developers: If this template doesn't exactly fit your project, you can try our",
+    "task-source-builder-cslogger-import-title": "CSLogger Loading Module",
 
     "task-material-builder-back-to-project": "Preview Project ",
     "task-material-builder-items": "Select the type of files that you will work with.",
-    "task-material-builder-images": "Images",
-    "task-material-builder-sounds": "Sounds",
+    "task-material-builder-image": "Images",
+    "task-material-builder-sound": "Sounds",
     "task-material-builder-video": "Videos",
+    "task-material-builder-pdf": "PDF",
+    "task-material-builder-tweet": "Tweets",
+    "task-material-builder-cslogger": "CSLogger",
+    "task-material-builder-cslogger-tooltip": "Create project using data from CSLogger",
     "task-material-builder-file-types": "Select the type of files that you will use for your project.",
     "task-material-builder-file-label-1": "You can choose from multiple options to create your project: <ul style='list-style-type:disc' class='ml-3 mt-1'><li> Images (*.jpg, *.png or *.svg)</li> <li> Videos (*.mp4 or *.avi)</li> <li> Audios (*.mp3 or *.wav)</li> <li> Documents (*.pdf)</li> <li> Tweets</li> </ul>",
 
     "task-job-builder-files-purpose": "What do you want your contributors to do?",
-    "task-job-builder-describe": "Describe",
-    "task-job-builder-classify": "Classify",
-    "task-job-builder-count": "Count",
     "task-job-builder-info": "Here you can create the survey for your task presenter. You can select between Survey or Geo/Survey",
     "task-job-builder-info-survey": "<strong>Survey</strong> <br/>Build a questionnaire, including single and multiple-choice questions, dropdown, and free text. You can set required and conditional questions.",
     "task-job-builder-info-survey-example": "Example: <br/><em>Question: do you see a fountain in the image?<ul style='list-style-type:circle' class='ml-3'><li>Yes</li><li>No</li><li>I can't say</li></ul></em>",
@@ -274,15 +276,6 @@
 
     "task-flickr-callback-access": "Flickr access granted",
     "task-flickr-callback-window": "You can now close this window and continue to import your pictures!",
-
-    "task-classify-template-question": "Question",
-    "task-classify-template-add-question": "Add question",
-    "task-classify-template-delete-question": "Delete question",
-    "task-classify-template-answer": "Answer",
-    "task-classify-template-add-answer": "Add answer",
-    "task-classify-template-delete-answer": "Delete answer",
-    "task-classify-template-label-before-go": "Add all your questions and answers before you continue!",
-    "task-classify-template-go": "Continue",
 
     "task-template-questions": "Survey",
     "task-template-no-questions": "No questions added.",
@@ -313,7 +306,7 @@
     "task-survey-template-maxanswers-title": "Max answers reached",
     "task-survey-template-maxanswers": "The maximun number of answers per question was reached.",
     "task-template-map-settings": "Map settings",
-    "task-template-map-interactions-label":"Map interactions",
+    "task-template-map-interactions-label": "Map interactions",
     "task-template-map-area-checkbox": "Draw area",
     "task-template-map-markers-checkbox": "Markers",
     "task-template-error-map-editor": "Select at least one option.",
@@ -323,9 +316,6 @@
     "task-template-valid-center-map": "Coordinates valid.",
     "task-template-error-valid-zoom-map": "Invalid zoom value",
 
-    "task-count-template-question": "Question",
-    "task-count-template-question-placeholder": "E.g. How many people can you see in the image?",
-    "task-count-template-go": "Continue",
     "task-count-template-error-incomplete-form": "Incomplete form",
     "task-count-template-error-question": "You have to provide a correct question",
     "task-count-template-error-many-characters-question": "Too many characters in this question",
@@ -333,21 +323,14 @@
     "task-count-template-error-many-characters-answer": "Too many characters in this answer",
     "task-count-template-error-empty-answer": "The answer should not be empty",
 
-    "task-describe-template-question": "General description",
-    "task-describe-template-question-placeholder": "E.g. Describe the people in the picture.",
-    "task-describe-template-description": "Detailed description",
-    "task-describe-template-description-placeholder": "Describe what?",
-    "task-describe-template-add-description": "Add detailed description",
-    "task-describe-template-delete": "Delete",
-    "task-describe-template-go": "Continue",
     "task-describe-template-error-incomplete-form": "Incomplete form",
     "task-describe-template-error-fields-validation": "All the fields should be validated",
     "task-describe-template-error-many-characters-answer": "Too many characters in this description",
     "task-describe-template-error-empty-answer": "The description should not be empty",
 
-    "task-import-amazon-files-allowed":"<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "taks-import-amazon-files-allowed": "<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
 
-    "task-import-dropbox-files-allowed":"<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "taks-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
     "dropbox-choose-files": " Choose files from DropBox",
     "dropbox-license": " You can use any free licensed pics (Creative Commons or alike), your own pictures or those copyright images that you are authorised to use.",
 
@@ -580,8 +563,8 @@
     "task-settings-delete-danger-note": "If you delete all the tasks and task runs they will be gone forever! You cannot undo this action!",
     "task-settings-delete-confirm-note": "Are you sure you want to delete all the project tasks and associated task runs?",
     "task-settings-delete-confirm-no": "No, do not delete anything!",
-    "task-settings-delete-loading-label":"Deleting tasks...",
-    "task-settings-delete-loading-sublabel":"This process could take a while, please wait.",
+    "task-settings-delete-loading-label": "Deleting tasks...",
+    "task-settings-delete-loading-sublabel": "This process could take a while, please wait.",
 
     "task-settings-redundancy": "Tasks Redundancy",
     "task-settings-redundancy-header": "Tasks Redundancy",
@@ -672,7 +655,7 @@
     "taks-import-flickr-text2a": "You can revoke the access to your Flickr account at anytime",
     "taks-import-flickr-text3": "Select",
     "taks-import-flickr-text4": "Manually provide the ID of a Flickr set with images for all.",
-    "task-import-flickr-files-allowed":"<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)",
+    "taks-import-flickr-files-allowed": "<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)",
     "taks-import-flickr-text5-error": "You must provide a flickr album ID",
 
     "taks-source-editor-amazon-text1": "Name of the S3 bucket",
@@ -695,7 +678,21 @@
     "taks-import-publiccsv-text1": "Public csv link",
     "taks-import-publiccsv-text2": "Send tasks",
 
-    "text-cookies": "We use cookies to improve your experience on our sites.",
+    "taks-import-cslogger-csv-label": "Data file",
+    "taks-import-cslogger-media-label": "Media files",
+    "taks-import-cslogger-csv-placeholder": "Search or drop the csv file.",
+    "taks-import-cslogger-media-placeholder": "Search or drop the media files.",
+    "taks-import-cslogger-valid": "Valid file.",
+    "taks-import-cslogger-csv-loaded": "First load the data file.",
+    "taks-import-cslogger-invalid-format":"Invalid file(s) format.",
+    "taks-import-cslogger-invalid-size":"Invalid file(s) size.",
+    "taks-import-cslogger-validating": "Waiting for media files.",
+    "taks-import-cslogger-failed-files-title": "Media files findings",
+    "taks-import-cslogger-files-label": "File(s)",
+    "taks-import-cslogger-failed-files-missing":"Included in csv, but not in media.",
+    "taks-import-cslogger-failed-files-extra":"Included in media, but not in csv",
+
+    "textValid file-cookies": "We use cookies to improve your experience on our sites.",
 
     "notifications-messages-register-error": "Error during registration",
     "notifications-messages-register-notavailable": "Registration not available",
@@ -840,7 +837,7 @@
     "project-protect-with-password": "Protect project with password",
     "private-c": "Private",
 
-    "loading-hide-btn":"Continue in background" 
+    "loading-hide-btn": "Continue in background"
   },
   "de": {
     "site-title": "CS Project Builder",
@@ -1075,27 +1072,30 @@
     "task-summary-builder-description": "Beschreibung",
     "task-summary-builder-answer": "Antwort",
     "task-summary-builder-onsubmit": "Sie erstellen damit die Übersichtsseite Ihres Projekts und Ihren „Task Presenter“, um mit den Teilnehmer*innen zu interagieren. Ihr Projekt wird noch nicht veröffentlicht. Es ist nur für Sie sichtbar und Sie können es weiterhin bearbeiten.",
-    "task-summary-builder-loading-label":"Aufgaben erstellen...",
-    "task-summary-builder-loading-sublabel":"Dieser Vorgang kann eine Weile dauern, bitte warten Sie.",
+    "task-summary-builder-loading-label": "Aufgaben erstellen...",
+    "task-summary-builder-loading-sublabel": "Dieser Vorgang kann eine Weile dauern, bitte warten Sie.",
 
     "task-source-builder-select-source": "Wählen Sie Ihre Dateien aus",
     "task-source-builder-other-source": "Zurück: Andere Quelle auswählen",
-    "task-source-builder-info":"<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
+    "task-source-builder-info": "<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
     "task-source-builder-choose-authorized": "Stellen Sie sicher, dass Sie zur Verwendung der Daten berechtigt sind, d.h. verwenden Sie kostenlos lizenzierte Dateien (Creative Commons oder ähnliches), Ihre eigenen Dateien oder Copyright-Bilder, zu deren Verwendung Sie berechtigt sind.",
     "task-source-builder-options-next-label": "Für Entwickler*innen: Wenn diese Vorlage nicht genau zu Ihrem Projekt passt, probieren sie unseren",
 
+    "task-source-builder-cslogger-import-title": "CSLogger Loading Module",
+
     "task-material-builder-back-to-project": "Vorschau des Projekts",
     "task-material-builder-items": "Wählen Sie den Dateityp aus, mit dem Sie arbeiten möchten.",
-    "task-material-builder-images": "Bilder",
-    "task-material-builder-sounds": "Töne",
+    "task-material-builder-image": "Bilder",
+    "task-material-builder-sound": "Töne",
     "task-material-builder-video": "Videos",
+    "task-material-builder-pdf": "PDF",
+    "task-material-builder-tweet": "Tweets",
+    "task-material-builder-cslogger": "CSLogger",
+    "task-material-builder-cslogger-tooltip": "Projekt mit Daten aus CSLogger erstellen",
     "task-material-builder-file-types": "Wählen Sie den Dateityp aus, den Sie für Ihr Projekt verwenden möchten.",
     "task-material-builder-file-label-1": "You can choose from multiple options to create your project: <ul style='list-style-type:disc' class='ml-3 mt-1'><li> Images (*.jpg, *.png or *.svg)</li> <li> Videos (*.mp4 or *.avi)</li> <li> Audios (*.mp3 or *.wav)</li> <li> Documents (*.pdf)</li> <li> Tweets</li> </ul>",
 
     "task-job-builder-files-purpose": "Was sollen Ihre Projektteilnehmer*innen tun?",
-    "task-job-builder-describe": "Beschreiben",
-    "task-job-builder-classify": "Klassifizieren",
-    "task-job-builder-count": "Zählen",
     "task-job-builder-info": "<strong>Job</strong><br/> Here you can create the survey for your task presenter. You can select between Survey or Geo/Survey",
     "task-job-builder-info-survey": "<strong>Umfrage</strong> <br/>Einen Fragebogen erstellen, einschließlich Single-Choice- und Multiple-Choice-Fragen, Dropdown- und Textfelder. Sie können die Optionalität und die Abhängigkeiten der Fragen untereinander festlegen.",
     "task-job-builder-info-survey-example": "Beispiel: <br/><em>Frage: Sehen Sie einen Springbrunnen auf dem Bild?<ul style='list-style-type:circle' class='ml-3'><li>Ja</li><li>Nein</li><li>Ich nicht sagen</li></ul></em>",
@@ -1106,15 +1106,6 @@
 
     "task-flickr-callback-access": "Flickr-Zugriff gewährt",
     "task-flickr-callback-window": "Sie können dieses Fenster jetzt schließen und Ihre Bilder importieren.",
-
-    "task-classify-template-question": "Frage",
-    "task-classify-template-add-question": "Frage hinzufügen",
-    "task-classify-template-delete-question": "Frage verwerfen",
-    "task-classify-template-answer": "Antwort",
-    "task-classify-template-add-answer": "Antwort hinzufügen",
-    "task-classify-template-delete-answer": "Antwort verwerfen",
-    "task-classify-template-label-before-go": "Fügen Sie alle Ihre Fragen und Antworten hinzu, bevor Sie fortfahren.",
-    "task-classify-template-go": "Weiter",
 
     "task-template-questions": "Umfrage",
     "task-template-no-questions": "Keine Fragen hinzugefügt",
@@ -1145,7 +1136,7 @@
     "task-survey-template-maxanswers-title": "Max Anworten erreicht",
     "task-survey-template-maxanswers": "Die maximale Anzahl von Antworten pro Frage wurde erreicht.",
     "task-template-map-settings": "Karteneinstellungen",
-    "task-template-map-interactions-label":"Karte Interaktionen",
+    "task-template-map-interactions-label": "Karte Interaktionen",
     "task-template-map-area-checkbox": "Zeichnungsbereich",
     "task-template-map-markers-checkbox": "Markierungen",
     "task-template-error-map-editor": "Wählen Sie mindestens eine Option aus.",
@@ -1155,9 +1146,6 @@
     "task-template-valid-center-map": "Koordinaten gültig.",
     "task-template-error-valid-zoom-map": "Ungültiger Zoomwert",
 
-    "task-count-template-question": "Frage",
-    "task-count-template-question-placeholder": "Z.B. Wie viele Personen können Sie auf dem Bild sehen?",
-    "task-count-template-go": "Weiter",
     "task-count-template-error-incomplete-form": "Unvollständiges Formular",
     "task-count-template-error-question": "Sie müssen eine korrekte Frage stellen",
     "task-count-template-error-many-characters-question": "Zu viele Zeichen in dieser Frage",
@@ -1165,21 +1153,14 @@
     "task-count-template-error-many-characters-answer": "Zu viele Zeichen in dieser Antwort",
     "task-count-template-error-empty-answer": "Die Antwort darf nicht leer sein",
 
-    "task-describe-template-question": "Allgemeine Beschreibung",
-    "task-describe-template-question-placeholder": "z. B.: Beschreiben Sie die Personen im Bild.",
-    "task-describe-template-description": "Detaillierte Beschreibung",
-    "task-describe-template-description-placeholder": "Was ist zu beschreiben?",
-    "task-describe-template-add-description": "Detaillierte Beschreibung hinzufügen",
-    "task-describe-template-delete": "Löschen",
-    "task-describe-template-go": "Weiter",
     "task-describe-template-error-incomplete-form": "Unnvollständiges Formular",
     "task-describe-template-error-fields-validation": "Alle Felder müssen ausgefüllt werden",
     "task-describe-template-error-many-characters-answer": "Zu viele Zeichen in dieser Beschreibung",
     "task-describe-template-error-empty-answer": "Die Beschreibung darf nicht leer sein",
 
-    "task-import-amazon-files-allowed":"<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "taks-import-amazon-files-allowed": "<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
 
-    "task-import-dropbox-files-allowed":"<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "taks-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
     "dropbox-choose-files": " Dateien aus Dropbox auswählen",
     "dropbox-license": "Sie können kostenlos lizenzierte Bilder (Creative Commons oder ähnliches), Ihre eigenen Bilder oder Copyright-Bilder, zu deren Verwendung Sie berechtigt sind, verwenden.",
 
@@ -1320,8 +1301,8 @@
     "task-settings-delete-danger-note": "wenn sie die Aufgaben und Aufgaben-Ausführungen löschen, sind sie für immer verschwunden. Sie können diese Aktion nicht rückgängig machen!",
     "task-settings-delete-confirm-note": "Sind Sie sicher, dass Sie alle Aufgaben und zugehörigen Ausführungen löschen möchten?",
     "task-settings-delete-confirm-no": "Nein, nichts löschen!",
-    "task-settings-delete-loading-label":"Aufgaben löschen...",
-    "task-settings-delete-loading-sublabel":"Dieser Vorgang kann eine Weile dauern, bitte warten Sie.",
+    "task-settings-delete-loading-label": "Aufgaben löschen...",
+    "task-settings-delete-loading-sublabel": "Dieser Vorgang kann eine Weile dauern, bitte warten Sie.",
 
     "task-settings-redundancy": "Aufgaben Redundanz",
     "task-settings-redundancy-header": "Aufgaben Redundanz",
@@ -1514,7 +1495,7 @@
     "taks-import-flickr-text2a": "Sie können den Zugriff auf Ihr Flickr-Konto jederzeit widerrufen",
     "taks-import-flickr-text3": "Auswählen",
     "taks-import-flickr-text4": "Geben Sie die ID eines Flickr-Sets manuell mit Bildern für alle an.",
-    "task-import-flickr-files-allowed":"<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp) ",
+    "taks-import-flickr-files-allowed": "<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp) ",
     "taks-import-flickr-text5-error": "Sie müssen eine Flickr-Album-ID angeben",
 
     "taks-source-editor-amazon-text1": "Name des S3-Buckets",
@@ -1536,6 +1517,20 @@
 
     "taks-import-publiccsv-text1": "Öffentlicher CSV-Link",
     "taks-import-publiccsv-text2": "Aufgaben senden",
+
+    "taks-import-cslogger-csv-label": "Data file",
+    "taks-import-cslogger-media-label": "Media files",
+    "taks-import-cslogger-csv-placeholder": "Search or drop the csv file.",
+    "taks-import-cslogger-media-placeholder": "Search or drop the media files.",
+    "taks-import-cslogger-valid": "Valid file.",
+    "taks-import-cslogger-csv-loaded": "First load the data file.",
+    "taks-import-cslogger-invalid-format":"Invalid file(s) format.",
+    "taks-import-cslogger-invalid-size":"Invalid file(s) size.",
+    "taks-import-cslogger-validating": "Waiting for media files.",
+    "taks-import-cslogger-failed-files-title": "Media files findings",
+    "taks-import-cslogger-files-label": "File(s)",
+    "taks-import-cslogger-failed-files-missing":"Included in csv, but not in media.",
+    "taks-import-cslogger-failed-files-extra":"Included in media, but not in csv",
 
     "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites.",
 
@@ -1679,6 +1674,6 @@
     "project-protect-with-password": "Projekt mit Passwort schützen",
     "private-c": "Privat",
 
-    "loading-hide-btn":"Weiter im Hintergrund" 
+    "loading-hide-btn": "Weiter im Hintergrund"
   }
 }

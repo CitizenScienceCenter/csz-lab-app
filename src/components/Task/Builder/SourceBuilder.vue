@@ -17,18 +17,18 @@
           class="centered mt-3 justify-content-between"
         >
           <b-col md="8" class="mt-md-0 mt-4">
-            <h2 class="mb-4">{{ $t("task-job-builder-cslogger-import-title") }}</h2>
+            <h2 class="mb-4">{{ $t("task-source-builder-cslogger-import-title") }}</h2>
             <load-data></load-data>
           </b-col>
 
           <b-col md="3" class="text-muted">
             <p class="small">
               <i class="fas fa-info-circle"></i><br />
-              {{ $t("task-job-builder-cslogger-info1") }}
+              {{ $t("task-source-builder-cslogger-info1") }}
             </p>
             <!-- Allowed files for media -->
             <p class="small">
-              {{ $t("task-job-builder-cslogger-info2") }}
+              {{ $t("task-source-builder-cslogger-info2") }}
               warning regarding total media files size
             </p>
           </b-col>

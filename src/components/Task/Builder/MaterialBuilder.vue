@@ -34,7 +34,7 @@
               class="text-center material"
             >
               <i class="fas fa-images fa-4x"></i><br />
-              <div class="m-2">{{ $t("task-material-builder-images") }}</div>
+              <div class="m-2">{{ $t("task-material-builder-image") }}</div>
             </b-card>
           </b-col>
 
@@ -48,7 +48,7 @@
               class="text-center material"
             >
               <i class="fas fa-music fa-4x"></i><br />
-              <div class="m-2">{{ $t("task-material-builder-sounds") }}</div>
+              <div class="m-2">{{ $t("task-material-builder-sound") }}</div>
             </b-card>
           </b-col>
 
@@ -78,7 +78,7 @@
               class="text-center material"
             >
               <i class="fas fa-file-pdf fa-4x"></i><br />
-              <div class="m-2">PDFs</div>
+              <div class="m-2">{{$t('task-material-builder-pdf')}}</div>
             </b-card>
           </b-col>
 
@@ -92,7 +92,7 @@
               class="text-center material"
             >
               <i class="fab fa-twitter fa-4x"></i><br />
-              <div class="m-2">Tweets</div>
+              <div class="m-2">{{$t('task-material-builder-tweet')}}</div>
             </b-card>
           </b-col>
 
@@ -100,7 +100,7 @@
             md="4"
             class="mt-2 mt-md-0"
             v-b-popover.hover.bottom="
-              $t('task-material-builder-cslogger')
+              $t('task-material-builder-cslogger-tooltip')
             "
           >
             <b-card
@@ -112,7 +112,7 @@
               class="text-center material"
             >
               <i class="fas fa-question fa-4x"></i><br />
-              <div class="m-2">CS Logger</div>
+              <div class="m-2">{{ $t("task-material-builder-cslogger") }}</div>
             </b-card>
           </b-col>
         </b-row>
