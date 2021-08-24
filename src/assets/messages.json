@@ -243,12 +243,12 @@
     "task-summary-builder-description": "Description",
     "task-summary-builder-answer": "Answer",
     "task-summary-builder-onsubmit": "You will create your project overview page, and your “task presenter” to interact with the contributors. Your project will not be public. It will be visible only to you, and you will still be able to modify it.",
-    "task-summary-builder-loading-label":"Creating tasks...",
-    "task-summary-builder-loading-sublabel":"This process could take a while, please wait.",
+    "task-summary-builder-loading-label": "Creating tasks...",
+    "task-summary-builder-loading-sublabel": "This process could take a while, please wait.",
 
     "task-source-builder-select-source": "Select your files",
     "task-source-builder-other-source": "Go back: select another source",
-    "task-source-builder-info":"<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
+    "task-source-builder-info": "<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
     "task-source-builder-choose-authorized": "Make sure you are authorised to use the data, ie. use free licensed files (Creative Commons or alike), your own files, or copyright files that you are authorised to use.",
     "task-source-builder-options-next-label": "For developers: If this template doesn't exactly fit your project, you can try our",
 
@@ -309,11 +309,11 @@
     "task-template-options-modal-confirm-button": "Confirm",
     "task-template-options-modal-close-button": "Close",
     "task-survey-template-maxquestions-title": "Max question reached",
-    "task-survey-template-maxquestions": "The maximun number of question allowed was reached.",
+    "task-survey-template-maxquestions": "The max. number of question allowed was reached.",
     "task-survey-template-maxanswers-title": "Max answers reached",
-    "task-survey-template-maxanswers": "The maximun number of answers per question was reached.",
+    "task-survey-template-maxanswers": "The max. number of answers per question was reached.",
     "task-template-map-settings": "Map settings",
-    "task-template-map-interactions-label":"Map interactions",
+    "task-template-map-interactions-label": "Map interactions",
     "task-template-map-area-checkbox": "Draw area",
     "task-template-map-markers-checkbox": "Markers",
     "task-template-error-map-editor": "Select at least one option.",
@@ -345,11 +345,11 @@
     "task-describe-template-error-many-characters-answer": "Too many characters in this description",
     "task-describe-template-error-empty-answer": "The description should not be empty",
 
-    "task-import-amazon-files-allowed":"<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "task-import-amazon-files-allowed": "<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
 
-    "task-import-dropbox-files-allowed":"<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "task-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
     "dropbox-choose-files": " Choose files from DropBox",
-    "dropbox-license": " You can use any free licensed pics (Creative Commons or alike), your own pictures or those copyright images that you are authorised to use.",
+    "dropbox-license": " You can use any free licensed files (Creative Commons or alike), your own files or those copyright files that you are authorised to use.",
 
     "project-menu-task-presenter-header": "Task Presenter Editor",
     "project-menu-task-presenter-preview": "Preview task presenter",
@@ -580,8 +580,8 @@
     "task-settings-delete-danger-note": "If you delete all the tasks and task runs they will be gone forever! You cannot undo this action!",
     "task-settings-delete-confirm-note": "Are you sure you want to delete all the project tasks and associated task runs?",
     "task-settings-delete-confirm-no": "No, do not delete anything!",
-    "task-settings-delete-loading-label":"Deleting tasks...",
-    "task-settings-delete-loading-sublabel":"This process could take a while, please wait.",
+    "task-settings-delete-loading-label": "Deleting tasks...",
+    "task-settings-delete-loading-sublabel": "This process could take a while, please wait.",
 
     "task-settings-redundancy": "Tasks Redundancy",
     "task-settings-redundancy-header": "Tasks Redundancy",
@@ -672,7 +672,7 @@
     "taks-import-flickr-text2a": "You can revoke the access to your Flickr account at anytime",
     "taks-import-flickr-text3": "Select",
     "taks-import-flickr-text4": "Manually provide the ID of a Flickr set with images for all.",
-    "task-import-flickr-files-allowed":"<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)",
+    "task-import-flickr-files-allowed": "<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)",
     "taks-import-flickr-text5-error": "You must provide a flickr album ID",
 
     "taks-source-editor-amazon-text1": "Name of the S3 bucket",
@@ -840,7 +840,7 @@
     "project-protect-with-password": "Protect project with password",
     "private-c": "Private",
 
-    "loading-hide-btn":"Continue in background" 
+    "loading-hide-btn": "Continue in background"
   },
   "de": {
     "site-title": "CS Project Builder",
@@ -1075,12 +1075,12 @@
     "task-summary-builder-description": "Beschreibung",
     "task-summary-builder-answer": "Antwort",
     "task-summary-builder-onsubmit": "Sie erstellen damit die Übersichtsseite Ihres Projekts und Ihren „Task Presenter“, um mit den Teilnehmer*innen zu interagieren. Ihr Projekt wird noch nicht veröffentlicht. Es ist nur für Sie sichtbar und Sie können es weiterhin bearbeiten.",
-    "task-summary-builder-loading-label":"Aufgaben erstellen...",
-    "task-summary-builder-loading-sublabel":"Dieser Vorgang kann eine Weile dauern, bitte warten Sie.",
+    "task-summary-builder-loading-label": "Aufgaben erstellen...",
+    "task-summary-builder-loading-sublabel": "Dieser Vorgang kann eine Weile dauern, bitte warten Sie.",
 
     "task-source-builder-select-source": "Wählen Sie Ihre Dateien aus",
     "task-source-builder-other-source": "Zurück: Andere Quelle auswählen",
-    "task-source-builder-info":"<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
+    "task-source-builder-info": "<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
     "task-source-builder-choose-authorized": "Stellen Sie sicher, dass Sie zur Verwendung der Daten berechtigt sind, d.h. verwenden Sie kostenlos lizenzierte Dateien (Creative Commons oder ähnliches), Ihre eigenen Dateien oder Copyright-Bilder, zu deren Verwendung Sie berechtigt sind.",
     "task-source-builder-options-next-label": "Für Entwickler*innen: Wenn diese Vorlage nicht genau zu Ihrem Projekt passt, probieren sie unseren",
 
@@ -1145,7 +1145,7 @@
     "task-survey-template-maxanswers-title": "Max Anworten erreicht",
     "task-survey-template-maxanswers": "Die maximale Anzahl von Antworten pro Frage wurde erreicht.",
     "task-template-map-settings": "Karteneinstellungen",
-    "task-template-map-interactions-label":"Karte Interaktionen",
+    "task-template-map-interactions-label": "Karte Interaktionen",
     "task-template-map-area-checkbox": "Zeichnungsbereich",
     "task-template-map-markers-checkbox": "Markierungen",
     "task-template-error-map-editor": "Wählen Sie mindestens eine Option aus.",
@@ -1177,9 +1177,9 @@
     "task-describe-template-error-many-characters-answer": "Zu viele Zeichen in dieser Beschreibung",
     "task-describe-template-error-empty-answer": "Die Beschreibung darf nicht leer sein",
 
-    "task-import-amazon-files-allowed":"<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "task-import-amazon-files-allowed": "<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
 
-    "task-import-dropbox-files-allowed":"<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "task-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
     "dropbox-choose-files": " Dateien aus Dropbox auswählen",
     "dropbox-license": "Sie können kostenlos lizenzierte Bilder (Creative Commons oder ähnliches), Ihre eigenen Bilder oder Copyright-Bilder, zu deren Verwendung Sie berechtigt sind, verwenden.",
 
@@ -1320,8 +1320,8 @@
     "task-settings-delete-danger-note": "wenn sie die Aufgaben und Aufgaben-Ausführungen löschen, sind sie für immer verschwunden. Sie können diese Aktion nicht rückgängig machen!",
     "task-settings-delete-confirm-note": "Sind Sie sicher, dass Sie alle Aufgaben und zugehörigen Ausführungen löschen möchten?",
     "task-settings-delete-confirm-no": "Nein, nichts löschen!",
-    "task-settings-delete-loading-label":"Aufgaben löschen...",
-    "task-settings-delete-loading-sublabel":"Dieser Vorgang kann eine Weile dauern, bitte warten Sie.",
+    "task-settings-delete-loading-label": "Aufgaben löschen...",
+    "task-settings-delete-loading-sublabel": "Dieser Vorgang kann eine Weile dauern, bitte warten Sie.",
 
     "task-settings-redundancy": "Aufgaben Redundanz",
     "task-settings-redundancy-header": "Aufgaben Redundanz",
@@ -1514,7 +1514,7 @@
     "taks-import-flickr-text2a": "Sie können den Zugriff auf Ihr Flickr-Konto jederzeit widerrufen",
     "taks-import-flickr-text3": "Auswählen",
     "taks-import-flickr-text4": "Geben Sie die ID eines Flickr-Sets manuell mit Bildern für alle an.",
-    "task-import-flickr-files-allowed":"<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp) ",
+    "task-import-flickr-files-allowed": "<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp) ",
     "taks-import-flickr-text5-error": "Sie müssen eine Flickr-Album-ID angeben",
 
     "taks-source-editor-amazon-text1": "Name des S3-Buckets",
@@ -1679,6 +1679,6 @@
     "project-protect-with-password": "Projekt mit Passwort schützen",
     "private-c": "Privat",
 
-    "loading-hide-btn":"Weiter im Hintergrund" 
+    "loading-hide-btn": "Weiter im Hintergrund"
   }
 }

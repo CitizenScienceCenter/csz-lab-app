@@ -222,7 +222,7 @@ export default {
             ) {
               this.showInfo({
                 title: "Number of markers",
-                content: `Only ${this.mapSettings.maxMarkers} markers maximun`
+                content: `Only ${this.mapSettings.maxMarkers} markers max.`
               });
               return;
             }
