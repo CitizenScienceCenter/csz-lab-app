@@ -52,7 +52,7 @@
     </b-col>
 
     <b-col md="3">
-      <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
+      <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
       <p
         class="small text-muted"
         v-html="$t('taks-import-flickr-files-allowed')"

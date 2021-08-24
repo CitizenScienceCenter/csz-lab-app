@@ -27,7 +27,10 @@ const component = {
         <!-- Map Section when NO questions exist -->
         <div v-if="questionList.length == 0">
           <!-- Map question -->
-          <label> {{mapSettings.question}} </label>
+          <label>
+            {{mapSettings.question}}
+            <span v-if="mapSettings.required" class="text-primary font-weight-bold h5">*</span>
+          </label>
           <!-- Map -->
           <maps
             class="my-2"
@@ -86,7 +89,10 @@ const component = {
     <b-row class="my-4" v-if="questionList.length > 0">
       <b-col>
         <!-- Map question -->
-        <label> {{mapSettings.question}} </label>
+        <label> 
+        	{{mapSettings.question}}
+          <span v-if="mapSettings.required" class="text-primary font-weight-bold h5">*</span>
+        </label>
         <!-- Map -->
         <maps
           class="my-2"
