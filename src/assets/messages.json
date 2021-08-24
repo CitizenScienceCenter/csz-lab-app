@@ -302,9 +302,9 @@
     "task-template-options-modal-confirm-button": "Confirm",
     "task-template-options-modal-close-button": "Close",
     "task-survey-template-maxquestions-title": "Max question reached",
-    "task-survey-template-maxquestions": "The maximun number of question allowed was reached.",
+    "task-survey-template-maxquestions": "The max. number of question allowed was reached.",
     "task-survey-template-maxanswers-title": "Max answers reached",
-    "task-survey-template-maxanswers": "The maximun number of answers per question was reached.",
+    "task-survey-template-maxanswers": "The max. number of answers per question was reached.",
     "task-template-map-settings": "Map settings",
     "task-template-map-interactions-label": "Map interactions",
     "task-template-map-area-checkbox": "Draw area",
@@ -328,11 +328,11 @@
     "task-describe-template-error-many-characters-answer": "Too many characters in this description",
     "task-describe-template-error-empty-answer": "The description should not be empty",
 
-    "taks-import-amazon-files-allowed": "<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "task-import-amazon-files-allowed": "<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
 
-    "taks-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "task-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
     "dropbox-choose-files": " Choose files from DropBox",
-    "dropbox-license": " You can use any free licensed pics (Creative Commons or alike), your own pictures or those copyright images that you are authorised to use.",
+    "dropbox-license": " You can use any free licensed files (Creative Commons or alike), your own files or those copyright files that you are authorised to use.",
 
     "project-menu-task-presenter-header": "Task Presenter Editor",
     "project-menu-task-presenter-preview": "Preview task presenter",
@@ -655,7 +655,7 @@
     "taks-import-flickr-text2a": "You can revoke the access to your Flickr account at anytime",
     "taks-import-flickr-text3": "Select",
     "taks-import-flickr-text4": "Manually provide the ID of a Flickr set with images for all.",
-    "taks-import-flickr-files-allowed": "<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)",
+    "task-import-flickr-files-allowed": "<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)",
     "taks-import-flickr-text5-error": "You must provide a flickr album ID",
 
     "taks-source-editor-amazon-text1": "Name of the S3 bucket",
@@ -1158,9 +1158,9 @@
     "task-describe-template-error-many-characters-answer": "Zu viele Zeichen in dieser Beschreibung",
     "task-describe-template-error-empty-answer": "Die Beschreibung darf nicht leer sein",
 
-    "taks-import-amazon-files-allowed": "<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "task-import-amazon-files-allowed": "<strong>Amazon</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
 
-    "taks-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
+    "task-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
     "dropbox-choose-files": " Dateien aus Dropbox auswählen",
     "dropbox-license": "Sie können kostenlos lizenzierte Bilder (Creative Commons oder ähnliches), Ihre eigenen Bilder oder Copyright-Bilder, zu deren Verwendung Sie berechtigt sind, verwenden.",
 
@@ -1495,7 +1495,7 @@
     "taks-import-flickr-text2a": "Sie können den Zugriff auf Ihr Flickr-Konto jederzeit widerrufen",
     "taks-import-flickr-text3": "Auswählen",
     "taks-import-flickr-text4": "Geben Sie die ID eines Flickr-Sets manuell mit Bildern für alle an.",
-    "taks-import-flickr-files-allowed": "<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp) ",
+    "task-import-flickr-files-allowed": "<strong>Flickr</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp) ",
     "taks-import-flickr-text5-error": "Sie müssen eine Flickr-Album-ID angeben",
 
     "taks-source-editor-amazon-text1": "Name des S3-Buckets",

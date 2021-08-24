@@ -119,7 +119,7 @@
       </b-col>
 
       <b-col md="3" align-self="start" class="pt-4 pt-md-0">
-        <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
+        <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
         <p
           v-html="$t('task-material-builder-file-types')"
           class="small text-muted"
