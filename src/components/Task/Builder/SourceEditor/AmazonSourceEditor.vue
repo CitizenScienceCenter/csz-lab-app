@@ -75,13 +75,15 @@
     </b-col>
 
     <b-col md="3" align-self="start">
-      <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
+      <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
       <p
         class="small text-muted"
         v-html="$t('task-import-amazon-files-allowed')"
       ></p>
-      <p class="small text-primary" v-html="$t('task-source-builder-choose-authorized')">
-      </p>
+      <p
+        class="small text-primary"
+        v-html="$t('task-source-builder-choose-authorized')"
+      ></p>
     </b-col>
   </b-row>
 </template>

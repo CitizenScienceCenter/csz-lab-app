@@ -60,7 +60,7 @@
         </b-col>
 
         <b-col md="3" align-self="start">
-          <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
+          <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
           <p
             v-html="$t('information-builder-tip1')"
             class="text-muted small"
@@ -228,5 +228,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

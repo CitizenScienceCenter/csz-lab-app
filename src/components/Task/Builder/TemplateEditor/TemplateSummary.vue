@@ -105,6 +105,12 @@
               @click="collapseButtonOrientation()"
             >
               <span class="font-weight-bold">Map Settings</span>
+              <span
+                class="text-primary font-weight-bold h5"
+                v-if="task.mapSettings.required"
+              >
+                *
+              </span>
             </b-button>
           </b-card-header>
           <b-collapse

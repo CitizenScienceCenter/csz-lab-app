@@ -22,7 +22,7 @@
 
       <!-- Information section - left side -->
       <b-col md="3" align-self="start" class="pr-0 pt-4 pt-md-0">
-        <img src="@/assets/infoicon.svg" class="icon-secondary-big mb-3" />
+        <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
         <p
           v-html="$t('task-template-builder-how-to-map-settings')"
           class="text-muted small mb-0"
