@@ -132,14 +132,16 @@
         :select-label="$t('task-template-options-dropdown-select')"
         :selectedLabel="$t('task-template-options-dropdown-selected')"
         :block-keys="['Tab', 'Enter']"
-        label="name"
         :options="types"
         :searchable="false"
         :allow-empty="false"
         :preselect-first="true"
       >
         <template slot="singleLabel" slot-scope="{ option }">
-          <strong>{{ option.name }}</strong>
+          <strong>{{ $t(option.name) }}</strong>
+        </template>
+        <template slot="option" slot-scope="{ option }">
+          <span>{{ $t(option.name) }}</span>
         </template>
       </multiselect>
       <span class="small text-muted">{{
