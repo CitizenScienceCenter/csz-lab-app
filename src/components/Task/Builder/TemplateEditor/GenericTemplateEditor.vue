@@ -69,6 +69,7 @@
           <div
             v-if="types.slice(0, 3).some(x => x.value == question.type)"
             class="ans-overflow"
+            ref="ans_content"
           >
             <b-form-group
               :key="answerKey"
@@ -258,7 +259,7 @@ export default {
       // focus in new tab automatically
       setTimeout(function() {
         aux.current_tab = aux.questions.length - 1;
-      }, 200);
+      }, 20);
     },
     deleteQuestion(questionKey) {
       if (this.questions.length > this.minQuestions) {
@@ -275,8 +276,16 @@ export default {
 
     // answer methods
     addAnswer(questionKey) {
+      const aux = this;
       if (this.questions[questionKey].answers.length < MAXANSWERS) {
         this.questions[questionKey].answers.push("");
+        // focus in new tab automatically
+        setTimeout(function() {
+          aux.$refs.ans_content[aux.current_tab].scrollTo({
+            top: aux.$refs.ans_content[aux.current_tab].scrollHeight,
+            behavior: "smooth"
+          });
+        }, 20);
       } else {
         this.showInfo({
           title: this.$t("task-survey-template-maxanswers-title"),
