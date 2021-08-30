@@ -303,20 +303,26 @@ export default {
               "taks-import-cslogger-invalid-size"
             );
           } else {
-            const media_names = this.mediaFiles.map(x => x.name);
-            const csv_responses = this.json_csvFile.map(function(x) {
-              return x.response;
-            });
-            // get the files not included into CSV
-            this.extra_media = media_names.filter(
-              x => !csv_responses.some(y => y.includes(x))
-            );
-            // get the files not included into MEDIA
-            this.missing_media = csv_responses
-              .filter(x => !media_names.some(y => x.includes(y)))
-              .map(y => y.substr(y.lastIndexOf(":") + 1).trim());
-
-            this.validating = false;
+            try {
+              const media_names = this.mediaFiles.map(x => x.name);
+              const csv_responses = this.json_csvFile
+                .filter(file => "response" in file)
+                .map(function(x) {
+                  return x.response;
+                });
+              // get the files not included into CSV
+              this.extra_media = media_names.filter(
+                x => !csv_responses.some(y => y.includes(x))
+              );
+              // get the files not included into MEDIA
+              this.missing_media = csv_responses
+                .filter(x => !media_names.some(y => x.includes(y)))
+                .map(y => y.substr(y.lastIndexOf(":") + 1).trim());
+            } catch (error) {
+              console.log(error);
+            } finally {
+              this.validating = false;
+            }
           }
         } else {
           this.valid[ext] = false;
