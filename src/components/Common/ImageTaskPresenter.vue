@@ -146,7 +146,12 @@ export default {
     link() {
       // Refresh component each time link is changed
       this.refresh = false;
-      this.imgObject.refresh();
+      if ("refresh" in this.imgObject) {
+        // Wait until new link is loaded into the component
+        setTimeout(() => {
+          this.imgObject.refresh();
+        }, 2);
+      }
     }
   }
 };

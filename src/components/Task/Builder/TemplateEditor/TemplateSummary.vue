@@ -71,7 +71,7 @@
                 </ul>
                 <div>
                   <small class="text-primary">Question type: </small>
-                  <small>{{ getQuestionType(question.type) }}</small>
+                  <small>{{ $t(getQuestionType(question.type)) }}</small>
                 </div>
                 <div v-if="'questionId' in question.condition">
                   <small class="text-primary"

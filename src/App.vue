@@ -55,15 +55,6 @@
     >
       <span v-html="notification.message.content"></span>
     </b-toast>
-
-    <!-- TODO: change for new loading component, must be wrapper -->
-    <!-- <loading
-      :active.sync="isLoadingOverlay"
-      :can-cancel="false"
-      :is-full-page="true"
-      color="#c5202e"
-    >
-    </loading> -->
     <loading></loading>
 
     <project-password-modal :value="showProjectPassModal" :project="project">
@@ -74,12 +65,6 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import { i18n } from "./i18n";
-// TODO: Implement a new component for loading with :
-// custom text(title and subtitle), hide btn, progress bar, spinner
-// remove vue-loading-overlay
-// TODO: verify showLoading
-// import Loading from "vue-loading-overlay";
-// import "vue-loading-overlay/dist/vue-loading.css";
 import Loading from "@/components/Common/Loading.vue";
 
 import GDPR from "./components/GDPR.vue";
