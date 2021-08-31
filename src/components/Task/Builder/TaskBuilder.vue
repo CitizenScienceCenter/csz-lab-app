@@ -1,15 +1,5 @@
 <template>
   <div>
-    <b-alert
-      show
-      dismissible
-      class="mb-0"
-      variant="primary"
-      v-if="currentStep === 'job'"
-    >
-      This is a new version. Two buttons should be visible, if not, please clear
-      the cache and try again.
-    </b-alert>
     <b-breadcrumb :items="items"></b-breadcrumb>
     <b-container>
       <MaterialBuilder v-if="currentStep === 'material'"></MaterialBuilder>

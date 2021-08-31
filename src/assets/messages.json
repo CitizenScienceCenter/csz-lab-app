@@ -271,6 +271,7 @@
     "task-job-builder-info-survey-geo-example": "Example: <br/><em>Question: do you see a fountain in the image?<ul style='list-style-type:circle' class='ml-3'><li>Yes</li><li>No</li><li>I can't say</li></ul><p class='mt-2'>Geo Question: If you know the location of the fountain, please mark it on the map.</p> </em>",
     "task-job-builder-survey": "Survey",
     "task-job-builder-survey-geo": "Geo/Survey",
+    "task-job-builder-info-clean-cache": "<strong>This is a new version!</strong><br/>Two buttons should be visible, if not, please clear the cache and refresh this page.",
 
     "task-flickr-callback-access": "Flickr access granted",
     "task-flickr-callback-window": "You can now close this window and continue to import your pictures!",
@@ -1105,6 +1106,7 @@
     "task-job-builder-info-survey-geo-example": "Example: <br/><em>Question: do you see a fountain in the image?<ul style='list-style-type:circle' class='ml-3'><li>Yes</li><li>No</li><li>I can't say</li></ul><p class='mt-2'>Geo Question: If you know the location of the fountain, please mark it on the map.</p> </em>",
     "task-job-builder-survey": "Umfrage",
     "task-job-builder-survey-geo": "Geo/Umfrage",
+    "task-job-builder-info-clean-cache": "<strong>This is a new version!</strong><br/>Two buttons should be visible, if not, please clear the cache and refresh this page.",
 
     "task-flickr-callback-access": "Flickr-Zugriff gewährt",
     "task-flickr-callback-window": "Sie können dieses Fenster jetzt schließen und Ihre Bilder importieren.",
