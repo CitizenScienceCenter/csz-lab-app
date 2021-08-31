@@ -1,5 +1,5 @@
 import api from "@/api/aws";
-import media_ext from "@/resources/media_files_ext.json";
+import media_ext from "@/assets/media_files_ext.json";
 
 const errors = {
   GET_BUCKET_FILES_ERROR: "Error during bucket files loading"
@@ -72,7 +72,7 @@ const state = {
   materialExtensions: {
     [materials.image]: media_ext.image,
     [materials.sound]: media_ext.sound,
-    [materials.pdf]: media_ext.document,
+    [materials.pdf]: media_ext.documents,
     [materials.tweet]: [],
     [materials.video]: media_ext.video
   },
