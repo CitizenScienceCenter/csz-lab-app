@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-alert show dismissible class="mb-0" variant="primary">
-      Some elements are not visible, please clear cache and refresh this page.
+    <b-alert :show="show" dismissible class="mb-0" variant="primary">
+      Some elements may not visible, please clear cache and refresh this page.
     </b-alert>
     <b-breadcrumb :items="items"></b-breadcrumb>
     <b-container>
@@ -31,6 +31,11 @@ export default {
     MaterialBuilder,
     TemplateBuilder
   },
+  data() {
+    return {
+      show: false
+    };
+  },
   metaInfo: function() {
     return {
       title: `Project ${this.project.id} - Builder`,
@@ -55,7 +60,7 @@ export default {
     ...mapState("project", {
       project: state => state.selectedProject
     }),
-    ...mapState("task/builder", ["currentStep", "steps"]),
+    ...mapState("task/builder", ["currentStep", "steps", "task", "materialJobs"]),
     items() {
       const items = [
         {
@@ -118,11 +123,15 @@ export default {
   },
   watch: {
     steps(steps) {
+      this.show = false;
       if (this.currentStep === "material" && steps["material"] === true) {
         this.$router.push({
           name: "task.builder.job",
           params: { id: "id" in this.project ? this.project.id : 0 }
         });
+        if(this.materialJobs[this.task.material].length != 2) {
+          this.show = true
+        }
       } else if (this.currentStep === "job" && steps["job"] === true) {
         this.$router.push({
           name: "task.builder.template",

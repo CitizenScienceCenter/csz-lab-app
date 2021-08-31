@@ -1,6 +1,5 @@
 import api from "@/api/aws";
 import media_ext from "@/resources/media_files_ext.json";
-import builder_settings from "@/resources/builder_settings.json";
 
 const errors = {
   GET_BUCKET_FILES_ERROR: "Error during bucket files loading"
@@ -50,14 +49,25 @@ const state = {
     summary: false
   },
   // global vars
-  materials: builder_settings.materials,
-  jobs: builder_settings.jobs,
-  sources: builder_settings.sources,
-
+  materials: materials,
+  jobs: jobs,
+  sources: sources,
   // available jobs for each material type
-  materialJobs: builder_settings.materialJobs,
+  materialJobs: {
+    [materials.image]: [jobs.survey, jobs.geo_survey],
+    [materials.sound]: [jobs.survey, jobs.geo_survey],
+    [materials.video]: [jobs.survey, jobs.geo_survey],
+    [materials.tweet]: [jobs.survey, jobs.geo_survey],
+    [materials.pdf]: [jobs.survey, jobs.geo_survey]
+  },
   // available sources for each material type
-  materialSources: builder_settings.materialSources,
+  materialSources: {
+    [materials.image]: [sources.amazon, sources.dropbox, sources.flickr],
+    [materials.sound]: [sources.amazon, sources.dropbox],
+    [materials.pdf]: [sources.amazon, sources.dropbox],
+    [materials.tweet]: [sources.twitter],
+    [materials.video]: [sources.amazon, sources.dropbox]
+  },
   // available extensions for each material type
   materialExtensions: {
     [materials.image]: media_ext.image,
