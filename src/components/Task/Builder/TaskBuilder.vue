@@ -1,5 +1,8 @@
 <template>
   <div>
+    <b-alert show dismissible class="mb-0" variant="primary">
+      Some elements are not visible, please clear cache and refresh this page.
+    </b-alert>
     <b-breadcrumb :items="items"></b-breadcrumb>
     <b-container>
       <MaterialBuilder v-if="currentStep === 'material'"></MaterialBuilder>
