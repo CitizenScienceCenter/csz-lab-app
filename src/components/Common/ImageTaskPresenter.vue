@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-skeleton-wrapper :loading="loading && refresh">
+    <b-skeleton-wrapper :loading="loading">
       <template #loading>
         <b-skeleton-img
           animation="throb"
@@ -20,16 +20,17 @@
         :disable-click-to-choose="true"
         :disable-scroll-to-zoom="true"
         :disable-pinch-to-zoom="true"
-        :show-loading="true"
+        :show-loading="refreshing"
         :loading-size="10"
         :zoom-speed="10"
-        placeholder="Loading Image..."
+        :placeholder="$t('task-presenter-menu-image-loading')"
         :placeholder-font-size="30"
         :accept="'image/*'"
         initial-position="center"
         initial-size="cover"
         auto-sizing
-        @new-image-drawn="onNewImage"
+        @new-image="onNewImage"
+        @loading-end="onReadyImage"
         @zoom="onZoom"
       >
         <img v-if="link" :src="link" :alt="link" slot="initial" />
@@ -83,7 +84,7 @@ export default {
       minZoom: 0,
       maxZoom: 0,
       timing: null,
-      refresh: true
+      refreshing: false
     };
   },
   props: {
@@ -119,7 +120,6 @@ export default {
       this.currentZoom = this.imgObject.scaleRatio;
       this.minZoom = this.imgObject.scaleRatio * 1;
       this.maxZoom = this.imgObject.scaleRatio * 10;
-      this.refresh = true;
     },
     onSliderChange(value) {
       var increment = value;
@@ -138,20 +138,17 @@ export default {
     onZoom() {
       this.currentZoom = this.imgObject.scaleRatio;
     },
+    onReadyImage() {
+      this.refreshing = false;
+      this.imgObject.refresh();      
+    },
     hideSlider() {
       this.isZoom = false;
     }
   },
   watch: {
     link() {
-      // Refresh component each time link is changed
-      this.refresh = false;
-      if ("refresh" in this.imgObject) {
-        // Wait until new link is loaded into the component
-        setTimeout(() => {
-          this.imgObject.refresh();
-        }, 2);
-      }
+      this.refreshing = true;
     }
   }
 };

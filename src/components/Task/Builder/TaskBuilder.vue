@@ -52,7 +52,12 @@ export default {
     ...mapState("project", {
       project: state => state.selectedProject
     }),
-    ...mapState("task/builder", ["currentStep", "steps"]),
+    ...mapState("task/builder", [
+      "currentStep",
+      "steps",
+      "task",
+      "materialJobs"
+    ]),
     items() {
       const items = [
         {

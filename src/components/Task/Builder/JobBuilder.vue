@@ -15,7 +15,21 @@
     </b-row>
 
     <b-row class="mt-4">
-      <b-col md="9">
+      <!-- TODO: Temporal fix, validate if materialJobs, but show cleaning cache message -->
+      <b-col
+        md="9"
+        v-if="
+          !materialJobs[task.material] ||
+            materialJobs[task.material].length == 0
+        "
+        class="container superlight-greyish"
+      >
+        <div
+          class="text-center text-primary mx-4 mt-5"
+          v-html="$t('task-job-builder-info-clean-cache')"
+        ></div>
+      </b-col>
+      <b-col md="9" v-else>
         <b-row>
           <!-- These are the specific type of jobs according the material -->
           <b-col
@@ -86,6 +100,11 @@
         </div>
         <div v-else>
           <p v-html="$t('task-job-builder-info')" class="text-muted small"></p>
+          <!-- TODO: Temporal fix, validate if materialJobs, but show cleaning cache message -->
+          <p
+            v-html="$t('task-job-builder-info-clean-cache')"
+            class="text-primary small"
+          ></p>
         </div>
       </b-col>
     </b-row>
