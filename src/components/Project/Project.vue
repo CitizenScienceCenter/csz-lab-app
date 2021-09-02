@@ -336,7 +336,9 @@
 
               <b-tab
                 ref="tab-tasks"
-                v-if="isLoggedUserOwnerOfProject(project) || infos.admin"
+                v-if="
+                  logged && (isLoggedUserOwnerOfProject(project) || infos.admin)
+                "
                 :title="$t('tasks-c')"
                 :active="currentTab === tabs.tasks"
                 @click="setCurrentTab(tabs.tasks)"
@@ -347,7 +349,9 @@
 
               <b-tab
                 ref="tab-settings"
-                v-if="isLoggedUserOwnerOfProject(project) || infos.admin"
+                v-if="
+                  logged && (isLoggedUserOwnerOfProject(project) || infos.admin)
+                "
                 :title="$t('settings-c')"
                 :active="currentTab === tabs.settings"
                 @click="setCurrentTab(tabs.settings)"
@@ -531,7 +535,7 @@ export default {
     }),
     ...mapState("task", ["taskPresenter", "projectTasks"]),
     ...mapState("project/menu", ["currentTab", "tabs"]),
-    ...mapState("user", ["infos"]),
+    ...mapState("user", ["infos", "logged"]),
     ...mapGetters("user", ["isLoggedUserOwnerOfProject", "isLoggedUserAdmin"]),
     getBaseUrl() {
       if (this.loading && this.project.info.thumbnail) {
