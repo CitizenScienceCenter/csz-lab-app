@@ -29,7 +29,7 @@
         initial-position="center"
         initial-size="cover"
         auto-sizing
-        @new-image="onNewImage"
+        @new-image-drawn="onNewImage"
         @loading-end="onReadyImage"
         @zoom="onZoom"
       >
