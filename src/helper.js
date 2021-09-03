@@ -273,7 +273,9 @@ export function groupBy(key, array) {
     r[a[key]] = [...(r[a[key]] || []), a];
     return r;
   }, {});
-  return Object.values(group_obj) || [];
+  // remove wrong parameters
+  delete group_obj[""];
+  return group_obj;
 }
 
 // convert CSV file to Json format

@@ -83,6 +83,18 @@
           <i>{{ $t("taks-import-cslogger-csv-loaded") }}</i>
         </small>
       </div>
+      <!-- TODO: pending translations -->
+      <!-- Partial checkbox -->
+      <div class="mb-4">
+        <b-form-checkbox v-model="partial">
+          {{ $t("taks-import-cslogger-partial-load") }}
+        </b-form-checkbox>
+        <!-- Error message for no task to create-->
+        <span class="text-primary" v-show="no_tasks">
+          <i class="fas fa-exclamation-triangle"></i>
+          <small>{{ $t("taks-import-cslogger-no-tasks") }}</small>
+        </span>
+      </div>
     </b-form-group>
 
     <!-- Continue button-->
@@ -187,7 +199,9 @@ export default {
       extra_media: [],
       missing_media: [],
       qfiles_onscreen: 0,
-      total_size: 0
+      total_size: 0,
+      partial: false,
+      no_tasks: false
     };
   },
   created() {
@@ -239,25 +253,30 @@ export default {
     }),
 
     onSubmit() {
+      this.no_tasks = false;
       this.error_message = { ...{ media: null, csv: null } };
-      // validate number of tasks according activity_id
-      const number_of_tasks = this.getNumberOfTasks(
-        "id",
-        this.json_csvFile
-      );
-      //TODO: Validate if there are files to submit!!! it means number of task > 0
-      // Prepair data to send. Excluding the extra_media no contained into csv
-      const dataObj = {
-        n_tasks: number_of_tasks,
-        // TODO: validations:
-        // - if partial is true, media files just remove extra files
-        // - if partial is false, media files remove extra and groupfiles where belongs missing_files names
-        files: this.mediaFiles.filter(x => !this.extra_media.includes(x.name)),
-        csv: this.csvFile
-      };
-      this.setTaskSourceContent(dataObj);
-      this.setTaskSource(this.sources.cslogger);
-      this.setStep({ step: "source", value: true });
+      // validate group of tasks according id
+      const group_of_tasks = this.getGroupsOfTasks("id", this.json_csvFile);
+      // get the number of tasks
+      const number_of_tasks = group_of_tasks.length;
+      if (number_of_tasks > 0) {
+        // flatten the group of tasks for filtering the mediaFiles loaded
+        const tasks = group_of_tasks.reduce((x, y) => x.concat(y));
+        // Prepair data to send. Excluding the extra_media no contained into csv
+        const dataObj = {
+          n_tasks: number_of_tasks,
+          // filter only the media included into groups only
+          files: this.mediaFiles.filter(x =>
+            tasks.some(t => t.response.includes(x.name))
+          ),
+          csv: this.csvFile
+        };
+        this.setTaskSourceContent(dataObj);
+        this.setTaskSource(this.sources.cslogger);
+        this.setStep({ step: "source", value: true });
+      } else {
+        this.no_tasks = true;
+      }
     },
 
     // Validate files
@@ -320,8 +339,12 @@ export default {
               );
               // get the files not included into MEDIA
               this.missing_media = csv_responses
-                .filter(x => !media_names.some(y => x.includes(y)))
-                .map(y => y.substr(y.lastIndexOf(":") + 1).trim());
+                .filter(
+                  x =>
+                    x.includes("filename") &&
+                    !media_names.some(y => x.includes(y))
+                )
+                .map(name => name.substr(name.lastIndexOf(":") + 1).trim());
             } catch (error) {
               console.log(error);
             } finally {
@@ -336,16 +359,20 @@ export default {
         }
       }
     },
-    getNumberOfTasks(groupId, array, partial = false) {
+    getGroupsOfTasks(groupId, array) {
       // convert array into a grouped array
-      // TODO: If partial is false, reject the gruops and files which integrate the groupId group
-      const groups = groupBy(groupId, array);
-      if (partial) {
+      let groups = groupBy(groupId, array);
+      if (this.partial) {
         // Return only the group with at least one resource available as response
-        return groups.filter(g => g.some(el => el.response)).length;
-      }
-      else{
-        return groups.filter(g => g.some(el => el.response)).length;
+        return Object.values(groups);
+      } else {
+        const discard_groupId = new Set(
+          this.missing_media.map(
+            x => this.json_csvFile.find(row => row.response.includes(x)).id
+          )
+        );
+        discard_groupId.forEach(x => delete groups[x]);
+        return Object.values(groups);
       }
     },
     getExt(name) {
