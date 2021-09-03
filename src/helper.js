@@ -1,4 +1,5 @@
 import { i18n } from "./i18n.js";
+import media_ext from "@/assets/media_files_ext.json";
 
 export function uuid() {
   let dt = new Date().getTime();
@@ -243,28 +244,9 @@ export function getWidthScreen() {
 
 // Get MIME type for url file
 export function getMIME(raw_url) {
-  const img_ext = new Set([
-    "png",
-    "jpg",
-    "jpeg",
-    "gif",
-    "bmp",
-    "svg",
-    "tif",
-    "tiff",
-    "webp"
-  ]);
-  const video_ext = new Set(["avi", "mp4", "mpeg", "ogv", "webm", "3gp"]);
-  const audio_ext = new Set([
-    "aac",
-    "mid",
-    "midi",
-    "mp3",
-    "oga",
-    "opus",
-    "wav",
-    "weba"
-  ]);
+  const img_ext = new Set(media_ext.image);
+  const video_ext = new Set(media_ext.video);
+  const audio_ext = new Set(media_ext.sound);
 
   const types = new Map();
   //add images to the Map
@@ -273,8 +255,13 @@ export function getMIME(raw_url) {
   video_ext.forEach(video => types.set(video, "video"));
   //add audio to the Map
   audio_ext.forEach(audio => types.set(audio, "audio"));
+  let extension;
+  try {
+    const url = new URL(raw_url);
+    extension = url.pathname.split(".").pop();
+  } catch (e) {
+    if (typeof raw_url == "string") extension = raw_url.split(".").pop();
+  }
 
-  const url = new URL(raw_url);
-  const extension = url.pathname.split(".")[1];
-  return types.get(extension);
+  return types.get(`.${extension}`);
 }
