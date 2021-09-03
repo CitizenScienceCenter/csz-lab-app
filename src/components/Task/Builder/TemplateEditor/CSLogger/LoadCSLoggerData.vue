@@ -242,12 +242,16 @@ export default {
       this.error_message = { ...{ media: null, csv: null } };
       // validate number of tasks according activity_id
       const number_of_tasks = this.getNumberOfTasks(
-        "activity_id",
+        "id",
         this.json_csvFile
       );
+      //TODO: Validate if there are files to submit!!! it means number of task > 0
       // Prepair data to send. Excluding the extra_media no contained into csv
       const dataObj = {
         n_tasks: number_of_tasks,
+        // TODO: validations:
+        // - if partial is true, media files just remove extra files
+        // - if partial is false, media files remove extra and groupfiles where belongs missing_files names
         files: this.mediaFiles.filter(x => !this.extra_media.includes(x.name)),
         csv: this.csvFile
       };
@@ -332,12 +336,17 @@ export default {
         }
       }
     },
-    getNumberOfTasks(activityId, array) {
+    getNumberOfTasks(groupId, array, partial = false) {
       // convert array into a grouped array
-      // TODO: validate group by indicator (userId, activityId, etc)
-      const groups = groupBy(activityId, array);
-      // return only the task with at least one resource available as response
-      return groups.filter(g => g.some(el => el.response)).length;
+      // TODO: If partial is false, reject the gruops and files which integrate the groupId group
+      const groups = groupBy(groupId, array);
+      if (partial) {
+        // Return only the group with at least one resource available as response
+        return groups.filter(g => g.some(el => el.response)).length;
+      }
+      else{
+        return groups.filter(g => g.some(el => el.response)).length;
+      }
     },
     getExt(name) {
       return name.split(".").pop();
