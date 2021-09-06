@@ -313,7 +313,8 @@ export default {
       else if (this.task.source === this.sources.cslogger) {
         sourcePromise = this.importLocalCSLoggerFile({
           files: this.task.sourceContent.files,
-          csv: this.task.sourceContent.csv
+          csv: this.task.sourceContent.csv,
+          partial: this.task.sourceContent.partial
         });
       }
 

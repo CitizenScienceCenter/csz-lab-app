@@ -90,7 +90,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-import { getMIME } from "@/helper.js";
+import { getMIME,validateCSLoggerResponse } from "@/helper.js";
 
 export default {
   name: "TemplateRenderer",
@@ -123,7 +123,7 @@ export default {
       done: 0,
       total: 0
     });
-    // load the project first to have access to the presenter and to the related tasks 
+    // load the project first to have access to the presenter and to the related tasks
     this.getProject(this.id).then(result => {
       this.taskPresenterLoaded = true;
       // if the project presenter exists or a template is given (with the task presenter editor), it will be displayed
@@ -397,6 +397,12 @@ export default {
     // get the mime type for media file
     getFileType(file) {
       return getMIME(file);
+    },
+
+    // CSLogger implementation only
+    // Validate type of response from string
+    validateResponse(response){
+      return validateCSLoggerResponse(response)
     }
   }
 };

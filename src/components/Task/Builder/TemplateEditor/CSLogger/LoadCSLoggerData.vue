@@ -269,7 +269,8 @@ export default {
           files: this.mediaFiles.filter(x =>
             tasks.some(t => t.response.includes(x.name))
           ),
-          csv: this.csvFile
+          csv: this.csvFile,
+          partial: this.partial
         };
         this.setTaskSourceContent(dataObj);
         this.setTaskSource(this.sources.cslogger);

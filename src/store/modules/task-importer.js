@@ -846,14 +846,15 @@ const actions = {
   },
 
   //** Citizen Science Logger Section **/
-  async importLocalCSLoggerFile({ commit, rootState }, { files, csv }) {
+  async importLocalCSLoggerFile({ commit, rootState }, { files, csv, partial }) {
     commit("notification/showLoadingOverlay", true, { root: true });
 
     try {
       const res = await api.importLocalCSLoggerFile(
         rootState.project.selectedProject.short_name,
         files,
-        csv
+        csv,
+        partial
       );
       if ("status" in res.data && res.data.status === "message") {
         let flash = res.data.flash.split(" ");

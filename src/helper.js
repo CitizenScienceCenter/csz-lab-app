@@ -290,3 +290,22 @@ export async function csvToJson(csv) {
     });
   });
 }
+
+// CSLogger implementation only
+// Validate type of response from string
+export function validateCSLoggerResponse(response) {
+  // Get the type of response
+  const type = response.split(":")[0];
+  let url = null;
+  try {
+    url = new URL(response);
+  } catch (error) {}
+  if (url && (url.protocol === "http:" || url.protocol === "https:")) {
+    return "url";
+  } else if (type != "filename") {
+    //TODO: Change for respective response type
+    return "text";
+  } else {
+    return false;
+  }
+}

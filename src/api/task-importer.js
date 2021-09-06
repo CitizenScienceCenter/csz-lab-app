@@ -237,8 +237,9 @@ export default {
     );
   },
 
-  async importLocalCSLoggerFile(projectShortName, files, csv) {
+  async importLocalCSLoggerFile(projectShortName, files, csv, partial = false) {
     const data = new FormData();
+    data.append("partial", partial);
     data.append("file", csv);
     data.append("csv_filename", csv.name);
     files.forEach(file => {
@@ -273,8 +274,7 @@ export default {
         } else {
           up_config = {
             label: "Creating tasks...",
-            sublabel:
-              "This process could take a while, please wait. ",
+            sublabel: "This process could take a while, please wait. ",
             progress: null,
             finite: false,
             hideBtn: false

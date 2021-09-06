@@ -44,11 +44,7 @@ const component = {
         </b-col>
 
         <!-- Right column - Media -->
-        <b-col
-          md="7"
-          class="order-1 order-md-2"
-          style="overflow-y: auto; height: 75vh; z-index: 0"
-        >
+        <b-col md="7" class="order-1 order-md-2" style="overflow-y: auto; height: 75vh; z-index: 0">
           <!-- Content wrapped for overlay for loading time -->
           <b-overlay
             :show="!pybossa.taskLoaded"
@@ -65,20 +61,26 @@ const component = {
               class="mb-2"
               align="center"
               border-variant="light"
-              :sub-title="resource.question"
+              :sub-title="resource.prompt"
             >
-              <!-- Image -->
-              <image-task-presenter
-                v-if="getMime(resource.url)=='img'"
-                :link="resource.url"
-                :pybossa="pybossa"
-              />
-              <!-- Video -->
-              <media v-else-if="getMime(resource.url)=='video'" :link="resource.url" type="video">
-              </media>
-              <!-- Audio -->
-              <media v-else-if="getMime(resource.url)=='audio'" :link="resource.url" type="audio">
-              </media>
+              <div v-if="resource.type == 'url'">
+                <!-- Image -->
+                <image-task-presenter
+                  v-if="getMime(resource.url)=='img'"
+                  :link="resource.url"
+                  :pybossa="pybossa"
+                />
+                <!-- Video -->
+                <media v-else-if="getMime(resource.url)=='video'" :link="resource.url" type="video">
+                </media>
+                <!-- Audio -->
+                <media v-else-if="getMime(resource.url)=='audio'" :link="resource.url" type="audio">
+                </media>
+              </div>
+              <!-- Text -->
+              <b-alert v-else-if="resource.type == 'text'" :show="true" variant="secondary">
+                {{resource.url}}
+              </b-alert>
               <!-- No recognized element -->
               <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
             </b-card>
@@ -165,9 +167,17 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
-      return this.task && this.task.info
-        ? JSON.parse(this.task.info.csloggerTasks)
-        : [];
+      /* Validate type of response and discard the invalid ones */
+      const responses =
+        this.task && this.task.info
+          ? JSON.parse(this.task.info.csloggerTasks)
+          : [];
+      return responses
+        .map(res => {
+          res["type"] = this.pybossa.validateResponse(res.url);
+          return res;
+        })
+        .filter(valid => valid.type);
     },
     context() {
       return this;
