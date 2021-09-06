@@ -47,32 +47,21 @@ router.beforeEach(async (to, from, next) => {
     i18n.locale = language;
     console.log(i18n.locale);
 
-    // validate with server for protected routes
+    // validate for protected routes
     if (!publicRoutes.includes(to.name)) {
-      try {
-        const values = await store.dispatch("user/getAccountProfile");
-        if (!values) {
-          store.commit("user/setLoggedOut");
-          store.commit("user/setUserInfos", {});
-        }
-        if (store.state.user.logged) {
-          next();
-        } else {
-          // if the route needs to be logged the user is redirected
-          store.commit("notification/showInfo", {
-            title: getTranslationLocale("error-login-authentication"),
-            content: getTranslationLocale("error-login-authentication-content")
-          });
-          from.name !== null
-            ? next(false)
-            : next({
-                name: "login"
-              });
-        }
-      } catch (error) {
-        next({
-          name: "home"
+      if (store.state.user.logged) {
+        next();
+      } else {
+        // if the route needs to be logged the user is redirected
+        store.commit("notification/showInfo", {
+          title: getTranslationLocale("error-login-authentication"),
+          content: getTranslationLocale("error-login-authentication-content")
         });
+        from.name !== null
+          ? next(false)
+          : next({
+              name: "login"
+            });
       }
     } else {
       next();
