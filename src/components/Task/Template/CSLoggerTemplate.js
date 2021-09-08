@@ -78,9 +78,9 @@ const component = {
                 </media>
               </div>
               <!-- Text -->
-              <b-alert v-else-if="resource.type == 'text'" :show="true" variant="secondary">
+              <b-card-text v-else-if="resource.type == 'text'" class="text-left">
                 {{resource.url}}
-              </b-alert>
+              </b-card-text>
               <!-- No recognized element -->
               <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
             </b-card>
