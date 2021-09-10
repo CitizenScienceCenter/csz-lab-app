@@ -15,7 +15,7 @@
     </b-row>
 
     <b-row class="mt-4">
-      <!-- TODO: Temporal fix, validate if materialJobs, but show cleaning cache message -->
+      <!-- TODO: Temporal fix Not working, validate if materialJobs, but show cleaning cache message -->
       <b-col
         md="9"
         v-if="

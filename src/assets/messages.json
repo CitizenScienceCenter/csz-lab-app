@@ -664,7 +664,7 @@
     "taks-import-cslogger-failed-files-missing":"Included in csv, but not in media.",
     "taks-import-cslogger-failed-files-extra":"Included in media, but not in csv",
 
-    "textValid-cookies": "We use cookies to improve your experience on our sites.",
+    "text-cookies": "We use cookies to improve your experience on our sites.",
 
     "notifications-messages-register-error": "Error during registration",
     "notifications-messages-register-notavailable": "Registration not available",
