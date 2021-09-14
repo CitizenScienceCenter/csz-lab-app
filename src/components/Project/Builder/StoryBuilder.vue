@@ -64,6 +64,22 @@
           </b-form-group>
 
           <b-form-group
+            id="fieldset-contribute"
+            :label="$t('project-description-contribute')"
+            label-for="contribute"
+            :description="$t('story-builder-project-info-description-5')"
+            :valid-feedback="validFeedback('currentContribute')"
+            :invalid-feedback="invalidFeedback('currentContribute')"
+            :state="validated('currentContribute')"
+          >
+            <vue-editor
+              id="contribute"
+              :editorToolbar="toolbarOptions"
+              v-model="currentContribute"
+            ></vue-editor>
+          </b-form-group>
+
+          <b-form-group
             id="fieldset-keep-track"
             :label="$t('project-description-keep-track')"
             label-for="keep-track"
@@ -117,12 +133,14 @@ export default {
       currentHow: "",
       currentWho: "",
       currentKeepTrack: "",
+      currentContribute: "",
 
       firstInteraction: {
         currentWhatWhy: true,
         currentHow: true,
         currentWho: true,
-        currentKeepTrack: true
+        currentKeepTrack: true,
+        currentContribute: true
       },
 
       toolbarOptions: [["bold", "italic", "link"], [{ list: "bullet" }]]
@@ -133,6 +151,7 @@ export default {
     this.currentHow = this.how;
     this.currentWho = this.who;
     this.currentKeepTrack = this.keepTrack;
+    this.currentContribute = this.contribute;
   },
   methods: {
     ...mapMutations("project/builder", ["setStory", "setStep"]),
@@ -142,7 +161,8 @@ export default {
         "currentWhatWhy",
         "currentHow",
         "currentWho",
-        "currentKeepTrack"
+        "currentKeepTrack",
+        "currentContribute"
       ];
       let isValid = true;
 
@@ -161,7 +181,8 @@ export default {
         whatWhy: this.currentWhatWhy,
         how: this.currentHow,
         who: this.currentWho,
-        keepTrack: this.currentKeepTrack
+        keepTrack: this.currentKeepTrack,
+        contribute: this.currentContribute
       });
 
       this.setStep({ step: "story", value: true });
@@ -199,7 +220,8 @@ export default {
       whatWhy: state => state.story.whatWhy,
       how: state => state.story.how,
       who: state => state.story.who,
-      keepTrack: state => state.story.keepTrack
+      keepTrack: state => state.story.keepTrack,
+      contribute: state => state.story.contribute
     })
   },
   watch: {
@@ -214,6 +236,9 @@ export default {
     },
     currentKeepTrack() {
       this.firstInteraction.currentKeepTrack = false;
+    },
+    currentContribute() {
+      this.firstInteraction.currentContribute = false;
     }
   }
 };

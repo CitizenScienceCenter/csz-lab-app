@@ -109,6 +109,18 @@
             </b-form-group>
 
             <b-form-group
+              :label="$t('project-description-contribute')"
+              :valid-feedback="validFeedback('contribute')"
+              :invalid-feedback="invalidFeedback('contribute')"
+              :state="validated('contribute')"
+            >
+              <vue-editor
+                :editorToolbar="toolbarOptions"
+                v-model="form.contribute"
+              ></vue-editor>
+            </b-form-group>
+
+            <b-form-group
               :label="$t('project-description-keep-track')"
               :valid-feedback="validFeedback('keepTrack')"
               :invalid-feedback="invalidFeedback('keepTrack')"
@@ -230,6 +242,7 @@ export default {
         how: "",
         who: "",
         keepTrack: "",
+        contribute: "",
         allowAnonymousContributors: true,
         password: "",
         protect: null
@@ -254,6 +267,9 @@ export default {
           maxLength: 800
         },
         who: {
+          maxLength: 800
+        },
+        contribute: {
           maxLength: 800
         },
         keepTrack: {
@@ -306,7 +322,8 @@ export default {
               whatWhy: this.form.whatWhy,
               how: this.form.how,
               who: this.form.who,
-              keepTrack: this.form.keepTrack
+              keepTrack: this.form.keepTrack,
+              contribute: this.form.contribute
             }),
             allow_anonymous_contributors: this.form.allowAnonymousContributors,
             protect: this.form.protect,
