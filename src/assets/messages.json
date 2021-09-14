@@ -123,7 +123,8 @@
 
     "project-description-what-why": "What & Why",
     "project-description-how": "How",
-    "project-description-who": "Who",
+    "project-description-who": "Who is behind",
+    "project-description-contribute": "Who contributes",
     "project-description-keep-track": "Additional links",
 
     "project-editor-project-data": "Project data",
@@ -161,9 +162,10 @@
     "story-builder-project-info-label-2": "How",
     "story-builder-project-info-description-2": "Explain how your volunteers will  contribute, and how their contributions will be used.",
     "story-builder-project-info-label-3": "Who",
-    "story-builder-project-info-description-3": "Explain who should contribute to this project",
+    "story-builder-project-info-description-3": "Explain who is behind and provide support to this project",
     "story-builder-project-info-label-4": "Additional links",
     "story-builder-project-info-description-4": "Add links to any additional information, including details about how contributors can contact or follow you (i.e. e-mail, Facebook page, Twitter handle, etc.)",
+    "story-builder-project-info-description-5": "Explain who should contribute to this project",
 
     "summary-builder-congrats": "Congratulations!",
     "summary-builder-just-created-project": "You just created the homepage for your project ",
@@ -930,7 +932,8 @@
 
     "project-description-what-why": "Was & Warum",
     "project-description-how": "Wie",
-    "project-description-who": "Wer",
+    "project-description-who": "Wer ist dahinter",
+    "project-description-contribute": "Wer beiträgt",
     "project-description-keep-track": "Zusätzliche Links",
 
     "project-editor-project-data": "Projektdaten",
@@ -969,9 +972,10 @@
     "story-builder-project-info-label-2": "Wie",
     "story-builder-project-info-description-2": "Erklären Sie, wie Freiwillige bei Ihrem Projekt mitmachen können und wie deren Beiträge verwendet werden.",
     "story-builder-project-info-label-3": "Wer",
-    "story-builder-project-info-description-3": "Erklären Sie, wer zu diesem Projekt beitragen soll.",
+    "story-builder-project-info-description-3": "Erklären Sie, wer hinter diesem Projekt steht und es unterstützt",
     "story-builder-project-info-label-4": "Zusätzliche Links",
     "story-builder-project-info-description-4": "Fügen Sie Links zu weiteren Informationen hinzu, einschliesslich Angaben darüber, wie Projekt-Teilnehmende Sie kontaktieren oder Ihnen folgen können (z. B. E-Mail, Facebook-Seite, Twitter-Profil,  usw.).",
+    "story-builder-project-info-description-5": "Erklären Sie, wer zu diesem Projekt beitragen soll.",
 
     "summary-builder-congrats": "Herzlichen Glückwunsch!",
     "summary-builder-just-created-project": "Sie haben die Startseite für Ihr Projekt erstellt. ",

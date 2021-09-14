@@ -11,6 +11,9 @@
         <h2 class="mt-3 mb-0">{{ $t('project-description-who') }}</h2>
         <p class="small" v-html="description.who"></p>
 
+        <h2 class="mt-3 mb-0">{{ $t('project-description-contribute') }}</h2>
+        <p class="small" v-html="description.contribute"></p>
+
         <h2 class="mt-3 mb-0">{{ $t('project-description-keep-track') }}</h2>
         <p class="small mb-3" v-html="description.keepTrack"></p>
       </b-col>
@@ -29,7 +32,8 @@ export default {
         whatWhy: '',
         how: '',
         who: '',
-        keepTrack: ''
+        keepTrack: '',
+        contribute:''
       }
     }
   },
