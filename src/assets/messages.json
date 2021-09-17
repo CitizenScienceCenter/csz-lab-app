@@ -665,6 +665,7 @@
     "taks-import-cslogger-files-label": "File(s)",
     "taks-import-cslogger-failed-files-missing":"Included in csv, but not in media.",
     "taks-import-cslogger-failed-files-extra":"Included in media, but not in csv",
+    "taks-import-cslogger-no-tasks":"No tasks idenfied. Please check your files.",
 
     "text-cookies": "We use cookies to improve your experience on our sites.",
 
@@ -1478,6 +1479,7 @@
     "taks-import-cslogger-files-label": "File(s)",
     "taks-import-cslogger-failed-files-missing":"Included in csv, but not in media.",
     "taks-import-cslogger-failed-files-extra":"Included in media, but not in csv",
+    "taks-import-cslogger-no-tasks":"No tasks idenfied. Please check your files.",
 
     "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites.",
 

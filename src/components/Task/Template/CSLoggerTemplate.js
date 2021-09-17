@@ -177,7 +177,6 @@ const component = {
           res["type"] = this.pybossa.validateResponse(res.url);
           return res;
         })
-        .filter(valid => valid.type);
     },
     context() {
       return this;
