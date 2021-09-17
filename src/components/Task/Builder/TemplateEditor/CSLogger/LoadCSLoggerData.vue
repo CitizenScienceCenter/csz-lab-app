@@ -39,7 +39,6 @@
           v-model="mediaFiles"
           class="mb-1"
           browse-text="Search"
-          required
           :state="validateMedia"
           :disabled="!csvFile && !validateCSV"
         >
@@ -61,7 +60,7 @@
             </b-badge>
           </template>
         </b-file>
-        <!-- Valid media message in green color -->
+        <!-- Valid media message in secondary color -->
         <span class="text-secondary" v-show="valid.media">
           <i class="fas fa-check-circle"></i>
           <small> {{ $t("taks-import-cslogger-valid") }}</small>
@@ -83,18 +82,17 @@
           <i>{{ $t("taks-import-cslogger-csv-loaded") }}</i>
         </small>
       </div>
-      <!-- TODO: pending translations -->
+      <span class="text-primary" v-show="no_tasks">
+        <i class="fas fa-exclamation-triangle"></i>
+        <small>{{ $t("taks-import-cslogger-no-tasks") }}</small>
+      </span>
+      <!-- TODO: This is hiden and checked by default -->
       <!-- Partial checkbox -->
-      <div class="mb-4">
+      <!-- <div class="mb-4">
         <b-form-checkbox v-model="partial">
           {{ $t("taks-import-cslogger-partial-load") }}
         </b-form-checkbox>
-        <!-- Error message for no task to create-->
-        <span class="text-primary" v-show="no_tasks">
-          <i class="fas fa-exclamation-triangle"></i>
-          <small>{{ $t("taks-import-cslogger-no-tasks") }}</small>
-        </span>
-      </div>
+      </div> -->
     </b-form-group>
 
     <!-- Continue button-->
@@ -114,7 +112,7 @@
       </span>
     </div>
 
-    <!-- Files not included into csv-->
+    <!-- csv issues-->
     <b-card
       no-body
       overlay
@@ -129,6 +127,7 @@
       </b-card-header>
 
       <b-card-body class="overflow-body">
+        <!-- files inclided in csv, but not in media -->
         <b-card-text v-if="missing_media.length > 0">
           <b-card-sub-title class="d-flex justify-content-between mb-2">
             <small class="text-secondary font-weight-bold">
@@ -150,6 +149,7 @@
           </ul>
         </b-card-text>
         <hr v-if="extra_media.length > 0 && missing_media.length > 0" />
+        <!-- files inclided in media, but not in csv -->
         <b-card-text v-if="extra_media.length > 0">
           <b-card-sub-title class="d-flex justify-content-between mb-2">
             <small class="text-secondary font-weight-bold">
@@ -200,7 +200,7 @@ export default {
       missing_media: [],
       qfiles_onscreen: 0,
       total_size: 0,
-      partial: false,
+      partial: true,
       no_tasks: false
     };
   },
@@ -226,7 +226,8 @@ export default {
       return null;
     },
     isValid() {
-      return Object.values(this.valid).every(x => x);
+      // Media could be null or true
+      return this.valid.csv && this.valid.media != false;
     },
     file_names() {
       // Formatting the file names to show in input field
@@ -243,6 +244,13 @@ export default {
           return x.name;
         });
       return file_names;
+    },
+    responses() {
+      return this.json_csvFile
+        .filter(file => "response" in file)
+        .map(function(x) {
+          return x.response;
+        });
     }
   },
   methods: {
@@ -283,15 +291,17 @@ export default {
     // Validate files
     async validate(ext, size) {
       this.validating = true;
-      this.extra_media = [];
-      this.missing_media = [];
       this.valid[ext] = null;
       this.error_message[ext] = null;
 
       // csv file validation
       if (ext === "csv") {
+        this.valid = { ...{ csv: null, media: null } };
+        this.error_message = { ...{ csv: null, media: null } };
+        // validate type of file
         if (this.getExt(this.csvFile.name) === "csv") {
           this.valid[ext] = true;
+          // validate size of file
           if (this.csvFile.size > size) {
             this.valid[ext] = false;
             this.error_message[ext] = this.$t(
@@ -300,6 +310,9 @@ export default {
           } else {
             // convert CSV file into json format
             this.json_csvFile = await csvToJson(this.csvFile);
+            this.getMediaIssues(undefined, this.responses);
+            // validate if csv contains external files as csv_responses
+            this.validating = this.missing_media.length > 0;
           }
         } else {
           this.valid[ext] = false;
@@ -308,8 +321,13 @@ export default {
           );
         }
       }
+
       // media multiple files validation
       if (ext === "media") {
+        if (this.mediaFiles.length == 0) {
+          return;
+        }
+        // validate media file types allowed
         if (
           this.mediaFiles.every(x =>
             this.allowed_files.includes(this.getExt(x.name))
@@ -329,23 +347,7 @@ export default {
           } else {
             try {
               const media_names = this.mediaFiles.map(x => x.name);
-              const csv_responses = this.json_csvFile
-                .filter(file => "response" in file)
-                .map(function(x) {
-                  return x.response;
-                });
-              // get the files not included into CSV
-              this.extra_media = media_names.filter(
-                x => !csv_responses.some(y => y.includes(x))
-              );
-              // get the files not included into MEDIA
-              this.missing_media = csv_responses
-                .filter(
-                  x =>
-                    x.includes("filename") &&
-                    !media_names.some(y => x.includes(y))
-                )
-                .map(name => name.substr(name.lastIndexOf(":") + 1).trim());
+              this.getMediaIssues(media_names, this.responses);
             } catch (error) {
               console.log(error);
             } finally {
@@ -367,6 +369,7 @@ export default {
         // Return only the group with at least one resource available as response
         return Object.values(groups);
       } else {
+        // Discard the media files which belongs to an uncompleted group
         const discard_groupId = new Set(
           this.missing_media.map(
             x => this.json_csvFile.find(row => row.response.includes(x)).id
@@ -385,6 +388,21 @@ export default {
       if (getWidthScreen() < 1020) return 2;
       if (getWidthScreen() < 1280) return 3;
       return 4;
+    },
+    getMediaIssues(media_names = [], csv_responses) {
+      this.extra_media = [];
+      this.missing_media = [];
+      media_names = media_names || [];
+      // get the files not included into CSV
+      this.extra_media = media_names.filter(
+        x => !csv_responses.some(y => y.includes(x))
+      );
+      // get the files not included into MEDIA
+      this.missing_media = csv_responses
+        .filter(
+          x => x.includes("filename") && !media_names.some(y => x.includes(y))
+        )
+        .map(name => name.substr(name.lastIndexOf(":") + 1).trim());
     }
   },
   watch: {
