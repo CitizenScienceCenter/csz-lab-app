@@ -17,9 +17,13 @@ import "./scss/global.scss";
 import VueGtag from "vue-gtag";
 import Meta from "vue-meta";
 import "@/components/Common/globalComponents";
+import Croppa from "vue-croppa";
 
+// Leaflet map styles
+import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 Vue.config.productionTip = false;
-//Vue.use(VueDisqus)
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VueLayers, {
@@ -44,6 +48,7 @@ Vue.use(
 );
 
 Vue.component("pdf", Pdf);
+Vue.use(Croppa, { componentName: "beauty-img" });
 
 window.Vue = Vue;
 

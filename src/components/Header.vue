@@ -37,7 +37,7 @@
 
             <b-nav-item-dropdown v-else right>
               <template slot="button-content">
-                <b-img v-if="userProfile.info.avatar_url" height="32" width="32" rounded="circle" :src="userProfile.info.avatar_url"></b-img>
+                <b-img v-if="avatarUrl" height="32" width="32" rounded="circle" :src="avatarUrl"></b-img>
                 <b-img v-else height="32" width="32" rounded="circle" :src='defaultImage' ></b-img>&ensp;
                 {{ userProfile.name }}
               </template>
@@ -79,7 +79,11 @@ export default {
     ...mapState({
         userLogged: state => state.user.logged,
         userProfile: state => state.user.infos
-    })
+    }),
+    avatarUrl(){
+      const au = this.userProfile ? (this.userProfile.info ? this.userProfile.info.avatar_url: null): null
+      return au
+    }
   }
 }
 

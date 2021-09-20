@@ -47,7 +47,7 @@ export default {
   name: 'LocalCsvImporter',
   data: () => {
     return {
-      csvFile: '',
+      csvFile: null,
       csvSamples: {
         video,
         image,

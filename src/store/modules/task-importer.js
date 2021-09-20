@@ -1,28 +1,37 @@
-import api from '@/api/task-importer'
-import aws from '@/api/aws'
-import flickr from '@/api/flickr'
+import api from "@/api/task-importer";
+import aws from "@/api/aws";
+import flickr from "@/api/flickr";
 
-import { getTranslationLocale, getPybossaTranslation } from '@/helper'
-
+import { getTranslationLocale, getPybossaTranslation } from "@/helper";
 
 const errors = {
-  GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading amazon s3 options',
-  POST_AMAZON_S3_TASKS_ERROR: 'Error when importing amazon s3 tasks',
-  GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading google docs importer options',
-  POST_GOOGLE_DOCS_TASKS_ERROR: 'Error when importing google docs tasks',
-  GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading local csv importer options',
-  POST_CSV_FILE_TASKS_ERROR: 'Error when importing csv file tasks',
-  GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading online csv importer options',
-  POST_CSV_TASKS_ERROR: 'Error when importing csv tasks',
-  GET_BUCKET_FILES_ERROR: 'Error during bucket files loading',
-  GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading dropbox importer options',
-  POST_DROPBOX_TASKS_ERROR: 'Error when importing dropbox tasks',
-  GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading flickr importer options',
-  POST_FLICKR_TASKS_ERROR: 'Error when importing flickr tasks',
-  LOAD_FLICKR_ALBUMS_ERROR: 'Impossible to load your Flickr albums. Ensure that Pybossa is authorized to access your account',
-  GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR: 'Error when loading twitter importer options',
-  POST_TWITTER_TASKS_ERROR: 'Error when importing twitter tasks'
-}
+  GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR:
+    "Error when loading amazon s3 options",
+  POST_AMAZON_S3_TASKS_ERROR: "Error when importing amazon s3 tasks",
+  GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR:
+    "Error when loading google docs importer options",
+  POST_GOOGLE_DOCS_TASKS_ERROR: "Error when importing google docs tasks",
+  GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR:
+    "Error when loading local csv importer options",
+  POST_CSV_FILE_TASKS_ERROR: "Error when importing csv file tasks",
+  GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR:
+    "Error when loading online csv importer options",
+  POST_CSV_TASKS_ERROR: "Error when importing csv tasks",
+  GET_BUCKET_FILES_ERROR: "Error during bucket files loading",
+  GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR:
+    "Error when loading dropbox importer options",
+  POST_DROPBOX_TASKS_ERROR: "Error when importing dropbox tasks",
+  GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR:
+    "Error when loading flickr importer options",
+  POST_FLICKR_TASKS_ERROR: "Error when importing flickr tasks",
+  LOAD_FLICKR_ALBUMS_ERROR:
+    "Impossible to load your Flickr albums. Ensure that Pybossa is authorized to access your account",
+  GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR:
+    "Error when loading twitter importer options",
+  POST_TWITTER_TASKS_ERROR: "Error when importing twitter tasks",
+  POST_CSLOGGER_IMPORTER_LOADING_ERROR:
+    "Error when loading CSLogger files",
+};
 
 const state = {
   isGoogleDocImporterVisible: false,
@@ -34,7 +43,7 @@ const state = {
   isTwitterImporterVisible: false,
 
   bucket: {
-    name: '',
+    name: "",
     files: []
   },
   dropboxFiles: [],
@@ -49,16 +58,16 @@ const state = {
   twitterTasksImportationOptions: {},
 
   loaders: {
-    GET_BUCKET_FILES: 'task/importer/getBucketFiles'
+    GET_BUCKET_FILES: "task/importer/getBucketFiles"
   }
-}
+};
 
 // filter methods on the state data
 const getters = {
-  getBucketFileLink: (state) => (file) => {
-    return 'https://' + state.bucket.name + '.s3.amazonaws.com/' + file
+  getBucketFileLink: state => file => {
+    return "https://" + state.bucket.name + ".s3.amazonaws.com/" + file;
   }
-}
+};
 
 // async methods making mutations are placed here
 const actions = {
@@ -69,29 +78,40 @@ const actions = {
    * @param bucketName
    * @return {Promise<T | boolean>}
    */
-  getBucketFiles ({ state, commit }, bucketName) {
-    const id = state.loaders.GET_BUCKET_FILES
-    commit('notification/showLoading', id, { root: true })
+  getBucketFiles({ state, commit }, bucketName) {
+    const id = state.loaders.GET_BUCKET_FILES;
+    commit("notification/showLoading", id, { root: true });
 
-    return aws.getBucketLinks(bucketName).then(value => {
-      commit('notification/closeLoading', id, { root: true })
-      commit('setBucketFiles', value.data)
-      return value.data
-    }).catch(reason => {
-      commit('notification/closeLoading', id, { root: true })
-      if (reason.response.data.hasOwnProperty('exception_msg')) {
-        commit('notification/showError', {
-          title: 'Impossible to load this bucket',
-          content: reason.response.data.exception_msg
-        }, { root: true })
-      } else {
-        commit('notification/showError', {
-          title: getTranslationLocale("GET_BUCKET_FILES_ERROR"), 
-          content: reason
-        }, { root: true })
-      }
-      return false
-    })
+    return aws
+      .getBucketLinks(bucketName)
+      .then(value => {
+        commit("notification/closeLoading", id, { root: true });
+        commit("setBucketFiles", value.data);
+        return value.data;
+      })
+      .catch(reason => {
+        commit("notification/closeLoading", id, { root: true });
+        if (reason.response.data.hasOwnProperty("exception_msg")) {
+          commit(
+            "notification/showError",
+            {
+              title: "Impossible to load this bucket",
+              content: reason.response.data.exception_msg
+            },
+            { root: true }
+          );
+        } else {
+          commit(
+            "notification/showError",
+            {
+              title: getTranslationLocale("GET_BUCKET_FILES_ERROR"),
+              content: reason
+            },
+            { root: true }
+          );
+        }
+        return false;
+      });
   },
 
   /**
@@ -100,17 +120,26 @@ const actions = {
    * @param project
    * @return {Promise<T | boolean>}
    */
-  getAmazonS3TasksImportationOptions ({ commit }, project) {
-    return api.getAmazonS3TasksImportationOptions(project.short_name).then(value => {
-      commit('setAmazonS3TasksImportationOptions', value.data)
-      return value.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR"), 
-        content: reason
-      }, { root: true })
-      return false
-    })
+  getAmazonS3TasksImportationOptions({ commit }, project) {
+    return api
+      .getAmazonS3TasksImportationOptions(project.short_name)
+      .then(value => {
+        commit("setAmazonS3TasksImportationOptions", value.data);
+        return value.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: getTranslationLocale(
+              "GET_AMAZON_S3_IMPORTER_OPTIONS_LOADING_ERROR"
+            ),
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
   },
 
   /**
@@ -123,38 +152,58 @@ const actions = {
    * @param files
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
-  importAmazonS3Tasks ({ commit, state, dispatch }, { project, bucket, files }) {
+  importAmazonS3Tasks({ commit, state, dispatch }, { project, bucket, files }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getAmazonS3TasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importAmazonS3Tasks(
-          state.amazonS3TasksImportationOptions.form.csrf,
-          project,
-          bucket,
-          files
-        ).then(value => {
-          if ('status' in value.data && value.data.status === 'message') {
-            commit('notification/showSuccess', {
-              title: 'Success',
-              content: value.data.flash
-            }, { root: true })
-            return value.data
-          }
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_AMAZON_S3_TASKS_ERROR"), 
-            content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getAmazonS3TasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importAmazonS3Tasks(
+              state.amazonS3TasksImportationOptions.form.csrf,
+              project,
+              bucket,
+              files
+            )
+            .then(value => {
+              if ("status" in value.data && value.data.status === "message") {
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: "Success",
+                    content: value.data.flash
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_AMAZON_S3_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -163,17 +212,26 @@ const actions = {
    * @param project
    * @return {Promise<T | boolean>}
    */
-  getGoogleDocsTasksImportationOptions ({ commit }, project) {
-    return api.getGoogleDocsTasksImportationOptions(project.short_name).then(value => {
-      commit('setGoogleDocsTasksImportationOptions', value.data)
-      return value.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR"), 
-        content: reason
-      }, { root: true })
-      return false
-    })
+  getGoogleDocsTasksImportationOptions({ commit }, project) {
+    return api
+      .getGoogleDocsTasksImportationOptions(project.short_name)
+      .then(value => {
+        commit("setGoogleDocsTasksImportationOptions", value.data);
+        return value.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: getTranslationLocale(
+              "GET_GOOGLE_DOCS_IMPORTER_OPTIONS_LOADING_ERROR"
+            ),
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
   },
 
   /**
@@ -185,43 +243,69 @@ const actions = {
    * @param link
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
-  importGoogleDocsTasks ({ commit, state, dispatch }, { project, link }) {
+  importGoogleDocsTasks({ commit, state, dispatch }, { project, link }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getGoogleDocsTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importGoogleDocsTasks(
-          state.googleDocsTasksImportationOptions.form.csrf,
-          project.short_name,
-          link
-        ).then(value => {
-          if ('flash' in value.data) {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          commit('notification/showError', {
-            title: 'Error',
-            content: 'It seems that there is a problem with your link...'
-          }, { root: true })
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_GOOGLE_DOCS_TASKS_ERROR"),
-            content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getGoogleDocsTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importGoogleDocsTasks(
+              state.googleDocsTasksImportationOptions.form.csrf,
+              project.short_name,
+              link
+            )
+            .then(value => {
+              if ("flash" in value.data) {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              commit(
+                "notification/showError",
+                {
+                  title: "Error",
+                  content: "It seems that there is a problem with your link..."
+                },
+                { root: true }
+              );
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_GOOGLE_DOCS_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -230,17 +314,26 @@ const actions = {
    * @param project
    * @return {Promise<T | boolean>}
    */
-  getLocalCsvTasksImportationOptions ({ commit }, project) {
-    return api.getLocalCsvTasksImportationOptions(project.short_name).then(value => {
-      commit('setLocalCsvTasksImportationOptions', value.data)
-      return value.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR"), 
-        content: reason
-      }, { root: true })
-      return false
-    })
+  getLocalCsvTasksImportationOptions({ commit }, project) {
+    return api
+      .getLocalCsvTasksImportationOptions(project.short_name)
+      .then(value => {
+        commit("setLocalCsvTasksImportationOptions", value.data);
+        return value.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: getTranslationLocale(
+              "GET_LOCAL_CSV_IMPORTER_OPTIONS_LOADING_ERROR"
+            ),
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
   },
 
   /**
@@ -252,43 +345,69 @@ const actions = {
    * @param file
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
-  importLocalCsvTasks ({ commit, state, dispatch }, { project, file }) {
+  importLocalCsvTasks({ commit, state, dispatch }, { project, file }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getLocalCsvTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importLocalCsvTasks(
-          state.localCsvTasksImportationOptions.form.csrf,
-          project.short_name,
-          file
-        ).then(value => {
-          if ('flash' in value.data) {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          commit('notification/showError', {
-            title: 'Error',
-            content: 'It seems that there is a problem with your file...'
-          }, { root: true })
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_CSV_FILE_TASKS_ERROR"),
-            content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getLocalCsvTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importLocalCsvTasks(
+              state.localCsvTasksImportationOptions.form.csrf,
+              project.short_name,
+              file
+            )
+            .then(value => {
+              if ("flash" in value.data) {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              commit(
+                "notification/showError",
+                {
+                  title: "Error",
+                  content: "It seems that there is a problem with your file..."
+                },
+                { root: true }
+              );
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_CSV_FILE_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -297,17 +416,26 @@ const actions = {
    * @param project
    * @returns {Promise<T | boolean>}
    */
-  getOnlineCsvTasksImportationOptions ({ commit }, project) {
-    return api.getOnlineCsvTasksImportationOptions(project.short_name).then(value => {
-      commit('setOnlineCsvTasksImportationOptions', value.data)
-      return value.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR"), 
-        content: reason
-      }, { root: true })
-      return false
-    })
+  getOnlineCsvTasksImportationOptions({ commit }, project) {
+    return api
+      .getOnlineCsvTasksImportationOptions(project.short_name)
+      .then(value => {
+        commit("setOnlineCsvTasksImportationOptions", value.data);
+        return value.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: getTranslationLocale(
+              "GET_ONLINE_CSV_IMPORTER_OPTIONS_LOADING_ERROR"
+            ),
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
   },
 
   /**
@@ -319,43 +447,69 @@ const actions = {
    * @param link
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
-  importOnlineCsvTasks ({ commit, state, dispatch }, { project, link }) {
+  importOnlineCsvTasks({ commit, state, dispatch }, { project, link }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getOnlineCsvTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importOnlineCsvTasks(
-          state.onlineCsvTasksImportationOptions.form.csrf,
-          project.short_name,
-          link
-        ).then(value => {
-          if ('flash' in value.data) {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          commit('notification/showError', {
-            title: 'Error',
-            content: 'It seems that there is a problem with your link...'
-          }, { root: true })
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_CSV_TASKS_ERROR"),
-            content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getOnlineCsvTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importOnlineCsvTasks(
+              state.onlineCsvTasksImportationOptions.form.csrf,
+              project.short_name,
+              link
+            )
+            .then(value => {
+              if ("flash" in value.data) {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              commit(
+                "notification/showError",
+                {
+                  title: "Error",
+                  content: "It seems that there is a problem with your link..."
+                },
+                { root: true }
+              );
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_CSV_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -364,17 +518,26 @@ const actions = {
    * @param project
    * @returns {Promise<T | boolean>}
    */
-  getDropboxTasksImportationOptions ({ commit }, project) {
-    return api.getDropboxTasksImportationOptions(project.short_name).then(value => {
-      commit('setDropboxTasksImportationOptions', value.data)
-      return value.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR"), 
-        content: reason
-      }, { root: true })
-      return false
-    })
+  getDropboxTasksImportationOptions({ commit }, project) {
+    return api
+      .getDropboxTasksImportationOptions(project.short_name)
+      .then(value => {
+        commit("setDropboxTasksImportationOptions", value.data);
+        return value.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: getTranslationLocale(
+              "GET_DROPBOX_IMPORTER_OPTIONS_LOADING_ERROR"
+            ),
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
   },
 
   /**
@@ -386,38 +549,61 @@ const actions = {
    * @param files
    * @returns {*}
    */
-  importDropboxTasks ({ commit, state, dispatch }, { project, files }) {
+  importDropboxTasks({ commit, state, dispatch }, { project, files }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getDropboxTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importDropboxTasks(
-          state.dropboxTasksImportationOptions.form.csrf,
-          project.short_name,
-          files
-        ).then(value => {
-          if ('status' in value.data && value.data.status === 'message') {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_DROPBOX_TASKS_ERROR"), content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getDropboxTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importDropboxTasks(
+              state.dropboxTasksImportationOptions.form.csrf,
+              project.short_name,
+              files
+            )
+            .then(value => {
+              if ("status" in value.data && value.data.status === "message") {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_DROPBOX_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -426,16 +612,26 @@ const actions = {
    * @param project
    * @returns {Promise<T | boolean>}
    */
-  getFlickrTasksImportationOptions ({ commit }, project) {
-    return api.getFlickrTasksImportationOptions(project.short_name).then(value => {
-      commit('setFlickrTasksImportationOptions', value.data)
-      return value.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR"), content: reason
-      }, { root: true })
-      return false
-    })
+  getFlickrTasksImportationOptions({ commit }, project) {
+    return api
+      .getFlickrTasksImportationOptions(project.short_name)
+      .then(value => {
+        commit("setFlickrTasksImportationOptions", value.data);
+        return value.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: getTranslationLocale(
+              "GET_FLICKR_IMPORTER_OPTIONS_LOADING_ERROR"
+            ),
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
   },
 
   /**
@@ -448,38 +644,61 @@ const actions = {
    * @param files
    * @returns {*}
    */
-  importFlickrTasks ({ commit, state, dispatch }, { project, albumId }) {
+  importFlickrTasks({ commit, state, dispatch }, { project, albumId }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
-
-    return dispatch('getFlickrTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importFlickrTasks(
-          state.flickrTasksImportationOptions.form.csrf,
-          project.short_name,
-          albumId
-        ).then(value => {
-          if ('status' in value.data && value.data.status === 'message') {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_FLICKR_TASKS_ERROR"), content: reason
-          }, { root: true })
-          return false
-        })
-      }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+    return dispatch("getFlickrTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importFlickrTasks(
+              state.flickrTasksImportationOptions.form.csrf,
+              project.short_name,
+              albumId
+            )
+            .then(value => {
+              if ("status" in value.data && value.data.status === "message") {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_FLICKR_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
   },
 
   /**
@@ -487,16 +706,24 @@ const actions = {
    * @param commit
    * @returns {Promise<T | boolean>}
    */
-  getFlickrAlbums ({ commit }) {
-    return flickr.getAlbums().then(response => {
-      commit('setFlickrAlbums', response.data)
-      return response.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("LOAD_FLICKR_ALBUMS_ERROR"), content: reason
-      }, { root: true })
-      return false
-    })
+  getFlickrAlbums({ commit }) {
+    return flickr
+      .getAlbums()
+      .then(response => {
+        commit("setFlickrAlbums", response.data);
+        return response.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: getTranslationLocale("LOAD_FLICKR_ALBUMS_ERROR"),
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
   },
 
   /**
@@ -505,14 +732,18 @@ const actions = {
    * @param commit
    * @returns {Promise<T | never>}
    */
-  revokeFlickerAccess ({ dispatch, commit }) {
+  revokeFlickerAccess({ dispatch, commit }) {
     return flickr.revokeAccess().then(() => {
-      commit('notification/showSuccess', {
-        title: getTranslationLocale('success'),
-        content: ''
-      }, { root: true })
-      return dispatch('getFlickrAlbums')
-    })
+      commit(
+        "notification/showSuccess",
+        {
+          title: getTranslationLocale("success"),
+          content: ""
+        },
+        { root: true }
+      );
+      return dispatch("getFlickrAlbums");
+    });
   },
 
   /**
@@ -521,16 +752,26 @@ const actions = {
    * @param project
    * @returns {Promise<T | boolean>}
    */
-  getTwitterTasksImportationOptions ({ commit }, project) {
-    return api.getTwitterTasksImportationOptions(project.short_name).then(value => {
-      commit('setTwitterTasksImportationOptions', value.data)
-      return value.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: getTranslationLocale("GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR"), content: reason
-      }, { root: true })
-      return false
-    })
+  getTwitterTasksImportationOptions({ commit }, project) {
+    return api
+      .getTwitterTasksImportationOptions(project.short_name)
+      .then(value => {
+        commit("setTwitterTasksImportationOptions", value.data);
+        return value.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: getTranslationLocale(
+              "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR"
+            ),
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
   },
 
   /**
@@ -543,100 +784,167 @@ const actions = {
    * @param maxTweets
    * @return {Promise<any> | * | Promise<any> | Thenable<any> | PromiseLike<any> | Promise<any>}
    */
-  importTwitterTasks ({ commit, state, dispatch }, { project, source, maxTweets }) {
+  importTwitterTasks(
+    { commit, state, dispatch },
+    { project, source, maxTweets }
+  ) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+    const overlay_config = {
+      label: getTranslationLocale("task-summary-builder-loading-label"),
+      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
+      progress: null,
+      finite: false,
+      hideBtn: false
+    };
+    commit("notification/setLoadingConfig", overlay_config, { root: true });
 
-    commit('notification/showLoadingSpinner', true, { root: true })
+    return dispatch("getTwitterTasksImportationOptions", project)
+      .then(response => {
+        if (response) {
+          return api
+            .importTwitterTasks(
+              state.twitterTasksImportationOptions.form.csrf,
+              project.short_name,
+              source,
+              maxTweets
+            )
+            .then(value => {
+              if ("status" in value.data && value.data.status === "message") {
+                let flash = value.data.flash.split(" ");
+                let message = flash.slice(1).join(" ");
+                commit(
+                  "notification/showSuccess",
+                  {
+                    title: getTranslationLocale("success"),
+                    content: isNaN(flash[0])
+                      ? getPybossaTranslation(value.data.flash)
+                      : flash[0] + " " + getPybossaTranslation(message)
+                  },
+                  { root: true }
+                );
+                return value.data;
+              }
+              return false;
+            })
+            .catch(reason => {
+              commit(
+                "notification/showError",
+                {
+                  title: getTranslationLocale("POST_TWITTER_TASKS_ERROR"),
+                  content: reason
+                },
+                { root: true }
+              );
+              return false;
+            });
+        }
+        return false;
+      })
+      .finally(() =>
+        commit("notification/showLoadingOverlay", false, { root: true })
+      );
+  },
 
-    return dispatch('getTwitterTasksImportationOptions', project).then(response => {
-      if (response) {
-        return api.importTwitterTasks(
-          state.twitterTasksImportationOptions.form.csrf,
-          project.short_name,
-          source,
-          maxTweets
-        ).then(value => {
-          if ('status' in value.data && value.data.status === 'message') {
-            let flash = value.data.flash.split(' ')
-            let message = flash.slice(1).join(' ')
-            commit('notification/showSuccess', {
-              title: getTranslationLocale('success'),
-              content: (isNaN(flash[0]) ? getPybossaTranslation(value.data.flash) : flash[0] + ' ' + getPybossaTranslation(message) )
-            }, { root: true })
-            return value.data
-          }
-          return false
-        }).catch(reason => {
-          commit('notification/showError', {
-            title: getTranslationLocale("POST_TWITTER_TASKS_ERROR"), content: reason
-          }, { root: true })
-          return false
-        })
+  //** Citizen Science Logger Section **/
+  async importLocalCSLoggerFile({ commit, rootState }, { files, csv, partial }) {
+    commit("notification/showLoadingOverlay", true, { root: true });
+
+    try {
+      const res = await api.importLocalCSLoggerFile(
+        rootState.project.selectedProject.short_name,
+        files,
+        csv,
+        partial
+      );
+      if ("status" in res.data && res.data.status === "message") {
+        let flash = res.data.flash.split(" ");
+        let message = flash.slice(1).join(" ");
+        commit(
+          "notification/showSuccess",
+          {
+            title: getTranslationLocale("success"),
+            content: isNaN(flash[0])
+              ? getPybossaTranslation(res.data.flash)
+              : flash[0] + " " + getPybossaTranslation(message)
+          },
+          { root: true }
+        );
+        return res.data;
       }
-      return false
-    }).finally(() =>
-        commit('notification/showLoadingSpinner', false, { root: true })
-    )
+      return false;
+    } catch (reason) {
+      commit(
+        "notification/showError",
+        {
+          title: getTranslationLocale("POST_CSLOGGER_IMPORTER_LOADING_ERROR"),
+          content: reason
+        },
+        { root: true }
+      );
+      return false;
+    } finally {
+      commit("notification/showLoadingOverlay", false, { root: true });
+    }
   }
-
-}
+};
 
 // methods that change the state
 const mutations = {
-  setAmazonS3TasksImportationOptions (state, options) {
-    state.amazonS3TasksImportationOptions = options
+  setAmazonS3TasksImportationOptions(state, options) {
+    state.amazonS3TasksImportationOptions = options;
   },
-  setGoogleDocsTasksImportationOptions (state, options) {
-    state.googleDocsTasksImportationOptions = options
+  setGoogleDocsTasksImportationOptions(state, options) {
+    state.googleDocsTasksImportationOptions = options;
   },
-  setLocalCsvTasksImportationOptions (state, options) {
-    state.localCsvTasksImportationOptions = options
+  setLocalCsvTasksImportationOptions(state, options) {
+    state.localCsvTasksImportationOptions = options;
   },
-  setOnlineCsvTasksImportationOptions (state, options) {
-    state.onlineCsvTasksImportationOptions = options
+  setOnlineCsvTasksImportationOptions(state, options) {
+    state.onlineCsvTasksImportationOptions = options;
   },
-  setDropboxTasksImportationOptions (state, options) {
-    state.dropboxTasksImportationOptions = options
+  setDropboxTasksImportationOptions(state, options) {
+    state.dropboxTasksImportationOptions = options;
   },
-  setFlickrTasksImportationOptions (state, options) {
-    state.flickrTasksImportationOptions = options
+  setFlickrTasksImportationOptions(state, options) {
+    state.flickrTasksImportationOptions = options;
   },
-  setFlickrAlbums (state, albums) {
-    state.flickrAlbums = albums
+  setFlickrAlbums(state, albums) {
+    state.flickrAlbums = albums;
   },
-  setTwitterTasksImportationOptions (state, options) {
-    state.twitterTasksImportationOptions = options
+  setTwitterTasksImportationOptions(state, options) {
+    state.twitterTasksImportationOptions = options;
   },
-  setGoogleDocImporterVisible (state, value) {
-    state.isGoogleDocImporterVisible = value
+  setGoogleDocImporterVisible(state, value) {
+    state.isGoogleDocImporterVisible = value;
   },
-  setLocalCsvImporterVisible (state, value) {
-    state.isLocalCsvImporterVisible = value
+  setLocalCsvImporterVisible(state, value) {
+    state.isLocalCsvImporterVisible = value;
   },
-  setOnlineCsvImporterVisible (state, value) {
-    state.isOnlineCsvImporterVisible = value
+  setOnlineCsvImporterVisible(state, value) {
+    state.isOnlineCsvImporterVisible = value;
   },
-  setAmazonS3ImporterVisible (state, value) {
-    state.isAmazonS3ImporterVisible = value
+  setAmazonS3ImporterVisible(state, value) {
+    state.isAmazonS3ImporterVisible = value;
   },
-  setFlickrImporterVisible (state, value) {
-    state.isFlickrImporterVisible = value
+  setFlickrImporterVisible(state, value) {
+    state.isFlickrImporterVisible = value;
   },
-  setDropboxImporterVisible (state, value) {
-    state.isDropboxImporterVisible = value
+  setDropboxImporterVisible(state, value) {
+    state.isDropboxImporterVisible = value;
   },
-  setTwitterImporterVisible (state, value) {
-    state.isTwitterImporterVisible = value
+  setTwitterImporterVisible(state, value) {
+    state.isTwitterImporterVisible = value;
   },
-  setBucketFiles (state, files) {
-    state.bucket = { ...state.bucket, files }
+  setBucketFiles(state, files) {
+    state.bucket = { ...state.bucket, files };
   },
-  setBucketName (state, name) {
-    state.bucket = { ...state.bucket, name }
+  setBucketName(state, name) {
+    state.bucket = { ...state.bucket, name };
   },
-  setDropboxFiles (state, files) {
-    state.dropboxFiles = files
+  setDropboxFiles(state, files) {
+    state.dropboxFiles = files;
   }
-}
+};
 
 export default {
   namespaced: true,
@@ -644,4 +952,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};

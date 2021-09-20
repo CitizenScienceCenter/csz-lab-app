@@ -107,7 +107,8 @@ export default {
             whatWhy: this.story.whatWhy,
             how: this.story.how,
             who: this.story.who,
-            keepTrack: this.story.keepTrack
+            keepTrack: this.story.keepTrack,
+            contribute: this.story.contribute,
           })
         }).then(project => {
 

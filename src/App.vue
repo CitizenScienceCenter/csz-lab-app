@@ -55,14 +55,7 @@
     >
       <span v-html="notification.message.content"></span>
     </b-toast>
-
-    <loading
-      :active.sync="isLoadingSpinnerDisplayed"
-      :can-cancel="false"
-      :is-full-page="true"
-      color="#c5202e"
-    >
-    </loading>
+    <loading></loading>
 
     <project-password-modal :value="showProjectPassModal" :project="project">
     </project-password-modal>
@@ -72,12 +65,12 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import { i18n } from "./i18n";
-import Loading from "vue-loading-overlay";
+import Loading from "@/components/Common/Loading.vue";
+
 import GDPR from "./components/GDPR.vue";
 import Footer from "./components/Footer.vue";
 import Header from "./components/Header.vue";
 import ProjectPasswordModal from "@/components/Common/ProjectPasswordModal";
-import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "App",
@@ -131,9 +124,6 @@ export default {
       errorNotifications: state => state.notification.errorNotifications,
       infoNotifications: state => state.notification.infoNotifications,
       successNotifications: state => state.notification.successNotifications,
-      isLoadingSpinnerDisplayed: state =>
-        state.notification.isLoadingSpinnerDisplayed,
-
       userLogged: state => state.user.logged,
       userProfile: state => state.user.infos,
 
@@ -176,7 +166,6 @@ export default {
   border: 0px;
   border-color: transparent;
 }
-
 .main-content {
   padding-bottom: 20rem;
 }

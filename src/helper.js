@@ -1,4 +1,6 @@
 import { i18n } from "./i18n.js";
+import media_ext from "@/assets/media_files_ext.json";
+import Papa from "papaparse";
 
 export function uuid() {
   let dt = new Date().getTime();
@@ -233,5 +235,77 @@ export function trackEvent(_this, info = undefined) {
       event_label: info.label,
       event_value: 1
     });
+  }
+}
+
+// Get the width screen size using javascript.get
+export function getWidthScreen() {
+  return window.screen.width;
+}
+
+// Get MIME type for url file
+export function getMIME(raw_url) {
+  const img_ext = new Set(media_ext.image);
+  const video_ext = new Set(media_ext.video);
+  const audio_ext = new Set(media_ext.sound);
+
+  const types = new Map();
+  //add images to the Map
+  img_ext.forEach(img => types.set(img, "img"));
+  //add video to the Map
+  video_ext.forEach(video => types.set(video, "video"));
+  //add audio to the Map
+  audio_ext.forEach(audio => types.set(audio, "audio"));
+  let extension;
+  try {
+    const url = new URL(raw_url);
+    extension = url.pathname.split(".").pop();
+  } catch (e) {
+    if (typeof raw_url == "string") extension = raw_url.split(".").pop();
+  }
+
+  return types.get(`.${extension}`);
+}
+
+// group array of object by key and return grouped array of arrays
+export function groupBy(key, array) {
+  const group_obj = array.reduce((r, a) => {
+    r[a[key]] = [...(r[a[key]] || []), a];
+    return r;
+  }, {});
+  // remove wrong parameters
+  delete group_obj[""];
+  return group_obj;
+}
+
+// convert CSV file to Json format
+export async function csvToJson(csv) {
+  return new Promise((resolve, reject) => {
+    Papa.parse(csv, {
+      header: true,
+      complete: results => {
+        resolve(results.data);
+        reject(results.error);
+      }
+    });
+  });
+}
+
+// CSLogger implementation only
+// Validate type of response from string
+export function validateCSLoggerResponse(response) {
+  // Get the type of response
+  const type = response.split(":")[0];
+  let url = null;
+  try {
+    url = new URL(response);
+  } catch (error) {}
+  if (url && (url.protocol === "http:" || url.protocol === "https:")) {
+    return "url";
+  } else if (type != "filename") {
+    //TODO: Change for respective response type
+    return "text";
+  } else {
+    return false;
   }
 }

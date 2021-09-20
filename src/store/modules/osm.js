@@ -1,36 +1,48 @@
-import api from '@/api/osm'
+import api from "@/api/osm";
 
 const errors = {
-  GET_LOCALIZATIONS_WITH_QUERY_ERROR: 'Impossible to find a localization by query'
-}
+  GET_LOCALIZATIONS_WITH_QUERY_ERROR:
+    "Impossible to find a localization by query"
+};
 
-const state = {
-
-}
+const state = {};
 
 // filter methods on the state data
-const getters = {
-
-}
+const getters = {};
 
 // async methods making mutations are placed here
 const actions = {
-  qetLocalizationsWithQuery ({ commit }, query) {
-    return api.qetLocalizationsWithQuery(query).then(response => {
-      return response.data
-    }).catch(reason => {
-      commit('notification/showError', {
-        title: errors.GET_LOCALIZATIONS_WITH_QUERY_ERROR, content: reason
-      }, { root: true })
-      return false
-    })
+  qetLocalizationsWithQuery({ commit }, query) {
+    return api
+      .qetLocalizationsWithQuery(query)
+      .then(response => {
+        return response.data;
+      })
+      .catch(reason => {
+        commit(
+          "notification/showError",
+          {
+            title: errors.GET_LOCALIZATIONS_WITH_QUERY_ERROR,
+            content: reason
+          },
+          { root: true }
+        );
+        return false;
+      });
+  },
+  async getAddress({ commit }, query) {
+    try {
+      const res = await api.getAddress(query.lat, query.lng);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return;
+    }
   }
-}
+};
 
 // methods that change the state
-const mutations = {
-
-}
+const mutations = {};
 
 export default {
   namespaced: true,
@@ -38,4 +50,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};
