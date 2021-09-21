@@ -186,6 +186,8 @@ export default {
           return "fab fa-dropbox";
         case this.sources.amazon:
           return "fab fa-aws";
+        case this.sources.localcsv:
+          return "fas fa-file-csv";
         case this.sources.cslogger:
           return "fas fa-question";
         default:
@@ -242,15 +244,13 @@ export default {
       "importDropboxTasks",
       "importFlickrTasks",
       "importTwitterTasks",
-      "importLocalCSLoggerFile"
+      "importLocalCsvTasks",
+      "importCSLoggerFile"
     ]),
     ...mapActions("task/builder", {
       resetTaskBuilder: "reset"
     }),
-    ...mapMutations("notification", [
-      "showSuccess",
-      "showError"
-    ]),
+    ...mapMutations("notification", ["showSuccess", "showError"]),
 
     onSubmit() {
       /// -----------------------------------------------------------
@@ -308,10 +308,17 @@ export default {
           maxTweets: this.task.sourceContent.maxTweets
         });
       }
+      // Local csv
+      else if (this.task.source === this.sources.localcsv) {
+        sourcePromise = this.importLocalCsvTasks({
+          project: this.selectedProject,
+          file: this.task.sourceContent
+        });
+      }
 
       // CSLogger
       else if (this.task.source === this.sources.cslogger) {
-        sourcePromise = this.importLocalCSLoggerFile({
+        sourcePromise = this.importCSLoggerFile({
           files: this.task.sourceContent.files,
           csv: this.task.sourceContent.csv,
           partial: this.task.sourceContent.partial

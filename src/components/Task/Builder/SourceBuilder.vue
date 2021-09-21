@@ -47,7 +47,7 @@
                   ref="card-amazon"
                   v-if="source === sources.amazon"
                   @click="onSourceSelected(source)"
-                  class="text-center material mt-2 mt-md-0"
+                  class="text-center material mt-3 mt-md-2"
                 >
                   <i class="fab fa-aws fa-4x"></i>
                   <div class="m-2">Amazon S3 bucket</div>
@@ -57,7 +57,7 @@
                   ref="card-dropbox"
                   v-if="source === sources.dropbox"
                   @click="onSourceSelected(source)"
-                  class="text-center material mt-2 mt-md-0"
+                  class="text-center material mt-3 mt-md-2"
                 >
                   <i class="fab fa-dropbox fa-4x"></i><br />
                   <div class="m-2">Dropbox</div>
@@ -67,10 +67,20 @@
                   ref="card-flickr"
                   v-if="source === sources.flickr"
                   @click="onSourceSelected(source)"
-                  class="text-center material mt-2 mt-md-0"
+                  class="text-center material mt-3 mt-md-2"
                 >
                   <i class="fab fa-flickr fa-4x"></i><br />
                   <div class="m-2">Flickr</div>
+                </b-card>
+
+                <b-card
+                  ref="card-localcsv"
+                  v-if="source === sources.localcsv"
+                  @click="onSourceSelected(source)"
+                  class="text-center material mt-3 mt-md-2"
+                >
+                  <i class="fas fa-file-csv fa-4x"></i><br />
+                  <div class="m-2">csv File</div>
                 </b-card>
               </b-col>
             </b-row>
@@ -105,6 +115,9 @@
             <TwitterSourceEditor
               v-if="selectedSource === sources.twitter"
             ></TwitterSourceEditor>
+            <LocalCsvSourceEditor
+              v-if="selectedSource === sources.localcsv"
+            ></LocalCsvSourceEditor>
           </b-col>
         </b-row>
       </b-col>
@@ -119,6 +132,7 @@ import DropboxSourceEditor from '@/components/Task/Builder/SourceEditor/DropboxS
 import AmazonSourceEditor from '@/components/Task/Builder/SourceEditor/AmazonSourceEditor'
 import FlickrSourceEditor from '@/components/Task/Builder/SourceEditor/FlickrSourceEditor'
 import TwitterSourceEditor from '@/components/Task/Builder/SourceEditor/TwitterSourceEditor'
+import LocalCsvSourceEditor from '@/components/Task/Builder/SourceEditor/LocalCsvSourceEditor'
 import LoadCSLoggerData from "@/components/Task/Builder/TemplateEditor/CSLogger/LoadCSLoggerData";
 
 export default {
@@ -128,6 +142,7 @@ export default {
     FlickrSourceEditor,
     AmazonSourceEditor,
     DropboxSourceEditor,
+    LocalCsvSourceEditor,
     LoadData:LoadCSLoggerData
   },
   data: () => {

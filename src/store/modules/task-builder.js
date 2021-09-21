@@ -27,7 +27,8 @@ const sources = {
   amazon: "amazon",
   flickr: "flickr",
   twitter: "twitter",
-  cslogger: "cslogger"
+  cslogger: "cslogger",
+  localcsv: "localcsv"
 };
 
 // global state for this module
@@ -65,12 +66,17 @@ const state = {
   },
   // available sources for each material type
   materialSources: {
-    [materials.image]: [sources.amazon, sources.dropbox, sources.flickr],
-    [materials.sound]: [sources.amazon, sources.dropbox],
-    [materials.pdf]: [sources.amazon, sources.dropbox],
+    [materials.image]: [
+      sources.amazon,
+      sources.dropbox,
+      sources.flickr,
+      sources.localcsv
+    ],
+    [materials.sound]: [sources.amazon, sources.dropbox, sources.localcsv],
+    [materials.pdf]: [sources.amazon, sources.dropbox, sources.localcsv],
     [materials.tweet]: [sources.twitter],
     [materials.cslogger]: [sources.cslogger],
-    [materials.video]: [sources.amazon, sources.dropbox],
+    [materials.video]: [sources.amazon, sources.dropbox, sources.localcsv]
   },
   // available extensions for each material type
   materialExtensions: {
