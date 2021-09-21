@@ -237,7 +237,7 @@ export default {
     );
   },
 
-  async importLocalCSLoggerFile(projectShortName, files, csv, partial = false) {
+  async importCSLoggerFile(projectShortName, files, csv, partial = false) {
     const data = new FormData();
     data.append("partial", partial);
     data.append("file", csv);

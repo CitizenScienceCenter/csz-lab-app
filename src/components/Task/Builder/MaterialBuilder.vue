@@ -95,26 +95,6 @@
               <div class="m-2">{{$t('task-material-builder-tweet')}}</div>
             </b-card>
           </b-col>
-
-          <b-col
-            md="4"
-            class="mt-2 mt-md-0"
-            v-b-popover.hover.bottom="
-              $t('task-material-builder-cslogger-tooltip')
-            "
-          >
-            <b-card
-              ref="card-cslogger"
-              :class="{
-                'material-selected': selectedMaterial === materials.cslogger
-              }"
-              @click="onMaterialSelected(materials.cslogger)"
-              class="text-center material"
-            >
-              <i class="fas fa-question fa-4x"></i><br />
-              <div class="m-2">{{ $t("task-material-builder-cslogger") }}</div>
-            </b-card>
-          </b-col>
         </b-row>
       </b-col>
 

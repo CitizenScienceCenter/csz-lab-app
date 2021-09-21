@@ -2,7 +2,7 @@
   <div>
     <b-card v-b-toggle.csv-collapse @click="closeOtherImporters" ref="card-csv" class="text-center material" :class="{ 'material-selected': isLocalCsvVisible }">
       <i class="fas fa-file-csv fa-4x"></i>
-      <div class="m-2">CSV file</div>
+      <div class="m-2">csv File</div>
     </b-card>
     <b-collapse id="csv-collapse" v-model="isLocalCsvVisible">
 
@@ -12,15 +12,13 @@
         <li v-else-if="project.info.task_category=='sound'"><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
         <li v-else-if="project.info.task_category=='video'"><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
         <li v-else-if="project.info.task_category=='pdf'"><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>
-        <li v-else-if="project.info.task_category=='tweet'"></li>
-        <li v-else><b-link :href="csvSamples.geoCoding" download="geo-coding-sample.csv">{{ $t('taks-import-localcsv-text6') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='tweet'"></li>        
       </ul>
       <ul v-else>
         <li ><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('taks-import-localcsv-text2') }}</b-link></li>
         <li><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
         <li><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
         <li><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>
-        <li><b-link :href="csvSamples.geoCoding" download="geo-coding-sample.csv">{{ $t('taks-import-localcsv-text6') }}</b-link></li>
       </ul>
 
       <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
@@ -41,7 +39,6 @@ import video from '@/assets/csv-samples/video.csv'
 import image from '@/assets/csv-samples/image.csv'
 import sound from '@/assets/csv-samples/sound.csv'
 import pdf from '@/assets/csv-samples/pdf.csv'
-import geoCoding from '@/assets/csv-samples/geo-coding.csv'
 
 export default {
   name: 'LocalCsvImporter',
@@ -52,8 +49,7 @@ export default {
         video,
         image,
         sound,
-        pdf,
-        geoCoding
+        pdf
       }
     }
   },
