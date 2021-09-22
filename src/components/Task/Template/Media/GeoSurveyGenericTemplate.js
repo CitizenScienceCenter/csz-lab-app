@@ -65,14 +65,14 @@ const component = {
           />
           <media
             v-else-if="mime=='video'"
-            :link="taskInfo.link_raw || taskInfo.video_url"
+            :link="taskInfo.video_url || taskInfo.link_raw"
             type="video"
             :loading="!pybossa.taskLoaded"
           >
           </media>
           <media
             v-else-if="mime=='audio'"
-            :link="taskInfo.link_raw || taskInfo.audio_url"
+            :link="taskInfo.audio_url || taskInfo.link_raw"
             type="audio"
             :loading="!pybossa.taskLoaded"
           >

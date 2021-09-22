@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Audio multimedia -->
+    <!-- Video multimedia -->
     <b-skeleton-wrapper :loading="loading" v-if="type === 'video'">
       <template #loading>
         <b-skeleton-img animation="throb"></b-skeleton-img>
@@ -8,7 +8,7 @@
       <b-embed type="video" :src="link" allowfullscreen controls> </b-embed>
     </b-skeleton-wrapper>
 
-    <!-- Video multimedia -->
+    <!-- Audio multimedia -->
     <b-skeleton-wrapper :loading="loading" v-if="type === 'audio'">
       <template #loading>
         <b-skeleton type="input" animation="throb"></b-skeleton>
