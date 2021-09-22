@@ -64,9 +64,9 @@ const component = {
             :loading="!pybossa.taskLoaded"
           />
           <media
-            v-else-if="mime=='video'"
-            :link="taskInfo.video_url || taskInfo.link_raw"
-            type="video"
+            v-else-if="mime=='video' || mime=='vembed'"
+            :link="mime=='vembed' ? taskInfo.oembed : (taskInfo.video_url || taskInfo.link_raw)"
+            :type="mime"
             :loading="!pybossa.taskLoaded"
           >
           </media>
@@ -225,7 +225,10 @@ const component = {
     taskInfo() {
       if (this.task && this.task.info) {
         this.mime = this.pybossa.getFileType(
-          this.task.info.url || this.task.info.link_raw
+          this.task.info.url ||
+            this.task.info.video_url ||
+            this.task.info.audio_url ||
+            this.task.info.link_raw
         );
         return this.task.info;
       }

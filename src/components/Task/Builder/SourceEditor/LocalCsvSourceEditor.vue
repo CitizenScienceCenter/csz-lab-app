@@ -53,12 +53,29 @@
           :placeholder="$t('taks-import-localcsv-text7')"
           accept=".csv"
           v-model="csvFile"
+          browse-text="Search"
+          required
+          :state="validateCSV"
         ></b-file>
+        <!-- Valid csv message in green color -->
+        <span class="text-secondary" v-show="valid">
+          <i class="fas fa-check-circle"></i>
+          <small> {{ $t("taks-import-localcsv-valid") }}</small>
+        </span>
+        <!-- Invalid csv message in red color -->
+        <span class="text-primary" v-show="!valid && valid != null">
+          <i class="fas fa-exclamation-triangle"></i>
+          <small>{{ error_message }}</small>
+        </span>
+        <!-- Hint for max size of the csv file -->
+        <small class="text-muted" v-if="valid == null">
+          <i>Max. size 1Mb</i>
+        </small>
       </b-form-group>
 
       <b-btn
         ref="btn-submit"
-        v-if="csvFile"
+        v-if="valid"
         @click="onSubmit"
         class="mt-4"
         variant="primary"
@@ -76,6 +93,9 @@ import video from "@/assets/csv-samples/video.csv";
 import image from "@/assets/csv-samples/image.csv";
 import sound from "@/assets/csv-samples/sound.csv";
 import pdf from "@/assets/csv-samples/pdf.csv";
+import { csvToJson } from "@/helper.js";
+
+const MAX_SIZE_CSV = 1000000; // 1Mb
 
 export default {
   name: "LocalCsvSourceEditor",
@@ -87,7 +107,10 @@ export default {
         image,
         sound,
         pdf
-      }
+      },
+      valid: null,
+      error_message: null,
+      json_csvFile: null
     };
   },
   methods: {
@@ -99,8 +122,34 @@ export default {
 
     onSubmit() {
       this.setTaskSource(this.sources.localcsv);
-      this.setTaskSourceContent(this.csvFile);
+      this.setTaskSourceContent({
+        file: this.csvFile,
+        n_tasks: this.json_csvFile.length
+      });
       this.setStep({ step: "source", value: true });
+    },
+    // Validate files
+    async validate() {
+      this.valid = null;
+      this.error_message = null;
+
+      // csv file validation
+      if (this.getExt(this.csvFile.name) === "csv") {
+        this.valid = true;
+        if (this.csvFile.size > MAX_SIZE_CSV) {
+          this.valid = false;
+          this.error_message = this.$t("taks-import-localcsv-invalid-size");
+        } else {
+          // convert CSV file into json format
+          this.json_csvFile = await csvToJson(this.csvFile);
+        }
+      } else {
+        this.valid = false;
+        this.error_message = this.$t("taks-import-localcsv-invalid-format");
+      }
+    },
+    getExt(name) {
+      return name.split(".").pop();
     }
   },
   computed: {
@@ -109,7 +158,17 @@ export default {
       "materialExtensions",
       "sources",
       "materials"
-    ])
+    ]),
+    validateCSV() {
+      if (this.valid) return true;
+      if (!this.valid && this.valid != null) return false;
+      return null;
+    }
+  },
+  watch: {
+    csvFile() {
+      this.validate();
+    }
   }
 };
 </script>

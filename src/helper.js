@@ -260,6 +260,10 @@ export function getMIME(raw_url) {
   try {
     const url = new URL(raw_url);
     extension = url.pathname.split(".").pop();
+    // special cases:
+    // youtube, vimeo
+    if (["youtube", "vimeo"].some(x => url.hostname.includes(x)))
+      return "vembed";
   } catch (e) {
     if (typeof raw_url == "string") extension = raw_url.split(".").pop();
   }

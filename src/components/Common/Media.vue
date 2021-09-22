@@ -1,11 +1,26 @@
 <template>
   <div>
     <!-- Video multimedia -->
-    <b-skeleton-wrapper :loading="loading" v-if="type === 'video'">
+    <b-skeleton-wrapper
+      :loading="loading"
+      v-if="type == 'video' || type == 'vembed'"
+    >
       <template #loading>
         <b-skeleton-img animation="throb"></b-skeleton-img>
       </template>
-      <b-embed type="video" :src="link" allowfullscreen controls> </b-embed>
+      <b-embed
+        v-if="type == 'video'"
+        type="video"
+        :src="link"
+        allowfullscreen
+        controls
+      >
+      </b-embed>
+      <div
+        v-else-if="type == 'vembed'"
+        v-html="link"
+        class="videoWrapper"
+      ></div>
     </b-skeleton-wrapper>
 
     <!-- Audio multimedia -->
@@ -64,6 +79,18 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 .animation {
   width: 250px;
   height: 50px;
