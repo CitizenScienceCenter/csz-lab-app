@@ -53,18 +53,18 @@ const component = {
         :class="questionList.length > 0 ? 'order-md-2':'order-lg-2'"
       >
         <div
-          v-if="taskInfo.link_raw || taskInfo.pdf_url"
+          v-if="taskInfo.pdf_url || taskInfo.link_raw"
           class="text-center"
           style="position: sticky; top: 15%"
         >
           <div
             v-if="pybossa.taskLoaded && taskInfo.page && taskInfo.page.length > 0"
             class="clickable-element"
-            @click="pybossa.showModal('pdf', taskInfo.link_raw || taskInfo.pdf_url)"
+            @click="pybossa.showModal('pdf', taskInfo.pdf_url || taskInfo.link_raw)"
           >
             <pdf
               class="w-100 shadow"
-              :src="taskInfo.link_raw || taskInfo.pdf_url"
+              :src="taskInfo.pdf_url || taskInfo.link_raw"
               :page="parseInt(taskInfo.page)"
             >
             </pdf>
@@ -74,12 +74,12 @@ const component = {
             </b-pagination>
             <div
               class="clickable-element"
-              @click="pybossa.showModal('pdf', taskInfo.link_raw || taskInfo.pdf_url)"
+              @click="pybossa.showModal('pdf', taskInfo.pdf_url || taskInfo.link_raw)"
             >
               <pdf
                 class="w-100 shadow"
                 @num-pages="pageCount = $event"
-                :src="taskInfo.link_raw || taskInfo.pdf_url"
+                :src="taskInfo.pdf_url || taskInfo.link_raw"
                 :page="currentPage"
               >
               </pdf>

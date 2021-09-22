@@ -53,17 +53,7 @@
               <template v-slot:aside>
                 <i class="fas fa-list-ul icon-secondary-medium"></i>
               </template>
-              <span
-                v-if="
-                  ![sources.twitter, sources.flickr, sources.cslogger].includes(
-                    task.source
-                  )
-                "
-              >
-                <b>{{ task.sourceContent.length }}</b>
-                {{ $t("task-summary-builder-tasks") }}
-              </span>
-              <span v-else-if="task.source === sources.flickr">
+              <span v-if="task.source === sources.flickr">
                 {{ $t("task-summary-builder-flickr-import") }} (<span
                   class="font-italic"
                   >{{ task.sourceContent }}</span
@@ -73,8 +63,16 @@
                 {{ task.sourceContent.maxTweets + "" }}
                 {{ $t("task-summary-builder-tweets-import") }}
               </span>
-              <span v-else-if="task.source === sources.cslogger">
+              <span
+                v-else-if="
+                  [sources.cslogger, sources.localcsv].includes(task.source)
+                "
+              >
                 {{ task.sourceContent.n_tasks }}
+                {{ $t("task-summary-builder-tasks") }}
+              </span>
+              <span v-else>
+                <b>{{ task.sourceContent.length }}</b>
                 {{ $t("task-summary-builder-tasks") }}
               </span>
             </b-media>
@@ -312,7 +310,7 @@ export default {
       else if (this.task.source === this.sources.localcsv) {
         sourcePromise = this.importLocalCsvTasks({
           project: this.selectedProject,
-          file: this.task.sourceContent
+          file: this.task.sourceContent.file
         });
       }
 
