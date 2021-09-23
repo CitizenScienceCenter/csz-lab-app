@@ -170,13 +170,12 @@ const component = {
       /* Validate type of response and discard the invalid ones */
       const responses =
         this.task && this.task.info
-          ? JSON.parse(this.task.info.csloggerTasks)
+          ? JSON.parse(this.task.info.csloggerTasks.replaceAll(NaN, null))
           : [];
-      return responses
-        .map(res => {
-          res["type"] = this.pybossa.validateResponse(res.url);
-          return res;
-        })
+      return responses.map(res => {
+        res["type"] = this.pybossa.validateResponse(res.url);
+        return res;
+      });
     },
     context() {
       return this;
