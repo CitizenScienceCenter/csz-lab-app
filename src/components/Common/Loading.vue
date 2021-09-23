@@ -29,7 +29,6 @@
             <b-progress
               :value="progressBar.value"
               :max="progressBar.max"
-              show-progress
               animated
               class="mx-5"
             ></b-progress>
