@@ -133,7 +133,7 @@ import AmazonSourceEditor from '@/components/Task/Builder/SourceEditor/AmazonSou
 import FlickrSourceEditor from '@/components/Task/Builder/SourceEditor/FlickrSourceEditor'
 import TwitterSourceEditor from '@/components/Task/Builder/SourceEditor/TwitterSourceEditor'
 import LocalCsvSourceEditor from '@/components/Task/Builder/SourceEditor/LocalCsvSourceEditor'
-import LoadCSLoggerData from "@/components/Task/Builder/TemplateEditor/CSLogger/LoadCSLoggerData";
+import LoadCSLoggerData from "@/components/Task/Builder/SourceEditor/CSLogger/LoadCSLoggerData";
 
 export default {
   name: "SourceBuilder",
