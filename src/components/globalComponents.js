@@ -9,9 +9,9 @@ Vue.component("CommonEditorElements", () =>
 );
 
 Vue.component("ImageTaskPresenter", () =>
-  import("@/components/Common/ImageTaskPresenter")
+  import("@/components/Task/Presenter/Resources/ImageTaskPresenter")
 );
 
-Vue.component("Media", () => import("@/components/Common/Media"));
+Vue.component("Media", () => import("@/components/Task/Presenter/Resources/Media"));
 
-Vue.component("Maps", () => import("@/components/Common/Maps"));
+Vue.component("Maps", () => import("@/components/Task/Presenter/Resources/Maps"));
