@@ -16,7 +16,7 @@ import "vuelayers/lib/style.css";
 import "./scss/global.scss";
 import VueGtag from "vue-gtag";
 import Meta from "vue-meta";
-import "@/components/Common/globalComponents";
+import "@/components/globalComponents";
 import Croppa from "vue-croppa";
 
 // Leaflet map styles
