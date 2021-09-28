@@ -67,19 +67,11 @@ const component = {
             v-if="taskInfo.extended_entities && taskInfo.extended_entities.media && taskInfo.extended_entities.media.length > 0"
             class="text-center"
           >
-            <image-task-presenter
-              v-if="taskInfo.extended_entities.media[0].type == 'photo'"
-              :link="getMedia('photo')"
-              :pybossa="pybossa"
-              :loading="!pybossa.taskLoaded"
-            />
-            <media
-              v-else-if="['video', 'animated_gif'].includes(taskInfo.extended_entities.media[0].type)"
-              :link="getMedia('video')"
-              type="video"
-              :loading="!pybossa.taskLoaded"
-            >
-            </media>
+            <media-presenter
+              :context="pybossa"
+              :link="getMedia(taskInfo.extended_entities.media[0].type)"
+              :loading="!pybossa.taskLoaded">
+            </media-presenter>
           </div>
         </div>
       </b-col>
@@ -222,7 +214,7 @@ const component = {
       if (type == "photo") {
         return this.taskInfo.extended_entities.media[0].media_url_https;
       }
-      if (type == "video") {
+      if (type == "video" || type == "animated_gif") {
         return this.taskInfo.extended_entities.media[0].video_info.variants.find(
           x => x.content_type.includes("video")
         ).url;

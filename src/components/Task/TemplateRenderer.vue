@@ -393,12 +393,7 @@ export default {
         question.condition.questionId < 0
       );
     },
-
-    // get the mime type for media file
-    getFileType(file) {
-      return getMIME(file);
-    },
-
+    
     // CSLogger implementation only
     // Validate type of response from string
     validateResponse(response){
