@@ -18,7 +18,7 @@
       </b-embed>
       <div
         v-else-if="type == 'vembed'"
-        v-html="link"
+        v-html="embed"
         class="videoWrapper"
       ></div>
     </b-skeleton-wrapper>
@@ -50,6 +50,7 @@
 
 <script>
 export default {
+  name:"MediaTaskPResenter",
   data() {
     return {
       audio_animation: false
@@ -57,6 +58,7 @@ export default {
   },
   props: {
     link: String,
+    embed: String,
     loading: Boolean,
     type: {
       type: String,
