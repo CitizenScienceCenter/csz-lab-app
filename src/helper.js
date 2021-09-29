@@ -245,9 +245,11 @@ export function getWidthScreen() {
 
 // Get MIME type for url file
 export function getMIME(raw_url) {
+  let response = null;
   const img_ext = new Set(media_ext.image);
   const video_ext = new Set(media_ext.video);
   const audio_ext = new Set(media_ext.sound);
+  const video_embed = new Set(["youtube", "vimeo"]);
 
   const types = new Map();
   //add images to the Map
@@ -256,19 +258,28 @@ export function getMIME(raw_url) {
   video_ext.forEach(video => types.set(video, "video"));
   //add audio to the Map
   audio_ext.forEach(audio => types.set(audio, "audio"));
-  let extension;
+
+  // Validate if url belongs to image, video or audio
+  let ext;
   try {
     const url = new URL(raw_url);
-    extension = url.pathname.split(".").pop();
-    // special cases:
-    // youtube, vimeo
-    if (["youtube", "vimeo"].some(x => url.hostname.includes(x)))
-      return "vembed";
+    /* Special case */
+    // Embed video (i.e., youtube, vimeo)
+    if ([...video_embed].some(x => url.hostname.includes(x))) {
+      response = "vembed";
+    }
+    ext = url.pathname.split(".").pop();
   } catch (e) {
-    if (typeof raw_url == "string") extension = raw_url.split(".").pop();
+    if (typeof raw_url == "string") ext = raw_url.split(".").pop();
+  } finally {
+    if (types.get(`.${ext}`)) return types.get(`.${ext}`);
+    if (response) return response;
   }
 
-  return types.get(`.${extension}`);
+  /* Special case */
+  // CSLogger types
+  response = csloggerType(raw_url);
+  return response;
 }
 
 // group array of object by key and return grouped array of arrays
@@ -297,19 +308,27 @@ export async function csvToJson(csv) {
 
 // CSLogger implementation only
 // Validate type of response from string
-export function validateCSLoggerResponse(response) {
+function csloggerType(response) {
   // Get the type of response
-  const type = response.split(":")[0];
-  let url = null;
-  try {
-    url = new URL(response);
-  } catch (error) {}
-  if (url && (url.protocol === "http:" || url.protocol === "https:")) {
-    return "url";
-  } else if (type != "filename") {
-    //TODO: Change for respective response type
-    return "text";
-  } else {
-    return false;
+  const type = response.split(":")[0].toLowerCase();
+  if (type == "geo") {
+    return "geo";
   }
+  if (type == "true" || type == "false") {
+    return "boolean";
+  }
+  if (type == "date") {
+    return "date";
+  }
+  if (type == "value") {
+    // This includes radio, checkbox and slider
+    return "value";
+  }
+  if (type == "time_range") {
+    return "time_range";
+  }
+  if (type && type.length > 0 && type != "filename") {
+    return "text";
+  }
+  return null;
 }

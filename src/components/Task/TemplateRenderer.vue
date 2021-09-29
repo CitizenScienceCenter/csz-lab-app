@@ -90,7 +90,6 @@
 
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-import { getMIME,validateCSLoggerResponse } from "@/helper.js";
 
 export default {
   name: "TemplateRenderer",
@@ -392,12 +391,6 @@ export default {
         Object.keys(question.condition).length === 0 ||
         question.condition.questionId < 0
       );
-    },
-    
-    // CSLogger implementation only
-    // Validate type of response from string
-    validateResponse(response){
-      return validateCSLoggerResponse(response)
     }
   }
 };
