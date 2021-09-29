@@ -61,28 +61,15 @@ const component = {
               class="mb-2"
               align="center"
               border-variant="light"
-              :sub-title="resource.prompt"
             >
-              <div v-if="resource.type == 'url'">
-                <!-- Image -->
-                <image-task-presenter
-                  v-if="getMime(resource.url)=='img'"
-                  :link="resource.url"
-                  :pybossa="pybossa"
-                />
-                <!-- Video -->
-                <media v-else-if="getMime(resource.url)=='video'" :link="resource.url" type="video">
-                </media>
-                <!-- Audio -->
-                <media v-else-if="getMime(resource.url)=='audio'" :link="resource.url" type="audio">
-                </media>
-              </div>
-              <!-- Text -->
-              <b-card-text v-else-if="resource.type == 'text'" class="text-left">
-                {{resource.url}}
-              </b-card-text>
-              <!-- No recognized element -->
-              <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
+              <label>
+                {{resource.prompt}}
+              </label>
+              <media-presenter
+                v-if="resource.url"
+                :context="pybossa"
+                :link="resource.url">
+              </media-presenter>
             </b-card>
             <!-- Message and spinner for loading time -->
             <template #overlay>
@@ -157,9 +144,6 @@ const component = {
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
-    getMime(file_link) {
-      return this.pybossa.getFileType(file_link);
-    }
   },
 
   computed: {
@@ -172,10 +156,7 @@ const component = {
         this.task && this.task.info
           ? JSON.parse(this.task.info.csloggerTasks.replaceAll(NaN, null))
           : [];
-      return responses.map(res => {
-        res["type"] = this.pybossa.validateResponse(res.url);
-        return res;
-      });
+      return responses
     },
     context() {
       return this;

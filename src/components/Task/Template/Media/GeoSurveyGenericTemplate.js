@@ -53,7 +53,6 @@ const component = {
         :class="questionList.length > 0 ? 'order-md-2':'order-lg-2'"
       >
         <div
-          v-if="validUrl"
           class="text-center"
           style="position: sticky; top: 15%"
         >
@@ -64,7 +63,6 @@ const component = {
             :loading="!pybossa.taskLoaded">
           </media-presenter>
         </div>
-        <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
       </b-col>
     </b-row>
 

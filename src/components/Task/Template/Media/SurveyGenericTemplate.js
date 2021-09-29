@@ -57,7 +57,6 @@ const component = {
       <!-- right columns - Media -->
       <b-col md="7" class="order-1 order-md-2">
         <div
-          v-if="validUrl"
           class="text-center"
           style="position: sticky; top: 15%"
         >
@@ -68,9 +67,6 @@ const component = {
             :loading="!pybossa.taskLoaded">
           </media-presenter>
         </div>
-        <b-alert v-else :show="true" variant="danger">
-          {{$t('template-editor-text-16')}}
-        </b-alert>
       </b-col>
     </b-row>
 
@@ -88,12 +84,12 @@ const component = {
     questions: [
       {
         question: "",
-        answers: [""],
-      },
+        answers: [""]
+      }
     ],
     answers: [],
     showAlert: false,
-    questionList: [],
+    questionList: []
   },
 
   methods: {
@@ -112,8 +108,8 @@ const component = {
     isFormValid() {
       const ctrl = this;
       let valid = true;
-      this.questionList.every((question) => {
-        const ans = ctrl.answers.find((x) => x.qid == question.id) || [];
+      this.questionList.every(question => {
+        const ans = ctrl.answers.find(x => x.qid == question.id) || [];
         if (question.required && (!!!ans.value || ans.value.length <= 0)) {
           valid = false;
           return false;
@@ -125,8 +121,8 @@ const component = {
     initialize() {
       this.showAlert = false;
       const pb = this.pybossa;
-      this.questionList = this.questions.filter((q) => pb.isConditionEmpty(q));
-      this.answers = this.questions.map(function (x) {
+      this.questionList = this.questions.filter(q => pb.isConditionEmpty(q));
+      this.answers = this.questions.map(function(x) {
         const answer = { qid: x.id, question: x.question, value: null };
         if (x.type === "multiple_choice") {
           answer.value = [];
@@ -134,7 +130,7 @@ const component = {
         return answer;
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
-    },
+    }
   },
 
   computed: {
@@ -159,7 +155,7 @@ const component = {
         this.task.info.audio_url ||
         this.task.info.link_raw
       );
-    },
+    }
   },
 
   created() {
@@ -177,9 +173,9 @@ const component = {
   props: {
     /* Injected by the Pybossa App */
     pybossa: {
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 
 export default component;
