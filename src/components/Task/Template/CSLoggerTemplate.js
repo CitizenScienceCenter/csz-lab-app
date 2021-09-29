@@ -61,7 +61,6 @@ const component = {
               class="mb-2"
               align="center"
               border-variant="light"
-              :sub-title="resource.prompt"
             >
               <label>
                 {{resource.prompt}}
@@ -145,9 +144,6 @@ const component = {
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
-    getMime(file_link) {
-      return this.pybossa.getFileType(file_link);
-    }
   },
 
   computed: {
@@ -160,10 +156,7 @@ const component = {
         this.task && this.task.info
           ? JSON.parse(this.task.info.csloggerTasks.replaceAll(NaN, null))
           : [];
-      return responses.map(res => {
-        res["type"] = this.pybossa.validateResponse(res.url);
-        return res;
-      });
+      return responses
     },
     context() {
       return this;
