@@ -66,9 +66,9 @@ const component = {
                 {{resource.prompt}}
               </label>
               <media-presenter
-                v-if="resource.url"
                 :context="pybossa"
-                :link="resource.url">
+                :link="resource.url"
+                :loading="!pybossa.taskLoaded">
               </media-presenter>
             </b-card>
             <!-- Message and spinner for loading time -->

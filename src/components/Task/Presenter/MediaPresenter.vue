@@ -12,9 +12,10 @@
     />
     <!-- For static maps component -->
     <maps-task-presenter
-      v-else-if="mime == 'geo'"
-      style="height: 350px; width:100%"
+      v-else-if="mime == 'geo' && !loading"
+      style="height: 350px; width: 100%;"
       :mapSettings="mapSettings"
+      :locations="locations"
       hideGeoSearch
       hideInteraction
     ></maps-task-presenter>
@@ -41,7 +42,7 @@ export default {
   components: {
     MediaTaskPresenter,
     ImageTaskPresenter,
-    "maps-task-presenter": Maps
+    "maps-task-presenter": Maps,
   },
   data() {
     return {
@@ -49,7 +50,8 @@ export default {
       ctype: null,
       mediaComponent: null,
       mapSettings: {},
-      media_types: MEDIA_TYPES
+      locations: null,
+      media_types: MEDIA_TYPES,
     };
   },
   props: {
@@ -59,18 +61,19 @@ export default {
     link: String,
     embed: { type: String, default: null },
     loading: Boolean,
-    // For maps
-    location: String
+  },
+  created() {
+    this.mapSettings = {
+      center: null,
+      zoom: 10,
+      mapType: "Road",
+      static_map: true,
+    };
   },
   mounted() {
     this.mime = getMIME(this.link);
+    this.setMapCenter();
     this.setMediaComponent();
-    this.mapSettings = {
-      center: [47.38440837506529, 8.542299170672376],
-      zoom: 10,
-      mapType: "Road",
-      static_map: true
-    };
   },
   methods: {
     setMediaComponent() {
@@ -80,15 +83,50 @@ export default {
         return (this.mediaComponent = MediaTaskPresenter);
       }
       return (this.mediaComponent = null);
-    }
+    },
+    setMapCenter() {
+      if (this.mime != "geo") return;
+      // If coordinates has the format lat,lon
+      let coordinates = this.link.split(",");
+      if (
+        coordinates &&
+        coordinates.length == 2 &&
+        coordinates.every((x) => parseFloat(x))
+      ) {
+        return (this.mapSettings.center = coordinates);
+      }
+
+      // Exclusive for CSLogger
+      coordinates = this.link.replaceAll(" ", "");
+      // Validate if CSLogger geo format is present
+      const cslogger_geo_regex = /geo:lat\(.*\)\/long\(.*\)/g;
+      if (cslogger_geo_regex.test(coordinates)) {
+        let match;
+        const re = /\(([^)]+)\)/gm; // match the characters between parentheses
+        this.mapSettings.center = [];
+        do {
+          match = re.exec(coordinates);
+          if (match) {
+            this.mapSettings.center.push(parseFloat(match[1]));
+          }
+        } while (match);
+        this.locations = [
+          {
+            lat: this.mapSettings.center[0],
+            lng: this.mapSettings.center[1],
+          },
+        ];
+      }
+    },
   },
   watch: {
     link() {
       this.mime = null;
       this.mime = getMIME(this.link);
+      this.setMapCenter();
       this.setMediaComponent();
-    }
-  }
+    },
+  },
 };
 </script>
 
