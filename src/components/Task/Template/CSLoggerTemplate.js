@@ -63,26 +63,14 @@ const component = {
               border-variant="light"
               :sub-title="resource.prompt"
             >
-              <div v-if="resource.type == 'url'">
-                <!-- Image -->
-                <image-task-presenter
-                  v-if="getMime(resource.url)=='img'"
-                  :link="resource.url"
-                  :pybossa="pybossa"
-                />
-                <!-- Video -->
-                <media v-else-if="getMime(resource.url)=='video'" :link="resource.url" type="video">
-                </media>
-                <!-- Audio -->
-                <media v-else-if="getMime(resource.url)=='audio'" :link="resource.url" type="audio">
-                </media>
-              </div>
-              <!-- Text -->
-              <b-card-text v-else-if="resource.type == 'text'" class="text-left">
-                {{resource.url}}
-              </b-card-text>
-              <!-- No recognized element -->
-              <b-alert v-else :show="true" variant="danger">{{$t('template-editor-text-16')}}</b-alert>
+              <label>
+                {{resource.prompt}}
+              </label>
+              <media-presenter
+                :context="pybossa"
+                :link="resource.url"
+                :loading="!pybossa.taskLoaded">
+              </media-presenter>
             </b-card>
             <!-- Message and spinner for loading time -->
             <template #overlay>
