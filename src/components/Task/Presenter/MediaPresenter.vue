@@ -132,8 +132,8 @@ export default {
       this.mime = getMIME(this.link);
       this.setMapCenter();
       this.setMediaComponent();
-    }
-  }
+    },
+  },
 };
 </script>
 
