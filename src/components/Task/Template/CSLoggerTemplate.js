@@ -68,6 +68,7 @@ const component = {
               <media-presenter
                 :context="pybossa"
                 :link="resource.url"
+                :options="resource.options"
                 :loading="!pybossa.taskLoaded">
               </media-presenter>
             </b-card>
