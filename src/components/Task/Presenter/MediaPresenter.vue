@@ -20,9 +20,12 @@
       hideInteraction
     ></maps-task-presenter>
     <!-- For text-based component -->
-    <b-card-text class="text-left" v-else-if="mime == 'text'">
-      {{ link }}
-    </b-card-text>
+    <text-based-task-presenter
+      v-else-if="text_based_types.includes(mime)"
+      :content="link"
+      :options="options"
+      :type="mime"
+    ></text-based-task-presenter>
     <!-- No recognized element -->
     <b-alert v-else :show="true" variant="danger">{{
       $t("template-editor-text-16")
@@ -33,15 +36,18 @@
 <script>
 import MediaTaskPresenter from "./Resources/MediaTaskPresenter";
 import ImageTaskPresenter from "./Resources/ImageTaskPresenter";
+import TextBasedTaskPresenter from "./Resources/TextBasedTaskPresenter";
 import Maps from "./Resources/Maps";
 import { getMIME } from "@/helper.js";
 
 const MEDIA_TYPES = ["img", "audio", "video", "vembed"];
+const TEXT_BASED_TYPES = ["text", "value", "date", "time_range"];
 export default {
   name: "MediaPresenter",
   components: {
     MediaTaskPresenter,
     ImageTaskPresenter,
+    TextBasedTaskPresenter,
     "maps-task-presenter": Maps,
   },
   data() {
@@ -52,6 +58,7 @@ export default {
       mapSettings: {},
       locations: null,
       media_types: MEDIA_TYPES,
+      text_based_types: TEXT_BASED_TYPES,
     };
   },
   props: {
@@ -61,6 +68,8 @@ export default {
     link: String,
     embed: { type: String, default: null },
     loading: Boolean,
+    // For text-based and composed responses
+    options: { type: String, default: null },
   },
   created() {
     this.mapSettings = {
