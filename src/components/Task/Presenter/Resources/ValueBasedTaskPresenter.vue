@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <b-card-text class="text-left" v-if="type == 'value'">
-      Content: {{ content }} *** Options: {{ options }}
-    </b-card-text>
+  <div class="text-left">
+    <!-- For checkbox and radio types -->
+    <b-list-group v-if="!options.slider" flush>
+      <b-list-group-item v-for="(item, index) in content" :key="index">
+        <i class="fas fa-minus fa-xs text-primary"></i>
+        {{ getValue(item) }}
+      </b-list-group-item>
+    </b-list-group>
+    <div v-else>{{ content }} *** {{ options }}</div>
   </div>
 </template>
 
@@ -11,9 +16,14 @@ export default {
   name: "ValueBasedTaskPresenter",
   props: {
     type: String,
-    content: String,
-    options: String,
+    content: Array,
+    options: Object
   },
+  methods: {
+    getValue(key) {
+      return this.options.content.get(key);
+    }
+  }
 };
 </script>
 

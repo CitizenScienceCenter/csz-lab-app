@@ -28,8 +28,8 @@
     <!-- For types with options component -->
     <value-based-task-presenter
       v-else-if="mime == 'value' && link"
-      :content="link"
-      :options="options"
+      :content="resp_values"
+      :options="resp_options"
       :type="mime"
     ></value-based-task-presenter>
     <!-- No recognized element -->
@@ -56,17 +56,22 @@ export default {
     ImageTaskPresenter,
     TextBasedTaskPresenter,
     ValueBasedTaskPresenter,
-    "maps-task-presenter": Maps,
+    "maps-task-presenter": Maps
   },
   data() {
     return {
       mime: null,
       ctype: null,
       mediaComponent: null,
+      // Geo responses
       mapSettings: {},
       locations: null,
+      // Value based responses
+      resp_options: null,
+      resp_values: null,
+      // Constants
       media_types: MEDIA_TYPES,
-      text_based_types: TEXT_BASED_TYPES,
+      text_based_types: TEXT_BASED_TYPES
     };
   },
   props: {
@@ -77,19 +82,20 @@ export default {
     embed: { type: String, default: null },
     loading: Boolean,
     // For text-based and composed responses
-    options: { type: String, default: null },
+    options: { type: String, default: null }
   },
   created() {
     this.mapSettings = {
       center: null,
       zoom: 10,
       mapType: "Road",
-      static_map: true,
+      static_map: true
     };
   },
   mounted() {
     this.mime = getMIME(this.link);
     this.setMapCenter();
+    this.getValueResponses();
     this.setMediaComponent();
   },
   methods: {
@@ -108,7 +114,7 @@ export default {
       if (
         coordinates &&
         coordinates.length == 2 &&
-        coordinates.every((x) => parseFloat(x))
+        coordinates.every(x => parseFloat(x))
       ) {
         return (this.mapSettings.center = coordinates);
       }
@@ -130,20 +136,55 @@ export default {
         this.locations = [
           {
             lat: this.mapSettings.center[0],
-            lng: this.mapSettings.center[1],
-          },
+            lng: this.mapSettings.center[1]
+          }
         ];
       }
     },
+    getValueResponses() {
+      if (!this.options || !this.link.startsWith("value")) return;
+      const aux = this;
+      this.resp_options = { content: null, slider: null };
+      // Options format option1,option2,...
+      // Option format value:key
+      this.resp_options.content = new Map();
+      this.options.split(",").forEach(function(x) {
+        let [value, key] = x.split(":");
+        aux.resp_options.content.set(key.trim(), value.trim());
+      });
+      // Values format value: 0,1,2,...
+      const array = this.link.split("value:")[1];
+      this.resp_values = array.split(",").map(function(x) {
+        return x.trim();
+      });
+      this.isSlider();
+    },
+    isSlider() {
+      const values = Array.from(this.resp_options.content.values());
+      let numeric = [];
+      try {
+        numeric = Array.from(values, x => parseInt(x.trim(), 10));
+        if (numeric.some(x => isNaN(x))) throw 'not a number detected';
+      } catch (error) {
+        return false;
+      }
+      this.resp_options.slider = {
+        max: Math.max(...numeric),
+        min: Math.min(...numeric)
+      };
+      console.log(this.resp_options.slider);
+      return true;
+    }
   },
   watch: {
     link() {
       this.mime = null;
       this.mime = getMIME(this.link);
       this.setMapCenter();
+      this.getValueResponses();
       this.setMediaComponent();
-    },
-  },
+    }
+  }
 };
 </script>
 
