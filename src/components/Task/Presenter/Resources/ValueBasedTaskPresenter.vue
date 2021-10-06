@@ -7,7 +7,27 @@
         {{ getValue(item) }}
       </b-list-group-item>
     </b-list-group>
-    <div v-else>{{ content }} *** {{ options }}</div>
+    <div v-else class="mt-2">
+      <span v-for="(value, i) in content" :key="i">
+        <b-form-rating
+          :value="value"
+          no-border
+          readonly
+          show-value
+          size="lg"
+          :stars="options.slider.max || 5"
+        >
+          <template slot="icon-empty">
+            <i class="far fa-circle text-secondary"></i>
+          </template>
+          <template slot="icon-full">
+            <i class="fas fa-circle text-primary"></i>
+          </template>
+        </b-form-rating>
+        <span class="float-left font-weight-bold">Min.: {{options.slider.min}}</span>
+        <span class="float-right font-weight-bold">Max.: {{options.slider.max}}</span>
+      </span>
+    </div>
   </div>
 </template>
 
