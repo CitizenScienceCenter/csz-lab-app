@@ -3,10 +3,11 @@
     <!-- For checkbox and radio types -->
     <b-list-group v-if="!options.slider" flush>
       <b-list-group-item v-for="(item, index) in content" :key="index">
-        <i class="fas fa-minus fa-xs text-primary"></i>
+        <i class="far fa-dot-circle fa-xs text-primary"></i>
         {{ getValue(item) }}
       </b-list-group-item>
     </b-list-group>
+    <!-- If is slider -->
     <div v-else class="mt-2">
       <span v-for="(value, i) in content" :key="i">
         <b-form-rating
