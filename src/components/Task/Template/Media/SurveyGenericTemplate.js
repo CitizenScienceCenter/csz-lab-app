@@ -63,7 +63,6 @@ const component = {
           <media-presenter
             :context="pybossa"
             :link="validUrl"
-            :embed="taskInfo.oembed"
             :loading="!pybossa.taskLoaded">
           </media-presenter>
         </div>

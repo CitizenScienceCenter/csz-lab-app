@@ -5,7 +5,6 @@
       v-if="media_types.includes(mime)"
       :is="mediaComponent"
       :link="link"
-      :embed="embed"
       :pybossa="context"
       :loading="loading"
       :type="mime"
@@ -66,7 +65,6 @@ export default {
     context: Object,
     // For images, videos and audios
     link: String,
-    embed: { type: String, default: null },
     loading: Boolean,
     // For text-based and composed responses
     options: { type: String, default: null },
