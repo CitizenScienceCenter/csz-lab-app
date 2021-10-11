@@ -11,16 +11,19 @@
       <b-embed
         v-if="type == 'video'"
         type="video"
+        aspect="16by9"
         :src="link"
         allowfullscreen
         controls
       >
       </b-embed>
-      <div
-        v-else-if="type == 'vembed'"
-        v-html="embed"
-        class="videoWrapper"
-      ></div>
+      <b-embed
+        v-if="type == 'vembed'"
+        aspect="16by9"
+        :src="link"
+        allowfullscreen
+      >
+      </b-embed>
     </b-skeleton-wrapper>
 
     <!-- Audio multimedia -->
@@ -39,7 +42,7 @@
       <audio
         controls
         :src="link"
-        style="width:85%"
+        style="width: 85%;"
         @play="audio_animation = true"
         @pause="audio_animation = false"
         @ended="audio_animation = false"
@@ -50,49 +53,36 @@
 
 <script>
 export default {
-  name:"MediaTaskPResenter",
+  name: "MediaTaskPResenter",
   data() {
     return {
-      audio_animation: false
+      audio_animation: false,
     };
   },
   props: {
     link: String,
-    embed: String,
     loading: Boolean,
     type: {
       type: String,
-      default: "video"
-    }
+      default: "video",
+    },
   },
   methods: {
     animateAudio(value) {
       this.audio_animation = value;
-    }
+    },
   },
   watch: {
     link() {
       // new audio link restart the audio animation
       this.audio_animation = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
-.videoWrapper {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  height: 0;
-}
-.videoWrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 .animation {
   width: 250px;
   height: 50px;
