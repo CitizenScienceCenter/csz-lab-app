@@ -22,14 +22,13 @@
           </b-col>
 
           <b-col md="3" class="text-muted">
+            <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
             <p class="small">
-              <i class="fas fa-info-circle"></i><br />
               {{ $t("task-source-builder-cslogger-info1") }}
             </p>
             <!-- Allowed files for media -->
             <p class="small">
               {{ $t("task-source-builder-cslogger-info2") }}
-              warning regarding total media files size
             </p>
           </b-col>
         </b-row>
@@ -87,7 +86,6 @@
           </b-col>
           <!-- Information section - left side -->
           <b-col md="3" align-self="start" class="pt-4 pt-md-0">
-            <!-- TODO: Define the specific information according source. Pending import standarization -->
             <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
             <p
               v-html="$t('task-source-builder-info')"

@@ -120,7 +120,7 @@
       class="mt-4"
       v-if="extra_media.length + missing_media.length > 0"
     >
-      <b-card-header header-border-variant="danger" class="p-0 ">
+      <b-card-header header-border-variant="danger" class="p-0">
         <span class="ml-2 font-weight-bold text-primary">
           {{ $t("taks-import-cslogger-failed-files-title") }}
         </span>
@@ -201,7 +201,7 @@ export default {
       qfiles_onscreen: 0,
       total_size: 0,
       partial: true,
-      no_tasks: false
+      no_tasks: false,
     };
   },
   created() {
@@ -212,7 +212,7 @@ export default {
   },
   computed: {
     ...mapState("project", {
-      project: state => state.selectedProject
+      project: (state) => state.selectedProject,
     }),
     ...mapState("task/builder", ["sources"]),
     validateCSV() {
@@ -234,7 +234,7 @@ export default {
       const aux = this;
       const file_names = this.mediaFiles
         .slice(0, this.qfiles_onscreen)
-        .map(function(x) {
+        .map(function (x) {
           // if file name is long
           if (x.name.length > 10) {
             const ext = aux.getExt(x.name);
@@ -247,17 +247,17 @@ export default {
     },
     responses() {
       return this.json_csvFile
-        .filter(file => "response" in file)
-        .map(function(x) {
+        .filter((file) => "response" in file)
+        .map(function (x) {
           return x.response;
         });
-    }
+    },
   },
   methods: {
     ...mapMutations({
       setTaskSourceContent: "task/builder/setTaskSourceContent",
       setStep: "task/builder/setStep",
-      setTaskSource: "task/builder/setTaskSource"
+      setTaskSource: "task/builder/setTaskSource",
     }),
 
     onSubmit() {
@@ -274,11 +274,13 @@ export default {
         const dataObj = {
           n_tasks: number_of_tasks,
           // filter only the media included into groups only
-          files: this.mediaFiles.filter(x =>
-            tasks.some(t => t.response.includes(x.name))
-          ),
+          files: !this.mediaFiles
+            ? []
+            : this.mediaFiles.filter((x) =>
+                tasks.some((t) => t.response.includes(x.name))
+              ),
           csv: this.csvFile,
-          partial: this.partial
+          partial: this.partial,
         };
         this.setTaskSourceContent(dataObj);
         this.setTaskSource(this.sources.cslogger);
@@ -329,7 +331,7 @@ export default {
         }
         // validate media file types allowed
         if (
-          this.mediaFiles.every(x =>
+          this.mediaFiles.every((x) =>
             this.allowed_files.includes(this.getExt(x.name))
           )
         ) {
@@ -346,7 +348,7 @@ export default {
             );
           } else {
             try {
-              const media_names = this.mediaFiles.map(x => x.name);
+              const media_names = this.mediaFiles.map((x) => x.name);
               this.getMediaIssues(media_names, this.responses);
             } catch (error) {
               console.log(error);
@@ -372,10 +374,10 @@ export default {
         // Discard the media files which belongs to an uncompleted group
         const discard_groupId = new Set(
           this.missing_media.map(
-            x => this.json_csvFile.find(row => row.response.includes(x)).id
+            (x) => this.json_csvFile.find((row) => row.response.includes(x)).id
           )
         );
-        discard_groupId.forEach(x => delete groups[x]);
+        discard_groupId.forEach((x) => delete groups[x]);
         return Object.values(groups);
       }
     },
@@ -395,15 +397,16 @@ export default {
       media_names = media_names || [];
       // get the files not included into CSV
       this.extra_media = media_names.filter(
-        x => !csv_responses.some(y => y.includes(x))
+        (x) => !csv_responses.some((y) => y.includes(x))
       );
       // get the files not included into MEDIA
       this.missing_media = csv_responses
         .filter(
-          x => x.includes("filename") && !media_names.some(y => x.includes(y))
+          (x) =>
+            x.includes("filename") && !media_names.some((y) => x.includes(y))
         )
-        .map(name => name.substr(name.lastIndexOf(":") + 1).trim());
-    }
+        .map((name) => name.substr(name.lastIndexOf(":") + 1).trim());
+    },
   },
   watch: {
     csvFile() {
@@ -415,8 +418,8 @@ export default {
         this.qfiles_onscreen = this.getSize();
         this.validate("media", MAX_SIZE_MEDIA);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
