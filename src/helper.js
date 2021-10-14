@@ -268,7 +268,10 @@ export function getMIME(raw_url) {
     if ([...video_embed].some((x) => url.hostname.includes(x))) {
       response = "vembed";
     }
-    ext = url.pathname.split(".").pop();
+    // Validate if url is valid protocol
+    if (["http", "https"].some((x) => url.protocol.includes(x))) {
+      ext = url.pathname.split(".").pop();
+    }
   } catch (e) {
     if (typeof raw_url == "string") ext = raw_url.split(".").pop();
   } finally {
