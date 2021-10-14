@@ -4,7 +4,7 @@
       v-if="template"
       :to="{
         name: 'project.task.presenter.editor',
-        params: { id: this.id, template: this.template }
+        params: { id: this.id, template: this.template },
       }"
     >
       {{ $t("task-template-renderer-go-back-editor") }}
@@ -12,15 +12,6 @@
     <b-link v-else :to="{ name: 'project', params: { id: this.id } }">{{
       $t("task-template-renderer-go-back-project")
     }}</b-link>
-
-    <div v-if="!taskPresenterLoaded" class="mt-4 text-center">
-      <b-spinner
-        variant="primary"
-        style="width: 3rem; height: 3rem;"
-        :label="$t('task-template-renderer-loading')"
-      >
-      </b-spinner>
-    </div>
 
     <!-- Here is rendered the customized template  -->
     <component
@@ -55,7 +46,7 @@
           size="lg"
           variant="outline-light"
           class="font-weight-bold"
-          style="margin-left: auto"
+          style="margin-left: auto;"
           @click="close()"
           >X</b-button
         >
@@ -96,35 +87,42 @@ export default {
   props: {
     // project id
     id: {
-      required: true
+      required: true,
     },
     // template code (optional)
     template: {
-      type: String
-    }
+      type: String,
+    },
   },
-  metaInfo: function() {
+  metaInfo: function () {
     return {
       title: `Project ${this.project.id} - Presenter`,
       meta: [
         {
           property: "og:title",
           content: `Project ${this.project.id} - Presenter`,
-          template: "%s | " + this.$t("site-title")
-        }
-      ]
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
     };
   },
 
   created() {
     // Initialize the User progress each time template is loaded
-    this.setSelectedProjectUserProgress({
-      done: 0,
-      total: 0
-    });
+    this.getUserProgress(this.project);
+    this.showLoadingOverlay(true);
+    const overlay_config = {
+      label: this.$t("task-template-renderer-loading"),
+      sublabel: null,
+      progress: null,
+      finite: false,
+      hideBtn: false,
+    };
+    this.setLoadingConfig(overlay_config);
     // load the project first to have access to the presenter and to the related tasks
-    this.getProject(this.id).then(result => {
+    this.getProject(this.id).then((result) => {
       this.taskPresenterLoaded = true;
+      this.showLoadingOverlay(false);
       // if the project presenter exists or a template is given (with the task presenter editor), it will be displayed
       // otherwise an alert is displayed to indicate that the presenter is not already configured
       if (this.presenter || this.template) {
@@ -145,41 +143,41 @@ export default {
         mediaType: "image",
         mediaUrl: "#",
         pdfPageCount: 1,
-        pdfCurrentPage: 1
-      }
+        pdfCurrentPage: 1,
+      },
     };
   },
   computed: {
     ...mapState("project", {
       // the current project where is displayed the task presenter
-      project: state => state.selectedProject,
+      project: (state) => state.selectedProject,
       // user task progress
-      userProgress: state => state.selectedProjectUserProgress,
+      userProgress: (state) => state.selectedProjectUserProgress,
       //get access for selected project
-      accessForSelectedProject: state => state.accessForSelectedProject
+      accessForSelectedProject: (state) => state.accessForSelectedProject,
     }),
 
     ...mapState("task", {
       // the currently displayed task in the presenter
-      task: state => state.currentTask,
-      offset: state => state.taskOffset,
+      task: (state) => state.currentTask,
+      offset: (state) => state.taskOffset,
       // the task presenter template loaded from the pybossa server
-      presenter: state => state.taskPresenter
+      presenter: (state) => state.taskPresenter,
     }),
 
     // user data
     ...mapState("user", {
-      isUserLogged: state => state.logged,
-      userId: state => state.infos.id,
-      userApiKey: state => state.infos.api_key
+      isUserLogged: (state) => state.logged,
+      userId: (state) => state.infos.id,
+      userApiKey: (state) => state.infos.api_key,
     }),
 
     ...mapGetters("project", {
-      userProgressInPercent: "getUserProgressInPercent"
+      userProgressInPercent: "getUserProgressInPercent",
     }),
 
     presenterComponent() {
-      const sanitize = el => el.replace(/[\n\r\t]+/g, "");
+      const sanitize = (el) => el.replace(/[\n\r\t]+/g, "");
       // display the optional template in priority if specified
       const sanitizedPresenter = this.template
         ? sanitize(this.template)
@@ -187,23 +185,27 @@ export default {
       // eslint-disable-next-line no-eval
       return {
         name: "presenter",
-        ...eval("() => { return" + sanitizedPresenter + "}")()
+        ...eval("() => { return" + sanitizedPresenter + "}")(),
       };
-    }
+    },
   },
   methods: {
     ...mapActions("task", ["getNewTask", "saveTaskRun", "skipTaskWithOffset"]),
     ...mapActions("project", [
       "getUserProgress",
       "getProject",
-      "isProjectPrivate"
+      "isProjectPrivate",
     ]),
     ...mapActions("osm", ["qetLocalizationsWithQuery"]),
 
-    ...mapMutations("notification", ["showError"]),
+    ...mapMutations("notification", [
+      "showError",
+      "showLoadingOverlay",
+      "setLoadingConfig",
+    ]),
     ...mapMutations("project", [
       "setSelectedProjectUserProgress",
-      "setProjectPassModal"
+      "setProjectPassModal",
     ]),
 
     /**
@@ -221,21 +223,21 @@ export default {
       this.taskLoaded = false;
       this.skipTaskWithOffset({
         id: this.project.id,
-        offset: this.offset
-      }).then(allowed => {
+        offset: this.offset,
+      }).then((allowed) => {
         //check if anonymous users are allowed. if not redirect to project page
         if (!allowed) {
           this.showError({
             title: this.$t("template-renderer-not-allowed-contribute"),
-            content: this.$t("template-renderer-not-allowed-anonymous")
+            content: this.$t("template-renderer-not-allowed-anonymous"),
           });
           this.$router.push({
             name: "project",
-            params: { id: this.project.id }
+            params: { id: this.project.id },
           });
         } else {
           //check if project is private and user has been granted access. if not redirect to project page and show pass modal.
-          this.isProjectPrivate({ id: this.project.id }).then(response => {
+          this.isProjectPrivate({ id: this.project.id }).then((response) => {
             //set accessForSelectedProject to array of objects for multiple private projects.
 
             if (
@@ -246,16 +248,16 @@ export default {
               this.setProjectPassModal(true);
               this.$router.push({
                 name: "project",
-                params: { id: this.project.id }
+                params: { id: this.project.id },
               });
             } else {
+              this.getUserProgress(this.project);
               this.setProjectPassModal(false);
               if (this.userProgressInPercent < 100 && !allowed.id) {
                 this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
                 this.newTask();
                 return;
-              }
-              this.getUserProgress(this.project);
+              }              
               this.taskLoaded = true;
             }
           });
@@ -266,24 +268,24 @@ export default {
       this.taskLoaded = false;
       this.skipTaskWithOffset({
         id: this.project.id,
-        offset: this.offset
-      }).then(allowed => {
+        offset: this.offset,
+      }).then((allowed) => {
         if (!allowed) {
           this.showError({
             title: this.$t("template-renderer-not-allowed-contribute"),
-            content: this.$t("template-renderer-not-allowed-anonymous")
+            content: this.$t("template-renderer-not-allowed-anonymous"),
           });
           this.$router.push({
             name: "project",
-            params: { id: this.project.id }
+            params: { id: this.project.id },
           });
         } else {
+          this.getUserProgress(this.project);
           if (this.userProgressInPercent < 100 && !allowed.id) {
             this.skipTaskWithOffset({ id: this.project.id, offset: 0 });
             this.skip();
             return;
           }
-          this.getUserProgress(this.project);
           this.taskLoaded = true;
         }
       });
@@ -298,7 +300,7 @@ export default {
         // required
         project_id: this.project.id,
         task_id: this.task.id,
-        info: answer
+        info: answer,
       };
       if (this.isUserLogged) {
         taskRun.user_id = this.userId;
@@ -308,7 +310,7 @@ export default {
         if (this.userProgress.total > 0) {
           this.setSelectedProjectUserProgress({
             done: this.userProgress.done + 1,
-            total: this.userProgress.total
+            total: this.userProgress.total,
           });
         }
         // load a new task when current task saved
@@ -325,30 +327,30 @@ export default {
     // Control the conditions between questions, received from template
     updateAnswer(aux) {
       const ctrl = this;
-      aux.questionList.forEach(function(question) {
+      aux.questionList.forEach(function (question) {
         // Get the children of each parent question
         const children = aux.questions.filter(
-          x => x.condition.questionId == question.id
+          (x) => x.condition.questionId == question.id
         );
         // The answers given by user so far
         const parentAnswers =
-          aux.answers.find(x => x.qid == question.id).value || [];
+          aux.answers.find((x) => x.qid == question.id).value || [];
         // Logic for conditions between questions
-        children.forEach(function(child) {
+        children.forEach(function (child) {
           let res = false;
           const parentQType = ctrl.getQuestionType(
             aux.questions,
             child.condition.questionId
           );
           if (parentQType === "multiple_choice") {
-            res = child.condition.answers.some(ans =>
+            res = child.condition.answers.some((ans) =>
               parentAnswers.includes(ans)
             );
           } else if (
             parentQType === "one_choice" ||
             parentQType === "dropdown"
           ) {
-            res = child.condition.answers.some(ans => parentAnswers == ans);
+            res = child.condition.answers.some((ans) => parentAnswers == ans);
           } else if (
             parentQType === "long_answer" ||
             parentQType === "short_answer"
@@ -359,14 +361,16 @@ export default {
           // Check if question has not been already added
           if (res) {
             // Add question to question list
-            if (!aux.questionList.some(q => q.id === child.id)) {
-              aux.questionList.push(aux.questions.find(x => x.id === child.id));
+            if (!aux.questionList.some((q) => q.id === child.id)) {
+              aux.questionList.push(
+                aux.questions.find((x) => x.id === child.id)
+              );
             }
           } else {
             // remove question to question list
-            aux.questionList = aux.questionList.filter(x => x.id != child.id);
+            aux.questionList = aux.questionList.filter((x) => x.id != child.id);
             // Clean answers when question is hiden
-            const rk = aux.answers.findIndex(x => x.qid === child.id);
+            const rk = aux.answers.findIndex((x) => x.qid === child.id);
             if (
               Array.isArray(aux.answers[rk].value) &&
               aux.answers[rk].value.length > 0
@@ -383,7 +387,7 @@ export default {
       });
     },
     getQuestionType(questionList, qid) {
-      const parentQuestion = questionList.find(x => x.id == qid);
+      const parentQuestion = questionList.find((x) => x.id == qid);
       return parentQuestion ? parentQuestion.type : null;
     },
     isConditionEmpty(question) {
@@ -392,7 +396,7 @@ export default {
         question.condition.questionId < 0
       );
     },
-  }
+  },
 };
 </script>
 

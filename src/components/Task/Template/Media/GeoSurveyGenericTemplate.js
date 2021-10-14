@@ -2,7 +2,8 @@
 const component = {
   template: `
   <!-- This template use https://bootstrap-vue.js.org/ -->
-  <div v-if="userProgress < 100 && taskInfo">
+  
+  <div v-if="pybossa.userProgressInPercent < 100">
     <b-row class="d-flex justify-content-center">
       <!-- Left column - Questions-->
       <b-col
@@ -204,24 +205,16 @@ const component = {
     task() {
       return this.pybossa.task;
     },
-    taskInfo() {
-      return this.task && this.task.info ? this.task.info : null;
-    },
     context() {
       return this;
     },
-    userProgress() {
-      return isNaN(this.pybossa.userProgressInPercent)
-        ? 0
-        : this.pybossa.userProgressInPercent;
-    },
     validUrl() {
-      return (
-        this.task.info.url ||
-        this.task.info.video_url ||
-        this.task.info.audio_url ||
-        this.task.info.link_raw
-      );
+      return this.task && this.task.info
+        ? this.task.info.url ||
+            this.task.info.video_url ||
+            this.task.info.audio_url ||
+            this.task.info.link_raw
+        : "";
     },
   },
 
