@@ -26,11 +26,11 @@
             -->
 
         <div
-          v-for="category in allCategories.filter(cat => {
+          v-for="category in allCategories.filter((cat) => {
             return cat.name == 'Thinking';
           })"
           :key="category.id"
-          style="outline: none"
+          style="outline: none;"
         >
           <!-- The list of projects -->
           <b-row>
@@ -54,8 +54,8 @@
               <b-pagination
                 v-if="
                   categoryPagination[category.short_name] &&
-                    categoryPagination[category.short_name].total >
-                      categoryPagination[category.short_name].per_page
+                  categoryPagination[category.short_name].total >
+                    categoryPagination[category.short_name].per_page
                 "
                 v-model="categoryCurrentPage[category.id]"
                 @change="pageChange($event, category)"
@@ -90,18 +90,18 @@ import ProjectCard from "./Common/ProjectCard";
 export default {
   name: "Discover",
   components: {
-    "app-project-card": ProjectCard
+    "app-project-card": ProjectCard,
   },
-  metaInfo: function() {
+  metaInfo: function () {
     return {
       title: "Discover",
       meta: [
         {
           property: "og:title",
           content: "Discover",
-          template: "%s | " + this.$t("site-title")
-        }
-      ]
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
     };
   },
   created() {
@@ -111,7 +111,7 @@ export default {
     return {
       categoryCurrentPage: {},
       allCategories: [],
-      loadingProjects: false
+      loadingProjects: false,
     };
   },
   methods: {
@@ -130,23 +130,26 @@ export default {
       const remoteCategories = await this.getCategories();
       this.allCategories = await [
         { id: 0, short_name: "featured", name: "Featured" },
-        ...remoteCategories
+        ...remoteCategories,
       ];
-      await this.allCategories.forEach(category => {
-        this.categoryCurrentPage[category.id] = 1;
-        this.getProjectsWithCategory({ category });
-      });
+
+      await Promise.all(
+        this.allCategories.map(async (category) => {
+          this.categoryCurrentPage[category.id] = 1;
+          await this.getProjectsWithCategory({ category });
+        })
+      );
       this.loadingProjects = false;
-    }
+    },
   },
   computed: {
     ...mapState("project", [
       "categories",
       "categoryProjects",
-      "categoryPagination"
+      "categoryPagination",
     ]),
-    ...mapGetters("project", ["projects", "globalPagination"])
-  }
+    ...mapGetters("project", ["projects", "globalPagination"]),
+  },
 };
 </script>
 
