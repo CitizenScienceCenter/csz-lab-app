@@ -11,13 +11,36 @@ import osm from "./modules/osm";
 import settings from "./modules/settings";
 import snakes from "./modules/snakes";
 import comments from "./modules/comments";
-import createPersistedState from "vuex-persistedstate";
+
+// libraries for local persistence idb prefered over localstorag
+import idb from "vuex-persist-indexeddb";
+import lsdb from "vuex-persistedstate";
 import SecureLS from "secure-ls";
 var ls = new SecureLS({ isCompression: false });
 
 Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== "production";
+
+const persistence = function () {
+  // validate if browser supports indexedDB
+  if ("indexedDB" in window) {
+    // return indexeddb pesistence object
+    return idb();
+  } else {
+    console.warn(
+      "This browser does not support indexedDB. LocalStorage used instead"
+    );
+    // return local storage pesistence object
+    return lsdb({
+      storage: {
+        getItem: (key) => ls.get(key),
+        setItem: (key, value) => ls.set(key, value),
+        removeItem: (key) => ls.remove(key),
+      },
+    });
+  }
+};
 
 export default new Vuex.Store({
   modules: {
@@ -28,27 +51,8 @@ export default new Vuex.Store({
     task,
     osm,
     snakes,
-    comments
+    comments,
   },
   strict: debug,
-  plugins: debug
-    ? [
-        createLogger(),
-        createPersistedState({
-          storage: {
-            getItem: key => ls.get(key),
-            setItem: (key, value) => ls.set(key, value),
-            removeItem: key => ls.remove(key)
-          }
-        })
-      ]
-    : [
-        createPersistedState({
-          storage: {
-            getItem: key => ls.get(key),
-            setItem: (key, value) => ls.set(key, value),
-            removeItem: key => ls.remove(key)
-          }
-        })
-      ]
+  plugins: debug ? [createLogger(), persistence()] : [persistence()],
 });
