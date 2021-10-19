@@ -25,11 +25,10 @@
         >
         <b-list-group-item
           ><b>{{ $t("overall-progress") }}</b
-          >: {{ infos.overall_progress }}%
-          {{ $t("completed") }}</b-list-group-item
+          >: {{ overallProgress }}% {{ $t("completed") }}</b-list-group-item
         >
         <b-list-group-item
-          ><b>{{ $t("tasks-c") }}</b> ({{ infos.n_tasks }})</b-list-group-item
+          ><b>{{ $t("tasks-c") }}</b> ({{ numberOfTasks }})</b-list-group-item
         >
       </b-list-group>
 
@@ -59,11 +58,12 @@ import moment from "moment";
 export default {
   name: "DeleteTaskSetting",
   data: () => {
-    return {};
+    return { task_info: {} };
   },
   created() {
     this.getProject(this.id).then(() => {
       this.getTaskDeletionOptions(this.project);
+      this.setTaskInfo();
     });
   },
   props: {
@@ -77,16 +77,14 @@ export default {
       "getTaskDeletionOptions",
       "deleteAllTasks"
     ]),
-    ...mapMutations("notification", [
-      "showLoadingOverlay",
-      "setLoadingConfig"
-    ]),
+    ...mapActions({ getProjectTasksPage: "task/getProjectTasksPage" }),
+    ...mapMutations("notification", ["showLoadingOverlay", "setLoadingConfig"]),
 
     deleteTasks() {
       this.showLoadingOverlay(true);
       const overlay_config = {
-        label: this.$t('task-settings-delete-loading-label'),
-        sublabel: this.$t('task-settings-delete-loading-sublabel'),
+        label: this.$t("task-settings-delete-loading-label"),
+        sublabel: this.$t("task-settings-delete-loading-sublabel"),
         progress: null,
         finite: false,
         hideBtn: false
@@ -98,6 +96,10 @@ export default {
         }
         this.showLoadingOverlay(false);
       });
+    },
+
+    async setTaskInfo() {
+      this.task_info = await this.getProjectTasksPage(this.project);
     },
 
     goBack() {
@@ -113,6 +115,9 @@ export default {
     }),
     ...mapState("task/settings", {
       infos: state => state.taskDeletionOptions
+    }),
+    ...mapState({
+      projectTasksTotalNumber: state => state.task.projectTasksTotalNumber
     }),
 
     projectCreationDate() {
@@ -140,6 +145,12 @@ export default {
           active: true
         }
       ];
+    },
+    numberOfTasks() {
+      return this.infos.n_tasks || this.task_info.n_tasks;
+    },
+    overallProgress() {
+      return this.infos.overall_progress || this.task_info.overall_progress;
     }
   }
 };
