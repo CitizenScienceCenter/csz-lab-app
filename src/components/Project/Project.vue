@@ -191,7 +191,7 @@
                   <span
                     v-html="
                       $t('project-draft-approval-warning', {
-                        link: `<a target='_blank' href='https://lab.staging.citizenscience.ch/en/about'>criteria</a>`
+                        link: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>criteria</a>`
                       })
                     "
                   ></span>
