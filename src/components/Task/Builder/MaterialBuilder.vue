@@ -6,12 +6,25 @@
           :to="{
             name: 'project',
             params: {
-              id: 'id' in this.selectedProject ? this.selectedProject.id : 0
-            }
+              id: 'id' in this.selectedProject ? this.selectedProject.id : 0,
+            },
           }"
         >
           {{ $t("task-material-builder-back-to-project") }}
         </b-link>
+      </b-col>
+      <b-col>
+        <b-btn
+          class="float-right"
+          variant="link"
+          @click="changeIsTutorial(true)"
+        >
+          <template>
+            <span>
+              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+            </span>
+          </template>
+        </b-btn>
       </b-col>
     </b-row>
     <b-row class="mt-4">
@@ -28,7 +41,7 @@
             <b-card
               ref="card-image"
               :class="{
-                'material-selected': selectedMaterial === materials.image
+                'material-selected': selectedMaterial === materials.image,
               }"
               @click="onMaterialSelected(materials.image)"
               class="text-center material"
@@ -42,7 +55,7 @@
             <b-card
               ref="card-sound"
               :class="{
-                'material-selected': selectedMaterial === materials.sound
+                'material-selected': selectedMaterial === materials.sound,
               }"
               @click="onMaterialSelected(materials.sound)"
               class="text-center material"
@@ -56,7 +69,7 @@
             <b-card
               ref="card-video"
               :class="{
-                'material-selected': selectedMaterial === materials.video
+                'material-selected': selectedMaterial === materials.video,
               }"
               @click="onMaterialSelected(materials.video)"
               class="text-center material"
@@ -72,13 +85,13 @@
             <b-card
               ref="card-pdf"
               :class="{
-                'material-selected': selectedMaterial === materials.pdf
+                'material-selected': selectedMaterial === materials.pdf,
               }"
               @click="onMaterialSelected(materials.pdf)"
               class="text-center material"
             >
               <i class="fas fa-file-pdf fa-4x"></i><br />
-              <div class="m-2">{{$t('task-material-builder-pdf')}}</div>
+              <div class="m-2">{{ $t("task-material-builder-pdf") }}</div>
             </b-card>
           </b-col>
 
@@ -86,13 +99,13 @@
             <b-card
               ref="card-tweet"
               :class="{
-                'material-selected': selectedMaterial === materials.tweet
+                'material-selected': selectedMaterial === materials.tweet,
               }"
               @click="onMaterialSelected(materials.tweet)"
               class="text-center material"
             >
               <i class="fab fa-twitter fa-4x"></i><br />
-              <div class="m-2">{{$t('task-material-builder-tweet')}}</div>
+              <div class="m-2">{{ $t("task-material-builder-tweet") }}</div>
             </b-card>
           </b-col>
         </b-row>
@@ -114,8 +127,8 @@
             :to="{
               name: 'project.task.presenter.settings',
               params: {
-                id: 'id' in this.selectedProject ? this.selectedProject.id : 0
-              }
+                id: 'id' in this.selectedProject ? this.selectedProject.id : 0,
+              },
             }"
           >
             {{ $t("task-template-builder-expert-path") }}
@@ -150,17 +163,21 @@ export default {
   },
   data: () => {
     return {
-      selectedMaterial: null
+      selectedMaterial: null,
     };
   },
   beforeMount() {
     // auto scroll to the page top when render first time
-    setTimeout(function() {
+    setTimeout(function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 2);
   },
   methods: {
-    ...mapMutations("task/builder", ["setTaskMaterial", "setStep"]),
+    ...mapMutations("task/builder", [
+      "setTaskMaterial",
+      "setStep",
+      "changeIsTutorial",
+    ]),
     ...mapMutations("task", ["setTaskTemplate"]),
     ...mapActions("task/builder", ["reset"]),
     ...mapActions("task", ["saveTaskPresenter"]),
@@ -171,7 +188,7 @@ export default {
 
     onSubmit() {
       if (
-        Object.values(this.materials).some(m => m === this.selectedMaterial)
+        Object.values(this.materials).some((m) => m === this.selectedMaterial)
       ) {
         // reset all the builder variables when a new material is selected
         if (this.task.material !== this.selectedMaterial) {
@@ -180,12 +197,12 @@ export default {
         this.setTaskMaterial(this.selectedMaterial);
         this.setStep({ step: "material", value: true });
       }
-    }
+    },
   },
   computed: {
     ...mapState("task/builder", ["materials", "task"]),
-    ...mapState("project", ["selectedProject"])
-  }
+    ...mapState("project", ["selectedProject"]),
+  },
 };
 </script>
 

@@ -1,0 +1,26 @@
+[
+  {
+    "step": 1,
+    "title": "tutorial-step1-title",
+    "subtitle": "tutorial-step1-subtitle",
+    "description": "tutorial-step1-description",
+    "images": [],
+    "video": "https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4"
+  },
+  {
+    "step": 2,
+    "title": "tutorial-step2-title",
+    "subtitle": "tutorial-step2-subtitle",
+    "description": "tutorial-step2-description",
+    "images": [],
+    "video": "https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4"
+  },
+  {
+    "step": 3,
+    "title": "tutorial-step3-title",
+    "subtitle": "tutorial-step3-subtitle",
+    "description": "tutorial-step3-description",
+    "images": [],
+    "video": null
+  }
+]

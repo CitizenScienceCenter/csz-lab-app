@@ -1,85 +1,141 @@
 <template>
-  <div>
-    <b-card title="Card with overlay" :aria-hidden="show ? 'true' : null">
-      <b-card-text
-        >Laborum consequat non elit enim exercitation cillum.</b-card-text
-      >
-      <b-card-text>Click the button to toggle the overlay:</b-card-text>
-      <b-button :disabled="show" variant="primary" @click="show = true">
-        Show overlay
-      </b-button>
-    </b-card>
-
-    <b-overlay :show="show" rounded="sm" no-wrap opacity="0.75">
-      <template #overlay>
-        <b-card
-          title="Card Title"
-          tag="article"
-          style="max-width: 80wh;"
-          class="mb-2"
-        >
-          <b-icon
-            icon="x-circle"
-            style="position:absolute; top:5%; right:5%"
-            @click="show = !show"
-          ></b-icon>
-          <v-card-body class="d-flex flex-column">
-            <video
-              src="https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4"
-              style="max-width: 100%"
-              class="mb-2"
-              controls
-              autoplay
-              muted
-              loop
-            ></video>
-
-            <b-card-text>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </b-card-text>
-            <div class="text-center">
-              <b-button href="#" variant="primary" class="mb-2"
-                >Continue</b-button
-              >
-            </div>
-          </v-card-body>
-          <b-card-footer
-            class="d-flex justify-content-center"
-            footer-border-variant="light"
-            style="background-color:white"
+  <b-overlay
+    :show="isTutorialVisible"
+    rounded="sm"
+    no-wrap
+    no-center
+    opacity="0.90"
+  >
+    <template #overlay>
+      <b-row align-h="center" class="pt-5">
+        <b-col cols="11" md="10" xl="6" class="pt-5">
+          <b-card
+            :title="current_step.title"
+            :sub-title="current_step.subtitle"
+            tag="article"
+            class="sticky-top"
+            v-if="current_step"
           >
-            <b-icon
-              icon="exclamation-circle-fill"
-              class="mr-2"
-              @click="alert('1')"
-              variant="danger"
-            ></b-icon>
-            <b-icon icon="exclamation-circle-fill" class="mr-2"></b-icon>
-            <b-icon icon="exclamation-circle-fill" class="mr-2"></b-icon>
-            <b-icon icon="exclamation-circle-fill" class="mr-2"></b-icon>
-            <b-icon icon="exclamation-circle-fill" class="mr-2"></b-icon>
-          </b-card-footer>
-        </b-card>
-      </template>
-    </b-overlay>
-  </div>
+            <b-btn
+              variant="link"
+              @click="changeIsTutorial(false)"
+              style="position: absolute; top: 3%; right: 5%;"
+            >
+              <i class="fas fa-times" aria-hidden="true"></i>
+            </b-btn>
+
+            <b-card-text class="text-center" v-if="current_step.video">
+              <video
+                :src="current_step.video"
+                style="max-width: 100%;"
+                controls
+                autoplay
+                muted
+                loop
+              ></video>
+            </b-card-text>
+            <b-card-text class="mt-4" v-if="current_step.description">
+              <p>{{ current_step.description }}</p>
+            </b-card-text>
+            <hr />
+            <div class="text-center">
+              <b-button
+                href="#"
+                variant="primary"
+                class="mb-2"
+                @click="changeStep(active_step + 1)"
+              >
+                Continue
+              </b-button>
+            </div>
+            <b-card-footer
+              class="d-flex justify-content-center"
+              footer-border-variant="light"
+              style="background-color: white;"
+            >
+              <b-btn-group>
+                <b-btn
+                  variant="link"
+                  v-for="step in step_list.length"
+                  :key="step"
+                >
+                  <b-icon
+                    :icon="isActiveIcon(step)"
+                    @click="changeStep(step)"
+                  ></b-icon>
+                </b-btn>
+              </b-btn-group>
+            </b-card-footer>
+          </b-card>
+        </b-col>
+      </b-row>
+    </template>
+  </b-overlay>
 </template>
 
 <script>
+import { BIcon } from "bootstrap-vue";
+import { mapState, mapMutations } from "vuex";
+import tutorial_content from "@/assets/tutorial/tutorial_content.json";
+
 export default {
+  name: "TutorialTaskBuilder",
+  components: {
+    BIcon,
+  },
+  props: {
+    currentStep: String,
+  },
   data() {
     return {
-      show: false
+      active_step: 1,
+      step_list: tutorial_content,
+      current_step: null,
     };
-  }
+  },
+  created() {
+    this.changeIsTutorial(true);
+  },
+  mounted() {
+    const initial_step = this.getStepId || 1;
+    this.changeStep(initial_step);
+  },
+  updated() {
+    const initial_step = this.getStepId || 1;
+    this.changeStep(initial_step);
+  },
+  computed: {
+    ...mapState({
+      isTutorialVisible: (state) => state.task.builder.isTutorialVisible,
+    }),
+    getStepId() {
+      // convert step name in step id
+      switch (this.currentStep) {
+        case "material":
+          return 1;
+        case "job":
+          return 2;
+        case "template":
+          return 3;
+        case "source":
+          return 4;
+        case "summary":
+          return 5;
+        default:
+          return false;
+      }
+    },
+  },
+  methods: {
+    ...mapMutations({ changeIsTutorial: "task/builder/changeIsTutorial" }),
+    changeStep(step) {
+      step = step > this.step_list.length ? 1 : step;
+      this.current_step = this.step_list.find((x) => x.step === step);
+      this.active_step = this.current_step.step;
+    },
+    isActiveIcon(step) {
+      return this.active_step == step ? "circle-fill" : " circle";
+    },
+  },
 };
 </script>
