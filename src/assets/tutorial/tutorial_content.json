@@ -13,14 +13,38 @@
     "subtitle": "tutorial-step2-subtitle",
     "description": "tutorial-step2-description",
     "images": [],
-    "video": "https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4"
+    "video": "https://www.youtube.com/embed/sVPYIRF9RCQ"
   },
   {
     "step": 3,
     "title": "tutorial-step3-title",
     "subtitle": "tutorial-step3-subtitle",
     "description": "tutorial-step3-description",
+    "images": [
+      "https://picsum.photos/1024/480/?image=10",
+      "https://picsum.photos/1024/480/?image=12",
+      "https://picsum.photos/1024/480/?image=22"
+    ],
+    "video": null
+  },
+  {
+    "step": 4,
+    "title": "tutorial-step4-title",
+    "subtitle": "tutorial-step4-subtitle",
+    "description": "tutorial-step4-description",
     "images": [],
+    "video": "https://www.youtube.com/embed/H9154xIoYTA"
+  },
+  {
+    "step": 5,
+    "title": "tutorial-step5-title",
+    "subtitle": "tutorial-step5-subtitle",
+    "description": "tutorial-step5-description",
+    "images": [
+      "https://picsum.photos/1280/720",
+      "https://picsum.photos/1024/480",
+      "https://picsum.photos/800/320"
+    ],
     "video": null
   }
 ]

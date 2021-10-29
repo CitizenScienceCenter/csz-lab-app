@@ -1,6 +1,21 @@
 <template>
   <div>
-    <b-row class="mt-4">
+    <b-row class="mt-4 mb-1">
+      <b-col>
+        <b-btn
+          class="float-right"
+          variant="link"
+          @click="changeIsTutorial(true)"
+        >
+          <template>
+            <span>
+              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+            </span>
+          </template>
+        </b-btn>
+      </b-col>
+    </b-row>
+    <b-row class="mt-2">
       <b-col>
         <h1 class="text-center centered small">
           {{ $t("task-summary-builder-rock") }}
@@ -248,6 +263,7 @@ export default {
     ...mapActions("task/builder", {
       resetTaskBuilder: "reset"
     }),
+    ...mapMutations("task/builder", ["changeIsTutorial"]),
     ...mapMutations("notification", ["showSuccess", "showError"]),
 
     onSubmit() {

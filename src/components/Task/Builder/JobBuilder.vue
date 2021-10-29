@@ -14,7 +14,7 @@
         >
           <template>
             <span>
-              <i class="fas fa-shoe-prints" aria-hidden="true"></i> Tutorial
+              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
             </span>
           </template>
         </b-btn>
