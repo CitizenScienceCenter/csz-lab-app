@@ -4,6 +4,20 @@
       <b-col>
         <b-link @click="goBack">{{ $t("go-back-btn") }}</b-link>
       </b-col>
+      <!-- TODO: Pending for development PB Tutorial -->
+      <!-- <b-col>
+        <b-btn
+          class="float-right"
+          variant="link"
+          @click="changeIsTutorial(true)"
+        >
+          <template>
+            <span>
+              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+            </span>
+          </template>
+        </b-btn>
+      </b-col> -->
     </b-row>
     <b-row class="mt-4 mb-2">
       <b-col>
@@ -48,38 +62,39 @@ import GenericTemplateEditor from "@/components/Task/Builder/TemplateEditor/Gene
 export default {
   name: "TemplateBuilder",
   components: {
-    GenericTemplateEditor
+    GenericTemplateEditor,
   },
   beforeMount() {
     // auto scroll to the page top when render first time
-    setTimeout(function() {
+    setTimeout(function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 2);
   },
   computed: {
     ...mapState("task/builder", ["task", "jobs"]),
-    ...mapState("project", ["selectedProject"])
+    ...mapState("project", ["selectedProject"]),
   },
   methods: {
     ...mapMutations("task/builder", [
       "setTaskJob",
       "setStep",
-      "setCurrentStep"
+      "setCurrentStep",
+      "changeIsTutorial"
     ]),
 
     goBack() {
       // go back to job selection
       this.setCurrentStep("material");
       this.setStep({ step: "job", value: false });
-    }
+    },
   },
   filters: {
-    capitalize: value => {
+    capitalize: (value) => {
       if (!value) return "";
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);
-    }
-  }
+    },
+  },
 };
 </script>
 
