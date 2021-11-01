@@ -13,7 +13,8 @@
           {{ $t("task-material-builder-back-to-project") }}
         </b-link>
       </b-col>
-      <b-col>
+      <!-- TODO: Pending for development PB Tutorial -->
+      <!-- <b-col>
         <b-btn
           class="float-right"
           variant="link"
@@ -25,7 +26,7 @@
             </span>
           </template>
         </b-btn>
-      </b-col>
+      </b-col> -->
     </b-row>
     <b-row class="mt-4">
       <b-col>

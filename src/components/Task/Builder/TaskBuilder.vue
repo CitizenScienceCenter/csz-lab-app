@@ -1,7 +1,8 @@
 <template>
   <div>
     <b-breadcrumb :items="items"></b-breadcrumb>
-    <tutorial :currentStep="currentStep"></tutorial>
+    <!-- TODO: Pending for development PB Tutorial -->
+    <!-- <tutorial :currentStep="currentStep"></tutorial> -->
     <b-container>
       <MaterialBuilder v-if="currentStep === 'material'"></MaterialBuilder>
       <JobBuilder v-if="currentStep === 'job'"></JobBuilder>

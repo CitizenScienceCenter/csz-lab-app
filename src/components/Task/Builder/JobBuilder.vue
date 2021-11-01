@@ -6,7 +6,8 @@
           {{ $t("go-back-btn") }}
         </b-link>
       </b-col>
-      <b-col>
+      <!-- TODO: Pending for development PB Tutorial -->
+      <!-- <b-col>
         <b-btn
           class="float-right"
           variant="link"
@@ -18,7 +19,7 @@
             </span>
           </template>
         </b-btn>
-      </b-col>
+      </b-col> -->
     </b-row>
     <!-- Job type selection title -->
     <b-row class="mt-4">
