@@ -27,7 +27,7 @@
       <solution-kit-cards></solution-kit-cards>
     </b-container>
 
-    <b-container fluid class="superlight-greyish">
+    <b-container fluid class="light-greyish">
       <b-container>
         <b-row class="pt-4">
           <b-col>
