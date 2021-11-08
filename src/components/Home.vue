@@ -4,10 +4,10 @@
       <h2 class="cover-heading scroll-effect">
         {{ $t("home-heading") }}
       </h2>
-      <p class="cover-subheading scroll-effect scroll-effect-delayed-1">
+      <p class="cover-subheading scroll-effect scroll-effect-delayed-2">
         {{ $t("home-subheading") }}
       </p>
-      <p class="text-center scroll-effect scroll-effect-delayed-2">
+      <!-- <p class="text-center scroll-effect scroll-effect-delayed-2">
         <b-button :to="{ name: 'discover' }" variant="primary" class="mb-1">{{
           $t("home-start-contributing")
         }}</b-button>
@@ -16,7 +16,7 @@
           class="btn-secondary-inverted"
           >{{ $t("home-create-a-project") }}</b-button
         >
-      </p>
+      </p> -->
     </app-cover>
 
     <!-- Solution Kit Cards section -->

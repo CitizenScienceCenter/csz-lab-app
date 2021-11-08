@@ -57,8 +57,9 @@ a {
 .navbar {
   background-color: white !important;
   box-shadow: 0px 4px 8px -4px rgba($black, 0.2);
+  padding: 0.1em 0.5em;
   .brand-logo {
-    width: 4em;
+    width: 3.5em;
   }
   .nav-item .nav-link {
     color: $black;
