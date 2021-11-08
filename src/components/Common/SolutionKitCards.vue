@@ -86,8 +86,8 @@ export default {
   border: none;
   animation: intro $transition-duration-long * 3 ease-in-out alternate;
   .project-image {
-    transform: scale(1);
-    max-width: 100%;
+    transform: scale(0.8);
+    max-width: 80%;
     transition: all $transition-duration-long ease-in-out;
     &:hover {
       transform: scale(1.1);
@@ -97,8 +97,8 @@ export default {
     font-size: $font-size-large;
   }
   .description {
-      font-size: $font-size-normal;
-    }
+    font-size: $font-size-normal;
+  }
   .card-footer {
     border: none;
     background-color: transparent;
@@ -116,6 +116,10 @@ export default {
 }
 @media only screen and (min-width: $viewport-tablet-portrait) {
   .kit-card {
+    .project-image {
+      transform: scale(1);
+      max-width: 100%;
+    }
     .card-title {
       font-size: $font-size-medium;
     }
