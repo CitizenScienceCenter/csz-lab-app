@@ -21,10 +21,33 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav class="ml-auto">
+      <b-navbar-nav class="menu-header ml-auto">
         <b-nav-item :to="{ name: 'home' }" exact-active-class="active">{{
           $t("app-vue-navigation-home")
         }}</b-nav-item>
+        <b-nav-item-dropdown right no-caret role="menu" active-class="active">
+          <template slot="button-content">
+            <span
+              :class="{
+                active: $router.history.current.name.includes('tools'),
+              }"
+            >
+              {{ $t("app-vue-navigation-tools") }}
+            </span>
+          </template>
+          <b-dropdown-item
+            :to="{ name: 'tools.cslogger' }"
+            exact-active-class="active"
+          >
+            {{ $t("app-vue-tools-cslogger") }}
+          </b-dropdown-item>
+          <b-dropdown-item
+            :to="{ name: 'tools.projectbuilder' }"
+            exact-active-class="active"
+          >
+            {{ $t("app-vue-tools-projectbuilder") }}
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
         <b-nav-item :to="{ name: 'discover' }" exact-active-class="active">{{
           $t("app-vue-navigation-discover")
         }}</b-nav-item>
@@ -136,9 +159,18 @@ export default {
 #dropdownLang > ul {
   min-width: 1rem;
 }
-.active {
-  font-weight: bold;
-  color: $color-primary !important;
+.menu-header {
+  a:visited {
+    color: $color-black;
+  }
+  a:active {
+    color: white;
+  }
+  .active {
+    font-weight: bold;
+    color: $color-primary !important;
+    background-color: transparent !important;
+  }
 }
 
 .beta {
