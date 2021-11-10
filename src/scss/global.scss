@@ -17,6 +17,7 @@
 
 html {
   font-size: 17px;
+  scroll-behavior: smooth;
 
   body {
     font-family: $font-family;
@@ -486,6 +487,33 @@ textarea {
   color: $secondary;
   width: 2.5em;
   height: auto;
+}
+
+.scroll-effect {
+  transition: all $transition-duration-super-long $transition-timing-function;
+  transform: translateY($scroll-effect-offset);
+  opacity: 0;
+
+  &.scroll-effect-delayed-1 {
+    transition-delay: $transition-delay-1;
+  }
+
+  &.scroll-effect-delayed-2 {
+    transition-delay: $transition-delay-2;
+  }
+
+  &.scroll-effect-delayed-3 {
+    transition-delay: $transition-delay-3;
+  }
+
+  &.scroll-effect-delayed-4 {
+    transition-delay: $transition-delay-4;
+  }
+
+  &.scrolled {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @media only screen and (min-width: $viewport-mobile-large) {

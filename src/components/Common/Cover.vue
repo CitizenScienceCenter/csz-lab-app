@@ -67,29 +67,6 @@ export default {
     box-shadow: 0 4px 8px $color-black-tint-20;
   }
 
-  .scroll-effect {
-    transition: all $transition-duration-super-long $transition-timing-function;
-    transform: translateY($scroll-effect-offset);
-    opacity: 0;
-
-    &.scroll-effect-delayed-1 {
-      transition-delay: 0.25s;
-    }
-
-    &.scroll-effect-delayed-2 {
-      transition-delay: 0.5s;
-    }
-
-    &.scroll-effect-delayed-3 {
-      transition-delay: 0.75s;
-    }
-
-    &.scrolled {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
   h1 {
     font-size: $font-size-xlarge;
     line-height: 1.25;

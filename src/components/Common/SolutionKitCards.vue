@@ -4,7 +4,7 @@
       <b-card
         v-for="(card, i) of content"
         :key="i"
-        class="kit-card my-4 my-md-0"
+        class="kit-card my-4 my-md-0 scroll-effect"
       >
         <b-card-title
           :title="$t(card.title)"
@@ -24,10 +24,7 @@
         </b-card-text>
         <template #footer>
           <div class="text-center">
-            <b-button
-              variant="primary"
-              @click.prevent="changeRoute(card.route)"
-            >
+            <b-button variant="primary" :to="card.route">
               {{ $t(card.button) }}
             </b-button>
           </div>
@@ -53,7 +50,7 @@ const CONTENT = [
     image: require("@/assets/img/solution_kit/logger_new.svg"),
     description: "solution-kit-cslogger-description",
     button: "solution-kit-cslogger-button",
-    route: "/discover",
+    route: "/tools/cslogger",
   },
   {
     title: "solution-kit-pb-title",
@@ -71,11 +68,15 @@ export default {
       content: CONTENT,
     };
   },
-  methods: {
-    changeRoute(route) {
-      this.$router.push(route);
-    },
+  mounted() {
+    let matches = this.$el.querySelectorAll(".scroll-effect");
+    window.setTimeout(function () {
+      for (let item of matches) {
+        item.classList.add("scrolled");
+      }
+    }, 1);
   },
+  methods: {},
 };
 </script>
 
@@ -84,7 +85,6 @@ export default {
 .kit-card {
   cursor: pointer;
   border: none;
-  animation: intro $transition-duration-long * 3 ease-in-out alternate;
   .project-image {
     transform: scale(0.8);
     max-width: 80%;
@@ -102,16 +102,6 @@ export default {
   .card-footer {
     border: none;
     background-color: transparent;
-  }
-  @keyframes intro {
-    from {
-      transform: translateY(10%);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0%);
-      opacity: 1;
-    }
   }
 }
 @media only screen and (min-width: $viewport-tablet-portrait) {
