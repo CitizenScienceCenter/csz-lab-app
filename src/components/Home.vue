@@ -7,16 +7,6 @@
       <p class="cover-subheading scroll-effect scroll-effect-delayed-2">
         {{ $t("home-subheading") }}
       </p>
-      <!-- <p class="text-center scroll-effect scroll-effect-delayed-2">
-        <b-button :to="{ name: 'discover' }" variant="primary" class="mb-1">{{
-          $t("home-start-contributing")
-        }}</b-button>
-        <b-button
-          :to="{ name: 'project.builder.name' }"
-          class="btn-secondary-inverted"
-          >{{ $t("home-create-a-project") }}</b-button
-        >
-      </p> -->
     </app-cover>
 
     <!-- Solution Kit Cards section -->
@@ -86,6 +76,12 @@ export default {
     this.getProjectsWithCategory({
       category: { short_name: "featured" },
     });
+  },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
   },
   methods: {
     ...mapActions("project", ["getProjectsWithCategory"]),
