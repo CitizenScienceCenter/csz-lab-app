@@ -1645,7 +1645,16 @@
 
     "home-solution-kit-cards": "Solutions Kit",
     "solution-kit-discover-title": "Discover",
+    "solution-kit-discover-subtitle": "Contribute to existing projects",
+    "solution-kit-discover-description": "Browse the projects created by scientists and citizens to answer questions in science and society, and contribute your own brain power!",
+    "solution-kit-discover-button": "Contribute",
     "solution-kit-cslogger-title": "CS Logger",
-    "solution-kit-pb-title": "CS Project Builder"
+    "solution-kit-cslogger-subtitle": "Create a data-collection project",
+    "solution-kit-cslogger-description": "Engage people in contributing  all sorts of digital data for your scientific quest by creating a ready to use data collection app for smartphones.",
+    "solution-kit-cslogger-button": "Get Started",
+    "solution-kit-pb-title": "CS Project Builder",
+    "solution-kit-pb-subtitle": "Create a data-analysis project",
+    "solution-kit-pb-description": "Does the analysis of your data (images, videos, documents,...) need some help?. Put them on the web for people contribution.",
+    "solution-kit-pb-button": "Get Started"
   }
 }
