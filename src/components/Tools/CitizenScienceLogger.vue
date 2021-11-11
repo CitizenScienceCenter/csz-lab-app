@@ -6,7 +6,7 @@
         <b-col cols="10" class="text-center">
           <h1 class="centered">{{ $t("cslogger-header") }}</h1>
         </b-col>
-        <b-col cols="12" class="text-center">
+        <b-col cols="12" class="text-center mt-4">
           <h2 class="centered">{{ $t("cslogger-subheader") }}</h2>
         </b-col>
       </b-row>
@@ -28,10 +28,10 @@
                 v-for="(ref, i) in anchors"
                 :key="i"
                 variant="link"
-                @click="goto_anchor(ref)"
+                @click="gotoAnchor(ref)"
                 class="pl-0"
               >
-                {{ $t(`cslogger-introduction-anchor-${i}`) }}
+                {{ $t("cslogger-introduction-anchor-" + i) }}
               </b-button>
             </b-button-group>
           </div>
@@ -55,11 +55,11 @@
     </b-container>
 
     <!-- Second text integrants section -->
-    <b-container fluid class="superlight-greyish" ref="logos">
+    <b-container fluid class="superlight-greyish small-bottom" ref="logos">
       <b-container class="py-4 scroll-effect scroll-effect-delayed-2">
         <div class="text-justify" v-html="$t('cslogger-team-content')"></div>
         <!-- Logos -->
-        <b-row class="d-flex justify-content-center mt-2">
+        <b-row class="d-flex justify-content-center mt-5">
           <a
             v-for="(logo, i) in team_logos"
             :key="i"
@@ -81,10 +81,11 @@
     </b-container>
 
     <!-- How to create an App section -->
-    <b-container
+    <b-container fluid
       class="full-heigth scroll-effect scroll-effect-delayed-1 pt-4"
       ref="create_app"
     >
+      <template-summary></template-summary>
     </b-container>
 
     <!-- How to share an App section -->
@@ -92,24 +93,31 @@
       class="full-heigth scroll-effect scroll-effect-delayed-1 pt-4 light-greyish"
       ref="share_app"
     >
+      <template-summary></template-summary>
     </b-container>
   </div>
 </template>
 
 <script>
 import { throttle } from "lodash";
+import TemplateSummary from "@/components/Task/Builder/TemplateEditor/TemplateSummary.vue";
+
+let ctrl_scroll = 0;
 
 export default {
   name: "CitizenScienceLogger",
+  components: {
+    TemplateSummary,
+  },
   data() {
     return {
       team_logos: [],
       anchors: ["create_app", "share_app", "integration_pb"],
-      throttleScroll: throttle(this.handleScroll, 500),
+      throttleScroll: throttle(this.handleScroll, 300),
     };
   },
   created() {
-    this.load_logos();
+    this.loadLogos();
     window.addEventListener("scroll", this.throttleScroll, false);
   },
   beforeMount() {
@@ -119,6 +127,9 @@ export default {
     }, 2);
   },
   mounted() {
+    // Initialize the scroll control
+    ctrl_scroll = 0;
+    // Set the initial transition effects
     let matches = this.$el.querySelectorAll(".scroll-effect");
     window.setTimeout(function () {
       for (let item of matches) {
@@ -130,7 +141,7 @@ export default {
     window.removeEventListener("scroll", this.throttleScroll, false);
   },
   methods: {
-    load_logos() {
+    loadLogos() {
       // load logos in array of
       const cri_logo = require("@/assets/img/cslogger_view/cri.png");
       const child_mind_inst_logo = require("@/assets/img/cslogger_view/child_mind_institute.png");
@@ -150,7 +161,7 @@ export default {
       ];
     },
 
-    goto_anchor(refName) {
+    gotoAnchor(refName) {
       const el = this.$refs[refName];
       if (el && el.offsetTop) {
         window.scrollTo(0, el.offsetTop - 50);
@@ -158,8 +169,35 @@ export default {
     },
 
     handleScroll(event) {
-      // TODO: Validate some pixels before for auto scroll  
-      console.log(window.scrollY);
+      const screen_pos = window.scrollY;
+
+      let scroll_down = ctrl_scroll < screen_pos;
+      const create_app = {
+        offsetTop: this.$refs[this.anchors[0]].offsetTop,
+        scrollHeight: this.$refs[this.anchors[0]].scrollHeight,
+      };
+      const share_app = {
+        offsetTop: this.$refs[this.anchors[1]].offsetTop,
+        scrollHeight: this.$refs[this.anchors[1]].scrollHeight,
+      };
+      if (scroll_down) {
+        if (
+          screen_pos >=
+            create_app.offsetTop - Math.floor(create_app.scrollHeight * 0.5) &&
+          screen_pos <= create_app.offsetTop
+        ) {
+          this.gotoAnchor(this.anchors[0]);
+        }
+
+        if (
+          screen_pos >=
+            share_app.offsetTop - Math.floor(share_app.scrollHeight * 0.6) &&
+          screen_pos <= share_app.offsetTop
+        ) {
+          this.gotoAnchor(this.anchors[1]);
+        }
+      }
+      ctrl_scroll = screen_pos;
     },
   },
 };
@@ -177,6 +215,6 @@ export default {
   }
 }
 .full-heigth {
-  height: 100vh;
+  min-height: 30vh;
 }
 </style>
