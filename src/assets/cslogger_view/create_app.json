@@ -1,0 +1,28 @@
+[
+  {
+    "id": "create-app-0",
+    "title": "cslogger-create-app-key-terms-example",
+    "content": {
+      "row_header": null,
+      "rows": [
+        ["<p>Before starting, learn about some key terms used in the interface:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li><strong>APPLET:</strong> The platform uses the term Applet instead of App. Applet refers to small applications, performing one or a few simple functions. So, you will be creating Applets.</li><li><strong>ACTIVITY:</strong> Applets are made of activities, such as filling a survey, recording a video, and other digital tasks. So, you will be adding activities to your Applet.</li><li><strong>ITEMS:</strong> Each activity is made of one or more item(s).</li><li><strong>SCREENS:</strong> Each item includes one or more screens (these are the screens on your smartphone).</li></ul>"]
+      ]
+    }
+  },
+  {
+    "id": "create-app-1",
+    "title": "cslogger-create-app-build-applet",
+    "content": {
+      "row_header": ["Instructions", "Web Dashboard", "Applet"],
+      "rows": [
+        ["Go to admin.mindlogger.org", null, null],
+        ["Login or create an account", null, null],
+        [
+          "In the dropdown button, choose to “<strong>Build an applet</strong>”.",
+          null,
+          null
+        ]
+      ]
+    }
+  }
+]

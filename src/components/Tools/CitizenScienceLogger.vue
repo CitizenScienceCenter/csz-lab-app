@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="cslogger">
+    <!-- Header section -->
     <b-container fluid class="small-bottom scroll-effect">
-      <!-- Header section -->
       <b-row class="mt-4 d-flex justify-content-center">
         <b-col cols="10" class="text-center">
           <h1 class="centered">{{ $t("cslogger-header") }}</h1>
@@ -22,17 +22,17 @@
             v-html="$t('cslogger-introduction-left-column')"
           ></div>
           <!-- anchors -->
-          <div class="text-left">
+          <div class="text-left mt-2">
             <b-button-group vertical>
-              <b-button
+              <a
                 v-for="(ref, i) in anchors"
                 :key="i"
                 variant="link"
                 @click="gotoAnchor(ref)"
-                class="pl-0"
+                class="anchor mb-1"
               >
                 {{ $t("cslogger-introduction-anchor-" + i) }}
-              </b-button>
+              </a>
             </b-button-group>
           </div>
         </b-col>
@@ -64,7 +64,7 @@
             v-for="(logo, i) in team_logos"
             :key="i"
             variant="link"
-            :class="`scroll-effect scroll-effect-delayed-${i + 1}`"
+            :class="`scroll-effect scroll-effect-delayed-${i + 2}`"
             :href="logo.url"
             target="_blank"
           >
@@ -81,39 +81,55 @@
     </b-container>
 
     <!-- How to create an App section -->
-    <b-container fluid
-      class="full-heigth scroll-effect scroll-effect-delayed-1 pt-4"
+    <b-container
+      fluid
+      class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
       ref="create_app"
     >
-      <template-summary></template-summary>
+      <b-row>
+        <b-col cols="12">
+          <h1 class="small pb-2 mb-1">{{ $t("cslogger-create-app-header") }}</h1>
+        </b-col>
+      </b-row>
+      <tutorial-accordion :content="createAppContent"></tutorial-accordion>
     </b-container>
+
+    <hr class="mx-2" />
 
     <!-- How to share an App section -->
     <b-container
-      class="full-heigth scroll-effect scroll-effect-delayed-1 pt-4 light-greyish"
+      fluid
+      class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
       ref="share_app"
     >
-      <template-summary></template-summary>
+      <b-row>
+        <b-col cols="12">
+          <h1>{{ $t("cslogger-share-app-header") }}</h1>
+        </b-col>
+      </b-row>
+      <tutorial-accordion></tutorial-accordion>
     </b-container>
   </div>
 </template>
 
 <script>
 import { throttle } from "lodash";
-import TemplateSummary from "@/components/Task/Builder/TemplateEditor/TemplateSummary.vue";
+import TutorialAccordion from "@/components/Common/TutorialAccordion";
 
 let ctrl_scroll = 0;
+const CREATE_APP_CONTENT = require("@/assets/cslogger_view/create_app.json");
 
 export default {
   name: "CitizenScienceLogger",
   components: {
-    TemplateSummary,
+    TutorialAccordion,
   },
   data() {
     return {
       team_logos: [],
       anchors: ["create_app", "share_app", "integration_pb"],
       throttleScroll: throttle(this.handleScroll, 300),
+      createAppContent: CREATE_APP_CONTENT,
     };
   },
   created() {
@@ -162,10 +178,14 @@ export default {
     },
 
     gotoAnchor(refName) {
+      window.removeEventListener("scroll", this.throttleScroll, false);
       const el = this.$refs[refName];
       if (el && el.offsetTop) {
         window.scrollTo(0, el.offsetTop - 50);
       }
+      setTimeout(() => {
+        window.addEventListener("scroll", this.throttleScroll, false);
+      }, 1000);
     },
 
     handleScroll(event) {
@@ -205,6 +225,12 @@ export default {
 
 <style lang="scss">
 @import "@/scss/variables.scss";
+.cslogger {
+  .anchor {
+    cursor: pointer;
+    color: $primary !important;
+  }
+}
 .logo {
   max-height: 100px;
   cursor: pointer;
@@ -215,6 +241,6 @@ export default {
   }
 }
 .full-heigth {
-  min-height: 30vh;
+  height: 95vh;
 }
 </style>

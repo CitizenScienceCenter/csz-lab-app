@@ -835,6 +835,9 @@
     "cslogger-header": "Citizen Science Logger",
     "cslogger-subheader": "Create data-collection projects",
     "cslogger-introduction-left-column": "<p>Citizen Science data collection project engage people in crowdsourcing tasks, contributing data in multiple form, such a text (survey answers), images, video, audio, geolocation, etc.</p> <p>The Citizen Science Logger allows you to create such projects in the form of a smartphone App (iOS and Android). The creation happens via a web interface, with a simple step-by-step process.</p>",
+    "cslogger-introduction-anchor-0":"How to create an applet",
+    "cslogger-introduction-anchor-1":"How to share an applet",
+    "cslogger-introduction-anchor-2":"Integration with CS Project Builder",
     "cslogger-introduction-right-column": "<p>The CS LOGGER is based on MindLogger, a web/mobile platform that makes it easy for anyone to crowdsource the collection of digital data. Via a web dashboard, anybody can build a smartphone app for all sorts of media collection (i.e. surveys, digital diaries, images, …) and make it available with one click on both iOS and Android devices.</p>",
     "cslogger-team-content":"MindLogger is a development of the Child Mind Institute in New York. Originally designed for mental health applications, it features a vast and powerful array of activities such as surveys, quizzes, digital diaries, and cognitive tasks. On top of these, more traditional and domain-generic Citizen Science activities are allowed, including the collection of geo-located images, video, and audio. The adaptation of MindLogger to become a “CS Logger” is a joint effort of CMI, CRI, CS Center Zurich and ETH Library Lab."
   },
