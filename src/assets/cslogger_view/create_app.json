@@ -5,7 +5,11 @@
     "content": {
       "row_header": null,
       "rows": [
-        ["<p>Before starting, learn about some key terms used in the interface:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li><strong>APPLET:</strong> The platform uses the term Applet instead of App. Applet refers to small applications, performing one or a few simple functions. So, you will be creating Applets.</li><li><strong>ACTIVITY:</strong> Applets are made of activities, such as filling a survey, recording a video, and other digital tasks. So, you will be adding activities to your Applet.</li><li><strong>ITEMS:</strong> Each activity is made of one or more item(s).</li><li><strong>SCREENS:</strong> Each item includes one or more screens (these are the screens on your smartphone).</li></ul>"]
+        [
+          {
+            "text": "<p>Before starting, learn about some key terms used in the interface:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li><strong>APPLET:</strong> The platform uses the term Applet instead of App. Applet refers to small applications, performing one or a few simple functions. So, you will be creating Applets.</li><li><strong>ACTIVITY:</strong> Applets are made of activities, such as filling a survey, recording a video, and other digital tasks. So, you will be adding activities to your Applet.</li><li><strong>ITEMS:</strong> Each activity is made of one or more item(s).</li><li><strong>SCREENS:</strong> Each item includes one or more screens (these are the screens on your smartphone).</li></ul> <p><strong>Example:</strong><br/>To further clarify the terms and their use, and illustrate the process, we will use this example: <strong>You are creating an applet to collect geo-located images of stray dogs. For each image, you would like your contributors to add their account of the dog attitude.</strong></p>"
+          }
+        ]
       ]
     }
   },
@@ -15,10 +19,51 @@
     "content": {
       "row_header": ["Instructions", "Web Dashboard", "Applet"],
       "rows": [
-        ["Go to admin.mindlogger.org", null, null],
-        ["Login or create an account", null, null],
         [
-          "In the dropdown button, choose to “<strong>Build an applet</strong>”.",
+          {
+            "text": "<p>Go to <a href='https://admin.mindlogger.org/' target='_blank'>admin.mindlogger.org</a></p>Login or create an account"
+          },
+          {
+            "img": "cslogger_view/create_app/login_mindlogger.png"
+          },
+          null
+        ],
+        [
+          {
+            "text": "In the dropdown button, choose to “<strong>Build an applet</strong>”."
+          },
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  {
+    "id": "create-app-2",
+    "title": "cslogger-create-app-add-activities",
+    "content": {
+      "row_header": ["Instructions", "Web Dashboard", "Applet"],
+      "rows": [
+        [
+          {
+            "text": "Go to admin.mindlogger.org"
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "text": "Login or create an account"
+          },
+          {
+            "img": "cslogger_view/create_app/login_mindlogger.png"
+          },
+          null
+        ],
+        [
+          {
+            "text": "In the dropdown button, choose to “<strong>Build an applet</strong>”."
+          },
           null,
           null
         ]
