@@ -30,10 +30,17 @@
         ],
         [
           {
-            "text": "In the dropdown button, choose to “<strong>Build an applet</strong>”."
+            "text": "<p>For the first time you will see the welcome message.</p>Please click on the “<strong>CLICK HERE</strong>” button and select “<strong>Build an applet</strong>”."
           },
-          null,
+          {"img": "cslogger_view/create_app/welcome_mindlogger.png"},
           null
+        ],
+        [
+          {
+            "text": "<p>Enter your applet name and description.<br/>You can add more details in the about page, an image, and you have the choice of three themes.</p><p><strong>Example:</strong><br/><em>Applet Name</em>: Stray dogs (test) <br/><em>Description</em>: By using this App you provide information about the stray dogs you meet in your whereabouts. </p>"
+          },
+          {"img": "cslogger_view/create_app/create_applet_mindlogger.png"},
+          {"img": "cslogger_view/create_app/create_applet_smartphone_mindlogger.png"}
         ]
       ]
     }

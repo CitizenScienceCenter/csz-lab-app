@@ -19,10 +19,10 @@
       >
         <span class="font-weight-bold"> {{ current_tab.title }} </span>
       </b-card-header>
-      <b-card-body class="full-height">
+      <b-card-body class="full-height pt-0">
         <b-card-text v-if="current_tab.content.rows">
-          <!-- Header: only visible after md screens -->
-          <b-row v-if="current_tab.content.row_header" class="pb-2">
+          <!-- Header: only visible after lg screens -->
+          <b-row v-if="current_tab.content.row_header" class="pt-2 pb-3 sticky-top bg-white">
             <b-col
               cols="4"
               v-for="h in current_tab.content.row_header"
@@ -46,7 +46,10 @@
             >
               <div v-if="col">
                 <div v-html="col.text" v-if="col.text"></div>
-                <div @click.prevent="selected_img = col.img">
+                <div
+                  @click.prevent="selected_img = col.img"
+                  class="d-flex justify-content-center"
+                >
                   <b-img-lazy
                     class="cslogger-img"
                     v-if="col.img"
@@ -54,6 +57,7 @@
                     fluid
                     :alt="col.img"
                     v-b-modal.modal-img
+                    rounded
                   ></b-img-lazy>
                 </div>
               </div>
@@ -143,6 +147,10 @@ export default {
 .cslogger-img {
   max-height: 300px;
   height: 100%;
+  cursor: pointer;
+  -webkit-box-shadow: 0 3px 5px -3px black;
+  -moz-box-shadow: 0 3px 5px -3px black;
+  box-shadow: 0 3px 5px -3px black;
 }
 .cslogger-img-zoom {
   height: auto;
@@ -175,7 +183,6 @@ export default {
   }
   .cslogger-img {
     max-height: 350px;
-    height: 100%;
   }
   .steps-button {
     top: 3%;
@@ -185,15 +192,21 @@ export default {
     }
   }
 }
-@media only screen and (min-width: $viewport-xxlarge) {
+@media only screen and (min-width: $viewport-xlarge) {
   .cslogger-img-zoom {
     height: auto;
     max-width: 100%;
     transform: scale(2);
   }
+}
+@media only screen and (min-width: $viewport-xxlarge) {
+  .cslogger-img-zoom {
+    height: auto;
+    max-width: 100%;
+    transform: scale(2.5);
+  }
   .cslogger-img {
     max-height: 400px;
-    height: 100%;
   }
 }
 </style>
