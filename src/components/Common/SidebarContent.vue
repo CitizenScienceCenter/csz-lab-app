@@ -11,7 +11,7 @@
       <span class="ml-1 font-weight-bold"> Steps</span>
     </b-button>
     <!-- Card for content section -->
-    <b-card no-body class="mb-1 border-0">
+    <b-card no-body class="mb-1 border-0" ref="sidebar_content">
       <b-card-header
         header-tag="header"
         header-bg-variant="secondary"
@@ -22,12 +22,15 @@
       <b-card-body class="full-height pt-0">
         <b-card-text v-if="current_tab.content.rows">
           <!-- Header: only visible after lg screens -->
-          <b-row v-if="current_tab.content.row_header" class="pt-2 pb-3 sticky-top bg-white">
+          <b-row
+            v-if="current_tab.content.row_header"
+            class="pt-2 pb-3 sticky-top bg-white"
+          >
             <b-col
               cols="4"
               v-for="h in current_tab.content.row_header"
               :key="h"
-              class="d-none d-lg-block"
+              class="d-none d-lg-block text-center"
             >
               <h2>{{ h }}</h2>
             </b-col>
@@ -40,6 +43,7 @@
           >
             <b-col
               cols="12"
+              class="pb-2"
               :lg="Math.floor(12 / r.length)"
               v-for="(col, c_i) in r"
               :key="c_i"
@@ -61,6 +65,9 @@
                   ></b-img-lazy>
                 </div>
               </div>
+            </b-col>
+            <b-col>
+              <hr />
             </b-col>
           </b-row>
         </b-card-text>
@@ -98,6 +105,7 @@
       ok-disabled
       hide-header
       hide-footer
+      v-b-modal.modal-xl
     >
       <b-img-lazy
         class="cslogger-img-zoom"
@@ -128,6 +136,11 @@ export default {
     changeTab(id) {
       this.current_tab = this.content.find(x => x.id === id);
       this.$root.$emit("bv::toggle::collapse", "sidebar_steps");
+      const sidebar_content = this.$refs.sidebar_content;
+      sidebar_content.classList.add("animate-card");
+      setTimeout(() => {
+        sidebar_content.classList.remove("animate-card");
+      }, 500);
     },
     openSidebar() {
       this.$emit("openSidebar");
@@ -144,13 +157,30 @@ export default {
 <style lang="scss" scoped>
 @import "@/scss/variables.scss";
 
+.animate-card {
+  animation-name: slide-right;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+}
+@keyframes slide-right {
+  from {
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
 .cslogger-img {
   max-height: 300px;
   height: 100%;
   cursor: pointer;
   -webkit-box-shadow: 0 3px 5px -3px black;
   -moz-box-shadow: 0 3px 5px -3px black;
-  box-shadow: 0 3px 5px -3px black;
+  box-shadow: 0 4px 3px -3px black;
 }
 .cslogger-img-zoom {
   height: auto;
@@ -166,7 +196,8 @@ export default {
 }
 .full-height {
   max-height: 70vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 @media only screen and (min-width: $viewport-tablet-portrait) {
   .steps-button {
