@@ -102,6 +102,7 @@
         </b-row>
         <sidebar-content
           :content="createAppContent"
+          parent="create_app"
           @openSidebar="gotoAnchor('create_app')"
         ></sidebar-content>
       </b-container>
@@ -121,7 +122,11 @@
             <h1>{{ $t("cslogger-share-app-header") }}</h1>
           </b-col>
         </b-row>
-        <sidebar-content></sidebar-content>
+        <sidebar-content
+          :content="shareAppContent"
+          parent="share_app"
+          @openSidebar="gotoAnchor('share_app')"
+        ></sidebar-content>
       </b-container>
     </content-section>
   </div>
@@ -134,19 +139,20 @@ import ContentSection from "@/components/Common/ContentSection";
 
 let ctrl_scroll = 0;
 const CREATE_APP_CONTENT = require("@/assets/cslogger_view/create_app.json");
+const SHARE_APP_CONTENT = require("@/assets/cslogger_view/share_app.json");
 
 export default {
   name: "CitizenScienceLogger",
-  metaInfo: function () {
+  metaInfo: function() {
     return {
       title: "CS Logger",
       meta: [
         {
           property: "og:title",
           content: "CS Logger",
-          template: "%s | " + this.$t("site-title"),
-        },
-      ],
+          template: "%s | " + this.$t("site-title")
+        }
+      ]
     };
   },
   components: {
@@ -158,7 +164,8 @@ export default {
       team_logos: [],
       anchors: ["create_app", "share_app", "integration_pb"],
       throttleScroll: throttle(this.handleScroll, 300),
-      createAppContent: CREATE_APP_CONTENT
+      createAppContent: CREATE_APP_CONTENT,
+      shareAppContent: SHARE_APP_CONTENT
     };
   },
   created() {

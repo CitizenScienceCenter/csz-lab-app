@@ -11,6 +11,9 @@
     "home-no-featured-projects": "There are no featured projects so far.",
 
     "app-vue-navigation-home": "Home",
+    "app-vue-navigation-tools": "Tools",
+    "app-vue-tools-cslogger": "CS Logger",
+    "app-vue-tools-projectbuilder":"Project Builder",    
     "app-vue-navigation-discover": "Discover",
     "app-vue-navigation-about": "About",
     "app-vue-navigation-login": "Login",
@@ -858,6 +861,9 @@
     "home-no-featured-projects": "Momentan gibt es keine unterstützten Projekte",
 
     "app-vue-navigation-home": "Home",
+    "app-vue-navigation-tools": "Tools",
+    "app-vue-tools-cslogger": "CS Logger",
+    "app-vue-tools-projectbuilder":"Project Builder",    
     "app-vue-navigation-discover": "Entdecken",
     "app-vue-navigation-about": "Über",
     "app-vue-navigation-login": "Anmelden",

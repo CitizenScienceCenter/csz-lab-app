@@ -2,7 +2,6 @@
   <div class="mt-2" role="tablist" v-if="content">
     <!-- Button for sidebar toggle -->
     <b-button
-      v-b-toggle.sidebar_steps
       variant="link"
       class="steps-button"
       @click.prevent="openSidebar"
@@ -76,7 +75,7 @@
 
     <!-- Sidebar section  -->
     <b-sidebar
-      id="sidebar_steps"
+      :id="parentRef"
       :title="$t('cslogger-create-app-sidebar-title')"
       shadow
       right
@@ -120,7 +119,7 @@
 <script>
 export default {
   name: "SidebarContent",
-  props: { content: Array },
+  props: { content: Array, parent: String },
   data() {
     return {
       current_tab: null,
@@ -132,10 +131,15 @@ export default {
       this.current_tab = this.content[0];
     }
   },
+  computed: {
+    parentRef() {
+      return `sidebar_steps-${this.parent}`;
+    }
+  },
   methods: {
     changeTab(id) {
       this.current_tab = this.content.find(x => x.id === id);
-      this.$root.$emit("bv::toggle::collapse", "sidebar_steps");
+      this.$root.$emit("bv::toggle::collapse", this.parentRef);
       const sidebar_content = this.$refs.sidebar_content;
       // Scroll to top of sidebar content
       sidebar_content.scrollTop = 0;
@@ -147,6 +151,7 @@ export default {
       }, 500);
     },
     openSidebar() {
+      this.$root.$emit("bv::toggle::collapse", this.parentRef);
       this.$emit("openSidebar");
     },
     getImage(img_url) {
