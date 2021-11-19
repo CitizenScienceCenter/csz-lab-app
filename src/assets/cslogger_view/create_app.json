@@ -7,7 +7,7 @@
       "rows": [
         [
           {
-            "text": "<p>Before starting, learn about some key terms used in the interface:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li><strong>APPLET:</strong> The platform uses the term Applet instead of App. Applet refers to small applications, performing one or a few simple functions. So, you will be creating Applets.</li><li><strong>ACTIVITY:</strong> Applets are made of activities, such as filling a survey, recording a video, and other digital tasks. So, you will be adding activities to your Applet.</li><li><strong>ITEMS:</strong> Each activity is made of one or more item(s).</li><li><strong>SCREENS:</strong> Each item includes one or more screens (these are the screens on your smartphone).</li></ul> <p><strong>Example:</strong><br/>To further clarify the terms and their use, and illustrate the process, we will use this example: <strong>You are creating an applet to collect geo-located images of stray dogs. For each image, you would like your contributors to add their account of the dog attitude.</strong></p>"
+            "text": "<p>Before starting, learn about some key terms used in the interface:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li><strong>APPLET:</strong> The platform uses the term Applet instead of App. Applet refers to small applications, performing one or a few simple functions. So, you will be creating Applets.</li><li><strong>ACTIVITY:</strong> Applets are made of activities, such as filling a survey, recording a video, and other digital tasks. So, you will be adding activities to your Applet.</li><li><strong>ITEMS:</strong> Each activity is made of one or more item(s).</li><li><strong>SCREENS:</strong> Each item includes one or more screens (these are the screens on your smartphone).</li></ul> <p>For details and Q&A have a look of the <strong>MindLogger Admin Guide</strong> <a href='https://mindlogger.org/guides/admin-guide.html' target='_blank' rel='noopener'> https://mindlogger.org/guides/admin-guide.html</a></p> <p><strong>Example:</strong><br/>To further clarify the terms and their use, and illustrate the process, we will use this example: <strong>You are creating an applet to collect geo-located images of stray dogs. For each image, you would like your contributors to add their account of the dog attitude.</strong></p>"
           }
         ]
       ]
@@ -21,7 +21,7 @@
       "rows": [
         [
           {
-            "text": "<p>Go to <a href='https://admin.mindlogger.org/' target='_blank'>admin.mindlogger.org</a></p>Login or create an account"
+            "text": "<p>Go to <a href='https://admin.mindlogger.org/' target='_blank' rel='noopener'>admin.mindlogger.org</a></p>Login or create an account"
           },
           {
             "img": "cslogger_view/create_app/login_mindlogger.png"
@@ -58,11 +58,13 @@
             "text": "<p>Click “<strong>ADD ACTIVITY</strong>” to add the first activity to your project. Add your activity name and description.</p><p><strong>Note:</strong> For some applications, you may want to add more activities. For example, if your Applet includes answering questions at different times of the day, you will have a “Morning Questionnaire” and a “Evening Questionnaire”.</p><p><strong>Example:</strong><br/>The first activity for your contributors is to take a geo-located photo of the dog. <br/><em>Name</em>: Geo-located Photo <br/><em>Description</em>: Take a geo-located photo of a dog.</p>"
           },
           { "img": "cslogger_view/create_app/add_activity_mindlogger.png" },
-          { "img": "cslogger_view/create_app/add_activity_smartphone_mindlogger.png" }
+          {
+            "img": "cslogger_view/create_app/add_activity_smartphone_mindlogger.png"
+          }
         ],
         [
           {
-            "text": "<p>Add the first item to your activity by clicking the “<strong>ADD ITEM</strong>” button and select “<strong>Blank item</strong>”.</p><p>An item is composed of one or more screens. The first screen will be added. <br/> Click on <i class='fas fa-pen fas-sm'></i> to edit it.</p>"
+            "text": "<p>Add the first item to your activity by clicking the “<strong>ADD ITEM</strong>” button and select “<strong>Blank item</strong>”.</p><p>An item is composed of one or more screens. The first screen will be added. <br/> Click on <i class='fas fa-pen fa-sm'></i> to edit it.</p>"
           },
           {
             "img": "cslogger_view/create_app/add_item_mindlogger.png"
@@ -80,14 +82,18 @@
       "rows": [
         [
           {
-            "text": "<p>Fill the details for your <strong>Screen 1</strong> on the app.</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>You can add a header image to this screen.</li><li>Use the text creator to enter your question/instruction.</li><li>Choose the input type.</li><li>Set additional options if necessary.</li></ul><p><strong>Example:</strong><br/>The first screen of the app will ask the user to allow geo-location service in the smartphone. <br/><em>Text Creator</em>: Please allow the app to access your phone location services. <br/><em>Input Type</em>: <i class='fas fa-map-marker-alt fas-xs'></i> geolocation</p>"
+            "text": "<p>Fill the details for your <strong>Screen 1</strong>.</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>You can add a header image to this screen.</li><li>Use the text creator to enter your question/instruction.</li><li>Choose the input type.</li><li>Set additional options if necessary.</li></ul><p><strong>Example:</strong><br/>The first screen of the app will ask the user to allow geo-location service in the smartphone. <br/><em>Text Creator</em>: Please allow the app to access your phone location services. <br/><em>Input Type</em>: <i class='fas fa-map-marker-alt fa-sm'></i> geolocation</p>"
           },
-          { "img": "cslogger_view/create_app/edit_first_screen_mindlogger.png" },
-          { "img": "cslogger_view/create_app/geolocation_smartphone_mindlogger.png" }
+          {
+            "img": "cslogger_view/create_app/edit_first_screen_mindlogger.png"
+          },
+          {
+            "img": "cslogger_view/create_app/geolocation_smartphone_mindlogger.png"
+          }
         ],
         [
           {
-            "text": "<p>Add a second item, click on <i class='fas fa-pen fas-sm'></i> icon to edit, and fill the details for your <strong>Screen 2</strong> on the app. In this screen, the user has to take a photo.</p><p><strong>Example:</strong><br/>The second screen of the app will ask the user to take a picture of the target dog. <br/><em>Text Creator</em>: Please take a picture of the dog. Don’t get too close and be careful not to put yourself in danger! <br/><em>Input Type</em>: <i class='fas fa-camera fas-xs'></i> photo</p>"
+            "text": "<p>Add a second item, click on <i class='fas fa-pen fa-sm'></i> icon to edit, and fill the details for your <strong>Screen 2</strong>. In this screen, the user has to take a photo.</p><p><strong>Example:</strong><br/>The second screen of the app will ask the user to take a picture of the target dog. <br/><em>Text Creator</em>: Please take a picture of the dog. Don’t get too close and be careful not to put yourself in danger! <br/><em>Input Type</em>: <i class='fas fa-camera fa-sm'></i> photo</p>"
           },
           {
             "img": "cslogger_view/create_app/edit_second_screen_mindlogger.png"
@@ -107,21 +113,55 @@
       "rows": [
         [
           {
-            "text": "<p style='color:red'><strong>PENDING</strong></p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>You can add a header image to this screen.</li><li>Use the text creator to enter your question/instruction.</li><li>Choose the input type.</li><li>Set additional options if necessary.</li></ul><p><strong>Example:</strong><br/>The first screen of the app will ask the user to allow geo-location service in the smartphone. <br/><em>Text Creator</em>: Please allow the app to access your phone location services. <br/><em>Input Type</em>: <i class='fas fa-map-marker-alt fas-xs'></i> geolocation</p>"
+            "text": "<p>Add a third item, click on <i class='fas fa-pen fa-sm'></i> icon to edit, and fill the details for your <strong>Screen 3</strong>. In this screen, the user has to answer a dropdown type question.</p><p><strong>Example:</strong><br/>The third screen of the app will ask the user to choose the perceived dog's attitude. <ul><li><em>Text Creator</em>: How would you describe the attitude of the dog?</li> <li><em>Input Type</em>: <i class='far fa-dot-circle fa-sm'></i> radio</li><li><em>Options</em>:</li><ul style='list-style-type:disc' class='ml-3 mt-1'><li>Friendly</li><li>Scared</li><li> Aggressive</li><li>Other</li></ul></ul></p>"
           },
-          { "img": "cslogger_view/create_app/edit_first_screen_mindlogger.png" },
-          { "img": "cslogger_view/create_app/geolocation_smartphone_mindlogger.png" }
+          {
+            "img": "cslogger_view/create_app/edit_third_screen_mindlogger.png"
+          },
+          {
+            "img": "cslogger_view/create_app/radio_smartphone_mindlogger.png"
+          }
         ],
         [
           {
-            "text": "<p>Add a second item, click on <i class='fas fa-pen fas-sm'></i> icon to edit, and fill the details for your <strong>Screen 2</strong> on the app. In this screen, the user has to take a photo.</p><p><strong>Example:</strong><br/>The second screen of the app will ask the user to take a picture of the target dog. <br/><em>Text Creator</em>: Please take a picture of the dog. Don’t get too close and be careful not to put yourself in danger! <br/><em>Input Type</em>: <i class='fas fa-camera fas-xs'></i> photo</p>"
+            "text": "<p>Add a fourth item, click on <i class='fas fa-pen fa-sm'></i> icon to edit, and fill the details for your <strong>Screen 4</strong>. This screen will be shown only if the user selects “<em>Other</em>” in the previous question.</p><p><strong>Example:</strong><br/>The fourth screen of the app will ask the user which other option in for dog's attitude. <ul><li><em>Text Creator</em>: You chose \"Other\", how would you describe the dog's attitude?</li> <li><em>Input Type</em>: <i class='fas fa-ellipsis-h fa-xs'></i> text</li></ul></p>"
           },
           {
-            "img": "cslogger_view/create_app/edit_second_screen_mindlogger.png"
+            "img": "cslogger_view/create_app/edit_fourth_screen_mindlogger.png"
+          },
+          null
+        ],
+        [
+          {
+            "text": "<p>As you added an open option on the <strong>Screen 3</strong>, this requires knowing which other option the user refers to. Thus add a Conditional Logic.</p><p><strong>Example:</strong><br/>Click on the “<strong>Conditional Logic</strong>” button at the top of the page.<br/>Click on the “<strong>ADD CONDITIONAL</strong>” button. Insert your condition: Only if <strong>Screen 3</strong> is equal to “<em>Other</em>”, then show <strong>Screen 4</strong>.</p>"
           },
           {
-            "img": "cslogger_view/create_app/photo_smartphone_mindlogger.png"
+            "img": "cslogger_view/create_app/edit_conditional_screen_mindlogger.png"
+          },
+          {
+            "img": "cslogger_view/create_app/conditional_smartphone_mindlogger.png"
           }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "create-app-5",
+    "title": "cslogger-create-app-save-overview",
+    "content": {
+      "row_header": ["Instructions", "Web Dashboard"],
+      "rows": [
+        [
+          {
+            "text": "<p>When the applet edition is finished, please save it by clicking the “<strong>Save to Dashboard</strong>” button.</p><p>It’s required to ingress a password to protect the applet. Please save it carefully.</p><p>You will receive an email that confirms the applet creation.</p>"
+          },
+          { "img": "cslogger_view/create_app/save_applet_mindlogger.png" }
+        ],
+        [
+          {
+            "text": "<p>Go back to your dashboard (click on “MindLogger Dashboard” on top of page) and you will see the Applet just created together with the previously created ones.</p>"
+          },
+          { "img": "cslogger_view/create_app/dashboard_mindlogger.png" }
         ]
       ]
     }
