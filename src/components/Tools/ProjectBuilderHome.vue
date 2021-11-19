@@ -10,6 +10,18 @@
 <script>
 export default {
   name: "ProjectBuilderHome",
+  metaInfo: function() {
+    return {
+      title: "Project Builder",
+      meta: [
+        {
+          property: "og:title",
+          content: "Project Builder",
+          template: "%s | " + this.$t("site-title")
+        }
+      ]
+    };
+  }
 };
 </script>
 
