@@ -137,6 +137,18 @@ const CREATE_APP_CONTENT = require("@/assets/cslogger_view/create_app.json");
 
 export default {
   name: "CitizenScienceLogger",
+  metaInfo: function () {
+    return {
+      title: "CS Logger",
+      meta: [
+        {
+          property: "og:title",
+          content: "CS Logger",
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
+    };
+  },
   components: {
     ContentSection,
     SidebarContent

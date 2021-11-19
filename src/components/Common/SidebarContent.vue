@@ -11,15 +11,15 @@
       <span class="ml-1 font-weight-bold"> Steps</span>
     </b-button>
     <!-- Card for content section -->
-    <b-card no-body class="mb-1 border-0" ref="sidebar_content">
+    <b-card no-body class="mb-1 border-0">
       <b-card-header
         header-tag="header"
         header-bg-variant="secondary"
         header-text-variant="white"
       >
-        <span class="font-weight-bold"> {{ current_tab.title }} </span>
+        <span class="font-weight-bold"> {{ $t(current_tab.title) }} </span>
       </b-card-header>
-      <b-card-body class="full-height pt-0">
+      <b-card-body class="full-height pt-0" ref="sidebar_content">
         <b-card-text v-if="current_tab.content.rows">
           <!-- Header: only visible after lg screens -->
           <b-row
@@ -27,7 +27,7 @@
             class="pt-2 pb-3 sticky-top bg-white"
           >
             <b-col
-              cols="4"
+              :lg="Math.floor(12 / current_tab.content.row_header.length)"
               v-for="h in current_tab.content.row_header"
               :key="h"
               class="d-none d-lg-block text-center"
@@ -92,7 +92,7 @@
           :variant="item.id === current_tab.id ? 'primary' : 'link'"
           @click="changeTab(item.id)"
         >
-          <span class="font-weight-bold"> {{ item.title }} </span>
+          <span class="font-weight-bold"> {{ $t(item.title) }} </span>
         </b-button>
       </div>
     </b-sidebar>
@@ -137,7 +137,11 @@ export default {
       this.current_tab = this.content.find(x => x.id === id);
       this.$root.$emit("bv::toggle::collapse", "sidebar_steps");
       const sidebar_content = this.$refs.sidebar_content;
+      // Scroll to top of sidebar content
+      sidebar_content.scrollTop = 0;
+      // Animate change of card content
       sidebar_content.classList.add("animate-card");
+
       setTimeout(() => {
         sidebar_content.classList.remove("animate-card");
       }, 500);
