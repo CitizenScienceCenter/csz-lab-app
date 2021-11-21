@@ -1,13 +1,9 @@
 <template>
   <div class="mt-2" role="tablist" v-if="content">
     <!-- Button for sidebar toggle -->
-    <b-button
-      variant="link"
-      class="steps-button"
-      @click.prevent="openSidebar"
-    >
+    <b-button variant="link" class="steps-button" @click.prevent="openSidebar">
       <i class="fas fa-stream fa-lg"></i>
-      <span class="ml-1 font-weight-bold"> Steps</span>
+      <span class="ml-1 font-weight-bold"> {{$t('steps')}}</span>
     </b-button>
     <!-- Card for content section -->
     <b-card no-body class="mb-1 border-0">
@@ -38,7 +34,7 @@
           <b-row
             v-for="(r, i) in current_tab.content.rows"
             :key="i"
-            class="mb-3"
+            class="my-3"
           >
             <b-col
               cols="12"
@@ -50,7 +46,7 @@
               <div v-if="col">
                 <div v-html="col.text" v-if="col.text"></div>
                 <div
-                  @click.prevent="selected_img = col.img"
+                  @click.prevent="showModal(col.img)"
                   class="d-flex justify-content-center"
                 >
                   <b-img-lazy
@@ -59,7 +55,6 @@
                     :src="getImage(col.img)"
                     fluid
                     :alt="col.img"
-                    v-b-modal.modal-img
                     rounded
                   ></b-img-lazy>
                 </div>
@@ -76,11 +71,13 @@
     <!-- Sidebar section  -->
     <b-sidebar
       :id="parentRef"
-      :title="$t('cslogger-create-app-sidebar-title')"
       shadow
       right
       class="full-height"
     >
+    <template slot="header">
+      <h2 class="pt-4 text-secondary">{{$t('steps')}}</h2>
+    </template>
       <div class="py-2">
         <b-button
           v-for="(item, index) in content"
@@ -98,20 +95,19 @@
 
     <!-- Image in modal section -->
     <b-modal
-      id="modal-img"
-      centered
-      cancel-disabled
-      ok-disabled
-      hide-header
+      scrollable
+      size="xl"
       hide-footer
-      v-b-modal.modal-xl
+      hide-header
+      ok-disabled
+      cancel-disabled
+      ref="img_modal"
+      content-class="img-modal-content"
+      body-class="img-modal-body"
     >
-      <b-img-lazy
-        class="cslogger-img-zoom"
-        :src="getImage(selected_img)"
-        fluid-grow
-        :alt="selected_img"
-      ></b-img-lazy>
+      <template>
+        <b-img class="w-100" fluid-grow :src="getImage(selected_img)"></b-img>
+      </template>
     </b-modal>
   </div>
 </template>
@@ -158,6 +154,10 @@ export default {
       if (img_url) {
         return require(`@/assets/img/${img_url}`);
       }
+    },
+    showModal(img_url) {
+      this.selected_img = img_url;
+      this.$refs.img_modal.show();
     }
   }
 };
@@ -207,6 +207,15 @@ export default {
   max-height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.img-modal-content {
+  background-color: transparent;
+  border: 0;
+}
+.img-modal-body {
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 @media only screen and (min-width: $viewport-tablet-portrait) {
   .steps-button {
