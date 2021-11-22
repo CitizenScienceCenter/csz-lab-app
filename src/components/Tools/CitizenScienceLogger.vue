@@ -94,8 +94,8 @@
         ref="create_app"
       >
         <b-row>
-          <b-col cols="12">
-            <h1 class="small pb-2 mb-1">
+          <b-col cols="12" class="text-center">
+            <h1 class="small pb-2 mb-1 centered">
               {{ $t("cslogger-create-app-header") }}
             </h1>
           </b-col>
@@ -118,8 +118,10 @@
         ref="share_app"
       >
         <b-row>
-          <b-col cols="12">
-            <h1>{{ $t("cslogger-share-app-header") }}</h1>
+          <b-col cols="12" class="text-center">
+            <h1 class="small pb-2 mb-1 centered">
+              {{ $t("cslogger-share-app-header") }}
+            </h1>
           </b-col>
         </b-row>
         <sidebar-content
