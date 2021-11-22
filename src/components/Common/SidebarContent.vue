@@ -3,7 +3,7 @@
     <!-- Button for sidebar toggle -->
     <b-button variant="link" class="steps-button" @click.prevent="openSidebar">
       <i class="fas fa-stream fa-lg"></i>
-      <span class="ml-1 font-weight-bold"> {{$t('steps')}}</span>
+      <span class="ml-1 font-weight-bold"> {{ $t("steps") }}</span>
     </b-button>
     <!-- Card for content section -->
     <b-card no-body class="mb-1 border-0">
@@ -12,7 +12,9 @@
         header-bg-variant="secondary"
         header-text-variant="white"
       >
-        <span class="font-weight-bold"> {{ $t(current_tab.title) }} </span>
+        <span class="font-weight-bold">
+          {{ current_index + 1 }} - {{ $t(current_tab.title) }}
+        </span>
       </b-card-header>
       <b-card-body class="full-height pt-0" ref="sidebar_content">
         <b-card-text v-if="current_tab.content.rows">
@@ -69,15 +71,10 @@
     </b-card>
 
     <!-- Sidebar section  -->
-    <b-sidebar
-      :id="parentRef"
-      shadow
-      right
-      class="full-height"
-    >
-    <template slot="header">
-      <h2 class="pt-4 text-secondary">{{$t('steps')}}</h2>
-    </template>
+    <b-sidebar :id="parentRef" shadow class="full-height">
+      <template slot="header">
+        <h2 class="pt-4 text-secondary">{{ $t("steps") }}</h2>
+      </template>
       <div class="py-2">
         <b-button
           v-for="(item, index) in content"
@@ -88,7 +85,9 @@
           :variant="item.id === current_tab.id ? 'primary' : 'link'"
           @click="changeTab(item.id)"
         >
-          <span class="font-weight-bold"> {{ $t(item.title) }} </span>
+          <span class="font-weight-bold">
+            {{ index + 1 }} - {{ $t(item.title) }}
+          </span>
         </b-button>
       </div>
     </b-sidebar>
@@ -119,6 +118,7 @@ export default {
   data() {
     return {
       current_tab: null,
+      current_index: 0,
       selected_img: null
     };
   },
@@ -135,6 +135,7 @@ export default {
   methods: {
     changeTab(id) {
       this.current_tab = this.content.find(x => x.id === id);
+      this.current_index = this.content.findIndex(x => x.id === id);
       this.$root.$emit("bv::toggle::collapse", this.parentRef);
       const sidebar_content = this.$refs.sidebar_content;
       // Scroll to top of sidebar content
@@ -197,8 +198,8 @@ export default {
 }
 .steps-button {
   position: absolute;
-  top: 2%;
-  right: 1%;
+  top: 3%;
+  left: 0%;
   span {
     display: none;
   }
@@ -234,8 +235,7 @@ export default {
     max-height: 350px;
   }
   .steps-button {
-    top: 3%;
-    right: 2.5%;
+    left: 2%;
     span {
       font-size: 1.2rem;
     }
