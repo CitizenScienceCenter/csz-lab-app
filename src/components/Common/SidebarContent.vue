@@ -71,10 +71,7 @@
     </b-card>
 
     <!-- Sidebar section  -->
-    <b-sidebar :id="parentRef" shadow class="full-height">
-      <template slot="header">
-        <h2 class="pt-4 text-secondary">{{ $t("steps") }}</h2>
-      </template>
+    <b-sidebar :id="parentRef" shadow :title="$t('steps')" header-class="pt-4 text-secondary">
       <div class="py-2">
         <b-button
           v-for="(item, index) in content"
