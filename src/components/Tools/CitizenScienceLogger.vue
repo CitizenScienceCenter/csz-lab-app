@@ -164,6 +164,30 @@
         ></sidebar-content>
       </b-container>
     </content-section>
+
+    <hr class="mx-2" />
+
+    <!-- Integrate cslogger and pb section -->
+    <content-section>
+      <b-container
+        fluid
+        class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        ref="integration_pb"
+      >
+        <b-row>
+          <b-col cols="12" class="text-center">
+            <h1 class="small pb-2 mb-1 centered">
+              {{ $t("cslogger-integration-pb-header") }}
+            </h1>
+          </b-col>
+        </b-row>
+        <sidebar-content
+          :content="integrationContent"
+          parent="integration_pb"
+          @openSidebar="gotoAnchor('integration_pb')"
+        ></sidebar-content>
+      </b-container>
+    </content-section>
   </div>
 </template>
 
@@ -175,6 +199,7 @@ import ContentSection from "@/components/Common/ContentSection";
 let ctrl_scroll = 0;
 const CREATE_APP_CONTENT = require("@/assets/cslogger_view/create_app.json");
 const SHARE_APP_CONTENT = require("@/assets/cslogger_view/share_app.json");
+const INTEGRATION_PB_CONTENT = require("@/assets/cslogger_view/integration_pb.json");
 
 export default {
   name: "CitizenScienceLogger",
@@ -200,7 +225,8 @@ export default {
       anchors: ["create_app", "share_app", "integration_pb"],
       throttleScroll: throttle(this.handleScroll, 300),
       createAppContent: CREATE_APP_CONTENT,
-      shareAppContent: SHARE_APP_CONTENT
+      shareAppContent: SHARE_APP_CONTENT,
+      integrationContent: INTEGRATION_PB_CONTENT
     };
   },
   created() {
@@ -256,30 +282,29 @@ export default {
       const screen_pos = window.scrollY;
 
       let scroll_down = ctrl_scroll < screen_pos;
-      const create_app = {
+      const sectionMap = new Map();
+      sectionMap.set("create_app", {
         offsetTop: this.$refs[this.anchors[0]].offsetTop,
         scrollHeight: this.$refs[this.anchors[0]].scrollHeight
-      };
-      const share_app = {
-        offsetTop: this.$refs[this.anchors[1]].offsetTop,
-        scrollHeight: this.$refs[this.anchors[1]].scrollHeight
-      };
+      }),
+        sectionMap.set("share_app", {
+          offsetTop: this.$refs[this.anchors[1]].offsetTop,
+          scrollHeight: this.$refs[this.anchors[1]].scrollHeight
+        }),
+        sectionMap.set("integration_pb", {
+          offsetTop: this.$refs[this.anchors[2]].offsetTop,
+          scrollHeight: this.$refs[this.anchors[2]].scrollHeight
+        });
       if (scroll_down) {
-        if (
-          screen_pos >=
-            create_app.offsetTop - Math.floor(create_app.scrollHeight * 0.5) &&
-          screen_pos <= create_app.offsetTop
-        ) {
-          this.gotoAnchor(this.anchors[0]);
-        }
-
-        if (
-          screen_pos >=
-            share_app.offsetTop - Math.floor(share_app.scrollHeight * 0.6) &&
-          screen_pos <= share_app.offsetTop
-        ) {
-          this.gotoAnchor(this.anchors[1]);
-        }
+        sectionMap.forEach((value, key) => {
+          if (
+            screen_pos >=
+              value.offsetTop - Math.floor(value.scrollHeight * 0.6) &&
+            screen_pos <= value.offsetTop
+          ) {
+            this.gotoAnchor(key);
+          }
+        });
       }
       ctrl_scroll = screen_pos;
     }
