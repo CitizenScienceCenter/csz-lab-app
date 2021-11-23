@@ -20,10 +20,10 @@
         <b-row>
           <!-- Left column -->
           <b-col cols="12" md="6" class="pr-md-4 mb-4 mb-md-0">
-            <div
+            <p
               class="text-justify"
               v-html="$t('cslogger-introduction-left-column')"
-            ></div>
+            ></p>
             <!-- anchors -->
             <div class="text-left mt-2">
               <b-button-group vertical>
@@ -41,17 +41,50 @@
           </b-col>
           <!-- Right column -->
           <b-col cols="12" md="6" class="text-center pl-md-4">
-            <div
+            <!-- Text -->
+            <p
               class="text-justify"
               v-html="$t('cslogger-introduction-right-column')"
-            ></div>
+            ></p>
+            <!-- Download buttons -->
+            <p class="text-justify">
+              {{ $t("cslogger-download-app-label") }}:
+              <a
+                href="https://play.google.com/store/apps/details?id=com.childmindinstitute.exposuretherapy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <b-img
+                  :src="
+                    require('@/assets/img/cslogger_view/play_store_download.svg')
+                  "
+                  alt="Get it on Google Play"
+                  class="download-icon"
+                ></b-img>
+              </a>
+              <a
+                href="https://apps.apple.com/us/app/mindlogger-pilot/id1301092229#?platform=iphone"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <b-img
+                  :src="
+                    require('@/assets/img/cslogger_view/app_store_download.svg')
+                  "
+                  alt="Get it on App Store"
+                  class="download-icon"
+                ></b-img>
+              </a>
+            </p>
+            <!-- Create applet button -->
             <b-button
               variant="primary"
               href="https://admin.mindlogger.org/"
               target="_blank"
-              class="mt-5"
+              size="xs"
+              class="mt-2"
             >
-              {{ $t("cslogger-createapp-button") }}
+              {{ $t("cslogger-create-applet-button") }}
             </b-button>
           </b-col>
         </b-row>
@@ -62,7 +95,7 @@
     <content-section>
       <b-container fluid class="superlight-greyish small-bottom" ref="logos">
         <b-container class="py-4 scroll-effect scroll-effect-delayed-2">
-          <div class="text-justify" v-html="$t('cslogger-team-content')"></div>
+          <p class="text-justify" v-html="$t('cslogger-team-content')"></p>
           <!-- Logos -->
           <b-row class="d-flex justify-content-center mt-5">
             <a
@@ -274,6 +307,9 @@ export default {
 .full-heigth {
   min-height: 90vh;
 }
+.download-icon {
+  max-height: 25px;
+}
 @media only screen and (min-width: $viewport-tablet-portrait) {
   .logo {
     max-height: 80px;
@@ -282,6 +318,9 @@ export default {
 @media only screen and (min-width: $viewport-large) {
   .logo {
     max-height: 100px;
+  }
+  .download-icon {
+    max-height: 30px;
   }
 }
 </style>

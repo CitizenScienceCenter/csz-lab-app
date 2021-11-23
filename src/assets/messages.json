@@ -842,7 +842,9 @@
     "cslogger-introduction-anchor-0": "How to create an applet",
     "cslogger-introduction-anchor-1": "How to share an applet",
     "cslogger-introduction-anchor-2": "Integration with CS Project Builder",
-    "cslogger-introduction-right-column": "<p>The CS LOGGER is based on MindLogger, a web/mobile platform that makes it easy for anyone to crowdsource the collection of digital data. Via a web dashboard, anybody can build a smartphone app for all sorts of media collection (i.e. surveys, digital diaries, images, …) and make it available with one click on both iOS and Android devices.</p>",
+    "cslogger-introduction-right-column": "<p>The CS LOGGER is based on MindLogger, a web/mobile platform that makes it easy for anyone to crowdsource the collection of digital data. Via a web dashboard, anybody can build a smartphone app for all sorts of media collection (i.e. surveys, digital diaries, images, …) and make it available with one click on both iOS  and Android devices.</p>",
+    "cslogger-download-app-label":"Download app",
+    "cslogger-create-applet-button":"Create Applet",
     "cslogger-team-content": "MindLogger is a development of the Child Mind Institute in New York. Originally designed for mental health applications, it features a vast and powerful array of activities such as surveys, quizzes, digital diaries, and cognitive tasks. On top of these, more traditional and domain-generic Citizen Science activities are allowed, including the collection of geo-located images, video, and audio. The adaptation of MindLogger to become a “CS Logger” is a joint effort of CMI, CRI, CS Center Zurich and ETH Library Lab.",
     "cslogger-create-app-header": "How to create an applet",
     "cslogger-create-app-key-terms-example": "Key terms and example",
@@ -850,7 +852,11 @@
     "cslogger-create-app-add-activities": "Add activities",
     "cslogger-create-app-design-screens-1": "Design your screens (1 of 2)",
     "cslogger-create-app-design-screens-2": "Design your screens (2 of 2)",
-    "cslogger-create-app-save-overview": "Save and overview"
+    "cslogger-create-app-save-overview": "Save and overview",
+    "cslogger-share-app-header":"How to share an applet",
+    "cslogger-share-app-settings-privacy":"Privacy settings",
+    "cslogger-share-app-invite-participants":"Invite participants",
+    "cslogger-share-app-install-applet":"Install applet"
   },
   "de": {
     "site-title": "CS Project Builder",
@@ -1685,6 +1691,7 @@
     "solution-kit-pb-description": "Does the analysis of your data (images, videos, documents,...) need some help?. Put them on the web for people contribution.",
     "solution-kit-pb-button": "Get Started",
 
-    "cslogger-header": "Citizen Science Logger"
+    "cslogger-header": "Citizen Science Logger",
+    "cslogger-download-app-label":"App herunterladen"
   }
 }

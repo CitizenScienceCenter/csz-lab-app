@@ -46,7 +46,7 @@
               :key="c_i"
             >
               <div v-if="col">
-                <div v-html="col.text" v-if="col.text"></div>
+                <p v-html="col.text" v-if="col.text"></p>
                 <div
                   @click.prevent="showModal(col.img)"
                   class="d-flex justify-content-center"
@@ -176,7 +176,7 @@ export default {
 }
 @keyframes slide-right {
   from {
-    transform: translateX(-50%);
+    transform: translateX(50%);
     opacity: 0;
   }
   to {
