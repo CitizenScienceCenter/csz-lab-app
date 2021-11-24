@@ -856,7 +856,11 @@
     "cslogger-share-app-header":"How to share an applet",
     "cslogger-share-app-settings-privacy":"Privacy settings",
     "cslogger-share-app-invite-participants":"Invite participants",
-    "cslogger-share-app-install-applet":"Install applet"
+    "cslogger-share-app-install-applet":"Install applet",
+    "cslogger-integration-pb-header":"Integration with CS Project Builder",
+    "cslogger-integration-pb-introduction":"Why integrate with CS PB",
+    "cslogger-integration-pb-export-data":"Export data from CS Logger",
+    "cslogger-integration-pb-create-project":"Create a project with CS PB"
   },
   "de": {
     "site-title": "CS Project Builder",
