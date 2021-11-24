@@ -40,7 +40,9 @@
           {
             "text": "<p>After downloading, there will be two files:</p><ul><li><strong>report.csv</strong>: contains the data collected by the applet</li><li><strong>media-responses-xxxxx.zip</strong>: contains the multimedia collected by the applet</li></ul><p>Please unzip the compressed file before continuing with the next steps.</p>"
           },
-          { "img": "cslogger_view/integrate_app/downloaded_files_mindlogger.png" }
+          {
+            "img": "cslogger_view/integrate_app/downloaded_files_mindlogger.png"
+          }
         ]
       ]
     }
@@ -49,14 +51,11 @@
     "id": "integration-pb-2",
     "title": "cslogger-integration-pb-create-project",
     "content": {
-      "row_header": ["Instructions", "Website"],
+      "row_header": null,
       "rows": [
         [
           {
-            "text": "<p>After the crowdsourcing process is performed with the CS Logger app, it is necessary to analyze the information collected in order to contribute to the results of any ongoing research project. For this, it is possible to integrate the information collected in CS Logger into Project Builder and build typical survey tools based on that information.</p><p><strong>Example:</strong><br/>Let’s keep our Stray Dogs app as an example (see steps above). When people have contributed enough images of dogs for your study, you want people to look at the images and describe the dog in detail and say if they agree with the attitude as reported by the image collector.</p>"
-          },
-          {
-            "img": "cslogger_view/integrate_app/cslogger_pb_integration.png"
+            "text": "<p>For create a project based on the collected data by the applet using CS Logger, please click on the button and follow the instructions:</p> <div class='text-center'><a href='/tools/projectbuilder' class='btn btn-primary' target='_self'>Create Project</a></div>"
           }
         ]
       ]
