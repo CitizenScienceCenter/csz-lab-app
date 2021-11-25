@@ -140,8 +140,8 @@ export default {
         ];
       }
     },
-    
-    // Prepair responses with "valid" type
+
+    // Prepare responses with "valid" type
     getValueResponses() {
       const aux = this;
       this.resp_options = { content: null, slider: null };
