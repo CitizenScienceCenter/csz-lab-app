@@ -6,7 +6,7 @@ import { getTranslationLocale } from "@/helper";
 
 export const router = new VueRouter({
   routes: routes,
-  mode: "history"
+  mode: "history",
 });
 
 const publicRoutes = [
@@ -15,6 +15,8 @@ const publicRoutes = [
   "register",
   "logout",
   "discover",
+  "tools.cslogger",
+  "tools.projectbuilder",
   "about",
   "forum",
   "project",
@@ -23,7 +25,7 @@ const publicRoutes = [
   "project.task.presenter.test",
   "reset-password",
   "recover-password",
-  "register-confirmation"
+  "register-confirmation",
 ];
 
 router.beforeEach(async (to, from, next) => {
@@ -35,7 +37,7 @@ router.beforeEach(async (to, from, next) => {
   //const link = document.querySelector("[rel='icon']")
   //link.setAttribute('href',to.meta.icon)
 
-  let filteredPath = to.path.split("/").filter(element => element.length > 0);
+  let filteredPath = to.path.split("/").filter((element) => element.length > 0);
   console.log(filteredPath);
   console.log(to.name);
 
@@ -55,12 +57,12 @@ router.beforeEach(async (to, from, next) => {
         // if the route needs to be logged the user is redirected
         store.commit("notification/showInfo", {
           title: getTranslationLocale("error-login-authentication"),
-          content: getTranslationLocale("error-login-authentication-content")
+          content: getTranslationLocale("error-login-authentication-content"),
         });
         from.name !== null
           ? next(false)
           : next({
-              name: "login"
+              name: "login",
             });
       }
     } else {

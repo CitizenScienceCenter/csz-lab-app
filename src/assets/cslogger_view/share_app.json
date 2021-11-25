@@ -1,0 +1,82 @@
+[
+  {
+    "id": "share-app-0",
+    "title": "cslogger-share-app-settings-privacy",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "<p>It’s now time to invite the participants! You have <strong>two choices</strong>:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>You can keep your Applet private and only invite specific participants to use it. In this case you need each users’ email. You can also assign to each invitee different roles.</li><li>You can generate a public link so that anybody with the link can use your Applet. You can also choose if you want your users to create an account or contribute anonymously.</li></ul>"
+          }
+        ],
+        [
+          {
+            "text": "<p>Go to <a href='https://admin.mindlogger.org/' target='_blank' rel='noopener'>admin.mindlogger.org</a> and login at your account.</p><p>On your dashboard, you can see the list of applets created. For sharing the desired applet is required send invitations. <br/> You can manage your invitations clicking on the “<strong>View Users</strong>”.</p> <p><strong>Example:</strong><br/> On the <em>Stray Dogs (Test)</em> applet click on <i class='fas fa-user-friends fa-sm'></i> button.</p>"
+          },
+          {
+            "img": "cslogger_view/share_app/view_users_mindlogger.png"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "share-app-1",
+    "title": "cslogger-share-app-invite-participants",
+    "content": {
+      "row_header": ["Instructions", "Web Dashboard"],
+      "rows": [
+        [
+          {
+            "text": "<p>On invitation tab you can find the following sections:</p> <ul><li><strong>Pending Invitations</strong><br/>List of invitations already sent to users and pending to be accepted.</li><li><strong>Create Invitation</strong><br/>Create a new invitation and send it to the user’s email.</li><li><strong>Public Link</strong><br/>Set the user contribution as public, therefore it is not required to create an invitation.</li></ul><p><strong>Example:</strong><br/>Click on the “<strong>GENERATE</strong>” button in the Public Link section.</p>"
+          },
+          {
+            "img": "cslogger_view/share_app/user_invitation_mindlogger.png"
+          }
+        ],
+        [
+          {
+            "text": "<p>For a public contribution, it is possible to do it anonymously or identifiable, for which it is necessary to create an account on mindlogger or not respectively.</p><p><strong>Example:</strong><br/>Click on “<strong>No</strong>”.</p>"
+          },
+          { "img": "cslogger_view/share_app/public_link_mindlogger.png" }
+        ],
+        [
+          {
+            "text": "<p>Now is possible to share the assessment  link for inviting participants to contribute. Please copy and send to participants or publishing somewhere.</p><p><strong>Example:</strong><br/>Click copy <i class='far fa-clone fa-sm'></i> icon on the right side, and paste in email to your friends.</p>"
+          },
+          { "img": "cslogger_view/share_app/share_public_link_mindlogger.png" }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "share-app-2",
+    "title": "cslogger-share-app-install-applet",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "<p>For a successful user contribution, all participants need to download the MindLogger app either from the app store for iOS or google play for Android. This step is required only for the first time, just before the first participation. All subsequent contributions, and contributions to new projects will not need this step.</p>"
+          }
+        ],
+        [
+          {
+            "text": "<h2>Android <a href='https://play.google.com/store/apps/details?id=com.childmindinstitute.exposuretherapy' target='_blank' rel='noopener'><i class='fas fa-download'></i></a></h2>",
+            "img": "cslogger_view/share_app/mindlogger-playstore.png"
+          },
+          {
+            "text": "<h2>iOS <a href='https://apps.apple.com/us/app/mindlogger-pilot/id1301092229#?platform=iphone' target='_blank' rel='noopener'><i class='fas fa-download'></i></a></h2>",
+            "img": "cslogger_view/share_app/mindlogger-appstore.png"
+          }
+        ],
+        [
+          {
+            "text": "<p>Once the app is installed on the device, all the participants need to do is click on the link provided by the project organizers (see above) and follow instructions on app.</p>"
+          }
+        ]
+      ]
+    }
+  }
+]
