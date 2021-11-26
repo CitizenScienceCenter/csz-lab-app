@@ -92,6 +92,7 @@
                   :to="{ name: 'project.task.presenter' }"
                   variant="primary"
                   class="mt-2"
+                  :disabled="!hasProjectTasks"
                   >{{ $t("project-draft-test") }}</b-btn
                 >
                 &ensp;&ensp;&ensp;
@@ -467,7 +468,7 @@ export default {
     },
     approve() {
       if (this.taskPresenter.length > 0) {
-        if (this.projectTasks.length > 0) {
+        if (this.hasProjectTasks) {
           this.approveProject(this.project);
           this.localPendingApproval = true;
         } else {
@@ -486,7 +487,7 @@ export default {
 
     publish() {
       if (this.taskPresenter.length > 0) {
-        if (this.projectTasks.length > 0) {
+        if (this.hasProjectTasks) {
           this.publishProject(this.project);
         } else {
           this.showError({
@@ -546,6 +547,9 @@ export default {
       } else {
         return this.defaultImage;
       }
+    },
+    hasProjectTasks() {
+      return this.projectTasks.length > 0;
     }
   }
 };
