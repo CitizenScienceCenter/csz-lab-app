@@ -9,9 +9,9 @@
         <b-card-title
           :title="$t(card.title)"
           title-tag="h3"
-          class="text-center font-weight-bold mb-4"
+          class="text-center font-weight-bold mb-2"
         ></b-card-title>
-        <div class="text-center my-3">
+        <div class="text-center">
           <object :data="card.image" type="image/svg+xml" class="project-image">
             <b-img-lazy :src="card.image" class="project-image"></b-img-lazy>
           </object>
@@ -39,7 +39,7 @@ const CONTENT = [
   {
     title: "solution-kit-discover-title",
     subtitle: "solution-kit-discover-subtitle",
-    image: require("@/assets/img/solution_kit/discover_new.svg"),
+    image: require("@/assets/img/solution_kit/1_discover.svg"),
     description: "solution-kit-discover-description",
     button: "solution-kit-discover-button",
     route: "/discover",
@@ -47,7 +47,7 @@ const CONTENT = [
   {
     title: "solution-kit-cslogger-title",
     subtitle: "solution-kit-cslogger-subtitle",
-    image: require("@/assets/img/solution_kit/logger_new.svg"),
+    image: require("@/assets/img/solution_kit/2_collect.svg"),
     description: "solution-kit-cslogger-description",
     button: "solution-kit-cslogger-button",
     route: "/tools/cslogger",
@@ -55,7 +55,7 @@ const CONTENT = [
   {
     title: "solution-kit-pb-title",
     subtitle: "solution-kit-pb-subtitle",
-    image: require("@/assets/img/solution_kit/pb_new.svg"),
+    image: require("@/assets/img/solution_kit/3_analyse.svg"),
     description: "solution-kit-pb-description",
     button: "solution-kit-pb-button",
     route: "/project/builder/name",
