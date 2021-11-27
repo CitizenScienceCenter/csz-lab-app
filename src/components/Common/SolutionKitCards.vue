@@ -58,7 +58,7 @@ const CONTENT = [
     image: require("@/assets/img/solution_kit/3_analyse.svg"),
     description: "solution-kit-pb-description",
     button: "solution-kit-pb-button",
-    route: "/project/builder/name",
+    route: "/tools/projectbuilder",
   },
 ];
 export default {

@@ -286,15 +286,15 @@ export default {
       sectionMap.set("create_app", {
         offsetTop: this.$refs[this.anchors[0]].offsetTop,
         scrollHeight: this.$refs[this.anchors[0]].scrollHeight
-      }),
-        sectionMap.set("share_app", {
-          offsetTop: this.$refs[this.anchors[1]].offsetTop,
-          scrollHeight: this.$refs[this.anchors[1]].scrollHeight
-        }),
-        sectionMap.set("integration_pb", {
-          offsetTop: this.$refs[this.anchors[2]].offsetTop,
-          scrollHeight: this.$refs[this.anchors[2]].scrollHeight
-        });
+      });
+      sectionMap.set("share_app", {
+        offsetTop: this.$refs[this.anchors[1]].offsetTop,
+        scrollHeight: this.$refs[this.anchors[1]].scrollHeight
+      });
+      sectionMap.set("integration_pb", {
+        offsetTop: this.$refs[this.anchors[2]].offsetTop,
+        scrollHeight: this.$refs[this.anchors[2]].scrollHeight
+      });
       if (scroll_down) {
         sectionMap.forEach((value, key) => {
           if (
