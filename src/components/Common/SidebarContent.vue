@@ -46,7 +46,12 @@
               :key="c_i"
             >
               <div v-if="col">
-                <p v-html="col.text" v-if="col.text"></p>
+                <!-- Element for text only -->
+                <component
+                  :is="getDynamicData(col.text)"
+                  v-if="col.text"
+                ></component>
+                <!-- Element for image only with modal features -->
                 <div
                   @click.prevent="showModal(col.img)"
                   class="d-flex justify-content-center"
@@ -71,7 +76,12 @@
     </b-card>
 
     <!-- Sidebar section  -->
-    <b-sidebar :id="parentRef" shadow :title="$t('steps')" header-class="pt-4 text-secondary">
+    <b-sidebar
+      :id="parentRef"
+      shadow
+      :title="$t('steps')"
+      header-class="pt-4 text-secondary"
+    >
       <div class="py-2">
         <b-button
           v-for="(item, index) in content"
@@ -156,6 +166,12 @@ export default {
     showModal(img_url) {
       this.selected_img = img_url;
       this.$refs.img_modal.show();
+    },
+
+    getDynamicData(text) {
+      return {
+        template: `<div>${text}</div>`
+      };
     }
   }
 };
