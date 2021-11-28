@@ -670,9 +670,9 @@
     "taks-import-cslogger-validating": "Waiting for media files.",
     "taks-import-cslogger-failed-files-title": "Media files findings",
     "taks-import-cslogger-files-label": "File(s)",
-    "taks-import-cslogger-failed-files-missing":"Included in csv, but not in media.",
-    "taks-import-cslogger-failed-files-extra":"Included in media, but not in csv",
-    "taks-import-cslogger-no-tasks":"No tasks idenfied. Please check your files.",
+    "taks-import-cslogger-failed-files-missing": "Included in csv, but not in media.",
+    "taks-import-cslogger-failed-files-extra": "Included in media, but not in csv",
+    "taks-import-cslogger-no-tasks": "No tasks idenfied. Please check your files.",
 
     "text-cookies": "We use cookies to improve your experience on our sites.",
 
@@ -842,8 +842,8 @@
     "cslogger-introduction-anchor-1": "How to share an applet",
     "cslogger-introduction-anchor-2": "Integration with CS Project Builder",
     "cslogger-introduction-right-column": "<p>The CS LOGGER is based on MindLogger, a web/mobile platform that makes it easy for anyone to crowdsource the collection of digital data. Via a web dashboard, anybody can build a smartphone app for all sorts of media collection (i.e. surveys, digital diaries, images, …) and make it available with one click on both iOS  and Android devices.</p>",
-    "cslogger-download-app-label":"Download app",
-    "cslogger-create-applet-button":"Create Applet",
+    "cslogger-download-app-label": "Download app",
+    "cslogger-create-applet-button": "Create Applet",
     "cslogger-team-content": "MindLogger is a development of the Child Mind Institute in New York. Originally designed for mental health applications, it features a vast and powerful array of activities such as surveys, quizzes, digital diaries, and cognitive tasks. On top of these, more traditional and domain-generic Citizen Science activities are allowed, including the collection of geo-located images, video, and audio. The adaptation of MindLogger to become a “CS Logger” is a joint effort of CMI, CRI, CS Center Zurich and ETH Library Lab.",
     "cslogger-create-app-header": "How to create an applet",
     "cslogger-create-app-key-terms-example": "Key terms and example",
@@ -852,14 +852,22 @@
     "cslogger-create-app-design-screens-1": "Design your screens (1 of 2)",
     "cslogger-create-app-design-screens-2": "Design your screens (2 of 2)",
     "cslogger-create-app-save-overview": "Save and overview",
-    "cslogger-share-app-header":"How to share an applet",
-    "cslogger-share-app-settings-privacy":"Privacy settings",
-    "cslogger-share-app-invite-participants":"Invite participants",
-    "cslogger-share-app-install-applet":"Install applet",
-    "cslogger-integration-pb-header":"Integration with CS Project Builder",
-    "cslogger-integration-pb-introduction":"Why integrate with CS PB",
-    "cslogger-integration-pb-export-data":"Export data from CS Logger",
-    "cslogger-integration-pb-create-project":"Create a project with CS PB"
+    "cslogger-share-app-header": "How to share an applet",
+    "cslogger-share-app-settings-privacy": "Privacy settings",
+    "cslogger-share-app-invite-participants": "Invite participants",
+    "cslogger-share-app-install-applet": "Install applet",
+    "cslogger-integration-pb-header": "Integration with CS Project Builder",
+    "cslogger-integration-pb-introduction": "Why integrate with CS PB",
+    "cslogger-integration-pb-export-data": "Export data from CS Logger",
+    "cslogger-integration-pb-create-project": "Create a project with CS PB",
+
+    "cspb-header": "Citizen Science Project Builder",
+    "cspb-subheader": "Create data-analysis projects",
+    "cspb-introduction": "<p>Citizen Science projects for the analysis of digital data engage people in complex tasks such as image analysis, pattern recognition, text transcription, mapping, etc. Such tasks are performed via a web interface on existing digital data.</p><p>The Citizen Science Project Builder is a web-based tool that allows you to create and run data-analysis projects with a simple step-by-step process.</p><p>The CS Project Builder is a joint effort of the <strong>Citizen Cyberlab at University of Geneva</strong> and the <strong>Citizen Science Center Zurich</strong>.</p><br/>Learn more:",
+    "cspb-introduction-anchor-0": "Overview",
+    "cspb-introduction-anchor-1": "Criteria",
+    "cspb-introduction-anchor-2": "How to create a Project",
+    "cspb-introduction-anchor-3": "Integration with CS Logger"
   },
   "de": {
     "site-title": "CS Project Builder",
@@ -1531,9 +1539,9 @@
     "taks-import-cslogger-validating": "Waiting for media files.",
     "taks-import-cslogger-failed-files-title": "Media files findings",
     "taks-import-cslogger-files-label": "File(s)",
-    "taks-import-cslogger-failed-files-missing":"Included in csv, but not in media.",
-    "taks-import-cslogger-failed-files-extra":"Included in media, but not in csv",
-    "taks-import-cslogger-no-tasks":"No tasks idenfied. Please check your files.",
+    "taks-import-cslogger-failed-files-missing": "Included in csv, but not in media.",
+    "taks-import-cslogger-failed-files-extra": "Included in media, but not in csv",
+    "taks-import-cslogger-no-tasks": "No tasks idenfied. Please check your files.",
 
     "text-cookies": "Wir verwenden Cookies zur Verbesserung unserer Websites.",
 
@@ -1694,6 +1702,6 @@
     "solution-kit-pb-button": "Get Started",
 
     "cslogger-header": "Citizen Science Logger",
-    "cslogger-download-app-label":"App herunterladen"
+    "cslogger-download-app-label": "App herunterladen"
   }
 }

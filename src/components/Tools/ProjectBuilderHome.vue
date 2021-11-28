@@ -45,33 +45,37 @@
 
     <!-- project builder overview section -->
     <content-section>
-      <b-container
-        class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
-        ref="pb_overview"
-      >
-        <b-row>
-          <b-col cols="12" class="text-center">
-            <h1 class="small pb-2 mb-1 centered">
-              {{ $t("cspb-overview-header") }}
-            </h1>
-          </b-col>
-        </b-row>
+      <b-container fluid class="superlight-greyish">
+        <b-container
+          class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+          ref="pb_overview"
+        >
+          <b-row>
+            <b-col cols="12" class="text-center">
+              <h1 class="small pb-2 mb-1 centered">
+                {{ $t("cspb-overview-header") }}
+              </h1>
+            </b-col>
+          </b-row>
+        </b-container>
       </b-container>
     </content-section>
 
     <!-- project builder criteria section -->
     <content-section>
-      <b-container
-        class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
-        ref="pb_criteria"
-      >
-        <b-row>
-          <b-col cols="12" class="text-center">
-            <h1 class="small pb-2 mb-1 centered">
-              {{ $t("cspb-criteria-header") }}
-            </h1>
-          </b-col>
-        </b-row>
+      <b-container fluid class="light-greyish">
+        <b-container
+          class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+          ref="pb_criteria"
+        >
+          <b-row>
+            <b-col cols="12" class="text-center">
+              <h1 class="small pb-2 mb-1 centered">
+                {{ $t("cspb-criteria-header") }}
+              </h1>
+            </b-col>
+          </b-row>
+        </b-container>
       </b-container>
     </content-section>
 
@@ -79,7 +83,7 @@
     <content-section>
       <b-container
         class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
-        ref="pb_overview"
+        ref="create_project"
       >
         <b-row>
           <b-col cols="12" class="text-center">
@@ -92,6 +96,22 @@
     </content-section>
 
     <hr class="mx-2" />
+
+    <!-- How to create a project section -->
+    <content-section>
+      <b-container
+        class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        ref="integration_cslogger"
+      >
+        <b-row>
+          <b-col cols="12" class="text-center">
+            <h1 class="small pb-2 mb-1 centered">
+              {{ $t("cspb-integration-cslogger-header") }}
+            </h1>
+          </b-col>
+        </b-row>
+      </b-container>
+    </content-section>
   </div>
 </template>
 
@@ -99,6 +119,8 @@
 import { throttle } from "lodash";
 import SidebarContent from "@/components/Common/SidebarContent";
 import ContentSection from "@/components/Common/ContentSection";
+
+let ctrl_scroll = 0;
 
 export default {
   name: "ProjectBuilderHome",
@@ -116,13 +138,34 @@ export default {
   },
   data() {
     return {
-      anchors: ["pb_overview", "pb_criteria", "create_project"],
+      anchors: [
+        "pb_overview",
+        "pb_criteria",
+        "create_project",
+        "integration_cslogger"
+      ],
       throttleScroll: throttle(this.handleScroll, 300)
     };
   },
   components: {
     ContentSection,
     SidebarContent
+  },
+  created() {
+    window.addEventListener("scroll", this.throttleScroll, false);
+  },
+  beforeMount() {
+    // auto scroll to the page top when render first time
+    setTimeout(function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 2);
+  },
+  mounted() {
+    // Initialize the scroll control
+    ctrl_scroll = 0;
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.throttleScroll, false);
   },
   methods: {
     gotoAnchor: function(refName) {

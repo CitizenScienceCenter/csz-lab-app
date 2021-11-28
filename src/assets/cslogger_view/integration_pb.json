@@ -55,7 +55,7 @@
       "rows": [
         [
           {
-            "text": "<p>For create a project based on the collected data by the applet using CS Logger, please click on the button and follow the instructions:</p> <div class='text-center'><a href='/tools/projectbuilder' class='btn btn-primary' target='_self'>Create Project</a></div>"
+            "text": "<p>For create a project based on the collected data by the applet using CS Logger, please click on the button and follow the instructions:</p> <div class='text-center'><router-link :to=\"'/tools/projectbuilder'\" tag='a' class='btn btn-primary'>Create Project</router-link></div>"
           }
         ]
       ]
