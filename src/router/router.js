@@ -32,25 +32,27 @@ router.beforeEach(async (to, from, next) => {
   console.log("navigate to: " + to.path);
   console.log("split:");
 
-  document.title = to.meta.title || "CS Project Builder";
+  // when indexed db used for persistence is required to restore the store first
+  if ("indexedDB" in window) {
+    await store.restored;
+  }
 
-  //const link = document.querySelector("[rel='icon']")
-  //link.setAttribute('href',to.meta.icon)
+  document.title = to.meta.title || "CS Project Builder";
 
   let filteredPath = to.path.split("/").filter((element) => element.length > 0);
   console.log(filteredPath);
   console.log(to.name);
 
-  //if( to.params.lang && to.params.lang.split('/')[0].length === 2 ) {
   if (filteredPath.length > 0 && filteredPath[0].length === 2) {
     console.log("url has language: " + filteredPath[0]);
     let language = filteredPath[0];
     store.dispatch("settings/setLanguage", language);
     i18n.locale = language;
-    console.log(i18n.locale);
 
     // validate for protected routes
-    if (!publicRoutes.includes(to.name)) {
+    if (publicRoutes.includes(to.name)) {
+      next();
+    } else {
       if (store.state.user.logged) {
         next();
       } else {
@@ -65,8 +67,6 @@ router.beforeEach(async (to, from, next) => {
               name: "login",
             });
       }
-    } else {
-      next();
     }
   } else {
     console.log("redirect to");

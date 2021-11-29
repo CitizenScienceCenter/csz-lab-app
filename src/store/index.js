@@ -12,9 +12,9 @@ import settings from "./modules/settings";
 import snakes from "./modules/snakes";
 import comments from "./modules/comments";
 
-// libraries for local persistence idb prefered over localstorag
-import idb from "vuex-persist-indexeddb";
-import lsdb from "vuex-persistedstate";
+// libraries for local persistence idb prefered over localstorage
+import VuexPersistence from "vuex-persist";
+import localForage from "localforage";
 import SecureLS from "secure-ls";
 var ls = new SecureLS({ isCompression: false });
 
@@ -22,22 +22,25 @@ Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== "production";
 
-const persistence = function () {
+const persistence = function() {
   // validate if browser supports indexedDB
   if ("indexedDB" in window) {
-    // return indexeddb pesistence object
-    return idb();
+    // return vuex persistence with indexed db
+    return new VuexPersistence({
+      storage: localForage,
+      asyncStorage: true
+    });
   } else {
     console.warn(
       "This browser does not support indexedDB. LocalStorage used instead"
     );
-    // return local storage pesistence object
-    return lsdb({
+    // return vuex persistence with local storage db
+    return new VuexPersistence({
       storage: {
-        getItem: (key) => ls.get(key),
+        getItem: key => ls.get(key),
         setItem: (key, value) => ls.set(key, value),
-        removeItem: (key) => ls.remove(key),
-      },
+        removeItem: key => ls.remove(key)
+      }
     });
   }
 };
@@ -51,8 +54,10 @@ export default new Vuex.Store({
     task,
     osm,
     snakes,
-    comments,
+    comments
   },
   strict: debug,
-  plugins: debug ? [createLogger(), persistence()] : [persistence()],
+  plugins: debug
+    ? [createLogger(), persistence().plugin]
+    : [persistence().plugin]
 });

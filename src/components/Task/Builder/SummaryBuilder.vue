@@ -347,10 +347,9 @@ export default {
         results => {
           if (results.filter(el => el !== false).length === 3) {
             this.resetTaskBuilder();
-            this.$router.push({
-              name: "project",
-              params: { id: this.selectedProject.id }
-            });
+            this.$router
+              .push(`/project/${this.selectedProject.id}`)
+              .catch(() => {});
           } else {
             this.showError({
               title: this.$t("error"),
