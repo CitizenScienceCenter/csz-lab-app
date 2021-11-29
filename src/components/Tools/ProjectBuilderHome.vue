@@ -20,6 +20,10 @@
         <b-row>
           <b-col class="text-center">
             <p class="text-justify" v-html="$t('cspb-introduction')"></p>
+            <!-- Create applet button -->
+            <b-button variant="primary" to="/project/builder/name" class="mt-2">
+              {{ $t("home-create-a-project") }}
+            </b-button>
             <!-- anchors -->
             <div class="text-left mt-2">
               <b-button-group vertical>
@@ -34,10 +38,6 @@
                 </a>
               </b-button-group>
             </div>
-            <!-- Create applet button -->
-            <b-button variant="primary" to="/project/builder/name" class="mt-2">
-              {{ $t("home-create-a-project") }}
-            </b-button>
           </b-col>
         </b-row>
       </b-container>
