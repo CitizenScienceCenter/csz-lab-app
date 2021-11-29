@@ -89,7 +89,7 @@ export default new Vuex.Store({
     task,
     osm,
     snakes,
-    comments,
+    comments
   },
   strict: debug,
   plugins: getPlugins()
