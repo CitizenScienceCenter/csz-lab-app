@@ -6,26 +6,31 @@ import { getTranslationLocale } from "@/helper";
 
 export const router = new VueRouter({
   routes: routes,
-  mode: "history",
+  mode: "history"
 });
-
-const publicRoutes = [
-  "home",
-  "login",
-  "register",
-  "logout",
-  "discover",
-  "tools.cslogger",
-  "tools.projectbuilder",
-  "about",
-  "forum",
-  "project",
-  "project.test",
-  "project.task.presenter",
-  "project.task.presenter.test",
-  "reset-password",
-  "recover-password",
-  "register-confirmation",
+const protectedRoutes = [
+  "profile",
+  "profile.edition",
+  "project.task.importers",
+  "project.task.exporters",
+  "project.task.settings",
+  "project.task.settings.delete",
+  "project.task.settings.scheduler",
+  "project.task.settings.redundancy",
+  "project.task.settings.priority",
+  "project.task.presenter.settings",
+  "project.task.presenter.editor",
+  "project.tasks.list",
+  "project.builder.name",
+  "project.builder.information",
+  "project.builder.story",
+  "project.builder.end",
+  "task.builder.material",
+  "task.builder.job",
+  "task.builder.template",
+  "task.builder.source",
+  "task.builder.summary",
+  "flickr.callback"
 ];
 
 router.beforeEach(async (to, from, next) => {
@@ -39,7 +44,7 @@ router.beforeEach(async (to, from, next) => {
 
   document.title = to.meta.title || "CS Project Builder";
 
-  let filteredPath = to.path.split("/").filter((element) => element.length > 0);
+  let filteredPath = to.path.split("/").filter(element => element.length > 0);
   console.log(filteredPath);
   console.log(to.name);
 
@@ -50,23 +55,23 @@ router.beforeEach(async (to, from, next) => {
     i18n.locale = language;
 
     // validate for protected routes
-    if (publicRoutes.includes(to.name)) {
-      next();
-    } else {
+    if (protectedRoutes.includes(to.name)) {
       if (store.state.user.logged) {
         next();
       } else {
         // if the route needs to be logged the user is redirected
         store.commit("notification/showInfo", {
           title: getTranslationLocale("error-login-authentication"),
-          content: getTranslationLocale("error-login-authentication-content"),
+          content: getTranslationLocale("error-login-authentication-content")
         });
         from.name !== null
           ? next(false)
           : next({
-              name: "login",
+              name: "login"
             });
       }
+    } else {
+      next();
     }
   } else {
     console.log("redirect to");

@@ -37,10 +37,10 @@
         <b-button
           variant="border-transparent text-white"
           @click="openInNewTab('mailto:info@citizenscience.ch')"
-          >
+        >
           <i class="fas fa-envelope"></i>
           <span class="ml-1">info@citizenscience.ch</span>
-        </b-button        >
+        </b-button>
         <b-button
           variant="border-transparent text-white "
           @click="openInNewTab('tel:+41446342197')"
@@ -79,7 +79,7 @@
           >Privacy Policy & Terms of Use</a
         >
         -
-        <router-link :to="{ name: 'about' }"
+        <router-link :to="{ name: 'tools.projectbuilder' }"
           >Criteria for project publication</router-link
         >
       </p>
