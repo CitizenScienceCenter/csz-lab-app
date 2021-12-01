@@ -867,7 +867,7 @@
     "cspb-introduction": "<p>Citizen Science projects for the analysis of digital data engage people in complex tasks such as image analysis, pattern recognition, text transcription, mapping, etc. Such tasks are performed via a web interface on existing digital data.</p><p>The Citizen Science Project Builder is a web-based tool that allows you to create and run data-analysis projects with a simple step-by-step process.</p><p>The CS Project Builder is a joint effort of the <strong>Citizen Cyberlab at University of Geneva</strong> and the <strong>Citizen Science Center Zurich</strong>.</p><br/>Learn more:",
     "cspb-introduction-anchor-0": "Overview",
     "cspb-introduction-anchor-1": "Criteria",
-    "cspb-introduction-anchor-2": "How to create a Project",
+    "cspb-introduction-anchor-2": "How it works",
     "cspb-introduction-anchor-3": "Integration with CS Logger"
   },
   "de": {

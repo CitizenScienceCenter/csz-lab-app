@@ -52,9 +52,11 @@
         >
           <b-row>
             <b-col cols="12" class="text-center">
-              <h1 class="small pb-2 mb-1 centered">
-                {{ $t("cspb-overview-header") }}
+              <h1 class="small centered">
+                {{ $t("about-overview") }}
               </h1>
+              <!-- Content already created in about moved to this section -->
+              <about-overview class="text-justify pt-4"></about-overview>
             </b-col>
           </b-row>
         </b-container>
@@ -71,37 +73,43 @@
           <b-row>
             <b-col cols="12" class="text-center">
               <h1 class="small pb-2 mb-1 centered">
-                {{ $t("cspb-criteria-header") }}
+                {{ $t("about-criteria") }}
               </h1>
+              <!-- Content already created in about moved to this section -->
+              <about-criteria class="text-justify pt-4"></about-criteria>
             </b-col>
           </b-row>
         </b-container>
       </b-container>
     </content-section>
 
-    <!-- How to create a project section -->
+    <!-- How it works section -->
     <content-section>
       <b-container
         class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
-        ref="create_project"
+        ref="pb_create_project"
       >
         <b-row>
           <b-col cols="12" class="text-center">
             <h1 class="small pb-2 mb-1 centered">
-              {{ $t("cspb-create-project-header") }}
+              {{ $t("about-howitworks") }}
             </h1>
           </b-col>
+          <sidebar-content
+            parent="pb_create_project"
+            @openSidebar="gotoAnchor('pb_create_project')"
+          ></sidebar-content>
         </b-row>
       </b-container>
     </content-section>
 
     <hr class="mx-2" />
 
-    <!-- How to create a project section -->
+    <!-- Integrate with CS Logger section -->
     <content-section>
       <b-container
         class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
-        ref="integration_cslogger"
+        ref="pb_integration_cslogger"
       >
         <b-row>
           <b-col cols="12" class="text-center">
@@ -119,6 +127,9 @@
 import { throttle } from "lodash";
 import SidebarContent from "@/components/Common/SidebarContent";
 import ContentSection from "@/components/Common/ContentSection";
+
+import AboutOverview from "@/components/Tools/AboutOverview";
+import AboutCriteria from "@/components/Tools/AboutCriteria";
 
 let ctrl_scroll = 0;
 
@@ -141,15 +152,17 @@ export default {
       anchors: [
         "pb_overview",
         "pb_criteria",
-        "create_project",
-        "integration_cslogger"
+        "pb_create_project",
+        "pb_integration_cslogger"
       ],
       throttleScroll: throttle(this.handleScroll, 300)
     };
   },
   components: {
     ContentSection,
-    SidebarContent
+    SidebarContent,
+    AboutOverview,
+    AboutCriteria
   },
   created() {
     window.addEventListener("scroll", this.throttleScroll, false);
@@ -183,9 +196,9 @@ export default {
 
       let scroll_down = ctrl_scroll < screen_pos;
       const sectionMap = new Map();
-      sectionMap.set(this.anchors[0], {
-        offsetTop: this.$refs[this.anchors[0]].offsetTop,
-        scrollHeight: this.$refs[this.anchors[0]].scrollHeight
+      sectionMap.set(this.anchors[2], {
+        offsetTop: this.$refs[this.anchors[2]].offsetTop,
+        scrollHeight: this.$refs[this.anchors[2]].scrollHeight
       });
       if (scroll_down) {
         sectionMap.forEach((value, key) => {

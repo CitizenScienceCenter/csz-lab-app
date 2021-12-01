@@ -13,54 +13,7 @@
               fill
             >
               <b-tab :title="$t('about-overview')" style="outline: none">
-                <h2 class="text-secondary">{{ $t("about-question-1") }}</h2>
-                <p>
-                  {{ $t("about-answer-1") }}
-                </p>
-                <h2 class="text-secondary mt-5">
-                  {{ $t("about-question-2") }}
-                </h2>
-                <p></p>
-                <p
-                  v-html="
-                    $t('about-answer-2', {
-                      link1: `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'>Wikipedia</a>`
-                    })
-                  "
-                ></p>
-                <h2 class="text-secondary mt-5">
-                  {{ $t("about-question-3") }}
-                </h2>
-                <p>
-                  {{ $t("about-answer-3") }}
-                </p>
-                <h2 class="text-secondary mt-5">
-                  {{ $t("about-question-4") }}
-                </h2>
-                <p>
-                  {{ $t("about-answer-4") }}
-                </p>
-                <p></p>
-
-                <p
-                  v-html="
-                    $t('about-answer-5', {
-                      criteria: `<a target='_blank' href='https://en.wikipedia.org/wiki/Citizen_science'></a>`
-                    })
-                  "
-                ></p>
-                <h2 class="text-secondary mt-5">
-                  {{ $t("about-question-6") }}
-                </h2>
-                <p></p>
-                <p
-                  v-html="
-                    $t('about-answer-6', {
-                      pybossa: `<a target='_blank' href='https://github.com/Scifabric/pybossa'>PyBossa</a>`,
-                      csgit: `<a target='_blank' href='https://github.com/CitizenScienceCenter'>Github</a>`
-                    })
-                  "
-                ></p>
+                
               </b-tab>
 
               <b-tab :title="$t('about-howitworks')" style="outline: none">
@@ -111,21 +64,7 @@
               </b-tab>
 
               <b-tab :title="$t('about-criteria')" style="outline: none">
-                {{ $t("about-criteria-label1") }}
-                <ul
-                  style="list-style-type: disc;margin-left:30px;margin-top:20px;"
-                >
-                  <li>{{ $t("about-criteria-list1") }}</li>
-                  <li>{{ $t("about-criteria-list2") }}</li>
-                  <li>{{ $t("about-criteria-list3") }}</li>
-                  <li>{{ $t("about-criteria-list4") }}</li>
-                  <li>{{ $t("about-criteria-list5") }}</li>
-                  <li>{{ $t("about-criteria-list6") }}</li>
-                  <li>{{ $t("about-criteria-list7") }}</li>
-                  <li>{{ $t("about-criteria-list8") }}</li>
-                  <li>{{ $t("about-criteria-list9") }}</li>
-                  <li>{{ $t("about-criteria-list10") }}</li>
-                </ul>
+                
               </b-tab>
             </b-tabs>
           </b-col>
