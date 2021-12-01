@@ -26,6 +26,7 @@ import TaskPrioritySetting from "@/components/Project/Menu/TaskMenu/Settings/Tas
 import FlickrCallback from "@/components/Task/Builder/FlickrCallback";
 import ResetPassword from "@/components/ResetPassword";
 import RecoverPassword from "@/components/RecoverPassword";
+import NotFound from "@/components/NotFound";
 
 export const routes = [
   {
@@ -33,28 +34,28 @@ export const routes = [
     component: {
       render(c) {
         return c("router-view");
-      },
+      }
     },
     children: [
       {
         path: "",
         name: "home",
-        component: Home,
+        component: Home
       },
       {
         path: "login",
         name: "login",
-        component: Login,
+        component: Login
       },
       {
         path: "register",
         name: "register",
-        component: Registration,
+        component: Registration
       },
       {
         path: "reset-password",
         name: "reset-password",
-        component: ResetPassword,
+        component: ResetPassword
       },
       {
         path: "account/reset-password",
@@ -69,7 +70,7 @@ export const routes = [
           } else {
             next({ name: "home" });
           }
-        },
+        }
       },
       {
         path: "account/register/confirmation",
@@ -88,7 +89,7 @@ export const routes = [
           if (url.length > 1) {
             store
               .dispatch("user/registerConfirmation", url[1])
-              .then((confirm) => {
+              .then(confirm => {
                 //console.log(confirm)
                 if (confirm) {
                   next({ name: "home" });
@@ -97,23 +98,23 @@ export const routes = [
           } else {
             next({ name: "home" });
           }
-        },
+        }
       },
       {
         path: "logout",
         name: "logout",
         beforeEnter: (to, from, next) => {
-          store.dispatch("user/signOut").then((signedOut) => {
+          store.dispatch("user/signOut").then(signedOut => {
             if (signedOut) {
               next({ name: "home" });
             }
           });
-        },
+        }
       },
       {
         path: "discover",
         name: "discover",
-        component: Discover,
+        component: Discover
       },
       {
         path: "tools",
@@ -121,20 +122,20 @@ export const routes = [
         component: {
           render(c) {
             return c("router-view");
-          },
+          }
         },
         children: [
           {
             path: "cslogger",
             name: "tools.cslogger",
-            component: CitizenScienceLogger,
+            component: CitizenScienceLogger
           },
           {
             path: "projectbuilder",
             name: "tools.projectbuilder",
-            component: ProjectBuilderHome,
-          },
-        ],
+            component: ProjectBuilderHome
+          }
+        ]
       },
       // TODO: uncomment when Forum for each particular projects is done
       //   {
@@ -149,7 +150,7 @@ export const routes = [
         beforeEnter: (to, from, next) => {
           store.commit("user/isInProfileEditionMode", false);
           next();
-        },
+        }
       },
       {
         path: "profile/edit",
@@ -158,7 +159,7 @@ export const routes = [
         beforeEnter: (to, from, next) => {
           store.commit("user/isInProfileEditionMode", true);
           next();
-        },
+        }
       },
 
       // Project related pages
@@ -186,7 +187,7 @@ export const routes = [
             );
           }
           next();
-        },
+        }
       },
       {
         path: "project/:short_name/test/confirm",
@@ -204,13 +205,13 @@ export const routes = [
               .dispatch("project/getProjectSharedLinkConfirmation", {
                 key: url[1],
                 short_name: short_name,
-                fullpath: fp,
+                fullpath: fp
               })
-              .then((confirm) => {
+              .then(confirm => {
                 if (confirm == "success") {
                   store.dispatch("project/resetTaskProgress", {
                     done: 0,
-                    total: 0,
+                    total: 0
                   });
                   store.dispatch("task/forceTaskOffset", 0);
                   next();
@@ -221,55 +222,55 @@ export const routes = [
           } else {
             next({ name: "home" });
           }
-        },
+        }
       },
       {
         path: "project/:id/task-importers",
         name: "project.task.importers",
         component: TaskImporterMenu,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/task-exporters",
         name: "project.task.exporters",
         component: TaskExporterMenu,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/task-settings",
         name: "project.task.settings",
         component: TaskSettingsMenu,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/task-settings/delete",
         name: "project.task.settings.delete",
         component: DeleteTaskSetting,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/task-settings/scheduler",
         name: "project.task.settings.scheduler",
         component: TaskSchedulerSetting,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/task-settings/redundancy",
         name: "project.task.settings.redundancy",
         component: TaskRedundancySetting,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/task-settings/priority",
         name: "project.task.settings.priority",
         component: TaskPrioritySetting,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/task-presenter",
         name: "project.task.presenter",
         component: TemplateRenderer,
-        props: true,
+        props: true
       },
       {
         path: "project/:short_name/task-presenter/test",
@@ -283,25 +284,25 @@ export const routes = [
           } else {
             next({ name: "home" });
           }
-        },
+        }
       },
       {
         path: "project/:id/task-presenter/settings",
         name: "project.task.presenter.settings",
         component: TaskPresenterMenu,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/task-presenter/editor",
         name: "project.task.presenter.editor",
         component: TaskPresenterEditor,
-        props: true,
+        props: true
       },
       {
         path: "project/:id/tasks",
         name: "project.tasks.list",
         component: TaskList,
-        props: true,
+        props: true
       },
 
       // Project builder steps
@@ -313,7 +314,7 @@ export const routes = [
         beforeEnter: (to, from, next) => {
           store.commit("project/builder/setCurrentStep", "name");
           next();
-        },
+        }
       },
       {
         path: "project/builder/information",
@@ -326,7 +327,7 @@ export const routes = [
           } else {
             next({ name: "project.builder.name" });
           }
-        },
+        }
       },
       {
         path: "project/builder/story",
@@ -342,7 +343,7 @@ export const routes = [
           } else {
             next({ name: "project.builder.information" });
           }
-        },
+        }
       },
       {
         path: "project/builder/end",
@@ -361,7 +362,7 @@ export const routes = [
           } else {
             next({ name: "project.builder.story" });
           }
-        },
+        }
       },
 
       // Task builder steps
@@ -374,7 +375,7 @@ export const routes = [
         beforeEnter: (to, from, next) => {
           store.commit("task/builder/setCurrentStep", "material");
           next();
-        },
+        }
       },
       {
         path: "project/:id/task/builder/job",
@@ -388,10 +389,10 @@ export const routes = [
           } else {
             next({
               name: "task.builder.material",
-              params: { id: to.params.id },
+              params: { id: to.params.id }
             });
           }
-        },
+        }
       },
       {
         path: "project/:id/task/builder/template",
@@ -405,10 +406,10 @@ export const routes = [
           } else {
             next({
               name: "task.builder.job",
-              params: { id: to.params.id },
+              params: { id: to.params.id }
             });
           }
-        },
+        }
       },
       {
         path: "project/:id/task/builder/source",
@@ -422,10 +423,10 @@ export const routes = [
           } else {
             next({
               name: "task.builder.template",
-              params: { id: to.params.id },
+              params: { id: to.params.id }
             });
           }
-        },
+        }
       },
       {
         path: "project/:id/task/builder/summary",
@@ -439,17 +440,22 @@ export const routes = [
           } else {
             next({
               name: "task.builder.source",
-              params: { id: to.params.id },
+              params: { id: to.params.id }
             });
           }
-        },
+        }
       },
       {
         path: "flickr/callback",
         name: "flickr.callback",
         props: true,
-        component: FlickrCallback,
+        component: FlickrCallback
       },
-    ],
-  },
+      {
+        // catch all NotFound
+        path: "*",
+        component: NotFound
+      }
+    ]
+  }
 ];

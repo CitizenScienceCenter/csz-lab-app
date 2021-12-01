@@ -3,6 +3,9 @@
     "site-title": "CS Project Builder",
     "site-description": "Next Level Citizen Science",
 
+    "notfound-button":"Home",
+    "notfound-label":"Page not found",
+
     "home-heading": "CITIZEN SCIENCE PROJECT BUILDER",
     "home-subheading": "Contribute to existing projects or create your own",
     "home-create-a-project": "Create a project",
@@ -870,6 +873,9 @@
   "de": {
     "site-title": "CS Project Builder",
     "site-description": "Next Level Citizen Science",
+
+    "notfound-button":"Home",
+    "notfound-label":"Seite nicht gefunden",
 
     "home-heading": "CITIZEN SCIENCE PROJECT BUILDER",
     "home-subheading": "Forschen Sie mit oder starten Sie Ihr eigenes Projekt",

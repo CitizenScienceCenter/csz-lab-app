@@ -124,7 +124,7 @@
                     <span
                       v-html="
                         $t('modify-draft-modal-content', {
-                          HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>How it works</a>`
+                          HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/tools/projectbuilder'>How it works</a>`
                         })
                       "
                     ></span>
@@ -192,7 +192,7 @@
                   <span
                     v-html="
                       $t('project-draft-approval-warning', {
-                        link: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>criteria</a>`
+                        link: `<a target='_blank' href='https://lab.citizenscience.ch/en/tools/projectbuilder'>criteria</a>`
                       })
                     "
                   ></span>
