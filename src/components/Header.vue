@@ -29,7 +29,7 @@
           <template slot="button-content">
             <span
               :class="{
-                active: $router.history.current.name.includes('tools'),
+                active: isTools
               }"
             >
               {{ $t("app-vue-navigation-tools") }}
@@ -118,27 +118,27 @@ export default {
   name: "Header",
   data: () => {
     return {
-      defaultImage: require("@/assets/graphic-community.png"),
+      defaultImage: require("@/assets/graphic-community.png")
     };
   },
   props: {
     languages: {
       type: Array,
-      default: function () {
+      default: function() {
         return ["en", "de"];
-      },
-    },
+      }
+    }
   },
   watch: {
     language(to) {
       i18n.locale = to;
       this.$router.push(this.$route.path.substring(3));
-    },
+    }
   },
   computed: {
     ...mapState({
-      userLogged: (state) => state.user.logged,
-      userProfile: (state) => state.user.infos,
+      userLogged: state => state.user.logged,
+      userProfile: state => state.user.infos
     }),
     avatarUrl() {
       const au = this.userProfile
@@ -148,7 +148,10 @@ export default {
         : null;
       return au;
     },
-  },
+    isTools() {
+      return this.$route.name ? this.$route.name.includes("tools") : false;
+    }
+  }
 };
 </script>
 

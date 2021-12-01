@@ -124,7 +124,7 @@
       <b-container
         fluid
         class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
-        ref="create_app"
+        ref="cslogger_create_app"
       >
         <b-row>
           <b-col cols="12" class="text-center">
@@ -135,8 +135,8 @@
         </b-row>
         <sidebar-content
           :content="createAppContent"
-          parent="create_app"
-          @openSidebar="gotoAnchor('create_app')"
+          parent="cslogger_create_app"
+          @openSidebar="gotoAnchor('cslogger_create_app')"
         ></sidebar-content>
       </b-container>
     </content-section>
@@ -148,7 +148,7 @@
       <b-container
         fluid
         class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
-        ref="share_app"
+        ref="cslogger_share_app"
       >
         <b-row>
           <b-col cols="12" class="text-center">
@@ -159,8 +159,8 @@
         </b-row>
         <sidebar-content
           :content="shareAppContent"
-          parent="share_app"
-          @openSidebar="gotoAnchor('share_app')"
+          parent="cslogger_share_app"
+          @openSidebar="gotoAnchor('cslogger_share_app')"
         ></sidebar-content>
       </b-container>
     </content-section>
@@ -172,7 +172,7 @@
       <b-container
         fluid
         class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
-        ref="integration_pb"
+        ref="cslogger_integration_pb"
       >
         <b-row>
           <b-col cols="12" class="text-center">
@@ -183,8 +183,8 @@
         </b-row>
         <sidebar-content
           :content="integrationContent"
-          parent="integration_pb"
-          @openSidebar="gotoAnchor('integration_pb')"
+          parent="cslogger_integration_pb"
+          @openSidebar="gotoAnchor('cslogger_integration_pb')"
         ></sidebar-content>
       </b-container>
     </content-section>
@@ -222,7 +222,7 @@ export default {
   data() {
     return {
       team_logos: [],
-      anchors: ["create_app", "share_app", "integration_pb"],
+      anchors: ["cslogger_create_app", "cslogger_share_app", "cslogger_integration_pb"],
       throttleScroll: throttle(this.handleScroll, 300),
       createAppContent: CREATE_APP_CONTENT,
       shareAppContent: SHARE_APP_CONTENT,
@@ -283,15 +283,15 @@ export default {
 
       let scroll_down = ctrl_scroll < screen_pos;
       const sectionMap = new Map();
-      sectionMap.set("create_app", {
+      sectionMap.set("cslogger_create_app", {
         offsetTop: this.$refs[this.anchors[0]].offsetTop,
         scrollHeight: this.$refs[this.anchors[0]].scrollHeight
       });
-      sectionMap.set("share_app", {
+      sectionMap.set("cslogger_share_app", {
         offsetTop: this.$refs[this.anchors[1]].offsetTop,
         scrollHeight: this.$refs[this.anchors[1]].scrollHeight
       });
-      sectionMap.set("integration_pb", {
+      sectionMap.set("cslogger_integration_pb", {
         offsetTop: this.$refs[this.anchors[2]].offsetTop,
         scrollHeight: this.$refs[this.anchors[2]].scrollHeight
       });
