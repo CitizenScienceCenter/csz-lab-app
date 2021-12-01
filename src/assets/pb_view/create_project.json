@@ -1,0 +1,19 @@
+[
+  {
+    "id": "create-project-0",
+    "title": "pb-create-project-introduction",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cspb-create-project-introduction-0"
+          },
+          {
+            "img": "pb_view/create_project/login_registration_pb.png"
+          }
+        ]
+      ]
+    }
+  }
+]

@@ -86,7 +86,8 @@
     <!-- How it works section -->
     <content-section>
       <b-container
-        class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        fluid
+        class="full-height small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
         ref="pb_create_project"
       >
         <b-row>
@@ -95,11 +96,12 @@
               {{ $t("about-howitworks") }}
             </h1>
           </b-col>
-          <sidebar-content
-            parent="pb_create_project"
-            @openSidebar="gotoAnchor('pb_create_project')"
-          ></sidebar-content>
         </b-row>
+        <sidebar-content
+          :content="createProjectContent"
+          parent="pb_create_project"
+          @openSidebar="gotoAnchor('pb_create_project')"
+        ></sidebar-content>
       </b-container>
     </content-section>
 
@@ -132,6 +134,7 @@ import AboutOverview from "@/components/Tools/AboutOverview";
 import AboutCriteria from "@/components/Tools/AboutCriteria";
 
 let ctrl_scroll = 0;
+const CREATE_PROJECT_CONTENT = require("@/assets/pb_view/create_project.json");
 
 export default {
   name: "ProjectBuilderHome",
@@ -155,7 +158,8 @@ export default {
         "pb_create_project",
         "pb_integration_cslogger"
       ],
-      throttleScroll: throttle(this.handleScroll, 300)
+      throttleScroll: throttle(this.handleScroll, 300),
+      createProjectContent: CREATE_PROJECT_CONTENT
     };
   },
   components: {
@@ -223,7 +227,7 @@ export default {
   cursor: pointer;
   color: $primary !important;
 }
-.full-heigth {
+.full-height {
   min-height: 90vh;
 }
 </style>

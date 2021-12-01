@@ -1,8 +1,6 @@
-import Vue from "vue";
 import store from "@/store";
-import Router from "vue-router";
 import Home from "@/components/Home";
-import Comments from "@/components/Forum/Comments";
+// import Comments from "@/components/Forum/Comments";
 import Login from "@/components/Login";
 import Discover from "@/components/Discover";
 import CitizenScienceLogger from "@/components/Tools/CitizenScienceLogger";
@@ -10,7 +8,6 @@ import ProjectBuilderHome from "@/components/Tools/ProjectBuilderHome";
 import Project from "@/components/Project/Project";
 import ProjectTest from "@/components/Project/ProjectTest";
 import ProjectBuilder from "@/components/Project/Builder/ProjectBuilder";
-import About from "@/components/About";
 import TaskBuilder from "@/components/Task/Builder/TaskBuilder";
 import TemplateRenderer from "@/components/Task/TemplateRenderer";
 import TemplateRendererTestProject from "@/components/Task/TemplateRendererTestProject";
@@ -138,11 +135,6 @@ export const routes = [
             component: ProjectBuilderHome,
           },
         ],
-      },
-      {
-        path: "about",
-        name: "about",
-        component: About,
       },
       // TODO: uncomment when Forum for each particular projects is done
       //   {
