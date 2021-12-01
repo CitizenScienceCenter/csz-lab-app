@@ -419,10 +419,6 @@
     "about-question-6": "A bit of history ...",
     "about-answer-6": "The web interface for the CS Project Builder is inspired by the now discontinued Crowdcrafting platform. Its implementation is based on the open source crowdsourcing framework {pybossa}. The code is publicly available under the ‘CitizenScienceCenter’ organisation on {csgit}.",
 
-    "about-how-header": "The Project Builder supports projects where volunteer contributors can analyse or enrich existing data. In particular, it allows to:",
-    "about-how-header-list": "<ul style='list-style-type: disc' class='ml-4 mt-1'><li>Classify or describe large sets of images or text (ie. identify images, count objects, describe scenes) and social media content (tweets).</li><li>Classify or describe sounds and video clips.</li><li>Work on PDF documents (transcribe, translate, describe).</li><li>Geo-code images or tweets, ie. mark their location on a map (note: this task requires some coding skills!).</li></ul>",
-    "about-how-header1": "Setting up a project involves a few simple steps:",
-
     "about-how-step0": "STEP 0: Login or create your Project Builder account",
     "about-how-step1": "STEP 1: Create your project’s home page",
     "about-how-step1-label": "To create your project, you start with choosing a nice and catchy title and an image to represent it (<1MB). Then, you need to provide:",
@@ -868,7 +864,9 @@
     "cspb-introduction-anchor-0": "Overview",
     "cspb-introduction-anchor-1": "Criteria",
     "cspb-introduction-anchor-2": "How it works",
-    "cspb-introduction-anchor-3": "Integration with CS Logger"
+    "cspb-introduction-anchor-3": "Integration with CS Logger",
+
+    "cspb-create-project-introduction-0":"<p>The Project Builder supports projects where volunteer contributors can analyse or enrich existing data. In particular, it allows to:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>Classify or describe large sets of images or text (ie. identify images, count objects, describe scenes) and social media content (tweets).</li><li>Classify or describe sounds and video clips.</li><li>Work on PDF documents (transcribe, translate, describe).</li><li>Geo-code images or tweets, ie. mark their location on a map (note: this task requires some coding skills!).</li></ul><p>Before starting, it is required to login into your Project Builder account or to register a  new account if you don't have one so far.</p><p>This is possible by clicking on the LOGIN button at the top right of this screen.</p>"
   },
   "de": {
     "site-title": "CS Project Builder",
@@ -1410,10 +1408,6 @@
     "about-question-6": "Über die Entstehung",
     "about-answer-6": "Als Vorbild für das Webinterface des CS Project Builder diente die inzwischen eingestellte Crowdcrafting platform. Die Gestaltung basiert auf dem Open Source Crowdsourcing Framework {pybossa}. Der Code ist unter der «CitizenScienceCenter» Organization auf {csgit} öffentlich verfügbar.",
 
-    "about-how-header": "Der Project Builder unterstützt Projekte, bei denen bereits existierende Daten von freiwilligen Mitwirkenden analysiert oder angereichert werden können. Er ermöglicht insbesondere:",
-    "about-how-header-list": "<ul style='list-style-type: disc' class='ml-4 mt-1'><li>die Klassifizierung oder Beschreibung von grossen Bild- oder Textmengen (d. h. die Erkennung von Bildern, die Zählung von Objekten, die Beschreibung von Szenen) und von Social-Media-Inhalt (Tweets).</li><li>die Klassifizierung oder Beschreibung von Geräuschen und Videoclips.</li><li>die Arbeit an PDF-Dokumenten (Transkription, Übersetzung, Beschreibung).</li><li>die Geokodierung von Bildern oder Tweets, d. h. die Kennzeichnung ihrer Position auf einer Landkarte (Hinweis: Für diese Aufgabe werden Programmierkenntnisse benötigt!).</li></ul>",
-    "about-how-header1": "Ein Projekt lässt sich in wenigen einfachen Schritten anlegen:",
-
     "about-how-step0": "SCHRITT 0: Melden Sie sich an oder erstellen Sie Ihr Project Builder-Konto",
     "about-how-step1": "SCHRITT 1: Erstellen Sie eine Homepage für Ihr Projekt",
     "about-how-step1-label": "Beginnen Sie damit, dass Sie für Ihr Projekt einen gut klingenden und einprägsamen Namen auswählen sowie ein Bild, das Ihr Projekt repräsentiert (< 1 MB).",
@@ -1704,6 +1698,9 @@
     "solution-kit-pb-button": "Get Started",
 
     "cslogger-header": "Citizen Science Logger",
-    "cslogger-download-app-label": "App herunterladen"
+    "cslogger-download-app-label": "App herunterladen",
+
+
+    "cspb-create-project-introduction-0":"<p>Der Project Builder unterstützt Projekte, bei denen bereits existierende Daten von freiwilligen Mitwirkenden analysiert oder angereichert werden können. Er ermöglicht insbesondere:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>die Klassifizierung oder Beschreibung von grossen Bild- oder Textmengen (d. h. die Erkennung von Bildern, die Zählung von Objekten, die Beschreibung von Szenen) und von Social-Media-Inhalt (Tweets).</li><li>die Klassifizierung oder Beschreibung von Geräuschen und Videoclips.</li><li>die Arbeit an PDF-Dokumenten (Transkription, Übersetzung, Beschreibung).</li><li>die Geokodierung von Bildern oder Tweets, d. h. die Kennzeichnung ihrer Position auf einer Landkarte (Hinweis: Für diese Aufgabe werden Programmierkenntnisse benötigt!).</li></ul><p>Bevor Sie beginnen, müssen Sie sich bei Ihrem Project Builder-Konto anmelden oder ein neues Konto registrieren, falls Sie noch keines haben.</p><p>Dies ist möglich, indem Sie auf die Schaltfläche LOGIN oben rechts auf diesem Bildschirm klicken.</p>"
   }
 }

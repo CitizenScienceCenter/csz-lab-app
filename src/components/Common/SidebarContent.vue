@@ -119,6 +119,8 @@
 </template>
 
 <script>
+import { getTranslationLocale } from "@/helper.js";
+
 export default {
   name: "SidebarContent",
   props: { content: Array, parent: String },
@@ -170,7 +172,7 @@ export default {
 
     getDynamicData(text) {
       return {
-        template: `<div>${text}</div>`
+        template: `<div>${getTranslationLocale(text)}</div>`
       };
     }
   }

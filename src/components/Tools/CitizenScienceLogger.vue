@@ -123,7 +123,7 @@
     <content-section>
       <b-container
         fluid
-        class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        class="full-height small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
         ref="cslogger_create_app"
       >
         <b-row>
@@ -147,7 +147,7 @@
     <content-section>
       <b-container
         fluid
-        class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        class="full-height small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
         ref="cslogger_share_app"
       >
         <b-row>
@@ -171,7 +171,7 @@
     <content-section>
       <b-container
         fluid
-        class="full-heigth small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        class="full-height small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
         ref="cslogger_integration_pb"
       >
         <b-row>
@@ -329,7 +329,7 @@ export default {
     transform: scale(1.1);
   }
 }
-.full-heigth {
+.full-height {
   min-height: 90vh;
 }
 .download-icon {

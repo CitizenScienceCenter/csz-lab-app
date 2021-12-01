@@ -144,7 +144,7 @@ export function validateEmail(email) {
 }
 
 export function getTranslationLocale(tag) {
-  return i18n.messages[i18n.locale][tag];
+  return i18n.messages[i18n.locale][tag] || tag;
 }
 
 export function getPybossaTranslation(reason) {

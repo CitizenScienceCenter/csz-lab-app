@@ -51,9 +51,9 @@
         <b-nav-item :to="{ name: 'discover' }" exact-active-class="active">{{
           $t("app-vue-navigation-discover")
         }}</b-nav-item>
-        <b-nav-item :to="{ name: 'about' }" exact-active-class="active">{{
+        <!-- <b-nav-item :to="{ name: 'about' }" exact-active-class="active">{{
           $t("app-vue-navigation-about")
-        }}</b-nav-item>
+        }}</b-nav-item> -->
         <!-- TODO: uncomment when Forum for each particular projects is done -->
         <!-- <b-nav-item :to="{ name: 'forum' }">Forum</b-nav-item> -->
       </b-navbar-nav>
