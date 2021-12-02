@@ -47,7 +47,7 @@
     <content-section>
       <b-container fluid class="superlight-greyish">
         <b-container
-          class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+          class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-1"
           ref="pb_overview"
         >
           <b-row>
@@ -67,7 +67,7 @@
     <content-section>
       <b-container fluid class="light-greyish">
         <b-container
-          class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+          class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-1"
           ref="pb_criteria"
         >
           <b-row>
@@ -228,6 +228,6 @@ export default {
   color: $primary !important;
 }
 .full-height {
-  min-height: 90vh;
+  min-height: 80vh;
 }
 </style>
