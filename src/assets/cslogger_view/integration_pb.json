@@ -7,7 +7,7 @@
       "rows": [
         [
           {
-            "text": "<p>After the crowdsourcing process is performed with the CS Logger app, it is necessary to analyze the information collected in order to contribute to the results of any ongoing research project. For this, it is possible to integrate the information collected in CS Logger into Project Builder and build typical survey tools based on that information.</p><p><strong>Example:</strong><br/>Let’s keep our Stray Dogs app as an example (see steps above). When people have contributed enough images of dogs for your study, you want people to look at the images and describe the dog in detail and say if they agree with the attitude as reported by the image collector.</p>"
+            "text": "cslogger-integration-pb-introduction-0"
           },
           {
             "img": "cslogger_view/integrate_app/cslogger_pb_integration.png"
@@ -24,7 +24,7 @@
       "rows": [
         [
           {
-            "text": "<p>Go to <a href='https://admin.mindlogger.org/' target='_blank' rel='noopener'>admin.mindlogger.org</a> and login at your account.</p><p>On your dashboard, you can see the list of applets created. Please click on the applet name to access the management and settings section.<p><strong>Example:</strong><br/>Click on “Stray dogs (test)”</p>"
+            "text": "cslogger-integration-pb-export-data-0"
           },
           {
             "img": "cslogger_view/integrate_app/dashboard_mindlogger.png"
@@ -32,13 +32,13 @@
         ],
         [
           {
-            "text": "<p>Here it is possible to perform the following actions by clicking on the buttons located in the top bar:</p><ul><li><i class='fas fa-user-friends fa-sm'></i> View and manage users and invitations</li><li><i class='far fa-calendar-alt fa-sm'></i> View general calendar</li><li><i class='fas fa-edit fa-sm'></i> Edit the applet</li><li><svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' role='img' style='vertical-align: -0.125em;' width='1em' height='1em' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'><g transform='rotate(90 12 12)'><path d='M23 12l-4-4v3h-9v2h9v3M1 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3h-2V6H3v12h12v-3h2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z' fill='currentColor'/></g></svg> Export data contributed for participants</li><li><svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' role='img' style='vertical-align: -0.125em;' width='1em' height='1em' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'><path d='M11 17H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h12v2H4v12h7v-2l4 3l-4 3v-2m8 4V7H8v6H6V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-2h2v2h11z' fill='currentColor'/></svg> Duplicate applet</li><li><i class='fas fa-trash fa-sm'></i> Delete applet</li></ul><p><strong>Example:</strong><br/>Click on Export Data, ingress the password of the applet and click on “<strong>SUBMIT</strong>”</p>"
+            "text": "cslogger-integration-pb-export-data-1"
           },
           { "img": "cslogger_view/integrate_app/export_data_mindlogger.png" }
         ],
         [
           {
-            "text": "<p>After downloading, there will be two files:</p><ul><li><strong>report.csv</strong>: contains the data collected by the applet</li><li><strong>media-responses-xxxxx.zip</strong>: contains the multimedia collected by the applet</li></ul><p>Please unzip the compressed file before continuing with the next steps.</p>"
+            "text": "cslogger-integration-pb-export-data-2"
           },
           {
             "img": "cslogger_view/integrate_app/downloaded_files_mindlogger.png"
@@ -55,7 +55,7 @@
       "rows": [
         [
           {
-            "text": "<p>For create a project based on the collected data by the applet using CS Logger, please click on the button and follow the instructions:</p> <div class='text-center'><router-link :to=\"'/tools/projectbuilder'\" tag='a' class='btn btn-primary'>Create Project</router-link></div>"
+            "text": "cslogger-integration-pb-create-project-0"
           }
         ]
       ]

@@ -1,16 +1,57 @@
 [
   {
     "id": "create-project-0",
-    "title": "pb-create-project-introduction",
+    "title": "cspb-create-project-card",
     "content": {
       "row_header": null,
       "rows": [
         [
           {
-            "text": "cspb-create-project-introduction-0"
+            "text": "cspb-create-project-card-0"
           },
           {
             "img": "pb_view/create_project/login_registration_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-create-project-card-1"
+          },
+          {
+            "img": "pb_view/create_project/title_description_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-create-project-card-2"
+          },
+          {
+            "img": "pb_view/create_project/created_card_pb.png"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "create-project-1",
+    "title": "cspb-create-project-overview",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cspb-create-project-overview-0"
+          },
+          {
+            "img": "pb_view/create_project/story_overview_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-create-project-overview-1"
+          },
+          {
+            "img": "pb_view/create_project/project_created_pb.png"
           }
         ]
       ]

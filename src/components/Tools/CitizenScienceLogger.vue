@@ -330,7 +330,7 @@ export default {
   }
 }
 .full-height {
-  min-height: 90vh;
+  min-height: 80vh;
 }
 .download-icon {
   max-height: 25px;
