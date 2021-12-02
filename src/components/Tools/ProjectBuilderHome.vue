@@ -169,17 +169,18 @@ export default {
     AboutCriteria
   },
   created() {
-    window.addEventListener("scroll", this.throttleScroll, false);
-  },
-  beforeMount() {
+    // Initialize the scroll control
+    ctrl_scroll = 0;
     // auto scroll to the page top when render first time
     setTimeout(function() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 2);
   },
   mounted() {
-    // Initialize the scroll control
-    ctrl_scroll = 0;
+    // Add scroll event listener
+    setTimeout(() => {
+      window.addEventListener("scroll", this.throttleScroll, false);
+    }, 1000);
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.throttleScroll, false);
