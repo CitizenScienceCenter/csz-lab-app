@@ -236,6 +236,7 @@ export default {
   created() {
     // Initialize the scroll control
     ctrl_scroll = 0;
+    this.loadLogos();
     // auto scroll to the page top when render first time
     setTimeout(function() {
       window.scrollTo({ top: 0, behavior: "smooth" });
