@@ -55,10 +55,10 @@
                 <div
                   @click.prevent="showModal(col.img)"
                   class="d-flex justify-content-center"
+                  v-if="col.img"
                 >
                   <b-img-lazy
                     class="cslogger-img"
-                    v-if="col.img"
                     :src="getImage(col.img)"
                     fluid
                     :alt="col.img"

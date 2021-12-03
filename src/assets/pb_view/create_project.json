@@ -56,5 +56,63 @@
         ]
       ]
     }
+  },
+  {
+    "id": "create-project-2",
+    "title": "cspb-create-project-type",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cspb-create-project-type-0"
+          },
+          {
+            "img": "pb_view/create_project/material_type_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-create-project-type-1"
+          },
+          {
+            "img": "pb_view/create_project/job_type_pb.png"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "create-project-3",
+    "title": "cspb-create-project-design",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cspb-create-project-design-0"
+          },
+          {
+            "img": "pb_view/create_project/survey_template_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-create-project-design-1"
+          },
+          {
+            "img": "pb_view/create_project/geosurvey_template_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-create-project-design-2"
+          },
+          {
+            "img": "pb_view/create_project/conditional_template_pb.png"
+          }
+        ]
+      ]
+    }
   }
 ]
