@@ -63,9 +63,11 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import { i18n } from "./i18n";
 import Loading from "@/components/Common/Loading.vue";
+// modules for managing gtag
+import { bootstrap } from "vue-gtag";
 
 import GDPR from "./components/GDPR.vue";
 import Footer from "./components/Footer.vue";
@@ -130,6 +132,7 @@ export default {
       project: state => state.project.selectedProject,
       showProjectPassModal: state => state.project.showProjectPassModal
     }),
+    ...mapGetters({ getGtag: "settings/getGtag" }),
     language: {
       get() {
         return this.$store.state.settings.language;
@@ -139,7 +142,11 @@ export default {
       }
     }
   },
-  watch: {},
+  watch: {
+    getGtag() {
+      if (this.getGtag) bootstrap().then(gtag => {});
+    }
+  },
   methods: {
     ...mapMutations({
       closeError: "notification/closeError",
