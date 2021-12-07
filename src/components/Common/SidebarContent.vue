@@ -81,6 +81,7 @@
       shadow
       :title="$t('steps')"
       header-class="pt-4 text-secondary"
+      bg-variant="white"
     >
       <div class="py-2">
         <b-button
@@ -157,6 +158,8 @@ export default {
       }, 500);
     },
     openSidebar() {
+      // fit the sidebar to the screen height
+      document.getElementById(this.parentRef).style.height = "93vh";
       this.$root.$emit("bv::toggle::collapse", this.parentRef);
       this.$emit("openSidebar");
     },
