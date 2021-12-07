@@ -114,5 +114,30 @@
         ]
       ]
     }
+  },
+  {
+    "id": "create-project-4",
+    "title": "cspb-create-project-source",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cspb-create-project-source-0"
+          },
+          {
+            "img": "pb_view/create_project/source_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-create-project-source-1"
+          },
+          {
+            "img": "pb_view/create_project/summary_pb.png"
+          }
+        ]
+      ]
+    }
   }
 ]
