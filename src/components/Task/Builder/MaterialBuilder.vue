@@ -125,7 +125,7 @@
               @click="onMaterialSelected(materials.cslogger)"
               class="text-center material"
             >
-              <i class="fas fa-tablet-alt fa-4x"></i><br />
+              <i class="fas fa-mobile-alt fa-4x"></i><br />
               <div class="m-2">{{ $t("task-material-builder-cslogger") }}</div>
             </b-card>
           </b-col>
