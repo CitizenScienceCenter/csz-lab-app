@@ -1,0 +1,27 @@
+[
+  {
+    "id": "integration_cslogger-0",
+    "title": "cspb-integration_cslogger",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cspb-integration_cslogger-0"
+          },
+          {
+            "img": "pb_view/integration_cslogger/cslogger_project_type_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-integration_cslogger-1"
+          },
+          {
+            "img": "pb_view/integration_cslogger/cslogger_job_type_pb.png"
+          }
+        ]
+      ]
+    }
+  }
+]
