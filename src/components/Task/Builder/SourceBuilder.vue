@@ -27,8 +27,7 @@
               {{ $t("task-source-builder-cslogger-info1") }}
             </p>
             <!-- Allowed files for media -->
-            <p class="small">
-              {{ $t("task-source-builder-cslogger-info2") }}
+            <p class="small" v-html="$t('task-source-builder-cslogger-info2')">
             </p>
           </b-col>
         </b-row>

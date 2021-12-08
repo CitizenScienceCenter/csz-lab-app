@@ -53,7 +53,7 @@
           <b-row>
             <b-col cols="12" class="text-center">
               <h1 class="small centered">
-                {{ $t("about-overview") }}
+                {{ $t("cspb-introduction-anchor-0") }}
               </h1>
               <!-- Content already created in about moved to this section -->
               <about-overview class="text-justify pt-4"></about-overview>
@@ -73,7 +73,7 @@
           <b-row>
             <b-col cols="12" class="text-center">
               <h1 class="small pb-2 mb-1 centered">
-                {{ $t("about-criteria") }}
+                {{ $t("cspb-introduction-anchor-1") }}
               </h1>
               <!-- Content already created in about moved to this section -->
               <about-criteria class="text-justify pt-4"></about-criteria>
@@ -93,7 +93,7 @@
         <b-row>
           <b-col cols="12" class="text-center">
             <h1 class="small pb-2 mb-1 centered">
-              {{ $t("about-howitworks") }}
+              {{ $t("cspb-introduction-anchor-2") }}
             </h1>
           </b-col>
         </b-row>
@@ -110,16 +110,22 @@
     <!-- Integrate with CS Logger section -->
     <content-section>
       <b-container
-        class="small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        fluid
+        class="full-height small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
         ref="pb_integration_cslogger"
       >
         <b-row>
           <b-col cols="12" class="text-center">
             <h1 class="small pb-2 mb-1 centered">
-              {{ $t("cspb-integration-cslogger-header") }}
+              {{ $t("cspb-introduction-anchor-3") }}
             </h1>
           </b-col>
         </b-row>
+        <sidebar-content
+          :content="integrationCsloggerContent"
+          parent="pb_integration_cslogger"
+          @openSidebar="gotoAnchor('pb_integration_cslogger')"
+        ></sidebar-content>
       </b-container>
     </content-section>
   </div>
@@ -135,6 +141,7 @@ import AboutCriteria from "@/components/Tools/AboutCriteria";
 
 let ctrl_scroll = 0;
 const CREATE_PROJECT_CONTENT = require("@/assets/pb_view/create_project.json");
+const INTEGRATION_CSLOGGER_CONTENT = require("@/assets/pb_view/integration_cslogger.json");
 
 export default {
   name: "ProjectBuilderHome",
@@ -159,7 +166,8 @@ export default {
         "pb_integration_cslogger"
       ],
       throttleScroll: throttle(this.handleScroll, 300),
-      createProjectContent: CREATE_PROJECT_CONTENT
+      createProjectContent: CREATE_PROJECT_CONTENT,
+      integrationCsloggerContent: INTEGRATION_CSLOGGER_CONTENT
     };
   },
   components: {

@@ -257,9 +257,11 @@
     "task-source-builder-select-source": "Select your files",
     "task-source-builder-other-source": "Go back: select another source",
     "task-source-builder-info": "<p>Select the source of your data.</p>Your data should be available via url, in particular:<br/><ul style='list-style-type: disc' class ='ml-3 mt-1'><li>File hosted on cloud services such as Dropbox, Flickr or Amazon S3 bucket.</li></ul>",
-    "task-source-builder-choose-authorized": "Make sure you are authorised to use the data, ie. use free licensed files (Creative Commons or alike), your own files, or copyright files that you are authorised to use.",
+    "task-source-builder-choose-authorized": "Make sure you are authorized to use the data, ie. use free licensed files (Creative Commons or alike), your own files, or copyright files that you are authorized to use.",
     "task-source-builder-options-next-label": "For developers: If this template doesn't exactly fit your project, you can try our",
     "task-source-builder-cslogger-import-title": "CSLogger Loading Module",
+    "task-source-builder-cslogger-info1": "Import your data collected by the crowdsourcing process done with the CSLogger applet already downloaded. The required files are:",
+    "task-source-builder-cslogger-info2": "<ul style='list-style-type: disc' class ='ml-3 mt-1'><li><strong>Data file</strong>: report.csv file with metadata and responses</li><li><strong>Media files</strong>: unzipped multimedia files</li></ul>",
 
     "task-material-builder-back-to-project": "Preview Project ",
     "task-material-builder-items": "Select the type of files that you will work with.",
@@ -344,7 +346,7 @@
 
     "task-import-dropbox-files-allowed": "<strong>Dropbox</strong><br/>For images: (*.jpg, *.jpeg, *.png, *.svg)<br/>For videos: (*.avi, *.mp4, *.mpeg, *.3gp)<br/>For audios: (*.mp3, *.wav)<br/>For documents: (*.pdf)",
     "dropbox-choose-files": " Choose files from DropBox",
-    "dropbox-license": " You can use any free licensed files (Creative Commons or alike), your own files or those copyright files that you are authorised to use.",
+    "dropbox-license": " You can use any free licensed files (Creative Commons or alike), your own files or those copyright files that you are authorized to use.",
 
     "project-menu-task-presenter-header": "Task Presenter Editor",
     "project-menu-task-presenter-preview": "Preview task presenter",
@@ -406,7 +408,7 @@
     "field-should-not-exceed": "This field should not exceed",
 
     "about-header": "About",
-    "about-howitworks": "How it works",
+    "about-howitworks": "How to create a project",
     "about-criteria": "Criteria",
 
     "about-question-1": "What is the Citizen Science Project Builder?",
@@ -892,9 +894,8 @@
     "cspb-introduction": "<p>Citizen Science projects for the analysis of digital data engage people in complex tasks such as image analysis, pattern recognition, text transcription, mapping, etc. Such tasks are performed via a web interface on existing digital data.</p><p>The Citizen Science Project Builder is a web-based tool that allows you to create and run data-analysis projects with a simple step-by-step process.</p><p>The CS Project Builder is a joint effort of the <strong>Citizen Cyberlab at University of Geneva</strong> and the <strong>Citizen Science Center Zurich</strong>.</p>",
     "cspb-introduction-anchor-0": "Overview",
     "cspb-introduction-anchor-1": "Criteria",
-    "cspb-introduction-anchor-2": "How it works",
+    "cspb-introduction-anchor-2": "How to create a project",
     "cspb-introduction-anchor-3": "Integration with CS Logger",
-
     "cspb-create-project-card": "Create your project card",
     "cspb-create-project-card-0": "<p>The Project Builder supports projects where volunteer contributors can analyse or enrich existing data. In particular, it allows to:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>Classify or describe large sets of images or text (ie. identify images, count objects, describe scenes) and social media content (tweets).</li><li>Classify or describe sounds and video clips.</li><li>Work on PDF documents (transcribe, translate, describe).</li><li>Geo-code images or tweets, ie. mark their location on a map (note: this task requires some coding skills!).</li></ul><p>Before starting, it is required to login into your Project Builder account or to register a  new account if you don't have one so far.</p><p>This is possible by clicking on the LOGIN button at the top right of this screen.</p>",
     "cspb-create-project-card-1": "<p>Clicking on your username, located  at the top right of the screen, you can select “<strong>Create a project</strong>”. And follow the next instructions:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>Choose a nice and catchy title, which describes your project.</li><li>Add a short description (120 characters).</li><li>Upload from your computer an image to represent the project (<1Mb).</li></ul>",
@@ -905,13 +906,16 @@
     "cspb-create-project-type": "Select your project type",
     "cspb-create-project-type-0": "<p>Select the kind of data you want to work with. Options include:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>Images (*.jpg, *.png, *.gif, *.svg or *.bmp)</li><li>Videos (*.avi, *.mp4, *.3gp or *.mpeg)</li><li>Audios (*.mp3, *.wav or *.aac)</li><li>Documents (.pdf)</li><li>Tweets (@account or #hashtag)</li><li>CSLogger (Integration with mobile app)</li></ul><p><strong>Example:</strong><br/>Create a project based on images, therefore click on “<strong>Images</strong>”</p>",
     "cspb-create-project-type-1": "<p>Select the task you would like your contributors to perform. You can choose:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>Survey format, for tasks such as classification, description, and counting.</li><li>Survey plus geolocation, if the task also includes geolocation on a map (for example identify a landmark in an image and locate it on a city).</li></ul><p><strong>Example:</strong><br/>A simple survey is enough, therefore click on “<strong>Survey</strong>”</p>",
-    "cspb-create-project-design":"Design your task protocol",
+    "cspb-create-project-design": "Design your task protocol",
     "cspb-create-project-design-0": "<p>Design your survey, including many options of questions and answers, or text fields.<br/>In particular:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li>Add a question (button \"<strong>Add Question</strong>\")</li><li>Choose the type of question (dropdown menu)</li><li>Enter the question and the possible answers</li><li>Set optionality (use \"<strong>Required</strong>\" switch)</li><li>Add more answers if necessary (button \"<strong>Add Answer</strong>\")</li><li>Add more questions if necessary (button \"<strong>Add Question</strong>\")</li></ul>",
     "cspb-create-project-design-1": "<p>Design a  geo-based survey, ingressing the following information and settings:</p><ul style='list-style-type:disc' class='ml-3 mt-1'><li><strong>Question</strong> for user instruction</li><li><strong>Map center</strong>: Default location for centering map</li><li><strong>Map zoom</strong>: Default map zoom between 1 and 18</li><li><strong>Draw area</strong>: allows user draw an area on map</li><li><strong>Markers</strong>: allows user to put markers on map</li></ul><p>Additionally you can add a survey as mentioned above.</p>",
     "cspb-create-project-design-2": "<p>It’s also possible to add conditions between questions, as follow:</p><p class='mb-2'><strong>Example for Condition</strong>:</p><em><strong>Question 1</strong> (single choice): Do you know the breed of the dog?<ul style='list-style-type: circle' class='ml-3 mb-0'><li>Answer 1: Yes</li> <li>Answer 2: No</li> <li>Answer 3: I can't say</li></ul><strong>Question 2</strong> (short answer): What is the breed of the dog?</em><p class='mt-3'><strong>Condition:</strong> <em>Question 2</em> will be visible only if the answer to <em>Question 1</em> is \"Yes\". <br/> When on Question 2, click on \"Condition\", then select <em>Question 1</em> as conditional question and select \"Yes\" as conditional answer.</p>",
     "cspb-create-project-source": "Select your data source",
-    "cspb-create-project-source-0": "<p>It’s time to import your source files (images, videos, sounds, ...). The possible data sources  include: Dropbox, Flickr, Amazon S3 buckets or csv file. There are particular cases for Twitter or CSLoger datasources.</p><p>You will also be able to add additional files later from the “project overview” page when the project was already created.</p><p><em><strong>Note:</strong> The Project Builder is NOT copying your file, it is linking to them. So make sure they stay in the original location for the duration of the project.</em></p><p class='text-primary'>Make sure you are authorised to use the data, ie. use free licensed files (Creative Commons or alike), your own files, or copyright files that you are authorised to use.</p><p><strong>Example:</strong><br/>We have a list of public images in csv format, then click on “<strong>csv File</strong>”, for uploading it.</p>",
-    "cspb-create-project-source-1": "<p>Finally, before creating the project, you can check the summary. Since this point is possible to come back using the navigation routes on the top-left section and to edit whatever you consider.</p><p>Click on “<strong>CREATE!</strong>” button. To finalize the process.</p>"
+    "cspb-create-project-source-0": "<p>It’s time to import your source files (images, videos, sounds, ...). The possible data sources  include: Dropbox, Flickr, Amazon S3 buckets or csv file. There are particular cases for Twitter or CSLoger datasources.</p><p>You will also be able to add additional files later from the “project overview” page when the project was already created.</p><p><em><strong>Note:</strong> The Project Builder is NOT copying your file, it is linking to them. So make sure they stay in the original location for the duration of the project.</em></p><p class='text-primary'>Make sure you are authorized to use the data, ie. use free licensed files (Creative Commons or alike), your own files, or copyright files that you are authorized to use.</p><p><strong>Example:</strong><br/>We have a list of public images in csv format, then click on “<strong>csv File</strong>”, for uploading it.</p>",
+    "cspb-create-project-source-1": "<p>Finally, before creating the project, you can check the summary. Since this point is possible to come back using the navigation routes on the top-left section and to edit whatever you consider.</p><p>Click on “<strong>CREATE!</strong>” button. To finalize the process.</p>",
+    "cspb-integration_cslogger": "Select your project type",
+    "cspb-integration_cslogger-0":"<p>For the particular case of CSLogger project type, please click on the “<strong>CSLogger</strong>” button Select your project type as is presented on the image.</p><p><em><strong>Note:</strong> The previous steps to this are similar regardless of the project type. Please check the “<strong>How to create a project</strong>” section.</em></p>",
+    "cspb-integration_cslogger-1":"<p>CSLogger just allows the creation of a simple survey for your task protocol. Please click on “<strong>Survey</strong>”. </p>"
   },
   "de": {
     "site-title": "CS Project Builder",
@@ -1163,6 +1167,8 @@
     "task-source-builder-options-next-label": "For developers: If this template doesn't exactly fit your project, you can try our",
 
     "task-source-builder-cslogger-import-title": "CSLogger Loading Module",
+    "task-source-builder-cslogger-info1": "Import your data collected by the crowdsourcing process done with the CSLogger applet already downloaded. The required files are:",
+    "task-source-builder-cslogger-info2": "<ul style='list-style-type: disc' class ='ml-3 mt-1'><li><strong>Data file</strong>: report.csv file with metadata and responses</li><li><strong>Media files</strong>: unzipped multimedia files</li></ul>",
 
     "task-material-builder-back-to-project": "Vorschau des Projekts",
     "task-material-builder-items": "Wählen Sie den Dateityp aus, mit dem Sie arbeiten möchten.",
@@ -1310,7 +1316,7 @@
     "field-should-not-exceed": "This field should not exceed",
 
     "about-header": "Über",
-    "about-howitworks": "Wie es funktioniert",
+    "about-howitworks": "Wie man ein Projekt erstellt",
     "about-criteria": "Kriterien",
 
     "task-importer-menu-tasks-importing": "Aufgaben importieren",
