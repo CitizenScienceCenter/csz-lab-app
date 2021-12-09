@@ -111,7 +111,7 @@
     <content-section>
       <b-container
         fluid
-        class="full-height small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        class="full-height scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
         ref="pb_integration_cslogger"
       >
         <b-row>
@@ -209,9 +209,15 @@ export default {
 
       let scroll_down = ctrl_scroll < screen_pos;
       const sectionMap = new Map();
+      // reference to anchor in position 2
       sectionMap.set(this.anchors[2], {
         offsetTop: this.$refs[this.anchors[2]].offsetTop,
         scrollHeight: this.$refs[this.anchors[2]].scrollHeight
+      });
+      // reference to anchor in position 3
+      sectionMap.set(this.anchors[3], {
+        offsetTop: this.$refs[this.anchors[3]].offsetTop,
+        scrollHeight: this.$refs[this.anchors[3]].scrollHeight
       });
       if (scroll_down) {
         sectionMap.forEach((value, key) => {

@@ -171,7 +171,7 @@
     <content-section>
       <b-container
         fluid
-        class="full-height small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        class="full-height scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
         ref="cslogger_integration_pb"
       >
         <b-row>
@@ -288,14 +288,17 @@ export default {
 
       let scroll_down = ctrl_scroll < screen_pos;
       const sectionMap = new Map();
+      // reference to anchor in position 0
       sectionMap.set("cslogger_create_app", {
         offsetTop: this.$refs[this.anchors[0]].offsetTop,
         scrollHeight: this.$refs[this.anchors[0]].scrollHeight
       });
+      // reference to anchor in position 1
       sectionMap.set("cslogger_share_app", {
         offsetTop: this.$refs[this.anchors[1]].offsetTop,
         scrollHeight: this.$refs[this.anchors[1]].scrollHeight
       });
+      // reference to anchor in position 2
       sectionMap.set("cslogger_integration_pb", {
         offsetTop: this.$refs[this.anchors[2]].offsetTop,
         scrollHeight: this.$refs[this.anchors[2]].scrollHeight
