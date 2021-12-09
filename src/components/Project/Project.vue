@@ -53,7 +53,7 @@
             <p>{{ project.description }}</p>
 
             <div v-if="isLoggedUserOwnerOfProject(project)">
-              <!-- Publised state buttons -->
+              <!-- Publised state buttons - Admin-->
               <div v-if="project.published">
                 <!-- Published button -->
                 <b-row>
@@ -78,8 +78,14 @@
                       {{ $t("project-contribute") }}
                     </b-btn>
                   </b-col>
+                  <!-- Error message when no pending tasks -->
                   <b-col class="mt-2 pl-0" v-if="isCompletedTasks">
-                    <p class="font-weight-bold text-white"><i class="fas fa-info-circle"></i> {{ $t('project-draft-contribute-error-no-pending-tasks') }}</p>
+                    <p class="font-weight-bold text-white">
+                      <i class="fas fa-info-circle"></i>
+                      {{
+                        $t("project-draft-contribute-error-no-pending-tasks")
+                      }}
+                    </p>
                   </b-col>
                 </b-row>
               </div>
@@ -210,16 +216,25 @@
                 </b-alert>
               </b-modal>
             </div>
-
+            <!-- Published button Anonymous -->
             <div v-else-if="isAnonymousProject && !infos.admin">
+              <!-- Contribute button -->
               <b-btn
                 ref="btn-contribute"
                 :to="{ name: 'project.task.presenter' }"
                 variant="primary"
-                size="lg"
+                :disabled="isCompletedTasks"
                 @click.native="tracking()"
                 >{{ $t("project-contribute") }}
               </b-btn>
+              <!-- Error message when no pending tasks -->
+              <p
+                class="font-weight-bold text-white mt-2"
+                v-if="isCompletedTasks"
+              >
+                <i class="fas fa-info-circle"></i>
+                {{ $t("project-draft-contribute-error-no-pending-tasks") }}
+              </p>
             </div>
 
             <div v-else>
@@ -268,10 +283,18 @@
                   ref="btn-contribute"
                   :to="{ name: 'project.task.presenter' }"
                   variant="primary"
-                  size="lg"
+                  :disabled="isCompletedTasks"
                   @click.native="tracking()"
                   >{{ $t("project-contribute") }}
                 </b-btn>
+                <!-- Error message when no pending tasks -->
+                <p
+                  class="font-weight-bold text-white mt-2"
+                  v-if="isCompletedTasks"
+                >
+                  <i class="fas fa-info-circle"></i>
+                  {{ $t("project-draft-contribute-error-no-pending-tasks") }}
+                </p>
               </div>
             </div>
           </b-skeleton-wrapper>
