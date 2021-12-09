@@ -237,6 +237,11 @@ export default {
   color: $primary !important;
 }
 .full-height {
-  min-height: 80vh;
+  min-height: 72vh;
+}
+@media only screen and (min-width: $viewport-large) {
+  .full-height {
+    min-height: 75vh;
+  }
 }
 </style>
