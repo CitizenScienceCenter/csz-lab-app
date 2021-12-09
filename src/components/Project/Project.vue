@@ -53,25 +53,36 @@
             <p>{{ project.description }}</p>
 
             <div v-if="isLoggedUserOwnerOfProject(project)">
+              <!-- Publised state buttons -->
               <div v-if="project.published">
-                <b-btn
-                  ref="btn-approve-it"
-                  variant="success"
-                  class="mt-2"
-                  disabled
-                  >{{ $t("project-draft-published") }}</b-btn
-                >
-                <b-btn
-                  ref="btn-contribute"
-                  :to="{ name: 'project.task.presenter' }"
-                  variant="primary"
-                  size="lg"
-                  @click.native="tracking()"
-                  >{{ $t("project-contribute") }}
-                </b-btn>
-                <br />
+                <!-- Published button -->
+                <b-row>
+                  <b-col cols="12" class="mt-2 pl-0">
+                    <b-btn
+                      ref="btn-approve-it"
+                      variant="success"
+                      class="mr-2"
+                      disabled
+                    >
+                      {{ $t("project-draft-published") }}
+                    </b-btn>
+                    <!-- Contribute button -->
+                    <b-btn
+                      ref="btn-contribute"
+                      :to="{ name: 'project.task.presenter' }"
+                      variant="primary"
+                      class="mr-2"
+                      :disabled="isCompletedTasks"
+                      @click.native="tracking()"
+                    >
+                      {{ $t("project-contribute") }}
+                    </b-btn>
+                  </b-col>
+                  <b-col class="mt-2 pl-0" v-if="isCompletedTasks">
+                    <p class="font-weight-bold text-white"><i class="fas fa-info-circle"></i> {{ $t('project-draft-contribute-error-no-pending-tasks') }}</p>
+                  </b-col>
+                </b-row>
               </div>
-
               <div
                 v-else-if="
                   !project.published &&
@@ -550,6 +561,9 @@ export default {
     },
     hasProjectTasks() {
       return this.projectTasks.length > 0;
+    },
+    isCompletedTasks() {
+      return this.stats.n_completed_tasks === this.stats.n_tasks;
     }
   }
 };
