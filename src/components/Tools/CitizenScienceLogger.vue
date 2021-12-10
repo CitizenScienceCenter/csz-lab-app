@@ -227,6 +227,7 @@ export default {
         "cslogger_share_app",
         "cslogger_integration_pb"
       ],
+      sectionMap: new Map(),
       throttleScroll: throttle(this.handleScroll, 300),
       createAppContent: CREATE_APP_CONTENT,
       shareAppContent: SHARE_APP_CONTENT,
@@ -243,6 +244,15 @@ export default {
     }, 2);
   },
   mounted() {
+    // if a valid section is comming as a param
+    setTimeout(() => {
+      if (
+        this.$route.params["section"] &&
+        this.anchors.includes(this.$route.params["section"])
+      ) {
+        this.gotoAnchor(this.$route.params["section"]);
+      }
+    }, 200);
     // Add scroll event listener
     setTimeout(() => {
       window.addEventListener("scroll", this.throttleScroll, false);
@@ -285,24 +295,7 @@ export default {
 
     handleScroll(event) {
       const screen_pos = window.scrollY;
-
       let scroll_down = ctrl_scroll < screen_pos;
-      const sectionMap = new Map();
-      // reference to anchor in position 0
-      sectionMap.set("cslogger_create_app", {
-        offsetTop: this.$refs[this.anchors[0]].offsetTop,
-        scrollHeight: this.$refs[this.anchors[0]].scrollHeight
-      });
-      // reference to anchor in position 1
-      sectionMap.set("cslogger_share_app", {
-        offsetTop: this.$refs[this.anchors[1]].offsetTop,
-        scrollHeight: this.$refs[this.anchors[1]].scrollHeight
-      });
-      // reference to anchor in position 2
-      sectionMap.set("cslogger_integration_pb", {
-        offsetTop: this.$refs[this.anchors[2]].offsetTop,
-        scrollHeight: this.$refs[this.anchors[2]].scrollHeight
-      });
       if (scroll_down) {
         sectionMap.forEach((value, key) => {
           if (
@@ -315,6 +308,15 @@ export default {
         });
       }
       ctrl_scroll = screen_pos;
+    },
+    getSectionsDetails() {
+      for (let i = 0; i <= 2; i++) {
+        // reference to anchor in position i
+        this.sectionMap.set(this.anchors[i], {
+          offsetTop: this.$refs[this.anchors[i]].offsetTop,
+          scrollHeight: this.$refs[this.anchors[i]].scrollHeight
+        });
+      }
     }
   }
 };

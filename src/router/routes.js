@@ -126,13 +126,15 @@ export const routes = [
         },
         children: [
           {
-            path: "cslogger",
+            path: "cslogger/:section?",
             name: "tools.cslogger",
+            props: true,
             component: CitizenScienceLogger
           },
           {
-            path: "projectbuilder",
+            path: "projectbuilder/:section?",
             name: "tools.projectbuilder",
+            props: true,
             component: ProjectBuilderHome
           }
         ]

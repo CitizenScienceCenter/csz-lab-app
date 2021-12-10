@@ -111,7 +111,7 @@
     <content-section>
       <b-container
         fluid
-        class="full-height scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        class="full-height small-bottom scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
         ref="pb_integration_cslogger"
       >
         <b-row>
@@ -125,6 +125,30 @@
           :content="integrationCsloggerContent"
           parent="pb_integration_cslogger"
           @openSidebar="gotoAnchor('pb_integration_cslogger')"
+        ></sidebar-content>
+      </b-container>
+    </content-section>
+
+    <hr class="mx-2" />
+
+    <!-- Testing and publishing section -->
+    <content-section>
+      <b-container
+        fluid
+        class="full-height scroll-effect scroll-effect-delayed-1 pt-4 px-0 px-md-2 px-xl-5"
+        ref="pb_test_and_publish"
+      >
+        <b-row>
+          <b-col cols="12" class="text-center">
+            <h1 class="small pb-2 mb-1 centered">
+              {{ $t("cspb-introduction-anchor-4") }}
+            </h1>
+          </b-col>
+        </b-row>
+        <sidebar-content
+          :content="testAndPublishContent"
+          parent="pb_test_and_publish"
+          @openSidebar="gotoAnchor('pb_test_and_publish')"
         ></sidebar-content>
       </b-container>
     </content-section>
@@ -142,6 +166,7 @@ import AboutCriteria from "@/components/Tools/AboutCriteria";
 let ctrl_scroll = 0;
 const CREATE_PROJECT_CONTENT = require("@/assets/pb_view/create_project.json");
 const INTEGRATION_CSLOGGER_CONTENT = require("@/assets/pb_view/integration_cslogger.json");
+const TEST_AND_PUBLISH_CONTENT = require("@/assets/pb_view/test_and_publish.json");
 
 export default {
   name: "ProjectBuilderHome",
@@ -163,11 +188,14 @@ export default {
         "pb_overview",
         "pb_criteria",
         "pb_create_project",
-        "pb_integration_cslogger"
+        "pb_integration_cslogger",
+        "pb_test_and_publish"
       ],
+      sectionMap: new Map(),
       throttleScroll: throttle(this.handleScroll, 300),
       createProjectContent: CREATE_PROJECT_CONTENT,
-      integrationCsloggerContent: INTEGRATION_CSLOGGER_CONTENT
+      integrationCsloggerContent: INTEGRATION_CSLOGGER_CONTENT,
+      testAndPublishContent: TEST_AND_PUBLISH_CONTENT
     };
   },
   components: {
@@ -185,10 +213,22 @@ export default {
     }, 2);
   },
   mounted() {
+    // if a valid section is comming as a param
+    setTimeout(() => {
+      if (
+        this.$route.params["section"] &&
+        this.anchors.includes(this.$route.params["section"])
+      ) {
+        this.gotoAnchor(this.$route.params["section"]);
+      }
+    }, 200);
+
     // Add scroll event listener
     setTimeout(() => {
       window.addEventListener("scroll", this.throttleScroll, false);
     }, 1000);
+    // Load sections rendered info
+    this.getSectionsDetails();
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.throttleScroll, false);
@@ -206,21 +246,9 @@ export default {
     },
     handleScroll(event) {
       const screen_pos = window.scrollY;
-
       let scroll_down = ctrl_scroll < screen_pos;
-      const sectionMap = new Map();
-      // reference to anchor in position 2
-      sectionMap.set(this.anchors[2], {
-        offsetTop: this.$refs[this.anchors[2]].offsetTop,
-        scrollHeight: this.$refs[this.anchors[2]].scrollHeight
-      });
-      // reference to anchor in position 3
-      sectionMap.set(this.anchors[3], {
-        offsetTop: this.$refs[this.anchors[3]].offsetTop,
-        scrollHeight: this.$refs[this.anchors[3]].scrollHeight
-      });
       if (scroll_down) {
-        sectionMap.forEach((value, key) => {
+        this.sectionMap.forEach((value, key) => {
           if (
             screen_pos >=
               value.offsetTop - Math.floor(value.scrollHeight * 0.6) &&
@@ -231,6 +259,15 @@ export default {
         });
       }
       ctrl_scroll = screen_pos;
+    },
+    getSectionsDetails() {
+      for (let i = 2; i <= 4; i++) {
+        // reference to anchor in position i
+        this.sectionMap.set(this.anchors[i], {
+          offsetTop: this.$refs[this.anchors[i]].offsetTop,
+          scrollHeight: this.$refs[this.anchors[i]].scrollHeight
+        });
+      }
     }
   }
 };

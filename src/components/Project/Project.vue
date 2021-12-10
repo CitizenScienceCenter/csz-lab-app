@@ -112,7 +112,6 @@
                   :disabled="!hasProjectTasks"
                   >{{ $t("project-draft-test") }}</b-btn
                 >
-                &ensp;&ensp;&ensp;
                 <b-btn
                   ref="btn-share-it"
                   v-b-modal.project-link
