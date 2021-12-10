@@ -84,7 +84,7 @@ export default {
 @import "@/scss/variables.scss";
 .kit-card {
   cursor: pointer;
-  border: none;
+  border: none !important;
   .project-image {
     transform: scale(0.8);
     max-width: 80%;
