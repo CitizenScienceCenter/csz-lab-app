@@ -37,13 +37,13 @@
           </template>
           <b-dropdown-item
             :to="{ name: 'tools.cslogger' }"
-            exact-active-class="active"
+            active-class="active"
           >
             {{ $t("app-vue-tools-cslogger") }}
           </b-dropdown-item>
           <b-dropdown-item
             :to="{ name: 'tools.projectbuilder' }"
-            exact-active-class="active"
+            active-class="active"
           >
             {{ $t("app-vue-tools-projectbuilder") }}
           </b-dropdown-item>
