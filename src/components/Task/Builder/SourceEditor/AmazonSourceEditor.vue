@@ -5,12 +5,12 @@
         <b-form-group>
           <b-input
             v-model="bucketName"
-            :placeholder="$t('taks-source-editor-amazon-text1')"
+            :placeholder="$t('tasks-source-editor-amazon-text1')"
           ></b-input>
         </b-form-group>
 
         <b-button type="submit" ref="btn-get-bucket-links" variant="primary">{{
-          $t("taks-source-editor-amazon-text2")
+          $t("tasks-source-editor-amazon-text2")
         }}</b-button>
         <b-btn
           ref="btn-submit"
@@ -19,7 +19,7 @@
           size="lg"
           class="float-right"
           v-if="allowedFiles.length > 0"
-          >{{ $t("taks-source-editor-amazon-text3") }}</b-btn
+          >{{ $t("tasks-source-editor-amazon-text3") }}</b-btn
         >
       </b-form>
 

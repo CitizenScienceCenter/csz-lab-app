@@ -3,9 +3,9 @@
     <b-form-group>
       <!-- Results file in CSV format -->
       <div class="mb-3">
-        <label>{{ $t("taks-import-cslogger-csv-label") }}</label>
+        <label>{{ $t("tasks-import-cslogger-csv-label") }}</label>
         <b-file
-          :placeholder="$t('taks-import-cslogger-csv-placeholder')"
+          :placeholder="$t('tasks-import-cslogger-csv-placeholder')"
           accept=".csv"
           v-model="csvFile"
           class="mb-1"
@@ -16,7 +16,7 @@
         <!-- Valid csv message in green color -->
         <span class="text-secondary" v-show="valid.csv">
           <i class="fas fa-check-circle"></i>
-          <small> {{ $t("taks-import-cslogger-valid") }}</small>
+          <small> {{ $t("tasks-import-cslogger-valid") }}</small>
         </span>
         <!-- Invalid csv message in red color -->
         <span class="text-primary" v-show="!valid.csv && valid.csv != null">
@@ -31,9 +31,9 @@
 
       <!-- Media files -->
       <div class="mb-4">
-        <label>{{ $t("taks-import-cslogger-media-label") }}</label>
+        <label>{{ $t("tasks-import-cslogger-media-label") }}</label>
         <b-file
-          :placeholder="$t('taks-import-cslogger-media-placeholder')"
+          :placeholder="$t('tasks-import-cslogger-media-placeholder')"
           multiple
           :accept="allowed_files"
           v-model="mediaFiles"
@@ -63,7 +63,7 @@
         <!-- Valid media message in secondary color -->
         <span class="text-secondary" v-show="valid.media">
           <i class="fas fa-check-circle"></i>
-          <small> {{ $t("taks-import-cslogger-valid") }}</small>
+          <small> {{ $t("tasks-import-cslogger-valid") }}</small>
         </span>
         <!-- Invalid media message in red color -->
         <span class="text-primary" v-show="!valid.media && valid.media != null">
@@ -79,18 +79,18 @@
         </small>
         <!-- Hint for csvFile null for media field -->
         <small class="text-muted" v-if="!csvFile">
-          <i>{{ $t("taks-import-cslogger-csv-loaded") }}</i>
+          <i>{{ $t("tasks-import-cslogger-csv-loaded") }}</i>
         </small>
       </div>
       <span class="text-primary" v-show="no_tasks">
         <i class="fas fa-exclamation-triangle"></i>
-        <small>{{ $t("taks-import-cslogger-no-tasks") }}</small>
+        <small>{{ $t("tasks-import-cslogger-no-tasks") }}</small>
       </span>
       <!-- TODO: This is hiden and checked by default -->
       <!-- Partial checkbox -->
       <!-- <div class="mb-4">
         <b-form-checkbox v-model="partial">
-          {{ $t("taks-import-cslogger-partial-load") }}
+          {{ $t("tasks-import-cslogger-partial-load") }}
         </b-form-checkbox>
       </div> -->
     </b-form-group>
@@ -107,7 +107,7 @@
       </b-button>
       <!-- spinner and message for sending files-->
       <span class="text-primary ml-2 smooth" v-if="validating">
-        {{ $t("taks-import-cslogger-validating") }}
+        {{ $t("tasks-import-cslogger-validating") }}
         <i class="fas fa-spinner fa-pulse"></i>
       </span>
     </div>
@@ -122,7 +122,7 @@
     >
       <b-card-header header-border-variant="danger" class="p-0">
         <span class="ml-2 font-weight-bold text-primary">
-          {{ $t("taks-import-cslogger-failed-files-title") }}
+          {{ $t("tasks-import-cslogger-failed-files-title") }}
         </span>
       </b-card-header>
 
@@ -131,11 +131,11 @@
         <b-card-text v-if="missing_media.length > 0">
           <b-card-sub-title class="d-flex justify-content-between mb-2">
             <small class="text-secondary font-weight-bold">
-              {{ $t("taks-import-cslogger-failed-files-missing") }}
+              {{ $t("tasks-import-cslogger-failed-files-missing") }}
             </small>
             <small class="font-weight-bold">
               {{ missing_media.length }}
-              {{ $t("taks-import-cslogger-files-label") }}
+              {{ $t("tasks-import-cslogger-files-label") }}
             </small>
           </b-card-sub-title>
           <ul>
@@ -153,11 +153,11 @@
         <b-card-text v-if="extra_media.length > 0">
           <b-card-sub-title class="d-flex justify-content-between mb-2">
             <small class="text-secondary font-weight-bold">
-              {{ $t("taks-import-cslogger-failed-files-extra") }}
+              {{ $t("tasks-import-cslogger-failed-files-extra") }}
             </small>
             <small class="font-weight-bold">
               {{ extra_media.length }}
-              {{ $t("taks-import-cslogger-files-label") }}
+              {{ $t("tasks-import-cslogger-files-label") }}
             </small>
           </b-card-sub-title>
           <ul>
@@ -307,7 +307,7 @@ export default {
           if (this.csvFile.size > size) {
             this.valid[ext] = false;
             this.error_message[ext] = this.$t(
-              "taks-import-cslogger-invalid-size"
+              "tasks-import-cslogger-invalid-size"
             );
           } else {
             // convert CSV file into json format
@@ -319,7 +319,7 @@ export default {
         } else {
           this.valid[ext] = false;
           this.error_message[ext] = this.$t(
-            "taks-import-cslogger-invalid-format"
+            "tasks-import-cslogger-invalid-format"
           );
         }
       }
@@ -344,7 +344,7 @@ export default {
           if (this.total_size > size) {
             this.valid[ext] = false;
             this.error_message[ext] = this.$t(
-              "taks-import-cslogger-invalid-size"
+              "tasks-import-cslogger-invalid-size"
             );
           } else {
             try {
@@ -359,7 +359,7 @@ export default {
         } else {
           this.valid[ext] = false;
           this.error_message[ext] = this.$t(
-            "taks-import-cslogger-invalid-format"
+            "tasks-import-cslogger-invalid-format"
           );
         }
       }

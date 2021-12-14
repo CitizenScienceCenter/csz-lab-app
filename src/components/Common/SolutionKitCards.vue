@@ -4,23 +4,19 @@
       <b-card
         v-for="(card, i) of content"
         :key="i"
-        class="kit-card my-4 my-md-0 scroll-effect"
+        class="kit-card my-4 my-md-0 px-1 px-xl-4 scroll-effect"
       >
-        <b-card-title
-          :title="$t(card.title)"
-          title-tag="h3"
-          class="text-center font-weight-bold mb-2"
-        ></b-card-title>
         <div class="text-center">
           <object :data="card.image" type="image/svg+xml" class="project-image">
             <b-img-lazy :src="card.image" class="project-image"></b-img-lazy>
           </object>
         </div>
         <b-card-text class="description">
-          <p class="font-weight-bold">{{ $t(card.subtitle) }}</p>
-          <p class="text-justify">
-            {{ $t(card.description) }}
-          </p>
+          <h3 class="text-center font-weight-bold mb-3">
+            {{ $t(card.title) }}
+          </h3>
+          <span class="font-weight-bold">{{ $t(card.subtitle) }}</span>
+          <div class="text-justify" v-html="$t(card.description)"></div>
         </b-card-text>
         <template #footer>
           <div class="text-center">
@@ -42,7 +38,7 @@ const CONTENT = [
     image: require("@/assets/img/solution_kit/1_discover.svg"),
     description: "solution-kit-discover-description",
     button: "solution-kit-discover-button",
-    route: "/discover",
+    route: "/discover"
   },
   {
     title: "solution-kit-cslogger-title",
@@ -50,7 +46,7 @@ const CONTENT = [
     image: require("@/assets/img/solution_kit/2_collect.svg"),
     description: "solution-kit-cslogger-description",
     button: "solution-kit-cslogger-button",
-    route: "/tools/cslogger",
+    route: "/tools/cslogger"
   },
   {
     title: "solution-kit-pb-title",
@@ -58,25 +54,25 @@ const CONTENT = [
     image: require("@/assets/img/solution_kit/3_analyse.svg"),
     description: "solution-kit-pb-description",
     button: "solution-kit-pb-button",
-    route: "/tools/projectbuilder",
-  },
+    route: "/tools/projectbuilder"
+  }
 ];
 export default {
   name: "SolutionKitCards",
   data() {
     return {
-      content: CONTENT,
+      content: CONTENT
     };
   },
   mounted() {
     let matches = this.$el.querySelectorAll(".scroll-effect");
-    window.setTimeout(function () {
+    window.setTimeout(function() {
       for (let item of matches) {
         item.classList.add("scrolled");
       }
     }, 1);
   },
-  methods: {},
+  methods: {}
 };
 </script>
 
@@ -132,9 +128,6 @@ export default {
   .kit-card {
     .card-title {
       font-size: $font-size-xlarge;
-    }
-    .description {
-      font-size: $font-size-medium;
     }
   }
 }

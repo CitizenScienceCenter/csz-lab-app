@@ -1,25 +1,25 @@
 <template>
   <div>
-    <p class="mt-4">{{ $t("taks-import-localcsv-text1") }}:</p>
+    <p class="mt-4">{{ $t("tasks-import-localcsv-text1") }}:</p>
     <ul v-if="task.material">
       <li v-if="task.material === materials.image">
         <b-link :href="csvSamples.image" download="image-sample.csv">{{
-          $t("taks-import-localcsv-text2")
+          $t("tasks-import-localcsv-text2")
         }}</b-link>
       </li>
       <li v-else-if="task.material === materials.sound">
         <b-link :href="csvSamples.sound" download="sound-sample.csv">{{
-          $t("taks-import-localcsv-text3")
+          $t("tasks-import-localcsv-text3")
         }}</b-link>
       </li>
       <li v-else-if="task.material === materials.video">
         <b-link :href="csvSamples.video" download="video-sample.csv">{{
-          $t("taks-import-localcsv-text4")
+          $t("tasks-import-localcsv-text4")
         }}</b-link>
       </li>
       <li v-else-if="task.material === materials.pdf">
         <b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{
-          $t("taks-import-localcsv-text5")
+          $t("tasks-import-localcsv-text5")
         }}</b-link>
       </li>
       <!-- <li v-else-if="project.info.task_category == 'tweet'"></li> -->
@@ -27,22 +27,22 @@
     <ul v-else>
       <li>
         <b-link :href="csvSamples.image" download="image-sample.csv">{{
-          $t("taks-import-localcsv-text2")
+          $t("tasks-import-localcsv-text2")
         }}</b-link>
       </li>
       <li>
         <b-link :href="csvSamples.sound" download="sound-sample.csv">{{
-          $t("taks-import-localcsv-text3")
+          $t("tasks-import-localcsv-text3")
         }}</b-link>
       </li>
       <li>
         <b-link :href="csvSamples.video" download="video-sample.csv">{{
-          $t("taks-import-localcsv-text4")
+          $t("tasks-import-localcsv-text4")
         }}</b-link>
       </li>
       <li>
         <b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{
-          $t("taks-import-localcsv-text5")
+          $t("tasks-import-localcsv-text5")
         }}</b-link>
       </li>
     </ul>
@@ -50,7 +50,7 @@
     <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
       <b-form-group>
         <b-file
-          :placeholder="$t('taks-import-localcsv-text7')"
+          :placeholder="$t('tasks-import-localcsv-text7')"
           accept=".csv"
           v-model="csvFile"
           browse-text="Search"
@@ -60,7 +60,7 @@
         <!-- Valid csv message in green color -->
         <span class="text-secondary" v-show="valid">
           <i class="fas fa-check-circle"></i>
-          <small> {{ $t("taks-import-localcsv-valid") }}</small>
+          <small> {{ $t("tasks-import-localcsv-valid") }}</small>
         </span>
         <!-- Invalid csv message in red color -->
         <span class="text-primary" v-show="!valid && valid != null">
@@ -138,14 +138,14 @@ export default {
         this.valid = true;
         if (this.csvFile.size > MAX_SIZE_CSV) {
           this.valid = false;
-          this.error_message = this.$t("taks-import-localcsv-invalid-size");
+          this.error_message = this.$t("tasks-import-localcsv-invalid-size");
         } else {
           // convert CSV file into json format
           this.json_csvFile = await csvToJson(this.csvFile);
         }
       } else {
         this.valid = false;
-        this.error_message = this.$t("taks-import-localcsv-invalid-format");
+        this.error_message = this.$t("tasks-import-localcsv-invalid-format");
       }
     },
     getExt(name) {
