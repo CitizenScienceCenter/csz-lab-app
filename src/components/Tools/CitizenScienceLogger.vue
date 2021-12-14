@@ -227,7 +227,7 @@ export default {
         "cslogger_share_app",
         "cslogger_integration_pb"
       ],
-      sectionMap: new Map(),
+      sectionMap: null,
       throttleScroll: throttle(this.handleScroll, 300),
       createAppContent: CREATE_APP_CONTENT,
       shareAppContent: SHARE_APP_CONTENT,
@@ -257,6 +257,9 @@ export default {
     setTimeout(() => {
       window.addEventListener("scroll", this.throttleScroll, false);
     }, 1000);
+    // Load sections rendered info
+    this.sectionMap = new Map();
+    this.getSectionsDetails();
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.throttleScroll, false);
@@ -297,7 +300,7 @@ export default {
       const screen_pos = window.scrollY;
       let scroll_down = ctrl_scroll < screen_pos;
       if (scroll_down) {
-        sectionMap.forEach((value, key) => {
+        this.sectionMap.forEach((value, key) => {
           if (
             screen_pos >=
               value.offsetTop - Math.floor(value.scrollHeight * 0.6) &&

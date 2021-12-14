@@ -19,9 +19,9 @@
       <b-container class="small-bottom scroll-effect scroll-effect-delayed-1">
         <b-row>
           <b-col class="text-center">
-            <p class="text-justify" v-html="$t('cspb-introduction')"></p>
+            <div class="text-justify" v-html="$t('cspb-introduction')"></div>
             <!-- Create applet button -->
-            <b-button variant="primary" to="/project/builder/name" class="mt-2">
+            <b-button variant="primary" to="/project/builder/name" class="mt-4">
               {{ $t("home-create-a-project") }}
             </b-button>
             <!-- anchors -->
@@ -191,7 +191,7 @@ export default {
         "pb_integration_cslogger",
         "pb_test_and_publish"
       ],
-      sectionMap: new Map(),
+      sectionMap: null,
       throttleScroll: throttle(this.handleScroll, 300),
       createProjectContent: CREATE_PROJECT_CONTENT,
       integrationCsloggerContent: INTEGRATION_CSLOGGER_CONTENT,
@@ -228,6 +228,7 @@ export default {
       window.addEventListener("scroll", this.throttleScroll, false);
     }, 1000);
     // Load sections rendered info
+    this.sectionMap = new Map();
     this.getSectionsDetails();
   },
   beforeDestroy() {
