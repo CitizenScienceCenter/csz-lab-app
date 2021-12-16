@@ -21,14 +21,35 @@ var ls = new SecureLS({ isCompression: false });
 Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== "production";
+const isIndexedDB = "indexedDB" in window;
 
-const persistence = function() {
-  // validate if browser supports indexedDB
-  if ("indexedDB" in window) {
+const persistence_idb = function() {
+  // return vuex persistence with indexed db
+  return new VuexPersistence({
+    storage: localForage,
+    asyncStorage: true,
+    reducer: state => ({
+      task: state.task,
+      project: state.project,
+      notification: state.notification
+    })
+  });
+};
+
+const persistence_ls = function() {
+  if (isIndexedDB) {
     // return vuex persistence with indexed db
     return new VuexPersistence({
-      storage: localForage,
-      asyncStorage: true
+      storage: {
+        getItem: key => ls.get(key),
+        setItem: (key, value) => ls.set(key, value),
+        removeItem: key => ls.remove(key)
+      },
+      reducer: state => ({
+        user: state.user,
+        osm: state.osm,
+        settings: state.settings,        
+      })
     });
   } else {
     console.warn(
@@ -45,6 +66,20 @@ const persistence = function() {
   }
 };
 
+const getPlugins = () => {
+  let plugins = [];
+  // validate if debug mode is enabled
+  if (debug) {
+    plugins.push(createLogger());
+  }
+  // validate if browser supports indexedDB
+  if (isIndexedDB) {
+    plugins.push(persistence_idb().plugin);
+  }
+  plugins.push(persistence_ls().plugin);
+  return plugins;
+};
+
 export default new Vuex.Store({
   modules: {
     settings,
@@ -57,7 +92,5 @@ export default new Vuex.Store({
     comments
   },
   strict: debug,
-  plugins: debug
-    ? [createLogger(), persistence().plugin]
-    : [persistence().plugin]
+  plugins: getPlugins()
 });
