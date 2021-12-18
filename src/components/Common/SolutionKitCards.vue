@@ -5,6 +5,7 @@
         v-for="(card, i) of content"
         :key="i"
         class="kit-card my-4 my-md-0 px-1 px-xl-4 scroll-effect"
+        @click.prevent="$router.push(card.route)"
       >
         <div class="text-center">
           <object :data="card.image" type="image/svg+xml" class="project-image">
@@ -12,9 +13,9 @@
           </object>
         </div>
         <b-card-text class="description">
-          <h3 class="text-center font-weight-bold mb-3">
+          <h1 class="text-center font-weight-bold mb-3 centered small">
             {{ $t(card.title) }}
-          </h3>
+          </h1>
           <span class="font-weight-bold">{{ $t(card.subtitle) }}</span>
           <div class="text-justify" v-html="$t(card.description)"></div>
         </b-card-text>
@@ -79,15 +80,9 @@ export default {
 <style lang="scss">
 @import "@/scss/variables.scss";
 .kit-card {
-  cursor: pointer;
   border: none !important;
   .project-image {
-    transform: scale(0.8);
-    max-width: 80%;
-    transition: all $transition-duration-long ease-in-out;
-    &:hover {
-      transform: scale(1.1);
-    }
+    max-width: 100%;
   }
   .card-title {
     font-size: $font-size-large;
@@ -126,6 +121,9 @@ export default {
 }
 @media only screen and (min-width: $viewport-xlarge) {
   .kit-card {
+    .project-image {
+      transform: scale(1.15);
+    }
     .card-title {
       font-size: $font-size-xlarge;
     }
