@@ -11,7 +11,7 @@
 
     <!-- Solution Kit Cards section -->
     <b-container fluid class="pt-4">
-      <h1 class="text-center centered">
+      <h1 class="text-center centered small">
         {{ $t("home-solution-kit-cards") }}
       </h1>
       <solution-kit-cards></solution-kit-cards>
