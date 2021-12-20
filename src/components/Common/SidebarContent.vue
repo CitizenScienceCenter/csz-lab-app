@@ -13,7 +13,12 @@
         header-text-variant="white"
       >
         <span class="font-weight-bold">
-          {{ current_index + 1 }} - {{ $t(current_tab.title) }}
+          {{
+            $t("step-sidebar", {
+              number: `${current_index + 1}/${content.length}`
+            })
+          }}
+          {{ $t(current_tab.title) }}
         </span>
       </b-card-header>
       <b-card-body class="full-height pt-0" ref="sidebar_content">
@@ -72,12 +77,37 @@
             </b-col>
           </b-row>
         </b-card-text>
+        <b-card-text>
+          <b-row align-h="around">
+            <b-col cols="5" class="text-center" v-if="isPreviousButtonVisible">
+              <b-button
+                variant="outline-primary"
+                class="font-weight-bold"
+                @click="getNextTab(false)"
+              >
+                <i class="fas fa-arrow-left"></i> {{ $t("back-btn") }}
+              </b-button>
+            </b-col>
+            <b-col cols="5" class="text-center" v-if="isNextButtonVisible">
+              <b-button
+                variant="outline-primary"
+                class="font-weight-bold"
+                @click="getNextTab(true)"
+              >
+                {{ $t("next-btn") }} <i class="fas fa-arrow-right"></i>
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-card-text>
       </b-card-body>
     </b-card>
 
     <!-- Sidebar section  -->
     <b-sidebar
       :id="parentRef"
+      v-model="sidebar_open"
+      :aria-controls="parentRef"
+      :aria-expanded="sidebar_open"
       shadow
       :title="$t('steps')"
       header-class="pt-4 text-secondary"
@@ -94,7 +124,7 @@
           @click="changeTab(item.id)"
         >
           <span class="font-weight-bold">
-            {{ index + 1 }} - {{ $t(item.title) }}
+            Step {{ index + 1 }} - {{ $t(item.title) }}
           </span>
         </b-button>
       </div>
@@ -129,7 +159,8 @@ export default {
     return {
       current_tab: null,
       current_index: 0,
-      selected_img: null
+      selected_img: null,
+      sidebar_open: false
     };
   },
   created() {
@@ -140,13 +171,21 @@ export default {
   computed: {
     parentRef() {
       return `sidebar_steps-${this.parent}`;
+    },
+    isPreviousButtonVisible() {
+      return this.current_index > 0;
+    },
+    isNextButtonVisible() {
+      return this.current_index < this.content.length - 1;
     }
   },
   methods: {
     changeTab(id) {
       this.current_tab = this.content.find(x => x.id === id);
       this.current_index = this.content.findIndex(x => x.id === id);
-      this.$root.$emit("bv::toggle::collapse", this.parentRef);
+      if (this.sidebar_open) {
+        this.$root.$emit("bv::toggle::collapse", this.parentRef);
+      }
       const sidebar_content = this.$refs.sidebar_content;
       // Scroll to top of sidebar content
       sidebar_content.scrollTop = 0;
@@ -177,6 +216,13 @@ export default {
       return {
         template: `<div>${getTranslationLocale(text)}</div>`
       };
+    },
+    // Get the tab id depending of button clicked (previous or next)
+    getNextTab(isNext = null) {
+      if (isNext != null) {
+        const index = this.current_index + (isNext ? 1 : -1);
+        this.changeTab(this.content[index].id);
+      }
     }
   }
 };

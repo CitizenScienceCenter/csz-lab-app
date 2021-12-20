@@ -17,15 +17,13 @@
     <!-- First text content section -->
     <content-section>
       <b-container class="small-bottom scroll-effect scroll-effect-delayed-1">
-        <b-row>
+        <p class="text-justify" v-html="$t('cslogger-introduction')"></p>
+        <b-row align-v="center">
           <!-- Left column -->
           <b-col cols="12" md="6" class="pr-md-4 mb-4 mb-md-0">
-            <p
-              class="text-justify"
-              v-html="$t('cslogger-introduction-left-column')"
-            ></p>
             <!-- anchors -->
             <div class="text-left mt-2">
+              <h2 class="mb-2 text-secondary">Tutorial</h2>
               <b-button-group vertical>
                 <a
                   v-for="(ref, i) in anchors"
@@ -41,13 +39,8 @@
           </b-col>
           <!-- Right column -->
           <b-col cols="12" md="6" class="text-center pl-md-4">
-            <!-- Text -->
-            <p
-              class="text-justify"
-              v-html="$t('cslogger-introduction-right-column')"
-            ></p>
             <!-- Download buttons -->
-            <p class="text-justify">
+            <p class="text-center">
               {{ $t("cslogger-download-app-label") }}:
               <a
                 href="https://play.google.com/store/apps/details?id=com.childmindinstitute.exposuretherapy"
@@ -82,7 +75,7 @@
               href="https://admin.mindlogger.org/"
               target="_blank"
               size="xs"
-              class="mt-2"
+              class="mt-1"
             >
               {{ $t("cslogger-create-applet-button") }}
             </b-button>
