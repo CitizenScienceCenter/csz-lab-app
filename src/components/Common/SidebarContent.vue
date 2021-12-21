@@ -26,26 +26,24 @@
           <!-- Header: only visible after lg screens -->
           <b-row
             v-if="current_tab.content.row_header"
-            class="pt-2 pb-3 sticky-top bg-white"
+            class="sticky-top bg-white"
           >
             <b-col
               :lg="Math.floor(12 / current_tab.content.row_header.length)"
-              v-for="h in current_tab.content.row_header"
-              :key="h"
-              class="d-none d-lg-block text-center"
+              v-for="(h, c_i) in current_tab.content.row_header"
+              :key="c_i"
+              class="d-none d-lg-block text-center pt-2 color-column"
+              :class="colorColumn(c_i)"
             >
               <h2>{{ h }}</h2>
             </b-col>
           </b-row>
           <!-- Content: rows of content -->
-          <b-row
-            v-for="(r, i) in current_tab.content.rows"
-            :key="i"
-            class="my-3"
-          >
+          <b-row v-for="(r, i) in current_tab.content.rows" :key="i">
             <b-col
               cols="12"
-              class="pb-2"
+              class="py-4 color-column"
+              :class="colorColumn(c_i)"
               :lg="Math.floor(12 / r.length)"
               v-for="(col, c_i) in r"
               :key="c_i"
@@ -72,8 +70,8 @@
                 </div>
               </div>
             </b-col>
-            <b-col>
-              <hr />
+            <b-col class="py-0">
+              <hr class="my-0" />
             </b-col>
           </b-row>
         </b-card-text>
@@ -223,6 +221,17 @@ export default {
         const index = this.current_index + (isNext ? 1 : -1);
         this.changeTab(this.content[index].id);
       }
+    },
+    // Color the columns of the current tab
+    colorColumn(index) {
+      if (index === 0) {
+        return "column-first";
+      }
+      if (index % 2 === 0) {
+        return "column-even";
+      } else {
+        return "column-odd";
+      }
     }
   }
 };
@@ -282,6 +291,20 @@ export default {
   padding: 0;
   background-color: rgba(0, 0, 0, 0.2);
 }
+
+// Color settings for columns
+.color-column {
+  &.column-first {
+    background: none;
+  }
+  &.column-even {
+    background: rgba($color-gradient-start, 0.04);
+  }
+  &.column-odd {
+    background: rgba($color-gradient-start, 0.02);
+  }
+}
+
 @media only screen and (min-width: $viewport-tablet-portrait) {
   .steps-button {
     span {
