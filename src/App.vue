@@ -121,6 +121,12 @@ export default {
     };
   },
   props: {},
+  created() {
+    // Check if Gtag for Google Analytics is enabled in the settings
+    if (this.getGtag) {
+      bootstrap().then(gtag => {});
+    }
+  },
   computed: {
     ...mapState({
       errorNotifications: state => state.notification.errorNotifications,
@@ -144,7 +150,9 @@ export default {
   },
   watch: {
     getGtag() {
-      if (this.getGtag) bootstrap().then(gtag => {});
+      if (this.getGtag) {
+        bootstrap().then(gtag => {});
+      }
     }
   },
   methods: {
