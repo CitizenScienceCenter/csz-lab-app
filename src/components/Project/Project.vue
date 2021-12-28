@@ -38,7 +38,7 @@
               ></b-skeleton>
               <b-skeleton
                 animation="wave"
-                width="20%"
+                width="90%"
                 height="1.5em"
                 class="mb-5"
               ></b-skeleton>
@@ -445,21 +445,21 @@ export default {
   created() {
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
-    this.getProject(this.id).then(project => {
+    this.getProject(this.id).then(async project => {
       if (!project) return false;
       this.shareable_link = project.info.shareable_link;
-      // load some stats
-      this.getStatistics(project);
-      this.getResults(project);
+      // has to be loaded to know if the project can be published
+      if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
+        this.getProjectTasks(project);
+      }
       // checks if the project is open for anonymous users or not
       this.getNewTask(project).then(allowed => {
         this.isAnonymousProject = !!allowed;
       });
-      if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
-        // has to be loaded to know if the project can be published
-        this.getProjectTasks(project);
-      }
-      this.setLoadingProject(true);
+      // load some stats
+      this.getResults(project);
+      await this.getStatistics(project);
+      await this.setLoadingProject(true); // loading is done when stats and project is ready
     });
   },
   beforeMount() {
