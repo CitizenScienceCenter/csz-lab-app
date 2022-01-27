@@ -134,7 +134,7 @@ export default {
 
     span {
       display: block;
-      font-size: $font-size-small / $font-scale;
+      font-size: calc($font-size-small / $font-scale);
       line-height: 1;
       margin-bottom: $spacing-1;
       color: white;
