@@ -22,29 +22,37 @@
         <b-nav-item :to="{ name: 'home' }" exact-active-class="active">{{
           $t("app-vue-navigation-home")
         }}</b-nav-item>
-        <b-nav-item-dropdown right no-caret role="menu" active-class="active">
-          <template slot="button-content">
-            <span
-              :class="{
-                active: isTools
-              }"
+        <div @mouseover="openDropdown()" @mouseleave="closeDropdown()">
+          <b-nav-item-dropdown
+            right
+            no-caret
+            role="menu"
+            active-class="active"
+            ref="tools_dropdown"
+          >
+            <template slot="button-content">
+              <span
+                :class="{
+                  active: isTools
+                }"
+              >
+                {{ $t("app-vue-navigation-tools") }}
+              </span>
+            </template>
+            <b-dropdown-item
+              :to="{ name: 'tools.cslogger' }"
+              active-class="active"
             >
-              {{ $t("app-vue-navigation-tools") }}
-            </span>
-          </template>
-          <b-dropdown-item
-            :to="{ name: 'tools.cslogger' }"
-            active-class="active"
-          >
-            {{ $t("app-vue-tools-cslogger") }}
-          </b-dropdown-item>
-          <b-dropdown-item
-            :to="{ name: 'tools.projectbuilder' }"
-            active-class="active"
-          >
-            {{ $t("app-vue-tools-projectbuilder") }}
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
+              {{ $t("app-vue-tools-cslogger") }}
+            </b-dropdown-item>
+            <b-dropdown-item
+              :to="{ name: 'tools.projectbuilder' }"
+              active-class="active"
+            >
+              {{ $t("app-vue-tools-projectbuilder") }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+        </div>
         <b-nav-item :to="{ name: 'discover' }" exact-active-class="active">{{
           $t("app-vue-navigation-discover")
         }}</b-nav-item>
@@ -145,6 +153,14 @@ export default {
     },
     isTools() {
       return this.$route.name ? this.$route.name.includes("tools") : false;
+    }
+  },
+  methods: {
+    openDropdown() {
+      this.$refs.tools_dropdown.visible = true;
+    },
+    closeDropdown() {
+      this.$refs.tools_dropdown.visible = false;
     }
   }
 };
