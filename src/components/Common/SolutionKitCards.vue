@@ -1,36 +1,45 @@
 <template>
-  <b-row class="justify-content-center px-xl-5 mx-xl-3 px-lg-3">
-    <b-card-group deck>
-      <b-card
-        v-for="(card, i) of content"
-        :key="i"
-        class="kit-card my-4 my-md-0 px-1 px-xl-4 scroll-effect"
-      >
-        <div class="text-center">
-          <object :data="card.image" type="image/svg+xml" class="project-image">
-            <b-img-lazy :src="card.image" class="project-image"></b-img-lazy>
-          </object>
-        </div>
-        <b-card-text
-          class="description"
-          @click.prevent="$router.push(card.route)"
+  <section>
+    <!-- Title section -->
+    <h1 class="text-center centered small scroll-effect" v-text="title"></h1>
+    <!-- Cards section -->
+    <b-row class="justify-content-center px-xl-5 mx-xl-3 px-lg-3">
+      <b-card-group deck>
+        <b-card
+          v-for="(card, i) of content"
+          :key="i"
+          class="kit-card my-4 my-md-0 px-1 px-xl-4 scroll-effect"
         >
-          <h1 class="text-center font-weight-bold mb-3 centered small">
-            {{ $t(card.title) }}
-          </h1>
-          <span class="font-weight-bold">{{ $t(card.subtitle) }}</span>
-          <div class="text-justify" v-html="$t(card.description)"></div>
-        </b-card-text>
-        <template #footer>
           <div class="text-center">
-            <b-button variant="primary" :to="card.route">
-              {{ $t(card.button) }}
-            </b-button>
+            <object
+              :data="card.image"
+              type="image/svg+xml"
+              class="project-image"
+            >
+              <b-img-lazy :src="card.image" class="project-image"></b-img-lazy>
+            </object>
           </div>
-        </template>
-      </b-card>
-    </b-card-group>
-  </b-row>
+          <b-card-text
+            class="description"
+            @click.prevent="$router.push(card.route)"
+          >
+            <h1 class="text-center font-weight-bold mb-3 centered small">
+              {{ $t(card.title) }}
+            </h1>
+            <span class="font-weight-bold">{{ $t(card.subtitle) }}</span>
+            <div class="text-justify" v-html="$t(card.description)"></div>
+          </b-card-text>
+          <template #footer>
+            <div class="text-center">
+              <b-button variant="primary" :to="card.route">
+                {{ $t(card.button) }}
+              </b-button>
+            </div>
+          </template>
+        </b-card>
+      </b-card-group>
+    </b-row>
+  </section>
 </template>
 
 <script>
@@ -62,6 +71,9 @@ const CONTENT = [
 ];
 export default {
   name: "SolutionKitCards",
+  props: {
+    title: String
+  },
   data() {
     return {
       content: CONTENT

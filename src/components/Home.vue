@@ -11,10 +11,9 @@
 
     <!-- Solution Kit Cards section -->
     <b-container fluid class="pt-4">
-      <h1 class="text-center centered small">
-        {{ $t("home-solution-kit-cards") }}
-      </h1>
-      <solution-kit-cards></solution-kit-cards>
+      <solution-kit-cards
+        :title="$t('home-solution-kit-cards')"
+      ></solution-kit-cards>
     </b-container>
 
     <b-container fluid class="light-greyish">
@@ -58,42 +57,42 @@ export default {
   components: {
     "app-cover": Cover,
     "app-project-card": ProjectCard,
-    SolutionKitCards,
+    SolutionKitCards
   },
-  metaInfo: function () {
+  metaInfo: function() {
     return {
       title: "Home",
       meta: [
         {
           property: "og:title",
           content: "Home",
-          template: "%s | " + this.$t("site-title"),
-        },
-      ],
+          template: "%s | " + this.$t("site-title")
+        }
+      ]
     };
   },
   created() {
     this.getProjectsWithCategory({
-      category: { short_name: "featured" },
+      category: { short_name: "featured" }
     });
   },
   beforeMount() {
     // auto scroll to the page top when render first time
-    setTimeout(function () {
+    setTimeout(function() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 2);
   },
   methods: {
-    ...mapActions("project", ["getProjectsWithCategory"]),
+    ...mapActions("project", ["getProjectsWithCategory"])
   },
   computed: {
     ...mapState("project", {
-      projects: (state) =>
+      projects: state =>
         "featured" in state.categoryProjects
           ? state.categoryProjects.featured
-          : [],
-    }),
-  },
+          : []
+    })
+  }
 };
 </script>
 

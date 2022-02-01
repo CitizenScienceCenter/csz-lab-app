@@ -52,7 +52,8 @@
         <!-- <b-nav-item :to="{ name: 'forum' }">Forum</b-nav-item> -->
       </b-navbar-nav>
 
-      <b-navbar-nav>
+      <!-- TODO: Remove v-if="false" here below when multiple languages are implemented -->
+      <b-navbar-nav v-if="false">
         <b-nav-item-dropdown id="dropdownLang" right>
           <template slot="button-content">
             {{ this.$i18n.locale }}
