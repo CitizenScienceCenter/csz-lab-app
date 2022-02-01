@@ -17,6 +17,7 @@
     <!-- First text content section -->
     <content-section>
       <b-container class="small-bottom scroll-effect scroll-effect-delayed-1">
+        <!-- Text content -->
         <p class="text-justify" v-html="$t('cslogger-introduction')"></p>
         <b-row align-v="center">
           <!-- Left column -->
@@ -49,7 +50,7 @@
               >
                 <b-img
                   :src="
-                    require('@/assets/img/cslogger_view/play_store_download.svg')
+                    require('@/assets/img/cslogger_view/play_store_download.png')
                   "
                   alt="Get it on Google Play"
                   class="download-icon"
@@ -62,7 +63,7 @@
               >
                 <b-img
                   :src="
-                    require('@/assets/img/cslogger_view/app_store_download.svg')
+                    require('@/assets/img/cslogger_view/app_store_download.png')
                   "
                   alt="Get it on App Store"
                   class="download-icon"

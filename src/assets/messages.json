@@ -22,6 +22,7 @@
     "app-vue-navigation-logout": "Sign Out",
     "app-vue-profile": "Profile",
     "app-vue-create-your-project": "Create your project",
+    "app-vue-navigation-created-by":"Created by:",
 
     "login-header": "Login",
     "login-input-email": "Email address",
@@ -346,7 +347,7 @@
     "go-back-btn": "Go back",
     "next-btn": "Next",
     "next-step-btn": "Next step",
-    "back-btn": "Back",
+    "previous-btn": "Previous",
     "create-btn": "Create!",
     "browse-btn": "Browse",
     "settings": "Settings",
@@ -843,6 +844,7 @@
     "app-vue-navigation-logout": "Abmelden",
     "app-vue-profile": "Profil",
     "app-vue-create-your-project": "Ihr Projekt starten",
+    "app-vue-navigation-created-by":"Erstellt von:",
 
     "login-header": "Anmelden",
     "login-input-email": "Email-Adresse",
