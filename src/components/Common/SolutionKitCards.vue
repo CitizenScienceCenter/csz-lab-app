@@ -5,14 +5,16 @@
         v-for="(card, i) of content"
         :key="i"
         class="kit-card my-4 my-md-0 px-1 px-xl-4 scroll-effect"
-        @click.prevent="$router.push(card.route)"
       >
         <div class="text-center">
           <object :data="card.image" type="image/svg+xml" class="project-image">
             <b-img-lazy :src="card.image" class="project-image"></b-img-lazy>
           </object>
         </div>
-        <b-card-text class="description">
+        <b-card-text
+          class="description"
+          @click.prevent="$router.push(card.route)"
+        >
           <h1 class="text-center font-weight-bold mb-3 centered small">
             {{ $t(card.title) }}
           </h1>
@@ -89,6 +91,7 @@ export default {
   }
   .description {
     font-size: $font-size-normal;
+    cursor: pointer;
   }
   .card-footer {
     border: none;

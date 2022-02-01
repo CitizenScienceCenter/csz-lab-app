@@ -83,7 +83,7 @@
                 class="font-weight-bold"
                 @click="getNextTab(false)"
               >
-                <i class="fas fa-arrow-left"></i> {{ $t("back-btn") }}
+                {{ $t("previous-btn") }}
               </b-button>
             </b-col>
             <b-col cols="5" class="text-center" v-if="isNextButtonVisible">
@@ -92,7 +92,7 @@
                 class="font-weight-bold"
                 @click="getNextTab(true)"
               >
-                {{ $t("next-btn") }} <i class="fas fa-arrow-right"></i>
+                {{ $t("next-btn") }}
               </b-button>
             </b-col>
           </b-row>

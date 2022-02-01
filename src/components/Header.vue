@@ -1,10 +1,7 @@
 <template>
   <b-navbar :sticky="true" toggleable="lg" type="light" variant="light">
-    <b-navbar-brand>
-      <div class="beta">Beta</div>
-    </b-navbar-brand>
-
-    <b-navbar-brand>
+    <b-navbar-brand class="brand">
+      <span class="beta" v-html="$t('app-vue-navigation-created-by')"></span>
       <a
         href="https://citizenscience.ch"
         class="home-link home-link-platform"
@@ -173,18 +170,20 @@ export default {
   }
 }
 
-.beta {
-  margin-left: 4px;
-  font-size: 36px;
-  //font-size: $font-size-tiny;
-  line-height: 100%;
-  text-transform: uppercase;
-  font-weight: 700;
-  //background-color: $color-secondary;
-  //border-radius: $border-radius;
-  padding: 2px;
+.brand {
   display: flex;
   align-self: flex-start;
+  .beta {
+    margin-inline: 2px 6px;
+    font-size: $font-size-mini;
+    line-height: 100%;
+    // text-transform: uppercase;
+    font-weight: 700;
+    padding: 2px;
+    text-align: left;
+    align-items: center;
+    display: flex;
+  }
 }
 
 .loginBtn {
@@ -199,5 +198,13 @@ export default {
   cursor: pointer;
   text-transform: uppercase;
   background: none;
+}
+
+@media only screen and (min-width: $viewport-tablet-portrait) {
+  .brand {
+    .beta {
+      font-size: $font-size-small;
+    }
+  }
 }
 </style>
