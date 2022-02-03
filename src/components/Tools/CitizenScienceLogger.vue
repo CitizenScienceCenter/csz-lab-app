@@ -5,7 +5,10 @@
       <b-container fluid class="small-bottom scroll-effect">
         <b-row class="mt-4 d-flex justify-content-center">
           <b-col cols="10" class="text-center">
-            <h1 class="centered">{{ $t("cslogger-header") }}</h1>
+            <h1 class="centered">
+              {{ $t("cslogger-header") }}
+              <b-badge pill variant="danger" class="beta-pill">BETA</b-badge>
+            </h1>
           </b-col>
           <b-col cols="12" class="text-center mt-4">
             <h2 class="centered">{{ $t("cslogger-subheader") }}</h2>
@@ -326,6 +329,12 @@ export default {
     cursor: pointer;
     color: $primary !important;
   }
+}
+.beta-pill {
+  font-size: 0.7rem;
+  line-height: 100%;
+  display: inline-block;
+  vertical-align: top;
 }
 .logo {
   max-height: 60px;

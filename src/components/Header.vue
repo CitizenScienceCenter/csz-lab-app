@@ -1,7 +1,7 @@
 <template>
   <b-navbar :sticky="true" toggleable="lg" type="light" variant="light">
     <b-navbar-brand class="brand">
-      <span class="beta" v-html="$t('app-vue-navigation-created-by')"></span>
+      <!-- <span class="beta" v-html="$t('app-vue-navigation-created-by')"></span> -->
       <a
         href="https://citizenscience.ch"
         class="home-link home-link-platform"
@@ -190,17 +190,18 @@ export default {
 .brand {
   display: flex;
   align-self: flex-start;
-  .beta {
-    margin-inline: 2px 6px;
-    font-size: $font-size-mini;
-    line-height: 100%;
-    // text-transform: uppercase;
-    font-weight: 700;
-    padding: 2px;
-    text-align: left;
-    align-items: center;
-    display: flex;
-  }
+  padding-inline-start: 4px;
+  // .beta {
+  //   margin-inline: 2px 6px;
+  //   font-size: $font-size-mini;
+  //   line-height: 100%;
+  //   // text-transform: uppercase;
+  //   font-weight: 700;
+  //   padding: 2px;
+  //   text-align: left;
+  //   align-items: center;
+  //   display: flex;
+  // }
 }
 
 .loginBtn {
