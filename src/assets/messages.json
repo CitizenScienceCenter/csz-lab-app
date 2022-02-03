@@ -22,7 +22,7 @@
     "app-vue-navigation-logout": "Sign Out",
     "app-vue-profile": "Profile",
     "app-vue-create-your-project": "Create your project",
-    "app-vue-navigation-created-by":"Created by:",
+    "app-vue-navigation-created-by": "Created by:",
 
     "login-header": "Login",
     "login-input-email": "Email address",
@@ -759,7 +759,7 @@
     "cslogger-integration-pb-export-data-1": "<p>Here it is possible to perform the following actions by clicking on the buttons located in the top bar:</p><ul><li><i class='fas fa-user-friends fa-sm'></i> View and manage users and invitations</li><li><i class='far fa-calendar-alt fa-sm'></i> View general calendar</li><li><i class='fas fa-edit fa-sm'></i> Edit the applet</li><li><svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' role='img' style='vertical-align: -0.125em;' width='1em' height='1em' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'><g transform='rotate(90 12 12)'><path d='M23 12l-4-4v3h-9v2h9v3M1 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3h-2V6H3v12h12v-3h2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z' fill='currentColor'/></g></svg> Export data contributed for participants</li><li><svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' role='img' style='vertical-align: -0.125em;' width='1em' height='1em' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'><path d='M11 17H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h12v2H4v12h7v-2l4 3l-4 3v-2m8 4V7H8v6H6V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-2h2v2h11z' fill='currentColor'/></svg> Duplicate applet</li><li><i class='fas fa-trash fa-sm'></i> Delete applet</li></ul><p><strong>Example:</strong><br/>Click on Export Data, ingress the password of the applet and click on “<strong>SUBMIT</strong>”</p>",
     "cslogger-integration-pb-export-data-2": "<p>After downloading, there will be two files:</p><ul><li><strong>report.csv</strong>: contains the data collected by the applet</li><li><strong>media-responses-xxxxx.zip</strong>: contains the multimedia collected by the applet</li></ul><p>Please unzip the compressed file before continuing with the next steps.</p>",
     "cslogger-integration-pb-create-project": "Create a project with CS PB",
-    "cslogger-integration-pb-create-project-0": "<p>For create a project based on the collected data by the applet using CS Logger, please click on the button and follow the instructions:</p> <div class='text-center'><router-link :to=\"{name:'tools.projectbuilder', params:{section:'pb_create_project'}}\" tag='a' class='btn btn-primary'>Create Project</router-link></div>",
+    "cslogger-integration-pb-create-project-0": "<p>For create a project based on the collected data by the applet using CS Logger, please click on the button and follow the instructions:<br/><strong><router-link :to=\"{name:'tools.projectbuilder', params:{section:'pb_create_project'}}\" tag='a'>How to Create Project</router-link></strong></p><div class='text-center'><router-link :to=\"{name:'project.builder.name'}\" tag='a' class='btn btn-primary'>Create Project</router-link></div>",
 
     "cspb-header": "Citizen Science Project Builder",
     "cspb-subheader": "Create data-analysis projects",
@@ -844,7 +844,7 @@
     "app-vue-navigation-logout": "Abmelden",
     "app-vue-profile": "Profil",
     "app-vue-create-your-project": "Ihr Projekt starten",
-    "app-vue-navigation-created-by":"Erstellt von:",
+    "app-vue-navigation-created-by": "Erstellt von:",
 
     "login-header": "Anmelden",
     "login-input-email": "Email-Adresse",
@@ -1581,7 +1581,7 @@
     "cslogger-integration-pb-export-data-1": "<p>Here it is possible to perform the following actions by clicking on the buttons located in the top bar:</p><ul><li><i class='fas fa-user-friends fa-sm'></i> View and manage users and invitations</li><li><i class='far fa-calendar-alt fa-sm'></i> View general calendar</li><li><i class='fas fa-edit fa-sm'></i> Edit the applet</li><li><svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' role='img' style='vertical-align: -0.125em;' width='1em' height='1em' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'><g transform='rotate(90 12 12)'><path d='M23 12l-4-4v3h-9v2h9v3M1 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3h-2V6H3v12h12v-3h2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z' fill='currentColor'/></g></svg> Export data contributed for participants</li><li><svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' role='img' style='vertical-align: -0.125em;' width='1em' height='1em' preserveAspectRatio='xMidYMid meet' viewBox='0 0 24 24'><path d='M11 17H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h12v2H4v12h7v-2l4 3l-4 3v-2m8 4V7H8v6H6V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-2h2v2h11z' fill='currentColor'/></svg> Duplicate applet</li><li><i class='fas fa-trash fa-sm'></i> Delete applet</li></ul><p><strong>Example:</strong><br/>Click on Export Data, ingress the password of the applet and click on “<strong>SUBMIT</strong>”</p>",
     "cslogger-integration-pb-export-data-2": "<p>After downloading, there will be two files:</p><ul><li><strong>report.csv</strong>: contains the data collected by the applet</li><li><strong>media-responses-xxxxx.zip</strong>: contains the multimedia collected by the applet</li></ul><p>Please unzip the compressed file before continuing with the next steps.</p>",
     "cslogger-integration-pb-create-project": "Create a project with CS PB",
-    "cslogger-integration-pb-create-project-0": "<p>For create a project based on the collected data by the applet using CS Logger, please click on the button and follow the instructions:</p> <div class='text-center'><router-link :to=\"{name:'tools.projectbuilder', params:{section:'pb_create_project'}}\" tag='a' class='btn btn-primary'>Create Project</router-link></div>",
+    "cslogger-integration-pb-create-project-0": "<p>For create a project based on the collected data by the applet using CS Logger, please click on the button and follow the instructions:<br/><strong><router-link :to=\"{name:'tools.projectbuilder', params:{section:'pb_create_project'}}\" tag='a'>How to Create Project</router-link></strong></p><div class='text-center'><router-link :to=\"{name:'project.builder.name'}\" tag='a' class='btn btn-primary'>Create Project</router-link></div>",
 
     "cspb-header": "Citizen Science Project Builder",
     "cspb-subheader": "Create data-analysis projects",
