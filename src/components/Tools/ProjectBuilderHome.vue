@@ -20,6 +20,21 @@
         <b-row>
           <b-col class="text-center">
             <div class="text-justify" v-html="$t('cspb-introduction')"></div>
+            <a
+              variant="link"
+              class="scroll-effect scroll-effect-delayed-2"
+              :href="cclab_logo.url"
+              target="_blank"
+            >
+              <b-img
+                class="logo m-4 mx-2 mx-sm-4"
+                :src="cclab_logo.img"
+                alt="citizen cyberlab"
+                rounded
+                fluid
+              ></b-img>
+            </a>
+            <br />
             <!-- Create applet button -->
             <b-button variant="primary" to="/project/builder/name" class="mt-4">
               {{ $t("home-create-a-project") }}
@@ -195,7 +210,11 @@ export default {
       throttleScroll: throttle(this.handleScroll, 300),
       createProjectContent: CREATE_PROJECT_CONTENT,
       integrationCsloggerContent: INTEGRATION_CSLOGGER_CONTENT,
-      testAndPublishContent: TEST_AND_PUBLISH_CONTENT
+      testAndPublishContent: TEST_AND_PUBLISH_CONTENT,
+      cclab_logo: {
+        img: require("@/assets/ccl-logo.png"),
+        url: "https://www.citizencyberlab.org/"
+      }
     };
   },
   components: {
@@ -283,9 +302,22 @@ export default {
 .full-height {
   min-height: 72vh;
 }
+.logo {
+  max-height: 50px;
+  cursor: pointer;
+  transform: scale(1);
+  transition: all $transition-duration-short ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
 @media only screen and (min-width: $viewport-large) {
   .full-height {
     min-height: 75vh;
+  }
+  .logo {
+    max-height: 75px;
   }
 }
 </style>
