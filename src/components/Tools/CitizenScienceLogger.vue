@@ -330,11 +330,11 @@ export default {
     color: $primary !important;
   }
 }
-.beta-pill {
-  font-size: 0.7rem;
-  line-height: 100%;
-  display: inline-block;
-  vertical-align: top;
+.badge {
+  &.beta-pill {
+    font-size: 0.7rem !important;
+    vertical-align: top !important;
+  }
 }
 .logo {
   max-height: 60px;
