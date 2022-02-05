@@ -27,7 +27,7 @@
               target="_blank"
             >
               <b-img
-                class="logo m-4 mx-2 mx-sm-4"
+                class="logo m-3 mx-2 mx-sm-4"
                 :src="cclab_logo.img"
                 alt="citizen cyberlab"
                 rounded
@@ -36,7 +36,7 @@
             </a>
             <br />
             <!-- Create applet button -->
-            <b-button variant="primary" to="/project/builder/name" class="mt-4">
+            <b-button variant="primary" to="/project/builder/name" class="mt-2">
               {{ $t("home-create-a-project") }}
             </b-button>
             <!-- anchors -->
