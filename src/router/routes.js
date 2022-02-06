@@ -197,16 +197,16 @@ export const routes = [
         component: ProjectTest,
         beforeEnter: (to, from, next) => {
           let fp = to.fullPath;
-          let short_name = fp.substring(
-            fp.lastIndexOf("project/") + 8,
-            fp.lastIndexOf("/test")
-          );
+          // let short_name = fp.substring(
+          //   fp.lastIndexOf("project/") + 8,
+          //   fp.lastIndexOf("/test")
+          // );
           let url = fp.split("?share=");
           if (url.length > 1) {
             store
               .dispatch("project/getProjectSharedLinkConfirmation", {
                 key: url[1],
-                short_name: short_name,
+                short_name: to.params.short_name,
                 fullpath: fp
               })
               .then(confirm => {
