@@ -13,7 +13,7 @@
       <v-geosearch
         :options="geosearchOptions"
         ref="geosearch"
-        v-if="!hideIcons"
+        v-if="!(hideIcons || hideGeoSearch)"
       ></v-geosearch>
       <v-tile-layer :url="source" :attribution="attribution"></v-tile-layer>
       <v-tile-layer
@@ -62,7 +62,7 @@
       <v-control
         :position="'bottomleft'"
         class="custom-buttons"
-        v-if="!hideIcons"
+        v-if="!(hideIcons || hideInteraction)"
       >
         <button
           class="custom-button mb-1"
@@ -116,6 +116,8 @@ export default {
     can_mark: { type: Boolean, default: false },
     can_draw: { type: Boolean, default: false },
     hideIcons: { type: Boolean, default: false },
+    hideGeoSearch: { type: Boolean, default: false },
+    hideInteraction: { type: Boolean, default: false },
     scrollToZoom: { type: Boolean, default: true },
     mapSettings: {
       type: Object,

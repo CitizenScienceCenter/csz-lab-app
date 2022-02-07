@@ -1,14 +1,32 @@
 <template>
   <div>
-    <!-- Audio multimedia -->
-    <b-skeleton-wrapper :loading="loading" v-if="type === 'video'">
+    <!-- Video multimedia -->
+    <b-skeleton-wrapper
+      :loading="loading"
+      v-if="type == 'video' || type == 'vembed'"
+    >
       <template #loading>
         <b-skeleton-img animation="throb"></b-skeleton-img>
       </template>
-      <b-embed type="video" :src="link" allowfullscreen controls> </b-embed>
+      <b-embed
+        v-if="type == 'video'"
+        type="video"
+        aspect="16by9"
+        :src="link"
+        allowfullscreen
+        controls
+      >
+      </b-embed>
+      <b-embed
+        v-if="type == 'vembed'"
+        aspect="16by9"
+        :src="link"
+        allowfullscreen
+      >
+      </b-embed>
     </b-skeleton-wrapper>
 
-    <!-- Video multimedia -->
+    <!-- Audio multimedia -->
     <b-skeleton-wrapper :loading="loading" v-if="type === 'audio'">
       <template #loading>
         <b-skeleton type="input" animation="throb"></b-skeleton>
@@ -24,7 +42,7 @@
       <audio
         controls
         :src="link"
-        style="width:85%"
+        style="width: 85%;"
         @play="audio_animation = true"
         @pause="audio_animation = false"
         @ended="audio_animation = false"
@@ -35,9 +53,10 @@
 
 <script>
 export default {
+  name: "MediaTaskPResenter",
   data() {
     return {
-      audio_animation: false
+      audio_animation: false,
     };
   },
   props: {
@@ -45,20 +64,20 @@ export default {
     loading: Boolean,
     type: {
       type: String,
-      default: "video"
-    }
+      default: "video",
+    },
   },
   methods: {
     animateAudio(value) {
       this.audio_animation = value;
-    }
+    },
   },
   watch: {
     link() {
       // new audio link restart the audio animation
       this.audio_animation = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

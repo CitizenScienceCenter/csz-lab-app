@@ -38,7 +38,7 @@
               ></b-skeleton>
               <b-skeleton
                 animation="wave"
-                width="20%"
+                width="90%"
                 height="1.5em"
                 class="mb-5"
               ></b-skeleton>
@@ -53,25 +53,42 @@
             <p>{{ project.description }}</p>
 
             <div v-if="isLoggedUserOwnerOfProject(project)">
+              <!-- Publised state buttons - Admin-->
               <div v-if="project.published">
-                <b-btn
-                  ref="btn-approve-it"
-                  variant="success"
-                  class="mt-2"
-                  disabled
-                  >{{ $t("project-draft-published") }}</b-btn
-                >
-                <b-btn
-                  ref="btn-contribute"
-                  :to="{ name: 'project.task.presenter' }"
-                  variant="primary"
-                  size="lg"
-                  @click.native="tracking()"
-                  >{{ $t("project-contribute") }}
-                </b-btn>
-                <br />
+                <!-- Published button -->
+                <b-row>
+                  <b-col cols="12" class="mt-2 pl-0">
+                    <b-btn
+                      ref="btn-approve-it"
+                      variant="success"
+                      class="mr-2"
+                      disabled
+                    >
+                      {{ $t("project-draft-published") }}
+                    </b-btn>
+                    <!-- Contribute button -->
+                    <b-btn
+                      ref="btn-contribute"
+                      :to="{ name: 'project.task.presenter' }"
+                      variant="primary"
+                      class="mr-2"
+                      :disabled="isCompletedTasks"
+                      @click.native="tracking()"
+                    >
+                      {{ $t("project-contribute") }}
+                    </b-btn>
+                  </b-col>
+                  <!-- Error message when no pending tasks -->
+                  <b-col class="mt-2 pl-0" v-if="isCompletedTasks">
+                    <p class="font-weight-bold text-white">
+                      <i class="fas fa-info-circle"></i>
+                      {{
+                        $t("project-draft-contribute-error-no-pending-tasks")
+                      }}
+                    </p>
+                  </b-col>
+                </b-row>
               </div>
-
               <div
                 v-else-if="
                   !project.published &&
@@ -92,6 +109,7 @@
                   :to="{ name: 'project.task.presenter' }"
                   variant="primary"
                   class="mt-2"
+                  :disabled="!hasProjectTasks"
                   >{{ $t("project-draft-test") }}</b-btn
                 >
                 &ensp;&ensp;&ensp;
@@ -191,23 +209,32 @@
                   <span
                     v-html="
                       $t('project-draft-approval-warning', {
-                        link: `<a target='_blank' href='https://lab.staging.citizenscience.ch/en/about'>criteria</a>`
+                        link: `<a target='_blank' href='https://lab.citizenscience.ch/en/about'>criteria</a>`
                       })
                     "
                   ></span>
                 </b-alert>
               </b-modal>
             </div>
-
+            <!-- Published button Anonymous -->
             <div v-else-if="isAnonymousProject && !infos.admin">
+              <!-- Contribute button -->
               <b-btn
                 ref="btn-contribute"
                 :to="{ name: 'project.task.presenter' }"
                 variant="primary"
-                size="lg"
+                :disabled="isCompletedTasks"
                 @click.native="tracking()"
                 >{{ $t("project-contribute") }}
               </b-btn>
+              <!-- Error message when no pending tasks -->
+              <p
+                class="font-weight-bold text-white mt-2"
+                v-if="isCompletedTasks"
+              >
+                <i class="fas fa-info-circle"></i>
+                {{ $t("project-draft-contribute-error-no-pending-tasks") }}
+              </p>
             </div>
 
             <div v-else>
@@ -256,10 +283,18 @@
                   ref="btn-contribute"
                   :to="{ name: 'project.task.presenter' }"
                   variant="primary"
-                  size="lg"
+                  :disabled="isCompletedTasks"
                   @click.native="tracking()"
                   >{{ $t("project-contribute") }}
                 </b-btn>
+                <!-- Error message when no pending tasks -->
+                <p
+                  class="font-weight-bold text-white mt-2"
+                  v-if="isCompletedTasks"
+                >
+                  <i class="fas fa-info-circle"></i>
+                  {{ $t("project-draft-contribute-error-no-pending-tasks") }}
+                </p>
               </div>
             </div>
           </b-skeleton-wrapper>
@@ -411,21 +446,21 @@ export default {
   created() {
     // eager loading: load the project and finally get stats and results
     // to have a fresh state for all sub components
-    this.getProject(this.id).then(project => {
+    this.getProject(this.id).then(async project => {
       if (!project) return false;
       this.shareable_link = project.info.shareable_link;
-      // load some stats
-      this.getStatistics(project);
-      this.getResults(project);
+      // has to be loaded to know if the project can be published
+      if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
+        this.getProjectTasks(project);
+      }
       // checks if the project is open for anonymous users or not
       this.getNewTask(project).then(allowed => {
         this.isAnonymousProject = !!allowed;
       });
-      if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
-        // has to be loaded to know if the project can be published
-        this.getProjectTasks(project);
-      }
-      this.setLoadingProject(true);
+      // load some stats
+      this.getResults(project);
+      await this.getStatistics(project);
+      await this.setLoadingProject(true); // loading is done when stats and project is ready
     });
   },
   beforeMount() {
@@ -467,7 +502,7 @@ export default {
     },
     approve() {
       if (this.taskPresenter.length > 0) {
-        if (this.projectTasks.length > 0) {
+        if (this.hasProjectTasks) {
           this.approveProject(this.project);
           this.localPendingApproval = true;
         } else {
@@ -486,7 +521,7 @@ export default {
 
     publish() {
       if (this.taskPresenter.length > 0) {
-        if (this.projectTasks.length > 0) {
+        if (this.hasProjectTasks) {
           this.publishProject(this.project);
         } else {
           this.showError({
@@ -546,6 +581,12 @@ export default {
       } else {
         return this.defaultImage;
       }
+    },
+    hasProjectTasks() {
+      return this.projectTasks.length > 0;
+    },
+    isCompletedTasks() {
+      return this.stats.n_completed_tasks === this.stats.n_tasks;
     }
   }
 };

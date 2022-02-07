@@ -76,15 +76,15 @@ $font-scale: 1.25;
   @return $value;
 }
 
-$font-size-tiny: 1rem / pow($font-scale,3);
-$font-size-mini: 1rem / pow($font-scale,2);
-$font-size-small: 1rem / $font-scale;
+$font-size-tiny: calc(1rem / pow($font-scale, 3));
+$font-size-mini: calc(1rem / pow($font-scale, 2));
+$font-size-small: calc(1rem / $font-scale);
 $font-size-normal: 1rem;
-$font-size-medium: 1rem * $font-scale;
-$font-size-large: 1rem * pow($font-scale,2);
-$font-size-xlarge: 1rem * pow($font-scale,3);
-$font-size-xxlarge: 1rem * pow($font-scale,4);
-$font-size-xxxlarge: 1rem * pow($font-scale,5);
+$font-size-medium: calc(1rem * $font-scale);
+$font-size-large: calc(1rem * pow($font-scale, 2));
+$font-size-xlarge: calc(1rem * pow($font-scale, 3));
+$font-size-xxlarge: calc(1rem * pow($font-scale, 4));
+$font-size-xxxlarge: calc(1rem * pow($font-scale, 5));
 
 
 /* Spacings */

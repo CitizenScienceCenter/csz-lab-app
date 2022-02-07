@@ -2,8 +2,24 @@
   <div>
     <b-row class="mt-4">
       <b-col>
-        <b-link @click="goBack"> {{ $t("go-back-btn") }} </b-link>
+        <b-link @click="goBack">
+          {{ $t("go-back-btn") }}
+        </b-link>
       </b-col>
+      <!-- TODO: Pending for development PB Tutorial -->
+      <!-- <b-col>
+        <b-btn
+          class="float-right"
+          variant="link"
+          @click="changeIsTutorial(true)"
+        >
+          <template>
+            <span>
+              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+            </span>
+          </template>
+        </b-btn>
+      </b-col> -->
     </b-row>
     <!-- Job type selection title -->
     <b-row class="mt-4">
@@ -20,7 +36,7 @@
         md="9"
         v-if="
           !materialJobs[task.material] ||
-            materialJobs[task.material].length == 0
+          materialJobs[task.material].length == 0
         "
         class="container superlight-greyish"
       >
@@ -130,8 +146,7 @@ import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "JobSelector",
-  components: {
-  },
+  components: {},
   created() {
     this.selectedJob = null;
     if (this.task.material != "cslogger") {
@@ -140,25 +155,26 @@ export default {
   },
   data: () => {
     return {
-      selectedJob: null
+      selectedJob: null,
     };
   },
   beforeMount() {
     // auto scroll to the page top when render first time
-    setTimeout(function() {
+    setTimeout(function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 2);
   },
   computed: {
     ...mapState("task/builder", ["task", "jobs", "materialJobs"]),
-    ...mapState("project", ["selectedProject"])
+    ...mapState("project", ["selectedProject"]),
   },
   methods: {
     ...mapMutations("task/builder", [
       "setTaskJob",
       "setCurrentStep",
       "setStep",
-      "setTaskTemplate"
+      "setTaskTemplate",
+      "changeIsTutorial",
     ]),
 
     onJobSelected(jobType) {
@@ -176,7 +192,7 @@ export default {
       // invalidate job step and go to material selection
       this.setStep({ step: "job", value: false });
     },
-  }
+  },
 };
 </script>
 

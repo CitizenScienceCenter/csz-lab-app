@@ -192,16 +192,16 @@ export default {
     this.types = this.questionTypes;
     this.type = this.types[0];
     this.minQuestions = 1;
-    this.questions = [JSON.parse(JSON.stringify(DEFAULT_QUESTION))];
-    if (Array.isArray(this.task.template)) {
-      // deep clone of questions
-      this.questions = JSON.parse(JSON.stringify(this.task.template));
-    }
+    // Validate if questions already exist
+    this.questions = Array.isArray(this.task.template)
+      ? JSON.parse(JSON.stringify(this.task.template))
+      : this.task.job === "geo_survey" // if questions no exist
+      ? [] // questions=[] for geo survey
+      : [JSON.parse(JSON.stringify(DEFAULT_QUESTION))]; // questions= default question
+
     if (this.task.job === "geo_survey") {
       // For geo/survey the questions are optional, thus the minQuestion could be 0
       this.minQuestions = 0;
-      // therefore the questions could be empty too
-      this.questions = [];
       if (this.task.mapSettings) {
         this.mapValid = true; // if mapSettings already exist asumes data as valid
         this.mapSettings = JSON.parse(JSON.stringify(this.task.mapSettings));

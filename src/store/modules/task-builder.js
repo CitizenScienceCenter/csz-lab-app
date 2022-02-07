@@ -2,7 +2,7 @@ import api from "@/api/aws";
 import media_ext from "@/assets/media_files_ext.json";
 
 const errors = {
-  GET_BUCKET_FILES_ERROR: "Error during bucket files loading"
+  GET_BUCKET_FILES_ERROR: "Error during bucket files loading",
 };
 
 // all the types of data available for a task
@@ -12,13 +12,13 @@ const materials = {
   video: "video",
   pdf: "pdf",
   tweet: "tweet",
-  cslogger: "cslogger"
+  cslogger: "cslogger",
 };
 
 // all the types of jobs available
 const jobs = {
   survey: "survey",
-  geo_survey: "geo_survey"
+  geo_survey: "geo_survey",
 };
 
 // the list of sources available to import files
@@ -27,7 +27,8 @@ const sources = {
   amazon: "amazon",
   flickr: "flickr",
   twitter: "twitter",
-  cslogger: "cslogger"
+  cslogger: "cslogger",
+  localcsv: "localcsv",
 };
 
 // global state for this module
@@ -39,7 +40,7 @@ const state = {
     template: null, // configuration of the task
     source: null, // contains the selected source (dropbox, flickr...)
     sourceContent: null, // contains the files got from the source
-    mapSettings: null
+    mapSettings: null,
   },
   // steps info
   currentStep: "material",
@@ -48,7 +49,7 @@ const state = {
     job: false,
     template: false,
     source: false,
-    summary: false
+    summary: false,
   },
   // global vars
   materials: materials,
@@ -61,16 +62,21 @@ const state = {
     [materials.video]: [jobs.survey, jobs.geo_survey],
     [materials.tweet]: [jobs.survey, jobs.geo_survey],
     [materials.pdf]: [jobs.survey, jobs.geo_survey],
-    [materials.cslogger]: [jobs.survey]
+    [materials.cslogger]: [jobs.survey],
   },
   // available sources for each material type
   materialSources: {
-    [materials.image]: [sources.amazon, sources.dropbox, sources.flickr],
-    [materials.sound]: [sources.amazon, sources.dropbox],
-    [materials.pdf]: [sources.amazon, sources.dropbox],
+    [materials.image]: [
+      sources.amazon,
+      sources.dropbox,
+      sources.flickr,
+      sources.localcsv,
+    ],
+    [materials.sound]: [sources.amazon, sources.dropbox, sources.localcsv],
+    [materials.pdf]: [sources.amazon, sources.dropbox, sources.localcsv],
     [materials.tweet]: [sources.twitter],
     [materials.cslogger]: [sources.cslogger],
-    [materials.video]: [sources.amazon, sources.dropbox],
+    [materials.video]: [sources.amazon, sources.dropbox, sources.localcsv],
   },
   // available extensions for each material type
   materialExtensions: {
@@ -78,28 +84,31 @@ const state = {
     [materials.sound]: media_ext.sound,
     [materials.pdf]: media_ext.documents,
     [materials.tweet]: [],
-    [materials.video]: media_ext.video
+    [materials.video]: media_ext.video,
   },
 
   // aws s3 bucket
   bucket: {
     name: "",
-    files: []
+    files: [],
   },
   dropboxFiles: [],
 
   loaders: {
-    GET_BUCKET_FILES: "task-builder/GET_BUCKET_FILES"
-  }
+    GET_BUCKET_FILES: "task-builder/GET_BUCKET_FILES",
+  },
+
+  // Tutorial state
+  isTutorialVisible: false,
 };
 
 // filter methods on the state data
 const getters = {
-  getBucketFileLink: state => file => {
+  getBucketFileLink: (state) => (file) => {
     return "https://" + state.bucket.name + ".s3.amazonaws.com/" + file;
   },
-  getBucketFilesWithExtensions: state => extensions => {
-    return state.bucket.files.filter(value => {
+  getBucketFilesWithExtensions: (state) => (extensions) => {
+    return state.bucket.files.filter((value) => {
       for (let extension of extensions) {
         if (value.endsWith(extension)) {
           return true;
@@ -108,7 +117,7 @@ const getters = {
       return false;
     });
   },
-  getMaterialForFilename: state => filename => {
+  getMaterialForFilename: (state) => (filename) => {
     const extension = "." + filename.split(".").pop();
     for (let material in state.materialExtensions) {
       if (state.materialExtensions[material].includes(extension)) {
@@ -116,7 +125,7 @@ const getters = {
       }
     }
     return null;
-  }
+  },
 };
 
 // async methods making mutations are placed here
@@ -134,19 +143,19 @@ const actions = {
 
     return api
       .getBucketLinks(bucketName)
-      .then(value => {
+      .then((value) => {
         commit("notification/closeLoading", id, { root: true });
         commit("setBucketFiles", value.data);
         return value.data;
       })
-      .catch(reason => {
+      .catch((reason) => {
         commit("notification/closeLoading", id, { root: true });
         if (reason.response.data.hasOwnProperty("exception_msg")) {
           commit(
             "notification/showError",
             {
               title: "Impossible to load this bucket",
-              content: reason.response.data.exception_msg
+              content: reason.response.data.exception_msg,
             },
             { root: true }
           );
@@ -155,7 +164,7 @@ const actions = {
             "notification/showError",
             {
               title: errors.GET_BUCKET_FILES_ERROR,
-              content: reason
+              content: reason,
             },
             { root: true }
           );
@@ -169,7 +178,7 @@ const actions = {
    * @return {Promise<void>}
    */
   reset({ commit }) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       commit("setStep", { step: "material", value: false });
       commit("setStep", { step: "job", value: false });
       commit("setStep", { step: "template", value: false });
@@ -187,7 +196,7 @@ const actions = {
       commit("setDropboxFiles", []);
       resolve();
     });
-  }
+  },
 };
 
 // methods that change the state
@@ -205,7 +214,7 @@ const mutations = {
     ) {
       state.task = {
         ...state.task,
-        source: state.materialSources[state.task.material][0]
+        source: state.materialSources[state.task.material][0],
       };
       state.steps = { ...state.steps, source: true };
     }
@@ -237,14 +246,18 @@ const mutations = {
   deleteBucketFile(state, file) {
     state.bucket = {
       ...state.bucket,
-      files: state.bucket.files.filter(value => {
+      files: state.bucket.files.filter((value) => {
         return value !== file;
-      })
+      }),
     };
   },
   setDropboxFiles(state, files) {
     state.dropboxFiles = files;
-  }
+  },
+  // change Tutorial dialog status
+  changeIsTutorial(state, status) {
+    state.isTutorialVisible = status;
+  },
 };
 
 export default {
@@ -253,5 +266,5 @@ export default {
   getters,
   actions,
   mutations,
-  errors
+  errors,
 };

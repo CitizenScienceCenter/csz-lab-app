@@ -2,7 +2,7 @@
 const component = {
   template: `
   <!-- This template use https://bootstrap-vue.js.org/ -->
-  <div v-if="userProgress < 100 && taskInfo">
+  <div v-if="pybossa.userProgressInPercent < 100">
     <b-row class="d-flex justify-content-center">
       <!-- Left column - Questions-->
       <b-col
@@ -67,19 +67,11 @@ const component = {
             v-if="taskInfo.extended_entities && taskInfo.extended_entities.media && taskInfo.extended_entities.media.length > 0"
             class="text-center"
           >
-            <image-task-presenter
-              v-if="taskInfo.extended_entities.media[0].type == 'photo'"
-              :link="getMedia('photo')"
-              :pybossa="pybossa"
-              :loading="!pybossa.taskLoaded"
-            />
-            <media
-              v-else-if="['video', 'animated_gif'].includes(taskInfo.extended_entities.media[0].type)"
-              :link="getMedia('video')"
-              type="video"
-              :loading="!pybossa.taskLoaded"
-            >
-            </media>
+            <media-presenter
+              :context="pybossa"
+              :link="getMedia(taskInfo.extended_entities.media[0].type)"
+              :loading="!pybossa.taskLoaded">
+            </media-presenter>
           </div>
         </div>
       </b-col>
@@ -148,8 +140,8 @@ const component = {
     questions: [
       {
         question: "",
-        answers: [""]
-      }
+        answers: [""],
+      },
     ],
     questionList: [],
 
@@ -157,7 +149,7 @@ const component = {
     markedPlaces: [],
     area: { latlngs: [] },
 
-    showAlert: false
+    showAlert: false,
   },
 
   methods: {
@@ -177,7 +169,7 @@ const component = {
         this.answers.push({
           question: this.mapSettings.question,
           coordinates: this.markedPlaces,
-          area: this.area
+          area: this.area,
         });
 
         this.pybossa.saveTask(this.answers);
@@ -193,8 +185,8 @@ const component = {
     isFormValid() {
       const ctrl = this;
       let valid = true;
-      this.questionList.every(question => {
-        const ans = ctrl.answers.find(x => x.qid == question.id) || [];
+      this.questionList.every((question) => {
+        const ans = ctrl.answers.find((x) => x.qid == question.id) || [];
         if (question.required && (!!!ans.value || ans.value.length <= 0)) {
           valid = false;
           return false;
@@ -206,8 +198,8 @@ const component = {
     initialize() {
       this.showAlert = false;
       const pb = this.pybossa;
-      this.questionList = this.questions.filter(q => pb.isConditionEmpty(q));
-      this.answers = this.questions.map(function(x) {
+      this.questionList = this.questions.filter((q) => pb.isConditionEmpty(q));
+      this.answers = this.questions.map(function (x) {
         const answer = { qid: x.id, question: x.question, value: null };
         if (x.type === "multiple_choice") {
           answer.value = [];
@@ -222,12 +214,12 @@ const component = {
       if (type == "photo") {
         return this.taskInfo.extended_entities.media[0].media_url_https;
       }
-      if (type == "video") {
+      if (type == "video" || type == "animated_gif") {
         return this.taskInfo.extended_entities.media[0].video_info.variants.find(
-          x => x.content_type.includes("video")
+          (x) => x.content_type.includes("video")
         ).url;
       }
-    }
+    },
   },
 
   computed: {
@@ -235,16 +227,11 @@ const component = {
       return this.pybossa.task;
     },
     taskInfo() {
-      return this.task && this.task.info ? this.task.info : null;
+      return this.task.info;
     },
     context() {
       return this;
     },
-    userProgress() {
-      return isNaN(this.pybossa.userProgressInPercent)
-        ? 0
-        : this.pybossa.userProgressInPercent;
-    }
   },
 
   watch: {
@@ -261,9 +248,9 @@ const component = {
   props: {
     /* Injected by the Pybossa App */
     pybossa: {
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 
 export default component;

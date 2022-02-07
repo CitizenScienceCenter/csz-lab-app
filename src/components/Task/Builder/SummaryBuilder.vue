@@ -1,6 +1,22 @@
 <template>
   <div>
-    <b-row class="mt-4">
+    <!-- TODO: Pending for development PB Tutorial -->
+    <!-- <b-row class="mt-4 mb-1">
+      <b-col>
+        <b-btn
+          class="float-right"
+          variant="link"
+          @click="changeIsTutorial(true)"
+        >
+          <template>
+            <span>
+              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+            </span>
+          </template>
+        </b-btn>
+      </b-col>
+    </b-row> -->
+    <b-row class="mt-2">
       <b-col>
         <h1 class="text-center centered small">
           {{ $t("task-summary-builder-rock") }}
@@ -53,17 +69,7 @@
               <template v-slot:aside>
                 <i class="fas fa-list-ul icon-secondary-medium"></i>
               </template>
-              <span
-                v-if="
-                  ![sources.twitter, sources.flickr, sources.cslogger].includes(
-                    task.source
-                  )
-                "
-              >
-                <b>{{ task.sourceContent.length }}</b>
-                {{ $t("task-summary-builder-tasks") }}
-              </span>
-              <span v-else-if="task.source === sources.flickr">
+              <span v-if="task.source === sources.flickr">
                 {{ $t("task-summary-builder-flickr-import") }} (<span
                   class="font-italic"
                   >{{ task.sourceContent }}</span
@@ -73,8 +79,16 @@
                 {{ task.sourceContent.maxTweets + "" }}
                 {{ $t("task-summary-builder-tweets-import") }}
               </span>
-              <span v-else-if="task.source === sources.cslogger">
+              <span
+                v-else-if="
+                  [sources.cslogger, sources.localcsv].includes(task.source)
+                "
+              >
                 {{ task.sourceContent.n_tasks }}
+                {{ $t("task-summary-builder-tasks") }}
+              </span>
+              <span v-else>
+                <b>{{ task.sourceContent.length }}</b>
                 {{ $t("task-summary-builder-tasks") }}
               </span>
             </b-media>
@@ -186,6 +200,8 @@ export default {
           return "fab fa-dropbox";
         case this.sources.amazon:
           return "fab fa-aws";
+        case this.sources.localcsv:
+          return "fas fa-file-csv";
         case this.sources.cslogger:
           return "fas fa-question";
         default:
@@ -242,15 +258,14 @@ export default {
       "importDropboxTasks",
       "importFlickrTasks",
       "importTwitterTasks",
-      "importLocalCSLoggerFile"
+      "importLocalCsvTasks",
+      "importCSLoggerFile"
     ]),
     ...mapActions("task/builder", {
       resetTaskBuilder: "reset"
     }),
-    ...mapMutations("notification", [
-      "showSuccess",
-      "showError"
-    ]),
+    ...mapMutations("task/builder", ["changeIsTutorial"]),
+    ...mapMutations("notification", ["showSuccess", "showError"]),
 
     onSubmit() {
       /// -----------------------------------------------------------
@@ -308,10 +323,17 @@ export default {
           maxTweets: this.task.sourceContent.maxTweets
         });
       }
+      // Local csv
+      else if (this.task.source === this.sources.localcsv) {
+        sourcePromise = this.importLocalCsvTasks({
+          project: this.selectedProject,
+          file: this.task.sourceContent.file
+        });
+      }
 
       // CSLogger
       else if (this.task.source === this.sources.cslogger) {
-        sourcePromise = this.importLocalCSLoggerFile({
+        sourcePromise = this.importCSLoggerFile({
           files: this.task.sourceContent.files,
           csv: this.task.sourceContent.csv,
           partial: this.task.sourceContent.partial
@@ -325,10 +347,9 @@ export default {
         results => {
           if (results.filter(el => el !== false).length === 3) {
             this.resetTaskBuilder();
-            this.$router.push({
-              name: "project",
-              params: { id: this.selectedProject.id }
-            });
+            this.$router
+              .push(`/project/${this.selectedProject.id}`)
+              .catch(() => {});
           } else {
             this.showError({
               title: this.$t("error"),

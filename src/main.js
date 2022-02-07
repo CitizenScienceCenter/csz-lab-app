@@ -6,7 +6,8 @@ import VueRouter from "vue-router";
 import { i18n } from "./i18n.js";
 import { router } from "./router/router.js";
 import store from "./store/index.js";
-import BootstrapVue from "bootstrap-vue";
+import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
+import "bootstrap-vue/dist/bootstrap-vue-icons.min.css";
 import VueLayers from "vuelayers";
 import Pdf from "vue-pdf";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -16,7 +17,7 @@ import "vuelayers/lib/style.css";
 import "./scss/global.scss";
 import VueGtag from "vue-gtag";
 import Meta from "vue-meta";
-import "@/components/Common/globalComponents";
+import "@/components/globalComponents";
 import Croppa from "vue-croppa";
 
 // Leaflet map styles
@@ -26,8 +27,9 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 Vue.use(VueLayers, {
-  dataProjection: "EPSG:4326"
+  dataProjection: "EPSG:4326",
 });
 Vue.use(Meta);
 
@@ -42,7 +44,8 @@ Vue.use(
   VueGtag,
   {
     config: { id: process.env.GTAG_ID },
-    enabled: store.getters["settings/getGtag"] // enable/disable analytics tracking
+    pageTrackerScreenviewEnabled: true,
+    bootstrap:false // GTAG is configured but launched when this parameter turns in true
   },
   router
 );
@@ -59,5 +62,5 @@ new Vue({
   router,
   store,
   components: { App },
-  template: "<App/>"
+  template: "<App/>",
 });

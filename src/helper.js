@@ -4,7 +4,7 @@ import Papa from "papaparse";
 
 export function uuid() {
   let dt = new Date().getTime();
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     let r = (dt + Math.random() * 16) % 16 | 0;
     dt = Math.floor(dt / 16);
     return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
@@ -215,7 +215,7 @@ export function utf8ToUnicode(text) {
   const utf = require("utf8");
   try {
     // Convert \\x to \x
-    text = text.replace(/\\x([0-9A-Fa-f]{2})/g, function() {
+    text = text.replace(/\\x([0-9A-Fa-f]{2})/g, function () {
       // Convert hex to int the char sequence after \x
       return String.fromCharCode(parseInt(arguments[1], 16));
     });
@@ -233,7 +233,7 @@ export function trackEvent(_this, info = undefined) {
     _this.$gtag.event(info.action, {
       event_category: info.category,
       event_label: info.label,
-      event_value: 1
+      event_value: 1,
     });
   }
 }
@@ -245,26 +245,44 @@ export function getWidthScreen() {
 
 // Get MIME type for url file
 export function getMIME(raw_url) {
+  let response = null;
   const img_ext = new Set(media_ext.image);
   const video_ext = new Set(media_ext.video);
   const audio_ext = new Set(media_ext.sound);
+  const video_embed = new Set(["youtube", "vimeo"]);
 
   const types = new Map();
   //add images to the Map
-  img_ext.forEach(img => types.set(img, "img"));
+  img_ext.forEach((img) => types.set(img, "img"));
   //add video to the Map
-  video_ext.forEach(video => types.set(video, "video"));
+  video_ext.forEach((video) => types.set(video, "video"));
   //add audio to the Map
-  audio_ext.forEach(audio => types.set(audio, "audio"));
-  let extension;
+  audio_ext.forEach((audio) => types.set(audio, "audio"));
+
+  // Validate if url belongs to image, video or audio
+  let ext;
   try {
     const url = new URL(raw_url);
-    extension = url.pathname.split(".").pop();
+    /* Special case */
+    // Embed video (i.e., youtube, vimeo)
+    if ([...video_embed].some((x) => url.hostname.includes(x))) {
+      response = "vembed";
+    }
+    // Validate if url is valid protocol
+    if (["http", "https"].some((x) => url.protocol.includes(x))) {
+      ext = url.pathname.split(".").pop();
+    }
   } catch (e) {
-    if (typeof raw_url == "string") extension = raw_url.split(".").pop();
+    if (typeof raw_url == "string") ext = raw_url.split(".").pop();
+  } finally {
+    if (types.get(`.${ext}`)) return types.get(`.${ext}`);
+    else if (response) return response;
   }
 
-  return types.get(`.${extension}`);
+  /* Special case */
+  // CSLogger types
+  response = csloggerType(raw_url);
+  return response;
 }
 
 // group array of object by key and return grouped array of arrays
@@ -283,29 +301,40 @@ export async function csvToJson(csv) {
   return new Promise((resolve, reject) => {
     Papa.parse(csv, {
       header: true,
-      complete: results => {
+      complete: (results) => {
         resolve(results.data);
         reject(results.error);
-      }
+      },
     });
   });
 }
 
 // CSLogger implementation only
 // Validate type of response from string
-export function validateCSLoggerResponse(response) {
+function csloggerType(response) {
   // Get the type of response
-  const type = response.split(":")[0];
-  let url = null;
-  try {
-    url = new URL(response);
-  } catch (error) {}
-  if (url && (url.protocol === "http:" || url.protocol === "https:")) {
-    return "url";
-  } else if (type != "filename") {
-    //TODO: Change for respective response type
-    return "text";
-  } else {
-    return false;
+  const type = response.split(":")[0].toLowerCase();
+  let res = null;
+  // By default all responses are text
+  if (type && type.length > 0 && type != "filename") {
+    res = "text";
   }
+  switch (type) {
+    case "geo":
+      res = "geo";
+      break;
+    case "true" || "false":
+      res = "bool";
+      break;
+    case "date":
+      res = "date";
+      break;
+    case "value":
+      res = "value";
+      break;
+    case "time_range":
+      res = "time_range";
+      break;
+  }
+  return res;
 }

@@ -141,14 +141,14 @@ export default {
     margin-bottom: $spacing-2;
 
     span {
-      font-size: $font-size-small/1.25;
+      font-size: calc($font-size-small/1.25);
       color: white;
       display: block;
       margin-bottom: $spacing-2;
     }
 
     p {
-      font-size: $font-size-small/1.25;
+      font-size: calc($font-size-small/1.25);
       color: white;
       display: block;
       margin-bottom: $spacing-2;
@@ -187,7 +187,7 @@ export default {
     p {
       text-align: center;
       color: rgba(255, 255, 255, 0.5);
-      font-size: $font-size-small / 1.25;
+      font-size: calc($font-size-small / 1.25);
       a {
         color: rgba(255, 255, 255, 0.5);
         text-decoration: underline;
