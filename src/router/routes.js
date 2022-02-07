@@ -197,11 +197,7 @@ export const routes = [
         component: ProjectTest,
         beforeEnter: (to, from, next) => {
           let fp = to.fullPath;
-          // let short_name = fp.substring(
-          //   fp.lastIndexOf("project/") + 8,
-          //   fp.lastIndexOf("/test")
-          // );
-          let url = fp.split("?share=");
+          const url = fp.split("?share=");
           if (url.length > 1) {
             store
               .dispatch("project/getProjectSharedLinkConfirmation", {
@@ -221,6 +217,8 @@ export const routes = [
                   next({ name: "home" });
                 }
               });
+          } else if (from.name === "project.task.presenter.test") {
+            next();
           } else {
             next({ name: "home" });
           }
