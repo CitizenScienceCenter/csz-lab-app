@@ -117,11 +117,12 @@
                   v-b-modal.project-link
                   variant="primary"
                   class="mt-2"
+                  :disabled="!hasProjectTasks"
                   >{{ $t("project-share-link") }}</b-btn
                 >
 
                 <b-btn
-                  v-if="shareable_link"
+                  v-if="shareable_link && hasProjectTasks"
                   class="mt-2"
                   variant="secondary"
                   @click="makeToast('info', shareable_link)"
@@ -170,6 +171,7 @@
                 </div>
                 <div v-else>
                   <b-btn
+                    v-if="hasProjectTasks"
                     ref="btn-publish-it"
                     variant="primary"
                     class="mt-2"
