@@ -27,7 +27,7 @@
             label-for="password"
           >
             <b-row>
-              <b-col cols="11">
+              <b-col cols="10" md="11">
                 <b-form-input
                   id="password"
                   :type="getPasswordVisibility"
@@ -39,7 +39,7 @@
               <b-col cols="1">
                 <b-button
                   variant="link"
-                  class="text-secondary no-active"
+                  class="text-secondary no-active px-0"
                   v-show="!isVisiblePass"
                   @click="showPassword(true)"
                 >
@@ -47,7 +47,7 @@
                 </b-button>
                 <b-button
                   variant="link"
-                  class="text-secondary no-active"
+                  class="text-secondary no-active px-0"
                   v-show="isVisiblePass"
                   @click="showPassword()"
                 >
