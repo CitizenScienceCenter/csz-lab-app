@@ -151,7 +151,7 @@
                     </b-button>
                     <b-row align-h="center" class="mt-4 mt-sm-0">
                       <b-col cols="12" md="11">
-                        <small style="font-family: monospace" class="m">
+                        <small class="link-to-project">
                           {{ shareable_link }}
                         </small>
                       </b-col>
@@ -630,5 +630,9 @@ export default {
 <style scoped>
 .myclass > .modal-dialog > .modal-content {
   margin-top: 100px;
+}
+.link-to-project{
+  overflow-wrap: break-word;
+  font-family: monospace;
 }
 </style>
