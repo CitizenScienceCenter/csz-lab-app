@@ -407,6 +407,13 @@ a {
     pointer-events: none;
     opacity: 0.25;
   }
+  &.no-active {
+    &:active {
+      background-color: transparent;
+      outline: none;
+      box-shadow: none;
+    }
+  }
 }
 a.btn {
   display: inline-block;

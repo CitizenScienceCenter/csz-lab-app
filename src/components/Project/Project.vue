@@ -144,7 +144,7 @@
                   <template>
                     <b-button
                       variant="link"
-                      class="text-secondary float-right"
+                      class="text-secondary float-right no-active"
                       @click.prevent="copyLink(shareable_link)"
                     >
                       <i class="far fa-copy fa-lg"></i>
@@ -575,10 +575,10 @@ export default {
         toaster: "b-toaster-top-center",
         variant: "info",
         solid: true,
-        autoHideDelay: 2000
+        autoHideDelay: 1500
       });
     },
-    
+
     draftProject(projectId) {
       this.$router.push({
         name: "task.builder.material",
