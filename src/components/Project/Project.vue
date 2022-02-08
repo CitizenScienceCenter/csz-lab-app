@@ -104,6 +104,7 @@
                 >
                   {{ $t("project-draft-complete") }}</b-btn
                 >
+                <!-- Test it button -->
                 <b-btn
                   ref="btn-test-it"
                   :to="{ name: 'project.task.presenter' }"
@@ -112,6 +113,7 @@
                   :disabled="!hasProjectTasks"
                   >{{ $t("project-draft-test") }}</b-btn
                 >
+                <!-- Get Shareable Link button -->
                 <b-btn
                   ref="btn-share-it"
                   v-b-modal.project-link
@@ -120,16 +122,44 @@
                   :disabled="!hasProjectTasks"
                   >{{ $t("project-share-link") }}</b-btn
                 >
-
+                <!-- My Link button -->
                 <b-btn
                   v-if="shareable_link && hasProjectTasks"
                   class="mt-2"
                   variant="secondary"
-                  @click="makeToast('info', shareable_link)"
+                  v-b-modal="'modal-copy-link'"
+                  ref="btnCpyLink"
                 >
-                  My link
+                  My Link
                 </b-btn>
+
+                <!-- Modal for shareable link copy -->
+                <b-modal
+                  id="modal-copy-link"
+                  :title="$t('shareable-link')"
+                  header-bg-variant="light"
+                  hide-footer
+                  body-class="pt-2"
+                >
+                  <template>
+                    <b-button
+                      variant="link"
+                      class="text-secondary float-right"
+                      @click.prevent="copyLink(shareable_link)"
+                    >
+                      <i class="far fa-copy fa-lg"></i>
+                    </b-button>
+                    <b-row align-h="center" class="mt-4 mt-sm-0">
+                      <b-col cols="12" md="11">
+                        <small style="font-family: monospace" class="m">
+                          {{ shareable_link }}
+                        </small>
+                      </b-col>
+                    </b-row>
+                  </template>
+                </b-modal>
                 <br />
+                <!-- Modal for draft project -->
                 <b-modal
                   id="draft-project"
                   :title="$t('project-draft-complete')"
@@ -537,14 +567,18 @@ export default {
         });
       }
     },
-    makeToast(variant = null, data) {
-      this.$bvToast.toast(data, {
+    copyLink(link) {
+      navigator.clipboard.writeText(link);
+      console.log(navigator.clipboard);
+      this.$root.$emit("bv::hide::modal", "modal-copy-link", "#btnCpyLink");
+      this.$bvToast.toast("Link copied to clipboard", {
         toaster: "b-toaster-top-center",
-        title: this.$t("shareable-link"),
-        variant: variant,
-        solid: true
+        variant: "info",
+        solid: true,
+        autoHideDelay: 2000
       });
     },
+    
     draftProject(projectId) {
       this.$router.push({
         name: "task.builder.material",
