@@ -23,7 +23,6 @@
           <p>{{ project.description }}</p>
           <b-btn
             ref="btn-test-it"
-            :disabled="!hasProjectTasks"
             :to="{
               name: 'project.task.presenter.test',
               params: {
@@ -120,10 +119,6 @@ export default {
     ...mapState("user", ["infos"]),
     ...mapGetters("user", ["isLoggedUserOwnerOfProject", "isLoggedUserAdmin"]),
 
-    // validate if project has tasks
-    hasProjectTasks() {
-      return this.projectTasks.length > 0;
-    }
   }
 };
 </script>
