@@ -29,7 +29,8 @@ const QUESTION_TYPES = [
 const state = {
   language: "en",
   gdpr: false,
-  questionTypes: QUESTION_TYPES
+  questionTypes: QUESTION_TYPES,
+  screenSize: null
 };
 
 const getters = {
@@ -44,6 +45,10 @@ const actions = {
   },
   setGtag({ state, commit, rootState }, gdpr) {
     commit("SET_GTAG", gdpr);
+  },
+  setScreenSize({ commit }, data = null) {
+    data = typeof data === "number" ? data : window.innerWidth;
+    commit("SET_SCREEN_SIZE", data);
   }
 };
 
@@ -53,6 +58,9 @@ const mutations = {
   },
   SET_GTAG(state, gdpr) {
     state.gdpr = gdpr;
+  },
+  SET_SCREEN_SIZE(state, payload) {
+    state.screenSize = payload;
   }
 };
 

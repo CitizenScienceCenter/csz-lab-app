@@ -115,8 +115,9 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState } from "vuex";
 import { i18n } from "../i18n";
+import settings from "../store/modules/settings";
 export default {
   name: "Header",
   data: () => {
@@ -141,7 +142,8 @@ export default {
   computed: {
     ...mapState({
       userLogged: state => state.user.logged,
-      userProfile: state => state.user.infos
+      userProfile: state => state.user.infos,
+      screenSize: state => state.settings.screenSize
     }),
     avatarUrl() {
       const au = this.userProfile
@@ -153,14 +155,25 @@ export default {
     },
     isTools() {
       return this.$route.name ? this.$route.name.includes("tools") : false;
+    },
+    isSmallScreen() {
+      // this number is defined for vue Bootsrap for screen smaller than large
+      // when the navbar collapse
+      return this.screenSize < 992;
     }
   },
   methods: {
     openDropdown() {
-      this.$refs.tools_dropdown.visible = true;
+      // validate if small screen
+      if (!this.isSmallScreen) {
+        this.$refs.tools_dropdown.visible = true;
+      }
     },
     closeDropdown() {
-      this.$refs.tools_dropdown.visible = false;
+      // validate if small screen
+      if (!this.isSmallScreen) {
+        this.$refs.tools_dropdown.visible = false;
+      }
     }
   }
 };
