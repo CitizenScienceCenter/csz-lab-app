@@ -127,6 +127,10 @@ export default {
       bootstrap().then(gtag => {});
     }
   },
+  mounted() {
+    this.setScreenSize(window.innerWidth);
+    window.addEventListener("resize", this.setScreenSize);
+  },
   computed: {
     ...mapState({
       errorNotifications: state => state.notification.errorNotifications,
@@ -161,7 +165,10 @@ export default {
       closeInfo: "notification/closeInfo",
       closeSuccess: "notification/closeSuccess"
     }),
-    ...mapActions("user", ["getAccountProfile"])
+    ...mapActions({
+      user: "user/getAccountProfile",
+      setScreenSize: "settings/setScreenSize"
+    })
   }
 };
 </script>
