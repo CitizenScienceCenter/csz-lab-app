@@ -29,7 +29,7 @@ Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.use(VueLayers, {
-  dataProjection: "EPSG:4326",
+  dataProjection: "EPSG:4326"
 });
 Vue.use(Meta);
 
@@ -44,8 +44,9 @@ Vue.use(
   VueGtag,
   {
     config: { id: process.env.GTAG_ID },
+    appName: "cs_tools",
     pageTrackerScreenviewEnabled: true,
-    bootstrap:false // GTAG is configured but launched when this parameter turns in true
+    bootstrap: false // GTAG is configured but launched when this parameter turns in true
   },
   router
 );
@@ -62,5 +63,5 @@ new Vue({
   router,
   store,
   components: { App },
-  template: "<App/>",
+  template: "<App/>"
 });
