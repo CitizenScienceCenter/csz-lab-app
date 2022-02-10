@@ -4,7 +4,7 @@ import Papa from "papaparse";
 
 export function uuid() {
   let dt = new Date().getTime();
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
     let r = (dt + Math.random() * 16) % 16 | 0;
     dt = Math.floor(dt / 16);
     return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
@@ -150,7 +150,7 @@ export function getTranslationLocale(tag) {
 export function getPybossaTranslation(reason) {
   const tag = reason.split(" ");
   const complete = tag.join("-");
-  return i18n.messages[i18n.locale][complete];
+  return i18n.messages[i18n.locale][complete] || reason;
 }
 
 export function getFormErrorsAsStringOnlyErrorMsg(errors) {
@@ -215,7 +215,7 @@ export function utf8ToUnicode(text) {
   const utf = require("utf8");
   try {
     // Convert \\x to \x
-    text = text.replace(/\\x([0-9A-Fa-f]{2})/g, function () {
+    text = text.replace(/\\x([0-9A-Fa-f]{2})/g, function() {
       // Convert hex to int the char sequence after \x
       return String.fromCharCode(parseInt(arguments[1], 16));
     });
@@ -233,7 +233,7 @@ export function trackEvent(_this, info = undefined) {
     _this.$gtag.event(info.action, {
       event_category: info.category,
       event_label: info.label,
-      event_value: 1,
+      event_value: 1
     });
   }
 }
@@ -253,11 +253,11 @@ export function getMIME(raw_url) {
 
   const types = new Map();
   //add images to the Map
-  img_ext.forEach((img) => types.set(img, "img"));
+  img_ext.forEach(img => types.set(img, "img"));
   //add video to the Map
-  video_ext.forEach((video) => types.set(video, "video"));
+  video_ext.forEach(video => types.set(video, "video"));
   //add audio to the Map
-  audio_ext.forEach((audio) => types.set(audio, "audio"));
+  audio_ext.forEach(audio => types.set(audio, "audio"));
 
   // Validate if url belongs to image, video or audio
   let ext;
@@ -265,11 +265,11 @@ export function getMIME(raw_url) {
     const url = new URL(raw_url);
     /* Special case */
     // Embed video (i.e., youtube, vimeo)
-    if ([...video_embed].some((x) => url.hostname.includes(x))) {
+    if ([...video_embed].some(x => url.hostname.includes(x))) {
       response = "vembed";
     }
     // Validate if url is valid protocol
-    if (["http", "https"].some((x) => url.protocol.includes(x))) {
+    if (["http", "https"].some(x => url.protocol.includes(x))) {
       ext = url.pathname.split(".").pop();
     }
   } catch (e) {
@@ -301,10 +301,10 @@ export async function csvToJson(csv) {
   return new Promise((resolve, reject) => {
     Papa.parse(csv, {
       header: true,
-      complete: (results) => {
+      complete: results => {
         resolve(results.data);
         reject(results.error);
-      },
+      }
     });
   });
 }
