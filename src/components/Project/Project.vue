@@ -1,9 +1,9 @@
 <template>
   <div>
     <app-cover :imageUrl="getBaseUrl">
-      <b-row class="mt-4">
+      <b-row class="pt-4">
         <!-- Avatar -->
-        <b-col cols="5" sm="4" md="3">
+        <b-col cols="12" sm="4" md="3" class="d-none d-sm-block">
           <b-skeleton-wrapper :loading="!loading">
             <template #loading>
               <b-skeleton
@@ -27,7 +27,7 @@
         </b-col>
 
         <!-- Header -->
-        <b-col cols="7" sm="8" md="9">
+        <b-col cols="12" sm="8" md="9">
           <b-skeleton-wrapper :loading="!loading">
             <template #loading>
               <b-skeleton
@@ -50,10 +50,10 @@
               ></b-skeleton>
             </template>
             <h1>{{ project.name }}</h1>
-            <p>{{ project.description }}</p>
+            <p :class="{ small: isSmallScreen }">{{ project.description }}</p>
 
             <div v-if="isLoggedUserOwnerOfProject(project)">
-              <!-- Publised state buttons - Admin-->
+              <!-- Published state buttons - Admin-->
               <div v-if="project.published">
                 <!-- Published button -->
                 <b-row>
@@ -80,12 +80,12 @@
                   </b-col>
                   <!-- Error message when no pending tasks -->
                   <b-col class="mt-2 pl-0" v-if="isCompletedTasks">
-                    <p class="font-weight-bold text-white">
+                    <small class="font-weight-bold text-white">
                       <i class="fas fa-info-circle"></i>
                       {{
                         $t("project-draft-contribute-error-no-pending-tasks")
                       }}
-                    </p>
+                    </small>
                   </b-col>
                 </b-row>
               </div>
@@ -96,14 +96,33 @@
                     !localPendingApproval
                 "
               >
+                <!-- Modify draft button -->
                 <b-btn
                   ref="btn-draft-complete-it"
                   v-b-modal.draft-project
-                  class="mt-2"
+                  class="mt-2 "
                   variant="primary"
                 >
-                  {{ $t("project-draft-complete") }}</b-btn
+                  {{ $t("project-draft-complete") }}
+                </b-btn>
+                <!-- Modal for draft project -->
+                <b-modal
+                  id="draft-project"
+                  :title="$t('project-draft-complete')"
+                  :ok-title="$t('ok')"
+                  :cancel-title="$t('cancel-c')"
+                  @ok="draftProject(id)"
                 >
+                  <b-alert variant="warning" :show="true">
+                    <span
+                      v-html="
+                        $t('modify-draft-modal-content', {
+                          HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/tools/projectbuilder'>How it works</a>`
+                        })
+                      "
+                    ></span>
+                  </b-alert>
+                </b-modal>
                 <!-- Test it button -->
                 <b-btn
                   ref="btn-test-it"
@@ -111,8 +130,10 @@
                   variant="primary"
                   class="mt-2"
                   :disabled="!hasProjectTasks"
-                  >{{ $t("project-draft-test") }}</b-btn
-                >
+                  >{{ $t("project-draft-test") }}
+                </b-btn>
+
+                <!-- The following section will be hidden for small screens -->
                 <!-- Get Shareable Link button -->
                 <b-btn
                   ref="btn-share-it"
@@ -120,11 +141,24 @@
                   variant="primary"
                   class="mt-2"
                   :disabled="!hasProjectTasks"
-                  >{{ $t("project-share-link") }}</b-btn
+                  v-if="!isSmallScreen"
+                  >{{ $t("project-share-link") }}
+                </b-btn>
+                <b-modal
+                  id="project-link"
+                  :title="$t('project-share-link')"
+                  :ok-title="$t('submit-btn')"
+                  :cancel-title="$t('cancel-c')"
+                  @ok="getLink"
                 >
+                  <b-alert variant="warning" :show="true">
+                    {{ $t("shareable-link-modal-content") }} <br />
+                    {{ $t("shareable-link-modal-content-note") }}
+                  </b-alert>
+                </b-modal>
                 <!-- My Link button -->
                 <b-btn
-                  v-if="shareable_link && hasProjectTasks"
+                  v-if="shareable_link && hasProjectTasks && !isSmallScreen"
                   class="mt-2"
                   variant="secondary"
                   v-b-modal="'modal-copy-link'"
@@ -132,7 +166,6 @@
                 >
                   My Link
                 </b-btn>
-
                 <!-- Modal for shareable link copy -->
                 <b-modal
                   id="modal-copy-link"
@@ -158,59 +191,70 @@
                     </b-row>
                   </template>
                 </b-modal>
-                <br />
-                <!-- Modal for draft project -->
-                <b-modal
-                  id="draft-project"
-                  :title="$t('project-draft-complete')"
-                  :ok-title="$t('ok')"
-                  :cancel-title="$t('cancel-c')"
-                  @ok="draftProject(id)"
-                >
-                  <b-alert variant="warning" :show="true">
-                    <span
-                      v-html="
-                        $t('modify-draft-modal-content', {
-                          HowitWorks: `<a target='_blank' href='https://lab.citizenscience.ch/en/tools/projectbuilder'>How it works</a>`
-                        })
-                      "
-                    ></span>
-                  </b-alert>
-                </b-modal>
-                <b-modal
-                  id="project-link"
-                  :title="$t('project-share-link')"
-                  :ok-title="$t('submit-btn')"
-                  :cancel-title="$t('cancel-c')"
-                  @ok="getLink"
-                >
-                  <b-alert variant="warning" :show="true">
-                    {{ $t("shareable-link-modal-content") }} <br />
-                    {{ $t("shareable-link-modal-content-note") }}
-                  </b-alert>
-                </b-modal>
-
-                <div v-if="!infos.admin">
+                <!-- Request Approval button -->
+                <span v-if="!isSmallScreen">
                   <b-btn
+                    v-if="!infos.admin"
                     ref="btn-approve-it"
                     variant="primary"
                     class="mt-2"
                     v-b-modal.approve-project
-                    >{{ $t("project-draft-approve-your-project") }}</b-btn
-                  ><br />
-                </div>
-                <div v-else>
+                    >{{ $t("project-draft-approve-your-project") }}
+                  </b-btn>
+
+                  <!-- Submit for publication button -->
+
                   <b-btn
-                    v-if="hasProjectTasks"
+                    v-else-if="hasProjectTasks"
                     ref="btn-publish-it"
                     variant="primary"
                     class="mt-2"
                     v-b-modal.publish-project
                     @click="publish()"
                   >
-                    {{ $t("project-draft-publish") }}</b-btn
-                  ><br />
-                </div>
+                    {{ $t("project-draft-publish") }}
+                  </b-btn>
+                </span>
+
+                <!-- This menu replace the previous buttons hidden for small screens -->
+                <b-dropdown
+                  right
+                  text="More Options"
+                  variant="primary"
+                  v-if="isSmallScreen"
+                >
+                  <b-dropdown-item
+                    v-b-modal.project-link
+                    :disabled="!hasProjectTasks"
+                    class="my-1"
+                  >
+                    {{ $t("project-share-link") }}
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    v-if="shareable_link && hasProjectTasks"
+                    v-b-modal.modal-copy-link
+                    ref="btnCpyLink"
+                    class="my-1"
+                  >
+                    My Link
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    v-if="!infos.admin"
+                    v-b-modal.approve-project
+                    class="my-1"
+                  >
+                    {{ $t("project-draft-approve-your-project") }}
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    v-else
+                    :disabled="!hasProjectTasks"
+                    v-b-modal.publish-project
+                    @click="publish()"
+                    class="my-1"
+                  >
+                    {{ $t("project-draft-publish") }}
+                  </b-dropdown-item>
+                </b-dropdown>
               </div>
 
               <div
@@ -569,7 +613,7 @@ export default {
     },
     copyLink(link) {
       navigator.clipboard.writeText(link);
-      console.log(navigator.clipboard);
+      console.log("Link copied to clipboard: ", navigator.clipboard);
       this.$root.$emit("bv::hide::modal", "modal-copy-link", "#btnCpyLink");
       this.$bvToast.toast("Link copied to clipboard", {
         toaster: "b-toaster-top-center",
@@ -606,6 +650,7 @@ export default {
     ...mapState("task", ["taskPresenter", "projectTasks"]),
     ...mapState("project/menu", ["currentTab", "tabs"]),
     ...mapState("user", ["infos", "logged"]),
+    ...mapState({ screenSize: state => state.settings.screenSize }),
     ...mapGetters("user", ["isLoggedUserOwnerOfProject", "isLoggedUserAdmin"]),
     getBaseUrl() {
       if (this.loading && this.project.info.thumbnail) {
@@ -622,6 +667,10 @@ export default {
     },
     isCompletedTasks() {
       return this.stats.n_completed_tasks === this.stats.n_tasks;
+    },
+
+    isSmallScreen() {
+      return this.screenSize <= 640;
     }
   }
 };
@@ -631,7 +680,7 @@ export default {
 .myclass > .modal-dialog > .modal-content {
   margin-top: 100px;
 }
-.link-to-project{
+.link-to-project {
   overflow-wrap: break-word;
   font-family: monospace;
 }
