@@ -3,7 +3,7 @@
     <app-cover :imageUrl="getBaseUrl()">
       <b-row class="mt-4">
         <!-- Avatar -->
-        <b-col cols="5" sm="4" md="3">
+        <b-col cols="5" sm="4" md="3" class="d-none d-sm-block">
           <div
             class="div-image"
             v-if="'info' in project && 'thumbnail_url' in project.info"
@@ -18,7 +18,7 @@
         </b-col>
 
         <!-- Header -->
-        <b-col cols="7" sm="8" md="9">
+        <b-col cols="12" sm="8" md="9">
           <h1>{{ project.name }}</h1>
           <p>{{ project.description }}</p>
           <b-btn
