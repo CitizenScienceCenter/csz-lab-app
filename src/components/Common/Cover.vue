@@ -233,8 +233,8 @@ export default {
 
 @media only screen and (min-width: $viewport-mobile-large) {
   .cover {
-    height: 35vh;
-    max-height: 360px;
+    height: 45vh;
+    max-height: 420px;
 
     .div-image {
       border-radius: 50%;
@@ -261,7 +261,8 @@ export default {
 
 @media only screen and (min-width: $viewport-tablet-portrait) {
   .cover {
-    height: 320px;
+    height: 45vh;
+    max-height: 420px;
 
     .uzh-eth {
       bottom: $spacing-3;
@@ -304,7 +305,7 @@ export default {
 @media only screen and (min-width: $viewport-large) {
   .cover {
     height: 80vh;
-    max-height: 280px;
+    max-height: 320px;
 
     .div-image {
       border-radius: 50%;

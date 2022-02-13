@@ -128,6 +128,7 @@ export default {
     }
   },
   mounted() {
+    // Check the screen size
     this.setScreenSize(window.innerWidth);
     window.addEventListener("resize", this.setScreenSize);
   },
