@@ -92,10 +92,10 @@
     "profile-editor-update-apikey": "Update your API key",
     "profile-editor-delete-account": "Delete your account",
 
-    "profile-header-edit-your-profile": "Edit your profile",
-    "profile-header-go-back-to-profile": "Go back to your profile",
-    "profile-header-position-global-ranking": "position in global ranking",
-    "profile-header-contributions-to-project": "contributions to projects",
+    "profile-header-edit-your-profile": "Edit profile",
+    "profile-header-go-back-to-profile": "Go back",
+    "profile-header-position-global-ranking": "Position in global ranking",
+    "profile-header-contributions-to-project": "Contributions to projects",
 
     "profile-view-draft-project": "Draft projects",
     "profile-view-contributions-project": "Your contributions",
@@ -915,7 +915,7 @@
     "profile-editor-delete-account": "Account löschen",
 
     "profile-header-edit-your-profile": "Profil bearbeiten",
-    "profile-header-go-back-to-profile": "Zurück zum Profil",
+    "profile-header-go-back-to-profile": "Zurück",
     "profile-header-position-global-ranking": "Position im globalen Ranking",
     "profile-header-contributions-to-project": "Beiträge zu Projekten",
 
