@@ -86,7 +86,7 @@
         <i class="fas fa-exclamation-triangle"></i>
         <small>{{ $t("tasks-import-cslogger-no-tasks") }}</small>
       </span>
-      <!-- BUG: This is hiden and checked by default -->
+      <!-- ******* This is hiden and checked by default ******-->
       <!-- Partial checkbox -->
       <!-- <div class="mb-4">
         <b-form-checkbox v-model="partial">

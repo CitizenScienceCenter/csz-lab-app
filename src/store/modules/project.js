@@ -22,7 +22,7 @@ const errors = {
   GET_PROJECT_RESULTS_LOADING_ERROR: "Error during project results loading",
   UPLOAD_PROJECT_ERROR: "Error during project update",
   GET_PROJECT_DELETION_OPTIONS_LOADING_ERROR: "Error during project deletion",
-  DELETE_PROJECT_ERROR: "Error during project deletion",
+  DELETE_PROJECT_ERROR: "Error during project deletion"
 };
 
 // global state for this module
@@ -60,10 +60,10 @@ const state = {
   showProjectPassModal: false,
   accessForSelectedProject: {
     access: false,
-    project_id: null,
+    project_id: null
   },
 
-  loading: false,
+  loading: false
 };
 
 // filter methods on the state data
@@ -73,22 +73,22 @@ const getters = {
    * @param state
    * @return {function({id: *}): T[]}
    */
-  getProjectsWithCategory: (state) => ({ id }) => {
-    return state.projects.filter((project) => {
+  getProjectsWithCategory: state => ({ id }) => {
+    return state.projects.filter(project => {
       return project.category_id === id;
     });
   },
-  getUserProgressInPercent: (state) => {
+  getUserProgressInPercent: state => {
     const progress =
       (state.selectedProjectUserProgress.done /
         state.selectedProjectUserProgress.total) *
       100;
     return isNaN(progress) ? 0 : progress;
   },
-  getUserProgress: (state) => {
+  getUserProgress: state => {
     return state.selectedProjectUserProgress;
   },
-  projects: (state) => {
+  projects: state => {
     let projects = [];
     for (const categoryId in state.categoryProjects) {
       if (categoryId !== "featured") {
@@ -98,27 +98,26 @@ const getters = {
     return projects;
   },
 
-  globalPagination: (state) => {
+  globalPagination: state => {
     const pagination = {
       next: false,
       page: 1,
       per_page: 20,
       prev: false,
-      total: 0,
+      total: 0
     };
-
-    for (const categoryId in state.categoryPagination) {
-      if (categoryId == "thinking") {
-        pagination.total += state.categoryPagination[categoryId].total;
+    for (const [key, category] of Object.entries(state.categoryPagination)) {
+      if (key !== "featured") {
+        pagination.total += category.total;
       }
     }
 
     return pagination;
   },
 
-  comments: (state) => {
+  comments: state => {
     return state.projectComments;
-  },
+  }
 };
 
 // async methods making mutations are placed here
@@ -131,16 +130,16 @@ const actions = {
   getCategories({ commit }) {
     return api
       .getCategories()
-      .then((value) => {
+      .then(value => {
         commit("setCategories", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale("GET_FEATURED_PROJECTS_LOADING_ERROR"),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -156,16 +155,16 @@ const actions = {
   getAllProjects({ commit }) {
     return api
       .getAllProjects()
-      .then((value) => {
+      .then(value => {
         commit("setProjects", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale("GET_ALL_PROJECTS_LOADING_ERROR"),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -181,27 +180,27 @@ const actions = {
    * @param page
    * @return {Promise<T | boolean>}
    */
-  getProjectsWithCategory({ commit }, { category, page }) {
+  getProjectsWithCategory({ commit }, { category, page, params }) {
     return api
-      .getProjectsWithCategory(category.short_name, page)
-      .then((value) => {
+      .getProjectsWithCategory(category.short_name, page, params)
+      .then(value => {
         commit("setProjectsForCategory", {
           category: value.data.active_cat.short_name,
-          projects: value.data.projects,
+          projects: value.data.projects
         });
         commit("setPaginationForCategory", {
           category: value.data.active_cat.short_name,
-          pagination: value.data.pagination,
+          pagination: value.data.pagination
         });
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         if (category.short_name !== "featured") {
           commit(
             "notification/showError",
             {
               title: getTranslationLocale("GET_CATEGORIES_LOADING_ERROR"),
-              content: reason,
+              content: reason
             },
             { root: true }
           );
@@ -222,24 +221,24 @@ const actions = {
   getProject({ commit, state, rootState }, id) {
     return api
       .getProjectById(id, rootState.user.infos.api_key)
-      .then((value) => {
+      .then(value => {
         commit("setSelectedProject", value.data);
         // stores the task presenter directly in the task store
         if ("task_presenter" in value.data.info) {
           commit("task/setTaskPresenter", value.data.info.task_presenter, {
-            root: true,
+            root: true
           });
         } else {
           commit("task/setTaskPresenter", "", { root: true });
         }
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale("GET_PROJECT_LOADING_ERROR"),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -250,7 +249,7 @@ const actions = {
   getProjectSharedLinkConfirmation({ commit }, payload) {
     return api
       .projectSharedLinkConfirmation(payload.key, payload.short_name)
-      .then((value) => {
+      .then(value => {
         if (value.data.status == "success") {
           commit("setProjectTestEnvironment", true);
           commit("setProjectShareableLink", payload.fullpath);
@@ -258,12 +257,12 @@ const actions = {
         }
         return value.data.status;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale("error"),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -274,24 +273,24 @@ const actions = {
   getProjectTestEnv({ commit, state, rootState }, project) {
     return api
       .getProjectByIdTestEnv(project.short_name)
-      .then((value) => {
+      .then(value => {
         commit("setSelectedProject", value.data);
         // stores the task presenter directly in the task store
         if ("task_presenter" in value.data.info) {
           commit("task/setTaskPresenter", value.data.info.task_presenter, {
-            root: true,
+            root: true
           });
         } else {
           commit("task/setTaskPresenter", "", { root: true });
         }
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale("GET_PROJECT_LOADING_ERROR"),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -311,11 +310,11 @@ const actions = {
   createProject({ commit, state, rootState }, builder) {
     return api
       .createProject(rootState.user.infos.api_key, builder)
-      .then((value) => {
+      .then(value => {
         commit("setSelectedProject", value.data);
         return state.selectedProject;
       })
-      .catch((reason) => {
+      .catch(reason => {
         const responseData = reason.response.data;
         if ("status" in responseData && responseData.status === "failed") {
           if (
@@ -327,7 +326,7 @@ const actions = {
               "notification/showError",
               {
                 title: getTranslationLocale("error"),
-                content: getTranslationLocale("project-name-already-taken"),
+                content: getTranslationLocale("project-name-already-taken")
               },
               { root: true }
             );
@@ -338,7 +337,7 @@ const actions = {
           "notification/showError",
           {
             title: errors.POST_PROJECT_ERROR,
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -355,11 +354,11 @@ const actions = {
   getProjectDeletionOptions({ commit }, project) {
     return api
       .getProjectDeletionOptions(project.short_name)
-      .then((value) => {
+      .then(value => {
         commit("setProjectDeletionOptions", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         const response = reason.response.data;
         commit(
           "notification/showError",
@@ -367,7 +366,7 @@ const actions = {
             title: getTranslationLocale(
               "GET_PROJECT_DELETION_OPTIONS_LOADING_ERROR"
             ),
-            content: "description" in response ? response.description : reason,
+            content: "description" in response ? response.description : reason
           },
           { root: true }
         );
@@ -384,27 +383,27 @@ const actions = {
    * @returns {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   deleteProject({ commit, state, dispatch }, project) {
-    return dispatch("getProjectDeletionOptions", project).then((response) => {
+    return dispatch("getProjectDeletionOptions", project).then(response => {
       if (response) {
         return api
           .deleteProject(state.projectDeletionOptions.csrf, project.short_name)
-          .then((value) => {
+          .then(value => {
             commit(
               "notification/showSuccess",
               {
                 title: getTranslationLocale("success"),
-                content: value.data.flash,
+                content: value.data.flash
               },
               { root: true }
             );
             return value.data;
           })
-          .catch((reason) => {
+          .catch(reason => {
             commit(
               "notification/showError",
               {
                 title: getTranslationLocale("DELETE_PROJECT_ERROR"),
-                content: reason,
+                content: reason
               },
               { root: true }
             );
@@ -428,18 +427,18 @@ const actions = {
         project.id,
         rootState.user.logged ? rootState.user.infos.api_key : false
       )
-      .then((value) => {
+      .then(value => {
         commit("setSelectedProjectUserProgress", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale(
               "GET_PROJECT_USER_PROGRESS_LOADING_ERROR"
             ),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -460,18 +459,18 @@ const actions = {
   getProjectUpdateOptions({ commit }, project) {
     return api
       .getProjectUpdateOptions(project.short_name)
-      .then((value) => {
+      .then(value => {
         commit("setProjectUpdateOptions", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale(
               "GET_PROJECT_UPDATE_OPTIONS_LOADING_ERROR"
             ),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -489,7 +488,7 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   updateProject({ commit, dispatch, state }, { project, form }) {
-    return dispatch("getProjectUpdateOptions", project).then((response) => {
+    return dispatch("getProjectUpdateOptions", project).then(response => {
       if (response) {
         return api
           .updateProject(
@@ -498,16 +497,16 @@ const actions = {
             project.id,
             form
           )
-          .then((value) => {
+          .then(value => {
             // nothing to commit
             return value.data;
           })
-          .catch((reason) => {
+          .catch(reason => {
             commit(
               "notification/showError",
               {
                 title: getTranslationLocale("UPLOAD_PROJECT_ERROR"),
-                content: reason,
+                content: reason
               },
               { root: true }
             );
@@ -529,7 +528,7 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   uploadAvatar({ commit, state, dispatch }, { project, image }) {
-    return dispatch("getProjectUpdateOptions", project).then((response) => {
+    return dispatch("getProjectUpdateOptions", project).then(response => {
       if (response) {
         return api
           .uploadAvatar(
@@ -537,16 +536,16 @@ const actions = {
             project.short_name,
             image
           )
-          .then((value) => {
+          .then(value => {
             // nothing to commit
             return value.data;
           })
-          .catch((reason) => {
+          .catch(reason => {
             commit(
               "notification/showError",
               {
                 title: getTranslationLocale("UPLOAD_PROJECT_AVATAR_ERROR"),
-                content: getTranslationLocale("profile-pic-too-big"),
+                content: getTranslationLocale("profile-pic-too-big")
               },
               { root: true }
             );
@@ -566,18 +565,18 @@ const actions = {
   getPublishProjectOptions({ commit }, project) {
     return api
       .getPublishProjectOptions(project.short_name)
-      .then((value) => {
+      .then(value => {
         commit("setPublishProjectOptions", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale(
               "GET_PUBLISH_PROJECT_OPTIONS_LOADING_ERROR"
             ),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -594,28 +593,28 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   publishProject({ commit, state, dispatch }, project) {
-    return dispatch("getPublishProjectOptions", project).then((response) => {
+    return dispatch("getPublishProjectOptions", project).then(response => {
       if (response) {
         return api
           .publishProject(state.publishProjectOptions.csrf, project.short_name)
-          .then((value) => {
+          .then(value => {
             commit("updateSelectedProject", { published: true });
             commit(
               "notification/showSuccess",
               {
                 title: getTranslationLocale("success"),
-                content: "The project " + project.name + " is now public",
+                content: "The project " + project.name + " is now public"
               },
               { root: true }
             );
             return value.data;
           })
-          .catch((reason) => {
+          .catch(reason => {
             commit(
               "notification/showError",
               {
                 title: getTranslationLocale("PUBLISH_PROJECT_ERROR"),
-                content: reason,
+                content: reason
               },
               { root: true }
             );
@@ -635,18 +634,18 @@ const actions = {
    * @return {Promise<any> | Thenable<any> | * | PromiseLike<T | never> | Promise<T | never>}
    */
   approveProject({ commit, state, dispatch }, project) {
-    return dispatch("getPublishProjectOptions", project).then((response) => {
+    return dispatch("getPublishProjectOptions", project).then(response => {
       if (response) {
         return api
           .approveProject(state.publishProjectOptions.csrf, project.short_name)
-          .then((value) => {
+          .then(value => {
             if (value.data.status === "success") {
               commit("updateSelectedProject", { published: false });
               commit(
                 "notification/showSuccess",
                 {
                   title: getTranslationLocale("success"),
-                  content: getPybossaTranslation(value.data.flash),
+                  content: getPybossaTranslation(value.data.flash)
                 },
                 { root: true }
               );
@@ -656,7 +655,7 @@ const actions = {
                 "notification/showError",
                 {
                   title: getTranslationLocale("error"),
-                  content: getPybossaTranslation(value.data.flash),
+                  content: getPybossaTranslation(value.data.flash)
                 },
                 { root: true }
               );
@@ -664,12 +663,12 @@ const actions = {
             }
             //return value.data
           })
-          .catch((reason) => {
+          .catch(reason => {
             commit(
               "notification/showError",
               {
                 title: getTranslationLocale("PUBLISH_PROJECT_ERROR"),
-                content: reason,
+                content: reason
               },
               { root: true }
             );
@@ -689,16 +688,16 @@ const actions = {
   getStatistics({ commit }, project) {
     return api
       .getStatistics(project.short_name)
-      .then((value) => {
+      .then(value => {
         commit("setSelectedProjectStats", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale("GET_PROJECT_STATS_LOADING_ERROR"),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -715,16 +714,16 @@ const actions = {
   getResults({ commit }, project) {
     return api
       .getResults(project.short_name)
-      .then((value) => {
+      .then(value => {
         commit("setSelectedProjectResults", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: getTranslationLocale("GET_PROJECT_RESULTS_LOADING_ERROR"),
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -734,16 +733,16 @@ const actions = {
   setProjectCommentsOptions({ commit }, short_name) {
     return api
       .setProjectCommentsOptions(short_name)
-      .then((value) => {
+      .then(value => {
         commit("setProjectCommentsOptions", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: "Error getting proeject commnets options",
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -761,7 +760,7 @@ const actions = {
    */
   setProjectComment({ commit, state, dispatch }, payload) {
     return dispatch("setProjectCommentsOptions", payload.short_name).then(
-      (response) => {
+      response => {
         if (response) {
           return api
             .setProjectComment(
@@ -769,16 +768,16 @@ const actions = {
               payload.short_name,
               payload.comment
             )
-            .then((value) => {
+            .then(value => {
               return value.data;
             })
-            .catch((reason) => {
+            .catch(reason => {
               commit("setProjectComments", []);
               commit(
                 "notification/showError",
                 {
                   title: "Error",
-                  content: "Could not save your comment. Try again later!",
+                  content: "Could not save your comment. Try again later!"
                 },
                 { root: true }
               );
@@ -793,11 +792,11 @@ const actions = {
   getProjectComments({ commit }, payload) {
     return api
       .getProjectComments(payload.limit, payload.offset, payload.id)
-      .then((value) => {
+      .then(value => {
         commit("setProjectComments", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit("setProjectComments", []);
         return false;
       });
@@ -806,12 +805,12 @@ const actions = {
   getForumThreads({ commit }, payload) {
     return api
       .getForumThreads(payload.limit, payload.offset)
-      .then((value) => {
+      .then(value => {
         commit("setForumThreads", value.data);
         //commit('comments/SET_NUMBER_OF_THREADS', value.count)
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit("setProjectComments", []);
         return false;
       });
@@ -820,16 +819,16 @@ const actions = {
   getShareableLink({ commit }, project) {
     return api
       .getShareableLink(project.short_name)
-      .then((value) => {
+      .then(value => {
         commit("setProjectShareableLink", value.data.key);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: "Shareable link error!",
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -839,16 +838,16 @@ const actions = {
   setPrivateProjectOptions({ commit }, short_name) {
     return api
       .setPrivateProjectOptions(short_name)
-      .then((value) => {
+      .then(value => {
         commit("setPrivateProjectOptions", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: "Error getting private project options",
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -858,7 +857,7 @@ const actions = {
 
   getAccessToProject({ commit, state, dispatch }, privateProject) {
     return dispatch("setPrivateProjectOptions", privateProject.short_name).then(
-      (response) => {
+      response => {
         if (response) {
           return api
             .getAccessToProject(
@@ -866,15 +865,15 @@ const actions = {
               privateProject.short_name,
               privateProject.password
             )
-            .then((value) => {
+            .then(value => {
               return value.data;
             })
-            .catch((reason) => {
+            .catch(reason => {
               commit(
                 "notification/showError",
                 {
                   title: "password",
-                  content: reason,
+                  content: reason
                 },
                 { root: true }
               );
@@ -888,15 +887,15 @@ const actions = {
   isProjectPrivate({ commit, state }, project) {
     return api
       .isProjectPrivate(project.id)
-      .then((value) => {
+      .then(value => {
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: "Private project",
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -907,16 +906,16 @@ const actions = {
   deleteCommentsOptions({ commit }, comment_id) {
     return api
       .deleteCommentsOptions(comment_id)
-      .then((value) => {
+      .then(value => {
         commit("deleteCommentsOptions", value.data);
         return value.data;
       })
-      .catch((reason) => {
+      .catch(reason => {
         commit(
           "notification/showError",
           {
             title: "Error getting comments options",
-            content: reason,
+            content: reason
           },
           { root: true }
         );
@@ -926,38 +925,38 @@ const actions = {
 
   deleteComment({ commit, state, dispatch }, payload) {
     return dispatch("deleteCommentsOptions", payload.comment_id).then(
-      (response) => {
+      response => {
         if (response) {
           return api
             .deleteComment(state.deleteCommentsOptions.csrf, payload.comment_id)
-            .then((value) => {
+            .then(value => {
               if (value.data.status === "success") {
                 //commit('setProjectComments', value.data.data)
                 //return true
                 return dispatch("getProjectComments", {
                   id: payload.thread_id,
                   limit: 1000,
-                  offset: 0,
+                  offset: 0
                 });
               } else {
                 commit(
                   "notification/showError",
                   {
                     title: getTranslationLocale("error"),
-                    content: "Could not delete your comment!",
+                    content: "Could not delete your comment!"
                   },
                   { root: true }
                 );
                 return false;
               }
             })
-            .catch((reason) => {
+            .catch(reason => {
               commit("setProjectComments", []);
               commit(
                 "notification/showError",
                 {
                   title: "Error",
-                  content: "Could not delete your comment!",
+                  content: "Could not delete your comment!"
                 },
                 { root: true }
               );
@@ -971,7 +970,7 @@ const actions = {
 
   updateProjectComment({ commit, state, dispatch }, payload) {
     return dispatch("setProjectCommentsOptions", payload.short_name).then(
-      (response) => {
+      response => {
         if (response) {
           return api
             .updateProjectComment(
@@ -979,16 +978,16 @@ const actions = {
               payload.short_name,
               payload.comment
             )
-            .then((value) => {
+            .then(value => {
               return value.data;
             })
-            .catch((reason) => {
+            .catch(reason => {
               //commit('setProjectComments',[])
               commit(
                 "notification/showError",
                 {
                   title: "Error",
-                  content: "Could not save your comment. Try again later!",
+                  content: "Could not save your comment. Try again later!"
                 },
                 { root: true }
               );
@@ -1002,11 +1001,11 @@ const actions = {
 
   deleteThread({ commit, state, dispatch }, payload) {
     return dispatch("deleteCommentsOptions", payload.comment_id).then(
-      (response) => {
+      response => {
         if (response) {
           return api
             .deleteComment(state.deleteCommentsOptions.csrf, payload.comment_id)
-            .then((value) => {
+            .then(value => {
               if (value.data.status === "success") {
                 return dispatch("getForumThreads", { limit: 1000, offset: 0 });
               } else {
@@ -1014,20 +1013,20 @@ const actions = {
                   "notification/showError",
                   {
                     title: getTranslationLocale("error"),
-                    content: "Could not delete your comment!",
+                    content: "Could not delete your comment!"
                   },
                   { root: true }
                 );
                 return false;
               }
             })
-            .catch((reason) => {
+            .catch(reason => {
               commit("setProjectComments", []);
               commit(
                 "notification/showError",
                 {
                   title: "Error",
-                  content: "Could not delete your comment!",
+                  content: "Could not delete your comment!"
                 },
                 { root: true }
               );
@@ -1037,7 +1036,7 @@ const actions = {
         return false;
       }
     );
-  },
+  }
 };
 
 // methods that change the state
@@ -1075,13 +1074,13 @@ const mutations = {
   setProjectsForCategory(state, { category, projects }) {
     state.categoryProjects = {
       ...state.categoryProjects,
-      [category]: projects,
+      [category]: projects
     };
   },
   setPaginationForCategory(state, { category, pagination }) {
     state.categoryPagination = {
       ...state.categoryPagination,
-      [category]: pagination,
+      [category]: pagination
     };
   },
   setProjectCommentsOptions(state, options) {
@@ -1116,7 +1115,7 @@ const mutations = {
   },
   setLoadingProject(state, value) {
     state.loading = value;
-  },
+  }
 };
 
 export default {
@@ -1128,6 +1127,6 @@ export default {
   errors,
   modules: {
     builder,
-    menu,
-  },
+    menu
+  }
 };
