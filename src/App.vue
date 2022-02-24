@@ -66,6 +66,8 @@
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import { i18n } from "./i18n";
 import Loading from "@/components/Common/Loading.vue";
+import projects from "@/mixins/projects.js";
+
 // modules for managing gtag
 import { bootstrap } from "vue-gtag";
 
@@ -120,17 +122,20 @@ export default {
       ]
     };
   },
+  mixins: [projects],
   props: {},
   created() {
     // Check if Gtag for Google Analytics is enabled in the settings
     if (this.getGtag) {
       bootstrap().then(gtag => {});
     }
+    // method included into mixins.projects.js
+    this.loadCategoryProjects();
   },
   mounted() {
     // Check the screen size
     this.setScreenSize(window.innerWidth);
-    window.addEventListener("resize", this.setScreenSize);
+    window.addEventListener("resize", this.setScreenSize);    
   },
   computed: {
     ...mapState({

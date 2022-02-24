@@ -13,13 +13,23 @@ export default {
     return axios.get(process.env.BASE_API_URL + "project");
   },
 
-  getProjectsWithCategory(categoryShortName, page) {
+  /**
+   * Get all projects with a pagination system for the given category
+   * Can also get the featured projects with the category short name 'featured'
+   * @param categoryShortName
+   * @param page
+   * @param params:{orderBy, desc}
+   * @return {Promise<T | boolean>}
+   */
+  getProjectsWithCategory(categoryShortName, page, params) {
+    const orderby = params ? params.orderby : "created";
+    const desc = params ? params.desc : true;
     return axios.get(
       process.env.BASE_ENDPOINT_URL +
         "project/category/" +
         categoryShortName +
         (typeof page !== "undefined" && page !== 1 ? "/page/" + page : "") +
-        `/?orderby=created&desc=true`,
+        `/?orderby=${orderby}${desc ? "&desc=true" : ""}`,
       {
         data: {},
         withCredentials: true
