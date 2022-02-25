@@ -104,6 +104,8 @@ import projects from "@/mixins/projects.js";
 
 // Define the default category to show
 const DEFAULT_CATEGORY = { id: 1, short_name: "thinking", name: "Thinking" };
+// control remote and local projects source
+let isRemote = false;
 
 export default {
   name: "Discover",
@@ -139,6 +141,9 @@ export default {
     };
   },
   created() {
+    // Validate if projects already exist in store load it while update in background
+    isRemote = !!this.categoryProjects[DEFAULT_CATEGORY.short_name]
+    // default values
     this.sortBy = "newest";
     this.categoryCurrent = DEFAULT_CATEGORY.short_name;
     this.getCategory(DEFAULT_CATEGORY.short_name);
@@ -151,7 +156,7 @@ export default {
      * Method called when the paginator is clicked
      */
     async getPageProjects(page = 1) {
-      this.loadingProjects = true;
+      this.loadingProjects = !isRemote;
       const params = this.getSortParams();
       await this.getProjectsWithCategory({
         category: this.category,
@@ -160,6 +165,7 @@ export default {
       });
       this.categoryCurrentPage[this.category.id] = page;
       this.loadingProjects = false;
+      isRemote = false;
     },
     getCategory() {
       this.category =
