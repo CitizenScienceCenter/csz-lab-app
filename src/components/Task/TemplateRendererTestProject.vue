@@ -18,6 +18,7 @@
             </b-spinner>
           </div>
 
+          <!-- Task presenter section  -->
           <component
             class="mt-4"
             ref="presenter"
