@@ -6,29 +6,29 @@
     </b-card>
     <b-collapse id="google-doc-collapse" v-model="isGoogleDocVisible">
 
-      <p class="mt-4">{{ $t('tasks-import-localPDF-text1') }}:</p>
+      <p class="mt-4">{{ $t('taks-import-localPDF-text1') }}:</p>
 
       <ul v-if="project.info.task_category">
-        <li v-if="project.info.task_category=='image'"><b-link href='https://docs.google.com/spreadsheets/d/1LM5DUtMG65dtYzkvA7a5ymhUTLamzqZy2t6XmRJvK7g/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text2') }}</b-link></li>
-        <li v-else-if="project.info.task_category=='sound'"><b-link href='https://docs.google.com/spreadsheets/d/1ALbDzJwp7DCb8Mva3rHS4jWeWwZbskrownR2kDtTB3c/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text3') }}</b-link></li>
-        <li v-else-if="project.info.task_category=='video'"><b-link href='https://docs.google.com/spreadsheets/d/1QVKXYzza9H1oHeUFHpblc8L3aCxkEP4OF25Ptcvtntg/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text4') }}</b-link></li>
-        <li v-else-if="project.info.task_category=='pdf'"><b-link href='https://docs.google.com/spreadsheets/d/1vKeB93G1uyqBnmiDr5OHbT3VGF6FD--D65YQYY0iGNY/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text5') }}</b-link></li>
-        <li v-else><b-link  href='https://docs.google.com/spreadsheets/d/1hU7TDDZB4dVWbgXuaxeUw7yHj00fyy0N_7sMhcZ4Xng/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text6') }}</b-link></li>
+        <li v-if="project.info.task_category=='image'"><b-link href='https://docs.google.com/spreadsheets/d/1LM5DUtMG65dtYzkvA7a5ymhUTLamzqZy2t6XmRJvK7g/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text2') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='sound'"><b-link href='https://docs.google.com/spreadsheets/d/1ALbDzJwp7DCb8Mva3rHS4jWeWwZbskrownR2kDtTB3c/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text3') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='video'"><b-link href='https://docs.google.com/spreadsheets/d/1QVKXYzza9H1oHeUFHpblc8L3aCxkEP4OF25Ptcvtntg/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text4') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='pdf'"><b-link href='https://docs.google.com/spreadsheets/d/1vKeB93G1uyqBnmiDr5OHbT3VGF6FD--D65YQYY0iGNY/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text5') }}</b-link></li>
+        <li v-else><b-link  href='https://docs.google.com/spreadsheets/d/1hU7TDDZB4dVWbgXuaxeUw7yHj00fyy0N_7sMhcZ4Xng/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text6') }}</b-link></li>
       </ul>
       <ul v-else>
-         <li><b-link href='https://docs.google.com/spreadsheets/d/1LM5DUtMG65dtYzkvA7a5ymhUTLamzqZy2t6XmRJvK7g/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text2') }}</b-link></li>
-        <li><b-link href='https://docs.google.com/spreadsheets/d/1ALbDzJwp7DCb8Mva3rHS4jWeWwZbskrownR2kDtTB3c/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text3') }}</b-link></li>
-        <li><b-link href='https://docs.google.com/spreadsheets/d/1QVKXYzza9H1oHeUFHpblc8L3aCxkEP4OF25Ptcvtntg/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text4') }}</b-link></li>
-        <li><b-link href='https://docs.google.com/spreadsheets/d/1vKeB93G1uyqBnmiDr5OHbT3VGF6FD--D65YQYY0iGNY/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text5') }}</b-link></li>
-        <li><b-link  href='https://docs.google.com/spreadsheets/d/1hU7TDDZB4dVWbgXuaxeUw7yHj00fyy0N_7sMhcZ4Xng/edit#gid=0' target='_blank'>{{ $t('tasks-import-localcsv-text6') }}</b-link></li>
+         <li><b-link href='https://docs.google.com/spreadsheets/d/1LM5DUtMG65dtYzkvA7a5ymhUTLamzqZy2t6XmRJvK7g/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text2') }}</b-link></li>
+        <li><b-link href='https://docs.google.com/spreadsheets/d/1ALbDzJwp7DCb8Mva3rHS4jWeWwZbskrownR2kDtTB3c/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text3') }}</b-link></li>
+        <li><b-link href='https://docs.google.com/spreadsheets/d/1QVKXYzza9H1oHeUFHpblc8L3aCxkEP4OF25Ptcvtntg/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text4') }}</b-link></li>
+        <li><b-link href='https://docs.google.com/spreadsheets/d/1vKeB93G1uyqBnmiDr5OHbT3VGF6FD--D65YQYY0iGNY/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text5') }}</b-link></li>
+        <li><b-link  href='https://docs.google.com/spreadsheets/d/1hU7TDDZB4dVWbgXuaxeUw7yHj00fyy0N_7sMhcZ4Xng/edit#gid=0' target='_blank'>{{ $t('taks-import-localcsv-text6') }}</b-link></li>
       </ul>
       
       <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
         <b-form-group>
-          <b-input :placeholder="$t('tasks-import-googlespeadsheet-text1')" v-model="googleDocLink"></b-input>
+          <b-input :placeholder="$t('taks-import-googlespeadsheet-text1')" v-model="googleDocLink"></b-input>
         </b-form-group>
 
-        <b-button type="submit" variant="secondary">{{ $t('tasks-import-googlespeadsheet-text2') }}</b-button>
+        <b-button type="submit" variant="secondary">{{ $t('taks-import-googlespeadsheet-text2') }}</b-button>
       </b-form>
     </b-collapse>
   </div>

@@ -11,20 +11,22 @@
         >
           <img src="@/assets/logo-white.svg" />
         </a>
-        <!-- <a
+        &nbsp;
+        <a
           href="http://www.citizencyberlab.org/"
           class="home-link home-link-platform"
           target="_blank"
         >
           <img src="@/assets/CCL-logo-all-white.png" />
-        </a> -->
+        </a>
+        &nbsp;&nbsp;
       </div>
       <div class="logo-wrapper">
         <p v-if="this.$i18n.locale === 'en'">Supported by</p>
         <p v-else>Unterstützt durch</p>
         <img
-          alt="University of Zurich / ETH Zurich"
-          src="@/assets/uzh_eth_logos.svg"
+          alt="University of Zurich / ETH Zurich / University of Geneva"
+          src="@/assets/three-uni-logos.svg"
           @click="logoClick($event)"
         />
       </div>
@@ -35,10 +37,10 @@
         <b-button
           variant="border-transparent text-white"
           @click="openInNewTab('mailto:info@citizenscience.ch')"
-        >
+          >
           <i class="fas fa-envelope"></i>
           <span class="ml-1">info@citizenscience.ch</span>
-        </b-button>
+        </b-button        >
         <b-button
           variant="border-transparent text-white "
           @click="openInNewTab('tel:+41446342197')"
@@ -77,7 +79,7 @@
           >Privacy Policy & Terms of Use</a
         >
         -
-        <router-link :to="{ name: 'tools.projectbuilder' }"
+        <router-link :to="{ name: 'about' }"
           >Criteria for project publication</router-link
         >
       </p>
@@ -98,10 +100,12 @@ export default {
       var rect = e.target.getBoundingClientRect();
       var x = e.clientX - rect.left;
       var width = rect.width;
-      if (x < width / 2) {
+      if (x < width / 3) {
         this.openInNewTab("https://www.uzh.ch");
-      } else {
+      } else if (x > width / 3 && x < (width / 3) * 2) {
         this.openInNewTab("https://www.ethz.ch");
+      } else {
+        this.openInNewTab(" https://www.unige.ch/en");
       }
     }
   }

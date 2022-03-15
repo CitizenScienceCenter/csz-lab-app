@@ -46,8 +46,7 @@ const actions = {
         whatWhy: "",
         how: "",
         who: "",
-        keepTrack: "",
-        contribute: ""
+        keepTrack: ""
       });
       resolve();
     });

@@ -7,10 +7,10 @@
     <b-collapse id="online-csv-collapse" v-model="isOnlineCsvVisible">
       <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
         <b-form-group>
-          <b-input :placeholder="$t('tasks-import-publiccsv-text1')" v-model="csvLink"></b-input>
+          <b-input :placeholder="$t('taks-import-publiccsv-text1')" v-model="csvLink"></b-input>
         </b-form-group>
 
-        <b-button type="submit" variant="secondary"> {{ $t('tasks-import-publiccsv-text2') }}</b-button>
+        <b-button type="submit" variant="secondary"> {{ $t('taks-import-publiccsv-text2') }}</b-button>
       </b-form>
     </b-collapse>
   </div>

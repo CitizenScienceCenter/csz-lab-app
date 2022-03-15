@@ -137,6 +137,8 @@ export default {
       taskPresenterExists: false,
       taskPresenterLoaded: false,
       taskLoaded: false,
+      showMulti: false,
+      showProjectPassModal: true,
       modal: {
         mediaType: "image",
         mediaUrl: "#",
@@ -388,8 +390,6 @@ export default {
       const parentQuestion = questionList.find((x) => x.id == qid);
       return parentQuestion ? parentQuestion.type : null;
     },
-
-    // Validate if question has conditions associated. This function is called from the presenter
     isConditionEmpty(question) {
       return (
         Object.keys(question.condition).length === 0 ||

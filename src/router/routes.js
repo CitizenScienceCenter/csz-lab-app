@@ -1,13 +1,14 @@
+import Vue from "vue";
 import store from "@/store";
+import Router from "vue-router";
 import Home from "@/components/Home";
-// import Comments from "@/components/Forum/Comments";
+import Comments from "@/components/Forum/Comments";
 import Login from "@/components/Login";
 import Discover from "@/components/Discover";
-import CitizenScienceLogger from "@/components/Tools/CitizenScienceLogger";
-import ProjectBuilderHome from "@/components/Tools/ProjectBuilderHome";
 import Project from "@/components/Project/Project";
 import ProjectTest from "@/components/Project/ProjectTest";
 import ProjectBuilder from "@/components/Project/Builder/ProjectBuilder";
+import About from "@/components/About";
 import TaskBuilder from "@/components/Task/Builder/TaskBuilder";
 import TemplateRenderer from "@/components/Task/TemplateRenderer";
 import TemplateRendererTestProject from "@/components/Task/TemplateRendererTestProject";
@@ -26,7 +27,6 @@ import TaskPrioritySetting from "@/components/Project/Menu/TaskMenu/Settings/Tas
 import FlickrCallback from "@/components/Task/Builder/FlickrCallback";
 import ResetPassword from "@/components/ResetPassword";
 import RecoverPassword from "@/components/RecoverPassword";
-import NotFound from "@/components/NotFound";
 
 export const routes = [
   {
@@ -117,27 +117,9 @@ export const routes = [
         component: Discover
       },
       {
-        path: "tools",
-        redirect: "tools/cslogger",
-        component: {
-          render(c) {
-            return c("router-view");
-          }
-        },
-        children: [
-          {
-            path: "cslogger/:section?",
-            name: "tools.cslogger",
-            props: true,
-            component: CitizenScienceLogger
-          },
-          {
-            path: "projectbuilder/:section?",
-            name: "tools.projectbuilder",
-            props: true,
-            component: ProjectBuilderHome
-          }
-        ]
+        path: "about",
+        name: "about",
+        component: About
       },
       // TODO: uncomment when Forum for each particular projects is done
       //   {
@@ -197,7 +179,11 @@ export const routes = [
         component: ProjectTest,
         beforeEnter: (to, from, next) => {
           let fp = to.fullPath;
-          const url = fp.split("?share=");
+          // let short_name = fp.substring(
+          //   fp.lastIndexOf("project/") + 8,
+          //   fp.lastIndexOf("/test")
+          // );
+          let url = fp.split("?share=");
           if (url.length > 1) {
             store
               .dispatch("project/getProjectSharedLinkConfirmation", {
@@ -217,8 +203,6 @@ export const routes = [
                   next({ name: "home" });
                 }
               });
-          } else if (from.name === "project.task.presenter.test") {
-            next();
           } else {
             next({ name: "home" });
           }
@@ -450,11 +434,6 @@ export const routes = [
         name: "flickr.callback",
         props: true,
         component: FlickrCallback
-      },
-      {
-        // catch all NotFound
-        path: "*",
-        component: NotFound
       }
     ]
   }

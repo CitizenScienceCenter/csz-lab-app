@@ -41,12 +41,6 @@ export default {
   created () {
     this.getAccountProfile()
   },
-  mounted() {
-    // Add scroll event listener
-    setTimeout(function() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 2);
-  },
   methods: {
     ...mapActions('user', [
       'getAccountProfile'

@@ -1,43 +1,6 @@
 <template>
   <b-container>
     <h1 class="mt-4 text-center centered">{{ $t("discover-header") }}</h1>
-    <!-- Filter section -->
-    <b-row class="justify-content-between">
-      <b-col cols="12" lg="8">
-        <b-form inline>
-          <label for="category_select" class="mr-1">Category</label>
-          <b-select
-            id="category_select"
-            size="sm"
-            v-model="categoryCurrent"
-            value-field="short_name"
-            text-field="name"
-            :options="categories"
-            @change="getCategory()"
-            class="mr-lg-4"
-          ></b-select>
-          <label for="sort_select" class="mr-1 mt-2">Sort by</label>
-          <b-select
-            id="sort_select"
-            size="sm"
-            v-model="sortBy"
-            :options="sortOptions"
-            @change="getPageProjects(categoryCurrentPage[category.id])"
-          ></b-select>
-        </b-form>
-      </b-col>
-      <!-- Total of projects section -->
-      <b-col cols="12" lg="4" class="text-right">
-        <small
-          class="font-weight-bold pt-0 text-primary"
-          v-if="getCategoryTotal >= 0"
-        >
-          {{ totalDescription }}
-        </small>
-      </b-col>
-    </b-row>
-    <!-- Projects section -->
-    <!-- Spinner section -->
     <b-row class="justify-content-center mt-4" v-if="loadingProjects">
       <b-col class="text-center">
         <b-spinner
@@ -48,11 +11,30 @@
         </b-spinner>
       </b-col>
     </b-row>
-    <!-- The list of projects -->
-    <b-row class="justify-content-center" v-else>
+    <b-row class="justify-content-center mt-4" v-else>
       <b-col>
-        <div style="outline: none;">
+        <h2 class="text-center">
+          {{ globalPagination.total }} {{ $t("projects-c") }}
+        </h2>
+        <!-- A tab for each category 
+          <b-tabs pills align="center">
+            <b-tab
+              v-for="category in allCategories"
+              :key="category.id"
+              :title="category.name + (category.short_name in categoryPagination ? ' (' + categoryPagination[category.short_name].total + ')' : '')"
+              style="outline: none">
+            -->
+
+        <div
+          v-for="category in allCategories.filter((cat) => {
+            return cat.name == 'Thinking';
+          })"
+          :key="category.id"
+          style="outline: none;"
+        >
+          <!-- The list of projects -->
           <b-row>
+            <!--<p class="text-center m-3" v-if="!categoryProjects[category.short_name] || categoryProjects[category.short_name].length < 1">{{ $t('discover-category-no-project') }}</p>-->
             <b-col
               :key="project.id"
               v-for="project in categoryProjects[category.short_name]"
@@ -72,11 +54,11 @@
               <b-pagination
                 v-if="
                   categoryPagination[category.short_name] &&
-                    categoryPagination[category.short_name].total >
-                      categoryPagination[category.short_name].per_page
+                  categoryPagination[category.short_name].total >
+                    categoryPagination[category.short_name].per_page
                 "
                 v-model="categoryCurrentPage[category.id]"
-                @change="getPageProjects($event)"
+                @change="pageChange($event, category)"
                 align="center"
                 :per-page="
                   category.short_name in categoryPagination
@@ -92,6 +74,10 @@
             </b-col>
           </b-row>
         </div>
+        <!--  
+            </b-tab>
+          </b-tabs> 
+          -->
       </b-col>
     </b-row>
   </b-container>
@@ -100,53 +86,33 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import ProjectCard from "./Common/ProjectCard";
-import projects from "@/mixins/projects.js";
-
-// Define the default category to show
-const DEFAULT_CATEGORY = { id: 1, short_name: "thinking", name: "Thinking" };
-// control remote and local projects source
-let isRemote = false;
 
 export default {
   name: "Discover",
   components: {
-    "app-project-card": ProjectCard
+    "app-project-card": ProjectCard,
   },
-  metaInfo: function() {
+  metaInfo: function () {
     return {
       title: "Discover",
       meta: [
         {
           property: "og:title",
           content: "Discover",
-          template: "%s | " + this.$t("site-title")
-        }
-      ]
-    };
-  },
-  mixins: [projects],
-  data: () => {
-    return {
-      categoryCurrentPage: {},
-      categoryCurrent: "",
-      loadingProjects: false,
-      category: null,
-      sortBy: "",
-      sortOptions: [
-        { text: "Newest", value: "newest" },
-        { text: "Oldest", value: "oldest" },
-        { text: "A to Z", value: "a_to_z" },
-        { text: "Z to A", value: "z_to_a" }
-      ]
+          template: "%s | " + this.$t("site-title"),
+        },
+      ],
     };
   },
   created() {
-    // Validate if projects already exist in store load it while update in background
-    isRemote = !!this.categoryProjects[DEFAULT_CATEGORY.short_name]
-    // default values
-    this.sortBy = "newest";
-    this.categoryCurrent = DEFAULT_CATEGORY.short_name;
-    this.getCategory(DEFAULT_CATEGORY.short_name);
+    this.loadData();
+  },
+  data: () => {
+    return {
+      categoryCurrentPage: {},
+      allCategories: [],
+      loadingProjects: false,
+    };
   },
   methods: {
     ...mapActions("project", ["getCategories", "getProjectsWithCategory"]),
@@ -155,58 +121,35 @@ export default {
      * Loads the projects in the specified page for the given category
      * Method called when the paginator is clicked
      */
-    async getPageProjects(page = 1) {
-      this.loadingProjects = !isRemote;
-      const params = this.getSortParams();
-      await this.getProjectsWithCategory({
-        category: this.category,
-        page: page,
-        params: params
-      });
-      this.categoryCurrentPage[this.category.id] = page;
+    pageChange(page, category) {
+      this.getProjectsWithCategory({ category, page });
+    },
+    async loadData() {
+      this.loadingProjects = true;
+      // all categories are loaded during the creation to have all the pagination systems
+      const remoteCategories = await this.getCategories();
+      this.allCategories = await [
+        { id: 0, short_name: "featured", name: "Featured" },
+        ...remoteCategories,
+      ];
+
+      await Promise.all(
+        this.allCategories.map(async (category) => {
+          this.categoryCurrentPage[category.id] = 1;
+          await this.getProjectsWithCategory({ category });
+        })
+      );
       this.loadingProjects = false;
-      isRemote = false;
     },
-    getCategory() {
-      this.category =
-        this.categories.find(x => x.short_name === this.categoryCurrent) ||
-        DEFAULT_CATEGORY;
-      this.getPageProjects(1);
-    },
-    getSortParams() {
-      switch (this.sortBy) {
-        case "oldest":
-          return { orderby: "created", desc: false };
-        case "a_to_z":
-          return { orderby: "name", desc: false };
-        case "z_to_a":
-          return { orderby: "name", desc: true };
-        default:
-          return { orderby: "created", desc: true };
-      }
-    }
   },
   computed: {
     ...mapState("project", [
       "categories",
       "categoryProjects",
-      "categoryPagination"
+      "categoryPagination",
     ]),
     ...mapGetters("project", ["projects", "globalPagination"]),
-    getCategoryTotal() {
-      const cat_id = this.category
-        ? this.category.short_name
-        : DEFAULT_CATEGORY.short_name;
-      return this.categoryPagination[cat_id]
-        ? this.categoryPagination[cat_id].total
-        : -1;
-    },
-    totalDescription() {
-      return `${this.getCategoryTotal} of ${
-        this.globalPagination.total
-      } ${this.$t("projects-c")} in ${this.category.name} category`;
-    }
-  }
+  },
 };
 </script>
 

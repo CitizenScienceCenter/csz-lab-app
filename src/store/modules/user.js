@@ -423,7 +423,7 @@ const actions = {
     commit('notification/showLoading', 'user/updateAvatar', { root: true })
     return dispatch('getProfileUpdateOptions', user).then(response => {
       if (response) {
-        return api.updateAvatar(response.form.csrf, user.name, avatar).then(value => {
+        return api.updateAvatar(state.profileUpdateOptions.form.csrf, user.name, avatar).then(value => {
           if ('status' in value.data && value.data.status === 'error') {
             commit('notification/showError', {
               title: getTranslationLocale('error'), 

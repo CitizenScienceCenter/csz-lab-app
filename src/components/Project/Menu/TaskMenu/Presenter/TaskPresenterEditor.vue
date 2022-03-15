@@ -13,8 +13,6 @@
             ref="btn-preview"
             variant="secondary"
             @click="previewPresenter"
-            v-show="!isCompletedTasks"
-            :disabled="!hasProjectTasks"
             >{{ $t("project-menu-task-presenter-preview") }}</b-btn
           >
           <b-btn
@@ -148,10 +146,9 @@ export default {
     }
   },
   computed: {
-    ...mapState("task", ["taskPresenter", "usingTemplate", "projectTasks"]),
+    ...mapState("task", ["taskPresenter", "usingTemplate"]),
     ...mapState("project", {
-      project: state => state.selectedProject,
-      stats: state => state.selectedProjectStats
+      project: state => state.selectedProject
     }),
 
     items() {
@@ -171,17 +168,6 @@ export default {
           active: false
         }
       ];
-    },
-
-    hasProjectTasks() {
-      return this.projectTasks.length > 0;
-    },
-
-    isCompletedTasks() {
-      return (
-        this.project.published &&
-        this.stats.n_completed_tasks === this.stats.n_tasks
-      );
     }
   },
   beforeMount() {

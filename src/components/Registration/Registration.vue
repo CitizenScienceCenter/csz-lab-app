@@ -67,36 +67,14 @@
                 :state="passwordsValid"
                 :invalid-feedback="passwordFeedback"
               >
-                <b-row>
-                  <b-col cols="10" md="11">
-                    <b-input
-                      id="password"
-                      :type="getPasswordVisibility"
-                      v-model="form.password"
-                      @input="fieldUpdated('password')"
-                      :placeholder="$t('register-password-placeholder')"
-                    >
-                    </b-input>
-                  </b-col>
-                  <b-col cols="1">
-                    <b-button
-                      variant="link"
-                      class="text-secondary no-active px-0"
-                      v-show="!isVisiblePass"
-                      @click="showPassword(true)"
-                    >
-                      <i class="fas fa-eye fa-lg"></i>
-                    </b-button>
-                    <b-button
-                      variant="link"
-                      class="text-secondary no-active px-0"
-                      v-show="isVisiblePass"
-                      @click="showPassword()"
-                    >
-                      <i class="fas fa-eye-slash fa-lg"></i>
-                    </b-button>
-                  </b-col>
-                </b-row>
+                <b-input
+                  id="password"
+                  type="password"
+                  v-model="form.password"
+                  @input="fieldUpdated('password')"
+                  :placeholder="$t('register-password-placeholder')"
+                >
+                </b-input>
               </b-form-group>
 
               <!-- Password confirmation -->
@@ -106,38 +84,16 @@
                 :state="passwordsValid"
                 :invalid-feedback="passwordFeedback"
               >
-                <b-row>
-                  <b-col cols="10" md="11">
-                    <b-input
-                      id="password-confirmation"
-                      :type="getPasswordVisibility"
-                      v-model="form.passwordConfirmation"
-                      @input="fieldUpdated('password')"
-                      :placeholder="
-                        $t('register-password-confirmation-placeholder')
-                      "
-                    >
-                    </b-input>
-                  </b-col>
-                  <b-col cols="1">
-                    <b-button
-                      variant="link"
-                      class="text-secondary no-active px-0"
-                      v-show="!isVisiblePass"
-                      @click="showPassword(true)"
-                    >
-                      <i class="fas fa-eye fa-lg"></i>
-                    </b-button>
-                    <b-button
-                      variant="link"
-                      class="text-secondary no-active px-0"
-                      v-show="isVisiblePass"
-                      @click="showPassword()"
-                    >
-                      <i class="fas fa-eye-slash fa-lg"></i>
-                    </b-button>
-                  </b-col>
-                </b-row>
+                <b-input
+                  id="password-confirmation"
+                  type="password"
+                  v-model="form.passwordConfirmation"
+                  @input="fieldUpdated('password')"
+                  :placeholder="
+                    $t('register-password-confirmation-placeholder')
+                  "
+                >
+                </b-input>
               </b-form-group>
 
               <b-button class="mt-3" type="submit" variant="primary">
@@ -178,7 +134,6 @@ export default {
   },
   data: () => {
     return {
-      isVisiblePass: false,
       form: {
         fullname: "",
         username: "",
@@ -267,11 +222,6 @@ export default {
 
     fieldUpdated(fieldName) {
       this.firstInteractions[fieldName] = false;
-    },
-
-    // Control the password visibility
-    showPassword(value = false) {
-      this.isVisiblePass = value;
     }
   },
   computed: {
@@ -311,11 +261,6 @@ export default {
       } else {
         return this.$t("register-error-form-password-match");
       }
-    },
-
-    // show or hide password and confirm password
-    getPasswordVisibility() {
-      return this.isVisiblePass ? "text" : "password";
     }
   }
 };

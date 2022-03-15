@@ -31,7 +31,7 @@
     </b-row>
 
     <b-row class="mt-4">
-      <!-- FIXME: Temporal fix Not working, validate if materialJobs, but show cleaning cache message -->
+      <!-- TODO: Temporal fix Not working, validate if materialJobs, but show cleaning cache message -->
       <b-col
         md="9"
         v-if="
@@ -116,7 +116,7 @@
         </div>
         <div v-else>
           <p v-html="$t('task-job-builder-info')" class="text-muted small"></p>
-          <!-- FIXME: Temporal fix, validate if materialJobs, but show cleaning cache message -->
+          <!-- TODO: Temporal fix, validate if materialJobs, but show cleaning cache message -->
           <p
             v-html="$t('task-job-builder-info-clean-cache')"
             class="text-primary small"

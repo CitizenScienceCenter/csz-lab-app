@@ -8,29 +8,22 @@ export const router = new VueRouter({
   routes: routes,
   mode: "history"
 });
-const protectedRoutes = [
-  "profile",
-  "profile.edition",
-  "project.task.importers",
-  "project.task.exporters",
-  "project.task.settings",
-  "project.task.settings.delete",
-  "project.task.settings.scheduler",
-  "project.task.settings.redundancy",
-  "project.task.settings.priority",
-  "project.task.presenter.settings",
-  "project.task.presenter.editor",
-  "project.tasks.list",
-  "project.builder.name",
-  "project.builder.information",
-  "project.builder.story",
-  "project.builder.end",
-  "task.builder.material",
-  "task.builder.job",
-  "task.builder.template",
-  "task.builder.source",
-  "task.builder.summary",
-  "flickr.callback"
+
+const publicRoutes = [
+  "home",
+  "login",
+  "register",
+  "logout",
+  "discover",
+  "about",
+  "forum",
+  "project",
+  "project.test",
+  "project.task.presenter",
+  "project.task.presenter.test",
+  "reset-password",
+  "recover-password",
+  "register-confirmation"
 ];
 
 router.beforeEach(async (to, from, next) => {
@@ -55,7 +48,9 @@ router.beforeEach(async (to, from, next) => {
     i18n.locale = language;
 
     // validate for protected routes
-    if (protectedRoutes.includes(to.name)) {
+    if (publicRoutes.includes(to.name)) {
+      next();
+    } else {
       if (store.state.user.logged) {
         next();
       } else {

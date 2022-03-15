@@ -3,9 +3,9 @@
     <b-form-group>
       <!-- Results file in CSV format -->
       <div class="mb-3">
-        <label>{{ $t("tasks-import-cslogger-csv-label") }}</label>
+        <label>{{ $t("taks-import-cslogger-csv-label") }}</label>
         <b-file
-          :placeholder="$t('tasks-import-cslogger-csv-placeholder')"
+          :placeholder="$t('taks-import-cslogger-csv-placeholder')"
           accept=".csv"
           v-model="csvFile"
           class="mb-1"
@@ -16,7 +16,7 @@
         <!-- Valid csv message in green color -->
         <span class="text-secondary" v-show="valid.csv">
           <i class="fas fa-check-circle"></i>
-          <small> {{ $t("tasks-import-cslogger-valid") }}</small>
+          <small> {{ $t("taks-import-cslogger-valid") }}</small>
         </span>
         <!-- Invalid csv message in red color -->
         <span class="text-primary" v-show="!valid.csv && valid.csv != null">
@@ -31,14 +31,15 @@
 
       <!-- Media files -->
       <div class="mb-4">
-        <label>{{ $t("tasks-import-cslogger-media-label") }}</label>
+        <label>{{ $t("taks-import-cslogger-media-label") }}</label>
         <b-file
-          :placeholder="$t('tasks-import-cslogger-media-placeholder')"
+          :placeholder="$t('taks-import-cslogger-media-placeholder')"
           multiple
           :accept="allowed_files"
           v-model="mediaFiles"
           class="mb-1"
           browse-text="Search"
+          required
           :state="validateMedia"
           :disabled="!csvFile && !validateCSV"
         >
@@ -60,10 +61,10 @@
             </b-badge>
           </template>
         </b-file>
-        <!-- Valid media message in secondary color -->
+        <!-- Valid media message in green color -->
         <span class="text-secondary" v-show="valid.media">
           <i class="fas fa-check-circle"></i>
-          <small> {{ $t("tasks-import-cslogger-valid") }}</small>
+          <small> {{ $t("taks-import-cslogger-valid") }}</small>
         </span>
         <!-- Invalid media message in red color -->
         <span class="text-primary" v-show="!valid.media && valid.media != null">
@@ -79,20 +80,21 @@
         </small>
         <!-- Hint for csvFile null for media field -->
         <small class="text-muted" v-if="!csvFile">
-          <i>{{ $t("tasks-import-cslogger-csv-loaded") }}</i>
+          <i>{{ $t("taks-import-cslogger-csv-loaded") }}</i>
         </small>
       </div>
-      <span class="text-primary" v-show="no_tasks">
-        <i class="fas fa-exclamation-triangle"></i>
-        <small>{{ $t("tasks-import-cslogger-no-tasks") }}</small>
-      </span>
-      <!-- ******* This is hiden and checked by default ******-->
+      <!-- TODO: pending translations -->
       <!-- Partial checkbox -->
-      <!-- <div class="mb-4">
+      <div class="mb-4">
         <b-form-checkbox v-model="partial">
-          {{ $t("tasks-import-cslogger-partial-load") }}
+          {{ $t("taks-import-cslogger-partial-load") }}
         </b-form-checkbox>
-      </div> -->
+        <!-- Error message for no task to create-->
+        <span class="text-primary" v-show="no_tasks">
+          <i class="fas fa-exclamation-triangle"></i>
+          <small>{{ $t("taks-import-cslogger-no-tasks") }}</small>
+        </span>
+      </div>
     </b-form-group>
 
     <!-- Continue button-->
@@ -107,12 +109,12 @@
       </b-button>
       <!-- spinner and message for sending files-->
       <span class="text-primary ml-2 smooth" v-if="validating">
-        {{ $t("tasks-import-cslogger-validating") }}
+        {{ $t("taks-import-cslogger-validating") }}
         <i class="fas fa-spinner fa-pulse"></i>
       </span>
     </div>
 
-    <!-- csv issues-->
+    <!-- Files not included into csv-->
     <b-card
       no-body
       overlay
@@ -120,22 +122,21 @@
       class="mt-4"
       v-if="extra_media.length + missing_media.length > 0"
     >
-      <b-card-header header-border-variant="danger" class="p-0">
+      <b-card-header header-border-variant="danger" class="p-0 ">
         <span class="ml-2 font-weight-bold text-primary">
-          {{ $t("tasks-import-cslogger-failed-files-title") }}
+          {{ $t("taks-import-cslogger-failed-files-title") }}
         </span>
       </b-card-header>
 
       <b-card-body class="overflow-body">
-        <!-- files inclided in csv, but not in media -->
         <b-card-text v-if="missing_media.length > 0">
           <b-card-sub-title class="d-flex justify-content-between mb-2">
             <small class="text-secondary font-weight-bold">
-              {{ $t("tasks-import-cslogger-failed-files-missing") }}
+              {{ $t("taks-import-cslogger-failed-files-missing") }}
             </small>
             <small class="font-weight-bold">
               {{ missing_media.length }}
-              {{ $t("tasks-import-cslogger-files-label") }}
+              {{ $t("taks-import-cslogger-files-label") }}
             </small>
           </b-card-sub-title>
           <ul>
@@ -149,15 +150,14 @@
           </ul>
         </b-card-text>
         <hr v-if="extra_media.length > 0 && missing_media.length > 0" />
-        <!-- files inclided in media, but not in csv -->
         <b-card-text v-if="extra_media.length > 0">
           <b-card-sub-title class="d-flex justify-content-between mb-2">
             <small class="text-secondary font-weight-bold">
-              {{ $t("tasks-import-cslogger-failed-files-extra") }}
+              {{ $t("taks-import-cslogger-failed-files-extra") }}
             </small>
             <small class="font-weight-bold">
               {{ extra_media.length }}
-              {{ $t("tasks-import-cslogger-files-label") }}
+              {{ $t("taks-import-cslogger-files-label") }}
             </small>
           </b-card-sub-title>
           <ul>
@@ -200,8 +200,8 @@ export default {
       missing_media: [],
       qfiles_onscreen: 0,
       total_size: 0,
-      partial: true,
-      no_tasks: false,
+      partial: false,
+      no_tasks: false
     };
   },
   created() {
@@ -212,7 +212,7 @@ export default {
   },
   computed: {
     ...mapState("project", {
-      project: (state) => state.selectedProject,
+      project: state => state.selectedProject
     }),
     ...mapState("task/builder", ["sources"]),
     validateCSV() {
@@ -226,15 +226,14 @@ export default {
       return null;
     },
     isValid() {
-      // Media could be null or true
-      return this.valid.csv && this.valid.media != false;
+      return Object.values(this.valid).every(x => x);
     },
     file_names() {
       // Formatting the file names to show in input field
       const aux = this;
       const file_names = this.mediaFiles
         .slice(0, this.qfiles_onscreen)
-        .map(function (x) {
+        .map(function(x) {
           // if file name is long
           if (x.name.length > 10) {
             const ext = aux.getExt(x.name);
@@ -244,20 +243,13 @@ export default {
           return x.name;
         });
       return file_names;
-    },
-    responses() {
-      return this.json_csvFile
-        .filter((file) => "response" in file)
-        .map(function (x) {
-          return x.response;
-        });
-    },
+    }
   },
   methods: {
     ...mapMutations({
       setTaskSourceContent: "task/builder/setTaskSourceContent",
       setStep: "task/builder/setStep",
-      setTaskSource: "task/builder/setTaskSource",
+      setTaskSource: "task/builder/setTaskSource"
     }),
 
     onSubmit() {
@@ -274,13 +266,11 @@ export default {
         const dataObj = {
           n_tasks: number_of_tasks,
           // filter only the media included into groups only
-          files: !this.mediaFiles
-            ? []
-            : this.mediaFiles.filter((x) =>
-                tasks.some((t) => t.response.includes(x.name))
-              ),
+          files: this.mediaFiles.filter(x =>
+            tasks.some(t => t.response.includes(x.name))
+          ),
           csv: this.csvFile,
-          partial: this.partial,
+          partial: this.partial
         };
         this.setTaskSourceContent(dataObj);
         this.setTaskSource(this.sources.cslogger);
@@ -293,45 +283,35 @@ export default {
     // Validate files
     async validate(ext, size) {
       this.validating = true;
+      this.extra_media = [];
+      this.missing_media = [];
       this.valid[ext] = null;
       this.error_message[ext] = null;
 
       // csv file validation
       if (ext === "csv") {
-        this.valid = { ...{ csv: null, media: null } };
-        this.error_message = { ...{ csv: null, media: null } };
-        // validate type of file
         if (this.getExt(this.csvFile.name) === "csv") {
           this.valid[ext] = true;
-          // validate size of file
           if (this.csvFile.size > size) {
             this.valid[ext] = false;
             this.error_message[ext] = this.$t(
-              "tasks-import-cslogger-invalid-size"
+              "taks-import-cslogger-invalid-size"
             );
           } else {
             // convert CSV file into json format
             this.json_csvFile = await csvToJson(this.csvFile);
-            this.getMediaIssues(undefined, this.responses);
-            // validate if csv contains external files as csv_responses
-            this.validating = this.missing_media.length > 0;
           }
         } else {
           this.valid[ext] = false;
           this.error_message[ext] = this.$t(
-            "tasks-import-cslogger-invalid-format"
+            "taks-import-cslogger-invalid-format"
           );
         }
       }
-
       // media multiple files validation
       if (ext === "media") {
-        if (this.mediaFiles.length == 0) {
-          return;
-        }
-        // validate media file types allowed
         if (
-          this.mediaFiles.every((x) =>
+          this.mediaFiles.every(x =>
             this.allowed_files.includes(this.getExt(x.name))
           )
         ) {
@@ -344,12 +324,28 @@ export default {
           if (this.total_size > size) {
             this.valid[ext] = false;
             this.error_message[ext] = this.$t(
-              "tasks-import-cslogger-invalid-size"
+              "taks-import-cslogger-invalid-size"
             );
           } else {
             try {
-              const media_names = this.mediaFiles.map((x) => x.name);
-              this.getMediaIssues(media_names, this.responses);
+              const media_names = this.mediaFiles.map(x => x.name);
+              const csv_responses = this.json_csvFile
+                .filter(file => "response" in file)
+                .map(function(x) {
+                  return x.response;
+                });
+              // get the files not included into CSV
+              this.extra_media = media_names.filter(
+                x => !csv_responses.some(y => y.includes(x))
+              );
+              // get the files not included into MEDIA
+              this.missing_media = csv_responses
+                .filter(
+                  x =>
+                    x.includes("filename") &&
+                    !media_names.some(y => x.includes(y))
+                )
+                .map(name => name.substr(name.lastIndexOf(":") + 1).trim());
             } catch (error) {
               console.log(error);
             } finally {
@@ -359,7 +355,7 @@ export default {
         } else {
           this.valid[ext] = false;
           this.error_message[ext] = this.$t(
-            "tasks-import-cslogger-invalid-format"
+            "taks-import-cslogger-invalid-format"
           );
         }
       }
@@ -371,13 +367,12 @@ export default {
         // Return only the group with at least one resource available as response
         return Object.values(groups);
       } else {
-        // Discard the media files which belongs to an uncompleted group
         const discard_groupId = new Set(
           this.missing_media.map(
-            (x) => this.json_csvFile.find((row) => row.response.includes(x)).id
+            x => this.json_csvFile.find(row => row.response.includes(x)).id
           )
         );
-        discard_groupId.forEach((x) => delete groups[x]);
+        discard_groupId.forEach(x => delete groups[x]);
         return Object.values(groups);
       }
     },
@@ -390,23 +385,7 @@ export default {
       if (getWidthScreen() < 1020) return 2;
       if (getWidthScreen() < 1280) return 3;
       return 4;
-    },
-    getMediaIssues(media_names = [], csv_responses) {
-      this.extra_media = [];
-      this.missing_media = [];
-      media_names = media_names || [];
-      // get the files not included into CSV
-      this.extra_media = media_names.filter(
-        (x) => !csv_responses.some((y) => y.includes(x))
-      );
-      // get the files not included into MEDIA
-      this.missing_media = csv_responses
-        .filter(
-          (x) =>
-            x.includes("filename") && !media_names.some((y) => x.includes(y))
-        )
-        .map((name) => name.substr(name.lastIndexOf(":") + 1).trim());
-    },
+    }
   },
   watch: {
     csvFile() {
@@ -418,8 +397,8 @@ export default {
         this.qfiles_onscreen = this.getSize();
         this.validate("media", MAX_SIZE_MEDIA);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

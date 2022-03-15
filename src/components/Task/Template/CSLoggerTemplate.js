@@ -61,6 +61,7 @@ const component = {
               class="mb-2"
               align="center"
               border-variant="light"
+              :sub-title="resource.prompt"
             >
               <label>
                 {{resource.prompt}}
@@ -68,7 +69,6 @@ const component = {
               <media-presenter
                 :context="pybossa"
                 :link="resource.url"
-                :options="resource.options"
                 :loading="!pybossa.taskLoaded">
               </media-presenter>
             </b-card>
@@ -145,6 +145,9 @@ const component = {
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
+    getMime(file_link) {
+      return this.pybossa.getFileType(file_link);
+    }
   },
 
   computed: {
@@ -155,9 +158,14 @@ const component = {
       /* Validate type of response and discard the invalid ones */
       const responses =
         this.task && this.task.info
-          ? JSON.parse(this.task.info.csloggerTasks.replaceAll(NaN, null))
+          ? JSON.parse(this.task.info.csloggerTasks)
           : [];
       return responses
+        .map(res => {
+          res["type"] = this.pybossa.validateResponse(res.url);
+          return res;
+        })
+        .filter(valid => valid.type);
     },
     context() {
       return this;

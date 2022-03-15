@@ -7,7 +7,7 @@
       </b-badge>
       
       <b-row class="row text-center mb-4">
-        <b-col class="col-image d-none d-md-block">
+        <b-col class="col-image">
           <!--<b-card-img-lazy v-if="project.info.thumbnail_url" :src="project.info.thumbnail_url"></b-card-img-lazy>
           <b-card-img-lazy v-else :src="'https://dummyimage.com/334x250/777777/fff&text=' + project.name"></b-card-img-lazy>-->
           <div v-if="project.info.thumbnail_url">

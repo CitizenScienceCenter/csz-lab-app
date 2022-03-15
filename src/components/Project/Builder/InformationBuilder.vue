@@ -17,7 +17,7 @@
           </h1>
           <b-form-group
             id="fieldset-description"
-            :label="$t('information-builder-short-description')"
+            :label="$t('information-builder-short-descripton')"
             label-for="Description"
             :valid-feedback="validFeedback"
             :invalid-feedback="invalidFeedback"
