@@ -7,12 +7,12 @@
     <b-collapse id="flickr-collapse" v-model="isFlickrVisible">
       <div class="mt-4">
 
-        <b-form-group v-if="albums.length === 0" :description="$t('taks-import-flickr-text1a')">
-          <b-btn :href="baseUrl + 'flickr/?next=' + callbackUrl" target="_blank" @click="listenForAccess"> {{ $t('taks-import-flickr-text1') }} </b-btn>
+        <b-form-group v-if="albums.length === 0" :description="$t('tasks-import-flickr-text1a')">
+          <b-btn :href="baseUrl + 'flickr/?next=' + callbackUrl" target="_blank" @click="listenForAccess"> {{ $t('tasks-import-flickr-text1') }} </b-btn>
         </b-form-group>
 
-        <b-form-group v-else :description="$t('taks-import-flickr-text2a')">
-          <b-btn variant="warning" @click="revokeFlickerAccess">{{ $t('taks-import-flickr-text2') }}</b-btn>
+        <b-form-group v-else :description="$t('tasks-import-flickr-text2a')">
+          <b-btn variant="warning" @click="revokeFlickerAccess">{{ $t('tasks-import-flickr-text2') }}</b-btn>
         </b-form-group>
 
         <b-row>
@@ -21,7 +21,7 @@
               <h5>{{ album.title }} ({{ album.photos }})</h5>
               <b-img :src="album.thumbnail_url" alt="Album thumbnail"></b-img>
               <div class="text-center mt-2">
-                <b-btn variant="secondary" @click="onSubmit(album.id)">{{ $t('taks-import-flickr-text3') }}</b-btn>
+                <b-btn variant="secondary" @click="onSubmit(album.id)">{{ $t('tasks-import-flickr-text3') }}</b-btn>
               </div>
             </b-media>
           </b-col>
@@ -29,7 +29,7 @@
 
         <p class="font-weight-bold">{{ $t('or-c') }}</p>
 
-        <b-form-group :description="$t('taks-import-flickr-text4')">
+        <b-form-group :description="$t('tasks-import-flickr-text4')">
 
           <b-form-group label="Album ID">
             <b-form-input v-model="albumId" placeholder="Flickr album ID"></b-form-input>
@@ -96,7 +96,7 @@ export default {
       } else {
         this.showError({
           title: this.$t('error-incomplete-form'),
-          content: this.$t('taks-import-flickr-text5-error')
+          content: this.$t('tasks-import-flickr-text5-error')
         })
         return false
       }

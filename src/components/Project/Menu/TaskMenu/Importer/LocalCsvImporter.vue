@@ -6,27 +6,27 @@
     </b-card>
     <b-collapse id="csv-collapse" v-model="isLocalCsvVisible">
 
-      <p class="mt-4">{{ $t('taks-import-localcsv-text1') }}:</p>
+      <p class="mt-4">{{ $t('tasks-import-localcsv-text1') }}:</p>
       <ul v-if="project.info.task_category">
-        <li v-if="project.info.task_category=='image'"><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('taks-import-localcsv-text2') }}</b-link></li>
-        <li v-else-if="project.info.task_category=='sound'"><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
-        <li v-else-if="project.info.task_category=='video'"><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
-        <li v-else-if="project.info.task_category=='pdf'"><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>
+        <li v-if="project.info.task_category=='image'"><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('tasks-import-localcsv-text2') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='sound'"><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('tasks-import-localcsv-text3') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='video'"><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('tasks-import-localcsv-text4') }}</b-link></li>
+        <li v-else-if="project.info.task_category=='pdf'"><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('tasks-import-localcsv-text5') }}</b-link></li>
         <li v-else-if="project.info.task_category=='tweet'"></li>        
       </ul>
       <ul v-else>
-        <li ><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('taks-import-localcsv-text2') }}</b-link></li>
-        <li><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('taks-import-localcsv-text3') }}</b-link></li>
-        <li><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('taks-import-localcsv-text4') }}</b-link></li>
-        <li><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('taks-import-localcsv-text5') }}</b-link></li>
+        <li ><b-link :href="csvSamples.image" download="image-sample.csv">{{ $t('tasks-import-localcsv-text2') }}</b-link></li>
+        <li><b-link :href="csvSamples.sound" download="sound-sample.csv">{{ $t('tasks-import-localcsv-text3') }}</b-link></li>
+        <li><b-link :href="csvSamples.video" download="video-sample.csv">{{ $t('tasks-import-localcsv-text4') }}</b-link></li>
+        <li><b-link :href="csvSamples.pdf" download="pdf-sample.csv">{{ $t('tasks-import-localcsv-text5') }}</b-link></li>
       </ul>
 
       <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
         <b-form-group>
-          <b-file :placeholder="$t('taks-import-localcsv-text7')" accept=".csv" v-model="csvFile"></b-file>
+          <b-file :placeholder="$t('tasks-import-localcsv-text7')" accept=".csv" v-model="csvFile"></b-file>
         </b-form-group>
 
-        <b-button type="submit" variant="secondary">{{ $t('taks-import-localcsv-text8') }}</b-button>
+        <b-button type="submit" variant="secondary">{{ $t('tasks-import-localcsv-text8') }}</b-button>
       </b-form>
     </b-collapse>
   </div>
