@@ -124,6 +124,12 @@ export default {
   .btn {
     margin-right: $spacing-1;
   }
+  .uzh-eth {
+    display: block;
+    position: absolute;
+    bottom: $spacing-2;
+    left: $spacing-2;
+    z-index: 1;
 
       span {
         display: block;
@@ -132,14 +138,6 @@ export default {
         margin-bottom: $spacing-1;
         color: white;
       }
-
-    span {
-      display: block;
-      font-size: calc($font-size-small / $font-scale);
-      line-height: 1;
-      margin-bottom: $spacing-1;
-      color: white;
-    }
 
     img {
       display: block;
