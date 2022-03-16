@@ -22,14 +22,12 @@
           </b-col>
 
           <b-col md="3" class="text-muted">
+            <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
             <p class="small">
-              <i class="fas fa-info-circle"></i><br />
               {{ $t("task-source-builder-cslogger-info1") }}
             </p>
             <!-- Allowed files for media -->
-            <p class="small">
-              {{ $t("task-source-builder-cslogger-info2") }}
-              warning regarding total media files size
+            <p class="small" v-html="$t('task-source-builder-cslogger-info2')">
             </p>
           </b-col>
         </b-row>
@@ -87,7 +85,6 @@
           </b-col>
           <!-- Information section - left side -->
           <b-col md="3" align-self="start" class="pt-4 pt-md-0">
-            <!-- TODO: Define the specific information according source. Pending import standarization -->
             <img src="@/assets/infoicon.png" class="icon-secondary-big mb-3" />
             <p
               v-html="$t('task-source-builder-info')"
@@ -133,7 +130,7 @@ import AmazonSourceEditor from '@/components/Task/Builder/SourceEditor/AmazonSou
 import FlickrSourceEditor from '@/components/Task/Builder/SourceEditor/FlickrSourceEditor'
 import TwitterSourceEditor from '@/components/Task/Builder/SourceEditor/TwitterSourceEditor'
 import LocalCsvSourceEditor from '@/components/Task/Builder/SourceEditor/LocalCsvSourceEditor'
-import LoadCSLoggerData from "@/components/Task/Builder/TemplateEditor/CSLogger/LoadCSLoggerData";
+import LoadCSLoggerData from "@/components/Task/Builder/SourceEditor/CSLogger/LoadCSLoggerData";
 
 export default {
   name: "SourceBuilder",

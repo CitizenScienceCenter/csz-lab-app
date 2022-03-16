@@ -132,7 +132,7 @@ export default {
   },
   created() {
     this.mapSettings = {
-      center: this.settings.center ? this.settings.center.split(",") : [0, 0],
+      center: this.getValidCenter(),
       zoom: this.settings.zoom,
       mapType: this.settings.mapType,
       static_map: true
@@ -141,6 +141,16 @@ export default {
   methods: {
     isRequired(condition) {
       return condition ? "*" : "";
+    },
+
+    getValidCenter() {
+      if (typeof this.settings.center === "string") {
+        return this.settings.center.split(",").slice(0, 2);
+      }
+      if (Array.isArray(this.settings.center)) {
+        return this.settings.center.slice(0, 2);
+      }
+      return [0, 0];
     },
 
     /** Inputs validation start*/
@@ -208,7 +218,7 @@ export default {
           );
         // Center validation
         case "center":
-          const coordinates = this.settings.center.split(",");
+          const coordinates = this.getValidCenter();
           return (
             coordinates.length == 2 && coordinates.every(x => !isNaN(x) && x)
           );
@@ -226,9 +236,9 @@ export default {
       handler() {
         this.mapSettings.zoom = parseInt(this.settings.zoom) || 1;
         if (this.validate("center")) {
-          this.mapSettings.center = this.settings.center
-            .split(",")
-            .map(x => parseFloat(x));
+          this.mapSettings.center = this.getValidCenter().map(x =>
+            parseFloat(x)
+          );
         }
         // allowed parameters
         const params = ["question", "map_editor", "center", "zoom"];

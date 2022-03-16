@@ -9,20 +9,20 @@
       <b-form ref="form" @submit.prevent="onSubmit" class="mt-4">
 
         <b-form-group
-          :label="$t('taks-import-twitter-text1')"
-          :description="$t('taks-import-twitter-text2')"
+          :label="$t('tasks-import-twitter-text1')"
+          :description="$t('tasks-import-twitter-text2')"
         >
-          <b-form-input v-model="source" :placeholder="$t('taks-import-twitter-text3')"></b-form-input>
+          <b-form-input v-model="source" :placeholder="$t('tasks-import-twitter-text3')"></b-form-input>
         </b-form-group>
 
         <b-form-group
-          :label="$t('taks-import-twitter-text4')"
-          :description="$t('taks-import-twitter-text5')"
+          :label="$t('tasks-import-twitter-text4')"
+          :description="$t('tasks-import-twitter-text5')"
         >
           <b-form-input v-model="maxTweets" type="number"></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="secondary">{{ $t('taks-import-twitter-text6') }}</b-button>
+        <b-button type="submit" variant="secondary">{{ $t('tasks-import-twitter-text6') }}</b-button>
 
       </b-form>
 
