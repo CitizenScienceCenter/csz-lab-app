@@ -1,0 +1,64 @@
+[
+  {
+    "id": "integration-pb-0",
+    "title": "cslogger-integration-pb-introduction",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cslogger-integration-pb-introduction-0"
+          },
+          {
+            "img": "cslogger_view/integrate_app/cslogger_pb_integration.png"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "integration-pb-1",
+    "title": "cslogger-integration-pb-export-data",
+    "content": {
+      "row_header": ["Instructions", "Web Dashboard"],
+      "rows": [
+        [
+          {
+            "text": "cslogger-integration-pb-export-data-0"
+          },
+          {
+            "img": "cslogger_view/integrate_app/dashboard_mindlogger.png"
+          }
+        ],
+        [
+          {
+            "text": "cslogger-integration-pb-export-data-1"
+          },
+          { "img": "cslogger_view/integrate_app/export_data_mindlogger.png" }
+        ],
+        [
+          {
+            "text": "cslogger-integration-pb-export-data-2"
+          },
+          {
+            "img": "cslogger_view/integrate_app/downloaded_files_mindlogger.png"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "integration-pb-2",
+    "title": "cslogger-integration-pb-create-project",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cslogger-integration-pb-create-project-0"
+          }
+        ]
+      ]
+    }
+  }
+]
