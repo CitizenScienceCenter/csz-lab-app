@@ -1,7 +1,7 @@
 <template>
   <b-row>
     <!-- Left section image -->
-    <b-col cols="10" md="4" xl="5" class="mt-4 mt-md-0">
+    <b-col cols="10" md="4" xl="5" class="mt-4 mt-md-0" order="2">
       <section>
         <!-- Twitter image -->
         <figure class="text-center" style="position: sticky; top: 15%">
@@ -18,7 +18,7 @@
         <!-- author @handler -@ Mar 11  -->
         <span class="post-author"> {{ taskInfo.author }} &nbsp; </span>
         <span class="post-handle">
-          {{ tweetHandle }} - @{{ post_time(taskInfo.date_created) }}
+          {{ tweetHandle }} - @{{ post_time(taskInfo.created_at) }}
         </span>
         <br />
         <p class="link" style="margin-top: 10px">
@@ -58,7 +58,7 @@
               style="font-size: 24px; margin: 0; max-width: 425px"
               v-if="approxLocationOptions.length"
             >
-              {{ step }} - {{ $t("geolocation.isItLocatedIn") }}
+              {{ step }} - {{ getQuestion(step, "question") }}
               {{ approxLocationOptions[0].storeValue }}?
             </h1>
             <!-- Check the image's comments to validate it -->
@@ -91,27 +91,19 @@
             </h2>
             <!-- Options : yes, no -->
             <!-- TODO: Check how to implement common editor elements component -->
-            <!-- <label>
-              {{ question.question }}
-              <span
-                v-if="question.required"
-                class="text-primary font-weight-bold h5"
-              >
-                *
-              </span>
-            </label>
+
             <common-editor-elements
               :answers="answers"
-              :question="question"
+              :question="getQuestion(step)"
               :context="context"
-            /> -->
-            <options
+            />
+            <!-- <options
               ref="optionsApprox"
               key="approxLocation"
               :options="approxLocationOptions"
               :storeValue.sync="approxLocation"
               :active="true"
-            ></options>
+            ></options> -->
           </div>
         </div>
 
@@ -166,101 +158,207 @@
               </button>
             </div>
           </h3>
-        </div>
-        <!-- Search input for google -->
-        <!-- TODO: install google-geocoder -->
-        <div class="control">
-          <gmap-autocomplete
-            class="input"
-            @place_changed="setPlace"
-          ></gmap-autocomplete>
+          <!-- Search input for google -->
+          <!-- TODO: install google-geocoder -->
+          <!-- <div class="control w-100">
+            <gmap-autocomplete
+              class="input"
+              @place_changed="setPlace"
+            ></gmap-autocomplete>
+          </div> -->
+
+          <!-- TODO: install vue2-google-maps -->
+          <!-- <Split class="fill-height-or-more" direction="vertical"> -->
+          <b-container fluid>
+            <b-row align-v="stretch" cols="1">
+              <!-- TODO: set the heights of this full height when second map is hidden, 70/30 when bot visible -->
+              <b-col :size="70">
+                <!-- Google maps -->
+                <!-- <gmap-map
+                  ref="gmap1"
+                  :zoom="zoom"
+                  :center="latLng"
+                  style="width: 100%; height: 100%"
+                  @zoom_changed="zoomChanged"
+                >
+                  <gmap-marker
+                    ref="marker1"
+                    @dragend="getMarkerPosition($event.latLng)"
+                    :position="latLng"
+                    :clickable="step === 2"
+                    :draggable="step === 2"
+                  ></gmap-marker>
+                  <gmap-polyline
+                    v-if="path.length > 0"
+                    v-bind:path.sync="path"
+                    v-bind:options="{ strokeColor: '#900000' }"
+                  ></gmap-polyline>
+                  <gmap-polygon
+                    v-if="polygon.length > 0"
+                    :paths="polygon"
+                    v-bind:options="{
+                      strokeColor: '#FF0000',
+                      fillColor: '#900000'
+                    }"
+                  ></gmap-polygon>
+                </gmap-map> -->
+              </b-col>
+              <!-- TODO: set the heights of this full height when second map is hidden, 70/30 when bot visible -->
+              <b-col :size="30">
+                <!-- Google street view when is enabled -->
+                <!-- Small map below without streetview capabilities -->
+                <!-- <gmap-map
+                  v-show="streetViewEnabled"
+                  ref="gmap2"
+                  :zoom="zoom"
+                  :center="latLng"
+                  style="width: 100%; height: 100%"
+                  @zoom_changed="zoomChanged"
+                  :options="{ streetViewControl: false }"
+                >
+                  <gmap-marker
+                    ref="marker2"
+                    @dragend="getMarkerPosition($event.latLng)"
+                    :position="latLng"
+                    :clickable="step === 2"
+                    :draggable="step === 2"
+                  ></gmap-marker>
+                  <gmap-polyline
+                    v-if="path.length > 0"
+                    v-bind:path.sync="path"
+                    v-bind:options="{ strokeColor: '#900000' }"
+                  ></gmap-polyline>
+                  <gmap-polygon
+                    v-if="polygon.length > 0"
+                    :paths="polygon"
+                    v-bind:options="{
+                      strokeColor: '#FF0000',
+                      fillColor: '#900000'
+                    }"
+                  ></gmap-polygon>
+                </gmap-map> -->
+              </b-col>
+            </b-row>
+          </b-container>
         </div>
 
-        <!-- TODO: install vue2-google-maps -->
-        <!-- <Split class="fill-height-or-more" direction="vertical"> -->
-        <b-container fluid>
-          <b-row align-v="stretch" cols="1">
-            <!-- TODO: set the heights of this full height when second map is hidden, 70/30 when bot visible -->
-            <b-col :size="80">
-              <!-- Google maps -->
-              <gmap-map
-                ref="gmap1"
-                :zoom="zoom"
-                :center="latLng"
-                style="width: 100%; height: 100%"
-                @zoom_changed="zoomChanged"
+        <!-- ***Step 3*** -->
+        <div class="centered" v-show="step === 3">
+          <div class="steps" style="max-width: 500px">
+            <h1
+              class="title"
+              style="font-size: 24px; margin: 0"
+              v-if="approxLocationOptions.length"
+            >
+              {{ step }} - {{ getQuestion(step, "question") }}
+            </h1>
+
+            <!-- TODO: Check how to implement common editor elements component -->
+            <common-editor-elements
+              :answers="answers"
+              :question="getQuestion(step)"
+              :context="context"
+            />
+            <!-- <options
+              ref="optionsPrecision"
+              key="precisionLocation"
+              :options="precisionOptions"
+              :overflow="true"
+              :storeValue.sync="accuracy"
+              :active="true"
+            ></options> -->
+          </div>
+        </div>
+
+        <!-- ***Step 4*** -->
+        <div class="centered" v-show="step === 4">
+          <div
+            class="steps"
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <!-- <img src="@/assets/img/completed.svg" style="padding-left: 20px" /> -->
+            <h1
+              class="title"
+              style="font-size: 24px; margin-top: 15px; margin-bottom: 15px"
+              v-if="approxLocationOptions.length"
+            >
+              {{ $t("geolocation.taskCompleted") }}
+            </h1>
+            <!-- NOTE: Submit button - will be replaced by ours -->
+            <button
+              class="button is-secondary"
+              :disabled="approxLocation === '' || accuracy === ''"
+              @click.prevent="saveMarker"
+            >
+              {{ $t("geolocation.submitAndNext") }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Skip button and navigation -->
+        <div class="bottom">
+          <div class="level">
+            <!-- Submit button -->
+            <b-btn
+              @click="submit"
+              variant="success"
+              class="mt-3"
+              :disabled="approxLocation === '' || accuracy === ''"
+              v-if="step === 4"
+            >
+              {{ $t("submit-btn") }}
+            </b-btn>
+
+            <!-- Skip button -->
+            <b-btn @click="skip" variant="secondary" class="mt-3"
+              >{{ $t("skip-btn") }}
+            </b-btn>
+
+            <!-- Navigation buttons -->
+            <div class="level-item">
+              <div>
+                {{ $t("geolocation.steps", { start: step, end: 4 }) }}
+              </div>
+            </div>
+
+            <div class="level-item">
+              <button
+                class="button is-secondary"
+                :disabled="step === 1"
+                style="margin-right: 5px"
+                @click="decStep"
               >
-                <gmap-marker
-                  ref="marker1"
-                  @dragend="getMarkerPosition($event.latLng)"
-                  :position="latLng"
-                  :clickable="step === 2"
-                  :draggable="step === 2"
-                ></gmap-marker>
-                <gmap-polyline
-                  v-if="path.length > 0"
-                  v-bind:path.sync="path"
-                  v-bind:options="{ strokeColor: '#900000' }"
-                ></gmap-polyline>
-                <gmap-polygon
-                  v-if="polygon.length > 0"
-                  :paths="polygon"
-                  v-bind:options="{
-                    strokeColor: '#FF0000',
-                    fillColor: '#900000'
-                  }"
-                ></gmap-polygon>
-              </gmap-map>
-            </b-col>
-            <!-- TODO: set the heights of this full height when second map is hidden, 70/30 when bot visible -->
-            <b-col :size="20">
-              <!-- Google street view when is enabled -->
-              <!-- small map below without streetview capabilities -->
-              <gmap-map
-                v-show="streetViewEnabled"
-                ref="gmap2"
-                :zoom="zoom"
-                :center="latLng"
-                style="width: 100%; height: 100%"
-                @zoom_changed="zoomChanged"
-                :options="{ streetViewControl: false }"
+                <b-icon icon="arrow-left"></b-icon>
+              </button>
+              <button
+                class="button is-secondary"
+                :disabled="step === 4 || approxLocation === ''"
+                @click="incStep"
               >
-                <gmap-marker
-                  ref="marker2"
-                  @dragend="getMarkerPosition($event.latLng)"
-                  :position="latLng"
-                  :clickable="step === 2"
-                  :draggable="step === 2"
-                ></gmap-marker>
-                <gmap-polyline
-                  v-if="path.length > 0"
-                  v-bind:path.sync="path"
-                  v-bind:options="{ strokeColor: '#900000' }"
-                ></gmap-polyline>
-                <gmap-polygon
-                  v-if="polygon.length > 0"
-                  :paths="polygon"
-                  v-bind:options="{
-                    strokeColor: '#FF0000',
-                    fillColor: '#900000'
-                  }"
-                ></gmap-polygon>
-              </gmap-map>
-            </b-col>
-          </b-row>
-        </b-container>
+                <b-icon icon="arrow-right"></b-icon>
+              </button>
+            </div>
+          </div>
+        </div>
       </section>
     </b-col>
   </b-row>
 </template>
 
 <script>
-import { i18n } from "../i18n";
+import { i18n } from "@/i18n";
+import moment from "moment";
+import MediaPresenter from "./MediaPresenter";
+import CommonEditorElements from "@/components/Common/CommonEditorElements";
 
 const ZOOMMIN = 3;
 const ZOOMMAX = 14;
 export default {
   name: "GeoTwitter",
+  components: {
+    MediaPresenter,
+    CommonEditorElements
+  },
   data: () => {
     return {
       showTips: false,
@@ -271,20 +369,58 @@ export default {
       zoom: ZOOMMIN,
       path: [],
       polygon: [],
-      approxLocationOptions: []
+      accuracy: "",
+      approxLocation: "",
+      approxLocationOptions: [],
+      // the variables used in template here in the component
+      questions: [
+        {
+          id: 1,
+          question: "geolocation.isItLocatedIn",
+          answers: ["geolocation.yes", "geolocation.no", "I can't say"],
+          type: "one_choice",
+          required: true,
+          isDependent: false,
+          condition: {}
+        },
+        {
+          id: 2,
+          question: "geolocation.locateExactPositionDesktop",
+          answers: [],
+          type: "one_choice",
+          required: true,
+          isDependent: false,
+          condition: {}
+        },
+        {
+          id: 3,
+          question: "geolocation.greatPleaseMeasure",
+          answers: [
+            { text: "geolocation.high", value: "high" },
+            { text: "geolocation.medium", value: "medium" },
+            { text: "geolocation.low", value: "low" }
+          ],
+          type: "one_choice",
+          required: true,
+          isDependent: false,
+          condition: {}
+        }
+      ],
+      questionList: [],
+      answers: []
     };
   },
   props: {
-    taskInfo: {
-      type: Object,
-      required: true
-    },
-    pybossa: {
-      type: Object,
-      required: true
-    }
+    taskInfo: { type: Object, required: true },
+    pybossa: { type: Object, required: true }
+  },
+  mounted() {
+    console.log(this.taskInfo);
   },
   computed: {
+    context() {
+      return this;
+    },
     tweetHandle() {
       if (this.taskInfo.hasOwnProperty("author_screen_name")) {
         return this.taskInfo.author_screen_name;
@@ -302,15 +438,23 @@ export default {
       if (url) return url.replace(/^http:\/\//i, "https://");
       return null;
     },
-    post_time(val) {
-      return moment(val).format("MMM D");
-    },
+    
     searchImg() {
       return `https://www.google.com/searchbyimage?image_url=${this.tweetImage}`;
     },
     translate() {
       return `https://translate.google.com/#auto/${i18n.locale}/${this.taskInfo.text}`;
     }
+  },
+
+  methods: {
+    getQuestion(id, param) {
+      const q = this.questions.find(q => q.id === id);
+      return q ? (param ? q[param] : q) : {};
+    },
+    post_time(val) {
+      return moment(val).format("MMM D");
+    },
   }
 };
 </script>
