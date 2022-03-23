@@ -50,7 +50,7 @@
     <b-col cols="11" md="8" xl="7" class="mt-4 mt-md-0">
       <section>
         <!-- **** STEP 1 ***** -->
-        <div class="centered" v-show="step < 2">
+        <div class="centered" v-if="step < 2">
           <div>
             <!-- Question  -->
             <h1
@@ -76,7 +76,7 @@
                 {{ $t("geolocation.tips") }}
               </span>
               <!-- Tips for this step -->
-              <div class="tips" :class="{ hidden: !showTips }">
+              <div class="tips" v-show="showTips">
                 <h3>{{ $t("geolocation.tipsHeadline") }}</h3>
                 <p>{{ $t("geolocation.readTheFullPost") }}</p>
                 <p>{{ $t("geolocation.useGoogleImages") }}</p>
@@ -108,7 +108,7 @@
         </div>
 
         <!-- ****Step 2***** -->
-        <div class="centered" v-show="step === 2">
+        <div class="centered" v-if="step === 2">
           <!-- Title -->
           <h1 class="title">
             {{ $t("geolocation.locateExactPositionDesktop") }}
@@ -243,7 +243,7 @@
         </div>
 
         <!-- ***Step 3*** -->
-        <div class="centered" v-show="step === 3">
+        <div class="centered" v-if="step === 3">
           <div class="steps" style="max-width: 500px">
             <h1
               class="title"
@@ -271,7 +271,7 @@
         </div>
 
         <!-- ***Step 4*** -->
-        <div class="centered" v-show="step === 4">
+        <div class="centered" v-if="step === 4">
           <div
             class="steps"
             style="display: flex; flex-direction: column; align-items: center"
@@ -377,7 +377,11 @@ export default {
         {
           id: 1,
           question: "geolocation.isItLocatedIn",
-          answers: ["geolocation.yes", "geolocation.no", "I can't say"],
+          answers: [
+            { text: "geolocation.yes", value: "yes" },
+            { text: "geolocation.no", value: "no" },
+            { text: "I can't say", value: "na" }
+          ],
           type: "one_choice",
           required: true,
           isDependent: false,
@@ -387,7 +391,7 @@ export default {
           id: 2,
           question: "geolocation.locateExactPositionDesktop",
           answers: [],
-          type: "one_choice",
+          type: null,
           required: true,
           isDependent: false,
           condition: {}
@@ -414,8 +418,9 @@ export default {
     taskInfo: { type: Object, required: true },
     pybossa: { type: Object, required: true }
   },
-  mounted() {
+  created() {
     console.log(this.taskInfo);
+    this.initialize();
   },
   computed: {
     context() {
@@ -438,16 +443,47 @@ export default {
       if (url) return url.replace(/^http:\/\//i, "https://");
       return null;
     },
-    
+
     searchImg() {
       return `https://www.google.com/searchbyimage?image_url=${this.tweetImage}`;
     },
     translate() {
       return `https://translate.google.com/#auto/${i18n.locale}/${this.taskInfo.text}`;
+    },
+
+    latLng() {
+      // The result of searching with google input autocomplete
+      if (this.searchLatLng != null) {
+        return this.searchLatLng;
+      }
+      // Consider the center coming from task info
+      if (this.taskInfo) {
+        let locationEncoded = this.taskInfo.tags.filter(
+          x => x.name === "CIME_geolocation_centre"
+        );
+        return this.getLatLng(locationEncoded);
+      }
     }
   },
 
   methods: {
+    initialize() {
+      console.log("Skip button clicked");
+      this.markerLatLng = null;
+      this.searchLatLng = null;
+      this.step = 1;
+      this.approxLocation = "";
+      this.approxLocationOptions = [];
+      this.accuracy = "";
+
+      this.answers = this.questions.map(function(x) {
+        const answer = { qid: x.id, question: x.question, value: null };
+        if (x.type === "multiple_choice") {
+          answer.value = [];
+        }
+        return answer;
+      });
+    },
     getQuestion(id, param) {
       const q = this.questions.find(q => q.id === id);
       return q ? (param ? q[param] : q) : {};
@@ -455,6 +491,60 @@ export default {
     post_time(val) {
       return moment(val).format("MMM D");
     },
+    // Get the clean lat lng in correct format
+    getLatLng(locationEncoded) {
+      let newLat;
+      let newLng;
+      if (locationEncoded.length === 1) {
+        locationEncoded = locationEncoded[0].value;
+        try {
+          // let location = JSON.parse(locationEncoded);
+          let location = locationEncoded;
+          newLat = location[0][0];
+          newLng = location[0][1];
+        } catch (err) {
+          newLat = 0;
+          newLng = 0;
+          let location = JSON.parse(locationEncoded.replace(/\\/g, ""));
+          newLat = parseFloat(location[0][0].replace(",", "."));
+          newLng = parseFloat(location[0][1].replace(",", "."));
+          console.warn(
+            "ERROR: JSON parse of location failed for task",
+            this.currentTask.id
+          );
+          console.warn(err.message);
+        }
+      } else {
+        newLat = this.currentTask.info.latitude;
+        newLng = this.currentTask.info.longitude;
+      }
+      return { lat: newLat, lng: newLng };
+    },
+
+    incStep() {
+      if (this.step < 5) {
+        this.step++;
+      }
+    },
+
+    decStep() {
+      if (this.step > 1) {
+        this.step--;
+      }
+    },
+
+    // Submit button
+    async submit() {
+      console.log("Submit button clicked");
+      this.$emit("submit", this.answers);
+    },
+
+    // Skip button
+    async skip() {
+      this.initialize();
+      await this.loaded();
+      this.$emit("skip");
+    }
   }
 };
 </script>
