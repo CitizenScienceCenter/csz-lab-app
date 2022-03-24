@@ -97,13 +97,6 @@
               :question="getQuestion(step)"
               :context="context"
             />
-            <!-- <options
-              ref="optionsApprox"
-              key="approxLocation"
-              :options="approxLocationOptions"
-              :storeValue.sync="approxLocation"
-              :active="true"
-            ></options> -->
           </div>
         </div>
 
@@ -259,14 +252,6 @@
               :question="getQuestion(step)"
               :context="context"
             />
-            <!-- <options
-              ref="optionsPrecision"
-              key="precisionLocation"
-              :options="precisionOptions"
-              :overflow="true"
-              :storeValue.sync="accuracy"
-              :active="true"
-            ></options> -->
           </div>
         </div>
 
@@ -419,7 +404,6 @@ export default {
     pybossa: { type: Object, required: true }
   },
   created() {
-    console.log(this.taskInfo);
     this.initialize();
   },
   computed: {
@@ -467,8 +451,9 @@ export default {
   },
 
   methods: {
+    // clean variables
     initialize() {
-      console.log("Skip button clicked");
+      const aux = this;
       this.markerLatLng = null;
       this.searchLatLng = null;
       this.step = 1;
@@ -476,6 +461,9 @@ export default {
       this.approxLocationOptions = [];
       this.accuracy = "";
 
+      this.questionList = this.questions.filter(q =>
+        aux.pybossa.isConditionEmpty(q)
+      );
       this.answers = this.questions.map(function(x) {
         const answer = { qid: x.id, question: x.question, value: null };
         if (x.type === "multiple_choice") {
@@ -484,12 +472,14 @@ export default {
         return answer;
       });
     },
+
     getQuestion(id, param) {
       const q = this.questions.find(q => q.id === id);
       return q ? (param ? q[param] : q) : {};
     },
+    // return formatted date
     post_time(val) {
-      return moment(val).format("MMM D");
+      return moment(new Date(val)).format("MMM D");
     },
     // Get the clean lat lng in correct format
     getLatLng(locationEncoded) {
@@ -521,12 +511,12 @@ export default {
       return { lat: newLat, lng: newLng };
     },
 
+    // Navigation buttons
     incStep() {
       if (this.step < 5) {
         this.step++;
       }
     },
-
     decStep() {
       if (this.step > 1) {
         this.step--;
