@@ -20,6 +20,9 @@ import Meta from "vue-meta";
 import "@/components/globalComponents";
 import Croppa from "vue-croppa";
 
+// google maps module
+import * as VueGoogleMaps from "vue2-google-maps";
+
 // Leaflet map styles
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -32,6 +35,13 @@ Vue.use(VueLayers, {
   dataProjection: "EPSG:4326"
 });
 Vue.use(Meta);
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: process.env.GOOGLE,
+    libraries: "places,drawing,visualization,geometry"
+  }
+});
 
 // Analytics configuration
 

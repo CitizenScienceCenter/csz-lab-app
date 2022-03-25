@@ -59,7 +59,7 @@
               v-if="approxLocationOptions.length"
             >
               {{ step }} - {{ getQuestion(step, "question") }}
-              {{ approxLocationOptions[0].storeValue }}?
+              {{ approxLocationOptions[0].value }}?
             </h1>
             <!-- Check the image's comments to validate it -->
             <h2
@@ -89,8 +89,6 @@
                 </button>
               </div>
             </h2>
-            <!-- Options : yes, no -->
-            <!-- TODO: Check how to implement common editor elements component -->
 
             <common-editor-elements
               :answers="answers"
@@ -101,13 +99,13 @@
         </div>
 
         <!-- ****Step 2***** -->
-        <div class="centered" v-if="step === 2">
+        <div class="centered" v-show="step === 2">
           <!-- Title -->
-          <h1 class="title">
+          <label class="title">
             {{ $t("geolocation.locateExactPositionDesktop") }}
-          </h1>
+          </label>
           <!-- Subtitle -->
-          <h3 class="subtitle" style="position: relative">
+          <h6 class="subtitle" style="position: relative">
             {{ $t("geolocation.useSearchbox") }}
             <span
               class="is-clickable"
@@ -118,11 +116,7 @@
               {{ $t("geolocation.tips") }}
             </span>
             <!-- Tips in pop up window -->
-            <div
-              class="tips"
-              :class="{ hidden: !showTips }"
-              style="width: 500px"
-            >
+            <div class="tips" v-show="showTips" style="width: 500px">
               <h3>{{ $t("geolocation.tipsHeadline") }}</h3>
               <p>
                 {{ $t("geolocation.streetview1Desktop") }}
@@ -150,88 +144,88 @@
                 {{ $t("geolocation.gotIt") }}
               </button>
             </div>
-          </h3>
+          </h6>
+
           <!-- Search input for google -->
-          <!-- TODO: install google-geocoder -->
-          <!-- <div class="control w-100">
+          <div class="control w-100 pb-3">
             <gmap-autocomplete
               class="input"
               @place_changed="setPlace"
             ></gmap-autocomplete>
-          </div> -->
-
-          <!-- TODO: install vue2-google-maps -->
-          <!-- <Split class="fill-height-or-more" direction="vertical"> -->
-          <b-container fluid>
-            <b-row align-v="stretch" cols="1">
-              <!-- TODO: set the heights of this full height when second map is hidden, 70/30 when bot visible -->
-              <b-col :size="70">
-                <!-- Google maps -->
-                <!-- <gmap-map
-                  ref="gmap1"
-                  :zoom="zoom"
-                  :center="latLng"
-                  style="width: 100%; height: 100%"
-                  @zoom_changed="zoomChanged"
-                >
-                  <gmap-marker
-                    ref="marker1"
-                    @dragend="getMarkerPosition($event.latLng)"
-                    :position="latLng"
-                    :clickable="step === 2"
-                    :draggable="step === 2"
-                  ></gmap-marker>
-                  <gmap-polyline
-                    v-if="path.length > 0"
-                    v-bind:path.sync="path"
-                    v-bind:options="{ strokeColor: '#900000' }"
-                  ></gmap-polyline>
-                  <gmap-polygon
-                    v-if="polygon.length > 0"
-                    :paths="polygon"
-                    v-bind:options="{
-                      strokeColor: '#FF0000',
-                      fillColor: '#900000'
-                    }"
-                  ></gmap-polygon>
-                </gmap-map> -->
-              </b-col>
-              <!-- TODO: set the heights of this full height when second map is hidden, 70/30 when bot visible -->
-              <b-col :size="30">
-                <!-- Google street view when is enabled -->
-                <!-- Small map below without streetview capabilities -->
-                <!-- <gmap-map
-                  v-show="streetViewEnabled"
-                  ref="gmap2"
-                  :zoom="zoom"
-                  :center="latLng"
-                  style="width: 100%; height: 100%"
-                  @zoom_changed="zoomChanged"
-                  :options="{ streetViewControl: false }"
-                >
-                  <gmap-marker
-                    ref="marker2"
-                    @dragend="getMarkerPosition($event.latLng)"
-                    :position="latLng"
-                    :clickable="step === 2"
-                    :draggable="step === 2"
-                  ></gmap-marker>
-                  <gmap-polyline
-                    v-if="path.length > 0"
-                    v-bind:path.sync="path"
-                    v-bind:options="{ strokeColor: '#900000' }"
-                  ></gmap-polyline>
-                  <gmap-polygon
-                    v-if="polygon.length > 0"
-                    :paths="polygon"
-                    v-bind:options="{
-                      strokeColor: '#FF0000',
-                      fillColor: '#900000'
-                    }"
-                  ></gmap-polygon>
-                </gmap-map> -->
-              </b-col>
-            </b-row>
+          </div>
+          <!-- Google Maps component -->
+          <b-container
+            fluid
+            class="pb-0 px-0 principal-container"
+            :class="{ 'street-view': streetViewEnabled }"
+          >
+            <!-- Google maps -->
+            <gmap-map
+              ref="gmap1"
+              :zoom="zoom"
+              :center="latLng"
+              class="maps-container"
+              @zoom_changed="zoomChanged"
+            >
+              <gmap-marker
+                ref="marker1"
+                @dragend="getMarkerPosition($event.latLng)"
+                :position="latLng"
+                :clickable="step === 2"
+                :draggable="step === 2"
+              ></gmap-marker>
+              <gmap-polyline
+                v-if="path.length > 0"
+                v-bind:path.sync="path"
+                v-bind:options="{ strokeColor: '#900000' }"
+              ></gmap-polyline>
+              <gmap-polygon
+                v-if="polygon.length > 0"
+                :paths="polygon"
+                v-bind:options="{
+                  strokeColor: '#FF0000',
+                  fillColor: '#900000'
+                }"
+              ></gmap-polygon>
+            </gmap-map>
+          </b-container>
+          <!-- Google street view when is enabled -->
+          <b-container
+            fluid
+            class="pb-0 px-0 secondary-container "
+            :class="{ 'street-view': streetViewEnabled }"
+          >
+            <!-- Small map below without streetview capabilities -->
+            <gmap-map
+              v-show="streetViewEnabled"
+              ref="gmap2"
+              :zoom="zoom"
+              :center="latLng"
+              class="maps-container"
+              @zoom_changed="zoomChanged"
+              :options="{ streetViewControl: false }"
+            >
+              <gmap-marker
+                ref="marker2"
+                @dragend="getMarkerPosition($event.latLng)"
+                :position="latLng"
+                :clickable="step === 2"
+                :draggable="step === 2"
+              ></gmap-marker>
+              <gmap-polyline
+                v-if="path.length > 0"
+                v-bind:path.sync="path"
+                v-bind:options="{ strokeColor: '#900000' }"
+              ></gmap-polyline>
+              <gmap-polygon
+                v-if="polygon.length > 0"
+                :paths="polygon"
+                v-bind:options="{
+                  strokeColor: '#FF0000',
+                  fillColor: '#900000'
+                }"
+              ></gmap-polygon>
+            </gmap-map>
           </b-container>
         </div>
 
@@ -269,14 +263,6 @@
             >
               {{ $t("geolocation.taskCompleted") }}
             </h1>
-            <!-- NOTE: Submit button - will be replaced by ours -->
-            <button
-              class="button is-secondary"
-              :disabled="approxLocation === '' || accuracy === ''"
-              @click.prevent="saveMarker"
-            >
-              {{ $t("geolocation.submitAndNext") }}
-            </button>
           </div>
         </div>
 
@@ -288,7 +274,7 @@
               @click="submit"
               variant="success"
               class="mt-3"
-              :disabled="approxLocation === '' || accuracy === ''"
+              :disabled="!approxLocation || !accuracy"
               v-if="step === 4"
             >
               {{ $t("submit-btn") }}
@@ -317,7 +303,7 @@
               </button>
               <button
                 class="button is-secondary"
-                :disabled="step === 4 || approxLocation === ''"
+                :disabled="step === 4 || !approxLocation"
                 @click="incStep"
               >
                 <b-icon icon="arrow-right"></b-icon>
@@ -354,8 +340,6 @@ export default {
       zoom: ZOOMMIN,
       path: [],
       polygon: [],
-      accuracy: "",
-      approxLocation: "",
       approxLocationOptions: [],
       // the variables used in template here in the component
       questions: [
@@ -363,9 +347,9 @@ export default {
           id: 1,
           question: "geolocation.isItLocatedIn",
           answers: [
-            { text: "geolocation.yes", value: "yes" },
-            { text: "geolocation.no", value: "no" },
-            { text: "I can't say", value: "na" }
+            // { text: "geolocation.yes", value: "yes" },
+            // { text: "geolocation.no", value: "no" },
+            // { text: "I can't say", value: "na" }
           ],
           type: "one_choice",
           required: true,
@@ -410,6 +394,25 @@ export default {
     context() {
       return this;
     },
+    accuracy() {
+      return this.answers[2].value;
+    },
+    approxLocation() {
+      return this.answers[0].value;
+    },
+    latLng() {
+      // The result of searching with google input autocomplete
+      if (this.searchLatLng != null) {
+        return this.searchLatLng;
+      }
+      // Consider the center coming from task info
+      if (this.taskInfo) {
+        let locationEncoded = this.taskInfo.tags.filter(
+          x => x.name === "CIME_geolocation_centre"
+        );
+        return this.getLatLng(locationEncoded);
+      }
+    },
     tweetHandle() {
       if (this.taskInfo.hasOwnProperty("author_screen_name")) {
         return this.taskInfo.author_screen_name;
@@ -433,37 +436,16 @@ export default {
     },
     translate() {
       return `https://translate.google.com/#auto/${i18n.locale}/${this.taskInfo.text}`;
-    },
-
-    latLng() {
-      // The result of searching with google input autocomplete
-      if (this.searchLatLng != null) {
-        return this.searchLatLng;
-      }
-      // Consider the center coming from task info
-      if (this.taskInfo) {
-        let locationEncoded = this.taskInfo.tags.filter(
-          x => x.name === "CIME_geolocation_centre"
-        );
-        return this.getLatLng(locationEncoded);
-      }
     }
   },
 
   methods: {
     // clean variables
-    initialize() {
-      const aux = this;
+    async initialize() {
+      this.step = 1;
       this.markerLatLng = null;
       this.searchLatLng = null;
-      this.step = 1;
-      this.approxLocation = "";
       this.approxLocationOptions = [];
-      this.accuracy = "";
-
-      this.questionList = this.questions.filter(q =>
-        aux.pybossa.isConditionEmpty(q)
-      );
       this.answers = this.questions.map(function(x) {
         const answer = { qid: x.id, question: x.question, value: null };
         if (x.type === "multiple_choice") {
@@ -471,6 +453,7 @@ export default {
         }
         return answer;
       });
+      await this.loaded();
     },
 
     getQuestion(id, param) {
@@ -481,6 +464,194 @@ export default {
     post_time(val) {
       return moment(new Date(val)).format("MMM D");
     },
+
+    // Navigation buttons
+    incStep() {
+      if (this.step < 5) {
+        this.step++;
+      }
+    },
+    decStep() {
+      if (this.step > 1) {
+        this.step--;
+      }
+    },
+
+    // Submit button
+    submit() {
+      if (this.markerLatLng != null) {
+        this.answers[1].value = this.markerLatLng;
+      } else {
+        this.answers[1].value = this.latLng;
+      }
+      console.log("Submit button clicked");
+      console.log(this.answers);
+      // this.$emit("submit", this.answers);
+      this.initialize();
+    },
+
+    // Skip button
+    skip() {
+      this.initialize();
+      this.$emit("skip");
+    },
+
+    //***  Google maps section */
+    // main function to load the map
+    async loaded() {
+      // polygon
+      console.log("Loaded called");
+      if (
+        typeof this.taskInfo !== "undefined" &&
+        typeof this.taskInfo.tags !== "undefined" &&
+        this.taskInfo.tags.length > 0
+      ) {
+        this.getBounds();
+
+        const _self = this;
+        if (_self.path.length + _self.polygon.length === 0) {
+          _self.zoom = ZOOMMAX;
+        }
+      }
+      await this.getAllApproxLocationOptions();
+      //this.isLoading = false; // TODO: check if this is needed
+    },
+
+    // get location options from the task based on lat lng
+    async getAllApproxLocationOptions() {
+      let locations = [];
+
+      // search for CIME_geolocation_string places
+      if (
+        typeof this.taskInfo !== "undefined" &&
+        typeof this.taskInfo.tags !== "undefined"
+      ) {
+        const tag = this.taskInfo.tags.find(
+          x => x.name === "CIME_geolocation_string"
+        );
+        // Get location from address
+        if (!!tag) {
+          if (tag.value === "") {
+            locations.push(await this.fixNoCIME());
+          } else {
+            let locationEncoded =
+              tag.value || `'["${await this.fixNoCIME()}"]'`;
+            let locationParsed = await this.fixNoCIME();
+            try {
+              // locationParsed = JSON.parse(locationEncoded);
+              locationParsed = locationEncoded;
+            } catch (err) {
+              locationParsed = JSON.parse(locationEncoded.replace(/\\/g, ""));
+            }
+            if (locationParsed !== "Pin is correct") {
+              locations = locationParsed;
+            }
+          }
+        }
+      }
+
+      // use info.place as fallback if no CIME_geolocation_string
+      if (locations.length < 1) {
+        if (this.taskInfo.place) {
+          if (this.taskInfo.place === "") {
+            locations.push(await this.fixNoCIME());
+          } else {
+            locations.push(this.taskInfo.place) || (await this.fixNoCIME());
+          }
+        } else {
+          locations.push(await this.fixNoCIME());
+        }
+      }
+
+      // create Approx Location Options
+      let i, location;
+      this.approxLocationOptions = [];
+      for ([i, location] of locations.entries()) {
+        this.approxLocationOptions.push({
+          value: locations[i],
+          text: locations[i]
+        });
+      }
+      this.approxLocationOptions.push({
+        value: "Another location",
+        text: "Another location"
+      });
+      if (this.approxLocationOptions.length === 2) {
+        this.approxLocationOptions[0].text = this.$t("geolocation.yes");
+        this.approxLocationOptions[1].text = this.$t("geolocation.no");
+      }
+    },
+    // get the value of a tag
+    async getBounds() {
+      const tag = this.taskInfo.tags.find(
+        x => x.name === "CIME_geolocation_geojson"
+      );
+      // Get the map polygon based on this tag name
+      if (!!tag) {
+        this.path = [];
+        this.polygon = [];
+        let polygonEncoded = tag.value || '["unkown"]';
+        let polygons = JSON.parse(polygonEncoded) || "unknown";
+        // let firstPolygon = JSON.parse(polygons[0]) || "unknown";
+        let firstPolygon = polygons || "unknown";
+        if (firstPolygon !== "unknown") {
+          if (firstPolygon.type === "Point") {
+            this.path.push(firstPolygon.coordinates);
+          } else if (firstPolygon.type === "LineString") {
+            this.path = firstPolygon.coordinates.map(([lng, lat]) => ({
+              lat,
+              lng
+            }));
+          } else if (firstPolygon.type === "Polygon") {
+            this.polygon = firstPolygon.coordinates.map(linearRing =>
+              linearRing.map(([lng, lat]) => ({
+                lat,
+                lng
+              }))
+            );
+          }
+        }
+      }
+    },
+
+    // get reverse geocoding from latlng center
+    async fixNoCIME() {
+      let address = await this.getReverseGeo(
+        this.taskInfo.tags.filter(x => x.name === "CIME_geolocation_centre")
+      );
+      if (address.hasOwnProperty("village")) {
+        return address.village;
+      } else if (address.hasOwnProperty("state")) {
+        return address.state;
+      } else {
+        return "Pin is correct";
+      }
+    },
+
+    async getReverseGeo(coordinates) {
+      if (coordinates.length) {
+        let tmp = [];
+        try {
+          // tmp = JSON.parse(coordinates[0].value);
+          tmp = coordinates[0].value;
+        } catch (err) {
+          tmp = JSON.parse(coordinates[0].value.replace(/\\/g, ""));
+          tmp[0][0] = parseFloat(tmp[0][0].replace(",", "."));
+          tmp[0][1] = parseFloat(tmp[0][1].replace(",", "."));
+        }
+        if (tmp.length) {
+          let lat = tmp[0][0];
+          let lng = tmp[0][1];
+          let url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+          let data_aux = await fetch(url);
+          const data = await data_aux.json();
+          if (data.hasOwnProperty("address")) {
+            return data.address;
+          }
+        }
+      }
+    },
+
     // Get the clean lat lng in correct format
     getLatLng(locationEncoded) {
       let newLat;
@@ -505,38 +676,114 @@ export default {
           console.warn(err.message);
         }
       } else {
-        newLat = this.currentTask.info.latitude;
-        newLng = this.currentTask.info.longitude;
+        newLat = this.taskInfo.latitude;
+        newLng = this.taskInfo.longitude;
       }
       return { lat: newLat, lng: newLng };
     },
 
-    // Navigation buttons
-    incStep() {
-      if (this.step < 5) {
-        this.step++;
-      }
-    },
-    decStep() {
-      if (this.step > 1) {
-        this.step--;
+    // Get coordinates from google search
+    setPlace(place) {
+      if (place != null) {
+        this.markerLatLng = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng()
+        };
+        this.searchLatLng = place.geometry.location;
       }
     },
 
-    // Submit button
-    async submit() {
-      console.log("Submit button clicked");
-      this.$emit("submit", this.answers);
+    // Get the marker position when is dragged by user
+    getMarkerPosition(latlng) {
+      console.log(latlng.lat(), latlng.lng());
+      this.markerLatLng = { lat: latlng.lat(), lng: latlng.lng() };
+      this.$refs.marker1.$markerObject.setPosition(this.markerLatLng);
+      this.$refs.marker2.$markerObject.setPosition(this.markerLatLng);
     },
 
-    // Skip button
-    async skip() {
-      this.initialize();
-      await this.loaded();
-      this.$emit("skip");
+    // Control zoom limits
+    zoomChanged(level) {
+      if (level < ZOOMMIN) {
+        this.zoom = ZOOMMIN;
+      }
+      // info: use ZOOMMAX + 1 because we cannot set for unknown reasons same Zoom level twice (as on init) :/
+      if (level > ZOOMMAX + 1) {
+        this.zoom = ZOOMMAX + 1;
+      }
+    }
+  },
+  watch: {
+    approxLocationOptions: {
+      handler() {
+        this.questions[0].answers = this.approxLocationOptions;
+      },
+      deep: true
+    },
+    step(newVal) {
+      // When step of maps is active
+      if (newVal === 2) {
+        // fit google maps to bounds
+        let bounds = new google.maps.LatLngBounds();
+        for (let point of this.path) {
+          bounds.extend(new google.maps.LatLng(point.lat, point.lng));
+        }
+        for (let polygon of this.polygon) {
+          for (let point of polygon) {
+            bounds.extend(new google.maps.LatLng(point.lat, point.lng));
+          }
+        }
+        if (this.markerLatLng != null) {
+          bounds.extend(
+            new google.maps.LatLng(this.markerLatLng.lat, this.markerLatLng.lng)
+          );
+        } else {
+          bounds.extend(
+            new google.maps.LatLng(this.latLng["lat"], this.latLng["lng"])
+          );
+        }
+        // Activate street view and marker position when street view is enabled
+        if (typeof this.$refs.gmap1 !== "undefined") {
+          const self = this;
+          self.$refs.gmap1.$mapPromise.then(map => {
+            console.log("NEW BOUNDS!");
+            let pn = map.getStreetView();
+            map.fitBounds(bounds);
+
+            pn.addListener("position_changed", function() {
+              let streetvpos = pn.getPosition();
+              self.getMarkerPosition(streetvpos);
+              console.log("Streetview position changed");
+              console.log(streetvpos.lat(), streetvpos.lng());
+            });
+
+            pn.addListener("visible_changed", function() {
+              self.streetViewEnabled = pn.getVisible();
+            });
+          });
+        }
+      }
     }
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.maps-container {
+  height: 100%;
+  width: 100%;
+}
+.principal-container {
+  height: 60vh;
+  transition: height 0.5s linear;
+  &.street-view {
+    height: 40vh;
+  }
+}
+.secondary-container {
+  height: 0vh;
+  transition: all 0.5s linear;
+  &.street-view {
+    height: 20vh;
+  }
+}
+</style>
