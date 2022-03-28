@@ -7,6 +7,5 @@ module.exports = merge(prodEnv, {
   BASE_ENDPOINT_URL: '"https://pybossa-staging.citizenscience.ch/"',
   BASE_API_URL: '"https://pybossa-staging.citizenscience.ch/api/"',
   FLICKR_CALLBACK_URL: '"http://localhost:8080/flickr/callback"',
-  GTAG_ID: '""',
-  GOOGLE:'"AIzaSyAqBvKF0AR7Rhyyw742m_CJtNDl05JrdpU"'
+  GTAG_ID: '""'
 });
