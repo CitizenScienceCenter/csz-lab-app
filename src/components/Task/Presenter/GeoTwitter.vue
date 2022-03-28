@@ -479,28 +479,29 @@ export default {
 
     // Submit button
     submit() {
+      // Attach the marker location to the answers
       if (this.markerLatLng != null) {
         this.answers[1].value = this.markerLatLng;
       } else {
         this.answers[1].value = this.latLng;
       }
-      console.log("Submit button clicked");
-      console.log(this.answers);
-      // this.$emit("submit", this.answers);
+      this.$emit("submit", {
+        answers: this.answers,
+        questions: this.questions
+      });
       this.initialize();
     },
 
     // Skip button
     skip() {
-      this.initialize();
       this.$emit("skip");
+      this.initialize();
     },
 
     //***  Google maps section */
     // main function to load the map
     async loaded() {
       // polygon
-      console.log("Loaded called");
       if (
         typeof this.taskInfo !== "undefined" &&
         typeof this.taskInfo.tags !== "undefined" &&
@@ -695,7 +696,6 @@ export default {
 
     // Get the marker position when is dragged by user
     getMarkerPosition(latlng) {
-      console.log(latlng.lat(), latlng.lng());
       this.markerLatLng = { lat: latlng.lat(), lng: latlng.lng() };
       this.$refs.marker1.$markerObject.setPosition(this.markerLatLng);
       this.$refs.marker2.$markerObject.setPosition(this.markerLatLng);
@@ -745,15 +745,12 @@ export default {
         if (typeof this.$refs.gmap1 !== "undefined") {
           const self = this;
           self.$refs.gmap1.$mapPromise.then(map => {
-            console.log("NEW BOUNDS!");
             let pn = map.getStreetView();
             map.fitBounds(bounds);
 
             pn.addListener("position_changed", function() {
               let streetvpos = pn.getPosition();
               self.getMarkerPosition(streetvpos);
-              console.log("Streetview position changed");
-              console.log(streetvpos.lat(), streetvpos.lng());
             });
 
             pn.addListener("visible_changed", function() {
