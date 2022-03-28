@@ -4,7 +4,7 @@
     <b-col cols="10" md="4" xl="5" class="mt-4 mt-md-0" order="2">
       <section>
         <!-- Twitter image -->
-        <figure class="text-center" style="position: sticky; top: 15%">
+        <figure class="text-center" style="position: relative">
           <media-presenter
             :context="pybossa"
             :link="tweetImage"
