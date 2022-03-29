@@ -53,14 +53,13 @@
         <div class="centered" v-if="step < 2">
           <div>
             <!-- Question  -->
-            <!-- FIXME: If More than one option available show a generic question -->
             <h1
               class="title"
               style="font-size: 24px; margin: 0; max-width: 425px"
-              v-if="locationName"
+              v-if="approxLocationOptions.length"
             >
               {{ step }} - {{ getQuestion(step, "question") }}
-              {{ locationName }}?
+              {{ approxLocationOptions[0].value }}?
             </h1>
             <!-- Check the image's comments to validate it -->
             <h2
@@ -233,7 +232,11 @@
         <!-- ***Step 3*** -->
         <div class="centered" v-if="step === 3">
           <div class="steps" style="max-width: 500px">
-            <h1 class="title" style="font-size: 24px; margin: 0">
+            <h1
+              class="title"
+              style="font-size: 24px; margin: 0"
+              v-if="approxLocationOptions.length"
+            >
               {{ step }} - {{ getQuestion(step, "question") }}
             </h1>
 
@@ -292,7 +295,7 @@
             <div class="level-item">
               <button
                 class="button is-secondary"
-                :disabled="step === 1 || !approxLocationOptions.length"
+                :disabled="step === 1"
                 style="margin-right: 5px"
                 @click="decStep"
               >
@@ -321,15 +324,6 @@ import CommonEditorElements from "@/components/Common/CommonEditorElements";
 
 const ZOOMMIN = 3;
 const ZOOMMAX = 14;
-// Set the column names important for geolocation in dataset
-const GEO_COLUMNS = [
-  { geoString: "locations", geoLat: "loc_lat", geoLng: "loc_lon" },
-  { geoString: "facility", geoLat: "fac_lat", geoLng: "fac_lon" },
-  { geoString: "gpe", geoLat: "gpe_lat", geoLng: "gpe_lon" }
-];
-// Default location for the map
-const DEFAULT_LOCATION = { lat: 47.384, lng: 8.542 };
-
 export default {
   name: "GeoTwitter",
   components: {
@@ -352,7 +346,11 @@ export default {
         {
           id: 1,
           question: "geolocation.isItLocatedIn",
-          answers: [],
+          answers: [
+            // { text: "geolocation.yes", value: "yes" },
+            // { text: "geolocation.no", value: "no" },
+            // { text: "I can't say", value: "na" }
+          ],
           type: "one_choice",
           required: true,
           isDependent: false,
@@ -391,9 +389,6 @@ export default {
   },
   created() {
     this.initialize();
-  },
-  async mounted() {
-    await this.getAllApproxLocationOptions();
   },
   computed: {
     context() {
@@ -441,12 +436,6 @@ export default {
     },
     translate() {
       return `https://translate.google.com/#auto/${i18n.locale}/${this.taskInfo.text}`;
-    },
-
-    locationName() {
-      return this.approxLocationOptions.length
-        ? this.approxLocationOptions[0].value
-        : null;
     }
   },
 
@@ -483,14 +472,13 @@ export default {
       }
     },
     decStep() {
-      const minStep = this.approxLocationOptions.length > 0 ? 1 : 2;
-      if (this.step > minStep) {
+      if (this.step > 1) {
         this.step--;
       }
     },
 
     // Submit button
-    async submit() {
+    submit() {
       // Attach the marker location to the answers
       if (this.markerLatLng != null) {
         this.answers[1].value = this.markerLatLng;
@@ -502,19 +490,17 @@ export default {
         questions: this.questions
       });
       this.initialize();
-      await this.getAllApproxLocationOptions();
     },
 
     // Skip button
-    async skip() {
+    skip() {
       this.$emit("skip");
       this.initialize();
-      await this.getAllApproxLocationOptions();
     },
 
     //***  Google maps section */
     // main function to load the map
-    loaded() {
+    async loaded() {
       // TODO: information is not coming in tags anymore.
       if (
         typeof this.taskInfo !== "undefined" &&
@@ -529,6 +515,7 @@ export default {
           _self.zoom = ZOOMMAX;
         }
       }
+      await this.getAllApproxLocationOptions();
       //this.isLoading = false; // TODO: Implement this loading
     },
 
@@ -537,47 +524,61 @@ export default {
       //TODO: This method will load the options based on location, geopolitical entity or facility
       //TODO: What happens when all the 3 columns are empty
       let locations = [];
-      this.approxLocationOptions = [];
-      // searching for places
-      if (this.taskInfo) {
-        // iterate the columns with geolocation data
-        for (const col of GEO_COLUMNS) {
-          const currentLocation = this.taskInfo[col.geoString];
-          const currentLat = this.taskInfo[col.geoLat];
-          const currentLng = this.taskInfo[col.geoLng];
-          if (
-            currentLocation &&
-            currentLocation !== "" &&
-            currentLocation !== "#N/A"
-          ) {
-            // push the location comming from dataset directly
-            locations.push(currentLocation);
-          } else if (
-            currentLat &&
-            currentLng &&
-            !isNaN(currentLat) &&
-            !isNaN(currentLng)
-          ) {
-            // reverse the coordinates comming from dataset
-            locations.push(
-              `"${await this.getAddress(currentLat, currentLng)}"`
-            );
+
+      //TODO: do this for all the 3 options
+      // search for CIME_geolocation_string places
+      if (
+        typeof this.taskInfo !== "undefined" &&
+        typeof this.taskInfo.tags !== "undefined"
+      ) {
+        const tag = this.taskInfo.tags.find(
+          x => x.name === "CIME_geolocation_string"
+        );
+        // Get location from address
+        if (!!tag) {
+          // TODO: if string exist push the value directly to location, but reverse geocode it
+          if (tag.value === "") {
+            locations.push(await this.fixNoCIME());
+          } else {
+            let locationEncoded = tag.value || `'"${await this.fixNoCIME()}"'`;
+            let locationParsed = await this.fixNoCIME();
+            try {
+              // locationParsed = JSON.parse(locationEncoded);
+              locationParsed = locationEncoded;
+            } catch (err) {
+              locationParsed = JSON.parse(locationEncoded.replace(/\\/g, ""));
+            }
+            if (locationParsed !== "Pin is correct") {
+              locations = locationParsed;
+            }
           }
         }
+      }
 
-        if (locations.length === 0) {
-          // set default location
-          locations.push(`"${await this.getAddress()}"`);
+      // use info.place as fallback if no CIME_geolocation_string
+      if (locations.length < 1) {
+        if (this.taskInfo.place) {
+          if (this.taskInfo.place === "") {
+            locations.push(await this.fixNoCIME());
+          } else {
+            locations.push(this.taskInfo.place) || (await this.fixNoCIME());
+          }
+        } else {
+          locations.push(await this.fixNoCIME());
         }
       }
-      for (const location of locations) {
+
+      // create Approx Location Options
+      let i, location;
+      this.approxLocationOptions = [];
+      for ([i, location] of locations.entries()) {
         this.approxLocationOptions.push({
-          value: location,
-          text: location
+          value: locations[i],
+          text: locations[i]
         });
       }
       this.approxLocationOptions.push({
-        value: "another_location",
+        value: "Another location",
         text: "Another location"
       });
       if (this.approxLocationOptions.length === 2) {
@@ -585,7 +586,6 @@ export default {
         this.approxLocationOptions[1].text = this.$t("geolocation.no");
       }
     },
-
     // Detect the bounds of map
     async getBounds() {
       //**TODO: Validate which coordinates exist, location, geopolitical entity or facility
@@ -625,12 +625,10 @@ export default {
     },
 
     // get reverse geocoding from latlng center
-    async getAddress(lat, lng) {
-      if (!lat || !lng) {
-        ({ lat, lng } = DEFAULT_LOCATION);
-      }
-      //TODO: this method works with center, but this not exist anymore
-      let address = await this.getReverseGeo(lat, lng);
+    async fixNoCIME() {
+      let address = await this.getReverseGeo(
+        this.taskInfo.tags.filter(x => x.name === "CIME_geolocation_centre")
+      );
       if (address.hasOwnProperty("village")) {
         return address.village;
       } else if (address.hasOwnProperty("state")) {
@@ -640,14 +638,26 @@ export default {
       }
     },
 
-    // get reverse geocoding from latlng
-    async getReverseGeo(lat, lng) {
-      if (!isNaN(lat) && !isNaN(lng)) {
-        let url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
-        let data_aux = await fetch(url);
-        const data = await data_aux.json();
-        if (data.hasOwnProperty("address")) {
-          return data.address;
+    async getReverseGeo(coordinates) {
+      if (coordinates.length) {
+        let tmp = [];
+        try {
+          // tmp = JSON.parse(coordinates[0].value);
+          tmp = coordinates[0].value;
+        } catch (err) {
+          tmp = JSON.parse(coordinates[0].value.replace(/\\/g, ""));
+          tmp[0][0] = parseFloat(tmp[0][0].replace(",", "."));
+          tmp[0][1] = parseFloat(tmp[0][1].replace(",", "."));
+        }
+        if (tmp.length) {
+          let lat = tmp[0][0];
+          let lng = tmp[0][1];
+          let url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+          let data_aux = await fetch(url);
+          const data = await data_aux.json();
+          if (data.hasOwnProperty("address")) {
+            return data.address;
+          }
         }
       }
     },
@@ -682,7 +692,7 @@ export default {
       return { lat: newLat, lng: newLng };
     },
 
-    // Get coordinates from Google search field
+    // Get coordinates from google search
     setPlace(place) {
       if (place != null) {
         this.markerLatLng = {
@@ -721,7 +731,7 @@ export default {
     step(newVal) {
       // When step of maps is active
       if (newVal === 2) {
-        // fit Google maps to bounds
+        // fit google maps to bounds
         let bounds = new google.maps.LatLngBounds();
         for (let point of this.path) {
           bounds.extend(new google.maps.LatLng(point.lat, point.lng));
