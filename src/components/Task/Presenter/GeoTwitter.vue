@@ -361,9 +361,6 @@ export default {
   created() {
     this.initialize();
   },
-  async mounted() {
-    await this.getAllApproxLocationOptions();
-  },
   computed: {
     context() {
       return this;
@@ -403,20 +400,20 @@ export default {
     //   return "";
     // },
     tweetImage() {
-      const url_img = this.taskInfo.media[0] || null;
+      const url_img = this.taskInfo.media_url || null;
       if (url_img) return url_img.replace(/^http:\/\//i, "https://");
       return null;
     },
 
     tweetUrl() {
       return (
-        this.taskInfo.url || `twitter.com/web/status/${this.taskInfo.TweetID}`
+        this.taskInfo.url || `twitter.com/web/status/${this.taskInfo.tweet_id}`
       );
     },
 
     tweetText() {
       var urlRegex = /(https?:\/\/[^\s]+)/g;
-      return this.taskInfo.text.replace(urlRegex, function(url) {
+      return this.taskInfo.full_text.replace(urlRegex, function(url) {
         return `<a href="${url}" target="_blank">${url}</a>`;
       });
     },
@@ -425,7 +422,7 @@ export default {
       return `https://www.google.com/searchbyimage?image_url=${this.tweetImage}`;
     },
     translate() {
-      return `https://translate.google.com/#auto/${i18n.locale}/${this.taskInfo.text}`;
+      return `https://translate.google.com/#auto/${i18n.locale}/${this.taskInfo.full_text}`;
     },
 
     locationName() {
@@ -435,10 +432,11 @@ export default {
 
   methods: {
     // clean variables
-    async initialize() {
+    initialize() {
       this.step = 1;
       this.markerLatLng = null;
       this.searchLatLng = null;
+      this.streetViewEnabled = false;
       this.locationOptions = [];
       this.answers = this.questions.map(function(x) {
         const answer = { qid: x.id, question: x.question, value: null };
@@ -485,14 +483,12 @@ export default {
         questions: this.questions
       });
       this.initialize();
-      await this.getAllApproxLocationOptions();
     },
 
     // Skip button
     async skip() {
       this.$emit("skip");
       this.initialize();
-      await this.getAllApproxLocationOptions();
     },
 
     //***  Google maps section */
@@ -511,7 +507,7 @@ export default {
           if (
             currentLocation &&
             currentLocation !== "" &&
-            currentLocation !== "#N/A"
+            currentLocation !== "N_A"
           ) {
             // push the location comming from dataset directly
             locations.push({
@@ -640,6 +636,13 @@ export default {
     }
   },
   watch: {
+    taskInfo:{
+      handler() {
+        this.getAllApproxLocationOptions();
+      },
+      deep: true,
+      immediate: true
+    },
     locationOptions: {
       handler() {
         this.questions[0].answers = this.locationOptions;
