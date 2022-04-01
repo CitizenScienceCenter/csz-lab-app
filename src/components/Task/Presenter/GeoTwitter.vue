@@ -406,9 +406,10 @@ export default {
     },
 
     tweetUrl() {
-      return (
-        this.taskInfo.url || `twitter.com/web/status/${this.taskInfo.TweetID}`
-      );
+      const tweetId = this.taskInfo.tweet_id.split("id:")[1]
+        ? this.taskInfo.tweet_id.split("id:")[1]
+        : "undefined";
+      return this.taskInfo.url || `twitter.com/web/status/${tweetId}`;
     },
 
     tweetText() {
