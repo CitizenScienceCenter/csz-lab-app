@@ -53,14 +53,12 @@
           <div>
             <!-- Question  -->
             <!-- FIXME: If More than one option available show a generic question -->
-            <h1
+            <h2
               class="title"
               style="font-size: 24px; margin: 0; max-width: 425px"
-              v-if="locationName"
             >
               {{ step }} - {{ getQuestion(step, "question") }}
-              {{ locationName }}?
-            </h1>
+            </h2>
             <!-- Check the image's comments to validate it -->
             <h2
               class="subtitle"
@@ -91,10 +89,15 @@
             </h2>
 
             <common-editor-elements
+              v-if="locationOptions.length"
               :answers="answers"
               :question="getQuestion(step)"
               :context="context"
             />
+            <gmap-autocomplete
+              :value="locationPre"
+              @place_changed="otherPlace"
+            ></gmap-autocomplete>
           </div>
         </div>
 
@@ -102,7 +105,7 @@
         <div class="centered" v-show="step === 2">
           <!-- Title -->
           <label class="title">
-            {{ step }} - {{ $t("geolocation.locateExactPositionDesktop") }}
+            {{ step }} - {{ getQuestion(step, "question") }}
           </label>
           <!-- Subtitle -->
           <h6 class="subtitle" style="position: relative">
@@ -148,10 +151,7 @@
 
           <!-- Search input for google -->
           <div class="control w-100 pb-3">
-            <gmap-autocomplete
-              class="input"
-              @place_changed="setPlace"
-            ></gmap-autocomplete>
+            <gmap-autocomplete @place_changed="setPlace"></gmap-autocomplete>
           </div>
           <!-- Google Maps component -->
           <b-container
@@ -206,9 +206,9 @@
         <!-- ***Step 3*** -->
         <div class="centered" v-if="step === 3">
           <div class="steps" style="max-width: 500px">
-            <h1 class="title" style="font-size: 24px; margin: 0">
+            <h2 class="pb-3" style="font-size: 24px; margin: 0">
               {{ step }} - {{ getQuestion(step, "question") }}
-            </h1>
+            </h2>
             <common-editor-elements
               :answers="answers"
               :question="getQuestion(step)"
@@ -263,7 +263,7 @@
             <div class="level-item">
               <button
                 class="button is-secondary"
-                :disabled="step === 1 || !locationOptions.length"
+                :disabled="step === 1"
                 style="margin-right: 5px"
                 @click="decStep"
               >
@@ -298,8 +298,11 @@ const GEO_COLUMNS = [
   { geoString: "facility", geoLat: "fac_lat", geoLng: "fac_lon" },
   { geoString: "gpe", geoLat: "gpe_lat", geoLng: "gpe_lon" }
 ];
-// Default location for the map
-const DEFAULT_LOCATION = { lat: 47.384, lng: 8.542 };
+const OTHER_LOCATION = {
+  value: "other",
+  text: "Another location",
+  coordinates: [0, 0]
+};
 
 export default {
   name: "GeoTwitter",
@@ -311,6 +314,8 @@ export default {
     return {
       showTips: false,
       step: 1,
+      selectedLocation: {},
+      locationPre: null,
       searchLatLng: null,
       streetViewEnabled: false,
       markerLatLng: null,
@@ -320,7 +325,7 @@ export default {
       questions: [
         {
           id: 1,
-          question: "geolocation.isItLocatedIn",
+          question: "geolocation.imgLocation",
           answers: [],
           type: "one_choice",
           required: true,
@@ -378,13 +383,8 @@ export default {
       }
       // Set the location selected in first step or the default location
       if (this.taskInfo) {
-        if (this.locationOptions.some(x => x.value === this.answers[0].value)) {
-          return this.getLatLng(
-            this.locationOptions.find(x => x.value === this.answers[0].value)
-              .coordinates
-          );
-        }
-        return this.getLatLng([DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng]);
+        const coordinates = this.selectedLocation.coordinates || [0, 0];
+        return this.getLatLng(coordinates);
       }
     },
     // tweetHandle() {
@@ -407,7 +407,7 @@ export default {
 
     tweetUrl() {
       return (
-        this.taskInfo.url || `twitter.com/web/status/${this.taskInfo.tweet_id}`
+        this.taskInfo.url || `twitter.com/web/status/${this.taskInfo.TweetID}`
       );
     },
 
@@ -437,6 +437,7 @@ export default {
       this.markerLatLng = null;
       this.searchLatLng = null;
       this.streetViewEnabled = false;
+      this.selectedLocation = {};
       this.locationOptions = [];
       this.answers = this.questions.map(function(x) {
         const answer = { qid: x.id, question: x.question, value: null };
@@ -464,14 +465,17 @@ export default {
       }
     },
     decStep() {
-      const minStep = this.locationOptions.length > 0 ? 1 : 2;
-      if (this.step > minStep) {
+      if (this.step > 1) {
         this.step--;
       }
     },
 
     // Submit button
     async submit() {
+      // assign the selected location in step 1 to answer one, when is "other"
+      if (this.answers[0].value === OTHER_LOCATION.value) {
+        this.answers[0].value = this.selectedLocation.value;
+      }
       // Attach the marker location to the answers
       if (this.markerLatLng != null) {
         this.answers[1].value = this.markerLatLng;
@@ -529,35 +533,42 @@ export default {
         }
       }
       if (locations.length === 0) {
-        // set default location
-        locations.push({
-          name: `"${await this.getAddress()}"`,
-          coordinates: [DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng]
-        });
+        return;
       }
       for (const location of locations) {
-        this.locationOptions.push({
+        if (this.locationOptions.some(x => x.value === location.name)) {
+          continue;
+        }
+        this.locationOptions.unshift({
           coordinates: location.coordinates,
           value: location.name,
           text: location.name
         });
       }
-      this.locationOptions.push({
-        coordinates: [DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng],
-        value: "another_location",
-        text: "Another location"
-      });
-      if (this.locationOptions.length === 2) {
-        this.locationOptions[0].text = this.$t("geolocation.yes");
-        this.locationOptions[1].text = this.$t("geolocation.no");
+      if (!this.locationOptions.some(x => x.value === OTHER_LOCATION.value)) {
+        this.locationOptions.push(OTHER_LOCATION);
+      }
+    },
+
+    // Get coordinates from Google search field for the first step
+    otherPlace(place) {
+      if (place != null) {
+        this.selectedLocation = {
+          coordinates: [
+            place.geometry.location.lat(),
+            place.geometry.location.lng()
+          ],
+          value: place.name,
+          text: place.formatted_address
+        };
+        this.locationPre = place.formatted_address;
+        // keep the answer[0] as other until user submit
+        this.answers[0].value = OTHER_LOCATION.value;
       }
     },
 
     // get reverse geocoding from latlng center
-    async getAddress(lat, lng) {
-      if (!lat || !lng) {
-        ({ lat, lng } = DEFAULT_LOCATION);
-      }
+    async getAddress(lat = 0, lng = 0) {
       let address = await this.getReverseGeo(lat, lng);
       if (address.hasOwnProperty("village")) {
         return address.village;
@@ -600,8 +611,6 @@ export default {
           );
           console.warn(err.message);
         }
-      } else {
-        [newLat, newLng] = [DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng];
       }
       return { lat: parseFloat(newLat), lng: parseFloat(newLng) };
     },
@@ -636,7 +645,7 @@ export default {
     }
   },
   watch: {
-    taskInfo:{
+    taskInfo: {
       handler() {
         this.getAllApproxLocationOptions();
       },
@@ -649,7 +658,26 @@ export default {
       },
       deep: true
     },
+    answers: {
+      handler(newValue, oldValue) {
+        if (
+          this.answers[0].value &&
+          this.answers[0].value != OTHER_LOCATION.value
+        ) {
+          this.selectedLocation = this.locationOptions.length
+            ? this.locationOptions.find(x => x.value === this.answers[0].value)
+            : {};
+        }
+      },
+      deep: true
+    },
     step(newVal) {
+      if (newVal === 1) {
+        this.locationPre =
+          this.answers[0].value === OTHER_LOCATION.value
+            ? this.selectedLocation.text
+            : null;
+      }
       // When step of maps is active
       if (newVal === 2) {
         // fit Google maps to bounds
