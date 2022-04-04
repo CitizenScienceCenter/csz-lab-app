@@ -48,8 +48,16 @@
     <!-- Left section - steps -->
     <b-col cols="11" md="8" xl="7" class="mt-4 mt-md-0">
       <section>
+        <div class="text-center interactive-section pt-5" v-if="loading">
+          <b-spinner
+            variant="primary"
+            style="width: 3rem; height: 3rem;"
+            label="Large Spinner"
+          ></b-spinner>
+          <h5>Loading new task...</h5>
+        </div>
         <!-- **** STEP 1 ***** -->
-        <div class="centered" v-if="step < 2">
+        <div class="interactive-section" v-if="step < 2 && !loading">
           <div>
             <!-- Question  -->
             <!-- FIXME: If More than one option available show a generic question -->
@@ -102,7 +110,7 @@
         </div>
 
         <!-- ****Step 2***** -->
-        <div class="centered" v-show="step === 2">
+        <div class="interactive-section" v-show="step === 2">
           <!-- Title -->
           <label class="title">
             {{ step }} - {{ getQuestion(step, "question") }}
@@ -204,7 +212,7 @@
         </div>
 
         <!-- ***Step 3*** -->
-        <div class="centered" v-if="step === 3">
+        <div class="interactive-section" v-if="step === 3">
           <div class="steps" style="max-width: 500px">
             <h2 class="pb-3" style="font-size: 24px; margin: 0">
               {{ step }} - {{ getQuestion(step, "question") }}
@@ -218,66 +226,63 @@
         </div>
 
         <!-- ***Step 4*** -->
-        <div class="centered" v-if="step === 4">
+        <div class="interactive-section" v-if="step === 4">
           <div
             class="steps"
             style="display: flex; flex-direction: column; align-items: center"
           >
-            <img src="@/assets/img/completed.svg" />
+            <img :src="finalImg" />
             <h2
               class="title"
               style="font-size: 24px; margin-top: 15px; margin-bottom: 15px"
-              v-if="locationOptions.length"
             >
-              {{ $t("geolocation.taskCompleted") }}
+              {{ $t(finalMsg) }}
             </h2>
           </div>
         </div>
 
         <!-- Skip button and navigation -->
         <div class="bottom">
-          <div class="level">
-            <!-- Submit button -->
-            <b-btn
-              @click="submit"
-              variant="success"
-              class="mt-3"
-              :disabled="!approxLocation || !accuracy"
-              v-if="step === 4"
-            >
-              {{ $t("submit-btn") }}
-            </b-btn>
-
-            <!-- Skip button -->
-            <b-btn @click="skip" variant="secondary" class="mt-3"
-              >{{ $t("skip-btn") }}
-            </b-btn>
-
+          <b-row align-h="center" class="py-2">
             <!-- Navigation buttons -->
-            <div class="level-item">
-              <div>
-                {{ $t("geolocation.steps", { start: step, end: 4 }) }}
-              </div>
-            </div>
-
-            <div class="level-item">
-              <button
-                class="button is-secondary"
+            <b-col cols="12" class="text-center">
+              {{ $t("geolocation.steps", { start: step, end: 4 }) }}
+            </b-col>
+            <b-button-group class="pt-2">
+              <!-- back button -->
+              <b-button
+                class="mr-3"
+                variant="primary"
+                size="sm"
                 :disabled="step === 1"
-                style="margin-right: 5px"
                 @click="decStep"
               >
                 <b-icon icon="arrow-left"></b-icon>
-              </button>
-              <button
-                class="button is-secondary"
+              </b-button>
+              <!-- Submit button -->
+              <b-btn
+                @click="submit"
+                variant="success"
+                :disabled="!approxLocation || !accuracy"
+                v-if="step === 4"
+              >
+                {{ $t("submit-btn") }}
+              </b-btn>
+
+              <!-- Skip button -->
+              <b-btn @click="skip" variant="secondary"
+                >{{ $t("skip-btn") }}
+              </b-btn>
+              <!-- next button -->
+              <b-button
+                variant="primary"
                 :disabled="step === 4 || !approxLocation"
                 @click="incStep"
               >
                 <b-icon icon="arrow-right"></b-icon>
-              </button>
-            </div>
-          </div>
+              </b-button>
+            </b-button-group>
+          </b-row>
         </div>
       </section>
     </b-col>
@@ -321,6 +326,7 @@ export default {
       markerLatLng: null,
       zoom: ZOOMMIN,
       locationOptions: [],
+      loading: false,
       // the variables used in template here in the component
       questions: [
         {
@@ -428,12 +434,24 @@ export default {
 
     locationName() {
       return this.locationOptions.length ? this.locationOptions[0].value : null;
+    },
+
+    finalMsg() {
+      return this.approxLocation && this.accuracy
+        ? "geolocation.finalMsg"
+        : "geolocation.finalMsgNoLocation";
+    },
+    finalImg() {
+      return this.approxLocation && this.accuracy
+        ? require("@/assets/img/completed.svg")
+        : require("@/assets/img/not_completed.svg");
     }
   },
 
   methods: {
     // clean variables
     initialize() {
+      this.loading = true;
       this.step = 1;
       this.markerLatLng = null;
       this.searchLatLng = null;
@@ -447,7 +465,6 @@ export default {
         }
         return answer;
       });
-      // await this.loaded();
     },
 
     getQuestion(id, param) {
@@ -534,6 +551,7 @@ export default {
         }
       }
       if (locations.length === 0) {
+        this.loading = false;
         return;
       }
       for (const location of locations) {
@@ -549,6 +567,7 @@ export default {
       if (!this.locationOptions.some(x => x.value === OTHER_LOCATION.value)) {
         this.locationOptions.push(OTHER_LOCATION);
       }
+      this.loading = false;
     },
 
     // Get coordinates from Google search field for the first step
@@ -718,15 +737,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.interactive-section {
+  min-height: 25vh;
+}
 .maps-container {
   height: 100%;
   width: 100%;
 }
 .principal-container {
-  height: 60vh;
+  height: 55vh;
   transition: height 0.5s linear;
   &.street-view {
-    height: 40vh;
+    height: 35vh;
   }
 }
 .secondary-container {
