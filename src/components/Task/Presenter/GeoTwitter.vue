@@ -251,7 +251,6 @@
             <b-button-group class="pt-2">
               <!-- back button -->
               <b-button
-                class="mr-3"
                 variant="primary"
                 size="sm"
                 :disabled="step === 1"
