@@ -234,6 +234,9 @@ a {
   span.small {
     font-size: $font-size-small;
   }
+  .is-clickable {
+    cursor: pointer;
+  }
 }
 
 .btn {

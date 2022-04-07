@@ -1,0 +1,36 @@
+{
+  "en": {
+    "geolocation": {
+      "seeOriginal": "See original post",
+      "googleReverse": "Search Google for image",
+      "googleTranslate": "Translate on Google",
+      "steps":"Step {start} of {end}",
+      "imgLocation": "What is the location of the image?",
+      "checkOriginalImage": "Check the image's information to validate it.",
+      "tips": "Tips",
+      "tipsHeadline": "Tips for location",
+      "readTheFullPost": "Read the full post. You can link to the source. Does the location provide a match?",
+      "useGoogleImages": "Use Google Images search and find relevant images to the current one.",
+      "useGoogleTranslate": "Aren't you familiarized with the text language?. Translate it with Google.",
+      "locateExactPositionDesktop": "Locate the exact position of the damage on the map.",
+      "useSearchbox":"Use the search box or drag the flag to point the location."
+    }
+  },
+  "de": {
+    "geolocation": {
+      "seeOriginal": "See original post",
+      "googleReverse": "Search Google for image",
+      "googleTranslate": "Translate on Google",
+      "steps":"Step {start} of {end}",
+      "imgLocation": "What is the location of the image?",
+      "checkOriginalImage": "Check the image's information to validate it.",
+      "tips": "Tips",
+      "tipsHeadline": "Tips for location",
+      "readTheFullPost": "Read the full post. You can link to the source. Does the location provide a match?",
+      "useGoogleImages": "Use Google Images search and find relevant images to the current one.",
+      "useGoogleTranslate": "Aren't you familiarized with the text language?. Translate it with Google.",
+      "locateExactPositionDesktop": "Locate the exact position of the damage on the map.",
+      "useSearchbox":"Use the search box or drag the flag to point the location."
+    }
+  }
+}

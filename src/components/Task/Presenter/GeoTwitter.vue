@@ -61,39 +61,28 @@
           <div>
             <!-- Question  -->
             <!-- FIXME: If More than one option available show a generic question -->
-            <h2
-              class="title"
-              style="font-size: 24px; margin: 0; max-width: 425px"
-            >
-              {{ step }} - {{ getQuestion(step, "question") }}
-            </h2>
+            <label class="title">
+              {{ step }} - {{ $t(getQuestion(step, "question")) }}
+            </label>
             <!-- Check the image's comments to validate it -->
-            <h2
-              class="subtitle"
-              style="margin-top: 12px; font-size: 16px; position: relative"
-            >
-              {{ $t("geolocation.checkOriginalImage") }}.
-              <span
-                class="is-clickable"
-                style="color: #2f67df"
-                @click="showTips = true"
-              >
+            <h2 style="margin-top: 12px; font-size: 16px; position: relative">
+              {{ $t("geolocation.checkOriginalImage") }}
+              <a class="is-clickable" v-b-modal.modal_tips1>
                 <b-icon icon="question-circle"></b-icon>
                 {{ $t("geolocation.tips") }}
-              </span>
+              </a>
               <!-- Tips for this step -->
-              <div class="tips" v-show="showTips">
-                <h3>{{ $t("geolocation.tipsHeadline") }}</h3>
+              <b-modal
+                id="modal_tips1"
+                hide-footer
+                ok-only
+                scrollable
+                :title="$t('geolocation.tipsHeadline')"
+              >
                 <p>{{ $t("geolocation.readTheFullPost") }}</p>
                 <p>{{ $t("geolocation.useGoogleImages") }}</p>
-                <button
-                  class="button is-secondary"
-                  style="align-self: flex-end"
-                  @click="showTips = false"
-                >
-                  {{ $t("geolocation.gotIt") }}
-                </button>
-              </div>
+                <p>{{ $t("geolocation.useGoogleTranslate") }}</p>
+              </b-modal>
             </h2>
 
             <common-editor-elements
@@ -113,22 +102,24 @@
         <div class="interactive-section" v-show="step === 2">
           <!-- Title -->
           <label class="title">
-            {{ step }} - {{ getQuestion(step, "question") }}
+            {{ step }} - {{ $t(getQuestion(step, "question")) }}
           </label>
           <!-- Subtitle -->
-          <h6 class="subtitle" style="position: relative">
+          <h2 style="margin-top: 12px; font-size: 16px; position: relative">
             {{ $t("geolocation.useSearchbox") }}
-            <span
-              class="is-clickable"
-              style="color: #2f67df"
-              @click="showTips = true"
-            >
+            <a class="is-clickable" v-b-modal.modal_tips2>
               <b-icon icon="question-circle"></b-icon>
               {{ $t("geolocation.tips") }}
-            </span>
+            </a>
             <!-- Tips in pop up window -->
-            <div class="tips" v-show="showTips" style="width: 500px">
-              <h3>{{ $t("geolocation.tipsHeadline") }}</h3>
+            <b-modal
+              id="modal_tips2"
+              hide-footer
+              ok-only
+              scrollable
+              :title="$t('geolocation.tipsHeadline')"
+              style="width: 500px"
+            >
               <p>
                 {{ $t("geolocation.streetview1Desktop") }}
                 <b-icon icon="account"></b-icon>
@@ -147,15 +138,8 @@
                 <li>{{ $t("geolocation.streetMedium") }}</li>
                 <li>{{ $t("geolocation.streetLow") }}</li>
               </ul>
-              <button
-                class="button is-secondary"
-                style="align-self: flex-end"
-                @click="showTips = false"
-              >
-                {{ $t("geolocation.gotIt") }}
-              </button>
-            </div>
-          </h6>
+            </b-modal>
+          </h2>
 
           <!-- Search input for google -->
           <div class="control w-100 pb-3">
@@ -316,7 +300,6 @@ export default {
   },
   data: () => {
     return {
-      showTips: false,
       step: 1,
       selectedLocation: {},
       locationPre: null,
