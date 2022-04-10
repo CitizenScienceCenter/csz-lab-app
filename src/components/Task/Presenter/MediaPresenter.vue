@@ -49,7 +49,7 @@ export default {
     ImageTaskPresenter,
     TextBasedTaskPresenter,
     ValueBasedTaskPresenter,
-    "maps-task-presenter": Maps
+    "maps-task-presenter": Maps,
   },
   data() {
     return {
@@ -101,7 +101,7 @@ export default {
         return ValueBasedTaskPresenter;
       }
       return (this.mediaComponent = null);
-    }
+    },
   },
   methods: {
     // Prepair the center and location map for "geo" type
@@ -148,36 +148,39 @@ export default {
         this.resp_values = this.link;
         return;
       }
+
       // Options format option1,option2,...
       // Option format value:key
       this.resp_options.content = new Map();
-      this.options.split(",").forEach(function(x) {
+      this.options.split(",").forEach(function (x) {
         let [value, key] = x.split(":");
         aux.resp_options.content.set(key.trim(), value.trim());
       });
+
       // Values format value: 0,1,2,...
       const array = this.link.split("value:")[1];
-      this.resp_values = array.split(",").map(function(x) {
+      this.resp_values = array.split(",").map(function (x) {
         return x.trim();
       });
       this.isSlider();
     },
+
     // validate if "value" type is a slider
     isSlider() {
       const values = Array.from(this.resp_options.content.values());
       let numeric = [];
       try {
-        numeric = Array.from(values, x => parseInt(x.trim(), 10));
-        if (numeric.some(x => isNaN(x))) throw "not a number detected";
+        numeric = Array.from(values, (x) => parseInt(x.trim(), 10));
+        if (numeric.some((x) => isNaN(x))) throw "not a number detected";
       } catch (error) {
         return false;
       }
       this.resp_options.slider = {
         max: Math.max(...numeric),
-        min: Math.min(...numeric)
+        min: Math.min(...numeric),
       };
       return true;
-    }
+    },
   },
   watch: {
     link() {
@@ -185,8 +188,8 @@ export default {
       this.mime = getMIME(this.link);
       this.setMapCenter();
       this.getValueResponses();
-    }
-  }
+    },
+  },
 };
 </script>
 

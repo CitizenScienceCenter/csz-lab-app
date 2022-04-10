@@ -42,7 +42,7 @@ router.beforeEach(async (to, from, next) => {
     await store.restored;
   }
 
-  document.title = to.meta.title || "CS Project Builder";
+  document.title = to.meta.title || "CSZ Solutions Kit";
 
   let filteredPath = to.path.split("/").filter(element => element.length > 0);
   console.log(filteredPath);
