@@ -28,7 +28,7 @@ if (!store.state.settings.language) {
   //store.dispatch("settings/setLanguage", 'de' );
 }
 
-// Merge internationalization messages from external JSON files
+// Merge internationalization messages with external JSON files
 const geoTwitter = require("./assets/messages_geoTwitter.json");
 for (let key in messages) {
     messages[key] = Object.assign(messages[key], geoTwitter[key]);

@@ -12,35 +12,44 @@
           />
         </figure>
         <br />
-        <!-- Twitter text-->
-        <p class="post-text" v-html="tweetText" />
-        <!-- author @handler -@ Mar 11  -->
-        <!-- TODO: This information is not included into dataset -->
-        <!-- <span class="post-author"> {{ taskInfo.author }} &nbsp; </span>
+        <div class="text-center interactive-section pt-5" v-if="loading">
+          <b-spinner
+            variant="primary"
+            style="width: 3rem; height: 3rem;"
+            label="Large Spinner"
+          ></b-spinner>
+        </div>
+        <div v-else>
+          <!-- Twitter text-->
+          <p class="post-text" v-html="tweetText" />
+          <!-- author @handler -@ Mar 11  -->
+          <!-- TODO: This information is not included into dataset -->
+          <!-- <span class="post-author"> {{ taskInfo.author }} &nbsp; </span>
         <span class="post-handle">
           {{ tweetHandle }} - @{{ post_time(taskInfo.created_at) }}
         </span> -->
-        <p class="link mt-3">
-          <!-- See original post -->
-          <a target="blank" :href="`https://${tweetUrl}`">
-            <b-icon icon="file-earmark" size="is-small"></b-icon>
-            {{ $t("geolocation.seeOriginal") }}
-          </a>
-        </p>
-        <!-- Search Google for image -->
-        <p class="link">
-          <a class="link" target="blank" :href="searchImg">
-            <b-icon icon="camera" size="is-small"></b-icon>
-            {{ $t("geolocation.googleReverse") }}
-          </a>
-        </p>
-        <!-- Translate on Google -->
-        <p class="link">
-          <a class="link" target="blank" :href="translate">
-            <b-icon icon="globe" size="is-small"></b-icon>
-            {{ $t("geolocation.googleTranslate") }}
-          </a>
-        </p>
+          <p class="link mt-3">
+            <!-- See original post -->
+            <a target="blank" :href="`https://${tweetUrl}`">
+              <i class="fab fa-twitter"></i>
+              {{ $t("geolocation.seeOriginal") }}
+            </a>
+          </p>
+          <!-- Search Google for image -->
+          <p class="link">
+            <a class="link" target="blank" :href="searchImg">
+              <i class="fas fa-image"></i>
+              {{ $t("geolocation.googleReverse") }}
+            </a>
+          </p>
+          <!-- Translate on Google -->
+          <p class="link">
+            <a class="link" target="blank" :href="translate">
+              <i class="fas fa-language"></i>
+              {{ $t("geolocation.googleTranslate") }}
+            </a>
+          </p>
+        </div>
         <!-- Component removed, more information required -->
         <!-- <comments linkClass="link" wrapperClass="link"></comments> -->
       </section>
@@ -54,7 +63,7 @@
             style="width: 3rem; height: 3rem;"
             label="Large Spinner"
           ></b-spinner>
-          <h5>Loading new task...</h5>
+          <h5>{{ $t("geolocation.loading_task") }}</h5>
         </div>
         <!-- **** STEP 1 ***** -->
         <div class="interactive-section" v-if="step < 2 && !loading">
@@ -68,7 +77,7 @@
             <h2 style="margin-top: 12px; font-size: 16px; position: relative">
               {{ $t("geolocation.checkOriginalImage") }}
               <a class="is-clickable" v-b-modal.modal_tips1>
-                <b-icon icon="question-circle"></b-icon>
+                <i class="fas fa-question-circle"></i>
                 {{ $t("geolocation.tips") }}
               </a>
               <!-- Tips for this step -->
@@ -99,7 +108,7 @@
         </div>
 
         <!-- ****Step 2***** -->
-        <div class="interactive-section" v-show="step === 2">
+        <div class="interactive-section" v-show="step === 2 && !loading">
           <!-- Title -->
           <label class="title">
             {{ step }} - {{ $t(getQuestion(step, "question")) }}
@@ -108,7 +117,7 @@
           <h2 style="margin-top: 12px; font-size: 16px; position: relative">
             {{ $t("geolocation.useSearchbox") }}
             <a class="is-clickable" v-b-modal.modal_tips2>
-              <b-icon icon="question-circle"></b-icon>
+              <i class="fas fa-question-circle"></i>
               {{ $t("geolocation.tips") }}
             </a>
             <!-- Tips in pop up window -->
@@ -122,18 +131,20 @@
             >
               <p>
                 {{ $t("geolocation.streetview1Desktop") }}
-                <b-icon icon="account"></b-icon>
+                <i class="fas fa-street-view"></i>
                 {{ $t("geolocation.streetview2Desktop") }}
               </p>
               <p>{{ $t("geolocation.streetview3Desktop") }}</p>
               <p>
                 {{ $t("geolocation.streetview4Desktop") }}
-                <b-icon icon="fullscreen"></b-icon>
+                <i class="fas fa-expand"></i>
               </p>
               <p>{{ $t("geolocation.streetview5Desktop") }}</p>
               <p>{{ $t("geolocation.streetview6Desktop") }}</p>
               <p>{{ $t("geolocation.streetview7Desktop") }}</p>
-              <ul>
+              <ul
+                style="list-style-type: disc;margin-left:30px;margin-top:20px;"
+              >
                 <li>{{ $t("geolocation.streetHigh") }}</li>
                 <li>{{ $t("geolocation.streetMedium") }}</li>
                 <li>{{ $t("geolocation.streetLow") }}</li>
@@ -196,10 +207,10 @@
         </div>
 
         <!-- ***Step 3*** -->
-        <div class="interactive-section" v-if="step === 3">
+        <div class="interactive-section" v-if="step === 3 && !loading">
           <div class="steps" style="max-width: 500px">
             <h2 class="pb-3" style="font-size: 24px; margin: 0">
-              {{ step }} - {{ getQuestion(step, "question") }}
+              {{ step }} - {{ $t(getQuestion(step, "question")) }}
             </h2>
             <common-editor-elements
               :answers="answers"
@@ -210,17 +221,17 @@
         </div>
 
         <!-- ***Step 4*** -->
-        <div class="interactive-section" v-if="step === 4">
+        <div class="interactive-section" v-if="step === 4 && !loading">
           <div
             class="steps"
             style="display: flex; flex-direction: column; align-items: center"
           >
-            <img :src="finalImg" />
+            <img src="@/assets/img/completed.svg" />
             <h2
               class="title"
               style="font-size: 24px; margin-top: 15px; margin-bottom: 15px"
             >
-              {{ $t(finalMsg) }}
+              {{ $t("geolocation.finalMsg") }}
             </h2>
           </div>
         </div>
@@ -246,7 +257,7 @@
               <b-btn
                 @click="submit"
                 variant="success"
-                :disabled="!approxLocation || !accuracy"
+                :disabled="!approxLocation"
                 v-if="step === 4"
               >
                 {{ $t("submit-btn") }}
@@ -259,7 +270,9 @@
               <!-- next button -->
               <b-button
                 variant="primary"
-                :disabled="step === 4 || !approxLocation"
+                :disabled="
+                  step === 4 || !approxLocation || (!accuracy && step === 3)
+                "
                 @click="incStep"
               >
                 <b-icon icon="arrow-right"></b-icon>
@@ -351,9 +364,6 @@ export default {
     taskInfo: { type: Object, required: true },
     pybossa: { type: Object, required: true }
   },
-  created() {
-    this.initialize();
-  },
   computed: {
     context() {
       return this;
@@ -416,24 +426,12 @@ export default {
 
     locationName() {
       return this.locationOptions.length ? this.locationOptions[0].value : null;
-    },
-
-    finalMsg() {
-      return this.approxLocation && this.accuracy
-        ? "geolocation.finalMsg"
-        : "geolocation.finalMsgNoLocation";
-    },
-    finalImg() {
-      return this.approxLocation && this.accuracy
-        ? require("@/assets/img/completed.svg")
-        : require("@/assets/img/not_completed.svg");
     }
   },
 
   methods: {
     // clean variables
     initialize() {
-      this.loading = true;
       this.step = 1;
       this.markerLatLng = null;
       this.searchLatLng = null;
@@ -486,13 +484,13 @@ export default {
         answers: this.answers,
         questions: this.questions
       });
-      this.initialize();
+      this.loading = true;
     },
 
     // Skip button
     async skip() {
       this.$emit("skip");
-      this.initialize();
+      this.loading = true;
     },
 
     //***  Google maps section */
@@ -649,6 +647,8 @@ export default {
   watch: {
     taskInfo: {
       handler() {
+        this.loading = true;
+        this.initialize();
         this.getAllApproxLocationOptions();
       },
       deep: true,

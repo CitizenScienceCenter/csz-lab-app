@@ -2,7 +2,7 @@
   <div>
     <b-form-radio-group
       v-model="answers[getRelativeId(question.id)].value"
-      :options="question.answers"
+      :options="options"
       :name="'question_radio' + question.id"
       stacked
       v-if="question.type === 'one_choice'"
@@ -10,7 +10,7 @@
 
     <b-form-checkbox-group
       v-model="answers[getRelativeId(question.id)].value"
-      :options="question.answers"
+      :options="options"
       :name="'question_checkbox' + question.id"
       stacked
       v-if="question.type === 'multiple_choice'"
@@ -18,7 +18,7 @@
 
     <b-form-select
       v-model="answers[getRelativeId(question.id)].value"
-      :options="question.answers"
+      :options="options"
       :name="'question_dropdown' + question.id"
       v-if="question.type === 'dropdown'"
     >
@@ -52,6 +52,17 @@ export default {
   methods: {
     getRelativeId(realId) {
       return this.answers.findIndex(a => a.qid == realId);
+    }
+  },
+  computed: {
+    options() {
+      return this.question.answers.map(a => {
+        if (typeof a === "string") {
+          return { text: this.$t(a), value: a };
+        } else {
+          return { text: this.$t(a.text), value: a.value };
+        }
+      });
     }
   },
   watch: {
