@@ -209,9 +209,9 @@
         <!-- ***Step 3*** -->
         <div class="interactive-section" v-if="step === 3 && !loading">
           <div class="steps" style="max-width: 500px">
-            <h2 class="pb-3" style="font-size: 24px; margin: 0">
+            <label class="title">
               {{ step }} - {{ $t(getQuestion(step, "question")) }}
-            </h2>
+            </label>
             <common-editor-elements
               :answers="answers"
               :question="getQuestion(step)"
