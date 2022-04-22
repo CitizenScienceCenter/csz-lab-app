@@ -17,22 +17,22 @@ if( !store.state.settings.language ) {
 
     // check if valid
     if( language !== 'en' && language !== 'de') {
-        language = "de";
+        language = "en";
     }
 
     // language for prerendering default routes
     if( navigator.userAgent === 'ReactSnap' ) {
-        language = "de";
+        language = "en";
     }
     console.log('final:', language)
-    //store.dispatch("settings/setLanguage", 'de' );
+    //store.dispatch("settings/setLanguage", 'en' );
 }
 
 
 //store.dispatch("settings/setLanguage", language );
 export const i18n = new VueI18n({
     silentTranslationWarn: true,
-    fallbackLocale: 'de',
+    fallbackLocale: 'en',
     locale: store.state.settings.language,
     messages
 })
