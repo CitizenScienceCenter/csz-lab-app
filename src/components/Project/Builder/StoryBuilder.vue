@@ -145,13 +145,8 @@ export default {
 
       toolbarOptions: [
         ["bold", "italic", "underline", "link"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        [
-          { align: "" },
-          { align: "center" },
-          { align: "right" },
-          { align: "justify" }
-        ],
+        [{ list: "bullet" }],
+        [{color:[]}],
         ["clean"]
       ]
     };
