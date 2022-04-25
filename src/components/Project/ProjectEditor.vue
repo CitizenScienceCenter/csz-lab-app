@@ -232,7 +232,18 @@ export default {
   },
   data: () => {
     return {
-      toolbarOptions: [["bold", "italic", "link"], [{ list: "bullet" }]],
+      toolbarOptions: [
+        ["bold", "italic", "underline", "link"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [
+          { align: "" },
+          { align: "center" },
+          { align: "right" },
+          { align: "justify" }
+        ],
+        [{color:[]}],
+        ["clean"]
+      ],
 
       form: {
         name: "",
