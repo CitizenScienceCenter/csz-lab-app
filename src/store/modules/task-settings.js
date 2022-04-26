@@ -31,7 +31,7 @@ const actions = {
     })
   },
 
-  setTaskScheduler ({ commit, dispatch }, { project, scheduler }) {
+  setTaskScheduler ({ commit, dispatch, state }, { project, scheduler }) {
     return dispatch('getTaskSchedulerOptions', project).then(response => {
       if (response) {
         return api.setTaskScheduler(state.taskSchedulerOptions.form.csrf, project.short_name, scheduler).then(value => {
