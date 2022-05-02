@@ -111,8 +111,8 @@ export default {
         {
           vmid: "og:image", // because it gets overwritten by some
           property: "og:image",
-          content: "@/assets/img/presentation.jpg"
-        }
+          content: "https://lab.citizenscience.ch/static/img/presentation.jpg"
+        },
       ],
       link: [
         {
