@@ -21,6 +21,14 @@
         :placeholder="$t('task-template-question-placeholder')"
       >
       </b-input>
+      <b-form-checkbox
+        v-model="settings.required"
+        name="check-button"
+        class="mr-4 pt-2"
+        switch
+      >
+        {{ $t("task-template-options-required") }}
+      </b-form-checkbox>
     </b-form-group>
 
     <!-- Map Editor section  -->
@@ -273,5 +281,7 @@ export default {
   font-size: 35px;
   color: $color-primary;
   font-weight: bold;
+  position: absolute;
+  transform: translateX(2px) translateY(-2px);
 }
 </style>
