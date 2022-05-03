@@ -7,6 +7,8 @@
         @onValid="mapSettingsValidation"
       ></map-settings>
     </div>
+
+    <!-- Questions section -->
     <div class="clearfix">
       <!-- Internal header section -->
       <h2 class="float-left">{{ $t("task-template-questions") }}</h2>
@@ -14,8 +16,7 @@
         $t("task-template-add-question")
       }}</b-btn>
     </div>
-
-    <!-- Questions section -->
+    
     <b-container class="small-bottom">
       <h2 class="text-center text-muted" v-if="questions.length == 0">
         {{ $t("task-template-no-questions") }}

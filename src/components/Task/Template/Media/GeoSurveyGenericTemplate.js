@@ -129,8 +129,8 @@ const component = {
     questions: [
       {
         question: "",
-        answers: [""],
-      },
+        answers: [""]
+      }
     ],
     questionList: [],
 
@@ -138,7 +138,7 @@ const component = {
     markedPlaces: [],
     area: { latlngs: [] },
 
-    showAlert: false,
+    showAlert: false
   },
 
   methods: {
@@ -147,18 +147,26 @@ const component = {
     },
     submit() {
       if (this.isFormValid()) {
-        if (this.mapSettings.markers && this.markedPlaces.length == 0) {
+        if (
+          this.mapSettings.required &&
+          this.mapSettings.markers &&
+          this.markedPlaces.length == 0
+        ) {
           this.showAlert = true;
           return;
         }
-        if (this.mapSettings.area && this.area.latlngs.length == 0) {
+        if (
+          this.mapSettings.required &&
+          this.mapSettings.area &&
+          this.area.latlngs.length == 0
+        ) {
           this.showAlert = true;
           return;
         }
         this.answers.push({
           question: this.mapSettings.question,
           coordinates: this.markedPlaces,
-          area: this.area,
+          area: this.area
         });
 
         this.pybossa.saveTask(this.answers);
@@ -174,8 +182,8 @@ const component = {
     isFormValid() {
       const ctrl = this;
       let valid = true;
-      this.questionList.every((question) => {
-        const ans = ctrl.answers.find((x) => x.qid == question.id) || [];
+      this.questionList.every(question => {
+        const ans = ctrl.answers.find(x => x.qid == question.id) || [];
         if (question.required && (!!!ans.value || ans.value.length <= 0)) {
           valid = false;
           return false;
@@ -187,8 +195,8 @@ const component = {
     initialize() {
       this.showAlert = false;
       const pb = this.pybossa;
-      this.questionList = this.questions.filter((q) => pb.isConditionEmpty(q));
-      this.answers = this.questions.map(function (x) {
+      this.questionList = this.questions.filter(q => pb.isConditionEmpty(q));
+      this.answers = this.questions.map(function(x) {
         const answer = { qid: x.id, question: x.question, value: null };
         if (x.type === "multiple_choice") {
           answer.value = [];
@@ -198,7 +206,7 @@ const component = {
       this.markedPlaces = [];
       this.area = { latlngs: [] };
       window.scrollTo({ top: 0, behavior: "smooth" });
-    },
+    }
   },
 
   computed: {
@@ -215,7 +223,7 @@ const component = {
             this.task.info.audio_url ||
             this.task.info.link_raw
         : "";
-    },
+    }
   },
 
   watch: {
@@ -232,9 +240,9 @@ const component = {
   props: {
     /* Injected by the Pybossa App */
     pybossa: {
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 
 export default component;
