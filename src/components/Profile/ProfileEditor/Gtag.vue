@@ -9,6 +9,9 @@
         Analytics {{ gdprAccepted ? "enabled" : "disabled" }}
       </b-form-checkbox>
     </b-form-group>
+    <b-alert :show="showRefreshWarning" variant="warning" dismissible fade>
+      {{$t('basic-profile-editor-privacy-refresh-warning')}}
+    </b-alert>
   </b-form>
 </template>
 
@@ -19,22 +22,26 @@ export default {
   name: "Gtag",
   data: () => {
     return {
-      gdprAccepted: false
+      gdprAccepted: false,
+      showRefreshWarning: false
     };
   },
   watch: {
     gdprAccepted: {
       handler: function(val, oldVal) {
-        this.setGtag(this.gdprAccepted)
+        this.setGtag(this.gdprAccepted);
+        if(!val && oldVal) {
+          this.showRefreshWarning = true;
+        }
       }
     }
   },
   computed: {
-    ...mapState("settings", ["gdpr"]),
+    ...mapState("settings", ["gdpr"])
     // ...mapState("user", ["infos"])
   },
   methods: {
-    ...mapActions("settings", ["setGtag"]),
+    ...mapActions("settings", ["setGtag"])
   },
   created() {
     this.gdprAccepted = this.gdpr;
