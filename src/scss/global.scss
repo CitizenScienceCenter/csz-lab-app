@@ -234,6 +234,9 @@ a {
   span.small {
     font-size: $font-size-small;
   }
+  .is-clickable {
+    cursor: pointer;
+  }
 }
 
 .btn {
@@ -443,6 +446,12 @@ label {
   word-break: break-word;
   word-wrap: break-word;
   color: $secondary;
+  &.custom-control-label {
+    padding-bottom: 0.75rem;
+    span {
+      font-weight: normal !important;
+    }
+  }
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),

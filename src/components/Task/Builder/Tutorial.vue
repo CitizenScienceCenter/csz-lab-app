@@ -18,16 +18,15 @@
               style="position: absolute; top: 0%; right: 0%; z-index: 100;"
               size="lg"
             >
-              <i class="fas fa-times" aria-hidden="true"></i>
+              <i class="fas fa-times fa-lg" aria-hidden="true"></i>
             </b-btn>
             <!-- Card for slide content -->
             <b-card
               :title="current_step.title"
               :sub-title="current_step.subtitle"
-              class="tutorial"
+              class="tutorial border-0"
               :class="{ active: is_active_step }"
               v-if="current_step"
-              border-variant="light"
             >
               <!-- video section-->
               <b-card-text class="text-center" v-if="current_step.video">
@@ -62,37 +61,35 @@
                 <p>{{ current_step.description }}</p>
               </b-card-text>
             </b-card>
-            <hr />
-            <!-- buttons section -->
-            <div class="text-center">
-              <!-- continue button: for last slide -->
-              <b-button
-                v-if="isLast"
-                variant="primary"
-                class="mb-2"
-                @click="changeIsTutorial(false)"
-              >
-                {{ $t("continue") }}
-              </b-button>
-              <!-- next button -->
-              <b-button
-                v-else
-                variant="secondary font-weight-bold"
-                class="mb-2"
-                @click="changeStep(active_step + 1)"
-              >
-                {{ $t("next-btn") }}
-              </b-button>
-            </div>
             <!-- card footer with tutorial indicators or buttons -->
             <b-card-footer
-              class="d-flex justify-content-center"
-              footer-border-variant="light"
-              style="background-color: white;"
+              class="d-flex flex-column justify-content-center container-fluid py-2 border-0"
+              footer-bg-variant="white"
             >
-              <b-btn-group>
-                <b-btn
-                  variant="link"
+              <!-- buttons section -->
+              <div class="text-center">
+                <!-- continue button: for last slide -->
+                <b-button
+                  v-if="isLast"
+                  variant="primary"
+                  class="mb-2"
+                  @click="changeIsTutorial(false)"
+                >
+                  {{ $t("continue") }}
+                </b-button>
+                <!-- next button -->
+                <b-button
+                  v-else
+                  variant="secondary font-weight-bold"
+                  class="mb-2"
+                  @click="changeStep(active_step + 1)"
+                >
+                  {{ $t("next-btn") }}
+                </b-button>
+              </div>
+              <b-row align-h="center">
+                <div
+                  class="text-primary mx-1 mx-lg-2 is-clickable"
                   v-for="step in step_list.length"
                   :key="step"
                 >
@@ -100,8 +97,8 @@
                     :icon="isActiveIcon(step)"
                     @click="changeStep(step)"
                   ></b-icon>
-                </b-btn>
-              </b-btn-group>
+                </div>
+              </b-row>
             </b-card-footer>
           </b-card>
         </b-col>
@@ -118,22 +115,27 @@ import tutorial_content from "@/assets/tutorial/tutorial_content.json";
 export default {
   name: "TutorialTaskBuilder",
   components: {
-    BIcon, // For bootstrap's icons
+    BIcon // For bootstrap's icons
   },
   props: {
-    currentStep: String,
+    currentStep: String
   },
   data() {
     return {
       active_step: 0,
       step_list: tutorial_content,
       current_step: null,
-      is_active_step: false,
+      is_active_step: false
     };
   },
   created() {
     // launch tutorial when is created by first time
-    this.changeIsTutorial(true);
+    if (
+      this.selectedProject.info &&
+      !this.selectedProject.info.task_presenter
+    ) {
+      this.changeIsTutorial(true);
+    }
   },
   mounted() {
     // load the first slide content
@@ -147,7 +149,8 @@ export default {
   },
   computed: {
     ...mapState({
-      isTutorialVisible: (state) => state.task.builder.isTutorialVisible,
+      isTutorialVisible: state => state.task.builder.isTutorialVisible,
+      selectedProject: state => state.project.selectedProject
     }),
     getStepId() {
       // convert step name in step id
@@ -168,7 +171,7 @@ export default {
     },
     isLast() {
       return this.active_step === this.step_list.length;
-    },
+    }
   },
   methods: {
     ...mapMutations({ changeIsTutorial: "task/builder/changeIsTutorial" }),
@@ -177,15 +180,15 @@ export default {
       step = step > this.step_list.length ? 1 : step;
       // small time out for animation purpose
       setTimeout(() => {
-        this.current_step = this.step_list.find((x) => x.step === step);
+        this.current_step = this.step_list.find(x => x.step === step);
         this.active_step = this.current_step.step;
         this.is_active_step = true;
       }, 500);
     },
     isActiveIcon(step) {
       return this.active_step == step ? "circle-fill" : " circle";
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">

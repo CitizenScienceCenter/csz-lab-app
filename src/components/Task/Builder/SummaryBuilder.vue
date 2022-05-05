@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- TODO: Pending for development PB Tutorial -->
-    <!-- <b-row class="mt-4 mb-1">
+    <b-row class="mt-4 mb-1">
       <b-col>
         <b-btn
           class="float-right"
@@ -10,12 +9,12 @@
         >
           <template>
             <span>
-              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+              <i class="fas fa-info" aria-hidden="true"></i> Tutorial
             </span>
           </template>
         </b-btn>
       </b-col>
-    </b-row> -->
+    </b-row>
     <b-row class="mt-2">
       <b-col>
         <h1 class="text-center centered small">

@@ -4,8 +4,8 @@
       <b-col>
         <b-link @click="goBack">{{ $t("go-back-btn") }}</b-link>
       </b-col>
-      <!-- TODO: Pending for development PB Tutorial -->
-      <!-- <b-col>
+      <!-- Tutorial button -->
+      <b-col>
         <b-btn
           class="float-right"
           variant="link"
@@ -13,11 +13,11 @@
         >
           <template>
             <span>
-              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+              <i class="fas fa-info" aria-hidden="true"></i> Tutorial
             </span>
           </template>
         </b-btn>
-      </b-col> -->
+      </b-col>
     </b-row>
     <b-row class="mt-4 mb-2">
       <b-col>

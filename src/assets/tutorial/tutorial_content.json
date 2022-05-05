@@ -13,7 +13,7 @@
     "subtitle": "tutorial-step2-subtitle",
     "description": "tutorial-step2-description",
     "images": [],
-    "video": "https://www.youtube.com/embed/sVPYIRF9RCQ"
+    "video": "https://www.youtube.com/embed/sVPYIRF9RCQ?autoplay=1"
   },
   {
     "step": 3,
@@ -21,9 +21,9 @@
     "subtitle": "tutorial-step3-subtitle",
     "description": "tutorial-step3-description",
     "images": [
-      "https://picsum.photos/1024/480/?image=10",
-      "https://picsum.photos/1024/480/?image=12",
-      "https://picsum.photos/1024/480/?image=22"
+      "https://picsum.photos/1024/620/?image=10",
+      "https://picsum.photos/1024/620/?image=12",
+      "https://picsum.photos/1024/620/?image=22"
     ],
     "video": null
   },
@@ -33,7 +33,7 @@
     "subtitle": "tutorial-step4-subtitle",
     "description": "tutorial-step4-description",
     "images": [],
-    "video": "https://www.youtube.com/embed/H9154xIoYTA"
+    "video": "https://www.youtube.com/embed/H9154xIoYTA?autoplay=1"
   },
   {
     "step": 5,
@@ -41,9 +41,9 @@
     "subtitle": "tutorial-step5-subtitle",
     "description": "tutorial-step5-description",
     "images": [
-      "https://picsum.photos/1280/720",
-      "https://picsum.photos/1024/480",
-      "https://picsum.photos/800/320"
+      "https://picsum.photos/1024/620/?image=11",
+      "https://picsum.photos/1024/620/?image=13",
+      "https://picsum.photos/1024/620/?image=15"
     ],
     "video": null
   }
