@@ -143,7 +143,12 @@ export default {
         currentContribute: true
       },
 
-      toolbarOptions: [["bold", "italic", "link"], [{ list: "bullet" }]]
+      toolbarOptions: [
+        ["bold", "italic", "underline", "link"],
+        [{ list: "bullet" }],
+        [{color:[]}],
+        ["clean"]
+      ]
     };
   },
   created() {

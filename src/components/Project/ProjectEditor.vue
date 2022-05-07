@@ -232,7 +232,12 @@ export default {
   },
   data: () => {
     return {
-      toolbarOptions: [["bold", "italic", "link"], [{ list: "bullet" }]],
+      toolbarOptions: [
+        ["bold", "italic", "underline", "link"],
+        [{ list: "bullet" }],
+        [{color:[]}],
+        ["clean"]
+      ],
 
       form: {
         name: "",
