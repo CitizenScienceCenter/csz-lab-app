@@ -38,7 +38,7 @@ Vue.use(Meta);
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: process.env.GOOGLE,
+    key: process.env.GOOGLE || "",
     libraries: "places,drawing,visualization,geometry"
   }
 });
