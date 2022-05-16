@@ -1,11 +1,16 @@
 [
   {
     "step": 1,
-    "title": "tutorial-step1-title",
-    "subtitle": "tutorial-step1-subtitle",
-    "description": "tutorial-step1-description",
-    "images": [],
-    "video": "https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4"
+    "title": "Material Selection",
+    "subtitle": "Select the kind of data you want to work with.",
+    "description": null,
+    "images": [
+      "tutorial/material_1.png",
+      "tutorial/material_2.png",
+      "tutorial/material_3.png",
+      "tutorial/material_4.png"
+    ],
+    "video": null
   },
   {
     "step": 2,

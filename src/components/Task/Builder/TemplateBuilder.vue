@@ -12,8 +12,9 @@
           @click="changeIsTutorial(true)"
         >
           <template>
-            <span>
-              <i class="fas fa-info" aria-hidden="true"></i> Tutorial
+            <span style="text-transform: none;">
+              <i class="fas fa-info" aria-hidden="true"></i>
+              {{ $t("task-builder-how-to-btn") }}
             </span>
           </template>
         </b-btn>

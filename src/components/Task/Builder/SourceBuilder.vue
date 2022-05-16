@@ -1,5 +1,27 @@
 <template>
   <div>
+    <b-row class="mt-4" v-if="!selectedSource">
+      <b-col>
+        <b-link @click="goBack">
+          {{ $t("go-back-btn") }}
+        </b-link>
+      </b-col>
+      <!-- Tutorial button -->
+      <b-col>
+        <b-btn
+          class="float-right"
+          variant="link"
+          @click="changeIsTutorial(true)"
+        >
+          <template>
+            <span style="text-transform: none;">
+              <i class="fas fa-info" aria-hidden="true"></i>
+              {{ $t("task-builder-how-to-btn") }}
+            </span>
+          </template>
+        </b-btn>
+      </b-col>
+    </b-row>
     <b-row class="mt-4">
       <b-col>
         <h1 class="text-center centered small">
@@ -7,7 +29,7 @@
         </h1>
         <b-link
           v-if="selectedSource && materialSources[task.material].length > 1"
-          @click="goBack"
+          @click="goBackSources"
           >{{ $t("task-source-builder-other-source") }}</b-link
         >
 
@@ -17,7 +39,9 @@
           class="centered mt-3 justify-content-between"
         >
           <b-col md="8" class="mt-md-0 mt-4">
-            <h2 class="mb-4">{{ $t("task-source-builder-cslogger-import-title") }}</h2>
+            <h2 class="mb-4">
+              {{ $t("task-source-builder-cslogger-import-title") }}
+            </h2>
             <load-data></load-data>
           </b-col>
 
@@ -27,11 +51,13 @@
               {{ $t("task-source-builder-cslogger-info1") }}
             </p>
             <!-- Allowed files for media -->
-            <p class="small" v-html="$t('task-source-builder-cslogger-info2')">
-            </p>
+            <p
+              class="small"
+              v-html="$t('task-source-builder-cslogger-info2')"
+            ></p>
           </b-col>
         </b-row>
-        
+
         <b-row class="mt-4" v-else-if="!selectedSource">
           <b-col md="9">
             <b-row>
@@ -125,11 +151,11 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 
-import DropboxSourceEditor from '@/components/Task/Builder/SourceEditor/DropboxSourceEditor'
-import AmazonSourceEditor from '@/components/Task/Builder/SourceEditor/AmazonSourceEditor'
-import FlickrSourceEditor from '@/components/Task/Builder/SourceEditor/FlickrSourceEditor'
-import TwitterSourceEditor from '@/components/Task/Builder/SourceEditor/TwitterSourceEditor'
-import LocalCsvSourceEditor from '@/components/Task/Builder/SourceEditor/LocalCsvSourceEditor'
+import DropboxSourceEditor from "@/components/Task/Builder/SourceEditor/DropboxSourceEditor";
+import AmazonSourceEditor from "@/components/Task/Builder/SourceEditor/AmazonSourceEditor";
+import FlickrSourceEditor from "@/components/Task/Builder/SourceEditor/FlickrSourceEditor";
+import TwitterSourceEditor from "@/components/Task/Builder/SourceEditor/TwitterSourceEditor";
+import LocalCsvSourceEditor from "@/components/Task/Builder/SourceEditor/LocalCsvSourceEditor";
 import LoadCSLoggerData from "@/components/Task/Builder/SourceEditor/CSLogger/LoadCSLoggerData";
 
 export default {
@@ -140,7 +166,7 @@ export default {
     AmazonSourceEditor,
     DropboxSourceEditor,
     LocalCsvSourceEditor,
-    LoadData:LoadCSLoggerData
+    LoadData: LoadCSLoggerData
   },
   data: () => {
     return {
@@ -158,7 +184,10 @@ export default {
   },
   methods: {
     ...mapMutations("task/builder", [
-      "setTaskSourceContent"
+      "setTaskSourceContent",
+      "setCurrentStep",
+      "setStep",
+      "changeIsTutorial"
     ]),
 
     onSourceSelected(source) {
@@ -168,9 +197,14 @@ export default {
       this.selectedSource = source;
     },
 
-    goBack () {
-      this.selectedSource = null
+    goBackSources() {
+      this.selectedSource = null;
     },
+    goBack() {
+      // go back to job selection
+      this.setCurrentStep("job");
+      this.setStep({ step: "source", value: false });
+    }
   },
   computed: {
     ...mapState("task/builder", [

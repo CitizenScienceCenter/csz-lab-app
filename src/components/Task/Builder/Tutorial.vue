@@ -43,12 +43,18 @@
                 v-if="current_step.images.length > 0"
               >
                 <!-- carousel contain images -->
-                <b-carousel controls img-height="480">
+                <b-carousel controls img-height="480" fade interval="6000">
                   <b-carousel-slide
-                    :img-src="img"
                     v-for="(img, i) in current_step.images"
                     :key="i"
                   >
+                    <template #img>
+                      <b-img-lazy
+                        :src="getImage(img)"
+                        fluid
+                        :alt="img"
+                      ></b-img-lazy>
+                    </template>
                   </b-carousel-slide>
                 </b-carousel>
               </b-card-text>
@@ -89,9 +95,12 @@
               </div>
               <b-row align-h="center">
                 <div
-                  class="text-primary mx-1 mx-lg-2 is-clickable"
+                  class="text-primary mx-2 mx-lg-3 is-clickable"
                   v-for="step in step_list.length"
                   :key="step"
+                  v-b-tooltip.hover.bottom="
+                    step_list.find(x => x.step === step).title
+                  "
                 >
                   <b-icon
                     :icon="isActiveIcon(step)"
@@ -110,7 +119,15 @@
 <script>
 import { BIcon } from "bootstrap-vue";
 import { mapState, mapMutations } from "vuex";
-import tutorial_content from "@/assets/tutorial/tutorial_content.json";
+import tutorial_content from "@/assets/tutorial_content.json";
+
+const STEPS = new Map([
+  ["material", 1],
+  ["job", 2],
+  ["template", 3],
+  ["source", 4],
+  ["summary", 5]
+]);
 
 export default {
   name: "TutorialTaskBuilder",
@@ -153,21 +170,7 @@ export default {
       selectedProject: state => state.project.selectedProject
     }),
     getStepId() {
-      // convert step name in step id
-      switch (this.currentStep) {
-        case "material":
-          return 1;
-        case "job":
-          return 2;
-        case "template":
-          return 3;
-        case "source":
-          return 4;
-        case "summary":
-          return 5;
-        default:
-          return false;
-      }
+      return STEPS.has(this.currentStep) ? STEPS.get(this.currentStep) : 1;
     },
     isLast() {
       return this.active_step === this.step_list.length;
@@ -187,6 +190,12 @@ export default {
     },
     isActiveIcon(step) {
       return this.active_step == step ? "circle-fill" : " circle";
+    },
+    getImage(img_url) {
+      if (img_url) {
+        return require(`@/assets/img/${img_url}`);
+      }
+      return null;
     }
   }
 };
