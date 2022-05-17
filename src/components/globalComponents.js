@@ -11,3 +11,5 @@ Vue.component("CommonEditorElements", () =>
 Vue.component("MediaPresenter", () => import("@/components/Task/Presenter/MediaPresenter"));
 
 Vue.component("Maps", () => import("@/components/Task/Presenter/Resources/Maps"));
+
+Vue.component("GeoTwitter", () => import("@/components/Task/Presenter/GeoTwitter"));

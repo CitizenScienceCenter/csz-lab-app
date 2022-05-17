@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-4">
+  <b-container class="mt-4 px-2 px-md-5" fluid>
     <b-link
       v-if="template"
       :to="{
