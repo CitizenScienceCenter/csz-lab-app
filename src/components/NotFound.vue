@@ -3,7 +3,7 @@
     <b-row>
       <b-col cols="12" class="text-center">
         <h1 class="centered header">404</h1>
-        <h2>{{ $t("notfound-label") }}</h2>
+        <h2 style="font-size: 3rem;">{{ $t("notfound-label") }}</h2>
         <b-button to="/" variant="primary">
           {{ $t("notfound-button") }}
         </b-button>
