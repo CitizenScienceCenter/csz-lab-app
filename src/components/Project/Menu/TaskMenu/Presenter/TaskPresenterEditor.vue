@@ -1,7 +1,7 @@
 <template>
   <div class="mb-5">
     <b-breadcrumb :items="items"></b-breadcrumb>
-    <b-container class="mb-3">
+    <b-container class="pb-4">
       <div class="mt-2 clearfix">
         <h1 class="float-left">
           {{ $t("project-menu-task-presenter-header") }}
