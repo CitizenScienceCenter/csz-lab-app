@@ -488,8 +488,8 @@
     "task-presenter-menu-transcribe1": "Re-use the PDF template",
     "task-presenter-menu-image-loading": "Loading image, please wait...",
 
-    "template-renderer-not-allowed-contribute": "You are not allowed to contribute",
-    "template-renderer-not-allowed-anonymous": "This project does not allow anonymous contributors",
+    "template-renderer-not-allowed-contribute": "Anonymous contributions not allowed",
+    "template-renderer-not-allowed-anonymous": "Please log in or register to contribute.",
 
     "info-c": "Info",
     "statistics-c": "Statistics",
@@ -1311,8 +1311,8 @@
     "task-presenter-menu-transcribe1": "PDF Transkriptions-Vorlage verwenden",
     "task-presenter-menu-image-loading": "Bild wird geladen, bitte warten...",
 
-    "template-renderer-not-allowed-contribute": "Sie dürfen nicht teilnehmen",
-    "template-renderer-not-allowed-anonymous": "Dieses Projekt erlaubt keine anonymen Beitragenden",
+    "template-renderer-not-allowed-contribute": "Anonyme Beiträge nicht erlaubt",
+    "template-renderer-not-allowed-anonymous": "Bitte melden Sie sich an oder registrieren Sie sich, um einen Beitrag zu leisten.",
 
     "info-c": "Info",
     "statistics-c": "Statistiken",

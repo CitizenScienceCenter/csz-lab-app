@@ -2,6 +2,7 @@ import api from "../../api/project";
 import builder from "./project-builder";
 import menu from "./project-menu";
 import { getTranslationLocale, getPybossaTranslation } from "@/helper";
+import {router} from "@/router/router";
 
 const errors = {
   GET_ALL_PROJECTS_LOADING_ERROR: "Error during projects loading",
@@ -242,6 +243,8 @@ const actions = {
           },
           { root: true }
         );
+        // If project does not exist, it redirect to the 404 page
+        router.push("/project-not-found");
         return false;
       });
   },
