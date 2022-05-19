@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container class="mt-4">
+    <b-container class="mt-4 px-2 px-md-5" fluid>
       <b-row>
         <b-col>
           <!--<b-link v-if="template" :to="{ name: 'project.task.presenter.editor', params: { id: this.id, template: this.template } }">{{ $t("task-template-renderer-go-back-editor") }}</b-link>-->
