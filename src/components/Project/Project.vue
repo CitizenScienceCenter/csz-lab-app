@@ -358,7 +358,7 @@
                   ref="btn-contribute"
                   :to="{ name: 'project.task.presenter' }"
                   variant="primary"
-                  :disabled="isCompletedTasks"
+                  :disabled="isCompletedTasks || isUserAllowedToContribute"
                   @click.native="tracking()"
                   >{{ $t("project-contribute") }}
                 </b-btn>
@@ -369,6 +369,14 @@
                 >
                   <i class="fas fa-info-circle"></i>
                   {{ $t("project-draft-contribute-error-no-pending-tasks") }}
+                </p>
+                <!-- Error message if user login is required -->
+                <p
+                  class="font-weight-bold text-white mt-2"
+                  v-if="isUserAllowedToContribute"
+                >
+                  <i class="fas fa-info-circle"></i>
+                  {{ $t("project-draft-contribute-error-user-login-required") }}
                 </p>
               </div>
             </div>
@@ -671,7 +679,12 @@ export default {
 
     isSmallScreen() {
       return this.screenSize <= 640;
-    }
+    },
+
+    // If project is not anonymous, but user is not logged,
+    isUserAllowedToContribute() {
+      return !this.isAnonymousProject && !Object.keys(this.infos).length;
+    },
   }
 };
 </script>
