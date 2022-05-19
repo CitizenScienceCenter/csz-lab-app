@@ -693,6 +693,9 @@
     "access-denied": "Access denied",
     "project-protect-with-password": "Protect project with password",
     "private-c": "Private",
+    "private-c-tooltip": "Users with the password can contribute only.",
+    "completed-c": "Completed",
+    "completed-c-tooltip": "No more contributions allowed.",
 
     "loading-hide-btn": "Continue in background",
 
@@ -1516,6 +1519,9 @@
     "access-denied": "Zugriff abgelehnt",
     "project-protect-with-password": "Projekt mit Passwort schützen",
     "private-c": "Privat",
+    "private-c-tooltip": "Nur Benutzer mit Passwort können einen Beitrag leisten",
+    "completed-c": "Geschlossen",
+    "completed-c-tooltip": "Keine Beiträge mehr erlaubt",
 
     "loading-hide-btn": "Weiter im Hintergrund",
 
