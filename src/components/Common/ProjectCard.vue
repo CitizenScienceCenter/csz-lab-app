@@ -4,7 +4,7 @@
       <div class="project-labels d-flex flex-column">
         <b-badge
           v-if="project.restricted"
-          variant="success"
+          variant="secondary"
           class="label"
           v-b-tooltip.hover
           :title="$t('private-c-tooltip')"
@@ -13,7 +13,7 @@
         </b-badge>
         <b-badge
           v-if="isProjectCompleted"
-          variant="secondary"
+          variant="success"
           class="label"
           v-b-tooltip.hover
           :title="$t('completed-c-tooltip')"
@@ -125,10 +125,10 @@ export default {
       right: 0;
       top: 0;
       .label {
-        font-size: 0.9rem;
+        font-size: 1rem;
         margin-bottom: 5px;
-        padding: 5px 20px;
-        transform: translateX(3px);
+        padding: 5px 15px;
+        transform: translateX(2px);
         cursor: help;
       }
     }
