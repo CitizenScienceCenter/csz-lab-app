@@ -118,11 +118,12 @@
     "project-draft-danger": "You are about to publish your project. This CANNOT be undone! Once your project has been published, people will be able to contribute to it. All the task runs (answers) that may have been created during the test phase will be flushed and your project will start fresh. That means that your project should be working properly, so please make sure it does. Otherwise you can work on it and publish it once it works fine.",
     "project-contribute": "Contribute",
     "project-draft-contribute-error-no-pending-tasks": "All tasks done. No more contributions allowed.",
-    "project-draft-approval-error-message-title": "Impossible to approve the project",
-    "project-draft-approval-error-message-content": "You must add at least one task to the project",
-    "project-draft-publish-error-message-title": "Impossible to publish the project",
-    "project-draft-publish-error-message-content-1": "You must add at least one task to the project",
-    "project-draft-publish-error-message-content-2": "You must provide a task presenter to publish the project",
+    "project-draft-contribute-error-user-login-required":"Anonymous contribution not allowed. Please login or register.",
+    "project-draft-approval-error-message-title": "Impossible to approve the project.",
+    "project-draft-approval-error-message-content": "You must add at least one task to the project.",
+    "project-draft-publish-error-message-title": "Impossible to publish the project.",
+    "project-draft-publish-error-message-content-1": "You must add at least one task to the project.",
+    "project-draft-publish-error-message-content-2": "You must provide a task presenter to publish the project.",
 
     "project-description-what-why": "What & Why",
     "project-description-how": "How",
@@ -489,8 +490,8 @@
     "task-presenter-menu-transcribe1": "Re-use the PDF template",
     "task-presenter-menu-image-loading": "Loading image, please wait...",
 
-    "template-renderer-not-allowed-contribute": "You are not allowed to contribute",
-    "template-renderer-not-allowed-anonymous": "This project does not allow anonymous contributors",
+    "template-renderer-not-allowed-contribute": "Anonymous contributions not allowed",
+    "template-renderer-not-allowed-anonymous": "Please log in or register to contribute.",
 
     "info-c": "Info",
     "statistics-c": "Statistics",
@@ -694,6 +695,9 @@
     "access-denied": "Access denied",
     "project-protect-with-password": "Protect project with password",
     "private-c": "Private",
+    "private-c-tooltip": "Users with the password can contribute only.",
+    "completed-c": "Completed",
+    "completed-c-tooltip": "No more contributions allowed.",
 
     "loading-hide-btn": "Continue in background",
 
@@ -941,7 +945,8 @@
     "project-draft-publish-your-project-no": "Nein, nicht veröffentlichen!",
     "project-draft-danger": "Sie veröffentlichen gleich Ihr Projekt. Dies kann nicht rückgängig gemacht werden! Sobald Ihr Projekt veröffentlicht wurde, kann jede/r daran teilnehmen. Alle Aufgaben-Ausführungen (Antworten), die möglicherweise während der Testphase erstellt wurden, werden gelöscht und Ihr Projekt wird neu gestartet. Bitte stellen Sie daher sicher, dass alles gut funktioniert. Falls dies noch nicht der Fall sein sollte, können Sie Ihr Projekt nochmals bearbeiten und veröffentlichen, sobald es einwandfrei läuft.",
     "project-contribute": "Mitmachen",
-    "project-draft-contribute-error-no-pending-tasks": "Alle Aufgaben erledigt, keine weiteren Beiträge erlaubt.",
+    "project-draft-contribute-error-no-pending-tasks": "Alle Aufgaben erledigt, keine weiteren Beiträge erlaubt",
+    "project-draft-contribute-error-user-login-required":"Anonymer Beitrag nicht erlaubt. Bitte anmelden oder registrieren",
     "project-draft-approval-error-message-title": "Das Projekt kann nicht genehmigt werden",
     "project-draft-approval-error-message-content": "Sie müssen dem Projekt mindestens eine Aufgabe hinzufügen",
     "project-draft-publish-error-message-title": "Das Projekt kann nicht veröffentlicht werden",
@@ -1313,8 +1318,8 @@
     "task-presenter-menu-transcribe1": "PDF Transkriptions-Vorlage verwenden",
     "task-presenter-menu-image-loading": "Bild wird geladen, bitte warten...",
 
-    "template-renderer-not-allowed-contribute": "Sie dürfen nicht teilnehmen",
-    "template-renderer-not-allowed-anonymous": "Dieses Projekt erlaubt keine anonymen Beitragenden",
+    "template-renderer-not-allowed-contribute": "Anonyme Beiträge nicht erlaubt",
+    "template-renderer-not-allowed-anonymous": "Bitte melden Sie sich an oder registrieren Sie sich, um einen Beitrag zu leisten.",
 
     "info-c": "Info",
     "statistics-c": "Statistiken",
@@ -1518,6 +1523,9 @@
     "access-denied": "Zugriff abgelehnt",
     "project-protect-with-password": "Projekt mit Passwort schützen",
     "private-c": "Privat",
+    "private-c-tooltip": "Nur Benutzer mit Passwort können einen Beitrag leisten",
+    "completed-c": "Geschlossen",
+    "completed-c-tooltip": "Keine Beiträge mehr erlaubt",
 
     "loading-hide-btn": "Weiter im Hintergrund",
 
