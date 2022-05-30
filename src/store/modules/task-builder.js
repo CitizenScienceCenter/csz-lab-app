@@ -1,5 +1,5 @@
 import api from "@/api/aws";
-import media_ext from "@/assets/media_files_ext.json";
+import media_ext from "@/data/media_files_ext.json";
 
 const errors = {
   GET_BUCKET_FILES_ERROR: "Error during bucket files loading",

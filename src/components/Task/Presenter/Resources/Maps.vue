@@ -357,6 +357,7 @@ export default {
   &.no-movement {
     pointer-events: none;
     cursor: none;
+    z-index: 0;
   }
 }
 .custom-buttons {

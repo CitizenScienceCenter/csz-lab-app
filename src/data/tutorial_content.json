@@ -14,23 +14,19 @@
   },
   {
     "step": 2,
-    "title": "tutorial-step2-title",
-    "subtitle": "tutorial-step2-subtitle",
-    "description": "tutorial-step2-description",
-    "images": [],
-    "video": "https://www.youtube.com/embed/sVPYIRF9RCQ?autoplay=1"
+    "title": "Job Selection",
+    "subtitle": "Select the type of tasks to be performed by the contributors.",
+    "description": null,
+    "images": ["tutorial/job_1.png", "tutorial/job_2.png"],
+    "video": null
   },
   {
     "step": 3,
-    "title": "tutorial-step3-title",
-    "subtitle": "tutorial-step3-subtitle",
-    "description": "tutorial-step3-description",
-    "images": [
-      "https://picsum.photos/1024/620/?image=10",
-      "https://picsum.photos/1024/620/?image=12",
-      "https://picsum.photos/1024/620/?image=22"
-    ],
-    "video": null
+    "title": "Survey Creation",
+    "subtitle": "Create and configure the survey.",
+    "description": null,
+    "images": [],
+    "video": "https://www.youtube.com/embed/FgKyljrd2-s?autoplay=1"
   },
   {
     "step": 4,

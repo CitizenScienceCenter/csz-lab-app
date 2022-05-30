@@ -43,7 +43,7 @@
                 v-if="current_step.images.length > 0"
               >
                 <!-- carousel contain images -->
-                <b-carousel controls img-height="480" fade interval="6000">
+                <b-carousel controls img-height="480" fade :interval="4500">
                   <b-carousel-slide
                     v-for="(img, i) in current_step.images"
                     :key="i"
@@ -119,7 +119,7 @@
 <script>
 import { BIcon } from "bootstrap-vue";
 import { mapState, mapMutations } from "vuex";
-import tutorial_content from "@/assets/tutorial_content.json";
+import tutorial_content from "@/data/tutorial_content.json";
 
 const STEPS = new Map([
   ["material", 1],
