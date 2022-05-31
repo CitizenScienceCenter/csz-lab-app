@@ -1,7 +1,7 @@
 [
   {
     "step": 1,
-    "title": "Material Selection",
+    "title": "Material Type",
     "subtitle": "Select the kind of data you want to work with.",
     "description": null,
     "images": [
@@ -30,22 +30,23 @@
   },
   {
     "step": 4,
-    "title": "tutorial-step4-title",
-    "subtitle": "tutorial-step4-subtitle",
-    "description": "tutorial-step4-description",
-    "images": [],
-    "video": "https://www.youtube.com/embed/H9154xIoYTA?autoplay=1"
+    "title": "Data Source",
+    "subtitle": "Choose the data source to be used.",
+    "description": null,
+    "images": [
+      "tutorial/source_1.png",
+      "tutorial/source_2.png",
+      "tutorial/source_3.png",
+      "tutorial/source_4.png"
+    ],
+    "video": null
   },
   {
     "step": 5,
-    "title": "tutorial-step5-title",
-    "subtitle": "tutorial-step5-subtitle",
-    "description": "tutorial-step5-description",
-    "images": [
-      "https://picsum.photos/1024/620/?image=11",
-      "https://picsum.photos/1024/620/?image=13",
-      "https://picsum.photos/1024/620/?image=15"
-    ],
+    "title": "Summary",
+    "subtitle": "Review the summary of the project.",
+    "description": null,
+    "images": ["tutorial/summary_1.png"],
     "video": null
   }
 ]
