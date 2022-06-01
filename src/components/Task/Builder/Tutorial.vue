@@ -9,8 +9,8 @@
     <template #overlay>
       <b-row align-h="center" class="pt-5">
         <b-col cols="11" md="10" xl="6" class="pt-4">
-          <!-- Card contentainer -->
-          <b-card class="pa-0">
+          <!-- Card container -->
+          <b-card>
             <!-- close button -->
             <b-btn
               variant="link"
@@ -29,34 +29,40 @@
               v-if="current_step"
             >
               <!-- video section-->
-              <b-card-text class="text-center" v-if="current_step.video">
-                <b-embed
-                  :src="current_step.video"
-                  style="max-width: 100%;"
-                  aspect="16by9"
-                  controls
-                ></b-embed>
+              <b-card-text class="text-center pt-2" v-if="current_step.video">
+                <b-overlay :show="mediaLoading" rounded="sm" spinner-small>
+                  <b-embed
+                    :src="current_step.video"
+                    style="max-width: 100%;"
+                    aspect="16by9"
+                    controls
+                    @load="onReadyMedia()"
+                  ></b-embed>
+                </b-overlay>
               </b-card-text>
               <!-- images section -->
               <b-card-text
-                class="text-center"
+                class="text-center pt-2"
                 v-if="current_step.images.length > 0"
               >
                 <!-- carousel contain images -->
-                <b-carousel controls img-height="480" fade :interval="4500">
-                  <b-carousel-slide
-                    v-for="(img, i) in current_step.images"
-                    :key="i"
-                  >
-                    <template #img>
-                      <b-img-lazy
-                        :src="getImage(img)"
-                        fluid
-                        :alt="img"
-                      ></b-img-lazy>
-                    </template>
-                  </b-carousel-slide>
-                </b-carousel>
+                <b-overlay :show="mediaLoading" rounded="sm" spinner-small>
+                  <b-carousel controls img-height="480" fade :interval="5000">
+                    <b-carousel-slide
+                      v-for="(img, i) in current_step.images"
+                      :key="i"
+                    >
+                      <template #img>
+                        <b-img
+                          :src="getImage(img)"
+                          fluid
+                          :alt="img"
+                          @load="onReadyMedia()"
+                        ></b-img>
+                      </template>
+                    </b-carousel-slide>
+                  </b-carousel>
+                </b-overlay>
               </b-card-text>
               <!-- description or text section -->
               <b-card-text
@@ -142,7 +148,8 @@ export default {
       active_step: 0,
       step_list: tutorial_content,
       current_step: null,
-      is_active_step: false
+      is_active_step: false,
+      mediaLoading: false
     };
   },
   created() {
@@ -179,6 +186,7 @@ export default {
   methods: {
     ...mapMutations({ changeIsTutorial: "task/builder/changeIsTutorial" }),
     changeStep(step) {
+      this.mediaLoading = true;
       this.is_active_step = false;
       step = step > this.step_list.length ? 1 : step;
       // small time out for animation purpose
@@ -196,6 +204,10 @@ export default {
         return require(`@/assets/img/${img_url}`);
       }
       return null;
+    },
+    // callback when media is loaded
+    onReadyMedia() {
+      this.mediaLoading = false;
     }
   }
 };
@@ -205,11 +217,14 @@ export default {
 
 .tutorial {
   transition: all $transition-duration-super-long $transition-timing-function;
-  transform: translatex(-$scroll-effect-offset);
+  transform: translatex(calc($scroll-effect-offset/-2));
   opacity: 0;
   &.active {
     transform: translateX(0);
     opacity: 1;
+  }
+  .card-body {
+    padding: 0;
   }
 }
 </style>
