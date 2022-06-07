@@ -247,6 +247,7 @@
     "task-source-builder-cslogger-info1": "Import your data collected by the crowdsourcing process done with the CSLogger applet already downloaded. The required files are:",
     "task-source-builder-cslogger-info2": "<ul style='list-style-type: disc' class ='ml-3 mt-1'><li><strong>Data file</strong>: report.csv file with metadata and responses</li><li><strong>Media files</strong>: unzipped multimedia files</li></ul>",
 
+    "task-builder-how-to-btn":"How to do it?",
     "task-material-builder-back-to-project": "Preview Project ",
     "task-material-builder-items": "Select the type of files that you will work with.",
     "task-material-builder-image": "Images",
@@ -1074,6 +1075,7 @@
     "task-source-builder-cslogger-info1": "Import your data collected by the crowdsourcing process done with the CSLogger applet already downloaded. The required files are:",
     "task-source-builder-cslogger-info2": "<ul style='list-style-type: disc' class ='ml-3 mt-1'><li><strong>Data file</strong>: report.csv file with metadata and responses</li><li><strong>Media files</strong>: unzipped multimedia files</li></ul>",
 
+    "task-builder-how-to-btn":"Wie ist das zu tun?",
     "task-material-builder-back-to-project": "Vorschau des Projekts",
     "task-material-builder-items": "Wählen Sie den Dateityp aus, mit dem Sie arbeiten möchten.",
     "task-material-builder-image": "Bilder",

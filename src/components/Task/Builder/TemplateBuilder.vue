@@ -4,20 +4,21 @@
       <b-col>
         <b-link @click="goBack">{{ $t("go-back-btn") }}</b-link>
       </b-col>
-      <!-- TODO: Pending for development PB Tutorial -->
-      <!-- <b-col>
+      <!-- Tutorial button -->
+      <b-col>
         <b-btn
           class="float-right"
           variant="link"
           @click="changeIsTutorial(true)"
         >
           <template>
-            <span>
-              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+            <span style="text-transform: none;">
+              <i class="fas fa-info" aria-hidden="true"></i>
+              {{ $t("task-builder-how-to-btn") }}
             </span>
           </template>
         </b-btn>
-      </b-col> -->
+      </b-col>
     </b-row>
     <b-row class="mt-4 mb-2">
       <b-col>

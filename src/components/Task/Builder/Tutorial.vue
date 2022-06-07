@@ -9,8 +9,8 @@
     <template #overlay>
       <b-row align-h="center" class="pt-5">
         <b-col cols="11" md="10" xl="6" class="pt-4">
-          <!-- Card contentainer -->
-          <b-card class="pa-0">
+          <!-- Card container -->
+          <b-card>
             <!-- close button -->
             <b-btn
               variant="link"
@@ -18,40 +18,51 @@
               style="position: absolute; top: 0%; right: 0%; z-index: 100;"
               size="lg"
             >
-              <i class="fas fa-times" aria-hidden="true"></i>
+              <i class="fas fa-times fa-lg" aria-hidden="true"></i>
             </b-btn>
             <!-- Card for slide content -->
             <b-card
               :title="current_step.title"
               :sub-title="current_step.subtitle"
-              class="tutorial"
+              class="tutorial border-0"
               :class="{ active: is_active_step }"
               v-if="current_step"
-              border-variant="light"
             >
               <!-- video section-->
-              <b-card-text class="text-center" v-if="current_step.video">
-                <b-embed
-                  :src="current_step.video"
-                  style="max-width: 100%;"
-                  aspect="16by9"
-                  controls
-                ></b-embed>
+              <b-card-text class="text-center pt-2" v-if="current_step.video">
+                <b-overlay :show="mediaLoading" rounded="sm" spinner-small>
+                  <b-embed
+                    :src="current_step.video"
+                    style="max-width: 100%;"
+                    aspect="16by9"
+                    controls
+                    @load="onReadyMedia()"
+                  ></b-embed>
+                </b-overlay>
               </b-card-text>
               <!-- images section -->
               <b-card-text
-                class="text-center"
+                class="text-center pt-2"
                 v-if="current_step.images.length > 0"
               >
                 <!-- carousel contain images -->
-                <b-carousel controls img-height="480">
-                  <b-carousel-slide
-                    :img-src="img"
-                    v-for="(img, i) in current_step.images"
-                    :key="i"
-                  >
-                  </b-carousel-slide>
-                </b-carousel>
+                <b-overlay :show="mediaLoading" rounded="sm" spinner-small>
+                  <b-carousel controls img-height="480" fade :interval="5000">
+                    <b-carousel-slide
+                      v-for="(img, i) in current_step.images"
+                      :key="i"
+                    >
+                      <template #img>
+                        <b-img
+                          :src="getImage(img)"
+                          fluid
+                          :alt="img"
+                          @load="onReadyMedia()"
+                        ></b-img>
+                      </template>
+                    </b-carousel-slide>
+                  </b-carousel>
+                </b-overlay>
               </b-card-text>
               <!-- description or text section -->
               <b-card-text
@@ -62,46 +73,47 @@
                 <p>{{ current_step.description }}</p>
               </b-card-text>
             </b-card>
-            <hr />
-            <!-- buttons section -->
-            <div class="text-center">
-              <!-- continue button: for last slide -->
-              <b-button
-                v-if="isLast"
-                variant="primary"
-                class="mb-2"
-                @click="changeIsTutorial(false)"
-              >
-                {{ $t("continue") }}
-              </b-button>
-              <!-- next button -->
-              <b-button
-                v-else
-                variant="secondary font-weight-bold"
-                class="mb-2"
-                @click="changeStep(active_step + 1)"
-              >
-                {{ $t("next-btn") }}
-              </b-button>
-            </div>
             <!-- card footer with tutorial indicators or buttons -->
             <b-card-footer
-              class="d-flex justify-content-center"
-              footer-border-variant="light"
-              style="background-color: white;"
+              class="d-flex flex-column justify-content-center container-fluid py-2 border-0"
+              footer-bg-variant="white"
             >
-              <b-btn-group>
-                <b-btn
-                  variant="link"
+              <!-- buttons section -->
+              <div class="text-center">
+                <!-- continue button: for last slide -->
+                <b-button
+                  v-if="isLast"
+                  variant="primary"
+                  class="mb-2"
+                  @click="changeIsTutorial(false)"
+                >
+                  {{ $t("continue") }}
+                </b-button>
+                <!-- next button -->
+                <b-button
+                  v-else
+                  variant="secondary font-weight-bold"
+                  class="mb-2"
+                  @click="changeStep(active_step + 1)"
+                >
+                  {{ $t("next-btn") }}
+                </b-button>
+              </div>
+              <b-row align-h="center">
+                <div
+                  class="text-primary mx-2 mx-lg-3 is-clickable"
                   v-for="step in step_list.length"
                   :key="step"
+                  v-b-tooltip.hover.bottom="
+                    step_list.find(x => x.step === step).title
+                  "
                 >
                   <b-icon
                     :icon="isActiveIcon(step)"
                     @click="changeStep(step)"
                   ></b-icon>
-                </b-btn>
-              </b-btn-group>
+                </div>
+              </b-row>
             </b-card-footer>
           </b-card>
         </b-col>
@@ -113,15 +125,23 @@
 <script>
 import { BIcon } from "bootstrap-vue";
 import { mapState, mapMutations } from "vuex";
-import tutorial_content from "@/assets/tutorial/tutorial_content.json";
+import tutorial_content from "@/data/tutorial_content.json";
+
+const STEPS = new Map([
+  ["material", 1],
+  ["job", 2],
+  ["template", 3],
+  ["source", 4],
+  ["summary", 5]
+]);
 
 export default {
   name: "TutorialTaskBuilder",
   components: {
-    BIcon, // For bootstrap's icons
+    BIcon // For bootstrap's icons
   },
   props: {
-    currentStep: String,
+    currentStep: String
   },
   data() {
     return {
@@ -129,11 +149,17 @@ export default {
       step_list: tutorial_content,
       current_step: null,
       is_active_step: false,
+      mediaLoading: false
     };
   },
   created() {
     // launch tutorial when is created by first time
-    this.changeIsTutorial(true);
+    if (
+      this.selectedProject.info &&
+      !this.selectedProject.info.task_presenter
+    ) {
+      this.changeIsTutorial(true);
+    }
   },
   mounted() {
     // load the first slide content
@@ -147,37 +173,25 @@ export default {
   },
   computed: {
     ...mapState({
-      isTutorialVisible: (state) => state.task.builder.isTutorialVisible,
+      isTutorialVisible: state => state.task.builder.isTutorialVisible,
+      selectedProject: state => state.project.selectedProject
     }),
     getStepId() {
-      // convert step name in step id
-      switch (this.currentStep) {
-        case "material":
-          return 1;
-        case "job":
-          return 2;
-        case "template":
-          return 3;
-        case "source":
-          return 4;
-        case "summary":
-          return 5;
-        default:
-          return false;
-      }
+      return STEPS.has(this.currentStep) ? STEPS.get(this.currentStep) : 1;
     },
     isLast() {
       return this.active_step === this.step_list.length;
-    },
+    }
   },
   methods: {
     ...mapMutations({ changeIsTutorial: "task/builder/changeIsTutorial" }),
     changeStep(step) {
+      this.mediaLoading = true;
       this.is_active_step = false;
       step = step > this.step_list.length ? 1 : step;
       // small time out for animation purpose
       setTimeout(() => {
-        this.current_step = this.step_list.find((x) => x.step === step);
+        this.current_step = this.step_list.find(x => x.step === step);
         this.active_step = this.current_step.step;
         this.is_active_step = true;
       }, 500);
@@ -185,7 +199,17 @@ export default {
     isActiveIcon(step) {
       return this.active_step == step ? "circle-fill" : " circle";
     },
-  },
+    getImage(img_url) {
+      if (img_url) {
+        return require(`@/assets/img/${img_url}`);
+      }
+      return null;
+    },
+    // callback when media is loaded
+    onReadyMedia() {
+      this.mediaLoading = false;
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -193,11 +217,14 @@ export default {
 
 .tutorial {
   transition: all $transition-duration-super-long $transition-timing-function;
-  transform: translatex(-$scroll-effect-offset);
+  transform: translatex(calc($scroll-effect-offset/-2));
   opacity: 0;
   &.active {
     transform: translateX(0);
     opacity: 1;
+  }
+  .card-body {
+    padding: 0;
   }
 }
 </style>
