@@ -178,7 +178,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { getWidthScreen, csvToJson, groupBy } from "@/helper.js";
-import media_ext from "@/assets/media_files_ext.json";
+import media_ext from "@/data/media_files_ext.json";
 
 const MAX_SIZE_MEDIA = 200000000; // 200Mb
 const MAX_SIZE_CSV = 500000; // 500Kb

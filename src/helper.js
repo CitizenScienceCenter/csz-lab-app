@@ -1,5 +1,5 @@
 import { i18n } from "./i18n.js";
-import media_ext from "@/assets/media_files_ext.json";
+import media_ext from "@/data/media_files_ext.json";
 import Papa from "papaparse";
 
 export function uuid() {

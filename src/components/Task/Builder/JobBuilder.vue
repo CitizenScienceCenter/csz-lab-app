@@ -6,20 +6,21 @@
           {{ $t("go-back-btn") }}
         </b-link>
       </b-col>
-      <!-- TODO: Pending for development PB Tutorial -->
-      <!-- <b-col>
+      <!-- Tutorial button -->
+      <b-col>
         <b-btn
           class="float-right"
           variant="link"
           @click="changeIsTutorial(true)"
         >
           <template>
-            <span>
-              <i class="fas fa-book" aria-hidden="true"></i> Tutorial
+            <span style="text-transform: none;">
+              <i class="fas fa-info" aria-hidden="true"></i>
+              {{ $t("task-builder-how-to-btn") }}
             </span>
           </template>
         </b-btn>
-      </b-col> -->
+      </b-col>
     </b-row>
     <!-- Job type selection title -->
     <b-row class="mt-4">
@@ -31,7 +32,6 @@
     </b-row>
 
     <b-row class="mt-4">
-      <!-- FIXME: Temporal fix Not working, validate if materialJobs, but show cleaning cache message -->
       <b-col
         md="9"
         v-if="
@@ -116,7 +116,6 @@
         </div>
         <div v-else>
           <p v-html="$t('task-job-builder-info')" class="text-muted small"></p>
-          <!-- FIXME: Temporal fix, validate if materialJobs, but show cleaning cache message -->
           <p
             v-html="$t('task-job-builder-info-clean-cache')"
             class="text-primary small"

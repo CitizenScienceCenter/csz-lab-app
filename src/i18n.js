@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
 import store from "./store/index.js";
-import * as messages from "./assets/messages.json";
+import * as messages from "./data/messages.json";
 
 Vue.use(VueI18n);
 
@@ -29,7 +29,7 @@ if (!store.state.settings.language) {
 }
 
 // Merge internationalization messages with external JSON files
-const geoTwitter = require("./assets/messages_geoTwitter.json");
+const geoTwitter = require("./data/messages_geoTwitter.json");
 for (let key in messages) {
     messages[key] = Object.assign(messages[key], geoTwitter[key]);
 }
