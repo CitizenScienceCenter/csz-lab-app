@@ -34,6 +34,20 @@
                 fluid
               ></b-img>
             </a>
+            <a
+              variant="link"
+              class="scroll-effect scroll-effect-delayed-2"
+              :href="crowd4sdg_logo.url"
+              target="_blank"
+            >
+              <b-img
+                class="logo m-3 mx-2 mx-sm-4"
+                :src="crowd4sdg_logo.img"
+                alt="crowd4sdg"
+                rounded
+                fluid
+              ></b-img>
+            </a>
             <br />
             <!-- Create applet button -->
             <b-button variant="primary" to="/project/builder/name" class="mt-2">
@@ -214,6 +228,10 @@ export default {
       cclab_logo: {
         img: require("@/assets/ccl-logo.png"),
         url: "https://www.citizencyberlab.org/"
+      },
+      crowd4sdg_logo: {
+        img: require("@/assets/img/cslogger_view/crowd4sdg.png"),
+        url: "https://crowd4sdg.eu/"
       }
     };
   },

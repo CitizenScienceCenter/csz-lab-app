@@ -267,6 +267,7 @@ export default {
       const cri_logo = require("@/assets/img/cslogger_view/cri.png");
       const child_mind_inst_logo = require("@/assets/img/cslogger_view/child_mind_institute.png");
       const eth_lib_lab_logo = require("@/assets/img/cslogger_view/eth_library_lab.png");
+      const crowd_4_sdg_logo = require("@/assets/img/cslogger_view/crowd4sdg.png");
       this.team_logos = [
         { alt: "cri_logo", img: cri_logo, url: "https://www.cri-paris.org/" },
         {
@@ -278,6 +279,11 @@ export default {
           alt: "eth_lib_lab_logo",
           img: eth_lib_lab_logo,
           url: "https://www.librarylab.ethz.ch/"
+        },
+        {
+          alt: "crowd_4_sdg_logo",
+          img: crowd_4_sdg_logo,
+          url: "https://crowd4sdg.eu/"
         }
       ];
     },
