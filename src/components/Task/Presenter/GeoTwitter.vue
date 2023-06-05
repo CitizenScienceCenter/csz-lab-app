@@ -65,56 +65,20 @@
           ></b-spinner>
           <h5>{{ $t("geolocation.loading_task") }}</h5>
         </div>
+        <!-- **** former STEP 1 ***** -->
+        <!-- **** removed ***** -->
+
         <!-- **** STEP 1 ***** -->
-        <div class="interactive-section" v-if="step < 2 && !loading">
+        <!-- **** fusion of STEP 1 & 2 ***** -->
+        <div class="interactive-section" v-if="step <= 1 && !loading">
           <div>
             <!-- Question  -->
             <!-- FIXME: If More than one option available show a generic question -->
             <label class="title">
               {{ step }} - {{ $t(getQuestion(step, "question")) }}
             </label>
-            <!-- Check the image's comments to validate it -->
+
             <h2 style="margin-top: 12px; font-size: 16px; position: relative">
-              {{ $t("geolocation.checkOriginalImage") }}
-              <a class="is-clickable" v-b-modal.modal_tips1>
-                <i class="fas fa-question-circle"></i>
-                {{ $t("geolocation.tips") }}
-              </a>
-              <!-- Tips for this step -->
-              <b-modal
-                id="modal_tips1"
-                hide-footer
-                ok-only
-                scrollable
-                :title="$t('geolocation.tipsHeadline')"
-              >
-                <p>{{ $t("geolocation.readTheFullPost") }}</p>
-                <p>{{ $t("geolocation.useGoogleImages") }}</p>
-                <p>{{ $t("geolocation.useGoogleTranslate") }}</p>
-              </b-modal>
-            </h2>
-
-            <common-editor-elements
-              v-if="locationOptions.length"
-              :answers="answers"
-              :question="getQuestion(step)"
-              :context="context"
-            />
-            <gmap-autocomplete
-              :value="locationPre"
-              @place_changed="otherPlace"
-            ></gmap-autocomplete>
-          </div>
-        </div>
-
-        <!-- ****Step 2***** -->
-        <div class="interactive-section" v-show="step === 2 && !loading">
-          <!-- Title -->
-          <label class="title">
-            {{ step }} - {{ $t(getQuestion(step, "question")) }}
-          </label>
-          <!-- Subtitle -->
-          <h2 style="margin-top: 12px; font-size: 16px; position: relative">
             {{ $t("geolocation.useSearchbox") }}
             <a class="is-clickable" v-b-modal.modal_tips2>
               <i class="fas fa-question-circle"></i>
@@ -152,10 +116,25 @@
             </b-modal>
           </h2>
 
-          <!-- Search input for google -->
+            <!-- Check the image's comments to validate it -->
+            <common-editor-elements
+              v-if="locationOptions.length"
+              :answers="answers"
+              :question="getQuestion(step)"
+              :context="context"
+            />
+            <gmap-autocomplete
+              :value="locationPre"
+              @place_changed="otherPlace"
+            ></gmap-autocomplete>
+          </div>
+
+        
+          <!-- Search input for google 
           <div class="control w-100 pb-3">
             <gmap-autocomplete @place_changed="setPlace"></gmap-autocomplete>
           </div>
+          -->
           <!-- Google Maps component -->
           <b-container
             fluid
@@ -174,8 +153,8 @@
                 ref="marker1"
                 @dragend="getMarkerPosition($event.latLng)"
                 :position="latLng"
-                :clickable="step === 2"
-                :draggable="step === 2"
+                :clickable="(step === 1)"
+                :draggable="(step === 1)"
               />
             </gmap-map>
           </b-container>
@@ -199,49 +178,36 @@
                 ref="marker2"
                 @dragend="getMarkerPosition($event.latLng)"
                 :position="latLng"
-                :clickable="step === 2"
-                :draggable="step === 2"
+                :clickable="(step === 1)"
+                :draggable="(step === 1)"
               />
             </gmap-map>
           </b-container>
         </div>
 
-        <!-- ***Step 3*** -->
-        <div class="interactive-section" v-if="step === 3 && !loading">
+        <!-- ***Step 2*** -->
+        <div class="interactive-section" v-if="step === 2 && !loading">
           <div class="steps" style="max-width: 500px">
             <label class="title">
-              {{ step }} - {{ $t(getQuestion(step, "question")) }}
+              {{ step }} - {{ $t(getQuestion(step + 1, "question")) }}
             </label>
             <common-editor-elements
               :answers="answers"
-              :question="getQuestion(step)"
+              :question="getQuestion(step + 1)"
               :context="context"
             />
           </div>
         </div>
 
-        <!-- ***Step 4*** -->
-        <div class="interactive-section" v-if="step === 4 && !loading">
-          <div
-            class="steps"
-            style="display: flex; flex-direction: column; align-items: center"
-          >
-            <img src="@/assets/img/completed.svg" />
-            <h2
-              class="title"
-              style="font-size: 24px; margin-top: 15px; margin-bottom: 15px"
-            >
-              {{ $t("geolocation.finalMsg") }}
-            </h2>
-          </div>
-        </div>
+        <!-- ***former Step 4*** -->
+        <!-- **** removed ***** -->
 
         <!-- Skip button and navigation -->
         <div class="bottom">
           <b-row align-h="center" class="py-2">
             <!-- Navigation buttons -->
             <b-col cols="12" class="text-center">
-              {{ $t("geolocation.steps", { start: step, end: 4 }) }}
+              {{ $t("geolocation.steps", { start: step, end: 2 }) }}
             </b-col>
             <b-button-group class="pt-2">
               <!-- back button -->
@@ -257,12 +223,14 @@
               <b-btn
                 @click="submit"
                 variant="success"
-                :disabled="!approxLocation"
-                v-if="step === 4"
+                :disabled="!approxLocation || !accuracy "
+                v-if="(step === 2)"
               >
                 {{ $t("submit-btn") }}
+                
               </b-btn>
 
+              
               <!-- Skip button -->
               <b-btn @click="skip" variant="secondary"
                 >{{ $t("skip-btn") }}
@@ -271,7 +239,7 @@
               <b-button
                 variant="primary"
                 :disabled="
-                  step === 4 || !approxLocation || (!accuracy && step === 3)
+                  step === 2
                 "
                 @click="incStep"
               >
@@ -418,7 +386,7 @@ export default {
     },
 
     searchImg() {
-      return `https://www.google.com/searchbyimage?image_url=${this.tweetImage}`;
+      return `https://lens.google.com/search?p=${this.tweetImage}`;
     },
     translate() {
       return `https://translate.google.com/#auto/${i18n.locale}/${this.taskInfo.full_text}`;
@@ -458,12 +426,12 @@ export default {
 
     // Navigation buttons
     incStep() {
-      if (this.step < 5) {
+      if (this.step <= 2) {
         this.step++;
       }
     },
     decStep() {
-      if (this.step > 1) {
+      if (this.step >= 0) {
         this.step--;
       }
     },
@@ -552,6 +520,7 @@ export default {
 
     // Get coordinates from Google search field for the first step
     otherPlace(place) {
+      console.log(place);
       if (place != null) {
         this.selectedLocation = {
           coordinates: [
