@@ -1,0 +1,82 @@
+[
+  {
+    "id": "share-app-0",
+    "title": "cslogger-share-app-settings-privacy",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cslogger-share-app-settings-privacy-0"
+          }
+        ],
+        [
+          {
+            "text": "cslogger-share-app-settings-privacy-1"
+          },
+          {
+            "img": "cslogger_view/share_app/view_users_mindlogger.png"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "share-app-1",
+    "title": "cslogger-share-app-invite-participants",
+    "content": {
+      "row_header": ["Instructions", "Web Dashboard"],
+      "rows": [
+        [
+          {
+            "text": "cslogger-share-app-invite-participants-0"
+          },
+          {
+            "img": "cslogger_view/share_app/user_invitation_mindlogger.png"
+          }
+        ],
+        [
+          {
+            "text": "cslogger-share-app-invite-participants-1"
+          },
+          { "img": "cslogger_view/share_app/public_link_mindlogger.png" }
+        ],
+        [
+          {
+            "text": "cslogger-share-app-invite-participants-2"
+          },
+          { "img": "cslogger_view/share_app/share_public_link_mindlogger.png" }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "share-app-2",
+    "title": "cslogger-share-app-install-applet",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cslogger-share-app-install-applet-0"
+          }
+        ],
+        [
+          {
+            "text": "cslogger-share-app-install-applet-1.1",
+            "img": "cslogger_view/share_app/mindlogger-playstore.png"
+          },
+          {
+            "text": "cslogger-share-app-install-applet-1.2",
+            "img": "cslogger_view/share_app/mindlogger-appstore.png"
+          }
+        ],
+        [
+          {
+            "text": "cslogger-share-app-install-applet-2"
+          }
+        ]
+      ]
+    }
+  }
+]

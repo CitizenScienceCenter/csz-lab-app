@@ -1,32 +1,29 @@
-const errors = {
-
-}
+const errors = {};
 
 // global state for this module
 const state = {
-  title: '',
-  shortDescription: '',
-  picture: '',
-  croppedPicture: '',
+  title: "",
+  shortDescription: "",
+  picture: "",
+  croppedPicture: "",
   cropData: {},
   story: {
-    whatWhy: '',
-    how: '',
-    who: '',
-    keepTrack: ''
+    whatWhy: "",
+    how: "",
+    who: "",
+    keepTrack: "",
+    contribute: ""
   },
-  currentStep: 'name',
+  currentStep: "name",
   steps: {
     name: false,
     information: false,
     story: false
   }
-}
+};
 
 // filter methods on the state data
-const getters = {
-
-}
+const getters = {};
 
 // async methods making mutations are placed here
 const actions = {
@@ -35,56 +32,61 @@ const actions = {
    * @param commit
    * @return {Promise<void>}
    */
-  reset ({ commit }) {
+  reset({ commit }) {
     return new Promise(resolve => {
-      commit('setStep', { step: 'name', value: false })
-      commit('setStep', { step: 'information', value: false })
-      commit('setStep', { step: 'story', value: false })
-      commit('setTitle', '')
-      commit('setShortDescription', '')
-      commit('setPicture', '')
-      commit('setCroppedPicture', '')
-      commit('setCropData', {})
-      commit('setStory', {
-        whatWhy: '',
-        how: '',
-        who: '',
-        keepTrack: ''
-      })
-      resolve()
-    })
+      commit("setStep", { step: "name", value: false });
+      commit("setStep", { step: "information", value: false });
+      commit("setStep", { step: "story", value: false });
+      commit("setTitle", "");
+      commit("setShortDescription", "");
+      commit("setPicture", "");
+      commit("setCroppedPicture", "");
+      commit("setCropData", {});
+      commit("setStory", {
+        whatWhy: "",
+        how: "",
+        who: "",
+        keepTrack: "",
+        contribute: ""
+      });
+      resolve();
+    });
   }
-}
+};
 
 // methods that change the state
 const mutations = {
-  setTitle (state, title) {
-    state.title = title
+  setTitle(state, title) {
+    state.title = title;
   },
-  setPicture (state, picture) {
-    state.picture = picture
+  setPicture(state, picture) {
+    state.picture = picture;
   },
-  setCroppedPicture (state, picture) {
-    state.croppedPicture = picture
+  setCroppedPicture(state, picture) {
+    state.croppedPicture = picture;
   },
-  setCropData (state, data) {
-    state.cropData = data
+  setCropData(state, data) {
+    state.cropData = data;
   },
-  setShortDescription (state, description) {
-    state.shortDescription = description
+  setShortDescription(state, description) {
+    state.shortDescription = description;
   },
-  setStory (state, { whatWhy, how, who, keepTrack }) {
+  setStory(state, { whatWhy, how, who, keepTrack, contribute }) {
     state.story = {
-      whatWhy, how, who, keepTrack
-    }
+      whatWhy,
+      how,
+      who,
+      keepTrack,
+      contribute
+    };
   },
-  setCurrentStep (state, step) {
-    state.currentStep = step
+  setCurrentStep(state, step) {
+    state.currentStep = step;
   },
-  setStep (state, { step, value }) {
-    state.steps = {...state.steps, [step]: value}
+  setStep(state, { step, value }) {
+    state.steps = { ...state.steps, [step]: value };
   }
-}
+};
 
 export default {
   namespaced: true,
@@ -93,4 +95,4 @@ export default {
   actions,
   mutations,
   errors
-}
+};

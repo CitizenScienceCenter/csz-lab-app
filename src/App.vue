@@ -55,14 +55,7 @@
     >
       <span v-html="notification.message.content"></span>
     </b-toast>
-
-    <loading
-      :active.sync="isLoadingSpinnerDisplayed"
-      :can-cancel="false"
-      :is-full-page="true"
-      color="#c5202e"
-    >
-    </loading>
+    <loading></loading>
 
     <project-password-modal :value="showProjectPassModal" :project="project">
     </project-password-modal>
@@ -70,14 +63,18 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import { i18n } from "./i18n";
-import Loading from "vue-loading-overlay";
+import Loading from "@/components/Common/Loading.vue";
+import projects from "@/mixins/projects.js";
+
+// modules for managing gtag
+import { bootstrap } from "vue-gtag";
+
 import GDPR from "./components/GDPR.vue";
 import Footer from "./components/Footer.vue";
 import Header from "./components/Header.vue";
 import ProjectPasswordModal from "@/components/Common/ProjectPasswordModal";
-import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "App",
@@ -114,8 +111,8 @@ export default {
         {
           vmid: "og:image", // because it gets overwritten by some
           property: "og:image",
-          content: "@/assets/img/presentation.jpg"
-        }
+          content: "https://lab.citizenscience.ch/static/img/presentation.jpg"
+        },
       ],
       link: [
         {
@@ -125,21 +122,33 @@ export default {
       ]
     };
   },
+  mixins: [projects],
   props: {},
+  created() {
+    // Check if Gtag for Google Analytics is enabled in the settings
+    if (this.getGtag) {
+      bootstrap().then(gtag => {});
+    }
+    // method included into mixins.projects.js
+    this.loadCategoryProjects();
+  },
+  mounted() {
+    // Check the screen size
+    this.setScreenSize(window.innerWidth);
+    window.addEventListener("resize", this.setScreenSize);    
+  },
   computed: {
     ...mapState({
       errorNotifications: state => state.notification.errorNotifications,
       infoNotifications: state => state.notification.infoNotifications,
       successNotifications: state => state.notification.successNotifications,
-      isLoadingSpinnerDisplayed: state =>
-        state.notification.isLoadingSpinnerDisplayed,
-
       userLogged: state => state.user.logged,
       userProfile: state => state.user.infos,
 
       project: state => state.project.selectedProject,
       showProjectPassModal: state => state.project.showProjectPassModal
     }),
+    ...mapGetters({ getGtag: "settings/getGtag" }),
     language: {
       get() {
         return this.$store.state.settings.language;
@@ -149,14 +158,23 @@ export default {
       }
     }
   },
-  watch: {},
+  watch: {
+    getGtag() {
+      if (this.getGtag) {
+        bootstrap().then(gtag => {});
+      }
+    }
+  },
   methods: {
     ...mapMutations({
       closeError: "notification/closeError",
       closeInfo: "notification/closeInfo",
       closeSuccess: "notification/closeSuccess"
     }),
-    ...mapActions("user", ["getAccountProfile"])
+    ...mapActions({
+      user: "user/getAccountProfile",
+      setScreenSize: "settings/setScreenSize"
+    })
   }
 };
 </script>
@@ -176,7 +194,6 @@ export default {
   border: 0px;
   border-color: transparent;
 }
-
 .main-content {
   padding-bottom: 20rem;
 }

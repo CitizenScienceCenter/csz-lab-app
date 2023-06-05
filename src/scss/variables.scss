@@ -7,20 +7,19 @@ $viewport-large: 1020px;
 $viewport-xlarge: 1281px;
 $viewport-xxlarge: 1420px;
 
-
 /* Easing */
 
-$transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-$transition-timing-function-symmetric: cubic-bezier(0.4, 0.0, 0.6, 1);
+$transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+$transition-timing-function-symmetric: cubic-bezier(0.4, 0, 0.6, 1);
 $transition-duration-long: 300ms;
 $transition-duration-short: 150ms;
 
 $transition-duration-super-long: 900ms;
-$transition-delay-1: 100ms;
-$transition-delay-2: 200ms;
-$transition-delay-3: 300ms;
+$transition-delay-1: 250ms;
+$transition-delay-2: 500ms;
+$transition-delay-3: 750ms;
+$transition-delay-4: 1000ms;
 $scroll-effect-offset: 48px;
-
 
 /* Colors */
 
@@ -28,7 +27,7 @@ $primary: #c5202e;
 $secondary: #16496b;
 $black: #231f20;
 $color-gradient-start: $secondary;
-$color-gradient-end: mix( $primary, $secondary, 75%);
+$color-gradient-end: mix($primary, $secondary, 75%);
 
 $danger: #b11d29;
 $success: #109b16;
@@ -40,26 +39,26 @@ $success: #109b16;
   @return mix(black, $color, $percentage);
 }
 
-$color-primary-shade-40: shade( $primary, 40% );
-$color-primary-shade-20: shade( $primary, 20% );
-$color-primary-shade-10: shade( $primary, 10% );
-$color-primary-tint-30: tint( $primary, 30% );
-$color-primary-tint-40: tint( $primary, 40% );
-$color-primary-tint-50: tint( $primary, 50% );
-$color-primary-tint-80: tint( $primary, 70% );
-$color-primary-tint-80: tint( $primary, 80% );
-$color-primary-tint-90: tint( $primary, 90% );
-$color-primary-tint-95: tint( $primary, 95% );
+$color-primary-shade-40: shade($primary, 40%);
+$color-primary-shade-20: shade($primary, 20%);
+$color-primary-shade-10: shade($primary, 10%);
+$color-primary-tint-30: tint($primary, 30%);
+$color-primary-tint-40: tint($primary, 40%);
+$color-primary-tint-50: tint($primary, 50%);
+$color-primary-tint-80: tint($primary, 70%);
+$color-primary-tint-80: tint($primary, 80%);
+$color-primary-tint-90: tint($primary, 90%);
+$color-primary-tint-95: tint($primary, 95%);
 
-$color-secondary-shade-20: shade( $secondary, 20% );
-$color-secondary-shade-50: shade( $secondary, 50% );
-$color-secondary-tint-30: tint( $secondary, 30% );
-$color-secondary-tint-40: tint( $secondary, 40% );
-$color-secondary-tint-50: tint( $secondary, 50% );
-$color-secondary-tint-80: tint( $secondary, 70% );
-$color-secondary-tint-80: tint( $secondary, 80% );
-$color-secondary-tint-90: tint( $secondary, 90% );
-$color-secondary-tint-95: tint( $secondary, 95% );
+$color-secondary-shade-20: shade($secondary, 20%);
+$color-secondary-shade-50: shade($secondary, 50%);
+$color-secondary-tint-30: tint($secondary, 30%);
+$color-secondary-tint-40: tint($secondary, 40%);
+$color-secondary-tint-50: tint($secondary, 50%);
+$color-secondary-tint-80: tint($secondary, 70%);
+$color-secondary-tint-80: tint($secondary, 80%);
+$color-secondary-tint-90: tint($secondary, 90%);
+$color-secondary-tint-95: tint($secondary, 95%);
 
 $color-black-tint-97: tint($black, 97%);
 $color-black-tint-90: tint($black, 90%);
@@ -72,7 +71,6 @@ $color-black-tint-30: tint($black, 30%);
 $color-black-tint-20: tint($black, 20%);
 $color-black-tint-10: tint($black, 10%);
 
-
 /* Misc */
 
 $border-radius: 6px;
@@ -80,7 +78,7 @@ $link-hover-decoration: none;
 
 /* Typography */
 
-$font-family: 'PT Sans', var(--font-family-sans-serif);
+$font-family: "PT Sans", var(--font-family-sans-serif);
 $font-family-base: $font-family;
 $font-scale: 1.25;
 
@@ -94,16 +92,15 @@ $font-scale: 1.25;
   @return $value;
 }
 
-$font-size-tiny: 1rem / pow($font-scale,3);
-$font-size-mini: 1rem / pow($font-scale,2);
-$font-size-small: 1rem / $font-scale;
+$font-size-tiny: calc(1rem / pow($font-scale, 3));
+$font-size-mini: calc(1rem / pow($font-scale, 2));
+$font-size-small: calc(1rem / $font-scale);
 $font-size-normal: 1rem;
-$font-size-medium: 1rem * $font-scale;
-$font-size-large: 1rem * pow($font-scale,2);
-$font-size-xlarge: 1rem * pow($font-scale,3);
-$font-size-xxlarge: 1rem * pow($font-scale,4);
-$font-size-xxxlarge: 1rem * pow($font-scale,5);
-
+$font-size-medium: calc(1rem * $font-scale);
+$font-size-large: calc(1rem * pow($font-scale, 2));
+$font-size-xlarge: calc(1rem * pow($font-scale, 3));
+$font-size-xxlarge: calc(1rem * pow($font-scale, 4));
+$font-size-xxxlarge: calc(1rem * pow($font-scale, 5));
 
 /* Spacings */
 

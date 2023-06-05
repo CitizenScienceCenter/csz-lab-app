@@ -1,14 +1,13 @@
-import Vue from "vue";
 import store from "@/store";
-import Router from "vue-router";
 import Home from "@/components/Home";
-import Comments from "@/components/Forum/Comments";
+// import Comments from "@/components/Forum/Comments";
 import Login from "@/components/Login";
 import Discover from "@/components/Discover";
+import CitizenScienceLogger from "@/components/Tools/CitizenScienceLogger";
+import ProjectBuilderHome from "@/components/Tools/ProjectBuilderHome";
 import Project from "@/components/Project/Project";
 import ProjectTest from "@/components/Project/ProjectTest";
 import ProjectBuilder from "@/components/Project/Builder/ProjectBuilder";
-import About from "@/components/About";
 import TaskBuilder from "@/components/Task/Builder/TaskBuilder";
 import TemplateRenderer from "@/components/Task/TemplateRenderer";
 import TemplateRendererTestProject from "@/components/Task/TemplateRendererTestProject";
@@ -27,6 +26,7 @@ import TaskPrioritySetting from "@/components/Project/Menu/TaskMenu/Settings/Tas
 import FlickrCallback from "@/components/Task/Builder/FlickrCallback";
 import ResetPassword from "@/components/ResetPassword";
 import RecoverPassword from "@/components/RecoverPassword";
+import NotFound from "@/components/NotFound";
 
 export const routes = [
   {
@@ -117,9 +117,27 @@ export const routes = [
         component: Discover
       },
       {
-        path: "about",
-        name: "about",
-        component: About
+        path: "tools",
+        redirect: "tools/cslogger",
+        component: {
+          render(c) {
+            return c("router-view");
+          }
+        },
+        children: [
+          {
+            path: "cslogger/:section?",
+            name: "tools.cslogger",
+            props: true,
+            component: CitizenScienceLogger
+          },
+          {
+            path: "projectbuilder/:section?",
+            name: "tools.projectbuilder",
+            props: true,
+            component: ProjectBuilderHome
+          }
+        ]
       },
       // TODO: uncomment when Forum for each particular projects is done
       //   {
@@ -162,9 +180,9 @@ export const routes = [
                       
                     }
                   })*/
-
           const selectedProjectId = store.state.project.selectedProject.id;
           if (parseInt(selectedProjectId) !== parseInt(to.params.id)) {
+            store.commit("project/setLoadingProject", false);
             store.commit(
               "project/menu/setCurrentTab",
               store.state.project.menu.tabs.info
@@ -179,16 +197,12 @@ export const routes = [
         component: ProjectTest,
         beforeEnter: (to, from, next) => {
           let fp = to.fullPath;
-          let short_name = fp.substring(
-            fp.lastIndexOf("project/") + 8,
-            fp.lastIndexOf("/test")
-          );
-          let url = fp.split("?share=");
+          const url = fp.split("?share=");
           if (url.length > 1) {
             store
               .dispatch("project/getProjectSharedLinkConfirmation", {
                 key: url[1],
-                short_name: short_name,
+                short_name: to.params.short_name,
                 fullpath: fp
               })
               .then(confirm => {
@@ -203,6 +217,8 @@ export const routes = [
                   next({ name: "home" });
                 }
               });
+          } else if (from.name === "project.task.presenter.test") {
+            next();
           } else {
             next({ name: "home" });
           }
@@ -388,7 +404,10 @@ export const routes = [
             store.commit("task/builder/setCurrentStep", "template");
             next();
           } else {
-            next({ name: "task.builder.job", params: { id: to.params.id } });
+            next({
+              name: "task.builder.job",
+              params: { id: to.params.id }
+            });
           }
         }
       },
@@ -419,7 +438,10 @@ export const routes = [
             store.commit("task/builder/setCurrentStep", "summary");
             next();
           } else {
-            next({ name: "task.builder.source", params: { id: to.params.id } });
+            next({
+              name: "task.builder.source",
+              params: { id: to.params.id }
+            });
           }
         }
       },
@@ -428,6 +450,11 @@ export const routes = [
         name: "flickr.callback",
         props: true,
         component: FlickrCallback
+      },
+      {
+        // catch all NotFound
+        path: "*",
+        component: NotFound
       }
     ]
   }

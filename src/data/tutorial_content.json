@@ -1,0 +1,54 @@
+[
+  {
+    "step": 1,
+    "title": "Material Type",
+    "subtitle": "Select the kind of data you want to work with.",
+    "description": null,
+    "images": [
+      "tutorial/material_1.png",
+      "tutorial/material_2.png",
+      "tutorial/material_3.png",
+      "tutorial/material_4.png"
+    ],
+    "video": null
+  },
+  {
+    "step": 2,
+    "title": "Job Selection",
+    "subtitle": "Select the type of tasks to be performed by the contributors.",
+    "description": null,
+    "images": ["tutorial/job_1.png", "tutorial/job_2.png"],
+    "video": null
+  },
+  {
+    "step": 3,
+    "title": "Survey Creation",
+    "subtitle": "Create and configure the survey.",
+    "description": null,
+    "images": [],
+    "video": "https://www.youtube.com/embed/7MRPsHzuDpc?autoplay=1"
+  },
+  {
+    "step": 4,
+    "title": "Data Source",
+    "subtitle": "Choose the data source to be used.",
+    "description": null,
+    "images": [
+      "tutorial/source_1.png",
+      "tutorial/source_2.png",
+      "tutorial/source_3.png",
+      "tutorial/source_4.png",
+      "tutorial/source_5.png",
+      "tutorial/source_6.png"
+    ],
+    "video": null
+  },
+  {
+    "step": 5,
+    "title": "Summary",
+    "subtitle": "Review the summary of the project.",
+    "description": null,
+    "images": ["tutorial/summary_1.png"],
+    "video": null
+  }
+]

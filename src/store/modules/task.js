@@ -11,11 +11,10 @@ import {
 } from "@/helper";
 
 import BasicTemplate from "@/components/Task/Template/BasicTemplate";
-import ImageTemplate from "@/components/Task/Template/Image/ImageClassificationTemplate";
-import VideoTemplate from "@/components/Task/Template/Video/VideoDescriptionTemplate";
-import SoundTemplate from "@/components/Task/Template/Sound/SoundClassificationTemplate";
-import DocumentTemplate from "@/components/Task/Template/Document/PdfDescriptionTemplate";
-import GeoCodingTemplate from "@/components/Task/Template/GeoCoding/GeoCodingTemplate";
+import DocumentTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
+import TwitterTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
+import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGenericTemplate";
+import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 
 const errors = {
   GET_PROJECT_TASKS_LOADING_ERROR: "Error during project tasks loading",
@@ -53,8 +52,9 @@ const state = {
     sound: "sound",
     image: "image",
     video: "video",
-    geocoding: "geocoding",
-    document: "document"
+    document: "document",
+    geo: "geo",
+    twitter: "twitter"
   },
 
   // contains data required to send forms
@@ -135,15 +135,19 @@ const actions = {
           return false;
         });
     } else {
+      // For image, sound and video the templates is similar
+      const commons = [
+        state.templates.image,
+        state.templates.sound,
+        state.templates.video
+      ];
+      template = commons.includes(template) ? "media" : template;
       switch (template) {
-        case state.templates.image:
-          commit("setTaskPresenter", buildTemplateFromModel(ImageTemplate, {}));
-          break;
-        case state.templates.sound:
-          commit("setTaskPresenter", buildTemplateFromModel(SoundTemplate, {}));
-          break;
-        case state.templates.video:
-          commit("setTaskPresenter", buildTemplateFromModel(VideoTemplate, {}));
+        case 'media':
+          commit(
+            "setTaskPresenter",
+            buildTemplateFromModel(SurveyGenericTemplate, {})
+          );
           break;
         case state.templates.document:
           commit(
@@ -151,10 +155,16 @@ const actions = {
             buildTemplateFromModel(DocumentTemplate, {})
           );
           break;
-        case state.templates.geocoding:
+        case state.templates.geo:
           commit(
             "setTaskPresenter",
-            buildTemplateFromModel(GeoCodingTemplate, {})
+            buildTemplateFromModel(GeoSurveyGenericTemplate, {})
+          );
+          break;
+        case state.templates.twitter:
+          commit(
+            "setTaskPresenter",
+            buildTemplateFromModel(TwitterTemplate, {})
           );
           break;
         default:

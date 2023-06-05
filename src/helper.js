@@ -1,4 +1,6 @@
 import { i18n } from "./i18n.js";
+import media_ext from "@/data/media_files_ext.json";
+import Papa from "papaparse";
 
 export function uuid() {
   let dt = new Date().getTime();
@@ -142,13 +144,13 @@ export function validateEmail(email) {
 }
 
 export function getTranslationLocale(tag) {
-  return i18n.messages[i18n.locale][tag];
+  return i18n.messages[i18n.locale][tag] || tag;
 }
 
 export function getPybossaTranslation(reason) {
   const tag = reason.split(" ");
   const complete = tag.join("-");
-  return i18n.messages[i18n.locale][complete];
+  return i18n.messages[i18n.locale][complete] || reason;
 }
 
 export function getFormErrorsAsStringOnlyErrorMsg(errors) {
@@ -234,4 +236,105 @@ export function trackEvent(_this, info = undefined) {
       event_value: 1
     });
   }
+}
+
+// Get the width screen size using javascript.get
+export function getWidthScreen() {
+  return window.screen.width;
+}
+
+// Get MIME type for url file
+export function getMIME(raw_url) {
+  let response = null;
+  const img_ext = new Set(media_ext.image);
+  const video_ext = new Set(media_ext.video);
+  const audio_ext = new Set(media_ext.sound);
+  const video_embed = new Set(["youtube", "vimeo"]);
+
+  const types = new Map();
+  //add images to the Map
+  img_ext.forEach(img => types.set(img, "img"));
+  //add video to the Map
+  video_ext.forEach(video => types.set(video, "video"));
+  //add audio to the Map
+  audio_ext.forEach(audio => types.set(audio, "audio"));
+
+  // Validate if url belongs to image, video or audio
+  let ext;
+  try {
+    const url = new URL(raw_url);
+    /* Special case */
+    // Embed video (i.e., youtube, vimeo)
+    if ([...video_embed].some(x => url.hostname.includes(x))) {
+      response = "vembed";
+    }
+    // Validate if url is valid protocol
+    if (["http", "https"].some(x => url.protocol.includes(x))) {
+      ext = url.pathname.split(".").pop();
+    }
+  } catch (e) {
+    if (typeof raw_url == "string") ext = raw_url.split(".").pop();
+  } finally {
+    if (types.get(`.${ext}`)) return types.get(`.${ext}`);
+    else if (response) return response;
+  }
+
+  /* Special case */
+  // CSLogger types
+  response = csloggerType(raw_url);
+  return response;
+}
+
+// group array of object by key and return grouped array of arrays
+export function groupBy(key, array) {
+  const group_obj = array.reduce((r, a) => {
+    r[a[key]] = [...(r[a[key]] || []), a];
+    return r;
+  }, {});
+  // remove wrong parameters
+  delete group_obj[""];
+  return group_obj;
+}
+
+// convert CSV file to Json format
+export async function csvToJson(csv) {
+  return new Promise((resolve, reject) => {
+    Papa.parse(csv, {
+      header: true,
+      complete: results => {
+        resolve(results.data);
+        reject(results.error);
+      }
+    });
+  });
+}
+
+// CSLogger implementation only
+// Validate type of response from string
+function csloggerType(response) {
+  // Get the type of response
+  const type = response.split(":")[0].toLowerCase();
+  let res = null;
+  // By default all responses are text
+  if (type && type.length > 0 && type != "filename") {
+    res = "text";
+  }
+  switch (type) {
+    case "geo":
+      res = "geo";
+      break;
+    case "true" || "false":
+      res = "bool";
+      break;
+    case "date":
+      res = "date";
+      break;
+    case "value":
+      res = "value";
+      break;
+    case "time_range":
+      res = "time_range";
+      break;
+  }
+  return res;
 }

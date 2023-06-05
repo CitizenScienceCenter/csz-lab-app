@@ -1,0 +1,44 @@
+[
+  {
+    "id": "test-and-publish-0",
+    "title": "cspb-test-and-publish-project",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cspb-test-and-publish-project-0"
+          },
+          {
+            "img": "pb_view/test_and_publish/test_project_pb.png"
+          }
+        ],
+        [
+          {
+            "text": "cspb-test-and-publish-project-1"
+          },
+          {
+            "img": "pb_view/test_and_publish/published_project_pb.png"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "id": "test-and-publish-1",
+    "title": "cspb-test-and-publish-project-settings",
+    "content": {
+      "row_header": null,
+      "rows": [
+        [
+          {
+            "text": "cspb-test-and-publish-project-settings-0"
+          },
+          {
+            "img": "pb_view/test_and_publish/project_settings_pb.png"
+          }
+        ]
+      ]
+    }
+  }
+]
