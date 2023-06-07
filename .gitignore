@@ -11,6 +11,7 @@ selenium-debug.log
 dist*
 save_pid.txt
 dev.log
+config/
 
 # Editor directories and files
 .idea
