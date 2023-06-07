@@ -123,18 +123,13 @@
               :question="getQuestion(step)"
               :context="context"
             />
+
             <gmap-autocomplete
               :value="locationPre"
               @place_changed="otherPlace"
             ></gmap-autocomplete>
           </div>
 
-        
-          <!-- Search input for google 
-          <div class="control w-100 pb-3">
-            <gmap-autocomplete @place_changed="setPlace"></gmap-autocomplete>
-          </div>
-          -->
           <!-- Google Maps component -->
           <b-container
             fluid
@@ -343,15 +338,21 @@ export default {
       return this.answers[0].value;
     },
     latLng() {
+      
       // The result of searching with google input autocomplete
       if (this.searchLatLng != null) {
         return this.searchLatLng;
       }
       // Set the location selected in first step or the default location
       if (this.taskInfo) {
+        
         const coordinates = this.selectedLocation.coordinates || [0, 0];
+        if (typeof this.selectedLocation.coordinates !== "undefined" ) {
+          this.zoom = 8;
+        }
         return this.getLatLng(coordinates);
       }
+
     },
     // tweetHandle() {
     //   if (this.taskInfo.hasOwnProperty("author_screen_name")) {
@@ -453,12 +454,14 @@ export default {
         questions: this.questions
       });
       this.loading = true;
+      this.zoom = ZOOMMIN;
     },
 
     // Skip button
     async skip() {
       this.$emit("skip");
       this.loading = true;
+      this.zoom = ZOOMMIN;
     },
 
     //***  Google maps section */
@@ -474,12 +477,20 @@ export default {
           const currentLocation = this.taskInfo[col.geoString];
           const currentLat = this.taskInfo[col.geoLat];
           const currentLng = this.taskInfo[col.geoLng];
+          
           if (
             currentLocation &&
             currentLocation !== "" &&
             currentLocation !== "N_A"
           ) {
             // push the location comming from dataset directly
+            if (typeof currentLat === "undefined" || typeof currentLng === "undefined") {
+              const latLngData  = await this.getLocation(currentLocation);
+              currentLat = latLngData[0];
+              currentLng = latLngData[1];
+            }
+            
+            // console.log(test);
             locations.push({
               name: currentLocation,
               coordinates: [currentLat, currentLng]
@@ -518,9 +529,10 @@ export default {
       this.loading = false;
     },
 
+    
+
     // Get coordinates from Google search field for the first step
     otherPlace(place) {
-      console.log(place);
       if (place != null) {
         this.selectedLocation = {
           coordinates: [
@@ -531,6 +543,7 @@ export default {
           text: place.formatted_address
         };
         this.locationPre = place.formatted_address;
+        this.zoom = 8;
         // keep the answer[0] as other until user submit
         this.answers[0].value = OTHER_LOCATION.value;
       }
@@ -545,6 +558,22 @@ export default {
         return address.state;
       } else {
         return "Pin is correct";
+      }
+    },
+
+    async getLocation(location) {
+      
+      try {  
+      let url_reverse = `https://nominatim.openstreetmap.org/search?format=json&q=${location}`;
+      let data_aux = await fetch(url_reverse);
+      const data = await data_aux.json();
+      return [data[0]["lat"], data[0]["lon"]];
+      } catch (err) {
+        const data = [0, 0];
+        data[0]["lat"] = 0;
+        data[0]["lon"] = 0;
+        console.log(err);
+        return data;
       }
     },
 
@@ -664,6 +693,7 @@ export default {
         }
 
         this.zoom = ZOOMMIN;
+
         // Activate street view and marker position when street view is enabled
         if (typeof this.$refs.gmap1 !== "undefined") {
           const self = this;
