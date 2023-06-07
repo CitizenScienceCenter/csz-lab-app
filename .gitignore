@@ -9,6 +9,9 @@ yarn-error.log*
 /test/e2e/reports/
 selenium-debug.log
 dist*
+save_pid.txt
+dev.log
+config/
 
 # Editor directories and files
 .idea

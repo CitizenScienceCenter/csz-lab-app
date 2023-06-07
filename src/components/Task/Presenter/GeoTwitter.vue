@@ -65,56 +65,20 @@
           ></b-spinner>
           <h5>{{ $t("geolocation.loading_task") }}</h5>
         </div>
+        <!-- **** former STEP 1 ***** -->
+        <!-- **** removed ***** -->
+
         <!-- **** STEP 1 ***** -->
-        <div class="interactive-section" v-if="step < 2 && !loading">
+        <!-- **** fusion of STEP 1 & 2 ***** -->
+        <div class="interactive-section" v-if="step <= 1 && !loading">
           <div>
             <!-- Question  -->
             <!-- FIXME: If More than one option available show a generic question -->
             <label class="title">
               {{ step }} - {{ $t(getQuestion(step, "question")) }}
             </label>
-            <!-- Check the image's comments to validate it -->
+
             <h2 style="margin-top: 12px; font-size: 16px; position: relative">
-              {{ $t("geolocation.checkOriginalImage") }}
-              <a class="is-clickable" v-b-modal.modal_tips1>
-                <i class="fas fa-question-circle"></i>
-                {{ $t("geolocation.tips") }}
-              </a>
-              <!-- Tips for this step -->
-              <b-modal
-                id="modal_tips1"
-                hide-footer
-                ok-only
-                scrollable
-                :title="$t('geolocation.tipsHeadline')"
-              >
-                <p>{{ $t("geolocation.readTheFullPost") }}</p>
-                <p>{{ $t("geolocation.useGoogleImages") }}</p>
-                <p>{{ $t("geolocation.useGoogleTranslate") }}</p>
-              </b-modal>
-            </h2>
-
-            <common-editor-elements
-              v-if="locationOptions.length"
-              :answers="answers"
-              :question="getQuestion(step)"
-              :context="context"
-            />
-            <gmap-autocomplete
-              :value="locationPre"
-              @place_changed="otherPlace"
-            ></gmap-autocomplete>
-          </div>
-        </div>
-
-        <!-- ****Step 2***** -->
-        <div class="interactive-section" v-show="step === 2 && !loading">
-          <!-- Title -->
-          <label class="title">
-            {{ step }} - {{ $t(getQuestion(step, "question")) }}
-          </label>
-          <!-- Subtitle -->
-          <h2 style="margin-top: 12px; font-size: 16px; position: relative">
             {{ $t("geolocation.useSearchbox") }}
             <a class="is-clickable" v-b-modal.modal_tips2>
               <i class="fas fa-question-circle"></i>
@@ -152,10 +116,20 @@
             </b-modal>
           </h2>
 
-          <!-- Search input for google -->
-          <div class="control w-100 pb-3">
-            <gmap-autocomplete @place_changed="setPlace"></gmap-autocomplete>
+            <!-- Check the image's comments to validate it -->
+            <common-editor-elements
+              v-if="locationOptions.length"
+              :answers="answers"
+              :question="getQuestion(step)"
+              :context="context"
+            />
+
+            <gmap-autocomplete
+              :value="locationPre"
+              @place_changed="otherPlace"
+            ></gmap-autocomplete>
           </div>
+
           <!-- Google Maps component -->
           <b-container
             fluid
@@ -174,8 +148,8 @@
                 ref="marker1"
                 @dragend="getMarkerPosition($event.latLng)"
                 :position="latLng"
-                :clickable="step === 2"
-                :draggable="step === 2"
+                :clickable="(step === 1)"
+                :draggable="(step === 1)"
               />
             </gmap-map>
           </b-container>
@@ -199,49 +173,36 @@
                 ref="marker2"
                 @dragend="getMarkerPosition($event.latLng)"
                 :position="latLng"
-                :clickable="step === 2"
-                :draggable="step === 2"
+                :clickable="(step === 1)"
+                :draggable="(step === 1)"
               />
             </gmap-map>
           </b-container>
         </div>
 
-        <!-- ***Step 3*** -->
-        <div class="interactive-section" v-if="step === 3 && !loading">
+        <!-- ***Step 2*** -->
+        <div class="interactive-section" v-if="step === 2 && !loading">
           <div class="steps" style="max-width: 500px">
             <label class="title">
-              {{ step }} - {{ $t(getQuestion(step, "question")) }}
+              {{ step }} - {{ $t(getQuestion(step + 1, "question")) }}
             </label>
             <common-editor-elements
               :answers="answers"
-              :question="getQuestion(step)"
+              :question="getQuestion(step + 1)"
               :context="context"
             />
           </div>
         </div>
 
-        <!-- ***Step 4*** -->
-        <div class="interactive-section" v-if="step === 4 && !loading">
-          <div
-            class="steps"
-            style="display: flex; flex-direction: column; align-items: center"
-          >
-            <img src="@/assets/img/completed.svg" />
-            <h2
-              class="title"
-              style="font-size: 24px; margin-top: 15px; margin-bottom: 15px"
-            >
-              {{ $t("geolocation.finalMsg") }}
-            </h2>
-          </div>
-        </div>
+        <!-- ***former Step 4*** -->
+        <!-- **** removed ***** -->
 
         <!-- Skip button and navigation -->
         <div class="bottom">
           <b-row align-h="center" class="py-2">
             <!-- Navigation buttons -->
             <b-col cols="12" class="text-center">
-              {{ $t("geolocation.steps", { start: step, end: 4 }) }}
+              {{ $t("geolocation.steps", { start: step, end: 2 }) }}
             </b-col>
             <b-button-group class="pt-2">
               <!-- back button -->
@@ -257,12 +218,14 @@
               <b-btn
                 @click="submit"
                 variant="success"
-                :disabled="!approxLocation"
-                v-if="step === 4"
+                :disabled="!approxLocation || !accuracy "
+                v-if="(step === 2)"
               >
                 {{ $t("submit-btn") }}
+                
               </b-btn>
 
+              
               <!-- Skip button -->
               <b-btn @click="skip" variant="secondary"
                 >{{ $t("skip-btn") }}
@@ -271,7 +234,7 @@
               <b-button
                 variant="primary"
                 :disabled="
-                  step === 4 || !approxLocation || (!accuracy && step === 3)
+                  step === 2
                 "
                 @click="incStep"
               >
@@ -375,15 +338,21 @@ export default {
       return this.answers[0].value;
     },
     latLng() {
+      
       // The result of searching with google input autocomplete
       if (this.searchLatLng != null) {
         return this.searchLatLng;
       }
       // Set the location selected in first step or the default location
       if (this.taskInfo) {
+        
         const coordinates = this.selectedLocation.coordinates || [0, 0];
+        if (typeof this.selectedLocation.coordinates !== "undefined" ) {
+          this.zoom = 8;
+        }
         return this.getLatLng(coordinates);
       }
+
     },
     // tweetHandle() {
     //   if (this.taskInfo.hasOwnProperty("author_screen_name")) {
@@ -418,7 +387,7 @@ export default {
     },
 
     searchImg() {
-      return `https://www.google.com/searchbyimage?image_url=${this.tweetImage}`;
+      return `https://lens.google.com/search?p=${this.tweetImage}`;
     },
     translate() {
       return `https://translate.google.com/#auto/${i18n.locale}/${this.taskInfo.full_text}`;
@@ -458,12 +427,12 @@ export default {
 
     // Navigation buttons
     incStep() {
-      if (this.step < 5) {
+      if (this.step <= 2) {
         this.step++;
       }
     },
     decStep() {
-      if (this.step > 1) {
+      if (this.step >= 0) {
         this.step--;
       }
     },
@@ -485,12 +454,14 @@ export default {
         questions: this.questions
       });
       this.loading = true;
+      this.zoom = ZOOMMIN;
     },
 
     // Skip button
     async skip() {
       this.$emit("skip");
       this.loading = true;
+      this.zoom = ZOOMMIN;
     },
 
     //***  Google maps section */
@@ -506,12 +477,20 @@ export default {
           const currentLocation = this.taskInfo[col.geoString];
           const currentLat = this.taskInfo[col.geoLat];
           const currentLng = this.taskInfo[col.geoLng];
+          
           if (
             currentLocation &&
             currentLocation !== "" &&
             currentLocation !== "N_A"
           ) {
             // push the location comming from dataset directly
+            if (typeof currentLat === "undefined" || typeof currentLng === "undefined") {
+              const latLngData  = await this.getLocation(currentLocation);
+              currentLat = latLngData[0];
+              currentLng = latLngData[1];
+            }
+            
+            // console.log(test);
             locations.push({
               name: currentLocation,
               coordinates: [currentLat, currentLng]
@@ -550,6 +529,8 @@ export default {
       this.loading = false;
     },
 
+    
+
     // Get coordinates from Google search field for the first step
     otherPlace(place) {
       if (place != null) {
@@ -562,6 +543,7 @@ export default {
           text: place.formatted_address
         };
         this.locationPre = place.formatted_address;
+        this.zoom = 8;
         // keep the answer[0] as other until user submit
         this.answers[0].value = OTHER_LOCATION.value;
       }
@@ -576,6 +558,22 @@ export default {
         return address.state;
       } else {
         return "Pin is correct";
+      }
+    },
+
+    async getLocation(location) {
+      
+      try {  
+      let url_reverse = `https://nominatim.openstreetmap.org/search?format=json&q=${location}`;
+      let data_aux = await fetch(url_reverse);
+      const data = await data_aux.json();
+      return [data[0]["lat"], data[0]["lon"]];
+      } catch (err) {
+        const data = [0, 0];
+        data[0]["lat"] = 0;
+        data[0]["lon"] = 0;
+        console.log(err);
+        return data;
       }
     },
 
@@ -695,6 +693,7 @@ export default {
         }
 
         this.zoom = ZOOMMIN;
+
         // Activate street view and marker position when street view is enabled
         if (typeof this.$refs.gmap1 !== "undefined") {
           const self = this;
