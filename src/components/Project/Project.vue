@@ -527,24 +527,7 @@ export default {
     };
   },
   created() {
-    // eager loading: load the project and finally get stats and results
-    // to have a fresh state for all sub components
-    this.getProject(this.id).then(async project => {
-      if (!project) return false;
-      this.shareable_link = project.info.shareable_link;
-      // has to be loaded to know if the project can be published
-      if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
-        this.getProjectTasks(project);
-      }
-      // checks if the project is open for anonymous users or not
-      this.getNewTask(project).then(allowed => {
-        this.isAnonymousProject = !!allowed;
-      });
-      // load some stats
-      this.getResults(project);
-      await this.getStatistics(project);
-      await this.setLoadingProject(true); // loading is done when stats and project is ready
-    });
+    this.__created();
   },
   beforeMount() {
     // auto scroll to the page top when render first time
@@ -583,6 +566,26 @@ export default {
         this.shareable_link = value.key;
       });
     },
+    __created(){
+      // eager loading: load the project and finally get stats and results
+      // to have a fresh state for all sub components
+    this.getProject(this.id).then(async project => {
+      if (!project) return false;
+      this.shareable_link = project.info.shareable_link;
+      // has to be loaded to know if the project can be published
+      if (this.isLoggedUserOwnerOfProject(project) || this.isLoggedUserAdmin) {
+        this.getProjectTasks(project);
+      }
+      // checks if the project is open for anonymous users or not
+      this.getNewTask(project).then(allowed => {
+        this.isAnonymousProject = !!allowed;
+      });
+      // load some stats
+      this.getResults(project);
+      await this.getStatistics(project);
+      await this.setLoadingProject(true); // loading is done when stats and project is ready
+    });
+    },
     approve() {
       if (this.taskPresenter.length > 0) {
         if (this.hasProjectTasks) {
@@ -606,6 +609,8 @@ export default {
       if (this.taskPresenter.length > 0) {
         if (this.hasProjectTasks) {
           this.publishProject(this.project);
+          this.__created();
+
         } else {
           this.showError({
             title: "Impossible to publish the project",
@@ -674,7 +679,10 @@ export default {
       return this.projectTasks.length > 0;
     },
     isCompletedTasks() {
-      return this.stats.n_completed_tasks === this.stats.n_tasks;
+      return (
+        this.project.published &&
+        this.stats.n_completed_tasks === this.stats.n_tasks
+      );
     },
 
     isSmallScreen() {
