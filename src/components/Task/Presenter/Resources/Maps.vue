@@ -113,6 +113,7 @@ import { mapMutations, mapActions } from "vuex";
 
 export default {
   props: {
+    reset_to_initial: { type: Boolean, default: true },
     can_mark: { type: Boolean, default: false },
     can_draw: { type: Boolean, default: false },
     hideIcons: { type: Boolean, default: false },
@@ -332,8 +333,10 @@ export default {
     },
     taskLoaded() {
       // for Task presenter initialization asumes the initial map conditions
-      this.zoom = this.INITIAL_SETTINGS.zoom;
-      this.center = this.INITIAL_SETTINGS.center;
+      if (reset_to_initial){
+        this.zoom = this.INITIAL_SETTINGS.zoom;
+        this.center = this.INITIAL_SETTINGS.center;
+      }
     },
     computedModel: {
       handler(n, o) {
