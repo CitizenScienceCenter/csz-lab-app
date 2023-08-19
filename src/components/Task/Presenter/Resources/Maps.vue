@@ -113,7 +113,7 @@ import { mapMutations, mapActions } from "vuex";
 
 export default {
   props: {
-    reset_to_initial: { type: Boolean, default: true },
+    resetToInitial: { type: Boolean, default: true },
     can_mark: { type: Boolean, default: false },
     can_draw: { type: Boolean, default: false },
     hideIcons: { type: Boolean, default: false },
@@ -285,7 +285,7 @@ export default {
         this.source =
           "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
         this.attribution =
-          'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+          'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
       }
     },
 
@@ -333,7 +333,7 @@ export default {
     },
     taskLoaded() {
       // for Task presenter initialization asumes the initial map conditions
-      if (reset_to_initial){
+      if (this.resetToInitial == true){
         this.zoom = this.INITIAL_SETTINGS.zoom;
         this.center = this.INITIAL_SETTINGS.center;
       }
