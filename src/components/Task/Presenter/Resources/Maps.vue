@@ -4,6 +4,7 @@
       ref="maps"
       :zoom="parseInt(zoom)"
       :center="center"
+      :max-bounds="maxBounds"
       @update:zoom="zoomUpdated"
       @update:center="centerUpdated"
       @update:bounds="boundsUpdated"
@@ -22,6 +23,7 @@
       ></v-tile-layer>
       <v-control-zoom position="bottomright" v-if="!hideIcons"></v-control-zoom>
 
+      <v-rectangle v-if="setRectangle" :bounds="rectangle.bounds" :l-style="rectangle.style"></v-rectangle>
       <v-feature-group>
         <v-polygon :lat-lngs="area.latlngs" :color="area.color">
           <v-popup>
@@ -103,11 +105,12 @@ import {
   LControl,
   LPopup,
   LPolygon,
-  LFeatureGroup
+  LFeatureGroup,
+  LRectangle
 } from "vue2-leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import VGeosearch from "vue2-leaflet-geosearch";
-import { Icon } from "leaflet";
+import { Icon, latLngBounds } from "leaflet";
 import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 import { mapMutations, mapActions } from "vuex";
 
@@ -115,11 +118,18 @@ export default {
   props: {
     resetToInitial: { type: Boolean, default: true },
     can_mark: { type: Boolean, default: false },
+    setRectangle: { type: Boolean, default: false },
     can_draw: { type: Boolean, default: false },
     hideIcons: { type: Boolean, default: false },
     hideGeoSearch: { type: Boolean, default: false },
     hideInteraction: { type: Boolean, default: false },
     scrollToZoom: { type: Boolean, default: true },
+    maxBounds: { type: Array, default: [[-90,-180], [90,180]] },
+    rectangle: { type: Object, default: () => ({
+            bounds: [[47.341456, -1.397133], [47.303901, -1.243813]],
+            style: { color: 'red', weight: 3 , fill: false}
+          })
+    },
     mapSettings: {
       type: Object,
       default: () => ({
@@ -155,6 +165,7 @@ export default {
     "v-popup": LPopup,
     "v-polygon": LPolygon,
     "v-feature-group": LFeatureGroup,
+    "v-rectangle": LRectangle,
     VGeosearch
   },
   data() {
