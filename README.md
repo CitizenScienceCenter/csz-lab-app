@@ -1,4 +1,4 @@
-# Citizen Science Center Zurich - Project builder
+# Citizen Science Zurich - Project builder
 
 > Project builder - pybossa-client
 

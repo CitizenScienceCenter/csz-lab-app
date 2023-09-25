@@ -8,9 +8,9 @@
         target="_blank"
       >
         <img
-          alt="Citizen Science Center Zurich"
+          alt="Citizen Science Zurich"
           class="brand-logo"
-          src="@/assets/img/logo.svg"
+          src="@/assets/img/logo_en.svg"
         />
       </a>
     </b-navbar-brand>

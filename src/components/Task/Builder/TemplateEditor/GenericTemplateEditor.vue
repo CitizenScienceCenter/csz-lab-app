@@ -216,7 +216,7 @@ export default {
         area: false,
         zoom: 5,
         maxMarkers: 1,
-        // Center positioned in Citizen Science Center Zurich by default
+        // Center positioned in Citizen Science Zurich by default
         center: "47.38440837506529, 8.542299170672376",
         static_map: false,
         mapType: "Road",

@@ -9,7 +9,7 @@
           class="home-link home-link-platform"
           target="_blank"
         >
-          <img src="@/assets/logo-white.svg" />
+          <img src="@/assets/logo_en_white.svg" />
         </a>
         <!-- <a
           href="http://www.citizencyberlab.org/"
@@ -38,13 +38,6 @@
         >
           <i class="fas fa-envelope"></i>
           <span class="ml-1">info@citizenscience.ch</span>
-        </b-button>
-        <b-button
-          variant="border-transparent text-white "
-          @click="openInNewTab('tel:+41446342197')"
-        >
-          <i class="fas fa-phone"></i>
-          <span class="ml-1">+41 44 634 21 97</span>
         </b-button>
         <b-button
           variant="border-transparent text-white "
