@@ -19,7 +19,7 @@
       <v-tile-layer :url="source" :attribution="attribution"></v-tile-layer>
       <v-tile-layer
         url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.png"
-        v-if="mapSettings.mapType === 'Aerial'"
+        v-if="mapSettings.mapType === 'Aerial' && !hideLabels" 
       ></v-tile-layer>
       <v-control-zoom position="bottomright" v-if="!hideIcons"></v-control-zoom>
 
@@ -121,6 +121,7 @@ export default {
     setRectangle: { type: Boolean, default: false },
     can_draw: { type: Boolean, default: false },
     hideIcons: { type: Boolean, default: false },
+    hideLabels: { type: Boolean, default: false },
     hideGeoSearch: { type: Boolean, default: false },
     hideInteraction: { type: Boolean, default: false },
     scrollToZoom: { type: Boolean, default: true },
