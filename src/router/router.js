@@ -49,7 +49,7 @@ router.beforeEach(async (to, from, next) => {
   // console.log(to.name);
 
   if (filteredPath.length > 0 && filteredPath[0].length === 2) {
-    console.log("url has language: " + filteredPath[0]);
+    // console.log("url has language: " + filteredPath[0]);
     let language = filteredPath[0];
     store.dispatch("settings/setLanguage", language);
     i18n.locale = language;
@@ -74,9 +74,9 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   } else {
-    console.log("redirect to");
-    console.log(to.fullPath);
-    console.log("/" + i18n.locale + to.fullPath);
+    // console.log("redirect to");
+    // console.log(to.fullPath);
+    // console.log("/" + i18n.locale + to.fullPath);
     next("/" + i18n.locale + to.fullPath);
   }
 });
