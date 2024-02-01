@@ -306,7 +306,7 @@ export default {
 
       if ("info" in project && "thumbnail_url" in project.info) {
         // uuid used to avoid cache loading which make CORS issues
-        this.picture = project.info.thumbnail_url + "?id=" + uuid();
+        this.picture = getBaseUrl + "?id=" + uuid();
         this.$refs.cropper.replace(this.picture);
       }
     },
@@ -497,6 +497,17 @@ export default {
       categories: state => state.categories
     }),
 
+    getBaseUrl() {
+      if (this.loading && this.project.info.thumbnail) {
+        const base = process.env.BASE_ENDPOINT_URL;
+        const container = this.project.info.container;
+        const picname = this.project.info.thumbnail;
+        return base + "uploads/" + container + "/" + picname;
+      } else {
+        return this.defaultImage;
+      }
+    },
+    
     selectCategories() {
       return this.categories.map(category => {
         return {
