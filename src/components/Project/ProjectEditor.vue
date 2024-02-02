@@ -306,7 +306,7 @@ export default {
 
       if ("info" in project && "thumbnail_url" in project.info) {
         // uuid used to avoid cache loading which make CORS issues
-        this.picture = getBaseUrl + "?id=" + uuid();
+        this.picture = this.getBaseUrl + "?id=" + uuid();
         this.$refs.cropper.replace(this.picture);
       }
     },
