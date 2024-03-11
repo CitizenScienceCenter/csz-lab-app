@@ -144,7 +144,8 @@ const component = {
         ? this.task.info.url ||
             this.task.info.video_url ||
             this.task.info.audio_url ||
-            this.task.info.link_raw
+            this.task.info.link_raw ||
+            this.task.info.validUrl
         : "";
     },
   },
