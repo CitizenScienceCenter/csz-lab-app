@@ -8,10 +8,11 @@
             <b-badge variant="primary">{{ taskSlice }}</b-badge>
             {{$t('template-editor-text-3')}}
           </p>
-  
-          <b-progress :value="userProgressAdapted / taskSlice * 30" :max="30"></b-progress>
-    <b-modal 
-          v-model="modalProgressShow" @hidden="modalShow = false">
+          <b-progress :value="userProgressAdapted / taskSlice * 100" :max="100" variant="success" striped="true"></b-progress>
+          <b-progress :value="20" :max="100" variant="success" striped="true"></b-progress>
+
+
+    <b-modal v-model="modalProgressShow" @hidden="modalShow = false">
           <b-card no-body class="border-0 text-center">
             <b-card-text>
               <p>{{ text.tl_header }}</p>
@@ -27,7 +28,7 @@
                 {{ text.tl_yes }}
               </b-button>
         </template>
-        </b-modal>
+      </b-modal>
 
 
   </template>
@@ -37,11 +38,12 @@
     name: "UserProgress",
     props: {
       taskSlice: { type: Number, default: 100 },
-      pybossa: {  required: true },
+      pybossa: {  type: Object, required: true },
+      taskLoaded: { type: Boolean, required: true }
     },
     data() {
       return {
-        modalShow: false,
+        modalShow: true,
         translations: {
           "de": {
             tl_header: "Vielen Dank für Ihre Teilnahme!",
@@ -68,8 +70,16 @@
               return this.userProgressLimited;
             }
           },
-          modalProgressShow: function(){return this.modalShow && this.userProgressLimited == 0},
-      }
+      modalProgressShow: function(){return true },
+      },
+    watch: { 
+      taskLoaded() {
+        this.modalShow = true;
+        console.log(this.taskLoaded);
+      
+    },
+
+    }
   };
   </script>
   
