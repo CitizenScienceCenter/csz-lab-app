@@ -10,6 +10,7 @@
         <b-input placeholder="Bucket name" v-model="bucketName" class="mt-4"></b-input>
         <b-button type="submit" ref="btn-search" class="mt-3" variant="secondary">{{ $t("tasks-import-amazon-text1") }}</b-button>
         <b-button ref="btn-add-files" @click="addFiles" v-if="selectedFiles.length > 0" class="mt-3 float-right" variant="secondary">{{ $t("tasks-import-amazon-text2") }}</b-button>
+        <b-button ref="btn-unselect-files" @click="unselectFiles" v-if="selectedFiles.length > 0" class="mt-3 float-right" variant="secondary">{{ $t("tasks-import-amazon-text3") }}</b-button>
       </b-form>
 
       <LoadingSpinner :id="loaders.GET_BUCKET_FILES"></LoadingSpinner>
@@ -84,7 +85,9 @@ export default {
         this.selectedFiles = files
       })
     },
-
+    unselectFiles() {
+      this.selectedFiles = []
+    },
     addFiles () {
       this.importAmazonS3Tasks({
         project: this.project,

@@ -533,6 +533,7 @@
 
     "tasks-import-amazon-text1": "Find bucket files",
     "tasks-import-amazon-text2": "Add the selected files",
+    "tasks-import-amazon-text3": "Unselect all files",
 
     "tasks-import-flickr-text1": "Log in Flickr",
     "tasks-import-flickr-text1a": "Grant access to your Flickr albums to select one...",
