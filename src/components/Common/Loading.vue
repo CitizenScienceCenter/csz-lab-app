@@ -35,7 +35,7 @@
           </b-container>
         </b-col>
         <!-- Button for hide overlay. Useful for longtime process -->
-        <b-col cols="12" class="mt-4" v-if="hideBtn">
+        <b-col cols="12" class="mt-4" v-if="!hideBtn">
           <b-button
             ref="hide"
             variant="outline-secondary"
