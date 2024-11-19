@@ -18,7 +18,7 @@
         </b-col>
         <b-col cols="12" class="mt-4" v-if="!finite">
           <b-spinner
-            variant="primary"
+            variant="secondary"
             role="loading"
             style="width: 3rem; height: 3rem;"
           ></b-spinner>
