@@ -37,12 +37,10 @@
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
 
-
 import video from '@/assets/csv-samples/video.csv'
 import image from '@/assets/csv-samples/image.csv'
 import sound from '@/assets/csv-samples/sound.csv'
 import pdf from '@/assets/csv-samples/pdf.csv'
-import geoCoding from '@/assets/csv-samples/geo-coding.csv'
 
 export default {
   name: 'GoogleDocImporter',
@@ -53,8 +51,7 @@ export default {
         video,
         image,
         sound,
-        pdf,
-        geoCoding
+        pdf
       }
     }
   },
