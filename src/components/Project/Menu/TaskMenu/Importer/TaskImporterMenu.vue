@@ -10,26 +10,12 @@
         <b-col md="6">
           <DropboxImporter></DropboxImporter>
         </b-col>
-        <b-col md="6" class="mt-md-0 mt-4">
-          <!-- TODO: removed temporarily while twitter API support is fixed -->
-          <!-- <TwitterImporter></TwitterImporter> -->
-        </b-col>
-      </b-row>
-
-      <b-row class="mt-4">
         <b-col md="6">
           <AmazonS3BucketImporter></AmazonS3BucketImporter>
         </b-col>
-        <b-col md="6" class="mt-md-0 mt-4">
-          <!-- TODO: removed temporarily while flickr API support is fixed -->
-          <!-- <FlickrImporter></FlickrImporter> -->
-        </b-col>
       </b-row>
 
       <b-row class="mt-4">
-        <b-col md="6">
-          <GoogleDocImporter></GoogleDocImporter>
-        </b-col>
         <b-col md="6" class="mt-md-0 mt-4">
           <LocalCsvImporter></LocalCsvImporter>
         </b-col>
@@ -37,6 +23,24 @@
           <OnlineCsvImporter></OnlineCsvImporter>
         </b-col>
       </b-row>
+      <b-row class="mt-4">
+        <b-col md="6">
+          <GoogleDocImporter></GoogleDocImporter>
+        </b-col>
+      </b-row>
+
+      <b-row class="mt-4">
+        <b-col md="6" class="mt-md-0 mt-4">
+          <!-- TODO: removed temporarily while twitter API support is fixed -->
+          <!-- <TwitterImporter></TwitterImporter> -->
+        </b-col>
+
+        <b-col md="6" class="mt-md-0 mt-4">
+          <!-- TODO: removed temporarily while flickr API support is fixed -->
+          <!-- <FlickrImporter></FlickrImporter> -->
+        </b-col>
+      </b-row>
+
     </b-container>
   </div>
 </template>
