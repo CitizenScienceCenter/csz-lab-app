@@ -11,7 +11,8 @@
           <DropboxImporter></DropboxImporter>
         </b-col>
         <b-col md="6" class="mt-md-0 mt-4">
-          <TwitterImporter></TwitterImporter>
+          <!-- TODO: removed temporarily while twitter API support is fixed -->
+          <!-- <TwitterImporter></TwitterImporter> -->
         </b-col>
       </b-row>
 
@@ -20,15 +21,15 @@
           <AmazonS3BucketImporter></AmazonS3BucketImporter>
         </b-col>
         <b-col md="6" class="mt-md-0 mt-4">
-          <FlickrImporter></FlickrImporter>
+          <!-- TODO: removed temporarily while flickr API support is fixed -->
+          <!-- <FlickrImporter></FlickrImporter> -->
         </b-col>
       </b-row>
 
       <b-row class="mt-4">
-        <!-- TODO: removed temporarily while google spreadsheet issue is fixed. -->
-        <!-- <b-col md="6">
-            <GoogleDocImporter></GoogleDocImporter>
-          </b-col> -->
+        <b-col md="6">
+          <GoogleDocImporter></GoogleDocImporter>
+        </b-col>
         <b-col md="6" class="mt-md-0 mt-4">
           <LocalCsvImporter></LocalCsvImporter>
         </b-col>
@@ -42,24 +43,27 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-// TODO: removed temporarily while google spreadsheet issue is fixed.
-// import GoogleDocImporter from '@/components/Project/Menu/TaskMenu/Importer/GoogleDocImporter'
+import GoogleDocImporter from '@/components/Project/Menu/TaskMenu/Importer/GoogleDocImporter'
 import LocalCsvImporter from "@/components/Project/Menu/TaskMenu/Importer/LocalCsvImporter";
 import OnlineCsvImporter from "@/components/Project/Menu/TaskMenu/Importer/OnlineCsvImporter";
 import AmazonS3BucketImporter from "@/components/Project/Menu/TaskMenu/Importer/AmazonS3BucketImporter";
-import FlickrImporter from "@/components/Project/Menu/TaskMenu/Importer/FlickrImporter";
+// TODO: removed temporarily while flickr API support is fixed
+// import FlickrImporter from "@/components/Project/Menu/TaskMenu/Importer/FlickrImporter";
 import DropboxImporter from "@/components/Project/Menu/TaskMenu/Importer/DropboxImporter";
-import TwitterImporter from "@/components/Project/Menu/TaskMenu/Importer/TwitterImporter";
+// TODO: removed temporarily while twitter API support is fixed
+// import TwitterImporter from "@/components/Project/Menu/TaskMenu/Importer/TwitterImporter";
 
 export default {
   name: "TaskImportersMenu",
   components: {
-    TwitterImporter,
+    // TODO: removed temporarily while twitter API support is fixed
+    // TwitterImporter,
     DropboxImporter,
-    FlickrImporter,
+    // TODO: removed temporarily while flickr API support is fixed
+    // FlickrImporter,
     AmazonS3BucketImporter,
     OnlineCsvImporter,
-    // GoogleDocImporter,
+    GoogleDocImporter,
     LocalCsvImporter
   },
   metaInfo: function() {
@@ -76,8 +80,7 @@ export default {
   },
   created() {
     this.getProject(this.id);
-    // TODO: removed temporarily while google spreadsheet issue is fixed.
-    // this.setGoogleDocImporterVisible(false)
+    this.setGoogleDocImporterVisible(false);
     this.setLocalCsvImporterVisible(false);
     this.setOnlineCsvImporterVisible(false);
     this.setAmazonS3ImporterVisible(false);
@@ -96,8 +99,7 @@ export default {
   methods: {
     ...mapActions("project", ["getProject"]),
     ...mapMutations("task/importer", [
-      // TODO: removed temporarily while google spreadsheet issue is fixed.
-      // 'setGoogleDocImporterVisible',
+      'setGoogleDocImporterVisible',
       "setLocalCsvImporterVisible",
       "setOnlineCsvImporterVisible",
       "setAmazonS3ImporterVisible",
