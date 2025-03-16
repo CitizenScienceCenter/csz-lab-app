@@ -114,7 +114,7 @@ export default {
           this.setDropboxFiles(finalFiles);
         },
         extensions: this.materialExtensions[this.task.material],
-        linkType: "preview",
+        linkType: 'direct',
         multiselect: true
         // sizeLimit: 1024,
         // folderselect: true
