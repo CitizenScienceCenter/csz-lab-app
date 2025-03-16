@@ -77,8 +77,13 @@ export default {
       const dropbox = window.Dropbox
       const options = {
         success: (files) => {
-          this.selectedFiles = files
-          this.files = files
+          const finalFiles = files.map(file => {
+            let link = file.link.replace("?dl=0", "?raw=1");
+            file.link = link;
+            return file;
+          });
+          this.selectedFiles = finalFiles
+          this.files = finalFiles
         },
         linkType: 'preview',
         multiselect: true
