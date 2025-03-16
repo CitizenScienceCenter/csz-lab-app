@@ -130,8 +130,6 @@ import SurveyGenericTemplate from "@/components/Task/Template/Media/SurveyGeneri
 import GeoSurveyGenericTemplate from "@/components/Task/Template/Media/GeoSurveyGenericTemplate";
 import PdfGenericTemplate from "@/components/Task/Template/Document/PdfGenericTemplate";
 import GeoPdfGenericTemplate from "@/components/Task/Template/Document/GeoPdfGenericTemplate";
-import TwitterGenericTemplate from "@/components/Task/Template/Twitter/TwitterGenericTemplate";
-import GeoTwitterGenericTemplate from "@/components/Task/Template/Twitter/GeoTwitterGenericTemplate";
 import CSLoggerTemplate from "@/components/Task/Template/CSLoggerTemplate";
 
 export default {
@@ -172,8 +170,6 @@ export default {
           return "fas fa-play";
         case this.materials.pdf:
           return "fas fa-file-pdf";
-        case this.materials.tweet:
-          return "fab fa-twitter";
         case this.materials.cslogger:
           return "fas fa-question";
         default:
@@ -192,10 +188,6 @@ export default {
     },
     getSourceIcon() {
       switch (this.task.source) {
-        case this.sources.twitter:
-          return "fab fa-twitter";
-        case this.sources.flickr:
-          return "fab fa-flickr";
         case this.sources.dropbox:
           return "fab fa-dropbox";
         case this.sources.amazon:
@@ -213,10 +205,6 @@ export default {
         media: {
           survey: SurveyGenericTemplate,
           geo_survey: GeoSurveyGenericTemplate
-        },
-        twitter: {
-          survey: TwitterGenericTemplate,
-          geo_survey: GeoTwitterGenericTemplate
         },
         pdf: {
           survey: PdfGenericTemplate,
@@ -239,10 +227,6 @@ export default {
       // Pdf template generation
       if (this.task.material === this.materials.pdf) {
         return templates.pdf[this.task.job];
-      }
-      // Twitter template generation
-      if (this.task.material === this.materials.tweet) {
-        return templates.twitter[this.task.job];
       }
       // CSLogger template generation
       if (this.task.material === this.materials.cslogger) {

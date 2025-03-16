@@ -97,20 +97,6 @@
             </b-card>
           </b-col>
 
-          <b-col md="4" class="mt-2 mt-md-0">
-            <b-card
-              ref="card-tweet"
-              :class="{
-                'material-selected': selectedMaterial === materials.tweet
-              }"
-              @click="onMaterialSelected(materials.tweet)"
-              class="text-center material"
-            >
-              <i class="fab fa-twitter fa-4x"></i><br />
-              <div class="m-2">{{ $t("task-material-builder-tweet") }}</div>
-            </b-card>
-          </b-col>
-
           <b-col
             md="4"
             class="mt-2 mt-md-0"

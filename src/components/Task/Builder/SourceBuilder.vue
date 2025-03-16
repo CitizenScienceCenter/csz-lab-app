@@ -135,9 +135,6 @@
             <FlickrSourceEditor
               v-if="selectedSource === sources.flickr"
             ></FlickrSourceEditor>
-            <TwitterSourceEditor
-              v-if="selectedSource === sources.twitter"
-            ></TwitterSourceEditor>
             <LocalCsvSourceEditor
               v-if="selectedSource === sources.localcsv"
             ></LocalCsvSourceEditor>
@@ -154,14 +151,12 @@ import { mapMutations, mapState } from "vuex";
 import DropboxSourceEditor from "@/components/Task/Builder/SourceEditor/DropboxSourceEditor";
 import AmazonSourceEditor from "@/components/Task/Builder/SourceEditor/AmazonSourceEditor";
 import FlickrSourceEditor from "@/components/Task/Builder/SourceEditor/FlickrSourceEditor";
-import TwitterSourceEditor from "@/components/Task/Builder/SourceEditor/TwitterSourceEditor";
 import LocalCsvSourceEditor from "@/components/Task/Builder/SourceEditor/LocalCsvSourceEditor";
 import LoadCSLoggerData from "@/components/Task/Builder/SourceEditor/CSLogger/LoadCSLoggerData";
 
 export default {
   name: "SourceBuilder",
   components: {
-    TwitterSourceEditor,
     FlickrSourceEditor,
     AmazonSourceEditor,
     DropboxSourceEditor,

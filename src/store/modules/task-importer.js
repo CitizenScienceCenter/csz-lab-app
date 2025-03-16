@@ -34,13 +34,12 @@ const errors = {
 };
 
 const state = {
+  isAmazonS3ImporterVisible: false,
   isGoogleDocImporterVisible: false,
   isLocalCsvImporterVisible: false,
   isOnlineCsvImporterVisible: false,
-  isAmazonS3ImporterVisible: false,
   isFlickrImporterVisible: false,
   isDropboxImporterVisible: false,
-  isTwitterImporterVisible: false,
 
   bucket: {
     name: "",
@@ -58,7 +57,13 @@ const state = {
   twitterTasksImportationOptions: {},
 
   loaders: {
-    GET_BUCKET_FILES: "task/importer/getBucketFiles"
+    GET_BUCKET_FILES: "task/importer/getBucketFiles",
+    IMPORT_AMAZON_S3_TASKS: "task-importer/IMPORT_AMAZON_S3_TASKS",
+    IMPORT_GOOGLE_DOCS_TASKS: "task-importer/IMPORT_GOOGLE_DOCS_TASKS",
+    IMPORT_LOCAL_CSV_TASKS: "task-importer/IMPORT_LOCAL_CSV_TASKS",
+    IMPORT_ONLINE_CSV_TASKS: "task-importer/IMPORT_ONLINE_CSV_TASKS",
+    IMPORT_FLICKR_TASKS: "task-importer/IMPORT_FLICKR_TASKS",
+    IMPORT_DROPBOX_TASKS: "task-importer/IMPORT_DROPBOX_TASKS"
   }
 };
 
@@ -746,105 +751,6 @@ const actions = {
     });
   },
 
-  /**
-   * Gets the CSRF token to import twitter tasks
-   * @param commit
-   * @param project
-   * @returns {Promise<T | boolean>}
-   */
-  getTwitterTasksImportationOptions({ commit }, project) {
-    return api
-      .getTwitterTasksImportationOptions(project.short_name)
-      .then(value => {
-        commit("setTwitterTasksImportationOptions", value.data);
-        return value.data;
-      })
-      .catch(reason => {
-        commit(
-          "notification/showError",
-          {
-            title: getTranslationLocale(
-              "GET_TWITTER_IMPORTER_OPTIONS_LOADING_ERROR"
-            ),
-            content: reason
-          },
-          { root: true }
-        );
-        return false;
-      });
-  },
-
-  /**
-   * Imports the tweets task found with the given search options
-   * @param commit
-   * @param state
-   * @param dispatch
-   * @param project
-   * @param source
-   * @param maxTweets
-   * @return {Promise<any> | * | Promise<any> | Thenable<any> | PromiseLike<any> | Promise<any>}
-   */
-  importTwitterTasks(
-    { commit, state, dispatch },
-    { project, source, maxTweets }
-  ) {
-    commit("notification/showLoadingOverlay", true, { root: true });
-    const overlay_config = {
-      label: getTranslationLocale("task-summary-builder-loading-label"),
-      sublabel: getTranslationLocale("task-summary-builder-loading-sublabel"),
-      progress: null,
-      finite: false,
-      hideBtn: false
-    };
-    commit("notification/setLoadingConfig", overlay_config, { root: true });
-
-    return dispatch("getTwitterTasksImportationOptions", project)
-      .then(response => {
-        if (response) {
-          return api
-            .importTwitterTasks(
-              state.twitterTasksImportationOptions.form.csrf,
-              project.short_name,
-              source,
-              maxTweets
-            )
-            .then(value => {
-              if ("status" in value.data && value.data.status === "message") {
-                let flash = value.data.flash.split(" ");
-                let message = flash.slice(1).join(" ");
-                commit(
-                  "notification/showSuccess",
-                  {
-                    title: getTranslationLocale("success"),
-                    content: isNaN(flash[0])
-                      ? getPybossaTranslation(value.data.flash)
-                      : flash[0] + " " + getPybossaTranslation(message)
-                  },
-                  { root: true }
-                );
-                return value.data;
-              }
-              return false;
-            })
-            .catch(reason => {
-              commit(
-                "notification/showError",
-                {
-                  title: getTranslationLocale("POST_TWITTER_TASKS_ERROR"),
-                  content: reason
-                },
-                { root: true }
-              );
-              return false;
-            });
-        }
-        return false;
-      })
-      .finally(() =>
-        commit("notification/showLoadingOverlay", false, { root: true })
-      );
-  },
-
   //** Citizen Science Logger Section **/
   async importCSLoggerFile({ commit, rootState }, { files, csv, partial }) {
     commit("notification/showLoadingOverlay", true, { root: true });
@@ -911,9 +817,6 @@ const mutations = {
   setFlickrAlbums(state, albums) {
     state.flickrAlbums = albums;
   },
-  setTwitterTasksImportationOptions(state, options) {
-    state.twitterTasksImportationOptions = options;
-  },
   setGoogleDocImporterVisible(state, value) {
     state.isGoogleDocImporterVisible = value;
   },
@@ -931,9 +834,6 @@ const mutations = {
   },
   setDropboxImporterVisible(state, value) {
     state.isDropboxImporterVisible = value;
-  },
-  setTwitterImporterVisible(state, value) {
-    state.isTwitterImporterVisible = value;
   },
   setBucketFiles(state, files) {
     state.bucket = { ...state.bucket, files };
