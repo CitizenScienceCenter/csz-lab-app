@@ -11,7 +11,6 @@ const materials = {
   sound: "sound",
   video: "video",
   pdf: "pdf",
-  tweet: "tweet",
   cslogger: "cslogger",
 };
 
@@ -25,8 +24,6 @@ const jobs = {
 const sources = {
   dropbox: "dropbox",
   amazon: "amazon",
-  flickr: "flickr",
-  twitter: "twitter",
   cslogger: "cslogger",
   localcsv: "localcsv",
 };
@@ -60,7 +57,6 @@ const state = {
     [materials.image]: [jobs.survey, jobs.geo_survey],
     [materials.sound]: [jobs.survey, jobs.geo_survey],
     [materials.video]: [jobs.survey, jobs.geo_survey],
-    [materials.tweet]: [jobs.survey, jobs.geo_survey],
     [materials.pdf]: [jobs.survey, jobs.geo_survey],
     [materials.cslogger]: [jobs.survey],
   },
@@ -69,12 +65,10 @@ const state = {
     [materials.image]: [
       sources.amazon,
       sources.dropbox,
-      sources.flickr,
       sources.localcsv,
     ],
     [materials.sound]: [sources.amazon, sources.dropbox, sources.localcsv],
     [materials.pdf]: [sources.amazon, sources.dropbox, sources.localcsv],
-    [materials.tweet]: [sources.twitter],
     [materials.cslogger]: [sources.cslogger],
     [materials.video]: [sources.amazon, sources.dropbox, sources.localcsv],
   },
@@ -83,7 +77,6 @@ const state = {
     [materials.image]: media_ext.image,
     [materials.sound]: media_ext.sound,
     [materials.pdf]: media_ext.documents,
-    [materials.tweet]: [],
     [materials.video]: media_ext.video,
   },
 
