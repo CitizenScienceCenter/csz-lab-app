@@ -4,7 +4,7 @@
       v-model="answers[getRelativeId(question.id)].value"
       :options="options"
       :name="'question_radio' + question.id"
-      stacked
+      :stacked="stacked"
       v-if="question.type === 'one_choice'"
     ></b-form-radio-group>
 
@@ -12,7 +12,7 @@
       v-model="answers[getRelativeId(question.id)].value"
       :options="options"
       :name="'question_checkbox' + question.id"
-      stacked
+      :stacked="stacked"
       v-if="question.type === 'multiple_choice'"
     ></b-form-checkbox-group>
 
@@ -47,7 +47,8 @@ export default {
   props: {
     answers: { type: Array, default: [], required: true },
     question: { type: Object, required: true },
-    context: Object
+    context: Object,
+    stacked: { type: Boolean, default: true } // Added prop for stacked
   },
   methods: {
     getRelativeId(realId) {
