@@ -1,37 +1,36 @@
 <template>
+  <div>
     <!-- User progress -->
     <!-- <p class="mt-2">You are working now on task: <b-badge variant="warning">{{ task.id }}</b-badge></p>-->
-          <p class="mt-2">
-            {{$t('template-editor-text-2')}}:
-            <b-badge variant="primary">{{ userProgressAdapted }}</b-badge>
-            {{$t('template-editor-text-2a')}}
-            <b-badge variant="primary">{{ taskSlice }}</b-badge>
-            {{$t('template-editor-text-3')}}
-          </p>
-          <b-progress :value="userProgressAdapted / taskSlice * 100" :max="100" variant="success" striped="true"></b-progress>
-          <b-progress :value="20" :max="100" variant="success" striped="true"></b-progress>
-
+    <p class="mt-2">
+      {{$t('template-editor-text-2')}}:
+      <b-badge variant="primary">{{ userProgressAdapted }}</b-badge>
+      {{$t('template-editor-text-2a')}}
+      <b-badge variant="primary">{{ taskSlice }}</b-badge>
+      {{$t('template-editor-text-3')}}
+    </p>
+    <b-progress :value="userProgressAdapted / taskSlice * 100" :max="100" variant="success" striped="true"></b-progress>
+    <b-progress :value="20" :max="100" variant="success" striped="true"></b-progress>
 
     <b-modal v-model="modalProgressShow" @hidden="modalShow = false">
-          <b-card no-body class="border-0 text-center">
-            <b-card-text>
-              <p>{{ text.tl_header }}</p>
-              <p>{{ text.tl_text_a }} <strong>{{ pybossa.userProgress.done }}</strong> {{ text.tl_text_b }}</p>
-              <p>{{ text.tl_question }}</p>
-            </b-card-text>
-          </b-card>
-          <template #modal-footer>
-              <b-button variant="light" @click="quitPresenter()">
-                {{ text.tl_no }}
-              </b-button>
-              <b-button variant="success" @click="modalShow = false">
-                {{ text.tl_yes }}
-              </b-button>
-        </template>
-      </b-modal>
-
-
-  </template>
+      <b-card no-body class="border-0 text-center">
+        <b-card-text>
+          <p>{{ text.tl_header }}</p>
+          <p>{{ text.tl_text_a }} <strong>{{ pybossa.userProgress.done }}</strong> {{ text.tl_text_b }}</p>
+          <p>{{ text.tl_question }}</p>
+        </b-card-text>
+      </b-card>
+      <template #modal-footer>
+        <b-button variant="light" @click="quitPresenter()">
+          {{ text.tl_no }}
+        </b-button>
+        <b-button variant="success" @click="modalShow = false">
+          {{ text.tl_yes }}
+        </b-button>
+      </template>
+    </b-modal>
+  </div>
+</template>
   
   <script>
   export default {
